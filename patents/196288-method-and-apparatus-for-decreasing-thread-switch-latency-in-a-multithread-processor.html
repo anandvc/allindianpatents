@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/196288-method-and-apparatus-for-decreasing-thread-switch-latency-in-a-multithread-processor by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 08:04:42 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 196288:METHOD AND APPARATUS FOR DECREASING THREAD SWITCH LATENCY IN A MULTITHREAD PROCESSOR</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD AND APPARATUS FOR DECREASING THREAD SWITCH LATENCY IN A MULTITHREAD PROCESSOR</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>METHOD AND APPARATUS FOR DECREASING THREAD SWITCH LATENCY IN A MULTITHREAD PROCESSOR IN THE ABSTRACT OF THE DISCLOSURE The method and apparatus for decreasing thread switch latency in a multithread processor stores instructions for an active thread in a primary instruction queue, and stores instructions for a dormant thread in a thread switch instruction queue. The active thread is the thread currently being processed by the multithread processor, while the dormant thread is a thread not currently being executed by the multithread processor. .During execution of the active thread, instructions are dispatched from the primary instruction queue for processing. When a thread switch occurs, instructions are dispatched from the thread switch instruction queue for execution. Simultaneously, instructions stored in the thread switch instruction queue are transferred to the primary instruction queue. In this manner, the thread switch latency resulting from the amount of time to refill the primary instruction queue with instructions of the dormant thread is eliminated.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>The present invention relates to a method and apparatus for decreasing thread switch latency in a multithread processor.<br>
+Description of Related Art<br>
+Today the most common architecture for high performance, single-chip microprocessors is the RISC, for reduced instruction set computer, architecture. As semiconductor technology has advanced, the goal of RISC architecture has been to develop processor designs that can come close to initiating one instruction on each clock cycle of the machine. This measure, clock cycles per instruction or CPI, is commonly used to characterize architectures for high performance processors. The architectural features of instruction pipelining and cache memories have made the CPI improvements possible. Pipeline instruction execution allows subsequent instructions to begin execution before previously issued instructions have finished execution. Cache memories allow instruction execution to continue, in most cases, without waiting the full access time of a main memory.<br>
+Although memory devices used for main memory are becoming faster, the<br>
+speed gap between such memory chips   	<br><br>
+and high-end processors is becoming increasingly larger. Accordingly, a significant amount of execution time in current high-end processor designs is spent waiting for cache misses, and it is expected that memory access delays will make up an increasing proportion of processor execution time unless memory latency tolerance techniques are implemented.<br>
+One known technique for tolerating memory latency is multithreading. Two types of multithreading exist: hardware multithreading and software multithreading, in general, hardware multithreading employs a processor that maintains the state of several tasks or threads on-chip. This generally involves replicating the processor registers for each thread.<br>
+There are two basic forms of hardware multithreading. A traditional form is to keep N threads, or states, in the processor and interleave the threads on a cycle-by-cycle basis. This eliminates all pipeline dependencies because instructions in a single thread are separated. The other form of hardware multithreading is to switch the threads on some long-latency event. A preferred embodiment of the present invention employs hardware multithreading and switches between threads on some long■latency event.<br>
+Thread switching itself, however, requires a number of clock cycles. A significant portion of the latency caused by a thread switch is attributable to the instruction fetch required to begin executing a new thread. Fig. 1 illustrates a prior art structure for dispatching instructions for processing by the plurality of pipelines of a multithread processor. As shown in Fig. 1, an instruction pass multiplexer 8 has a first and second input. The first input is connected to an instruction cache 4 which stores a plurality of instructions. The instructions stored by the instruction cache 4 belong to both the active thread, the thread currently being executed, and one or more<br><br>
+dormant threads, threads not currently being executed. The second input of the instruction pass multiplexer 8 is connected to the main memory and/or memory sub-system 2. Main memory stores all the instructions for each thread, while a memory sub-system such as a level two cache may store less than all the instructions for the various threads, but more instructions than the instruction cache 4. As shown in Fig. 1, the instruction cache 4 is also connected to the main memory and/or memory sub-system 2.<br>
+In accordance with a line fill bypass signal received from the control logic 6, the instruction pass multiplexer 8 outputs instructions addressed from either the instruction cache 4 or the main memory and/or memory sub-system 2 by the control logic 6. The instruction pass multiplexer 8 outputs the instructions to a primary instruction queue 10. The primary instruction queue 10 stores a plurality of instructions which it outputs for dispatch to the plurality of processing pipelines implemented by the multithread processor.<br>
+When a thread switch occurs, the instructions in the primary instruction queue 10 are invalidated, and during a first clock cycle, addresses for instructions of the dormant thread which is becoming the active thread are generated by the control logic 6. During the second clock cycle, instructions are addressed based on the newly generated instruction addresses, and the control logic 6 outputs a line fill bypass signal such that the instruction pass multiplexer 8 selects the input connected to the instruction cache 4. If the instructions being addressed are resident in the instruction cache 4, then during the third clock cycle, the instruction pass multiplexer 8 outputs these instructions to the primary instruction queue 10, and the primary instruction queue 10 outputs the instructions for dispatch to the processing pipelines. Accordingly, when the instructions of the dormant thread<br><br>
+which is becoming the active thread are resident in the instruction cache 4, a thread switch takes three clock cycles to complete.<br>
+Of course, if the instruction cache 4 does not contain the instructions of the dormant thread which is becoming the active thread addressed by the control logic 6, then the time to complete the thread switch will increase by the amount of time required to resolve the instruction cache miss.<br>
+OBJECTS AND SUMMARY OF THE INVENTION<br>
+It is an object of the present invention to provide a method and apparatus for decreasing thread switch latency in a multithread processor.<br>
+It is another object of the present invention to provide a method and apparatus for decreasing thread switch latency in a multithread processor which eliminates from the amount of time required to perform a thread switch, the time to refill the primary instruction queue.<br>
+These and other objectives are achieved by providing a thread switch instruction queue, which stores instructions of a dormant thread, in addition to a primary instruction queue, which stores instructions of the active thread. The instructions stored in the thread switch instruction queue are output for execution when a thread switch occurs thereby eliminating the thread switch latency resulting from having to wait for the primary instruction queue to be refilled.<br>
+Additionally, while instructions of the dormant thread which is becoming the active thread are output from the thread switch instruction queue, some of the instructions stored in the thread switch instruction queue are transferred to the primary instruction queue. After the initial output of instructions from the thread switch instruction queue, instructions for execution are again obtained from the primary instruction queue.<br><br>
+Because the primary instruction queue has been prefilled with instructions originally stored in the thread switch instruction queue, any further delays in filling the primary instruction queue are also eliminated.<br>
+Other objects, features and characteristics of the present invention; methods, operation, and functions of the related elements of the structure; combination of parts; and economies of manufacture will become apparent from the following detailed description of the preferred embodiments and accompanying drawings, all of which form a part of this specification, wherein like reference numerals designate corresponding parts in the various figures.<br>
+The invention provides a method for decreasing thread switch latency in a multithread processor, comprising: (a) storing instructions for an active thread in a primary instruction queue, said active thread being a thread currently executed by said multithread processor; (b) storing instructions for a dormant thread in a thread switch instruction queue, said dormant thread being a thread not currently executed by said multithread processor; (c) dispatching instructions from said primary instruction queue for execution during execution of said active thread; and (d) dispatching instructions from said thread switch instruction queue for execution when a thread switch occurs.<br><br>
+The invention also provides an apparatus dispatching instructions for execution by a multithread processor which decreases thread switch latency, comprising; a primary instruction queue storing instructions for an active thread, said active thread being a thread currently executed by said multithread processor; at least one thread switch instruction queue storing instructions for a dormant thread, said dormant thread being a thread not currently executed by said multithread processor; and dispatching means for dispatching instructions from said primary instruction queue for execution during execution of said active thread, and for dispatching instructions from said thread switch instruction queue for execution when a thread switch occurs.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+The present invention will become more fully understood from the detailed description given hereinbelow and the accompanying drawings which are given by way of illustration only, and thus are not limitative of the present invention, and wherein:<br>
+Fig. 1 illustrates a prior art structure for dispatching instructions; and<br>
+Fig. 2 illustrates the structure for dispatching instructions according to the present invention.<br>
+Of the above discussed figures, Fig. 2 is suggested for printing on the front page of a patent issuing on the subject application.<br><br>
+DETAILED DESCRIPTION OP THE PREFERRED EMBODIMENTS The structure for dispatching instructions according to the present invention includes a thread switch instruction queue connected to the instruction pass multiplexer and an output multiplexer in parallel with the primary instruction queue. The thread switch instruction queue stores instructions of a dormant thread, while the primary instruction queue stores instructions of the active thread. The instructions stored in the thread switch instruction queue are output for execution by the output multiplexer when a thread switch occurs thereby eliminating the thread switch latency resulting from having to wait for the primary instruction .queue to be refilled.<br>
+Additionally, while instructions of the dormant thread which is becoming the active thread are output by the output multiplexer, some of these instructions are transferred to the primary instruction queue. After the initial output of instructions obtained from the thread switch instruction queue, the output multiplexer again outputs instructions for execution obtained from the primary instruction queue. Because the primary instruction queue has been prefilled with instructions originally stored in the thread switch instruction queue, any further delays in filling the primary instruction queue are also eliminated.<br>
+The structure for dispatching instructions according to the present invention will now be discussed in detail with reference to Fig. 2. As shown in Fig. 2, the instruction pass multiplexer 8, the control logic 6, the instruction cache 4, and the main memory and/or memory sub-system 2 are connected in the same fashion as discussed above with respect to the prior art instruction dispatch structure. Similarly, the control logic 6 outputs a line fill bypass signal to the instruction pass multiplexer 8 indicating whether the instruction  pass  multiplexer  8  should  output<br><br>
+instructions received from the instruction cache 4 or the main memory and/or memory sub-system 2.<br>
+The structure according to the present invention for dispatching instructions, however, also includes an instruction fill multiplexer 12, a thread switch instruction queue 14, and an output multiplexer 16. The instruction fill multiplexer 12 has a first and second input. The first input is connected to the output of the instruction pass multiplexer 8, The second input of the instruction fill multiplexer 12 is connected to the output of the output multiplexer 16. The instruction fill multiplexer 12 outputs instructions received from either the instruction pass multiplexer 8 or the output multiplexer 16 based on a thread switch signal received from the control logic 6 to the primary instruction queue 10.<br>
+The thread switch instruction queue 14 also receives the output of the instruction pass multiplexer 8, and both the thread switch instruction queue 14 and the primary instruction queue 10 send their output to the output multiplexer 16. The output multiplexer 16 selectively outputs instructions from either the primary instruction queue 10 or the thread switch instruction queue 14 based on the thread switch signal generated by the control logic 6. The instructions output by the instruction multiplexer 16 are dispatched to the plurality of processing pipelines of the multithread processor.<br>
+During execution of the active thread, the thread switch signal remains low such that the instruction fill multiplexer 12 outputs instructions received from the instruction pass multiplexer 8 to fill the primary instruction queue 10, and the output multiplexer 16 outputs instructions received from the primary instruction queue 10.<br>
+Furthermore, during execution of the active thread, instructions of the dormant thread are prefetched and<br><br>
+stored in the thread switch instruction queue 14. To prefetch the instructions of the dormant thread for storage in the thread switch instruction queue 14, the control Logic 6 uses clock cycles designated for prefetching instructions of the active thread to store in the primary instruction queue 10. The control logic 6 will steal these clock cycles when (1) the thread switch instruction queue 14 has not already been loaded with instructions of the dormant thread; (2} an instruction cache miss resulting from the prefetch of instructions for the dormant thread is not being processed; and (3) none of the branch instructions in the primary instruction queue 10 and none of the instructions' being processed by the plurality of processing pipelines needs to access the instruction cache 4. If these conditions are met, then the control logic 6 generates addresses for the instructions of the dormant thread, accesses the instructions from at least one of the instruction cache 4 and the main memory and/or memory sub-system 2, and outputs a line fill bypass signal such that the instruction pass multiplexer 8 outputs the prefetched instructions of the dormant thread. The control logic 6 also enables the thread switch instruction queue 14 to store these instructions, and disables the primary instruction queue 10 from storing these instructions. For the sake of clarity, the enable/disable control lines from the control logic 6 to the primary instruction queue 10 and the thread switch instruction queue 14 have not been shown.<br>
+The size of the primary instruction queue 10 and the size of thread switch instruction queue 14 can be set based on desired operating characteristics. In a preferred embodiment, however, the size of the thread switch instruction queue 14 is set such that the thread switch instruction queue 14 stores more instructions than can be received in a single clock cycle by the plurality of processing pipelines.<br><br>
+When a thread switch occurs, the control logic 6 changes the state of the thread switch signal from low to high for one clock cycle. As a result, the output multiplexer 16 outputs the instructions stored by the thread switch instruction queue 14, Because the thread switch instruction queue 14 stores more instructions than can be received by the plurality of processing pipelines, the instructions not dispatched to the plurality of processing pipelines are received by the instruction fill multiplexer 12. The instruction fill multiplexer 12, in accordance with the state change of the thread switch signal, outputs instructions output by the output multiplexer 16 to the primary instruction queue 10. In this manner, in a single clock cycle, instructions from the dormant thread becoming the active thread are dispatched to the processing pipelines and transferred to the primary instruction queue 10,<br>
+After the completion of the clock cycle, the thread switch signal resumes its low state, and instructions are dispatched to the processing pipelines from the primary instruction queue 10 once again. Additionally, the control logic 6 begins prefetching instructions to fill the primary instruction queue 10 and the thread switch instruction queue 14.<br>
+Unlike the prior art structure, the instruction dispatch structure according to the present invention eliminates from the thread switch latency the amount of time required to fill and begin dispatching instructions from the instruction queue. Consequently, the present invention achieves a two-cycle reduction in thread switch latency as compared to the prior art.<br>
+it should be understood, that the present invention is not limited to the embodiment illustrated in Fig. 2. For instance, the present invention has been described above with respect to a multi thread processor implementing only two threads. The multithread processor, however, could implement a plurality of<br><br>
+threads wherein the control logic 6 stores, in the thread switch instruction queue 14, the instructions of the dormant thread most likely to become the active thread if a thread switch occurs. As a further alternative, a plurality of thread switch instruction queues each corresponding to a dormant thread could be provided, and the instruction fill multiplexer 12 and the output multiplexer 16 enlarged to accommodate the additional thread switch instruction queues.<br>
+While the invention has been described in connection with what is presently considered the most practical and preferred embodiments, it is to be understood that the invention is not limited to the disclosed embodiments, but on the contrary, is intended to cover various modifications and equivalent arrangements included within the spirit and scope of the appended claims.<br><br><br><br>
+WE CLAIM :<br>
+1.	A method for decreasing thread switch latency in a multithread processor,<br>
+comprising:<br>
+(a)	storing instructions for an active thread in a primary instruction queue, said active thread being a thread currently executed by said multithread processor;<br>
+(b)	storing instructions for a dormant thread in a thread switch instruction queue, said dormant thread being a thread not currently executed by said multithread processor;<br>
+(c)	dispatching instructions from said primary instruction queue for execution during execution of said active thread; and<br>
+(d)	dispatching instructions from said thread switch instruction queue for execution when a thread switch occurs.<br>
+2.	The method as claimed in claim 1, wherein said step (d) dispatches a<br>
+portion of said instructions stored in said thread switch instruction queue, and<br>
+further comprising,<br>
+(e)	transferring instructions in said thread switch instruction queue not<br>
+dispatched in step<br>
+(d)   to said primary instruction queue when a thread switch occurs.<br>
+3.	The method as claimed in claim 1, wherein instructions of said dormant<br>
+thread for storage in said thread switch instruction queue is preferred from at<br>
+least one of an instruction cache and a main memory.<br><br>
+4.	The method as claimed in claim 3, wherein said step (e) comprises:<br>
+(el) determining whether any branch instructions in said primary instruction<br>
+queue or dispatched for execution need to access said instruction cache;<br>
+(el) determining whether an instruction cache miss, as a result of an dormant<br>
+thread instruction prefetch, is being processed; and<br>
+(e3) prefetching instructions for said dormant thread instead of instructions for<br>
+said active thread when said step (el) determines that no branch instructions in<br>
+said primary instruction queue or dispatched for execution need to access said<br>
+instruction cache and said step (e2) determines that an instruction cache miss as<br>
+a result of an dormant thread instruction prefetch is not being processed.<br>
+5.	The method as claimed in any of claims 1 to 4, wherein said thread switch instruction queue stores more instructions than can be dispatched for execution in a single processing cycle.<br>
+6.	The method as claimed in any of claims 1 to 5, wherein said step (b) stores instructions for one of a plurality of dormant threads.<br>
+7.	The method as claimed in any of claims 1 to 5, wherein said step (b) stores<br>
+instructions for a plurality of dormant threads in a plurality of thread switch<br>
+instruction queues, each thread switch instruction queue being associated with<br>
+one of said plurality of dormant threads; and said step (d) dispatches<br>
+instructions from said thread switch instruction queue corresponding to said<br>
+dormant thread which is becoming active as a result of a thread switch.<br><br>
+8.	An apparatus dispatching instructions for execution by a multithread processor which decreases thread switch latency, comprising: a primary instruction queue storing instructions for an active thread, said active thread being a thread currently executed by said multithread processor; at least one thread switch instruction queue storing instructions for a dormant thread, said dormant thread being a thread not currently executed by said multithread processor; and dispatching means for dispatching instructions from said primary instruction queue for execution during execution of said active thread, and for dispatching instructions from said thread switch instruction queue for execution when a thread switch occurs.<br>
+9.	The apparatus as claimed in claim 8, wherein said dispatching means dispatches a portion of said instructions stored in said thread switch instruction queue for execution, and transfers instructions in said thread switch instruction queue not dispatched for execution to said primary instruction queue when a thread switch occurs.<br>
+10.	The apparatus as claimed in claim 9, wherein said dispatching means<br>
+comprises : a first multiplexer receiving output of said primary instruction<br>
+queue and output of said thread switch instruction queue, and outputting one of<br>
+said output of said primary instruction queue and said output of said thread<br>
+switch instruction queue based on a thread switch signal indicating a thread<br>
+switch; and a second multiplexer receiving output of said first multiplexer and<br>
+instructions for storage in said primary instruction queue, and outputting one of<br>
+said output of said first multiplexer and said instructions for storage in said<br>
+primary instruction queue based on said thread switch signal.<br><br>
+11.	The apparatus as claimed in claim 8, further comprising: a plurality of<br>
+thread switch instruction queues storing a plurality of dormant threads, each<br>
+thread switch instruction queue being associated with one of said plurality of<br>
+dormant threads; and wherein said dispatching means dispatches instructions<br>
+from one of said plurality of thread switch instruction queues corresponding to<br>
+said dormant thread which is becoming active as a result of a thread switch.<br>
+12.	The apparatus as claimed in claim 8, wherein said dispatching means<br>
+comprises a multiplexer having one input connected to said primary instruction<br>
+queue and another input connected to said thread switch instruction queue.<br>
+13.	A method for decreasing thread switch latency in a multithread processor,<br>
+substantially as hereinabove described and illustrated with reference to the<br>
+accompanying drawings.<br>
+14.	An apparatus dispatching instructions for execution by a multithread<br>
+processor which decreases thread switch latency, substantially as hereinabove<br>
+described and illustrated with reference to the accompanying drawings.<br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGFic3RyYWN0ICBkdXBsaWNhdGUucGRm" target="_blank" style="word-wrap:break-word;">388-mas-1998 abstract  duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">388-mas-1998 abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGFzc2lnbm1lbnQucGRm" target="_blank" style="word-wrap:break-word;">388-mas-1998 assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGNsYWltcyAgZHVwbGljYXRlLnBkZg==" target="_blank" style="word-wrap:break-word;">388-mas-1998 claims  duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">388-mas-1998 claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">388-mas-1998 correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGNvcnJlc3BvbmRlbmNlLXBvLnBkZg==" target="_blank" style="word-wrap:break-word;">388-mas-1998 correspondence-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGRlc2NyaXB0aW9uIChjb21wbGV0ZSkgIGR1cGxpY2F0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">388-mas-1998 description (complete)  duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">388-mas-1998 description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">388-mas-1998 drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGZvcm0tMTkucGRm" target="_blank" style="word-wrap:break-word;">388-mas-1998 form-19.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">388-mas-1998 form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGZvcm0tMjYucGRm" target="_blank" style="word-wrap:break-word;">388-mas-1998 form-26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGZvcm0tNC5wZGY=" target="_blank" style="word-wrap:break-word;">388-mas-1998 form-4.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IGZvcm0tNi5wZGY=" target="_blank" style="word-wrap:break-word;">388-mas-1998 form-6.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IG90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">388-mas-1998 others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg4LW1hcy0xOTk4IHBldGl0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">388-mas-1998 petition.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="196287-method-of-optimizing-network-capability-using-a-secured-system-for-an-online-community.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="196290-casting-apparatus-for-formation-of-resin-made-membrane.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>196288</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>388/MAS/1998</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>30/2009</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>24-Jul-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>25-Feb-1998</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>INTERNATIONAL BUSINESS MACHINES CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>ARMONK, NEW YORK 10504</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>WILLIAM THOMAS FLYNN</td>
+											<td>2516 14TH AVENUE S. W., ROCHESTER, MINNESOTA 5902</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>PHILIP ROGERS HILLIER III</td>
+											<td>2103 22ND STREET, N.W., ROCHESTER, MINNESOTA 55901</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F09/04</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>08/829,518</td>
+									<td>1997-03-28</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/196288-method-and-apparatus-for-decreasing-thread-switch-latency-in-a-multithread-processor by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 08:04:43 GMT -->
+</html>

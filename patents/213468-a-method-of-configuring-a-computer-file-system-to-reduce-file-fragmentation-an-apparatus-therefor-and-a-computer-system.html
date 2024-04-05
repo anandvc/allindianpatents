@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/213468-a-method-of-configuring-a-computer-file-system-to-reduce-file-fragmentation-an-apparatus-therefor-and-a-computer-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 05:43:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 213468:&quot;A METHOD OF CONFIGURING A COMPUTER FILE SYSTEM TO REDUCE FILE FRAGMENTATION, AN APPARATUS THEREFOR AND A COMPUTER SYSTEM&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;A METHOD OF CONFIGURING A COMPUTER FILE SYSTEM TO REDUCE FILE FRAGMENTATION, AN APPARATUS THEREFOR AND A COMPUTER SYSTEM&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A system for allocating block sizes in a computer file system is described. Input/output bandwidth requirements for disk access from an application is determined. Also determined is a data transfer characteristic for the drive being accessed. The minimum block size which reduces file fragmentation below a minimum threshold is then calculated as a function of the determined maximum input/output bandwidth and the data characteristic of the drive.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>LARGE BLOCK ALLOCATION FOR DISK BASED FILE SYSTEMS<br>
+FIELD OF THE INVENTION<br>
+The present invention relates generally to the field of computer operating systems, and more particularly to block size allocation for disk-based file systems.<br>
+BACKGROUND OF THE INVENTION<br>
+Disk based operating systems divide a disk into physical sectors which represent the fundamental units for data storage on the disk. A sector is a portion of the circumference of a track on the disk and represents the minimum physical storage unit on the disk.  File systems define blocks as some integer multiple number of sectors.  Each block represents the minimum logical storage unit for a disk.  Therefore, reading and writing data to a disk involves the use of entire blocks. In general purpose disk file systems, block sizes are usually selected to be small (e.g., 512 bytes/block), in order to minimize the waste of disk space in blocks that are only partially filled.  Such file systems also attempt to allocate the small blocks in sequential order on the disk, so that large reads and writes to the file can be performed efficiently. However, as files are created, modified, or deleted, the free space on the disk can quickly become scattered so that new files are not allocated disk space which is sequential on the disk. These new files will therefore be physically discontiguous or "fragmented".<br>
+Access to blocks in a file that are logically sequential, but discontiguous on the disk is often much slower than access to physically sequential blocks, because a disk seek operation must be performed between accesses to the<br><br>
+physically separate blocks on the disk. Usually after many files have been created and deleted on such a file system, some degree of fragmentation is bound to exist. In fact, if application programs are not restricted in the way in which they allocate free disk space to files, there is no general way to prevent the free space from becoming completely fragmented. For real-time applications which depend on a high amount of disk input/output bandwidth, this arbitrary degree of fragmentation may cause a failure due to increased access time to the files.<br>
+One common method of reducing file fragmentation is to use an optimization utility program which reorganizes files on a disk so that blocks allocated to each file are sequential and contiguous. However, the use of such a utility requires the user to monitor the degree of disk fragmentation and run the utility when fragmentation poses a problem.  Moreover, disk optimizer programs usually take a significant amount of time to run, and prevent access to the disk while optimization is being performed.<br>
+Another method to minimize file fragmentation is to increase the block size, so that even if files do become fragmented, fewer seek operations will be required to access a specific amount of contiguous data in the file. However, increasing the block size also increases the memory requirements for buffering, and the disk I/O latency for accessing data. Moreover, simply increasing block size does not ensure that fragmentation will not occur to any degree, and does not ensure that the amount of disk space wasted in blocks that are only partially filled is minimized.<br>
+Most general purpose file systems are suitable for use with applications for which a certain amount of fragmentation is allowable and does not adversely affect performance.  Certain applications, however, require data transfer operations to disk to be completed within a minimum of time.   This<br><br>
+time requirement translates to a minimum disk input/output bandwidth and is typically measured in terms of number of bytes written to, or read from, the disk per unit time.  For such applications, any amount of file fragmentation may introduce seek operations which increase disk access times beyond the minimum bandwidth requirements.  Examples of I/O intensive applications include real-time applications which require extensive disk access.<br>
+It is therefore an intended advantage of the present invention to provide a system for allocating block sizes in a disk file system which are large enough to prevent file fragmentation, yet not too large so that disk space is wasted within each block.<br>
+time requirement translates to a minimum disk input/output bandwidth and is typically measured in terms of number of bytes written to, or read from, the disk per unit time.  For such applications, any amount of file fragmentation may introduce seek operations which increase disk access times beyond the minimum bandwidth requirements.   Examples of I/O intensive applications include real-time applications which require extensive disk access.<br>
+It is therefore an intended advantage of the present invention to provide a system for allocating block sizes in a disk file system which are large enough to prevent file fragmentation, yet not too large so that disk space is wasted within each block.<br>
+A technique disclosed by Bryant ("Full-Bandwidth Fragmentation-Free Method of Disk Storage Allocation", by R. M. Bryant, IBM Technical Disclosure Bulletin, Vol. 26, No. 6, November, 1983) to allocate tracks on secondary storage disks. This technique merely-applies for allocation based on the number of cylinders of the disk. For example, the allocation is achieved by splitting the free list into four parts, one part for each 222 contiguous cylinders serviced by the arm. Kimber (European Patent Application, Publication No. 0375188A2, published June 27,1990, by Kimber, McPhee, and Moor) discloses a file system. The. disk space is divided into very large blocks of at least 64 kbytes. A large file is allocated a whole number of these large blocks. Small files reside in small file areas each of which is composed of a number of large blocks. Tsao (U.S. Patent No. 5,742,443 issued to Tsao et. al) discloses a method of apparatus for data placement of continuous media to utilize bandwidth efficiency. This technique divides the disk into a plurality of logical zones of equal number of tracks and assigns a constant disk access time for each logical zone.<br><br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+The present invention is illustrated by way of example and not limitation in the figures of the accompanying drawings, in which like references indicate similar elements, and in which:<br>
+Figure 1 is a block diagram of a computer system which may be used to implement an embodiment of the present invention.<br>
+Figures 2A, 2B, and 2C illustrate the fragmentation of files in a disk file system.<br>
+Figure 3 illustrates the allocation of blocks according to one embodiment of the present invention.<br>
+Figure 4 is a flowchart illustrating the process of allocating block sizes to prevent excessive fragmentation according to one embodiment of the present invention.<br>
+DETAILED DESCRIPTION<br>
+A system for allocating block sizes to prevent file fragmentation in a disk file system is described. In the following description, for purposes of explanation, numerous specific details are set forth in order to provide a thorough understanding of the present invention.  It will be evident, however, to one skilled in the art that the present invention may be practiced without these specific details.  In other instances, well-known structures and devices are shown in block diagram form to facilitate explanation. Hardware Overview<br>
+Figure 1 illustrates a block diagram of a computer which may be used to implement an embodiment of the present invention.   The computer system 100 includes a processor 102 coupled through a bus 101 to a random access memory (RAM) 104, a read only memory (ROM) 106, and display device 120. Keyboard 121 and cursor control unit 122 are coupled to bus 101 for communicating information and command selections to processor 102.   Also coupled to processor 102 through bus 101 is an input/output (I/O) interface 123 which can be used to control and transfer data to electronic devices connected to computer 100.<br>
+Mass storage device 107 is also coupled to processor 102 through bus 101.  Mass storage device 107 represents a memory device which stores data accessible from processor 102 through a block-based file system used by the computer system 100. Mass storage device 107 may be a persistent data storage device, such as a floppy disk drive or a fixed disk drive (e.g., magnetic, optical, magneto-optical, or the like) which can directly access locations on the disk for reading and writing data to and from the disk media.  Alternatively, mass storage device 107 could be a tape drive which accesses data sequentially on streaming tape media.  It should be noted that the architecture of Figure 1 is<br>
+provided only for purposes of illustration, and that a computer used in<br>
+conjunction with the present invention is not limited to this specific<br>
+architecture.<br>
+Block Size Allocation<br>
+Disk file systems organize data on disks in logical blocks. As files are deleted or modified, blocks which are freed become occupied by other files, resulting in file fragmentation in which data within a particular file may be spread among several non-contiguous blocks. Figures 2A-2C illustrate the process of file fragmentation created by the deletion and addition of files in a disk file system. In Figure 2A, file A occupies block Al; file B occupies blocks Bl and B2; file C occupies block Cl, and file D occupies blocks Dl, D2, and D3; and the rest of the disk is free. Figure 2B illustrates the allocation of blocks if files A and C are deleted. In this case, Al and Cl are now marked as free. Figure 2C illustrates the allocation of blocks if a new file E, is written to the disk. In this case, E is a file which requires three blocks. The first block of file E is written to the first free block (formerly Al) and is represented as block El; the second block of file E is written to the second free block (formerly Cl) and is represented as block E2, and the third block of file E is written to the next free block, E3. As can be seen in Figure 2C, file E is stored in discontiguous blocks and is therefore fragmented. Access to such a file would involve the disk read/write head seeking across multiple tracks on the disk to locate the blocks in which portions of file E are stored.  Such multiple seek operations can add a substantial amount time to the disk input/output (I/O) cycle.<br>
+One embodiment of the present invention provides a file system method which is suitable for use with applications with high disk I/O bandwidth requirements in which excessive file fragmentation may negatively impact application performance.  A method of the present<br>
+invention provides a system for allocating a block size in accordance with the requirements of files stored on the disk and the operating parameters of the disk drive system, so that file fragmentation may be reduced below the disk I/O bandwidth requirements of the application programs which access files on the disk.<br>
+Figure 3 illustrates the allocation of block sizes in accordance with one aspect of the present invention. In one embodiment, the block sizes are allocated a larger amount of disk space then the blocks illustrated in Figures 2A-2C. For example, if each block in Figures 2A-2C store 512 bytes to 4 kbytes of data (typical for disks used in personal computers), the blocks in Figure 3 might be on the order of 1 Mbyte long. The increased block size allows a greater amount of data for each file to be written to the disk as a single unit. This increases the amount of time required to read and write to a single block, but increases the efficiency of the overall system, since seek operations are reduced or eliminated for accesses to a single file. Although the use of larger disk blocks may introduce the problem of disk space waste due to under-utilization, the size of the blocks is not chosen arbitrarily.<br>
+In one embodiment of the present invention, the optimum size of the disk block is selected as a function of the file size and disk performance parameters. The block size is chosen such that for a given set of files, the largest file is written to consecutive addresses on the disk (i.e., within one block) so that fragmentation is reduced below a particular threshold. This threshold could be selected such that fragmentation is completely eliminated. Alternatively, however, the block size could be selected to guarantee that an application will not fail due to file fragmentation.  The elimination of fragmentation requires a trade-off between the increased latency and potential memory waste due to the increased memory size of each block against the<br>
+reduced seek times and increased efficiency of single file read/write operations.<br>
+Figure 4 is a flowchart illustrating the major steps of allocating block sizes to prevent fragmentation according to a method for one embodiment of the present invention. In step 402, the maximum disk I/O bandwidth required by the application for read/write cycles to a file on the disk is determined. The I/O bandwidth requirements of the application must be balanced against the data transfer characteristics of the drive. Therefore, in step 404, the data transfer characteristics of the disk drive are determined. For file access in cases where files may be fragmented, the maximum seek time for a drive to seek between two blocks on a disk, and the minimum data transfer rate of the drive are the critical operating parameters which are to be determined.  However, it should be noted that other operating characteristics, such as disk rotational speed, number of disk platters, and number of read/write heads may also be taken into account.<br>
+After the application I/O bandwidth requirements and the disk drive characteristics have been determined, the minimum block size which reduces fragmentation below the minimum threshold is determined, step 406.  In step 408, the file system format is modified so that blocks are allocated the amount of disk space calculated in step 406. If the I/O requirements and drive seek characteristics have been accurately determined, the calculation performed in step 406 should provide the minimum block size required to guarantee that an application meets performance requirements in the face of worst-case fragmentation of files on the disk.<br>
+In one embodiment, a method of the present invention is used in an application in which multiple channels of data are written to or read from a disk simultaneously. The bandwidth of the application is partitioned into a<br>
+number of different I/O channels. Each I/O channel has a continuous data rate that must be supported by the storage device, as well as a number of extra seeks (referred to as edits) that may be required by the channel to collect or write data from different locations on the device. For this embodiment, step 402 in Figure 4 corresponds to defining the period over which an application defines an integral maximum number of edits for each channel.  In general, an edit includes any operation involving discontinuous events stored on the disk. In this case, the application must seek between different files on a disk, or between different blocks within the same file on a disk. Each edit is defined as an extra seek required while performing I/O on that channel over the given period.  This is done whenever the application needs to switch a channel from performing I/O operations in the middle of one block to the middle of another block, as would be the case for accessing non-linear channels that have been edited.  The maximum continuous data rate required by each channel is also determined.<br>
+The parameters which depend on the performance characteristics of the storage device are then defined.  Worst-case characteristics are used in order to overestimate the block size, so that the application will attain the required bandwidth even with the worst case fragmentation effects. Step 404 of the flowchart of Figure 4 corresponds to determining the minimum sustained transfer rate (without seeks) of the device, as well as the maximum amount of time required to seek from one location on the disk to any other location on the disk.<br>
+This method of the present invention thus yields the following constants:<br>
+period = the number of seconds over which a channel will have, at most, the specified number of edits.<br><br>
+editsi = the maximum number of extra seeks that may be required by channel i over the given period.<br>
+ratei = the required continuous data rate for channel i, in bytes/second.<br>
+™temin = minimum (worst-case) sustained transfer rate of the device, in bytes/second.<br>
+seekjnax - maximum (worst-case) seek time between accessing two blocks on the device, in seconds.<br>
+Using the above variable values, the file system can determine the minimum block size required to guarantee bandwidth to the application such that the effects of fragmentation are eliminated, or reduced below a threshold value.  According to one embodiment of the present invention, the minimum block size is calculated in step 406 by the following formula:<br>
+(Formula Removed)<br>
+For a block-oriented device, the resulting block size would ordinarily be rounded up to the next physical sector size for efficiency. Since the calculation yields the minimum required block size, increasing the block size will not compromise the guaranteed bandwidth.  It should be noted that the denominator on the right-hand side of the above equation must be positive. A negative value indicates that the device cannot guarantee bandwidth for the specified number of channels in the application, due to some combination of an excessive bytes/seconds rate and an excessive number of extra seeks.<br>
+The following example is provided to illustrate the calculation of a minimum block size using the equation presented above.  For this example, it<br><br>
+is assumed that there is a 20-channel audio application, with each channel requiring 100 kbytes of data every second with the potential of one edit per channel per second.  Given a device with a 4MB/S minimum sustained transfer rate and a 10 millisecond worst-case seek time, the minimum block size for the application would be:<br>
+(Formula Removed)<br>
+In the above example, if the application added a video channel that required IMB/s of data with the potential of two edits per second, the file system would have to change the size of the blocks allocated to the application as follows:<br>
+(Formula Removed)<br>
+In one embodiment of the present invention, the minimum block size required to eliminate file fragmentation is performed by a processor coupled to the disk drive which is to be accessed (e.g., processor 102 in computer system 100). The formula to calculate the minimum block size in step 406 of Figure 4 could be made available as a subroutine written in a high-level computer language, such as C or Pascal, and incorporated into the file system software.  Similar programs could be provided to also determine the I/O bandwidth requirements of applications to be used to perform disk read/write operations. Finally, a program could be utilized to determine the block seek time, and other critical performance parameters for the disk to be accessed.<br>
+In an alternative embodiment of the present invention, block sizes may be allocated dynamically in accordance with specific requirements of a particular application. For example, some applications may not require as large a block size as others. In this case, allocating a fixed block size which accommodates the largest blocks may result in disk space waste for applications which only require smaller blocks. Thus, the file system may be configured to allocate block sizes on a single disk which are more closely related to the actual requirements of each application.<br>
+One embodiment of the present invention is used in a file system in a computer implemented digital player/recorder which allocates blocks of 32,768 data samples each. Applications include audio record and playback programs which read and write multiple tracks of data simultaneously to the disk.  Such applications present a great potential for file fragmentation. Fragmentation occurs because in simultaneous recording, a portion of the first track is written to a block (assuming the block is too small to accommodate the entire file), a portion of the second track is written to the next block, and so forth.<br>
+Such applications typically also have rigorous minimum disk I/O bandwidth requirements for playback. For these applications, the disk head may be forced to seek among blocks on the disk in order to play a single track, and data samples may not be read from the disk within the required transfer times. In this case, the audio data played back may be interrupted or otherwise distorted. The allocation of block sizes in accordance with the I/O bandwidth requirements of the applications and the data transfer characteristics of the disk drive, as described in reference to Figure 4, would ensure that data transfers would not fail due to file fragmentation effects.<br>
+Although the above discussion was written in the context of audio applications, it should be noted that a method of the present invention could be used in other similar applications, such as applications which involve both video and audio content, or applications which involve high-speed calculations on limited amounts of data.<br>
+The steps of a method of the present invention may be implemented by a central processing unit (CPU) in a computer executing sequences of instructions stored in a memory. The memory may be a random access memory (RAM), read-only memory (ROM), a persistent store, such as a mass Storage device, or any combination of these devices. Execution of the sequences of instructions causes the CPU to perform steps according to the present invention.  The instructions may be loaded into the memory of the computer from a storage device or from one or more other computer systems over a network connection.  Consequently, execution of the instructions may be performed directly by the CPU. In other cases, the instructions may not be directly executable by the CPU. Under these circumstances, the instructions may be executed by causing the CPU to execute an interpreter that interprets the instructions, or by causing the CPU to execute instructions which convert the received instructions to instructions which can be directly executed by the CPU. In other embodiments, hardwired circuitry may be used in place of, or in combination with, software instructions to implement the present invention.  Thus, the present invention is not limited to any specific combination of hardware circuitry and software, nor to any particular source for the instructions executed by the computer.<br>
+In the foregoing, a system has been allocating block sizes for a disk based file system to prevent file fragmentation on the disk.  Although the present invention has been described with reference to specific exemplary<br>
+embodiments, it will be evident that various modifications and changes may be made to these embodiments without departing from the broader spirit and scope of the invention as set forth in the claims.  Accordingly, the specification and drawings are to be regarded in an illustrative rather than a restrictive sense.<br><br><br>
+WE CLAIM:<br>
+1.       A  method  of configuring  a  computer  file   system  to  reduce  file fragmentation, the method comprising:<br>
+determining (402) an input/output bandwidth requirement for data storage accesses for an application using said file system; determining (404) a data transfer characteristic for a data storage device (107) accessed by said application;<br>
+determining a threshold below which file fragmentation is acceptable for application input/output performance; and<br>
+allocating (406,408) logical blocks on said data storage device (107) for reduced file fragmentation using said input/output bandwidth, said data transfer characteristic, and said threshold.<br>
+2.	The    method    as    claimed    in    claim     1,    wherein     said    data<br>
+transfer characteristic comprises a maximum seek time for said data<br>
+storage device to seek from one block on said data storage device to a<br>
+second block on said data storage device,  and a minimum data<br>
+transfer rate of said data storage device.<br>
+3.	The   method   as   claimed   in   claim   2,   wherein   said   allocating<br>
+comprises:   calculating  (406)   a  block  size  as  a function  of said<br>
+input/output    bandwidth    requirement    and    said    data    transfer<br>
+characteristic such that read/write operations to said data storage<br>
+device are below said threshold;  and programming (408)  said file<br>
+system so that logical blocks on said data storage device (107) are<br><br>
+allocated an amount of space corresponding to the calculated block size.<br>
+4.	The   method   as   claimed   in   claim   3,   wherein   said   threshold<br>
+is selected such that the file fragmentation is eliminated during write<br>
+operations from said application to said data storage device (107).<br>
+5.	The   method   as   claimed   in         claim   3,   wherein   said   threshold<br>
+is different for one or more applications of said application, and said<br>
+calculating said block size further comprises allocating blocks of a<br>
+first block size for a first set of applications of said application, and<br>
+allocating   blocks   of  a   second   block   size   for   a   second   set   of<br>
+applications.<br>
+6.	The   method   as  claimed   in   claim   3,   wherein   said   input/output<br>
+bandwidth  requirement  is  different for  one   or  more  applications<br>
+of  said   applications,   and   of  calculating   said   block   size   further<br>
+comprises the allocating blocks of a first block size for a first set of<br>
+applications of said applications, and allocating blocks of a second<br>
+block size for a second set of applications.<br>
+7.	The  method   as  claimed   in   claim   3,   wherein   said   input/output<br>
+bandwidth  requirement for  said data  storage  device  accesses for<br>
+applications using said file  system comprises an amount of time<br><br>
+required to perform seek operations and a minimum required data transfer rate.<br>
+8.	The method as claimed in claim 7, wherein allocating said file system<br>
+comprises: determining the time required to perform seek operations<br>
+between blocks representing discontinuous events stored on said data<br>
+storage device.<br>
+9.	An     apparatus     for     configuring     a     computer     file      system<br>
+to reduce file fragmentation, the apparatus comprising:<br>
+means for determining an input/output bandwidth requirement for<br>
+data storage accesses for an application using said file system;<br>
+means for determining a maximum seek time for a data storage device<br>
+accessed by said application to seek from one block on said data<br>
+storage device to a second block on said data storage device;<br>
+means for determining the minimum data transfer rate of said data<br>
+storage device;<br>
+means for determining a threshold below which file fragmentation is<br>
+acceptable for application input/output performance; and<br>
+means for allocating logical blocks on said data storage device for<br>
+reduced file fragmentation using said input/output bandwidth, said<br>
+data transfer characteristic, and said threshold.<br>
+10.	The   apparatus   as   claimed   in    claim   9,    wherein    the   means<br>
+for allocating comprised: means for calculating a block size as a<br><br>
+function of said input/output bandwidth requirement and said data transfer characteristic such that read/write operations to said data storage device are below said threshold; and means for programming said file system so that logical blocks on said data storage device are allocated an amount of space corresponding to the calculated block size.<br>
+11.	A computer system comprising:<br>
+a bus (101);<br>
+a data storage (107) device coupled to said bus (101); and<br>
+a processor (102) coupled to said data storage device (101), said<br>
+processor operable to receive instructions which, when executed by<br>
+the processor, cause the processor to perform operations comprising;<br>
+determining an input/output bandwidth requirement for data storage<br>
+accesses for an application using said file system;<br>
+determining  a  data  transfer  characteristic  for   said  data  storage<br>
+device (107);<br>
+determining    a    threshold    below    which    file    fragmentation    is<br>
+acceptable for application input/output performance; and<br>
+allocating logical blocks on said data storage device for reduced file<br>
+fragmentation using said input/output bandwidth,  said maximum<br>
+seek time and minimum data transfer rate, and said threshold.<br>
+12.	The computer system as claimed in claim  11,  wherein  said data<br>
+transfer characteristic comprises a maximum seek time for said data<br><br>
+storage device to seek from one block on said data storage device to a second block on said data storage device, and a minimum data transfer rate of said data storage device.<br>
+13.	The computer system as claimed in claim 11, wherein the instructions<br>
+causing the processor to perform allocating comprises instructions<br>
+which cause the process to perform operations comprising:<br>
+means for calculating a block size as a function of said input/output bandwidth requirement and said data transfer characteristic such that read/write operations to said data storage device are below said threshold; and<br>
+means for programming said file system so that logical blocks on said data storage device are allocated an amount of space corresponding to the calculated block size.<br>
+14.	The computer system as claimed in claim 13, wherein the instructions<br>
+causing the processor to perform allocating comprises instructions<br>
+which   cause   the   processor   to   perform   operations   comprising<br>
+determining the time required to perform seek operations between<br>
+blocks representing discontinuous events stored on said data storage<br>
+device.<br>
+15.	A  method   of  configuring  a  computer   file   system   to   reduce   file<br>
+fragmentation substantially as herein described with reference to the<br>
+accompanying drawings.<br><br>
+16.	An apparatus for configuring a computer file system to reduce file<br>
+fragmentation substantially as herein described with reference to the<br>
+accompanying drawings.<br>
+17.	A computer system substantially as herein described with reference to<br>
+the accompanying drawings.<br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">2753-del-1998-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1jbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">2753-del-1998-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1jb3JyZXNwb25kZW5jZS1vdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">2753-del-1998-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1jb3JyZXNwb25kZW5jZS1wby5wZGY=" target="_blank" style="word-wrap:break-word;">2753-del-1998-correspondence-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1kZXNjcmlwdGlvbiAoY29tcGxldGUpLnBkZg==" target="_blank" style="word-wrap:break-word;">2753-del-1998-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">2753-del-1998-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1mb3JtLTEucGRm" target="_blank" style="word-wrap:break-word;">2753-del-1998-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1mb3JtLTEzLnBkZg==" target="_blank" style="word-wrap:break-word;">2753-del-1998-form-13.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1mb3JtLTE5LnBkZg==" target="_blank" style="word-wrap:break-word;">2753-del-1998-form-19.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1mb3JtLTIucGRm" target="_blank" style="word-wrap:break-word;">2753-del-1998-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1mb3JtLTMucGRm" target="_blank" style="word-wrap:break-word;">2753-del-1998-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1mb3JtLTQucGRm" target="_blank" style="word-wrap:break-word;">2753-del-1998-form-4.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1mb3JtLTYucGRm" target="_blank" style="word-wrap:break-word;">2753-del-1998-form-6.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1ncGEucGRm" target="_blank" style="word-wrap:break-word;">2753-del-1998-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1wZXRpdGlvbi0xMzcucGRm" target="_blank" style="word-wrap:break-word;">2753-del-1998-petition-137.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1My1kZWwtMTk5OC1wZXRpdGlvbi0xMzgucGRm" target="_blank" style="word-wrap:break-word;">2753-del-1998-petition-138.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="213467-mobile-station-synchronization-within-a-spread-spectrum-communications-system.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="213469-controlled-shunt-reactor-of-transformer-type.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>213468</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2753/DEL/1998</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>04/2008</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>25-Jan-2008</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>02-Jan-2008</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>14-Sep-1998</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>SONY PICTURES ENTERTAINMENT, INC.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>10202 W. WASHINGTON BOULEVARD, CULVER CITY, CALIFORNIA 90232, U.S.A.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>RICHARD JOSEPH OLIVER</td>
+											<td>21629 OCEAN VISTA DRIVE, LAGUNA BEACH, CALIFORNIA 92677, U.S.A.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 12/02</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>08/936,567</td>
+									<td>1997-09-24</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/213468-a-method-of-configuring-a-computer-file-system-to-reduce-file-fragmentation-an-apparatus-therefor-and-a-computer-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 05:43:06 GMT -->
+</html>

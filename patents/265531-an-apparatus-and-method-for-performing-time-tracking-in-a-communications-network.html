@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/265531-an-apparatus-and-method-for-performing-time-tracking-in-a-communications-network by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:55:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 265531:&quot;AN APPARATUS AND METHOD FOR PERFORMING TIME TRACKING IN A COMMUNICATIONS NETWORK&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;AN APPARATUS AND METHOD FOR PERFORMING TIME TRACKING IN A COMMUNICATIONS NETWORK&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>Techniques for performing time tracking at a receiver are described. A first arriving path (FAP) and a last arriving path (LAP) are detected based on a channel impulse response estimate for a communication channel. The detected FAP and LAP may be correct or swapped. To resolve ambiguity in the detected FAP and LAP, a first hypothesis corresponding to the FAP and LAP being correctly detected and a second hypothesis corresponding to the FAP and LAP being incorrectly detected are evaluated. For each hypothesis, hypothesized FAP and LAP are determined based on the detected FAP and LAP, a correlation window is determined based on the hypothesized FAP and LAP, and correlation is performed using the correlation window. The correct hypothesis is determined based on correlation results for the two hypotheses. The receiver timing is updated based on the hypothesized FAP and LAP for the correct hypothesis and used for demodulation.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>SYNCHRONISATION IN A MULTICARRIER RECEIVER WITH GUARD INTERVAL CARRELATION<br>
+[0001] The present application claims priority to provisional U.S. Application Serial No. 60/737,087, entitled "IMPROVED TIME TRACKING ALGORITHM VIA GUARD INTERVAL CORRELATION FOR OFDM SIGNALS," filed November 15, 2005, assigned to the assignee hereof and incorporated herein by reference.<br>
+BACKGROUND<br>
+I.	Field<br>
+[0002] The present disclosure relates generally to communication, and more specifically to techniques for performing time tracking at a receiver in a communication system.<br>
+II.	Background<br>
+[0003] Orthogonal frequency division multiplexing (OFDM) is a multi-carrier modulation technique that can provide good performance for some wireless environments. OFDM partitions the overall system bandwidth into multiple (K) orthogonal frequency subbands, which are also called subcarriers, tones, bins, and so on. With OFDM, each subband is associated with a respective subcarrier that may be modulated with data. Up to K modulation symbols may be sent on the K subbands in each OFDM symbol period.<br>
+[0004] In an OFDM system, a transmitter typically transforms the modulation symbols for each OFDM symbol period to the time domain with a K-point inverse fast Fourier transform (IFFT) or inverse discrete Fourier transform (TDFT) to obtain K time-domain chips. To combat delay spread in a communication channel, the transmitter repeats some of the K chips to form an OFDM symbol. The repeated portion is commonly called a guard interval or a cyclic prefix. The guard interval is used to combat intersymbol interference (ISI) and inter-carrier interference (ICI) caused by delay spread, which is the time difference between the earliest and latest arriving signal paths at a receiver.<br>
+[0005] The receiver performs the complementary processing and removes the guard interval in each received OFDM symbol.   The receiver then transforms K time-domain<br><br>
+samples for each received OFDM symbol to the frequency domain with a K-point fast Fourier transform (FFT) or discrete Fourier transform (DFT) to obtain K received symbols for the K subbands. The receiver then performs detection on the received symbols to recover the transmitted modulation symbols. The receiver typically maintains a time tracking loop that determines the proper placement of an FFT window for each received OFDM symbol. This FFT window indicates which samples should be retained and which samples should be discarded. Data detection performance is greatly affected by the placement of the FFT window.<br>
+[0006] There is therefore a need in the art for techniques to perform time tracking at a receiver to achieve accurate placement of the FFT window.<br>
+SUMMARY<br>
+[0007] Techniques for performing time tracking at a receiver are described herein. A channel impulse response estimate for a communication channel may be derived, e.g., based on a received pilot. A first arriving path (FAP) and a last arriving path (LAP) may be detected based on the channel impulse response estimate. The FAP and LAP may be correctly detected, and the detected FAP and LAP may be the true FAP and LAP, respectively. However, if the delay spread of the cornmunication channel is excessive, then the FAP and LAP may be incorrectly detected, and the detected FAP and LAP may be swapped and may correspond to the true LAP and FAP, respectively. [0008] To resolve ambiguity in the detected FAP and LAP, two hypotheses may be evaluated. The first hypothesis may correspond to the FAP and LAP being correctly detected, and the second hypothesis may correspond to the FAP and LAP being incorrectly detected. For each hypothesis, hypothesized FAP and LAP are deterrnined based on the detected FAP and LAP, and a correlation window is determined based on the hypothesized FAP and LAP. The correlation window for each hypothesis may cover all or a portion of the guard interval for the hypothesized FAP and/or all or a portion of the guard interval for the hypothesized LAP. For each hypothesis, correlation may be performed between a first segment of received data within the correlation window and a second segment of received data, which may be K samples away, where K is the duration of the useful portion of an OFDM symbol. The correct hypothesis may be determined based on the correlation results for the two hypotheses. The timing at the receiver may be updated based on the hypothesized FAP and LAP for the correct<br><br>
+hypothesis.   OFDM demodulation may be performed based on the updated receiver timing, e.g., the FFT window may be accurately placed based on the receiver timing. [0009]      Various aspects and embodiments of the invention are described in further detail below.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[0010]        The features, and nature of the present invention will become more apparent<br>
+from the detailed description set forth below when taken in conjunction with the<br>
+drawings in which like reference characters identify correspondingly throughout.<br>
+[0011]        FIG. 1 shows a block diagram of a transmitter and a receiver.<br>
+[0012]        FIG. 2 shows a block diagram of an OFDM modulator at the transmitter.<br>
+[0013]       FIG. 3 shows a block diagram of an OFDM demodulator at the receiver.<br>
+[0014]        FIG. 4 shows a block diagram of a time tracking loop at the receiver.<br>
+[0015]        FIGS. 5A-5F illustrate FAP and LAP detection for two exemplary channel<br>
+impulse response estimates.<br>
+[0016]        FIGS. 6A-6D show channel topologies and channel impulse responses for<br>
+two exemplary operating scenarios.<br>
+[0017]        FIGS. 7A-7C show possible decisions by an FAP &amp; LAP detector.<br>
+[0018]        FTGS. 8A-8D illustrate an embodiment for resolving ambiguity in the FAP<br>
+and LAP detection by correlating OFDM symbol data.<br>
+[0019]        FIG. 9 shows correlation windows used to resolve FAP and LAP ambiguity.<br>
+[0020]        FIG. 10 shows a process for resolving ambiguity in detected FAP and LAP.<br>
+[0021]       FIG. 11 shows another process for resolving ambiguity in the detected FAP<br>
+and LAP.<br>
+[0022]        FIG. 12 shows a process for performing time tracking at the receiver.<br>
+DETAILED DESCRIPTION<br>
+[0023] The word "exemplary" is used herein to mean '^serving as an example, instance, or illustration." Any embodiment or design described herein as "exemplary" is not necessarily to be construed as preferred or advantageous over other embodiments or designs.<br>
+[0024] The time tracking techniques described herein may be used for various communication systems such as an OFDM system, an orthogonal frequency division<br><br>
+multiple access (OFDMA) system, a single-carrier frequency division multiple access (SC-FDMA) system, and so on. An OFDMA system utilizes OFDM. An SC-FDMA system may utilize interleaved FDMA (IFDMA) to transmit on subbands that are distributed across the system bandwidth, localized FDMA (LFDMA) to transmit on a block of adjacent subbands, or enhanced FDMA (EFDMA) to transmit on multiple blocks of adjacent subbands. In general, modulation symbols are sent in the frequency domain with OFDM and in the time domain with SC-FDMA. An SC-FDMA symbol includes a guard interval that is generated in the same manner as a guard interval for an OFDM symbol. For clarity, the time tracking techniques are specifically described below for an OFDM-based system.<br>
+[0025] FIG. 1 shows a block diagram of a transmitter 110 and a receiver 150 in an OFDM-based system 100. At transmitter 110, a transmit (TX) data processor 120 processes (e.g., formats, encodes, interleaves, and symbol maps) traffic data and generates data symbols. As used herein, a data symbol is a modulation symbol for traffic data, a pilot symbol is a modulation symbol for pilot, which is data that is known a priori by both the transmitter and receiver, and a zero symbol is a signal value of zero. [0026] An OFDM modulator 130 receives and multiplexes the data symbols and pilot symbols onto data and pilot subbands, respectively, performs OFDM modulation as described, below, and provides an OFDM symbol for each OFDM symbol period. An OFDM symbol period is the duration of one OFDM symbol and is also referred to as a symbol period. A transmitter unit (TMTR) 132 receives and processes (e.g., converts to analog, amplifies, filters, and frequency upconverts) the OFDM symbols and generates a modulated signal, which is transmitted via an antenna 134 to receiver 150. [0027] At receiver 150, an antenna 152 receives the modulated signal from transmitter 110 and provides a received signal to a receiver unit (RCVR) 154. Receiver unit 154 conditions (e.g., filters, amplifies, frequency downconverts, and digitizes) the received signal and provides received samples. An OFDM demodulator (Demod) 160 processes the received samples as described below and obtains K received symbols for the K subbands in each OFDM symbol period. The received symbols include received data symbols for the data subbands and received pilot symbols for the pilot subbands. OFDM demodulator 160 performs time tracking to properly place the FFT window for each OFDM symbol period. OFDM demodulator 160 also performs data demodulation/ detection on the received data symbols with a channel estimate to obtain data symbol<br><br>
+estimates, which are estimates of the data symbols sent by transmitter 110. A receive (RX) data processor 170 then processes (e.g., symbol demaps, deinterleaves, and decodes) the data symbol estimates to obtain decoded data. In general, the processing by OFDM demodulator 160 and RX data processor 170 is complementary to the processing by OFDM modulator 130 and TX data processor 120, respectively, at transmitter 110.<br>
+[0028J Controllers/processors 140 and 180 control the operation of various processing units at transmitter 110 and receiver 150, respectively. Memories 142 and 182 store data and program codes for transmitter 110 and receiver 150, respectively. [0029] FIG. 2 shows a block diagram of OFDM modulator 130 at transmitter 110 in FIG. 1. Within OFDM modulator 130, a symbol-to-subband mapping unit 210 receives and maps the data and pilot symbols to subbands used for data and pilot, respectively, maps zero symbols to unused subbands, and provides K transmit symbols for the K total subbands. Each transmit symbol may be a data symbol, a pilot symbol, or a zero symbol in each OFDM symbol period. For each OFDM symbol period, a unit 212 transforms the K transmit symbols to the time domain with a K-point IFFT/IDFT and provides a transformed symbol that contains K time-domain chips. Each chip is a complex value to be transmitted in one chip period. A parallcl-to-scrial (P/S) converter 214 serializes the K chips for each transformed symbol. A guard interval insertion unit 216 then repeats a portion (or G chips) of each transformed symbol to form an OFDM symbol that contains K + G chips. Each OFDM symbol contains K chips for a useful part and G chips for the guard interval. The guard interval is used to combat IS1 and IC1 caused by delay spread in the communication channel. The length of the guard interval, G, determines the largest delay spread that the receiver can tolerate without incurring ISI and ICI at a modest moving velocity.<br>
+[0030] FIG. 3 shows a block diagram of an embodiment of OFDM demodulator 160 at receiver 150 in FIG. 1. Within OFDM demodulator 160, a pre-processor 310 processes the received samples from receiver unit 154 and provides input samples. Preprocessor 310 may perform automatic gain control (AGC), timing acquisition, filtering, sample rate conversion, direct current (DC) offset removal, frequency error estimation and removal, and/or other functions. A unit 312 removes the guard interval in each received OFDM symbol based on an FFT Start pointer and provides K input samples for<br><br>
+that OFDM symbol. The FFT Start pointer controls the placement of the FFT window for each received OFDM symbol.<br>
+[0031] For each received OFDM symbol, .a unit 314 performs a K-point FFT/DFT on the K input samples and provides K. frequency-domain received symbols for the K total subbands. A channel estimator 318 derives a channel estimate based on the received pilot symbols. The channel estimate may be a time-domain channel impulse response estimate and/or a frequency-domain channel frequency response estimate. A data demodulator 316 performs data demodulation/detection on the received data symbols with the channel estimate and provides data symbol estimates. [0032] A time tracking loop 320 performs time tracking as described below, determines the timing for each received OFDM symbol, and provides the FFT Start pointer. Although not shown in FIG. 3 for simplicity, OFDM demodulator 160 may include processing units for frame detection, frame synchronization, frequency tracking, and/or other functions.<br>
+[0033] Channel estimator 318, time tracking loop 320, and other units within OFDM demodulator 160 may perform processing at the sample rate. These units may also decimate the samples and perform processing at a lower rate in order to reduce computational complexity. These units may also ovcrsamplc the received signal and perform processing at a higher rate in order to achieve better resolution. For clarity, the description below assumes processing at the sample rate, and various quantities, constants, and thresholds are given for sample rate processing.<br>
+[0034] The receiver may perform time tracking in various manners and based on various types of information sent by the transmitter. For example, the transmitter may transmit a pilot on N subbands that are uniformly distributed across the K total subbands, where 1 
+ <br>
+described below, the receiver performs time tracking based on the channel impulse response estimate.<br>
+[0035] FIG. 4 shows a block diagram of an embodiment of time tracking loop 320 in FIG. 3. Within, time tracking loop 320, a unit 410 receives the N channel taps for the channel impulse response estimate from channel estimator 318 and computes the square magnitude of each channel tap. Unit 410 may also filter the square magnitudes of the channel taps across multiple symbol periods. Unit 410 provides a channel power profile containing N (filtered or unfiltered) square magnitude values for the N channel taps. A detector 412 detects for the first arriving path (FAP) and the last arriving path (LAP) based on the channel power profile and provides the detected FAP and LAP, as described below. A unit 414 resolves ambiguity in the detected FAP and LAP and provides output FAP and LAP. A center of mass (CM) detector 416 determiaes the center of mass of the channel power profile based on the output FAP and LAP. A summer 418 subtracts a timing target from the detected center of mass and provides a timing error. The timing target is a target position for the FFT window and may be a programmable value. The timing error is indicative of the error between the detected center of mass and the target position for the FFT window.<br>
+[0036] A loop filter 420 filters the timing error and provides a timing adjustment. For the embodiment shown in FIG. 4, loop filter 420 implements a first order lowpass filter. A multiplier 422 multiplies the timing error with a gain. A summer 424 sums the output of multiplier 422 with the output of a delay unit 426 and provides the timing adjustment. Delay unit 426 stores the output of summer 424 for the next loop update. Other designs and/or other transfer functions may also be used, for loop filter 420. A limiter 430 limits the timing adjustment to within a predetermined range of values and provides an advance/retard (Adv/R.et) output that indicates how much the FFT window should be moved. A summer 434 sums the advance/retard output with the current FFT Start pointer from a delay unit 436 and provides an updated FFT Start pointer. Delay unit 436 stores the updated FFT Start pointer for the next loop update. f00371 Detector 412 may detect for the FAP and LAP in various manners. For clarity, a specific scheme for detecting the FAP and LAP based on the channel power profile is described below. For this scheme, the energy of all channel taps within a sliding window is first computed for different tap positions, as follows:<br><br>
+(Equation Removed)	Eq(l)<br>
+where Ek is the energy of the channel taps within the sliding window at tap position k, W is the width of the sliding window, and "mod N" denotes a modulo-N operation.<br>
+[00381 The shding window width may be selected to be less than or equal to half of the length of the channel impulse response estimate, or W<n the channel impulse response estimate length is typically less than or equal to guard interval n g . this because selected be greater delay spread in order avoid. isi and ici. equation essentially moves shding window a circular fashion across power profile for each tap position k computes energy of w taps within window. sliding wraps around front upon reaching end profile.></n>
+[0039] A finite difference is then computed for each tap position based on the tap energies, as follows: (Equation Removed)<br>
+	Eq (2)<br>
+where Q is the finite difference order, and<br>
+D„ is the finite difference value for tap position n.<br>
+A sliding window of length 2Q is used to compute the finite difference. This sliding window is moved in a circular fashion across the channel power profile. For each tap position n, the finite difference Dn is computed as the difference between the combined energies in the first half of the sliding window minus the combined energies in the second half of the sliding window.<br>
+[0040] Two metrics used to detect for the FAP and LAP may be defined based on the tap energies and the finite difference values, as follows:<br>
+(Equation Removed)	Eq (3)<br>
+(Equation Removed)	Eq (4)<br><br>
+where ct\ and α2 are coefficients used for FAP and LAP detection, respectively, SFAP(K) is a metric for FAP detection at tap position k, and SLAP(K) is a metric for LAP detection at tap position k.<br>
+[0041] Coefficient α1 determines the sensitivity of the FAP detection and may be selected such that an FAP is detected if it is the last large value before a drop in a zone of near-maximum accumulated energy. Similarly, coefficient α2 determines the sensitivity of the LAP detection and may be selected such that an LAP is detected if it is the first large value before a rise in the zone of near-maximum accumulated energy. Coefficients α1 and α2 may be selected to provide good performance for FAP and LAP detection, respectively, and may be determined based on computer simulation, empirical measurements, and so on. [0042]        The location of the FAP may be determined based on SFAP(K), as follows:<br>
+(Equation Removed)	Eq(5)<br>
+where FAPd is an index for a detected FAP of sufficient strength.  In equation (5), the largest value for SFAP(K) is first identified, and FAPd is set to the index that yields the largest value for SFAp(k). [0043]        The location of the LAP may be determined based on SLAF(K), AS follows:<br>
+(Equation Removed)	Eq (6)<br>
+(Equation Removed)	Eq (7)<br>
+where LAPd is an index for a detected LAP of sufficient strength. In equations (6) and (7), the smallest value for SLAP(K) is first identified, the index that yields the smallest value for SFAP(JC) is denoted as kmin. and LAPd is set to W -1 tap positions to the right of kmin. The mod N operation in equation (7) constrains LAPd to be within a range of 0 through N-l. In the following description, FAP and LAP denote the true FAP and LAP, respectively, and FAPd and LAPd denote the detected FAP and LAP, respectively. [0044] FTGS. 5A through 5C show FAP and LAP detection for an exemplary channel impulse response estimate. For this example, N = 16, and the channel impulse response estimate contains two large channel taps at tap positions 3 and 8, as shown in<br><br>
+FIG. 5A. FIG. 5B shows a plot 512 of the energy Ek and a plot 514 of the finite difference Dn (with W = 8 and Q = 2) for the channel impulse response estimate shown in FIG. 5A. FIG. 5C shows a plot 516 of the metric SFAP(K) and a plot 518 of the metric SLAP(R), with α[=α1 = 0.5.<br>
+[0045] As shown in FIG. 5B, the FAP may be ascertained by detecting for a falling edge in plot 512 for the energy Ek, which may in turn be ascertained by detecting for a peak in plot 514 for the finite difference D„. The finite difference operation for Dn may enhance noise. Hence, a weighted sum of the finite difference Dn and the energy Ek may be used as the metric SFAP(K). Similarly, the LAP may be ascertained by detecting for a rising edge in plot 512 for the energy Ek, which may in turn be ascertained by detecting for a trough in plot 514 for the finite difference D„. A weighted sum of the finite difference D„ and the energy Ek may be used as the metric SLAP(KC) in order to mitigate the effects of noise enhancement. For the example shown in FIGS. 5 A through 5C, the largest value for SFAP(K) occurs at index k = 3, and the FAP is detected to be at FAPd=3. The smallest value for SLAP((K) occurs at index k = \, and the LAP is detected to be at LAPd=l+8-l=8.<br>
+[0046] FIGS. 5D through 5F show FAP and LAP detection for another exemplary channel impulse response estimate containing two large channel taps at tap positions 3 and 13. FIG. 5E shows a plot 522 of the energy Ek and a plot 524 of the finite difference D„. FIG. 5F shows a plot 526 of the metric SFAP(K) and a plot 528 of the metric SLAP(K). For the example shown in FIGS. 5D through 5F, the largest value for SFAP(K) occurs at index k = 13, and the FAP is detected to be at FAPd=13. The smallest value for SLAP(K) occurs at index k = 12, and the LAP is detected to be at LAPd = (12 + 8-l)modl6 = 3.<br>
+[0047] For clarity, a specific scheme for detecting FAP and LAP has been described above. This scheme may provide erroneous FAP and/or LAP under certain conditions. For example, if the sliding window length is smaller than the channel delay spread, then it may be possible to pick a middle channel path as a likely candidate for either FAP or LAP. Furthermore, depending on the relative positions of the channel paths and/or their relative powers, this detection scheme with W = N/2 may detect different candidates for FAP and LAP. The erroneous detection of FAP and LAP may be avoided, e.g., by assuming that the previous center of mass was correctly located around a predetermined point Dmid. Then, for the current channel estimate, an initial decision may be made as to<br><br>
+which signal path appears later than Dmid and which signal path comes before Dmid but is aliased into the channel estimate earlier. Assuming that the channel content is equally likely to appear early as well as late, a cut-off point between past and future may be set to Dmid + N/2, and any channel tap after this cut-off point is assumed to have arrived<br>
+earlier but is aliased. Note that the channel content may have previously been present only up until Dmid +max{Δ h}/2, where Δ h is the channel delay spread.   The region<br>
+between Dmid + max{Δ 1}/2 and Dmid +N/2 represents a search zone for late channel<br>
+content. In general, FAP and LAP detection may be performed in various manners and to account for various channel conditions.<br>
+[0048] The FAP and LAP detection scheme described above in equations (1) through (7) provides relatively accurate detected FAP and LAP when the channel delay spread Δ 1 is less than or equal to half of the guard interval, or Δ h 
+[0049] The FAP and LAP may also be detected in other manners. Regardless of the scheme used for FAP and LAP detection, there may be ambiguity as to whether the detected FAP and LAP are correct or swapped.<br>
+[0050] The ambiguity in the FAP and LAP detection may be resolved by exploiting the relationship between the start of the FFT window (which is indicated by the FFT Start pointer) and the resulting channel delay profile. In particular, the locations of the FAP and LAP in the channel impulse response estimate are dependent on (1) the propagation delays for the FAP and LAP and (2) the placement of the FFT window. This relationship is illustrated by two examples below.<br>
+[0051] FIG. 6A shows an exemplary transmission of an OFDM symbol via a communication channel with multiple signal paths. In general, each signal path may have any complex gain and any propagation delay, both of which are determined by the channel environment. For simplicity, the gains for the FAP and LAP are assumed to be<br><br>
+equal in this example. The delay spread of the communication channel is Δ h, which is the difference between the propagation delays for the FAP and LAP. [0052] The OFDM symbol includes a useful part and a guard interval. The receiver obtains a copy of the OFDM symbol via each signal path. Each OFDM symbol copy is scaled by the complex gain for the associated signal path and is further delayed by the propagation delay for that signal path. For simplicity, FIG. 6A shows only the first OFDM symbol copy received via the FAP and the last OFDM symbol copy received via the LAP. The start of the last OFDM symbol copy is delayed by Δ h samples from the start of the first OFDM symbol copy. The received OFDM symbol is a superposition of all of the OFDM symbol copies at the receiver.<br>
+[0053] FIG. 6A also shows the placement of the FFT window for the OFDM symbol. The start of the FFT window is indicated by the FFT Start pointer. The FFT window has a width of K samples and determines which samples are selected for subsequent processing. For the example shown in FIG. 6A, the start of the FFT window is A samples away from the first sample in the useful part of the OFDM symbol copy for the FAP and is Δ 4- Δ h samples away from the first sample in the useful part of the OFDM symbol copy for the LAP.<br>
+[0054] FIG. 6A also shows an ISI/ICI-free region, which is an overlapping region for the guard intervals for all OFDM symbol copies at the receiver. If the FFT Start pointer is within the ISI/ICI-free region, then the proper K samples are selected for processing, and ISI and ICI are not encountered, which is desirable. The goal of time tracking loop 320 is to maintain the FFT Start pointer within the ISI/ICI-free region. [0055] FIG. 6B shows a channel impulse response estimate for the exemplary transmission shown in FIG. 6A. The channel impulse response for the communication channel includes a channel tap for each signal path. For simplicity, FIG. 6B shows only two channel taps at indices of A and A + At for the FAP and LAP, respectively. The magnitude of each channel tap is determined by the complex gain for the associated signal path. The location or index of each channel tap is determined by the propagation delay for the associated signal path and the FFT Start pointer.<br>
+[0056] FIG. 6B essentially shows a channel delay profile for the communication channel. For this channel delay profile, the FFT Start pointer is mapped to the origin. The channel gain for each signal path is mapped to an index determined by the distance between the FFT Start pointer and the first sample in the useful part of the OFDM<br><br>
+symbol copy for that signal path.   The channel delay profile includes information that<br>
+indicates the start of the channel impulse response estimate.<br>
+[0057]       FIG. 6C shows another exemplary transmission of an OFDM symbol via a<br>
+communication channel with multiple signal paths having a delay spread of G — Δ h.<br>
+For the example shown in FTG. 6C, the start of the FFT window is Δ  + Δ h samples<br>
+away from the first sample in the useful part of the OFDM symbol copy for the FAP<br>
+and is Δ  + G samples away from the first sample for the useful part of the OFDM<br>
+symbol copy for the LAP.<br>
+[0058]       FIG. 6D shows a channel impulse response estimate for the exemplary<br>
+transmission shown in FIG. 6C.   This channel impulse response estimate includes two<br>
+channel taps  at indices of Δ   and   Δ  +Δ vk   corresponding to  the LAP   and FAP,<br>
+respectively.  In this example, the first sample in the useful part of the OFDM symbol<br>
+copy for the LAP is more than G from the start of the FFT window. This results in the<br>
+channel tap for the LAP wrapping around and appearing at index A, which is to the left<br>
+of the channel tap for the FAP.<br>
+[0059]       As shown in FIGS. 6A through 6D, the channel delay profile (e.g., in FIG.<br>
+6B or 6D) may be determined based on the channel topology (e.g., in FIG. 6A or 6C)<br>
+and the FFT Start pointer.   Conversely, the channel topology may be determined based<br>
+on the channel delay profile and the FFT Start pointer.<br>
+[0060]       FIGS. 6A through 6D assume that the FFT Start pointer is not in the useful<br>
+portion of an OFDM symbol.   A given channel topology may also be associated with<br>
+multiple possible FFT Start pointer locations.   For example, the channel topology in<br>
+FIG. 6D may also be obtained with the start of the FFT window being at A samples to<br>
+the right away of the start of the useful portion of the OFDM symbol copy for the FAP,<br>
+i.e., G samples to the right of the FFT Start pointer location shown in FIG. 6D.   The<br>
+uncertainty in the FFT Start pointer may also be tested to determine the correct FAP and<br>
+LAP.<br>
+[0061]       Time tracking loop 320 attempts to maintain the FFT Start pointer within the<br>
+TST/TCT-free region.    Time tracking loop 320 attempts to achieve this goal in the<br>
+presence of timing drift due  to  difference between the clock frequencies  at  the<br>
+transmitter and receiver, variations in the clock frequencies over time, changes in the<br><br>
+communication channel, and so on. Accurate updating of the FFT Start pointer is essential to achieve good data detection performance.<br>
+[0062] FIG. 7A shows an exemplary channel impulse response estimate at the receiver. The receiver has knowledge of the channel tap at each tap position but, prior to time tracking, docs not know where the channel impulse response actually starts. FAP &amp; LAP detector 412 within time tracking loop 320 detects for the FAP and LAP. [0063] FIGS. 7B and 7C show two possible outcomes of the FAP and LAP detection for the channel impulse response estimate shown in FIG. 7A. The channel delay profile for the outcome in FTG. 7B indicates that the detected FAP is at index Δ and the detected LAP is at index Δ  + Δ h. The channel delay profile for the outcome in FIG. 7C indicates that the detected LAP is at index A and the detected FAP is at index Δ  + Δ h.<br>
+[0064] Based on the channel impulse response estimate shown in FIG. 7A, FAP &amp; LAP detector 412 provides the detected FAP and LAP, which may be as shown in FIG. 7B or 7C, depending on whether the delay spread Δ h exceeds the limit of the time tracking algorithm, the magnitude and location of the channel taps, and possibly other factors. If the actual channel delay profile is as shown in FIG. 7B and the FAPd and LAPd decisions are correct, then the channel topology shown in FIG. 6A may be reconstructed based on the relationship between the channel topology, the FFT Start pointer, and the channel delay profile. However, if the actual channel delay profile is as shown in FIG. 7B and the FAPd and LAPd decisions are incorrect, then the incorrect channel topology shown in FIG. 6C may be reconstructed.<br>
+[0065] The FFT Start pointer is updated in different manners for the channel topologies shown in FIG. 6A and 6C. Hence, incorrect detection of the FAP and LAP results in erroneous interpretation of the channel topology, which then results in the FFT Start pointer being updated in a suboptimal or wrong manner, which may in turn degrade performance for both time tracking and data detection.<br>
+[0066] To resolve ambiguity in the FAP and LAP detection, the receiver may evaluate two hypotheses for the FAPd and LAPd decisions to determine whether these decisions are correct or incorrect. Hypothesis 0 may denote a hypothesis that the FAPd and LAPd decisions are correct, and hypothesis 1 may denote a hypothesis that the FAPd and LAPd decisions are incorrect. For each hypothesis, the receiver may reconstruct the channel topology for that hypothesis by exploiting the OFDM symbol<br><br>
+structure and using the relationship between the FFT Start pointer and the channel delay profile, as described above for FIGS. 6A through 6D. From the reconstructed channel topology, the receiver can ascertain where the guard interval and guard copy are located based on the OFDM symbol structure. The receiver may then evaluate each hypothesis and perform correlation between the guard interval and guard copy. The correct hypothesis will yield a larger correlation result and may be used to correct erroneous FAPd and LAPd decisions.<br>
+[0067] FIGS. 8A through 8D show an embodiment for resolving ambiguity in the FAP and LAP detection by correlating OFDM symbol data. For this example, the true FAP and. LAP and the detected FAP and LAP are assumed to be as shown in FIG. 8B, and the detected FAP and LAP are incorrect. In the following description, FAPh and LAPh denote the hypothesized FAP and LAP, respectively, for a particular hypothesis. [0068] For hypothesis 0, the hypothesized FAP and LAP are equal to the detected FAP and LAP, respectively, or FAPh0= FAPd and LAPh0= LAPd, as shown in FTG. 8B. The channel topology shown in FIG. 8A is reconstructed based on the hypothesized FAP and LAP and the FFT Start pointer. For the embodiment shown in FIGS. 8A through 8D, a correlation window covers the first sample in the guard interval of the OFDM symbol copy for the FAP through the last sample in the guard interval of the OFDM symbol copy for the LAP. For hypothesis 0, the correlation window starts at sample index T0,a and ends at sample index To,b.<br>
+[0069] For hypothesis 1, the hypothesized FAP and LAP are equal to the detected LAP and FAP, respectively, or FAPhO = LAPd and LAPhO = FAPd, as shown in FTG. 8D. The channel topology shown in FIG. 8C is reconstructed based on the hypothesized FAP and LAP shown in FIG. 8D and the FFT Start pointer. For hypothesis 1, the correlation window starts at sample index Ti,a and ends at sample index Ti;b. [0070] For each hypothesis i, the start of the correlation window, T,ia, may be determined as:<br>
+(Equation Removed)	Eq (8)<br>
+where TFAP,i is the tap location for FAPhz. TFAP,0 = Δ  + Δ h for hypothesis 0 shown in FIGS. 8A and 8B, and TFAP,L = Δ  for hypothesis 1 shown in FIGS. 8C and 8D.<br><br>
+ [0071J        For each hypothesis i, the end of the correlation window, Ti,b, may be determined as:<br>
+(Equation Removed)	Eq (9)<br>
+where TLAP,I is the tap location for LAPhi after accounting for any wrap-around effect. TLAP0 = Δ  + G   for hypothesis 0 shown in FIGS. 8A and 8B, where G is added to<br>
+account for LAPhO  appearing to the  left of FAPhO  due to wrap-around effect. TLAP,I = Δ  + Δ h  for hypothesis 1 shown in FIGS. 8C and 8D, where G is not added<br>
+because LAPhl appears to the right of FAPhl and there is no wrap-around effect. [0072]        The size of the correlation window for each hypothesis i may be computed as Ti,b -Ti,a. As shown in FIGS. 8A and 8C, the correlation windows for hypotheses 0<br>
+and 1 typically have different sizes.<br>
+[0073]        A correlation is performed between the guard interval and the guard copy for<br>
+each hypothesis i, as follows: <br>
+(Equation Removed)                                             Eq (10)<br><br><br><br><br>
+where rn is an input sample at sample index n for the received OFDM symbol, d is the correlation result for hypothesis z, and " * " denotes a complex conjugate.<br>
+[0074] FIGS. 8A and 8C show the guard interval as well as the guard copy for each OFDM symbol copy. The guard interval is shown by gray shading, and the guard copy is shown with a dashed box. For each OFDM symbol copy, the guard interval is a dupUcate of the guard copy. As shown in equation (10), each sample in the guard interval is multiplied with the complex conjugate of a corresponding sample in the guard copy, and the multiplication results arc accumulated across the length of the correlation window. The division by (Ti,b — Ti,a ) in equation (10) accounts for different<br>
+correlation window sizes being used for hypotheses 0 and 1 and results in a normalized correlation result.<br>
+[0075] If the hypothesized FAP and LAP are the true FAP and LAP, as shown in FIG. 8D, then the correlation window covers the guard interval and the guard copy of<br><br>
+the transmitted OFDM symbol, as shown in FIG. 8C. The channel topology for the true hypothesis then results in a higher correlation result between the guard interval and. the guard copy because these sections carry the same waveform from the transmitter. If the hypothesized FAP and LAP are not the true FAP and LAP, as shown in FIG. 8B, then the correlation window covers a portion of the actual guard interval and also a portion of the useful part of the transmitted OFDM symbol. The channel topology for the false hypothesis then results in a lower correlation result between the "guard interval" and "guard copy", which contain random data that are often statistically independent. The correlation results for the two hypotheses may thus be used to determine which hypothesis is correct and to correct any erroneous FAPd and LAPd decisions that result from using only the channel impulse response estimate. T0076]       The correct hypothesis may be determined as follows:<br>
+(Equation Removed)	Eq (11 a)<br>
+(Equation Removed)	Eq (1 lb)<br>
+where FAPo and LAPo are the output FAP and LAP provided by unit 414 in FIG. 4. Equation (11a) is for the case in which hypothesis 0 is correct and the detected FAP and LAP are provided directly as the output FAP and LAP, respectively. Equation (1 lb) is for the case in which hypothesis 1 is correct and the detected FAP and LAP are swapped and provided as the output FAP and LAP<br>
+[0077] FIG. 9 shows various embodiments of the correlation window. For the embodiment shown in FIGS. 8A through 8D, which is labeled as Window 1 in FIG. 9, the correlation window starts at the first sample of the guard interval for the hypothesized FAP and ends at the last sample of the guard interval for the hypothesized LAP. For the embodiment labeled as Window 2, the correlation window starts at the middle sample of the guard interval for the hypothesized FAP and ends at the last sample of the guard interval for the hypothesized LAP. For the embodiment labeled as Window 3, the correlation window covers the entire guard interval for the hypothesized LAP. For the embodiment labeled as Window 4, the correlation window covers a portion (e.g., the second half) of the guard interval for the hypothesized LAP. For the embodiment labeled as Window 5, the correlation window covers the entire guard interval for the hypothesized FAP.    For the embodiment labeled as Window 6, the<br><br>
+correlation window covers the ISJ/1CI region for the hypothesized FAP and LAP. For the embodiment labeled as Window 7, the correlation -window has a fixed size (e.g., G samples) and is centered at the middle of the ISI/ICI region for the hypothesized FAP and LAP. Various other correlation windows may also be used. In another embodiment that is not shown in FIG. 9, the correlation window size may be selected as W &gt; max {AjJ.   In this embodiment, the previous FAP/LAP locations may be used to<br>
+limit the correlation window size. •<br>
+[0078] FIG. 10 shows an embodiment of a process 1000 for resolving ambiguity in the detected FAP and LAP. The FAP and LAP are initially detected, e.g., based on a channel impulse response estimate for a communication channel (block 1012). The FAP and LAP may be detected, e.g., by detenrn'rn'ng the energies of channel taps within a sliding window for different tap positions, determining finite difference values based on the energies, detecting the FAP based on a first function of the energies and the finite difference values, and detecting the LAP based on a second function of the energies and the finite difference values, as described above for equations (1) through (7). [0079] Hypothesized FAP and LAP for a first hypothesis corresponding to the FAP and LAP being correctly detected are determined based on the detected FAP and LAP (block 1014). Hypothesized FAP and LAP for a second hypothesis corresponding to the FAP and LAP being incorrectly detected are also determined based on the detected FAP and LAP (block 1016). A correlation window is determined for each hypothesis based on the hypothesized FAP and LAP for that hypothesis (block 1018). The correlation window for each hypothesis may cover all or a portion of the guard interval for the hypothesized FAP and/or all or a portion of the guard interval for the hypothesized LAP.<br>
+[0080] Correlation is then performed on received data for the first hypothesis based on the correlation window for the first hypothesis (block 1020). Correlation is also performed on the received data for the second hypothesis based on the correlation window for the second hypothesis (block 1022). For each hypothesis, the correlation may be performed between a first segment of received data within the correlation window for that hypothesis and a second segment of received data that is K samples away, where K is the duration of the useful portion of an OFDM symbol. The correct hypothesis is then determined based on the correlation results for the first and second hypotheses (block 1024).<br><br>
+ [0081] In another aspect, the correct FAP and LAP are determined by evaluating a single hypothesis. The FAP and LAP may be initially detected as described above. A single hypothesis for the FAP and LAP may be selected for evaluation in various manners.<br>
+[0082] In an embodiment, a hypothesis that results in a smaller timing adjustment to the current FFT Start pointer is selected for evaluation. In this embodiment, the amount of timing adjustment to the current FFT Start pointer for hypothesis 0 is determined, and denoted as Δ To. The amount of timing adjustment to the current FFT Start pointer for hypothesis 1 is also determined and denoted as Δ T1. The hypothesis with the smaller timing adjustment is selected for evaluation and is called hypothesis s. Correlation is performed for the selected hypothesis s as described above. The correlation result Cs For hypothesis s may be compared against a threshold Cth. If Cs is greater than Cth,, then hypothesis s is deemed to be the correct hypothesis, and the FFT Start pointer may be updated based on the hypothesized FAP and LAP for hypothesis s. Otherwise, if C is equal to or less than Cth, then the other hypothesis that was not evaluated (which is called hypothesis u) is deemed to be the correct hypothesis, and the FFT Start pointer may be updated based on the hypothesized FAP and LAP for hypothesis u. [0083] In another embodiment, a hypothesis is selected for evaluation based on tirning (e.g., timing adjustments) for prior hypothesis decisions. In this embodiment, timing adjustments may be computed for hypotheses 0 and 1 as described above. The timing adjustments for the two hypotheses may be compared against timing adjustments for the correct hypotheses for prior update intervals. For example, timing adjustments for P most recent correct hypotheses may be stored, and the hypothesis 0 or 1 that is closer to more of the P stored hypotheses may be selected for evaluation. As another example, the hypothesis 0 or 1 that is closer to the average timing of the P stored hypotheses may be selected. Other types of history information may also be stored and used for hypothesis selection. In any case, the selected hypothesis may be evaluated, and the correlation result Cs may be compared against the threshold Cth to determine whether the selected hypothesis s or the unselected hypothesis u is the correct hypothesis.<br>
+[0084] A single hypothesis may be selected for evaluation based on the detected FAP and LAP and history information, as described above. The single hypothesis may also be selected without history information. For example, hypothesis 0 may always be<br><br>
+selected, or one hypothesis may be randomly selected. The selected hypothesis may be evaluated and compared against the threshold Cth The threshold Cth, may be a fixed value that may be selected to achieve good performance. The threshold Cth may also be a configurable that may be set, e.g., based on the correlation results for the recent correct hypotheses. The correlation window for the selected hypothesis may be determined based on any of the embodiments described above for FIG. 9. A variable size correlation window may improve detection performance. However, a fixed size correlation window may reduce implementation complexity.<br>
+[0085] FIG. 11 shows an embodiment of a process 1100 for resolving ambiguity in the detected FAP and LAP. The FAP and LAP are initially detected, e.g., based on a channel impulse response estimate for a communication channel (block 1112). A single hypothesis for the FAP and LAP is selected for evaluation (block 1114). The hypothesis may be selected based on the current FFT Start pointer, history information for prior hypotheses, and so on. Correlation is then performed on received data for the selected hypothesis (block 1116). Whether the selected hypothesis is the correct hypothesis is determined based on the correlation result and a threshold (block 1118). [0086] The techniques described herein may be used to resolve ambiguity in the FAP and LAP detection when the channel delay spread is more than half of the guard interval (or Δh, &gt; G/2 ) as well as when the channel delay spread is less than or equal to half of the guard interval. In general, the techniques may be used to resolve ambiguity in any two channel taps for an impulse response of a communication channel, where the ambiguity is due to uncertainty as to whether the first channel tap is earlier or later than the second channel tap. Correlation may be performed for a first hypothesis corresponding to the first channel tap being earlier than the second channel tap. Correlation may also be performed for a second hypothesis corresponding to the first channel tap being later than the second channel tap. The correlation results for the two hypotheses may be used to determine whether the first channel tap is earlier or later than the second channel tap.<br>
+[0087] Referring back to FIG. 4, center of mass detector 416 receives the output FAP and LAP from unit 414 and determines the center of mass of the channel impulse response estimate. In an embodiment, detector 416 determines the center of mass based solely on the output FAP and LAP. For example, the center of mass may be set equal to the midpoint between FAPo and LAPo, as follows:<br><br>
+(Equation Removed)	Eq (12a)<br>
+(Equation Removed)	Eq (12b)<br>
+where DS is the detected channel delay spread. Tn equation (12a), the channel delay spread is computed as {(LAPo - FAPo) mod N}, where the mod N operation accounts for the case in which LAPo is to the left of FAPo in the channel delay profile. In equation (12b), the center of mass is half of the channel delay spread from FAPo, where the mod N operation accounts for possible wrap-around of the center of mass. In another embodiment, the center of mass is determined based on more than two (e.g., all) channel taps in the channel impulse response estimate, channel taps with sufficient strength, and so on. The center of mass computation may be performed in other manners known in the art. [0088]        The timing error from summer 418 may be computed as follows:<br>
+(Equation Removed)                   Eq (13)<br>
+The timing error is a signed value that may be positive, zero, or negative.<br>
+[0089]        In an embodiment, the timing adjustment from loop filter 420 may be<br>
+computed as follows:<br>
+(Equation Removed)                        Eq (14)<br>
+In another embodiment, the timing adjustment may be computed as follows:<br>
+(Equation Removed)	Eq (15)<br>
+Gain in equation (14)  and Gainl   and Gain2  in equation  (15) may be  fixed or programmable values.<br>
+[0090]        The timing adjustment may be limited to within a predetermined range of values, as follows:<br><br>
+(Equation Removed)                                             Eq(16)<br><br>
+where Max Adjust is an absolute value for the maximum timing adjustment for any given update and SAT { } is a saturation operation.   The resulting Adv/Ret (t) is a saturated signed value. [0091]        The FFT Start pointer may he updated as follows:<br>
+(Equation Removed)                              Eq (17)<br>
+The FFT Start pointer is advanced by K+G sample periods for each OFDM symbol and is further updated by Adv/Ret (t) in each loop update interval.<br>
+[0092] Time tracking loop 320 attempts to maintain the center of mass at a specific location in the channel delay profile, which is referred to as the target timing. A good location for the target timing may be dependent on the actual channel impulse response, the length of the channel estimation window (N), the length of the guard interval (G), and so on. A programmable value may be used for the target timing. The loop filter gain, Max Adjust, and/or other parameters may be fixed or configurable values. [0093] FTG. 12 shows an embodiment of a process 1200 for performing time tracking at the receiver. The FAP and LAP are initially detected, e.g., based on a channel impulse response estimate for a communication channel (block 1212). Ambiguity in the detected FAP and LAP is then resolved by performing correlation on received data for at least one hypothesis for the FAP and LAP (block 1214). Two hypotheses may be evaluated as described in FIG. 10 or a single hypothesis may be evaluated as described in FIG. 11. The timing at the receiver is then updated based on the hypothesized FAP and LAP for the correct hypothesis (block 1216). For block 1216, the center of mass of the channel impulse response estimate may be determined based on (e.g., as the midpoint between) the hypothesized FAP and LAP for the correct hypothesis. A timing error may be determined based on the center of mass and a timing target and may be filtered to obtain a timing adjustment. The timing adjustment may be limited to within a predetermined range of values and may be used to update the receiver timing, e.g., the FFT Start pointer. OFDM demodulation is performed on the received data based on the updated receiver timing (block 1218). The FFT Start pointer may be used to select samples in the received data for processing.<br>
+[0094] The techniques described herein may be implemented by various means. For example, these techniques may be implemented in hardware, firmware, software, or a combination thereof.    Fox a hardware implementation, the processing units used to<br><br>
+resolve ambiguity in a channel estimate and/or to perform time tracking at a receiver may be implemented within one or more application specific integrated circuits (ASICs), digital signal processors (DSPs), digital signal processing devices (DSPDs), programmable logic devices (PLDs), field programmable gate arrays (FPGAs), processors, controllers, micro-controllers, microprocessors, electronic devices, other electronic units designed to perform the functions described herein, or a combination thereof.<br>
+[0095] For a firmware and/or software implementation, the techniques may be implemented with modules (e.g., procedures, functions, and so on) that perform the functions described herein. The software codes may be stored in a memory (e.g., memory 182 in FIG. 1) and executed by a processor (e.g., processor 180). The memory may be implemented within the processor or external to the processor. [0096] The previous description of the disclosed embodiments is provided to enable any person skilled in the art to make or use the present invention. Various modifications to these embodiments will be readily apparent to those skilled in the art, and the generic principles defined herein may be applied to other embodiments without departing from the spirit or scope of the invention. Thus, the present invention is not intended to be limited to the embodiments shown herein but is to be accorded the widest scope consistent with the principles and novel features disclosed herein.<br><br><br><br>
+CLAIMS<br>
+1.	An apparatus comprising:<br>
+at least one processor configured to detect for a first arriving path (FAP) and a last arriving path (LAP) in a communication channel, to perform correlation on received data for a first hypothesis corresponding to the FAP and LAP being correctly detected, to perform correlation on the received data for a second hypothesis corresponding to the FAP and LAP being incorrectly detected, and to determine a correct hypothesis among the first and second hypotheses based on correlation results for the first and. second hypotheses; and<br>
+a memory coupled to the at least one processor.<br>
+2.	The apparatus of claim 1, wherein the at least one processor is configured to determine a first correlation window for the first hypothesis and a second correlation window for the second hypothesis based, on the detected FAP and LAP.<br>
+3.	The apparatus of claim 2, wherein the at least one processor is configured to perform correlation between a first segment of received data within the first correlation window and a second segment of received data, and to perform correlation between a third segment of received data within the second correlation window and a fourth segment of received data.<br>
+4.	The apparatus of claim 3, wherein the first and second segments arc separated by K samples and the third and fourth segments are separated by K samples, where K is a duration of a useful portion of an OFDM symbol.<br>
+5.	The apparatus of claim 1, wherein the at least one processor is configured, to determine hypothesized FAP and LAP for each hypothesis based on the detected FAP and LAP.<br><br>
+6.	The apparatus of claim 5, wherein the at least one processor is configured to determine a correlation window for each hypothesis to cover guard intervals for the hypothesized FAP and LAP for the hypothesis.<br>
+7.	The apparatus of claim 5, wherein the at least one processor is configured to determine a correlation window for each hypothesis to cover at least a portion of a guard interval for the hypothesized FAP and at least a portion of a guard interval for the hypothesized LAP.<br>
+8.	The apparatus of claim 5, wherein the at least one processor is configured to determine a correlation window for each hypothesis to cover at least a portion of a guard interval for the hypothesized FAP.<br>
+9.	The apparatus of claim 5, wherein the at least one processor is configured to determine a correlation window for each hypothesis to cover at least a portion of a guard interval for the hypothesized LAP.<br>
+10.	The apparatus of claim 1, wherein the at least one processor is configured, to detect for the FAP and LAP based on a channel impulse response estimate for the communication channel.<br>
+11.	The apparatus of claim 10, wherein the channel impulse response estimate comprises multiple channel taps, and wherein the at least one processor is configured to determine energies of channel taps within a sliding window for different tap positions, to determine a finite difference based on the energies for different tap positions, to detect for the FAP based on a first function of the energies and the finite difference, and to detect for the LAP based on a second function of the energies and the finite difference.<br>
+12.	The apparatus of claim 5, wherein the at least one processor is configured to determine a center of mass of an impulse response for the communication channel based on the hypothesized FAP and LAP for the correct hypothesis, to update a<br><br>
+pointer based on the center of mass, and to use the pointer to select samples in the received data for processing.<br>
+13.	The apparatus of claim 12, wherein the at least one processor is configured to determine the center of mass as a midpoint between the hypothesized FAP and LAP for the correct hypothesis.<br>
+14.	The apparatus of claim 12, wherein the at least one processor is configured to determine a timing error based on the center of mass and a timing target, to filter the timing error to obtain a timing adjustment, and to update the pointer based on the timing adjustment.<br>
+15.	The apparatus of claim 14, wherein the at least one processor is configured to limit the timing adjustment to within a predetermined range of values.<br>
+16.	The apparatus of claim 1, wherein the at least one processor is configured to update timing based on the correct hypothesis, and to perform orthogonal frequency division multiplexing (OFDM) demodulation on the received data based on the updated timing.<br>
+17.	A method comprising:<br>
+detecting for a first arriving path (FAP) and a last arriving path (LAP) in a communication channel;<br>
+performing correlation on received data for a first hypothesis corresponding to the FAP and LAP being correctly detected;<br>
+performing correlation on the received data for a second hypothesis corresponding to the FAP and LAP being incorrectly detected; and<br>
+determining a correct hypothesis among the first and second hypotheses based on correlation results for the first and second hypotheses.<br>
+18.	The method of claim 17, wherein the detecting for the FAP and LAP<br>
+comprises detecting for the FAP and LAP based on a channel impulse response estimate<br>
+for the communication channel.<br><br>
+19.	The method of claim 17, wherein the performing correlation on the<br>
+received data comprises<br>
+determining a first correlation window for the first hypothesis and a second correlation window for the second hypothesis based on the detected FAP and LAP,<br>
+performing correlation between a first segment of received data within the first correlation window- and a second segment of received data, and<br>
+performing correlation between a third segment of received data within the second correlation window and a fourth segment of received data.<br>
+20.	The method of claim 17, wherein the performing correlation on the<br>
+received data comprises<br>
+determining hypothesized FAP and LAP for each hypothesis based on the detected FAP and LAP,<br>
+determining a correlation window for each hypothesis to cover a portion of a guard interval for the hypothesized FAP, a portion of a guard interval for the hypothesized LAP, or both, and<br>
+performing correlation for each hypothesis based on the correlation window for the hypothesis.<br>
+21.	The method of claim 17, further comprising:<br>
+updating timing based on the correct hypothesis; and<br>
+performing orthogonal frequency division multiplexing (OFDM) demodulation on the received data based on the updated timing.<br>
+22.	An apparatus comprising:<br>
+means for detecting for a first arriving path (FAP) and a last arriving path (LAP) in a communication channel;<br>
+means for performing correlation on received data for a first hypothesis corresponding to the FAP and LAP being correctly detected;<br>
+means for performing correlation on the received data for a second hypothesis corresponding to the FAP and LAP being incorrectly detected; and<br><br>
+means for determining a correct hypothesis among the first and second hypotheses based on correlation results for the first and second hypotheses.<br>
+23.	The apparatus of claim 22, wherein the means for perforating correlation<br>
+on the received data comprises<br>
+means for determining a first correlation window for the first hypothesis and a second correlation window for the second hypothesis based on the detected FAP and LAP,<br>
+means for performing correlation between a first segment of received data within the first correlation window and a second segment of received data, and<br>
+means for performing correlation between a third segment of received data within the second correlation window and a fourth segment of received data.<br>
+24.	The apparatus of claim 22, wherein the means for performing correlation<br>
+on the received data comprises<br>
+means for determining hypothesized FAP and LAP for each hypothesis based on the detected FAP and LAP,<br>
+means for determining a correlation window for each hypothesis to cover a portion of a guard interval for the hypothesized FAP, a portion of a guard interval for the hypothesized LAP, or both, and<br>
+means for performing correlation for each hypothesis based on the correlation window for the hypothesis.<br>
+25.	The apparatus of claim 22, further comprising:<br>
+means for updating timing based on the correct hypothesis; and<br>
+means for performing orthogonal frequency division multiplexing (OFDM) demodulation on the received data based on the updated timing.<br>
+26.	A processor readable media for storing instructions operable to:<br>
+detect for a first arriving path (FAP) and a last arriving path (LAP) in a communication channel;<br>
+perform correlation on received data for a first hypothesis corresponding to the FAP and LAP being correctly detected;<br><br>
+perform correlation on the received data for a second hypothesis corresponding to the FAP and LAP being incorrectly detected; and<br>
+determine a correct hypothesis among the first and second hypotheses based on correlation results for the first and second hypotheses.<br>
+27.	The processor readable media of claim 26, and further for storing<br>
+instructions operable to<br>
+detect for the FAP and LAP based on a channel impulse response estimate for the communication channel.<br>
+28.	The processor readable media of claim 26, and further for storing<br>
+instructions operable to<br>
+determine a first correlation window for the first hypothesis and a second correlation window for the second hypothesis based on the detected FAP and LAP,<br>
+perform correlation between a first segment of received data within the first correlation window and a second segment of received data, and<br>
+perform correlation between a third segment of received data within the second correlation window and a fourth segment of received data.<br>
+29.	The processor readable media of claim 26, and further for storing<br>
+instructions operable to<br>
+determine hypothesized FAP and LAP for each hypothesis based on the detected FAP and LAP,<br>
+determine a correlation window for each hypothesis to cover a portion of a guard interval for the hypothesized FAP, a portion of a guard interval for the hypothesized LAP, or both, and<br>
+perform correlation for each hypothesis based on the correlation window for the hypothesis.<br>
+30.	The processor readable media of claim 26, and further for storing<br>
+instructions operable to<br>
+update timing based on the correct hypothesis; and<br><br>
+direct orthogonal frequency division multiplexing (OFDM) demodulation on the received data based on the updated timing.<br>
+31.	An apparatus comprising:<br>
+at least one processor configured to determine first and second channel taps for an impulse response of a communication channel, to perform correlation on received data for a first hypothesis corresponding to the first channel tap being earlier than the second channel tap, to perform correlation on the received data for a second hypothesis corresponding to the first channel tap being later than the second channel tap, and to determine whether the first channel tap is earlier or later than the second channel tap based on correlation results for the first and second hypotheses; and<br>
+a memory coupled to the at least one processor.<br>
+32.	The apparatus of claim 31, wherein for each hypothesis the at least one processor is configured to determine a correlation window for the hypothesis to cover a portion of a guard interval for the first channel tap, a portion of a guard interval for the second channel tap, or both, and to perform correlation for the hypothesis based on the correlation window.<br>
+33.	The apparatus of claim 31, wherein the at least one processor is configured to update timing based on the correct hypothesis and to perform demodulation on the received data based on the updated timing.<br>
+34.	An apparatus comprising:<br>
+at least one processor configured to detect for a first arriving path (FAP) and a last arriving path (LAP) in a communication channel, to select a hypothesis for the FAP and LAP for evaluation, to perform correlation on the received data for the selected hypothesis, and to determine whether the selected hypouresis is a correct hypothesis based on correlation result for the selected hypothesis; and<br>
+a memory coupled to the at least one processor.<br><br>
+35.	The apparatus of claim 34, wherein the at least one processor is configured to select the hypothesis based on history information for hypotheses previously evaluated.<br>
+36.	The apparatus of claim. 34, wherein the at least one processor is configured to select a hypothesis associated with timing that is closest to timing of hypotheses previously evaluated.	<br>
+37.	The apparatus of claim 34, wherein the at least one processor is configured to determine whether the selected hypothesis is the correct hypothesis based on the correlation result and a threshold.<br>
+38.	An. apparatus comprising:<br>
+means for detecting for a first arriving path (FAP) and a last arriving path (LAP) in a corn-mum' cation channel;<br>
+means for selecting a hypothesis for the FAP and LAP for evaluation;<br>
+means for performing correlation on the received data for the selected hypothesis; and<br>
+means for deterrnining "whether the selected hypothesis is a correct hypothesis based on correlation result for the selected hypothesis.<br>
+39.	The apparatus of claim 38, wherein the means for selecting the hypothesis comprises means for selecting the hypothesis based on history information for hypotheses previously evaluated.<br>
+40.	The apparatus of claim 3S, wherein the means for determining whether the selected hypothesis is the correct hypothesis comprises means for determining whether the selected hypo diesis is the correct hypothesis based on the correlation result and a threshold.<br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MCBERUxOUCAyMDA4IChQRVRJVElPTiBVTkRFUiBSVUxFIDEzNykucGRm" target="_blank" style="word-wrap:break-word;">4060 DELNP 2008 (PETITION UNDER RULE 137).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUFic3RyY3QtKDAxLTA0LTIwMTQpLnBkZg==" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Abstrct-(01-04-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUFzc2lnbm1lbnQtKDA5LTAyLTIwMTUpLnBkZg==" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Assignment-(09-02-2015).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUNsYWltcy0oMDEtMDQtMjAxNCkucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Claims-(01-04-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUNsYWltcy0oMDktMDItMjAxNSkucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Claims-(09-02-2015).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUNvcnJlc3BvbmRhbmNlIE90aGVycy0oMDktMDItMjAxNSkucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Correspondance Others-(09-02-2015).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMDEtMDQtMjAxNCkucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Correspondence Others-(01-04-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMDktMDUtMjAxNCkucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Correspondence Others-(09-05-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LWNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LURlc2NyaXB0aW9uIChDb21wbGV0ZSktKDAxLTA0LTIwMTQpLnBkZg==" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Description (Complete)-(01-04-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LURyYXdpbmdzLSgwMS0wNC0yMDE0KS5wZGY=" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Drawings-(01-04-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LWZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LWZvcm0tMTgucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUZvcm0tMiAtKDAxLTA0LTIwMTQpLnBkZg==" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Form-2 -(01-04-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LWZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUZvcm0tMy0oMDEtMDQtMjAxNCkucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Form-3-(01-04-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUZvcm0tMy0oMDktMDUtMjAxNCkucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Form-3-(09-05-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LWZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUZvcm0tNS0oMDEtMDQtMjAxNCkucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Form-5-(01-04-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LWZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LUdQQS0oMDEtMDQtMjAxNCkucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-GPA-(01-04-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LWdwYS5wZGY=" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LU1hcmtlZC1DbGFpbXMtKDA5LTAyLTIwMTUpLnBkZg==" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-Marked-Claims-(09-02-2015).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LXBjdC0xMDEucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-pct-101.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LXBjdC0yMTAucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-pct-210.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1kZWxucC0yMDA4LXBjdC0zMDQucGRm" target="_blank" style="word-wrap:break-word;">4060-delnp-2008-pct-304.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDA2MC1ERUxOUC0yMDA4Q29ycmVzcG9uZGVuY2UyOTEwMTQucGRm" target="_blank" style="word-wrap:break-word;">4060-DELNP-2008Correspondence291014.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QuanBn" target="_blank" style="word-wrap:break-word;">abstract.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="265530-patchouli-odorant.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="265532-method-and-device-for-energy-savingly-operating-a-communication-terminal.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>265531</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>4060/DELNP/2008</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>10/2015</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>06-Mar-2015</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>26-Feb-2015</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>13-May-2008</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>QUALCOMM INCORPORATED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>5775 MOREHOUSE DRIVE, SAN DIEGO, CALIFORNIA 92121-1714, UNITED STATE OF AMERICA.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>SERGUEI A. GLAKO</td>
+											<td>5156 SEASHELL PLACE, SAN DIEGO, CALIFORNIA 92130, UNITED STATES OF AMERICA.</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>KUEI-CHIANG LAI</td>
+											<td>M100, ICL/ITRI, ROOM 300, BLDG, 14, CHUNG HSING ROAD, CHUTUNG, 195 SEC 4, TAIWAN</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>SHIMMAN PATEL</td>
+											<td>9406 GALVIN AVENUE, SAN DIEGO, CALIFORNIA 92126, USA.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04L 27/26</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US06/060950</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2006-11-15</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>11/386,865</td>
+									<td>2006-03-22</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>60/737,087</td>
+									<td>2005-11-15</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/265531-an-apparatus-and-method-for-performing-time-tracking-in-a-communications-network by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:55:51 GMT -->
+</html>

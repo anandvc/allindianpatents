@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/227861-method-and-apparatus-for-decoding-a-data-stream-in-audio-video-streaming-systems by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 08:16:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 227861:&quot;METHOD AND APPARATUS FOR DECODING A DATA STREAM IN AUDIO VIDEO STREAMING SYSTEMS&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;METHOD AND APPARATUS FOR DECODING A DATA STREAM IN AUDIO VIDEO STREAMING SYSTEMS&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>Method for decoding a data stream containing a first and a second substream, the first substream containing first and second multimedia data packets and the second substream containing control information, wherein the multimedia data packets contain an indication of the time when to be presented and are decoded prior to their indicated presentation time, the method comprising steps of - extracting from said control information of, the second substream first, second and third control data, wherein the first control data (Length) are suitable for defining buffer size to be allocated, the second control data (StartLoadTime, StopLoadTime) are suitable for defining one or more second multimedia data packets to be buffered, and the third control data (LoadMode) are suitable for defining a mode for buffering the second multimedia data packets; - allocating, in a buffer, buffer size according to the first control data (Length); - storing the first decoded multimedia data packets in the buffer; and - storing one or more multimedia data packets according to the second control data (StartLoadTime, StopLoadTime) in the buffer, wherein depending on. the third control data (LoadMode) either the second multimedia data packets are appended to the first decoded multimedia data packets in the buffer, or replace some or all of the first decoded multimedia data packets in the buffer.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>Method and apparatus for decoding a data stream in streaming systems<br>
+This invention relates to a method and apparatus for decoding a data stream in a buffering node for multimedia streaming systems, like MPEG-4.<br>
+Background<br>
+In the MPEG-4 standard ISO/IEC 14496, in particular in part 1 Systems, an audio/video (AV) scene can be composed from several audio, video and synthetic 2D/3D objects that can be coded with different MPEG-4 format coding types and can be transmitted as binary compressed data in a multiplexed bitstream comprising multiple substreams. A substream is also referred to as Elementary Stream (ES), and can be accessed through a descriptor. ES can contain AV data, or can be so-called Object Description (OD) streams, which contain configuration information necessary for decoding the AV substreams. The process of synthesizing a single scene from the component objects is called composition, and means mixing multiple individual AV objects, e.g. a presentation of a video with related audio and text, after reconstruction of packets and separate decoding of their respective ES. The composition of a scene is described in a dedicated ES called 'Scene Description Stream', which contains a scene description consisting of an encoded tree of nodes called Binary Information For Scenes (BIFS). 'Node' means a processing step or unit used in the MPEG-4 standard, e.g. an interface that buffers data or carries out time synchronization between a decoder and subsequent processing units. Nodes can have attributes, referred to as fields, and other information<br><br>
+attached. A leaf node in the BIFS tree corresponds to elementary AV data by pointing to an OD within the OD stream, which in turn contains an ES descriptor pointing to AV data in an ES. Intermediate nodes, or scene description nodes, group this material to form AV objects, and perform e.g. grouping and transformation on such AV objects. In a receiver the configuration substreams are extracted and used to set up the required AV decoders. The AV substreams are decoded separately to objects, and the received composition instructions are used to prepare a single presentation from the decoded AV objects. This final presentation, or scene is then played back.<br>
+According to the MPEG-4 standard, audio content can only be stored in the 'audioBuffer' node or in the vmediaBuffer' node. Both nodes are able to store a single data block at a time. When storing another data block, the previously stored data block is overwritten.<br>
+The vaudioBuffer' node can only be loaded with data from the audio substream when the node is created, or when the 'length' field is changed. This means that the audio buffer can only be loaded with one continuous block of audio data. The allocated memory matches the specified amount of data. Further, it may happen that the timing of loading data samples is not exactly<br>
+due to the timing model of the BIFS decoder.<br><br>
+For loading more than one audio sample, it is possible to build up an MPEG-4 scene using multiple 'audioBuffer' nodes. But it is difficult to handle the complexity of the scene, and to synchronize the data stored in the different 'audioBuffer' nodes. Additionally, for each information a new stream has to be opened.<br>
+Summary of the Invention<br>
+The problem to be solved by the invention is to improve storage and retrieval of single or multiple data blocks in multimedia buffer nodes in streaming systems, like MPEG-4.<br>
+This problem is solved by the present invention as disclosed in claim 1. An apparatus using the inventive method is disclosed in claim 8.<br>
+According to the invention, additional parameters are added to the definition of a multimedia buffer node, e.g. audio or video node, so that multiple data blocks with AV contents can be stored and selectively processed, e.g. included into a scene, updated or deleted. In the case of MPEG-4 these additional parameters are new fields in the description of a node, e.g. in the 'audioBuffer' node or 'mediaBuffer' node. The new fields define the position of a data block within a received data stream, e.g. audio stream, and how to handle the loading of this block, e.g. overwriting previously stored data blocks or accumulating data blocks in a buffer.<br>
+Brief description of the drawings<br>
+Exemplary embodiments of the invention are described with reference to the accompanying drawings, which show in<br>
+Fig.l the general structure of an MPEG-4 scene;<br>
+Fig.2 an exemplary  AdvancedAudioBuffer' node for MPEG-4; and<br>
+Fig.3 the fields within an exemplary  AdvancedAudioBuffer' node for MPEG-4.<br>
+Fig. 4 an apparatus for decoding a data stream.<br><br>
+Detailed description of the invention<br>
+Fig.l shows the composition of an MPEG-4 scene, using a scene description received in a scene description stream ES_IDS. The scene comprises audio, video and other data, and the audio and video composition is defined in an AV node ODIDAV. The audio part of the scene is composed in an audio compositor, which includes an AdvancedAudioBuffer node and contains a reference ODIDA to an audio object, e.g. decoder. The actual audio data belonging to this audio object are contained as packets in an ES, namely the audio stream, which is accessible through its descriptor ES_DA. The AdvancedAudioBuffer node may pick out multiple audio data packets from the audio stream ES_IDA coming from an audio decoder.<br>
+The audio part of an MPEG-4 scene is shown in more detail in Fig.2. The audio part of a scene description 10 contains a sound node 11 that has an AdvancedAudioBuffer node 12, providing an interface for storing audio data. The audio data to be stored consist of packets within the audio stream 14, which is received from an audio decoder. For each data packet is specified at which time it is to be decoded. The AdvancedAudioBuffer node 12 holds the time information for the packets to load, e.g. start time t1 and end time t2. Further,<br>
+it can identify and access the required ES by referring to an<br>
+AudioSource node 13. The AdvancedAudioBuffer node may buffer<br>
+the specified data packet without overwriting previously received data packets, as long as it has sufficient buffer capacity.<br>
+The AdvancedAudioBuffer node 12 can be used instead of the AudioBuffer node defined in subclause 9.4.2.7 of the MPEG-4 systems standard ISO/IEC 14496-1:2002. As compared to the<br>
+AudioBuffer node, the inventive AdvancedAudioBuffer node has an enhanced load mechanism that allows e.g. reloading of data.<br>
+The AdvancedAudioBuffer node can be defined using the MPEG-4 syntax, as shown in Fig.3. It contains a number of fields and events. Fields have the function of parameters or variables, while events represent a control interface to the node. The function of the following fields is described in ISO/IEC 14496-1:2002, subclause 9.4.2.7: 'loop', 'pitch', 'startTime', 'stopTime', 'children', 'numChan', 'phaseGroup', , 'length' 'duration_changed' and 'isActive'. The 'length' field specifies the length of the allocated audio buffer in seconds. In the current version of the mentioned standard this field cannot be modified. This means that another AudioBuffer node must be instantiated when another audio data block shall be loaded, since audio data is buffered at the instantiation of the node. But the creation of a new node is a rather complex software process, and may result in a delay leading to differing time references in the created node and the BIFS tree.<br>
+The following new fields, compared to the AudioBuffer node, are included in the AdvancedAudioBuffer node: 'startLoadTime', 'stopLoadTime', 'loadMode', 'numAccumulatedBlocks',<br>
+'deleteBlock' and 'playBlock'. With these new fields it is<br><br>
+possible to enable new functions, e.g. load and delete stored<br>
+data. Further, it is possible to define at node instantiation time the buffer size to be allocated, independently from the actual amount of data to be buffered. The buffer size to be allocated is specified by the 'length' field. The 'startTime' and 'stopTime' fields can be used alternatively to the 'startLoadTime' and 'stopLoadTime' fields, depending on the mode described in the following.<br>
+Different load mechanisms may exist, which are specified by the field. 'loadMode' The different load modes are e.g. Compatibility mode, Reload mode, Accumulate mode, Continuous Accumulate mode and Limited Accumulate mode.<br>
+In Compatibility mode, audio data shall be buffered at the instantiation of the AdvancedAudioBuffer node, and whenever the length field changes. The 'startLoadTime', 'stopLoadTime', 'numAccumulatedBlocks', 'deleteBlock' and 'playBlock' fields have no effect in this mode. The 'startTime' and 'stopTime' fields specify the data block to be buffered.<br>
+In Reload mode, the 'startLoadTime' and 'stopLoadTime' fields are valid. When the time reference of the AdvancedAudioBuffer node reaches the time specified in the 'startLoadTime' field, the internal data buffer is cleared and the samples at the input of the node are stored until value in the 'stopLoadTime' field is reached, or the stored data have the length defined in the 'length' field. If the 'startLoadTime' value is higher or equal to the 'stopLoadTime' value, a data block with the length defined in the 'length' field will be loaded at the time specified in 'startLoadTime'. The 'numAccumulatedBlocks', 'deleteBlock' and 'playBlock' fields have no effect in this<br>
+mode.<br><br>
+In the Accumulate mode a data block defined by the interval between the 'startLoadTime' and 'stopLoadTime' field values is appended at the end of the buffer contents. In order to have all data blocks accessible, the blocks are indexed, or labeled, as described below. When the limit defined by the 'length' field is reached, loading is finished. The field 'numAccumulatedBlocks' has no effect in this mode.<br>
+In the Continuous Accumulate mode a data block defined by the interval between the 'startLoadTime' and 'stopLoadTime' field values is appended at the end of the buffer contents. All data blocks in the buffer are indexed to be addressable, as described before. When the limit defined by the 'length' field is reached, the oldest stored data may be discarded, or overwritten. The field 'numAccumulatedBlocks' has no effect in this mode.<br>
+In the Limited Accumulate mode is similar to the Accumulate mode, except that the number of stored blocks is limited to the number specified in the 'numAccumulatedBlocks' field. In this mode, the 'length' field has no effect.<br>
+For some of the described load mechanisms, a transition from 0 to a value below 0 in the 'deleteBlock' field starts deleting of a data block, relative to the latest data block. The latest block is addressed with -1, the block before it with -2 etc. This is possible e.g. in the following load modes: Accumulate mode, Continuous Accumulate mode and Limited Accumulate mode.<br>
+Since the inventive buffer may hold several data blocks, it is advantageous to have a possibility to select a particular data block for reproduction. The 'playBlock' field defines the block to be played. If the 'playBlock' field is set to 0, as is done by default, the whole content will be played, using the 'startTime' and 'stopTime' conditions. This is the above-mentioned Compatibility mode, since it is compatible to the function of the known MPEG-4 system. A negative value of 'playBlock' addresses a block relative to the latest block, e.g. the latest block is addressed with -1, the previous block with -2 etc.<br>
+It is an advantage of the inventive method that a buffer node can be reused, since loading data to the node is faster than in the current MPEG-4 standard, where a new node has to be created before data can be buffered. Therefore it is easier for the AdvancedAudioBuffer node to match the timing reference of the BIFS node, and thus synchronize e.g. audio and video data in MPEG-4.<br>
+An exemplary application for the invention is a receiver that receives a broadcast program stream containing various different elements, e.g. traffic information. From the audio stream, the packets with traffic information are extracted. With the inventive MPEG-4 system it is possible to store these packets, which are received discontinuously at different times, in the receiver in a way that they can be accumulated in its buffer, and then presented at a user defined time. E.g. the user may have an interface to call the latest traffic information message at any time, or filter or delete traffic information messages manually or automatically. On the other hand, also the broadcaster can selectively delete or update traffic information messages that are already stored in the receivers data buffer.<br>
+Advantageously, the invention can be used for all kinds of devices that receive data streams composed ovf one or more control streams and one or more multimedia data streams, and wherein a certain type of information is divided into different blocks sent at different times. Particularly these are broadcast receivers and all types of music rendering devices.<br>
+The invention is particularly good for receivers for MPEG-4 streaming systems. <br><br><br><br><br><br><br>
+We Claim:<br>
+1. Apparatus (40) for decoding a data stream, the data stream containing a first and a second substream (43,44), the first substream (43) containing first and second multimedia data packets and the second substream (44) containing control information, wherein the multimedia data packets contain an indication of the time when to be presented and are decoded prior to their indicated presentation time, and wherein the first and second multimedia data packets are buffered, the apparatus comprising<br>
+-	buffering means (47) for said buffering of the first and the second multimedia data packets;<br>
+-	extraction means (45) for extracting from said control information of the second substream (44) control data (49);<br>
+-	buffer allocation means (48) for allocating buffer size in the buffer (47); and<br>
+-	interface means (46) for storing in the buffer (47) the first decoded multimedia data packets and one or more second multimedia data packets;<br>
+characterized in that<br>
+said control data (49) comprises first, second and third control data, wherein the first control data (Length) are suitable for defining the buffer size to be allocated, the second control data (StartLoadTime, StopLoadTime) are suitable for defining one or more second multimedia data packets to be buffered, and the third control data (LoadMode) are suitable for defining a mode for buffering the second multimedia data packets;<br>
+-	the buffer allocation means (48) allocates buffer size in the buffer (47)<br>
+according to the first control data (Length); and<br>
+the interface means (46) stores the one or more second multimedia data packets in the buffer (47) according to the second control data (StartLoadTime, StopLoadTime), wherein depending on the third control data (LoadMode) the second multimedia data packets are either appended to the first decoded multimedia data packets in the buffer (47), or replace some or all of the first decoded multimedia data packets in the buffer (47).<br><br>
+2.	Apparatus as claimed in claim 1, wherein said interface means (46) uses<br>
+one of a plurality of operation modes according to the third control data<br>
+(LoadMode), wherein in a first mode buffering of multimedia data packets is<br>
+performed when the value of the first control data (Length) changes, and in<br>
+a second and third mode the second control data (StartLoadTime,<br>
+StopLoadTime) are used for specifying the multimedia data packets to be<br>
+buffered, wherein in the second mode the multimedia data packets replace<br>
+the buffer contents and in the third mode the multimedia data packets are<br>
+appended to the buffer contents.<br>
+3.	Apparatus as claimed in claim 1 or 2, wherein means (410) for attaching<br>
+labels to the buffered multimedia data packets, and for accessing, retrieving or<br>
+deleting the packets through their respective label.<br>
+4.	Apparatus as claimed in claim 3, wherein a label attached to the buffered data packets contains an index relative to the latest received data packet.<br>
+5.	Apparatus as claimed in one of the claims 1-4, wherein the data stream is an MPEG-4 compliant data stream.<br>
+6.	Method for decoding a data stream containing a first and a second substream, the first substream containing first and second multimedia data packets and the second substream containing control information, wherein the multimedia data packets contain an indication of the time when to be presented and are decoded prior to their indicated presentation time, wherein an apparatus as claimed in one of the claims 1-5 is used, the method comprising steps of<br>
+-	said extraction means (45) extracting control data (49) from said control<br>
+information of the second substream (44);<br>
+said buffer allocation means (48) allocating buffer size in the buffer (47); and<br>
+-	said interface means (46) storing in the buffer (47) the first decoded<br>
+multimedia data packets and one or more second multimedia data<br>
+packets;<br><br>
+characterized in that<br>
+said control data (49) comprises first, second and third control data, wherein the first control data (Length) define said buffer size being allocated, the second control data (StartLoadTime, StopLoadTime) define one or more second multimedia data packets being buffered, and the third control data (LoadMode) define a mode for buffering the second multimedia data packets; and<br>
+said one or more second multimedia data packets are stored as defined by the second control data (StartLoadTime, StopLoadTime), wherein depending on the third control data (LoadMode) said the second multimedia data packets are either appended to the first decoded multimedia data packets in the buffer (47), or replace in the buffer (47) some or all of the first decoded multimedia data packets.<br>
+7.	Method as claimed in claim 6, wherein the third control data (LoadMode) define one of a plurality of operation modes, wherein in a first mode buffering of multimedia data packets is performed when the value of the first control data (Length) changes, and in a second and third mode the second control data (StartLoadTime, StopLoadTime) are used for specifying the multimedia data packets to be buffered, wherein in the second mode the multimedia data packets replace the buffer contents and in the third mode the multimedia data packets are appended to the buffer contents.<br>
+8.	Method as claimed in claim 7, wherein the third mode has two variations, wherein in the first variation the buffering of multimedia data packets stops when the buffer is full, and in the second variation previously buffered data may be overwritten when the buffer is full.<br>
+9.	Method as claimed in one of the claims 6-8, wherein the method is executed in an instance of a processing node and wherein the first control data (Length)    defines    the    allocated    buffer    size    at   node    creation    time.<br>
+10.	Method as claimed in one of the claims 6-9, wherein replacing the stored<br>
+first decoded multimedia packets with the second multimedia data packets<br><br>
+further comprises the step of clearing the buffer before storing the second multimedia data packets.<br>
+11.	Method as claimed in one of the claims 6-10, wherein a labeling unit (410) attaches labels to the buffered multimedia data packets such that the buffered multimedia packets may be accessed through their respective label.<br>
+12.	Method as claimed in claim 11, wherein a label attached to the buffered data packets contains an index relative to the latest received data packet.<br>
+13.	Method as claimed in any of claims 6-12, wherein the first substream (43) contains audio data and the second substream (44) contains a description of the presentation.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUFic3RyYWN0LSgwNC0wNi0yMDA4KS5wZGY=" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Abstract-(04-06-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUNsYWltcy0oMDQtMDYtMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Claims-(04-06-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUNsYWltcy0oMTAtMTItMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Claims-(10-12-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUNsYWltcy0oMTYtMDEtMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Claims-(16-01-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMDQtMDYtMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Correspondence-Others-(04-06-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMDQtMDgtMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Correspondence-Others-(04-08-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMTAtMTItMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Correspondence-Others-(10-12-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMTYtMDEtMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Correspondence-Others-(16-01-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LURlc2NyaXB0aW9uIChDb21wbGV0ZSktKDEwLTEyLTIwMDgpLnBkZg==" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Description (Complete)-(10-12-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LURlc2NyaXB0aW9uIChDb21wbGV0ZSktKDE2LTAxLTIwMDkpLnBkZg==" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Description (Complete)-(16-01-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWRlc2NyaXB0aW9uIChjb21wbGV0ZSktMDQtMDYtMjAwOC5wZGY=" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-description (complete)-04-06-2008.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LURyYXdpbmdzLSgwNC0wNi0yMDA4KS5wZGY=" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Drawings-(04-06-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWZvcm0tMTMtKDE2LTAxLTIwMDkpLnBkZg==" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-form-13-(16-01-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWZvcm0tMTgucGRm" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUZvcm0tMi0oMDQtMDYtMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Form-2-(04-06-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUZvcm0tMy0oMDQtMDYtMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Form-3-(04-06-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUZvcm0tMy0oMDQtMDgtMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Form-3-(04-08-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUZvcm0tMy0oMTAtMTItMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Form-3-(10-12-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUZvcm0tMy0oMTYtMDEtMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Form-3-(16-01-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LUdQQS0oMDQtMDYtMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-GPA-(04-06-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LWdwYS5wZGY=" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LXBjdC00MDkucGRm" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-pct-409.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1kZWxucC0yMDA1LXBjdC00MTYucGRm" target="_blank" style="word-wrap:break-word;">5939-delnp-2005-pct-416.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LVBldGl0aW9uLTEzNy0oMDQtMDYtMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Petition-137-(04-06-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTkzOS1ERUxOUC0yMDA1LVBldGl0aW9uLTEzOC0oMDQtMDYtMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">5939-DELNP-2005-Petition-138-(04-06-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QuanBn" target="_blank" style="word-wrap:break-word;">abstract.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="227860-a-herbal-health-drink-composition.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="227862-a-fiber-winding-apparatus.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>227861</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>5939/DELNP/2005</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>07/2009</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>13-Feb-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>22-Jan-2009</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>20-Dec-2005</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>THOMSON LICENSING</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>46 QUAI A. LE GALLO, 92100 BOULOGNE-BILLANCOURT, FRANCE.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>JURGEN SCHMIDT</td>
+											<td>AKAZIENSTRASSE 5B, 31515 WUNSTORF, GERMANY.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04N 7/24</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/EP04/004795</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2004-05-06</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>03015991.7</td>
+									<td>2003-07-14</td>
+								    <td>EPO</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/227861-method-and-apparatus-for-decoding-a-data-stream-in-audio-video-streaming-systems by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 08:16:58 GMT -->
+</html>

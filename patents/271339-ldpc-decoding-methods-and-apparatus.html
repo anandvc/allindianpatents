@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/271339-ldpc-decoding-methods-and-apparatus by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 01:56:42 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 271339:LDPC DECODING METHODS AND APPARATUS</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">LDPC DECODING METHODS AND APPARATUS</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A flexible and relatively hardware efficient LDPC decoder is described. The decorder can be implemented with a level of parallelism which is less than the full parallelism of the code structure used to control the decoding process. Each command of a relatively simple control code used to describe the code structure can be stored and executed multiple times to complete the decoding of a codeword. Different codeword lengths are supported using the same set of control code instructions but with the code being implemented a different number of times depending on the codeword length. The decoder can switch between decoding codewords of different lengths, without the need to change the stored code description information, by simply changing a code lifting factor that is indicative of codeword length and is used to control the decoding process. When decoding codewords shorter than the maximum supported codeword length some block storage locations may go unused.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+LDPC DECODING METHODS AND APPARATUS FIELD OF THE INVENTION<br>
+The present invention is directed to methods and apparatus for performing Low Density Parity Check (LDPC) decoding operations and, more particularly, to decoding methods which are well suited for decoding data corresponding to codewords, e.g., codewords generated using a code structure which can be expressed as a product lifting.<br>
+BACKGROUND<br>
+Error correcting codes are ubiquitous in communications and data storage systems. Recently considerable interest has grown in a class of codes known as low-density parity-check (LDPC) codes. LDPC codes are provably good codes. On various channels, LDPC codes have been demonstrated to be really close to the channel capacity - the upper limit on transmission rate established by Claude Shannon.<br>
+LDPC codes are often represented by bipartite graphs, see exemplar)' graph 100 of Figure 1, called Tanner graphs, in which one set of nodes, variable nodes 102, correspond to bits of the codeword and the other set of nodes, constraint nodes 106, sometimes called check nodes, correspond to the set of parity-check constraints which define the code. Edges 104 in the graph 100 connect variable nodes 102 to constraint nodes 106. A variable node and a constraint node are said to be neighbors if they are connected by an edge in the graph. An alternative to the Tanner graph representation of LDPC codes is the parity check matrix representation H 202-Figure 2. A bit sequence x 206 is a codeword if and only if the product of the bit sequence and H is all-zero, that is: Hx=0.<br>
+A bit sequence associated one-to-one with the variable nodes is a codeword of the code if and only if, for each constraint node, the bits neighboring the constraint (via their association with variable nodes) sum to zero modulo two, i.e., they comprise an even number of ones.<br>
+In some cases some of these coded bits might be punctured or known. Punctured bits may be desirable in certain code structures and, in liftings (see below), both punctured and<br><br>
+known bits can be used to achieve block lengths that are not multiples of the lifting. Punctured bits and known bits may be, and often are, excluded from the transmitted codeword.<br>
+The number of edges attached to a node, i.e., a variable node or constraint node, is referred to as the degree of the node. A regular graph or code is one for which all variable nodes have the same degree, j say, and all constraint nodes have the same degree, k say. In this case we say that the code is a (j.k) regular code. These were the codes considered originally by Gallager (1961). In contrast to a "regular'1 code, an irregular code has constraint nodes and/or variable nodes of differing degrees. For example, some variable nodes may be of degree 4, others of degree 3 and still others of degree 2.<br>
+While irregular codes can be more complicated to represent and/or implement, it has been shown that irregular LDPC codes can provide superior error correction/detection performance when compared to regular LDPC codes.<br>
+It will be appreciated that received words generated in conjunction with LDPC coding, can be processed by performing LDPC decoding operations thereon, e.g., error correction and detection operations, to generate a reconstructed version of the original codeword. The reconstructed codeword can then be subject to data decoding to recover the original data that was coded. The data decoding process may be, e.g., simply selecting a specific subset of the bits from the reconstructed codeword.<br>
+LDPC decoding operations generally comprise message-passing algorithms. There are many potentially useful message-passing algorithms and the use of such algorithms is not hinted to LDPC decoding. The principle of a message-passing algorithm is that every node iterative}}' communicates to its neighbors via the connecting edge about its belief on the bit associated with the edge, the belief of the next iteration depending on the received believes on the current iteration.<br>
+Large block length LDPC codes, which correspond to large graph structures, offer many advantages over smaller codes in terms of error resiliency.<br><br>
+To implement a large graph structure using a smaller graph, various permutations may be applied to copies of the smaller graph structure and the copies can be linked together to generate a larger graph structure. In decoding operations, such permutation operations may be implemented by a switching device, referred to herein as a permuter, and also interchangeably referred to as a permutator, which applies a permutation operation on elements, e.g., messages in the case of a decoding operation, as they are passed between a memory and a vector processing unit which performs LDPC operations in parallel.<br>
+While various LDPC decoder implementations are known, there remains a need for methods and apparatus which can reduce LDPC decoder hardware implementation costs and/or make an LDPC decoder more flexible in terms of the number of LDPC codes which it can decode and/or the length of codewords which can be decoded by the LDPC decoder.<br>
+SUMMARY OF THE INVENTION<br>
+The present invention is dirscsd. to LDPC decoders and, more particularly, to LDPC decoders which can be inrst^rkeced rn a hardware efficient manner and/or which allow a degree of freedom by supporting rse n*r-*r^ of codewords of different lengths and/or codewords corresponding to different code ^mczires.<br>
+In some but not all embodiments of the present invention, the LDPC decoder of the present invention is made programmable. By altering code, e.g., microcode, used to control decoder operation, decoding of codewords generated according to different code structures is possible. A device, e.g.,communications device such as a wireless terminal, including the decoder of the present invention can store control code which is descriptive of different code structures. Based on infonnarior received rn a communications siream or from a user, the code corresponding to LDPC coded ckta ic be received and processed is identified and retrieved from memory. The code is thez loaded iso the decoder and used to control decoding as a function of the code structure determined to correspond to the data to be decoded.<br>
+In some embodiments, the decoder is loaded with a control code (e.g., microcode) corresponding to a single preselected code structure to be used by the device to control decoding. While the control code may be fixed in a particular embodiment, the same control<br><br>
+code can be used, in accordance with the invention, to decode codewords of different sizes up to a maximum codeword size determined by the maximum amount of memory and/or registers available to support decoding of a codeword. Depending on the codeword size, the number of times a control command stored in the decoder is executed may vary.<br>
+A codeword size indictor, which may be expressed as a selected code lifting factor, can be used to specify to the decoder the size of tbe codeword to be decoded. The codeword size indicator will normally indicate the codeword size in terms of a multiple of a minimum block size.<br>
+While various decoders of the present invention support programmability to allow for decoding data encoded according to different LDPC code structures and codewords of different lengths, the methods and apparatus of the present invention can also be used to implement a decoder which performs LDPC decoding operations on data generated according to a single code structure and of a single codeword size. That is, the methods and apparatus of the invention are useful even in cases where programmability and supporting codewords of different sizes is not an issue.<br>
+Various embodiments of the present invention are directed to data encoded using code structures which can be expressed as LDPC graphs that possess a certain hierarchical structure in which a full LDPC graph appears to be, in large part, made up of multiple copies, Z, e.g., of a Z rimes smaller graph, where Z is an integer. The Z graph copies may be identical. For purposes of explaining the invention, we will refer to tbe smaller graph as the projected graph, the full graph as the lifted graph, and Z as the lifting factor.<br>
+Consider indexing the projected LDPC graphs by 1,... ,j,... ,Z. In the strictly parallel graph variable nodes in graph j are connected only to constraint nodes in graph j. In accordance with the present invention, we take one vector edge, including one corresponding edge each from each graph copy, and allow a permutation within the Z edges, e.g., we permit the constraint nodes corresponding to the edges within the vector edge to be permuted, e.g., re-ordered.<br>
+We may restrict the permutations to be in the space of a subset (usually a group) of ZxZ permutation matrices, denoted as ¥ . We assume that the inverses of the permutations in<br><br>
+¥ are also in ¥ . The subset *F can in general be chosen using various criteria. One of the main motivations for the above structure is to simplify hardware implementation of decoders and encoders. Therefore, it can be beneficial to restrict W to permutations that can be efficiently implemented in hardware, e.g., in a switching network.<br>
+In the U.S. patent 6.633.856 an LDPC decoder architecture taking advantage of the lifted structure is described. In that architecture, we vectorize die decoding process. Specifically, we allow the Z edges within a vector edge ID imdsrgo a permutation, or exchange, between copies of the projected graph as they go, e.g.. from the variable node side to the constraint node side. In the vectorized message passing (decoding) process corresponding to the Z parallel projected graphs this exchange is implemented by permuting messages within a vector message as it is passed from one side of the vectorized graph to the other.<br>
+We briefly review an exemplary implementation of a vectorized decoder. We assume memory storing messages from variable node 10 check nodes and/or messages from check node to variable nodes is arranged into ZxE zr-bs storage locations, where E is the number of edges and m is the number of bits carried in a nssssge, an integer larger than 1. Memory is accessed in Z m-bit uniL in other words, ff-rr accss errher reads out or writes in Z m-bit. These Z m-bit correspond to the Z messages on the Z h±sc edges of the lifted graph. For convenience of description, we associate each SK es Z rr—^r messages to the corresponding edge in the projected graph. For example, when we say we access the messages of edge e in the projected graph, we actually access die Z m-bit messages corresponding to the Z edges in the lifted graph.<br>
+Lei us recall in me generic "rnss&amp;sgs-^assiiig algorithm., the message updating in a node depends on all ihe messages from the neighbors of the node. Assume a node in the projected has d edges t\, e^,..., ed. An edge-based impgrymaiioa of the message updating may read out messages of ej, apply the corresponding reordering; ana now.* the reordered messages are in proper neighboring groupings fix aQ me Z trades of ihe lifted graph. In the U.S. patent 6,633,856 the decoder architecture has Z parallel processing units for do the node processing. In one or more stages, the messages may undergo format transformation to facilitate efficient implementation. For example, different formats might be used on the variable node side and check node side.<br><br>
+The benefit of the vector decoder is that it achieves high throughput by providing structured parallelism. The lifting structure makes the description of the paralleled processing units in a compact way since the updated Z nodes correspond to the same node in the projected graph and all their neighboring edges correspond to the same edge in the projected graph respectively. Describing a lifted (vector) decoder normally involves the storage of the reordering and node information associated with each edge in addition to a description of small (projected) graph used to specify the larger graph structure. Assuming each edge has a constant description size, the total storage requirement on decoder information is proportional to the number of edges in the projected graph. For convenience of description, let us call this set of decoder description information the control code sometimes also referred to as the decoding microcode of a lifted graph. Therefore, for identical block length, increasing the lifting factor generally reduces the size of the decoding microcode. For large block length, this may significantly reduce the size of microcode storage memory.<br>
+In a microcode, half describes the variable node processing and the other half describes the check node processing. The decoding process executes each half of the microcode sequentially, each denoted as half of the decoding iteration. Embodiments of the U.S. patent 6,633,856 include structures doing two halves (variable node processing being one half and check node processing being the other half) of an LDPC decoding iteration, known as ant full iteration, either alternatively or simultaneously. A successful decoding will normally involve a few full iterations, e.g., multiple iterations may be required until the decoding processing results in a received codeword being modified to the point where it converges to a known codeword.<br>
+One element in the vectorized parallel processing is the reordering module facilitated by a switching network. The inter connection of the 2 copies are through the use of the reordering module. .After message reordering, the processing simply comprises Z parallel units each correspond to a copy of the projected graph.<br>
+A vector (lifted) LDPC decoder with implementation parallelism Z, implemented in accordance with the invention, achieves Z times high data throughput compared to a decoder with parallelism 1. The tradeoff is it invokes roughly Z times more gates in hardware complexity. Although setting implementation parallelism to the same as lifting factor for a lifted graph is convenient, it is not necessary. In many cases, it may not be desirable.<br><br>
+For example, let us suppose a large lifting factor Z is used in describing a large graph, for the above-mentioned benefit of saving microcode storage memory. Setting the implementation parallelism equal to the lifting factor Z results in an excessive throughput<br>
+Given the fact that hardware complexity is proportional to the implementation paraUensm but graph description complexity is proportional to the lifting factor Z, it is desirable the we can set the implementation parallelism such that the resulted throughput is matching the requirement without excessiveness while using a lifted graph described using a large lifting factor Z. This benefits both the processing unit complexity and decoder description storage.<br>
+The present invention is directed to methods and apparatus of implementing a vector LDPC decoder with implementation parallelism N using a decoder description with lifting factor Z, where N is a divisor of Z. Implementation parallelism N may be chosen to match the required tfeoughput, thus using the minimum hardware complexity.<br>
+r accompEshes this as the foDows. Given the microcode for a lifted graph with lifting factor Z=ix N. me present invention specifies a decoder with implementation parallelism N ZZF e^ssis each iteration of decoding into K iterations. Each iteration goes through the entire rsicnxxxe once, finishing i/K of a decoding iteration by a decoder with implementation parallelism Z. Since there are N parallel processing units, the total amount of processing time comes out to be the same, which is expected In essence, we are moving parallel processing into sequential processing without changing the microcode - describing the decoder using Uftmg Tartor rv-<br>
+Moreover, in accordance with the present invention, the vector LDPC decoder with impieuKuunion parallelism N is capable of decoding a class of LDPC codes, with same rate but diiierest codeword sizes, from the same microcode describing a decoder with lifting factor Z. Specifically, as an example, assume Z can be factored Kl x K2 x N, and the projected graph<br>
+code sizz is n, where each of Z, Kx, K2, N and n are positive integers, then the decoder may<br>
+decode three different codes of block sizes Nxn, K2 x N x n and K: x K2 x N x n.<br><br>
+Numerous additional features, benefits and advantages of the present invention are described in the detailed description which follows.<br>
+BRIEF DESCRIPTION OF THE FIGURES<br>
+Figure 1 illustrates a bipartite graph representation of an exemplary regular LDPC code of length ten.<br>
+Figure 2 is a matrix representation of the code graphically illustrated in Fig. 1.<br>
+Figure 3 and 4 illustrates the idea of decomposing the execution of a simple set of microcode into K steps.<br>
+Figure 5 illustrates an exemplary decoder architecture in accordance with the present invention.<br>
+Frr^re 6 illustrates 2 device, e.g., mobile node, which uses an exemplary programmable LDPC -s=Dier implemented in accordance with the present invention.<br>
+rL$-j.t 7? comprising the combination of Figure 7A and Figure 7B, is a flowchart of an exemplary method of operating an exemplary communications device in accordance with the present invention to perform encoding and decoding in accordance with the present invention.<br>
+DETAMJED DESCRIPTION OF THE INVENTION<br>
+Tie present invention is directed to LDPC decoders and, more particularly, to LDPC decoders ■which can be implemented in a hardware efficient manner. The decoding methods and appaizms of the present invention can he implemented as programmable devices and'or as devices wisch can receive codeword length indicator information and decode codewords of different lengths. Thus, while the decoders of the present invention can be implemented as fixed devices used to decode codewords of a specific codeword length allow a degree of freedom by supporting the decoding of codewords of different lengths and/or codewords corresponding to differenr code structures.<br><br>
+U.S. Patent Application 10/788,115 titled "METHOD AND APPARATUS FOR PERFORMING LOW-DENSITY PARITY-CHECK (LDPC) CODE OPERATIONS USING A MULTI-LEVEL PERMUTATION", filed on February 26, 2004, which is hereby expressly incorporated by reference, described product lifting methods which can be used with LDPC codes. Product lifting further restricts the group of Z x 2 permutation matrices used in lifting to be groups that can be decomposed into a direct-product of sub-groups. For example, we assume *F is a direct-product of two groups, i.e.. Y = T]xY2. The dimension of Y is equal rz ihe<br>
+product of the dimensions of y¥i, where Y, is the group of Kt x Ki permutation matrices, where<br>
+Kj is an integer. It is further assumed that the dimension of group y¥i equals to the dimension of<br>
+a matrix inside the group, thus Z = /sT, x K7.<br>
+In accordance with the present invention we restrict the lifting group ¥ to be a product-lifting group. A product lifting can equivalently be viewed as a multi-dimensional lifting. Assume the projected code is of size P, i.e., with P variable nodes. One could choose the cycfc group of size 64 for the lifting. An alternative, in accordance with the invention wosld be a product of the cyclic group of size 16 and the cyclic group of size 4. Tnis group car be<br>
+represented as follows. Consider indexing L = 0,.. .63 using pairs (a.b), a = 0... ..15 asd b=G	3<br>
+by the invertible map L = 4a+b. An element of this product group is a pair (c.d) c = 0	15 zzzz<br>
+d=0,.. .,3. The action of (c,d) on (a,b) is to permute the pair (a,b) to (a-fc mod 16, d+h mod 4;. This group also has order 64. The resulting lifted graph, however, can be interpreted as a lifting of a size 4P code by 16 or a size 16P code by 4 or a size P code by 64. The advantages offered by product liftings are realized in the context of a decoder of lie in vendor- The value a-dd^r b*" using product liftings is a feature of the invention. Liftings by groups which are not products, e.g., by a cyclic group, allow for liftings of arbitrary size but do not offer the flexibility of product liftings.<br>
+U.S. Patent Application S.N. 10/788,115 which has been incorporated by reference describes product lifting graphs and the potential benefits of using those graphs.<br>
+The present invention expands upon the basic principles described in the incorporated patent application. In particular, this application describes methods and apparatus for<br><br>
+implementing a decoder using a lifting factor Z=KxN and corresponding method and apparatus for decoding the graph with an implementation parallelism N, where K, N and Z are integers and N<z. thus the present invention is directed to a decoder which implements level of parallelism e.g. uses fewer check nodes and variable n in parallel than lifting factor z.></z.>
+We assume we have a lifted LDPC graph with lifting factor Z = KXN. The lifting group   to be a product-lifting group , where K is the dimension of group and N is<br>
+the dimension of group Thus the total lifting is the product of two smaller liftings.<br>
+An element in the vectorized parallel processing is the reordering module facilitated by a switching network. The messages are reordered according to their associated nodes, e.g., according to the processing to be performed. In a Z parallel embodiment, the implemented processing units comprise Z parallel units each correspond to a node in one copy of the projected graph.<br>
+In accordance with the invention,we use N parallel units, instead of Z parallel units. In processing, in the decoder of the invention we perform processing associated with N nodes in parallel as opposed to Z nodes. In such an implementation the decoding associated with processing a code specified by a Z times product lifting is performed by executing microcode K times, each time the N parallel units are doing message updating for N copies of the projected graph. Thus, in the jth time execution of the decoding, or a decoding pass, messages are updated far die jth N copies of the projected graph- Recall thai Z=NxK Thus, at the end of the K1*1 iisranan a decoding pass should be complete.<br>
+We write the original message vector d=(d]. d-, ... ds), each dj is an N m-bit vector. Given the lifting group is a product lifting let us write the reordering information<br>
+carried in each decoder description r = (n s2), where ri is the reordering amount in group <br>
+and T2 is the reordering amount in group We use the notationto  represent a<br>
+reordering by amount r on vector d (of Ki element) in group The reordering can be also<br>
+thought of a location permutation, so that the element dj at original location j goes to a new location denoted as in the reordered data. Then the reordering can be treated as a 2-<br><br>
+level reordering procedure. The first level reorders in group T2 for N (m-bit) elements to generate vector  Then the second level reorders in<br>
+group for K (N m-bit) elements to generate vector  Then the reordered data<br>
+d" is fed into node processing units. For convenience, let denote the inverse of<br>
+function <br>
+Hence for the jth N copies, their location inside the original Z m-bit vector is  So for an edge in the jth decoding pass, we read out data where the address is function<br>
+of both a and j, and reorder the read-out data by the amount of TI in group generate<br>
+  This set of messages corresponds to the set of properly ordered edge messages related to the N nodes in processing.<br>
+To facilitate understanding, we consider an example. Drawing 700 of Figure 3 shows the decoding process for an exemplary lifted graph with a maximum lifting factor Z=64 using a ievel of parallelism matching this lifting factor. The lifting group is the direct-product of cyclic group 4 and cyclic group 16. For purposes of explaining the invention we will now describe the decoding procedure for a set of 64 variable nodes corresponding to a node v in the projected graph using a level of parallelism which is equal to Z=64; where node v has degree 2. Decoding procedure for degree other than 2 or check nodes will have the same characteristic. The messages from the two edges connected to v are read out in two clocks, a=(ao-ai.a2,a3) 701, b=n&gt;*.h: J&gt;.K) 702. each a- fb) is a 16 element m-bit element vector 711. Time advancement is indicated by arrow 710. Those two 64 element data 701, 702 go through a 64 element permuter 703 comrolled by reordering information 708 indicated as (rl,r2), where rl represents the permmaiion ixrformation for the first cyclic group and r2 represents the permutation information for the second cyclic group. In our example, reordering information for data a 701 is (3,4) and<br>
+reordering information for data b 702 is (1,6). Thus after reordering, 704,<br>
+and 705, where d' represents the outcome of permuting data d by amount<br>
+i in cyclic group 16. The reordered data 704, 705 then go through a node processing module including 64 parallel configurable node-processing units 706, where the parallel processing performed by each of the units is mutually independent Therefore in the outcome data<br><br>
+C=(CQ,CJ?C2,c3) 707, Co only depends on ai and b*. Ci on a? and bo, c2 on a:, and b-., c^ on ac and 02. Decoder microcode command carries reordering information r=(rl,r2) 708 and node information 709.<br>
+Figure 4 which includes drawing 800 shows how we can implement the same decoding procedure shown in Fig. 3 using implementation parallelism 16 (N=16) rather than parallelism 64 (both in the permuter and in the parallel processing unit) following a microcode which supports the total lifting factor Z=64. The decoding is done in executing ibe microcode m 4 (K=4) loops where Z=NxK. Data is accessed as a function of a loop counter and and recording control information rl specified by (he microcode used to control decoding in accordance with the invention.<br>
+At the start of decoding the memory 912 is loaded with data to be decoded generated from a received signal, e.g. via data input 901. This data to be decoded may be referred to as a received codeword. As a result of channel interference and/or other factors which may introduce errors into a received signal, the received codeword to be decoded mas include errors which are to be detected and/or corrected by the decoding process. Decoding zs&gt; be determined to be complete in a variety of ways, e.g., by all the constrHhrs -n,f srr on a codeword being satisfied indicating that the received codeword has been decoasc to a codeword supported by the code. This may be described as the received codeword cocvsrgr^g to a known codeword. The decoded codeword can be read from memory 912 and/or output directly form node processing module 906.<br>
+In a first loop 827. e.g., a first processing iteration, the decoder aixasae^ ctma a? SGI 2nd bs 802; in the second loop 828; the decoder accesses data &amp;2 803 and bo 804: in the third loop 829: the decoder access data a3 805 and bi 806; and in the fourth loop 830. the dscoder accesses ao 807 and t&gt;2 808, where ai and bi represent sets of 16 m-bit elements, e.g~ messages being passes as part of the decoding process. Each message normally includes rrmitipfe bits. e-g_ soft values including reliability information that may be communicated in some of the messages. The exemplary 4 sets of data may not be contiguous as there are other variable nodes and a loop used to finish the complete set of microcode used for performing the decoding processing, e.g., the processing of the full set of variable nodes corresponding to the code structure to be used to control decoding. These 16 elements of each accessed data unit (801, 80Z 803, 804, 805, 806,<br><br>
+807, 808) go through a 16-element permuter 810 that is controlled by reordering information r2 825. Then the reordered data  818) go through a node processing module including 16 parallel node-processing units 820 that are controlled by node information 826 carried in the decoding command. The sequence Co 821, Cj 822, C2 823, c$ 824 is generated from the command. Therefore the same message passing result as in Figure 3 is accomplished by the structure in Figure 4, by using 4 times the processing rime while having approximately 1/4 of the hardware complexity. That is, the Fig. 4 decoder can be implemented using a level of parallelism of 16 instead of 64.<br>
+The above discussion describes how we can use parallelism N to decode using a microcode with lifting factor Z where Z=NxK.<br>
+We will now describe one exemplary LDPC decoder 900 implementation shown in Figure 5 that implements the K-loop decoding process of the present invention using a level of parallelism N to achieve the effect of using a level of parallelism Z.<br>
+Fig 5 shows an exemplary programmable decoder 900 implemented in accordance with the invention. The decoder 900 can be loaded via input 953 with different sets of code description information. In other embodiments, where a decoder of the present invention is not Drogrammable, the decoder 900 is pre-loaded, e.g., with a single set of code description information and the input 953 is omitted<br>
+Exemplary LDPC decoder 900 includes a memory source module 902, an N element controiiabi e pemmsr module 904, a node processing module (N node processors in parallel) 906, a control module 910, and a code lifting based block selection module 908. Memory source module 902 includes (NxKxL) memory (storage locations) 912 where each storage location can srore multiple bits, an address generation module 916, and, in some embodiments, as optional decompression module 914. The decompression module 914 is used in embodiments where messages passed as part of the decoding process between nodes are stored in a compressed format In such a case, they may be generated and stored in a compressed format and then subject to decompression before being subjected to further processing. Compression is not required and is not used in some embodiments but message compression can save on memory requirements and is therefore implemented in some embodiments.<br><br>
+The control module 910 includes a stored decoder description information module 942, an inner loop counter 940, and an outer loop counter 944. The stored decoder description information module 942 includes information, e.g., a control code such as microcode, which reflects the structure of the code which was used to control the generation of the code words to be decoded and thus which is also to be used to control decoding of received encoded LDPC codewords. The control code normally includes a sequence of commands which are implemented the number of times indicated by the selected code lifting factor SK up to the maximum supported lifting factor K, where K and SK are integers.<br>
+In exemplary LDPC decoder 900 of Figure 5, the control module 910 determines which command within the control code, e.g., microcode to be executed based on the value of the inner loop counter 940. The inner loop counter 940 increments by 1 at each step and resets upon reaching a maximum count as the number of commands inside the microcode corresponding to the stored code description being used to control decoding.<br>
+In one exemplary decoder embodiment, each line of the stored microcode which is executed in response to the control signal received from the inner loop counter 940 has the<br>
+format:<br>
+op r a nci<br>
+where op indicated a write operation;<br>
+where r is a number which provides permutation, e.g., message rotation, information - r is used as a compressed representation of separate rotation values rl, r2 which may alternatively be included in the command without being combined into a single value r and is normally processed by the decoder description module 942 to produce permutation information signals r] and T2where memory location indicator a is a memory location indicator, e.g., value, used to provide information on which memory location in memory 912 should be accessed when the specified operation is performed; and<br>
+where nci node configuration information which indicates whether the node processing module 906 should configure the nodes included therein as variable nodes or check nodes and/or<br><br>
+how many edges are to be processed by the nodes and/or the respective bits associated with variable nodes are punctured or known.<br>
+The number of edges to be processed by a node will, in the case of an irregular code, vary depending on which node in the code structure, e.g., graph, is being implemented at a particular point in time. Through the use of node control information, the node processing module can be able to be reconfigured to perform both variable node and check node processing apesndons avoiding the need for separate check node and variable node processing modules.<br>
+However, implementations which have separate variable node and check node processing modules are possible and within the scope of the invention. In such embodiments, node control configuration information 952 would be supplied to both the variable node and check node processing modules with each module using the control information which was relevant to the particular module.<br>
+Operation of the decoder 900 will now be discussed further. The stored decoder des^pdori information module 942 stores code description information used to control H*&gt;^--.~-^  Driven by the inner loop counter 940. the stored decoder description information mod^e 942 executes, e.g., by outpiitnng the appropriate control signals to implement the ^..'   v-rt a decoding command During each clock cycle in which the N element permuter module processes a set of data, a set of N elements are read out of memory 912. Data is written into memory when the write signal 928 is enabled, e.g., in response to the op signal generated frcHn the stored control code indscarmg a write is to be performed. A read and a write can occur in :he ssme permser clock cycie. This will happen when die write signal 928 is enabled given thai a read normally occur during each permuter clock cycle regards of the value of the write signs! 92S. This can be accomplished by using a dual ported memory or operating the memory module 902 a: rwice ihz rate of the permuter 904 allowing both a read and a write to memory 912 E&gt; occur in a permuter 904 clock cycle. Normally each of the elements of the decoder 900 are ckiven by a common clock signal. However, in some embodiments the memory 912 may be clocked at a higher rate to allow both a read and write in the period of the permuter 904 and/or node processing module 906. As discussed above, the command includes, e.g., an operator op, a memory location indicator a, reordering information r and node configuration information nci.<br><br>
+Operator op specifies the value of a write signal 928, e.g., a " 1" may be used to indicate write enable while a "0" may indicate write disable. The write signal 928 is output from the stored decoder description information module 942 and input to the memory source module 902. The memory location information a is used to generate the first address control signal (a) 930 which is supplied from module 942 to a memory source module 902. In this manner, the address generation module 916 of the memory source module 902 receives the information a corresponding to a command to be implemented. Reordering number r is separated into two parts (r:, r-). In various embodiments (ri, r2) each specify the reordering of element in the group y¥x and *F2, respectively, which are the groups into which nodes have been arranged to<br>
+implement a graph lifting as a function of two smaller liftings. The control values ri and r2 are stored in the value r. In one exemplary embodiment rl, which is specified by r for a given implementation, is determined from the value r as the integer divisor of r when divided by N which indicated the implemented level of node parallelism. That is, rl= r div N. r2 in such an embodiment is determined from the value r by taking the modulus of r/N. Assume for example that N=16. Consider for example if r=43 and N=16, then rl= (r div N) = (43 div 16) = 2. while r2= (rmodN) = (43 mod 16)= 11. Reordering part n, which is generated from r by macub 942, specifies block ordering information signal (n) 934 output from the stored description module 942. The signal r\ is provided as input to the code lifting block: SCENES module 908. while reordering Dart r&gt; determines the value of re-orderins controi sLszsL -r- 950 ouiput from module 942. The signal r^ is supplied as input to the N element consrslisbie permuter module 904.<br>
+Node configuration information included in a command which is executed determines the node configuration control signal 952 output from module 942. The node configuration information signal 952 is provided as input to the node processing module 906 which includes N configurable node processors arranged in parallel. In many, but not necessarily all embodiments, the node configuration information results in each of the N nodes processor in module 906 being configured the same way at the same point in time. The node processors may be switched between being configured as variable nodes and check nodes.<br>
+Stored decoder description information module 942, in some embodiments, e.g., embodiments in which the decoder 900 is programmable, includes an input 953 for receiving<br><br>
+code description information, e.g., decoder control instructions reflecting the code structure used in generating the codewords to be decoded.<br>
+Inner loop count signal 946 generated by the inner loop counter 940 is supplied as an increment control signal to outer loop counter 944. When the inner loop counter 940 reaches the maximum inner loop count value, e.g., the number of edges in the project graph, it triggers the outer loop counter 944 to be incremented by 1 and restarts counting from 0. e.g., the counter wraps around. The outer loop counter 944 determines which loop, from 1 to SK, is being executed in a complete iteration, where SK is a selected lifting factor which can range from 1 to K, where K and SK are integers. Once the outer loop counter 944 reaches the maximum, set through a code lifting factor control signal (SK) 948, the decoder 900 has finished a complete iteration and the outer loop counter 944 resets to zero. In some embodiments where the lifting factor is fixed, the SK signal input is omitted and the maximum outer loop counter value is set to<br>
+The code lifting based block selection module 908 receives the block ordering information signal (rO 934 from stored decoder information module 942 of control module 910 which is determined from an r; component of the reordering number r in the command from the said control module 910. Driven by the outer loop counter 944 of the control module 910 through outer loop control signal 936, and controlled by the block ordering information signal (jjj 934, the code lifting based block selection module 908 generates and outputs second address control signal (block address selection signal) 932.<br>
+"The memory module 902 receives write signal 928 and first address control signal (a) 930 conveying the operator and the memory location a from the control module 910. First address control signal (a) 930 and second address control signal 932 are received by the address generation module 916 of the memory source module 902. The address generation module 916 generates a memory access signal 920 specified by the information in received first and second address control signals 930, 932, and forwards the memory access signal 920 to memory 912. The signal 920 serves as a read address signal. Information is read out of the memory 912 once for each processing cycle of the N element controllable permuter 904. The memory address signal 920 is delayed by delay 954 to generate write address control signal 956. The number of cycles delayed between 956 and 920 may be controlled by part of the node configuration control<br><br>
+signal 952. The write output control signal 955 may be the same as the signal 956 and indicate the address to which a decoding result is written. The write address control signal controls the location at which the output of the node processing module 906 will be written into memory when the write signal 928 is enabled.<br>
+As shown the memory module 902 receives the output of the node processing module 906 via data input 928 or initial input through input 901. The initial input may be, e.g., a received codeword or portion of a codeword to be decoded.<br>
+The memory module 902 includes memory 912 which is arranged into K x (N x L) m-bit storage locations, were m represents the number of bits in a stored message, e.g., a soft value communicated between nodes. For convenience, we identify the storage locations with K blocks of (N x L) m-bit locations as block 1, ..., KL The memory 912 is accessed at a location that is a function of the first address control signal a 930 and the second address control signal k 932. Memory address generation module 916 indicates such a function. Given (a, k\ the memory source module 902 reads the N element vector corresponding to location a in the kth block. .-._..: Given the delayed (a, k\ and depending on the write signal, the memory source module 902 writes the N element vector input to location a in the feth block. Read and write operation for memory 912 may happen simultaneously, by using a dual-port memory or running the memory in double speed. The memory 912 may include additional memory for temporary storage of values in some embodiments.<br>
+Messages are read out of and written to memory 912 in N element units where each element includes m bits. As a set of X units 922 is r^ad-out of memory and is supplied to the input of the N element controllable permuter module 904. In some embodiments where message compression is used, decompression module 914 receives the N elements 918 read from memory 912, performs decompression, and outputs N elements to the controllable permuter where, as the result of decompression, each of the N element in signal 922 includes more bits than was originally read from memory. In embodiments where decompression module 914 is not used, the N element unit 918 read from memory 912 is supplied to the input of the permuter module 904. Embodiments which support decompression capability and allow the node processing module to generate messages in a compressed format allow for messages to be stored using m bits which is fewer than the number of bits included in each message after<br><br>
+decompression. N element controllable permuter module 904 implements a reordering of the N messages supplied thereto. This represents a reordering in the group T2.<br>
+Reordering control signal T2 950, which controls permuter 904 to perform the reordering of the N elements read from memory before they are supplied node processing module 906, is supplied by control module 910 and generated from the stored command of module 942 which is being executed.<br>
+The reordered N element vector output from the permuter module 904 is coupled to the N element vector input 924 of the N element node processing module 906. The node processing module 906 is controlled by the node configuration control signal 952 carried by the command from the said control module 910. In the illustrated embodiment, the output 926 of the node processing module 906 feeds into the memory module 902 and/or some additional memory, e.g., used for storing the result once successful decoding has been completed.<br>
+It should be noted that one variation~on tie described decoder embodiment is to use a decoder structure similar to the encoder impienezn^nocL inscribed in U.S. Patent Application S.N. 10/895547, tided "LDPC ENCODING METHODS AND APPARATUS" having a filing date July 21, 2004 and identified on the first pas by Airraey Docker No. [Rarion-108], which is hereby expressly incorporated by reference. Stzzh a Tfrrvjrr implemented in accordance with the invention would use inner loop repetition and would include K N-element registers to hold temporary node processing results. This variation will be apparent to those skilled in the field is to be considered within me scope of this patent and the invention. Such an implementation would include many of the memory module 902. oemuxsr module 904 and stored decoder description information module 942 features disclosed herein.<br>
+In summarv. riven the microcode for a lifsd ersnh with lifting- factor Z= K x N. and a codeword length = KxNxL, the present invention specifies a decoder with N processing units that executes the same decoder control code K times, e,g^ once during each of K passes used to complete one full decoding iteration associated with a lifted graph corresponding to Z copies of a smaller graph which can be used in specifying the code structure used to control coding of the codeword to be decoded.<br><br>
+In various embodiments of the present invention, the decoders of the invention can decode codewords corresponding to a class of codes that share the same rate as the projected graph, but have different codeword lengths. This is accomplished by using a selected lifting factor SK, where SK is a divisor of K, as the number of loops the decoder control code is executed to control one full iteration corresponding to the lifted graph.<br>
+More specifically, the group in such a product lifting may still be a direct-product of two groups and SK is the dimension of matrixand  J is the dimension of<br>
+  thus K = J x SK. As a special case, might be a group of single element 1 and is   so SK=1 and J=K. In any event, in the lifted graph, if we ignore the component inside the lifting group, then we have a lifted graph with a lifting factor ZfJ = SK x N. A different way to see this is we take the original graph and project it onto the lifting group , thus in the parity check matrix, every nonzero entry that indicates a Z x Z permutation matrix is now projected to a Z/ J xZf J permutation matrix. As such, the same sequence of decoding process in the larger graph still holds for the projected graph.<br>
+Thus, the microcode describing the larger graph with lifting factor Z can also be used in accordance with the invention as a microcode describing the projected graph with lifting factor ZJJ = SK x N. By the same line of argument as the case for Z, we can use the same decoder with N m-bit vector operation to decode a code with lifting factor SK x N by executing the microcode in SK loops to finish one iteration of decoder processing corresponding to the lifted graph.<br>
+Other codes of different codeword, e.g., block, lengths sharing the same microcode exist if W} is can still be written as a direct-product of two other groups  The same<br>
+decoder, in accordance with the present invention, with parallelism N can decode such a code with a lifting factor ZT, where F is the dimension of by specifying corresponding SK.<br>
+Further additional structure in may lead to more codes of different block lengths decodable<br>
+on the same hardware. Therefore, by controlling SK according to the group structure to be used in a particular decoding implementation, the decoder can decode codewords having different codeword lengths.<br><br>
+In the exemplary LDPC decoder 900 of Figure 5, the code lifting factor can be specified through the code lifting factor control signal (SK) 948. The signal 948 is coupled to the outer loop counter 944, determining the maximum count of the outer loop counter 944.<br>
+The methods and apparatus of the present invention can be used to implemented a wide variety of devices including, for example, wireless terminals, base stations, data storage devices and other types of devices where encoding and/or decoding of data to prevent and/or correct errors might be useful.<br>
+Figure 6 is a drawing of an exemplary wireless terminal (WT) 1000, e.g., mobile node, implemented in accordance with LDPC encoder/decoder apparatus that use methods of the present invention. Exemplary WT 1000 includes a receiver 1002, a receiver antenna 1004, a programmable LDPC decoder 1006, a transmitter 1008, a transmitter antenna 1010, a programmable LDPC encoder 1012, a processor 1014, user I/O devices 1015 and a memory 1016. The programmable LDPC decoder 1006 (which can be implemented using the decoder 900 of Hg. 5), programmable LDPC encoder 1012, processor 1014, user I/O devices 101-5 and memory 1016 are coupled together via a bus 1018 over which the various elements may interchange data and information.<br>
+The receiver 1002 is coupled to the receiver antenna 1004 through which the WT 1000 may receive signals from other devices, e.g., encoded downlink signals from a base station. The receiver 1002 is also coupled to the programmable LDPC decoder 1006 which may decode received downlink signals in accordance with the invention. Received signals may include, e.g., in a:kfi~ion to LDPC coded data, signals, e.s.. control information, used to indicate LDPC code structure used to encode data which is being received and/or the codeword length of codewords included in received data. The received data may include codewords corresponding to different applications. In accordance with the invention, the decoder may switch from decoding data corresponding to a first code structure and codeword length to decoding data corresponding to a second code structure and a second codeword length. The first and second codeword structures may be different with the decoder being loaded with the appropriate code structure information, e.g., control code in the form of microcode, in response to information included in the received information. The control information is normally not encoded using LDPC codes to facilitate rapid detection and interpretation of the control information. The first and second codeword<br><br>
+lengths can also be different In some cases, the first and second code structures are the same but the codeword lengths of data corresponding to different applications may be different In such case the code structure information need not be updated to decode the codewords of different sizes and merely the codeword length information, e.g., lifting factor information need be supplied to the decoder as the codeword length of the received data changes. The codeword length information may be specified as a code lifting factor for the code structure being used. As will be discussed below, code structure information, e.g., control code, can be used to control the programmable LDPC decoder while codeword length information can be used to set the codeword length for decoding purposes. Such information can be conveyed to the decoder 1006 from memory 1016 via bus 1018.<br>
+The transmitter 1008 is coupled to the transmitter antenna 1010 through which the WT 1000 may transmit uplink signals including encoded uplink signals to base stations. The transmitter 1008 is coupled to the programmable LDPC encoder 1012 which encodes various uplink signals, e.g., data signals corresponding to different applications, prior to transmission. The encoder can be.ioaded with different sets of.code--descrbs.cn information, e.g., different sets. ■ : of control codes such as microcode, corresponding IT- dsffcsE code structures. In addition the encoder 1012 can be supplied with codeword leng± irrTor-r-^otL e.g- in the form of code lifting factor information, used to control the length of code^ons gneraisd by the encoder 1012. Information selecting the codeword structure and/or cocewxn length may be obtained from received information, e.g.. the encoder may encode data generated by an application using the same codeword structure and codeword length as was used to decode received data intended for the particular application snsraing daia, Tnus, che encoder may be programmed to maich the encoding structure and codeword length being used bsr saotnz device with which the wireless terminal is interacting. Alternatively, a user of the device may specify use of a particular codeword structure and/or codeword lensth or such mfornsdDn mav be specified bv a communications routine or other program stored in the wrreiess terminal.<br>
+Code structure information and/or codeword length information. e.£. in the form of a set of control commands, can be conveyed from memory 1016 to the programmable LDPC decoder 1006 and to the programmable LDPC encoder 1012 over bus 1018. User I/O devices 1015, e.g., keypads, speakers, microphones, displays, etc. provide interfaces for the user to input data and information, e.g., data and information to be encoded and communicated to another WT and for<br><br>
+the user to output and/or display received data/information, e.g., received data and information from a peer node which has been decoded. User I/O devices 1015 provide an interface allowing a user to select and/or specify the code associated with a set of data, code length indicator, and/or sets of code description information to be used by the programmable LDPC decoder 1006 and/or programmable LDPC encoder 1012.<br>
+The processor 1014, e.g., a CPU, executes the routines and uses the data/mfonnation in memory 1016 to control the operation of the wireless terminal 1000 and implement the methods of the present invention.<br>
+Memory 1016 includes a group 1025 of encoder code description information sets 1026, 1028 and a group 1029 of decoder code description information sets 1030, 1032. Each encoder code description information set 1026, 1028 includes control codes, e.g., microcode, which reflects the code structure of the code to be used for encoding data. Each set of information 1026; 1028 corresponds to a different code structure. The encoder code description information can be loaded into the encoder control module of the programmable LDPC encoder 1012 and used, e.g., as stored encoder description information, to control encoding of data. Similarly, each of the decoder code description information sets 1030, 1032 includes control codes, e.g., microcode, which reflects the code structure of the code to be used for decoding data. Each set of decoder code description information 1030, 1032 corresponds to a different code structure. The decoder code description information can be loaded into the control module of the programmable LDPC decoder 1006 and used, e.g., as stored decoder description information, to ■control decoding of data.<br>
+Memory 1016 includes communications routines 1020, encoder code and codeword length selection routine 102Z and decoder code and codeword length selection routine 1024. Communications routines 1020 m£y control general communications and interactions with other wireless devices. The communications routine being implemented for given application may specify the code structure and/or codeword length to be used for a particular communications application when encoding and/or decoding data using LDPC codes. Encoder code and codeword selection routine 1022 is responsible for selecting the code structure and thus corresponding encoder code description information 1026, 1028 to be used for a particular application. This selection may be made based on information received from a communications<br><br>
+routine 1020. information received via receiver 1002 or from user input. The encoder code and codeword length selection routine 1022 is responsible for loading the programmable LDPC encoder 1012 with the selected code description information and for supplying information, e.g., a selected code lifting factor, to the programmable encoder 1012 if it has not already been configured to perform encoding in accordance with the selected code and codeword length. Decoder code and codeword selection routine 1024 is responsible for selecting the code structure and thus corresponding decoder code description information 1030, 1032 to be us&amp;d for a particular application. This selection may be made based on information received from a communications routine 1020, information received via receiver 1002 or from user input The decoder code and codeword length selection routine 1024 is responsible for loading the programmable LDPC decoder 1006 with the selected code description information, e.g., control code, and for supplying information, e.g., a selected code lifting factor, to the programmable decoder 1006 if it has not already been configured to perform decoding in accordance with the selected code and codeword length.<br>
+In addition to the above discussed routines and information relating to encoding and decoding, the memory 1016 may be used to stored received decoder information 1035. e g received information used by the decoder code and codeword length selection routine IG2-which indicates a code structure and codeword length to be used for decoding. In addidon received encoder information 1044, e.g., received information used by the encoder code 23d codeword length selection routine 1022 which indicates a code structure and codeword length to be used for encoding may be stored in memory 1016. User input information 1036 relating to decoding and user input information relating to encoding 1042 C2n also be stared in memory 1016. Such information may be the same as or similar to decoder information 1038 and encoder information 1044 but is obtained from a user via a user I/O device 1015 rather than via receiver 1002.<br>
+Figure 7, comprising the combination of Figure 7A and Figure 7B. is a flowchart HOG of an exemplary method of operating an exemplary communications device implemented in accordance with the present invention, e.g., WT 1000, to perform encoding and decoding in accordance with the present invention. Operation starts in step 1102, in which the WT 1000 is powered on and initialized. Operation proceeds from step 1102 to steps 1104, 1106, and steps 1108.<br><br>
+In step 1104, the WT 1000 is operated to receive encoding/decoding information and/or generate control information from received data. The encoding/decoding information, e.g., control information for the programmable LDPC encoder 1012 and/or programmable LDPC decoder 1006, may be received via a received signal processed through receiver 1002 and/or as user input received via user I/O devices 1015. In addition, received encoded data may be processed to generate control information. For example, multiple attempts at decoding can be performed using different code structure information and/or different codeword lengths. Upon successful decoding control information is generated in some embodiments indicating the code structure and/or codeword length which is to be used to decode incoming data and, in some embodiments encode outgoing data as well. Operation proceeds from step 1104 via connecting node A 1110 to step 1112. In step 1112, the WT 1000 is operated to determine the type of received encoding/decoding control information. Based upon the determination of step 1112, operation proceeds to step 1114, 1116, 1118, or 1120.<br>
+■ . If it is determined in step 1112, that the type .of control information is encoder code strucwre information, then operation proceeds to step 1114. In step 1114, the WT 1000 is operated to load the encoder 1012 with a set of code description information, e.g., control code corresponding to the code structure information indicated by the control information. Operation proceeds from step 1114 to connecting node B 1122.<br>
+If it is determined in step 1112, that die type of information is encoder codeword length infremarion. then operation proceeds to step 1116. In step 1116, the WT 1000 is operated to supply the encoder 1012 with codeword lengm indicator, e.g., selected lifting factor, corresponding to the codeword lengrh indicated by the control information. Operation proceeds from stED 1116 to connecting node B 1122.<br>
+4-	w<br>
+If it is determined in step 1112, that the type of control information is decoder code structure information, then operation proceeds to step 1118. In step 1118, the WT 1000 is operated to load the decoder 1006 with a set of code description information, e.g., control code corresponding to the code structure indicated by the control information. Operation proceeds from step 1118 to connecting node B 1122.<br><br>
+If it is determined in step 1112, that the type of information is decoder codeword length information, then operation proceeds to step 1120. In step 1120, the WT 1000 is operated to supply the decoder 1006 with codeword length indicator, e.g., selected lifting factor, corresponding to indicate codeword length. Operation proceeds from step 1120 to connecting nodeB 1122.<br>
+From connecting node B 1122 operation returns ro step 1104, where WT 1104 waits to<br>
+receive other encoding/decoding information, e.g.,	omplete the configuration of<br>
+the programmable decoder 1006 and/or programmable encoder 1012, and/or information to change selected settings, e.g., codeword length settings, of the decoder 1006 and/or encoder<br>
+1012.<br>
+In step 1106, the WT 1000 including a previously configured programmable decoder 1006 is operated to receive through receiver 1002 data to be decoded, e.g., encoded user data from a peer node of WT 1000. The received data is forwarded to the decoder 1006. Operation proceeds from step 1106 to step 1124. In step 1124, die decods: 1*006 is operated to decode data according to stored code description information in decoder 1006 and codeword length indicator information that has been supplied to the decoder. Operzticc proceeds from step 1124 to step 1106, where additional data to be decoded is received.<br>
+In step 1108, the WT 1000 including a previously configured programmable encoder 1012 is operated to receive through user I/O devices 1015 data to be encoded, e.g., input data from the user of WT 1000 imendec to be encoded and connminicated to a Deer node of ^T 1000. The received data is fofrwarded to the encoder 1012. Opcrsks: proceeds from st-ep 1105 to step 1126. In step 1126, the encoder 1012 is operated to encode data according to stored code description information and codeword length indicator nrfbnaH±5n supplied to the encoder. Operation proceeds from step 1126 to step 1108, where additional data to be encoded is received.<br>
+Over time, as the control information corresponding to the codeword length information, e.g., selected lifting factor, loaded into the encoder 1012 and decoder 1006 changes, the codeword length will change. Thus, the codeword length can, and in various implementations will, change as the wireless terminal switches from receiving data corresponding to a first device<br><br>
+and/or application to processing data corresponding to second device and/or application. In addition, the code structure information used by the encoder 1012 and/or decoder 1006 can be changed over time as the wireless terminal interacts with a different device and'or implements a different application. Thus, at a first point in time the encoder and decoder may process codewords corresponding to a first length and/or code structure and at another time processes codewords corresponding to a second length and/or code structure. At still other points in time the programmable LDPC encoders 1012 and decoders 1006 of the present invention may use other code structures and/or codeword lengths. The various supported codeword lengths will normally be up to a maximum size determined by the amount of memory available and/or number and size of available registers in the encoder 1012 and decoder 1006-<br>
+For a detailed discussion of an exemplary programmable LDPC encoder which can, and in some embodiments is used, as the programmable LDPC encoder 1012, see U.S. Patent Application S.N. 10/895547, titled "LDPC ENCODING METHODS AND APPARATUS", having a filing date July 21, 2004, which is identified on the first page by Attorney Docket Number-Flarion* 108, names as inventors Tom Richardson and Kx Jhu and which is hereby   .     .    . expressly incorporated by reference.<br>
+Using the above discussed routines and stored encoder/'dercder information, the wireless terminal can, and does, switch berween usins different code structures and codeword leneths for both encoding and decoding purposes as a function of received information, e.g., user information or information received via receiver 1002. Encoder/decoder changes may also be triggered by the particular communications routine 1020 executed at a particular point in time. Accordingly, the present invention allows for a great deai cf flexibility in encoding and decoding of LDPC codes with a single set of hardware which can be easily modified through the use of code updates corresponding IO different code structures zadfzs changes in a codeword length control parameter.<br>
+The following patent applications and patent provide information on encoding and/or decoding LDPC codes and are hereby expressly incorporated by reference. U.S. Patent Application S.N. 10/788,115 filed February 26, 2004; U.S. Patent .Application S.N. 10/117,264 filed April 4, 2002; U.S. Patent Application S.N. 10/618325 and U. S. Patent 6,633,856.<br><br>
+Numerous variations on the method and apparatus of the present invention are possible. For example, various features of the present invention may be implemented in hardware and/or software. The modules used to implement the present invention may be implemented as software, hardware, or as a combination of software and hardware. Some aspects of the invention may be implemented as processor executed program instructions. Alternatively, or in addition, some aspects of the present invention may be implemented as integrated circuits, such as ASICs for example. The apparatus of the present invention are directed to software, hardware and/or a combination of software and hardware. Machine readable medium including instructions used to control a machine to implement one or more method steps in accordance with the invention are contemplated and to be considered within the scope of some embodiments of the invention.<br>
+Thus, the present invention is directed to. among other things, software which can be used to control a processor to perform encoding and/or decoding in accordance with the present invention. The methods and apparatus of the present invention may be used with OFDM communications systems as well as with other types.of.communications systems including CDMA systems.<br><br><br><br><br><br><br>
+WHAT IS CLAIMED IS:<br>
+1.	An LDPC decoder, comprising:<br>
+a message source including a message output for supplying N messages in parallel, wherein N is greater than 1;<br>
+a node processing module including N node processors arranged in parallel;<br>
+a controllable pennutator coupling said message source to said node processing module, said controllable particular including a re-ordering control signal input for receiving a reordering control signal used to control reordering messages, in at least one set of N messages, being passed through said controllable pennutator;<br>
+a control module for generating a first address control signal as a function of stored code description information, said control module having a first address control signal output coupled to said message source; and<br>
+a block selection module for generating a block address selection signal, said block selection module having a block address selection signal output coupled to said message source.<br>
+2.	The decoder of claim 1. wherein said control module includes:<br>
+an inner loop couple for generating said first address control signal; and<br>
+an outer loop counter for generating an outer loop control signal supplied to said block<br>
+selection module, send outer loop counter being incremented as a function of an inner loop count<br>
+generated by said inner ioop counter.<br>
+3.	The decoder of claim 2,<br>
+wherein said messages source is a memory and.<br>
+wherein said other loop control is reset upon reaching a maximum count determined by a cock lifting factor control signal, said control lifting factor control signal indicating a selected lifting factor, SK SK having a value greater than or equal to 1.<br>
+4.	The decoder of claim 3, wherein said selected lifting factor SK is less than or equal to a<br>
+maximum lifting K corresponding to a maximum lifting factor supported by said control<br>
+module.<br><br>
+5.	The decoder of claim 1. wherein the block selection module includes a block orderins information signal input for receiving a block ordering information signal from said control module, said block ordering information signal being a function of a value generated by said inner counter and said stored code description information.<br>
+6.	The decoder of claim 5, wherein the message source includes an address generation module for generating a memory access signal from said first address control signal and said second address control signal.<br>
+7.	The decoder of claim 6, wherein said message source further includes a memory including at least N times K storage locations.<br>
+8.	The decoder of claim 7, wherein each of said N times K storage locations stores at least 2 bits.<br>
+9.	The decoder of claim 1, wherein the message source further includes a decompression module for decompressing messages stored in said memory prior to said messages being supplied to said controllable permutator.<br>
+10.	The decoder of claim L wherein each of said node processors is a variable node processor.<br>
+11.	The decoder of claim 1, wherein each of said node processors is a check node processor.<br>
+12.	The decoder of claim 1, wherein each of said node processors is a configurable node processor which is switchable between a variable node and a check node mode of operation.<br>
+13.	The decoder of claim 12, wherein each of said configurable node processors receives configuration information generated by said control module from said stored code description information.<br>
+14.	A method of performing Low Density Parity Check (LDPC) decoding processing comprising;<br><br>
+providing an decoder including:<br>
+a memory module including NxLxK storage locations, where N and L are positive integers and K is an integer &gt;1, each storage location being capable of storing multiple bits;<br>
+a controllable permuter coupled to said memory module for performing element re-ordering operations on a set of N multi-bit elements to change the order of the elements in said set;<br>
+a node processing module including N configurable node processors arranged in parallel coupled to said controllable permuter;<br>
+a set of stored decoder control instructions; and generating a first re-ordering signal used to control memory access as a function of a decoder control instruction included in said set of stored decoder control instructions; and generating a second re-ordering control signal as a function of said decoder control instruction, said second re-ordering control signal being supplied to said permuter module.<br>
+15,	The method of claim 14, further comprising:<br>
+performing a memory access operation at a location determined from said first re-TTig control signal: and<br>
+operating the perrautator module to perform a message reordering operation in accordance with said supplied reordering control signal.<br>
+16.	The method of claim 15, wherein said step of performing a memory access operation at a<br>
+location determined from sad first re-ordering control signal includes:<br>
+generating a memory address from a first address control value included in said decoder control command and a second address control signal generated from said first re-ordering signal and a value generated by a loop counter. .<br>
+17.     The method of claim 16. wherein the value generated by said loop counter is generated as a function of a codeword length indicator signal.<br>
+18.      The method of claim 17, further comprising:<br>
+configuring nodes in said node processing module as a function of configuration information included in said decoder control command.<br><br>
+19.	A method of decoding information previously encoded using a LDPC encoder, the<br>
+method comprising:<br>
+receiving first codeword length information indicative of the length of first codewords to decoded;<br>
+supplying said codeword length information to a control input of an LDPC decoder;<br>
+operating the LDPC decoder to receive data to be decoded; and<br>
+operating the LDPC decoder to decode the received data as a function of the received codeword length information.<br>
+20.	The method of claim 19, further comprising:<br>
+receiving second codeword length information indicative of the length of additional codewords to be decoded, said length of additional codewords being a second number of bits which is different form a first number of bits indicated by said first codeword length. information.<br>
+21.	The method of claim 20. wherein said first codeword length information is a first selected code lifting factor signal used to indicate the number of times commands fixed be iteratively executed.<br>
+22.	The method of claim 19, further comprising:<br>
+storing a first set of code structure description information in a module in said decoder; and<br>
+using the stored first set of code description information to perform an LDPC decoding operation.<br>
+23.	The method of claim 22, further comprising:<br>
+storing a second set of code structure description information in said, module in said decoder, the second set of code structure description information corresponding to = LDPC code having a different structure than a code structure to which the first set of code structure information corresponds.<br>
+24.	The method of claim 23, further comprising:<br><br>
+decoding data using the first set of code structure information when communicating with a first device; and<br>
+decoding data using the second set of code structure information when communicating with a second device.<br>
+25.	The method of claim 24, wherein the first set of code structure information is used at a different point in time from when the second set of code structure information is used.<br>
+26.	The method of claim 22, wherein said step of storing a first set of code description information is in response to receiving a signal indicating that codewords corresponding to said first set of code description information are to be decoded.<br>
+27.	The method of claim 22, wherein said step of storing a first set of code description information is in response to receiving a signal including codewords encoded according to a code structure corresponding to said first set of code description information.<br>
+28.	The method of claim 22, wherein said first set of code description information includes decoder control instructions.<br>
+29.	The method of claim 28, wherein each decoder control instruction includes one of a read and a write operation indicator.<br>
+30.	The method of claim 29, where each decodes- control instruction further includes rotation control information.<br>
+51.      The method of claim 29, where each decoder control instruction further includes memory address information.<br>
+32. The method of claim 31, wherein each decoder control instruction further includes node configuration information indicating that a node processing unit should be configured as one of a variable node processing unit and a check node processing unit.<br><br>
+33.	A method of implementing a programmable LDPC decoder system  the method<br>
+comprising the steps of:<br>
+storing, during a first period of time, a first set of decoding instructions in a module in an LDPC decoder, said first set of decoding instructions corresponding to a first LDPC code structure;<br>
+operating the LDPC decoder to perform an LDPC decoding operation using the stored decoding instructions structure;<br>
+storing, during a second period of time, a second set of decoding instructions. said second set of decoding instructions being different from said first set and corresponding to a second LDPC code structure which is different from said first LDPC code structure; and<br>
+operating the decoder to perform an LDPC decoding operation using the stored second set of decoding instructions.<br>
+34.	The method of claim 33, wherein the first and second sets of decoding instructions are used during different periods of time to perform decoding operations.<br>
+35.	The method of claim 33, wherein said step of storing the first set of  according instructions is in response to receiving a signal indicating that codewords corresponding to said first set of code description information are to be used.<br>
+36.	The method of claim 33, wherein said step of storing a first set of decoding instructions is in response to receiving a signal including codewords encoded according to a code structure corresponding to said first set of decoding instructions.<br>
+37.	The method of claim 33, wherein said first and second sets of decoding instructions are stored in said module during both said first and second periods of time, sad module being a storage device.<br>
+38.	The method of claim 37, wherein a plurality of said decoder control instructions includes a write operation enable/disable indicator.<br>
+39.	The method of claim 37, where each of said plurality of decoder control instructions includes rotation control information.<br><br>
+40.      The method of claim 39, where each of said plurality of decoder control instructions further includes memory address information.<br>
+Dated this 21 day of February 2007<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=aP60vsFtdleWo9YXi71Xyg==&amp;amp;loc=egcICQiyoj82NGgGrC5ChA==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=aP60vsFtdleWo9YXi71Xyg==&amp;amp;loc=egcICQiyoj82NGgGrC5ChA==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="271338-crystalline-complexes-of-agriculturally-active-organic-compounds.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="271340-a-method-for-fast-connectivity-fault-management-cfm-of-a-network.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>271339</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>744/CHENP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>08/2016</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>19-Feb-2016</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>17-Feb-2016</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>21-Feb-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>QUALCOMM INCORPORATED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>5775 MOREHOUSE DRIVE SAN DIEGO CALIFORNIA 92121</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>RICHARDSON, TOM</td>
+											<td>420 CLARK STREET, SOUTH ORANGE, NJ 07079, USA</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>JIN, HUI</td>
+											<td>41 CRESTVIEW DRIVE, CLINTON, NJ 08809, USA</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>NOVICHKOV, VLADIMIR</td>
+											<td>2162 GILBRIDE ROAD, MARTINSVILLE, NJ 08836, USA</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H03M13/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US05/25879</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-07-20</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/895,645</td>
+									<td>2004-07-21</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/271339-ldpc-decoding-methods-and-apparatus by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 01:56:43 GMT -->
+</html>

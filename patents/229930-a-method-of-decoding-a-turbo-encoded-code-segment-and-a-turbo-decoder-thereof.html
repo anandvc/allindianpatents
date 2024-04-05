@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/229930-a-method-of-decoding-a-turbo-encoded-code-segment-and-a-turbo-decoder-thereof by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 10:39:36 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 229930:A METHOD OF DECODING A TURBO ENCODED CODE SEGMENT AND A TURBO DECODER THEREOF</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD OF DECODING A TURBO ENCODED CODE SEGMENT AND A TURBO DECODER THEREOF</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>Techniques to improve the performance of a Turbo decoder when scale information for the bits in a code segment to be decoded is not known. A number of hypotheses are formed for the code segment, with each hypothesis corresponding to a particular set of one or more values for a set of one or more parameters used for decoding the code segment. For the MAP decoding scheme, these parameters may be for the sequence of scaling factors used to scale the bits prior to decoding and/or a scale used to evaluate a (e.g. min*) function for the MAP decoding. The code segment is decoded based on the MAP decoding scheme and in accordance with each hypothesis. The quality of the decoded result for each hypothesis is determined based on one or more performance metrics. The decoded bits for the best hypothesis are provided as the Turbo decoder output.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+TURBO DECODER WITH MULTIPLE SCALE SELECTIONS<br>
+BACKGROUNfD<br>
+[0001]	I. Field<br>
+[0002]	The   present   invention   relates   to   data  communication.      More<br>
+particularly, the present invention relates to techniques to Turbo decode a code<br>
+segment with  unknown  scale information  in  a  manner to  provide improved<br>
+perfomiance.<br>
+[0003]	n. Background<br>
+[0004]	Wireless communication systems are widely deployed to provide<br>
+various types of communication such as voice, packet data, and so on. These systems may be based on code division multiple access (CDMA), time division multiple access (TDMA), or some other multiple access techniques. A CDMA system provides certain advantages over other types of system, including increased system capacity.<br>
+[0005]	A CDMA system may be designed to support one or more CDMA<br>
+standards such as IS-95, W-CDMA. cdma2000, and others. Each standard typically defines the processing of data prior to transmission on the forward and reverse links. For example, voice and/or packet data may be coded at a particular data rate, formatted into a defined frame format, and processed (e.g., encoded for error correction and/or detection, interleaved, and so on) in accordance with a particular processing scheme.<br>
+[0006]	Many  newer  CDMA  standards   employ  a  parallel  concatenated<br>
+convolutional encoder (often referred to as a Turbo encoder), which may be selected for encoding a code segment (e.g., a data packet) prior to transmission. The Turbo encoder employs two constituent encoders operated in parallel and in combination with a code interleaver. The code interleaver shuffles (i.e., interleaves) the information bits in the code segment in accordance with a defined interleaving scheme. One constituent encoder encodes the information bits in the code segment to<br><br>
+generate a first sequence of parity bits, and the other constituent encoder encodes the shuffled information bits to generate a second sequence of parity bits. The information bits and some or all of the parity bits in the first and second sequences are transmitted.<br>
+[0007]	A complementary (and computationally intensive) Turbo decoding is<br>
+performed at a receiver unit. For each Turbo encoded segment, the received (soft<br>
+value) bits are typically scaled, quantized, and stored to a buffer. The information and<br>
+parity bits for the first constituent encoder are then retrieved from the buffer and<br>
+decoded by a first constituent decoder based on the first constituent code to provide<br>
+"extrinsic" information indicative of adjustments in the confidence in the detected<br>
+values for the information bits. Intermediate results that include the extrinsic<br>
+infonnation from the first constituent decoder are then stored to a storage unit in an<br>
+interleaved order matching the code interleaving used at the transmitter unit<br>
+[0008]	The intemiediate results and the parity bits from the second constituent<br>
+encoder are then retrieved from their respective sources and decoded by a second constituent decoder based on the second constituent code to provide extrinsic infomiation indicative of further adjustments in the confidence in the detected values for the information bits. Intermediate results that comprise the extrinsic information from the second constituent decoder are then stored to the storage unit in a de-interleaved order complementary to tfie code interleaving used at the transmitter unit The intermediate results are used by the next iteration of the furst constituent decoder. The decoding by the first and second constituent decoders is iterated a number of times to yield the final decoded result.<br>
+[0009]	Each constituent decoder may be implemented as a maximum a<br>
+posteriori (MAP) decoder that attempts to minimize the bit error of a code segment. For each information bit to be decoded by the MAP decoder, a number of computations are performed to derive the extrinsic information. For certain decoder implementations, the accuracy of the computations depends on knowledge of the "scale" of the input bits (i.e., the samples) provided to the MAP decoder The scale information may include the variance and amplitude of the samples provided to the MAP decoder. If the decoding is performed with no knowledge or a wrong assumption of the scale of the input bits, then the decoding performance can degrade.<br><br>
+[0010]	There is therefore a need for a Turbo decoder that can decode a code<br>
+segment with unknown scale information in a manner to provide improved performance.<br>
+SUMMARY<br>
+[0011]	Aspects of the present invention provide techniques to Turbo decode a<br>
+code segment in a manner to provide improved decoding result. For some Turbo<br>
+decoding schemes (such as the commonly used maximum a posteriori (MAP)<br>
+decoding scheme), the performance of the decoding is dependent on knowledge of<br>
+scale information for the bits to be decoded. Such scale information may relate to the<br>
+variance and amplitude of the bits to be decoded, and may be needed to accurately<br>
+evaluate a particular function for the MAP decoding. If wrong scale information is*<br>
+used to decode the code segment, then the performance of the MAP decoding may<br>
+degrade because d^ function may not be accurately evaluated.<br>
+[0012]	Aspects   of   the   invention   provide   techniques   to   improve   the<br>
+perfonnance of a Turbo decoder when the scale information for the received bits is not known. In general, a number of hypotheses are formed for a given code segment to be decoded, with each hyp)Othesis h corresponding to a particular set of one or more values for a set of one or more parameters used for decoding the code segment. For the MAP decoding scheme, these parameters may be for (1) the sequence of scaling factors used to scale the received bits in the code segment to derive the bits to be decoded, and/or (2) a scale used to evaluate a function (e.g., a min* function) for decoding the code segment.<br>
+[0013]	The code segment is decoded based on the MAP decoding scheme and<br>
+in accordance with each hypothesis. The quality of the decoded result for each hypothesis is then determined based on one or more performance metrics (e.g., CRC check, correlation metric, re-encoded correlation metric, and so on). The quality of the decoded results for all hypotheses are compared, and the decoded bits for the hypothesis that provides the "best" decoded result, as determined by the performance metrics, are provided as the Turbo decoder output for the code segment.<br><br>
+[0014]	Various aspects, embodiments, and features of the invention are<br>
+described in further detail below.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[0015]	The features, nature, and advantages of the present invention will<br>
+become more apparent from the detailed description set forth below when taken in<br>
+conjunction   with   the   drawings   in   which   like   reference   characters   identify<br>
+correspondingly throughout and wherein:<br>
+[0016]	FIG. 1 is a simplified block diagram of a communication system<br>
+capable of implementing various aspects and embodiments of the invention;<br>
+[0017]	FIG. 2 is a diagram of a Turbo encoder defined by the W-CDMA<br>
+standard;<br>
+[0018]	FIG. 3 is a block diagram that symbolically illustrates some of the<br>
+processing within a RX data processor at the receiver unit;<br>
+[0019]	FIG. 4 is a block diagram of a design of a Turbo decoder,<br>
+[0020]	FIGS. 5A and 5B show graphical representations of the forward and<br>
+reverse state metric calculations, respectively, for a MAP decoder;<br>
+[0021]	FIGS. 6 and 7 are flow diagrams for two Turbo decoding schemes, in<br>
+accordance with embodiments of the invention; and<br>
+[0022]	FIG. 8 is a block diagram of a Turbo decoder in accordance with an<br>
+embodiment of the invention.<br>
+DETAILED DESCRIPTION<br>
+[0023]	FIG. 1 is a simplified block diagram of a communication system 100<br>
+capable of implementing various aspects and embodiments of the invention. In an embodiment, communication system 100 is a CDMA system that conforms to cdma2000, W-CDMA, IS-856, and/or some other CDMA standards. At a transmitter unit 110, data is sent, typically in blocks, from a data source 112 to a U"ansmit (TX)<br><br>
+data processor 114 that fonnats, codes, and processes the data to generate one or more<br>
+analog signals. The analog signals are then provided to a transmitter (TMTR) 116<br>
+that (quadrature) modulates, filters, amplifies, and upconverts the signal(s) to generate<br>
+a modulated signal. The modulated signal is then transmitted via one or more<br>
+antennas 118 (only one is shown in FIG. 1) to one or more receiver units.<br>
+[0024]	At a receiver unit 150, the transmitted signal is received by one or<br>
+more antennas 152 (again, only one is shown) and provided to a receiver (RCVR)<br>
+154. Within receiver 154, the received signal(s) are amplified, filtered,<br>
+downconverted, (quadrature) demodulated, and digitized to generate samples. The<br>
+samples arc then processed and decoded by a receive (RX) data processor 156 to<br>
+recover the transmitted data. The processing and decoding at receiver unit 150 are<br>
+performed in a manner complementary to the processing and coding performed at<br>
+transmitter unit 110. The recovered data is then provided to a data sink 158.<br>
+[0025]	The signal processing described above supports transmissions of<br>
+voice, video, packet data, messaging, and other types of communication in one direction. A bi-directional communication system supports two-way data transmission. However, the signal processing for the other direction is not shown in FIG. 1 for simplicity.<br>
+[0026]	FIG. 2 is a diagram of a parallel concatenated convolutional encoder<br>
+200 (which is also referred to as a Turbo encoder) defined by the W-CDMA standard. Turbo encoder 200 may be used to perform the channel coding within TX data processor 114 in FIG. L Turbo encoder 200 includes a pair of constituent encoders 212a and 212b, a code interleaver 214, and a puncturer and multiplexer 216. Code interleaver 214 receives and interleaves the information bits in a code segment (e.g., a data packet) in accordance with a particular interleaving scheme (e.g., as defined by the standard being implemented).<br>
+[0027]	Each   constituent   encoder   212   receives   either   linear-order   or<br>
+interleaved information bits, encodes the received information bits with a defined constituent code, and provides a sequence of parity bits. Puncturer and multiplexer 216 receives the information bits and the parity bits from both constituent encoders 212a and 212b, punctures (i.e., deletes) zero or more parity bits to obtain the desired number of bits, and multiplexes the unpunctured information and parity bits into a<br><br>
+sequence of coded bits.   Zero or more coded bits may also be repeated instead of<br>
+punctured.   However, for simplicity and without loss of generality, puncturer and<br>
+multiplexer 216 can perform puncturing and/or repetition, as necessary.<br>
+[0028]	In the embodiment shown in FIG. 2, each constituent encoder 212<br>
+includes three series-coupled delay elements 222, four modulo-2 adders 224, and a switch 226. Initially, the states of delay elements 222 are set to zeros and switch 226 is in the up position. Then, for each information bit in the code segment, adder 224a performs modulo-2 addition of the inforaiation bit x with the output bit from adder 224d and provides the result to delay element 222a, Adders 224b and 224c receive and perform modulo-2 addition of the bits from adder 224a and delay elements 222a and 222c, and provide the parity bit y. Adder 224d performs modulo-2 addition of the bits from delay elements 222b and 222c.<br>
+[0029]	After all NB information bits in the code segment have been encoded,<br>
+switch 226 is moved to the down position and three zero CD'O tail bits are provided to<br>
+constituent encoder 212a.   Constituent encoder 212a then encodes the three tail bits<br>
+and provides six tail parity bits.<br>
+[0030]	For each segment of NB information bits, constituent encoder 212a<br>
+provides NB parity bits and the first six tail parity bits y*, and constituent encoder 212b provides NB parity bits and the last six tail parity bits y'. For each segment, puncturer and multiplexer 216 receives NB information bits x, NB-+^ parity bits y'<br>
+from encoder 212a, and NB+6 parity bits y^ from encoder 212b.   Puncturer and<br>
+multiplexer 216 may puncture (i.e„ delete) a number of parity bits to provide the required number of coded bits, which comprises the unpunctured information and parity bits.<br>
+[0031]	The sequence (or vector) X of information and parity bits provided by<br>
+Turbo encoder 200 may be expressed as:<br><br>
+Again, all or a subset of these bits may be transmitted from transmitter unit 110 to receiver unit 150.<br><br>
+[0032]	For each bit to be transmitted, a value A is transmitted if the bit is a<br>
+zero ("0") and a value -A is transmitted if the bit is a one ("1"). Each transmitted bit is distorted by channel noise, the analog and digital signal processing on the bit at both the transmitter and receiver units, and other phenomenon. The received sequence of bits at the receiver unit may be expressed as:<br><br>
+where V is the entire sequence of received bits including those corresponding to the tail bits and N = N^ +4. Each received bit Vj. in the sequence V can be expressed<br>
+as:<br><br>
+where<br>
+Z = {z, e, ^3 — ^3N)   ^ ^ vector of independent and identically distributed (iid)<br>
+random variables having a nomaal unit in a static scenario, A^ is the amplitude for the received bit and is typically equal to A, and<br>
+a^, is the standard deviation of the random variables z^ for the received bit due to channel noise, and can be approximated as cr^ ^a for Jt = 1, 2,... 3N.<br>
+Under fading conditions or under repetition conditions after the appropriate accumulation of symbols corresponding to identical bits, the received signal amplitude may differ from the transmitted signal amphtude.<br>
+[0033]	FIG. 3 is a block diagram that symbolically illustrates some of the<br>
+processing within RX data processor 156 at the receiver unit. A received signal is initially conditioned, digitized, and digitally processed (e.g., filtered, despread, decovered, and so on) by receiver 154 to provide a "soft" value for each received bit v^. The soft value for the received bit v^. may have many (e.g., 16) bits of resolution<br>
+after the digital signal processing. For many decoder implementations, it is not practical or necessary to store this many bits of resolution for each received bit. In particular, since an entire code segment of bits needs to be stored for Turbo decoding.<br><br>
+a very large storage unit would be needed to store many bits of resolution for each bit in the code segment to be decoded.<br>
+[0034]	To     reduce     the     storage     requirement,     the     received     bits<br>
+V = {v, Vj V3,..v3jj}  are effectively scaled via a multiplier 312 by a sequence of<br>
+scaling factors S = {5j52 ^3-..^3N)' *^"^ scaling factor may be provided for each received bit v^, and the scaling may be performed element by element for the sequence V. The scaled bits are then quantized by a quantizer 314 to provide the decoder input bits U = {w, u^ u^ -."SN } - The input bits w^ to the Turbo decoder are<br>
+thus scaled and quantized version of the received bits v^ and may have a reduced<br>
+resolution (e.g., of 4, 5,6, or some other number of bits).<br>
+[0035]	The scaling factors 5^ are selected such that the inforaiation in the<br>
+received bits v^.  are well represented and within a proper range in the quantized<br>
+output w^. If the scaling factors are too large, then clipping of the scaled bits would<br>
+occur during quantization and the resultant clipping noise can degrade the decoding performance. And if the scaling factors are too small, then the signal amplitude of the scaled bits would be small relative xhc quantization noise and the decoding performance also degrades.<br>
+[0036]	If multiple bits are received for a particular coded bit (i.e., repeated bits<br>
+for the coded bit), then a complementary processing is performed at the receiver unit for these repeated bits. The repeated bits corresponding to the code bit are initially scaled so that the variance over mean is constant for all symbols for this code bit, and the scaled bits are then added together to obtain one symbol for the code bit. If a coded bit is punctured at the transmitter unit, a soft symbol of zero ("0") (i.e., an erasure) is inserted for the punctured bit so that no priority is given to a +1 (bit "0") or a-l(bit"l").<br>
+[0037]	A Turbo decoder 316 receives the input bits  u^   and additional<br>
+information regarding the scale of the input bits. Turbo decoder 316 then decodes the input bits Uf.  using the scale information and provides a candidate sequence of<br>
+decoded bits. A post processor 318 may further process the decoded bits to provide an indication of the quality of the decoded result.  For example, post processor 318<br><br>
+may perfomi CRC check of the decoded results, if CRC bits are included in the transmitted code segment. Other performance metrics may also be evaluated for the decoded result to provide other indications of the decoding performance, as described below.<br>
+[0038]	FIG. 4 is a block diagram of a specific design for Turbo decoder 316.<br>
+In this design. Turbo decoder 316 includes two constituent decoders 410a and 410b, a code interleaver 412, a code deinterleaver 414, and a detector 416. Each constituent decoder 410 is typically implemented as a soft-input/soft-output (SISO) maximum a posteriori (MAP) decoder that attempts to minimize the bit error of a code sequence. However, other types of decoder may also be used, such as a decoder that implements the soft output Viterbi algorithm (SOVA).<br>
+[0039]	The MAP decoder typically operates on the log-likelihood ratio (LLR)<br>
+of the input bits w^, which includes the quantized information and parity bits and can<br>
+be expressed as:<br><br>
+The LLR of an input bit JC^ is the logarithm of the ratio of the probability of the bit being a zero ("0") given the received sequence U over the probability of the bit being a one ("1"). The probabilities, PrCjc^ = 0 ] U) and Pr(x^ = 11U), for each input bit are<br>
+based on the soft value for that bit and the sequence of bits received for the code<br>
+segment being decoded. The LLR for an erasure (i.e., a punctured bit) is indicative of<br>
+equal confidence in the bit being a zero or a one (i.e., LLR = 0).<br>
+[0040]	In the embodiment shown in HG. 4, a summer 408a receives and sums<br>
+IJLR(APP^), LLR(jc^), and the extrinsic information from deinterleaver 414 to provide a priori probabilities (APP) for decoder 410a.    LLR(APP^) is the log<br><br>
+likelihood ratio derived from an underlying assumption of the information bits. If each information bit in a code segment is assumed to be equally likely to be either zero ("0") or one ("1"), then LLRCAPP*^) is equal to zero for all bits in the code segment, and any parts related to LLR(APP ) are ignored. The extrinsic information from deinterleaver 414 is set to zero for the first decoding iteration.  LLR(x^t) is the<br>
+log-likelihood ratio of the received infonnation bits x^.<br>
+[0041]	Decoder 410a receives the AFP from summer 408a and LLRCyj),<br>
+which are the LLRs of the parity bits y/ received from the first constituent encoder.<br>
+LLR(y^) includes erasures for punctured (i.e., non-transmitted) parity bits, if any.<br>
+Decoder 410a then decodes the APP and lLR{yl} based on the MAP algorithm to generate a posteriori probabilities. The xAPP is then subtracted from the a posteriori probabilities by a summer 408b to provide extrinsic information, e\, which is indicative of corrections/adjustments in the confidence of the values for the information bits ^^ contributed by the parity bits yl.<br>
+[0042]	The extrinsic infonnation, e[, from summer 408b is summed v/ith the<br>
+information bit LLRs, LLR(x^)&gt; and the intermediate results (which are APP for the<br>
+next decoder) are stored to code interleaver 412.   Code interleaver 412 implements<br>
+the same code interleaving scheme used at the Turbo encoder (e.g., the same scheme<br>
+used for code interleaver 214 in FIG. 2).<br>
+[0043]	Decoder 410b receives the interleaved APP from interleaver 412 and<br>
+LLR(y4), which are the LLRs of the parity bits  y^   received from the second<br>
+constituent encoder.     Decoder 410b then  decodes the  APP and LLR(y;*)  in<br>
+accordance with the MAP algorithm to generate a posteriori probabilities. The APP is then subtracted from the a posteriori probabilities by a summer 408d to provide<br>
+extrinsic information, e^., which is indicative of further corrections/adjustments in the confidence of the values for the information bits Xj^ contributed by the received parity<br>
+bits yl, The extrinsic information, el, comprises the intermediate results from decoder 410b, which are stored to code deinterleaver 414.    Deinterleaver 414<br><br>
+implements a deinterleaving scheme complementary to the interleaving scheme used<br>
+for interleaver 412.<br>
+[0044]	The decoding of the information bit LLRs is iterated a number of times<br>
+(e.g., 12, 16, 20, or possibly more times). With each iteration, greater confidence is<br>
+gained for the detected values of the information bits.    After all the decoding<br>
+iterations have been completed, the final ULRs are provided to detector 418, which<br>
+provides hard-decision values (i.e., "Os" and "Is") for the received information bits<br>
+based on their LLRs.<br>
+[0045]	Each MAP decoder 410 performs calculations of the likelihood ratio,<br>
+A^, which can be expressed as:<br><br>
+where x^ is the unknown (and to be detected) input bit into the encoder at time it, and<br>
+U is the sequence of symbols input to the decoder (i.e., the received information and parity bits after scaling and quantization).   The likelihood ratio, &gt;ij^, represents the<br>
+likelihood of bit x^ being a one given the received sequence U over the likelihood of<br>
+bit x^ being a zero given the received sequence U.<br>
+[0046]	The likelihood ratio, A^^, can also be expressed as:<br><br>
+where<br>
+a^  represents a forward state metric at time k for the trellis state m (i.e., the<br>
+probability of the received vector up to time k given the trellis state at time k being m),<br>
+Pill'""^ represents a reverse state metric at time k for the trellis state m (i.e., the<br>
+probability of the received vector from time k to the end of the trellis given that the next trellis state is j{Uvi)\ where f{i,m) represents the next state given the input i and the current state m), and<br><br>
+SI'"" is a branch metric at time k for state m and input L<br>
+The two summations in equation (5) are performed over all encoder states.<br>
+[0047]	FIGS, 5A and 5B show graphical representations of the forward and<br>
+reverse state metric calculations, respectively. The forward state metric may be calculated recursively, as follows:<br><br>
+where b(Um) is the state in the previous time index kA from which a branch corresponding to input i transitions to state nu The reverse state metric may also be calculated recursivelv, as follows:<br><br>
+[0048]	As shown by the above equations (5) through (7), the MAP algorithm<br>
+performs a number of muUiplications, which are not easily performed in hardware. However, the algorithm may be transformed into the log domain by taking the logarithm (or the negative logarithm) of the terms. In the log domain, a multiplication of two terms transforms into a relatively simple addition, which can be performed by a min* function. The min* function can be expressed as:<br><br><br><br>
+where c"''"' is the parity hypothesis for parity bit n, given the input bit / and state m.<br>
+In equation (13), each of the two min* functions operates over all possible states m,<br>
+similar to the summations in equation (5).<br>
+[0050]	The derivation of the above equations for the MAP algorithm is well<br>
+known in the art. A description of such derivation is provided by Steven S. Pietrobon<br>
+in a paper entitled "Implementation and Performance of a Turbo/Map Decoder,"<br>
+International Journal of Satellite Communications, Vol. 16, 1998, pp. 23-46, and<br>
+incorporated herein by reference.<br>
+[0051]	The min* function is dependent on the scale infomiation of the inputs<br>
+a and b provided to the function.   For the sequence of received bits v^^ shown in<br>
+equation (2), the scaled bits can be expressed as:<br><br><br>
+where w^, represents the "scale" of the input bit u^ into the MAP decoder. The scaling factor s^ is typically selected for each received bit Vj^ in the code segment such that the quantity s^oll A,^ for all scaled bits w^^ are approximately equal (i.e., w^ = w for a given code segment).  Various techniques may be used to estimate (or<br>
+pre-measure) the appropriate scaling factors. These techniques may be MAP decoder<br>
+related or may be some other coarse forms of decoder-metric combination before the<br>
+Turbo decoder.<br>
+[0052]	If the variance a] and amplitude  A^  of the received bits v^  are<br>
+known, then the scaling factors s^ can be selected as a function of al, A^, and the quantization resolution, such that the quantized bits a^ (which are used as the inputs a and b to the min* function) have variances twice as large as their means, in absolute value, or 5^aJ / Ajt = 2. In this case, the function p(g) for the rain* function can be<br>
+simply expressed as:<br><br>
+As can be seen from equation (14b), the scale information is needed to accurately evaluate the function p(g,w) for the min* function.<br>
+[0053]	In certain MAP decoder implementations, the function p(g,w) shown<br>
+in equation (14b) is implemented with lookup tables, which can expedite the evaluation of the min* function. A set of lookup tables may be provided for a set of scale values w. For example, five lookup tables may be provided for five values of w = 0, 3, 6, 9, and 12. Depending on the value for the scale w (which may be determined based on the estimated or known values for cr^, A^^, and the number of<br>
+bits after quantization), the proper lookup table is used to evaluate the function pigf^)' For example, the lookup table for w = 12 may be designed for use when the<br><br>
+input bits u^. have been properly scaled and quantized to 6-bits, the lookup table for w = 6 may be designed for use when the input bits u^ have been properly scaled and quantized to 5-bits, and the lookup table for w = 3 may be designed for use when the input bits u^ have been properly scaled and quantized to 4-bits.<br>
+[0054]	In many instances, the variance al and amplitude A^. of the received<br>
+bits are not known. Instead, these quantities may be estimated based on various system parameters such as, for example, the bit rate used for a data transmission. The scaling factors  J^   are then selected based on the system parameters (and not<br>
+necessarily on the scaling or the noise) such that a desired value for the scale w is obtained. However, if the actual scaling of the received bits deviates from the desired scaling due to any number of reasons (such as fading, power control, cell configuration, and so on), then the performance of the MAP decoder degrades because the wrong lookup table (i.e., for the wrong scale value) is used to evaluate the function p(g,w).<br>
+[0055]	Aspects   of   the   invention   provide   techniques   to   improve   the<br>
+performance of a Turbo decoder when the scale information for the received bits is not known. In general, a number of hypotheses are formed for a given code segment (e.g., a data packet) to be decoded. Each hypothesis h corresponds to a hypothesized sequence S^ of scaling factors and a hypothesized scale w^.  The code segment is<br>
+then decoded in accordance with each formed hypothesis, and the decoded result for each hypothesis is evaluated based on one or more performance metrics. The performance for all hypotheses are compared, and the specific hypothesis that provides the "best" decoded result, as determined by the performance metrics, is used for the code segment. Simulations have shown that using the techniques described herein, the achievable decoding performance approaches the theoretical limit, which may be bounded, e.g., by the quantized values for the scale w for which the lookup tables are generated. For example, if five lookup tables are provided for scale values of w = 0, 3, 6, 9, and 12, then the decoding performance may be bounded by these quantized values for the scale w.<br>
+[0056]	FIG. 6 is a flow diagram of a process to Turbo decode a code segment,<br>
+in accordance with an aspect of the invention.  Initially, a number of hypotheses for<br><br>
+the code segment are formed, with each hypothesis h corresponding to a specific sequence S^, of scaling factors and a specific scale selection w,^, at step 612.  The<br>
+specific number of hypotheses to be formed is dependent on various considerations such as, for example, the amount of time available to decode the code segment, the<br>
+confidence in the initial estimates of crl and Aj^, and so on.<br>
+[0057]	An unevaluated hypothesis is then selected for evaluation, at step 614.<br>
+In the first part of the evaluation, the code segment is Turbo decoded in accordance with the selected hypothesis (i.e., the particular S/, and w^), at step 616. This may<br>
+entail scaling the received bits with the sequence S^ of scaling factors, quantizing the<br>
+scaled bits to the required number of bits of resolution (e.g., as determined by cx^,<br>
+A^., and S^). and decoding the quantized bits with the scale selection w^^ (e.g.. using<br>
+the lookup uble for the specific value of w^) to provide a candidate sequence of<br>
+decoded bits. The quality of the decoded result for the hypothesis is then determined<br>
+using one or more performance metrics, which are described below, at step 618.<br>
+[0058]	A determination is then made whether the decoded result for the code<br>
+segment based on the current hypothesis is the best thus far, at step 620. If this hypothesis is the best thus far, then the performance metric is stored for later comparison, at step 622. Other information may also be stored such as the hypothesis values (e.g., the scaling factor sequence S^ and the scale w^), the decoded results.<br>
+and so on. The process then proceeds to step 624. Otherwise, if the current<br>
+hypothesis is not the best, then the process simply proceeds from step 620 to step 624.<br>
+[0059]	At step 624, a determination is made whether or not all hypotheses<br>
+have been evaluated.   If the answer is no, then the process returns to step 614 and<br>
+another unevaluated  hypothesis is selected for evaluation.     Otherwise, if all<br>
+hypotheses have been evaluated, the process proceeds to step 626 and the decoded<br>
+result for the best hypothesis is provided. The process then terminates.<br>
+[0060]	The decoding scheme shown in FIG. 6 represent a general form that<br>
+may be used when the scaling information for the received bits is not known. In many practical implementations, the number of hypotheses that may be evaluated may be limited by various considerations.    For example, a limited time period may be<br><br>
+available to decode a code segment, which would then limit the number of hypotheses that may be evaluated. If the min* function is evaluated with a set of lookup tables, then the possible values for the scale w are also restricted. For example, five lookup tables may be provided for w = 0, 3, 6, 9, and 12, in which case die scale w is restricted to these five values. Various variations to the decoding scheme shown in FIG, 6 may be contemplated and are within the scope of the invention. Some of these decoding schemes are described below,<br>
+[0061]	FIG. 7 is a flow diagram of a Turbo decoding scheme, in accordance<br>
+with another embodiment of the invention. This decoding scheme evaluates a number of hypotheses with the same sequence S of scaling factors but different scale selections w. Initially, a particular sequence S of scaling factors is selected based on<br>
+some criteria (e.g., the estimated values for aj and Aj^, the data rate of the code segment, and so on), at step 710. The received bits v^ in a code segn^nt are then scaled in accordance with the selected scaling factors and quantized to the desired number bits (e.g., determined based on the estimated <ti and a the selected s></ti>
+to form the input bits u^, which arc then stored to a storage unit. A set of scale values w^ is also selected for evaluation, at step 712.   These scale values may be<br>
+selected based on various criteria (e.g., the estimated values for a^ and A^ and the<br>
+selected S, the available time period to decode, and so on). For example, the scale values for all lookup tables may be selected for evaluation (e.g., w^ = 0, 3, 6, 9, and<br>
+12).<br>
+[0062]	An unevaluated scale value w^ is then selected for evaluation, at step<br>
+714. The code segment is next Turbo decoded in accordance with the selected hypothesis (i.e., the particular scale value w^). at step 716. This may entail retrieving<br>
+from the storage unit the input bits u^ for the code segment and decoding the bits<br>
+with the scale selection  w^   (e.g., using the lookup table for W;J to provide a<br>
+candidate sequence of decoded bits. The quality of the decoded result is then determined based on one or more performance metrics, at step 718. The remaining processing in steps 720, 722, 724, and 726 are similar to that for steps 620» 622, 624, and 626. respectively, in FIG. 6.<br><br>
+[0063]	The decoding scheme shown in HG. 7 thus decodes a code segment<br>
+based on a particular sequence S but a set of scale selections vi'^,, and provides the<br>
+decoded result corresponding to the best scale selection, as determined by the performance metric.<br>
+[0064]	In another Turbo decoding scheme, a code segment is decoded in<br>
+accordance with a number of hypotheses formed with a particular scale selection w but different sequences S^ of scaling factors.   For example, the sequences S^ of<br>
+scaling factors may be selected as SQ , 2So, SQ / 2, and so on. Initially, the received<br>
+bits v^ in the code segment are stored to a storage unit.  For each hypothesis to be<br>
+evaluated, the received bits v^ in the code segment are retrieved from the storage unit,<br>
+scaled in accordance with the sequence S^ of scaling factors for the hypothesis being<br>
+evaluated, and quantized to the desired number bits to obtain the input bits M^ .<br>
+[0065]	The input bits u^ are then Turbo decoded in accordance with the scale<br>
+w to generate a candidate segment of decoded bits. Again, the quality of the decoded result is determined based on one or more performance metrics. Other hypotheses for other sequences S^ of scaling factors are also evaluated in similar manner.   The<br>
+decoded result corresponding to the best sequences  S^, as determined by the<br>
+performance naetric, is then provided as the Turbo decoder output.<br>
+[0066]	For the above Turbo decoding scheme, different scaling is performed<br>
+on the received bits v^ to derive the input bits M^ for the Turbo decoder. Since each<br>
+received bit  v^  may have many bits of resolution (e.g.,  16 bits), the storage<br>
+requirement to store an entire code sequence of received bits may be large.<br>
+[0067]	To reduce the storage requirement, the received bits v^^  may be<br>
+successively scaled, quantized, and evaluated, starting with the sequence of largest scaling factors. For example, if the selected sequences are S^, 2SQ , and Sp /2, then<br>
+the received bits may be initially scaled by 2SQ and stored for the first hypothesis. For the next hypothesis, the stored bits are retrieved, scaled again by a factor of 0.5 (to obtain S(j), quantized, and evaluated. And for the third hypothesis, the stored bits are<br><br>
+retrieved, scaled again by another factor of 0,5 (to obtain Sp/l), quantized, and<br>
+evaluated. The storage requirement is thus reduced to the storage size required for the<br>
+largest scaling factors.    However, successive scaling and quantization typically<br>
+increase the amount of quantization noise, which may degrade decoding performance.<br>
+[0068]	In yet another Turbo decoding scheme, a code segment is decoded in<br>
+accordance with a number of hypotheses formed with a specific sequence S of scaling factors but various scale values w,^. Initially, the received bits v^ in a code segment<br>
+are scaled, quantized, and stored to a storage unit as the input bits u^. For each hypothesis to be evaluated, the input bits u^ in the code segment are retrieved from the storage unit and evaluated afresh in accordance with the scale value w^, for that<br>
+hypothesis.<br>
+[0069]	However, for this decoding scheme, a smaller number of iterations are<br>
+executed for each hypothesis. For example, 3, 5, or some other number of iterations may be performed for cadi hypotiiesis instead of 15,17, or 19 which may normally be needed to completely decode the code segment. The smaller number of iterations for each hypothesis may allow more hypotheses to be evaluated for a given amount of time. For each hypothesis, the quality of the decoding result is evaluated based on one or more performance metrics. The hypothesis with the best performance is then used to completely decode the code segment, which is then provided as the Turbo decoder output.<br>
+[0070]	Various variations of the Turbo decoding schemes described herein<br>
+may also be implemented and are within the scope of the invention. In general, any number of hypotheses may be evaluated, with each hypothesis including any specific set of values for any set of parameters (e.g., sequence of scaling factors and/or scale). Moreover, each hypothesis may be evaluated in various manners (e.g., partial or complete decoding).<br>
+[0071]	Performance Metrics<br>
+[0072]	As  noted  above,  various  performance  metrics  may be  used to<br>
+determine the quality of the decoded result. These metrics include (1) CRC check, (2) the minimum or average LLR for the decoded bits in a candidate sequence, (3) the<br><br>
+number of iterations completed when a decoded segment is declared, (4) the correlation metric, (5) the re-encoded energy, and (6) the re-encoded bit error rate (BER). These metrics are described below.<br>
+[0073]	A code segment may include CRC bits that can be used to check the<br>
+decoded result. If the CRC check passes, then there is a high likelihood that the code segment has been decoded error free. K multiple candidate sequences for multiple hypotheses pass the CRC check, then one of the sequences may be selected (e.g., arbitrarily, via some criteria, or via some other metrics).<br>
+[0074]	The minimum or average LLR among the decoded bits in a candidate<br>
+sequence (after the final iteration) may be used as a performance metric. In some applications, a code sequence may be deemed unacceptable if any one of the information bits in the code sequence is received in error. And in some other applications, errors for a small number of information bits in the code sequence may be acceptable. Thiis, depending on the requirement of the application, the worst LLR (i.e., the LLR with the smallest magnitude) or a number of worse LLRs may be used as an indicaiion of the quality of the decoded segment. An average of a number of worse LLRs may also be used as a performance metric.<br>
+[0075]	Turbo decoding is typically performed for a number of iterations (e.g.,<br>
+12, 16, 20, or possibly more) by the first and second constituent decoders before declaring a decoded segment With each iteration by a constituent decoder, the confidence in the received information bits may increase and asymptotically reach a final value. A Turbo decoder may employ checks during the decoding process to terminate the decoding if the LLRs for the bits in the code segment exceed a particular threshold value. Alternatively, the Turbo decoder may use a built-in error detecting function (e.g., CRC check) to determine whether decoding has been successftjl and can be terminated before reaching the maximum number of allowed iterations. In these cases, the number of iterations performed to decode the code segment may be used as a performance metric.<br>
+[0076]	The correlation metric may be obtained by performing an inner product<br>
+of the decoded bits b^. in a candidate sequence with the received information bits Xj.<br>
+(either before or after the scaling and quantization). This inner product may be achieved by multiplying the candidate sequence with the received information bit<br><br>
+sequence, element-by-element (i.e., bit-by-bit), and accumulating the resultant products of the multiplications. The final accumulated value represents the correlation between the two sequences. This inner product can be expressed as:<br><br>
+A high value for the correlation metric M^ indicates a high degree of correlation<br>
+between the received and decoded bits.  Conversely, a low value for the correlation<br>
+metric indicates errors in the decoded bits and/or low values for the received bits. A<br>
+higher value for the correlation metric thus corresponds to a higher quality decoded<br>
+result.<br>
+[0077]	A correlation between the power of the received and decoded bits may<br>
+also be computed. In this case, each received information bits and each decoded bit is<br>
+first squared. The inner product is then performed on the vectors of squared decoded<br>
+bits and squared received information bits.<br>
+[0078]	For the re-cncoded correlation metric, the cfecoded bits bj^  in the<br>
+decoded segment are first re-encoded by the same Turbo encoder and punctured with the same puncturing scheme used at the transmitter unit to derive the re-encoded bits r^.   The re-encoded bits r^  are then conelated with the received bits M^ or v^..<br>
+However, the correlation is performed for all received information and parity bits, and not just for the received information bits as is the case for the correlation metric. The inner product for the re-encoded correlation metric can be expressed as:<br><br>
+Similar to the correlation metric described above, a higher value for the re-encoded correlation metric M^^ corresponds to a higher quality decoded result The re-encoded correlation metric may be more accurate than the correlation metric because all received information and parity bits (and not just the information bits) are evaluated by the metric.<br>
+[0079]	The re-encoded bit error rate may be obtained by re-encoding a<br>
+candidate sequence and comparing the re-encoded bits, bit-by-bit, with the received<br><br>
+information and parity bits (which have been transformed to hard-decision or binary values). During the comparison, errors between the re-encoded bits and received bits are counted. The re-encoded BER is then detennined as the number of bit errors divided by the total number of bits compared. A lower value for the re-encoded BER is indicative of a higher quality decoded result.<br>
+[0080]	Some of the above performance metrics are described in further detail<br>
+in U.S Patent No. 6,175,590, entitled "METHOD AND APPARATUS FOR DETERMINING THE RATE OF RECEIVED DATA IN A VARIABLE RATE COMMUNICATION SYSTEM," issued January 16, 2001, assigned to the assignee of the present application. Other performance metrics may also be used and are within the scope of the invention. Also, any combination of performance metrics may be used to determine the quality of the decoded resulL<br>
+[0081]	FIG. 8 is a block diagram of a Turbo decoder 800, in accordance with<br>
+an embodiment of the invention. Turbo decoder 800 is one specific implementation of Turbo decoders 316 in FIGS. 3 and 4. In this embodiment. Turbo decoder 800 includes a local memory/combiner 808, a MAP decoder 810, a detector 812, lookup tables 814, a performance metric calculator 816, a storage unit 820, and an address generator 830. Referring back to FIG. 4, the two constituent decoders 410a and 410b are operated in series, with the extrinsic information from one decoder being provided as an input to the other decoder. Because of the serial operation of the two constituent decoders, only one (physical) decoder can be used to implement both constituent decoders.<br>
+[0082]	A sealer/quantizer 806 receives and scales the received bits v^^ with the<br>
+sequence S of scaling factors, quantizes the scaled bits, and provides the quantized bits w^ to local memory/combiner 808.   The received bits may be de-punctured, if<br>
+puncturing was performed at the transmitter unit, by another unit (e.g., a channel interleaver) prior to being provided to Turbo decoder 800. The de-puncturing is achieved by providing an erasure for each punctured bit in the code segment, with the erasure being indicative of equal likelihood of the bit being a zero or a one. Or the received symbols corresponding to identical bits may be combined in an appropriate fashion if the bits were repeated.<br><br>
+[0083]	Depending on the particular decoding iteration being performed (i.e.,<br>
+decoding for the first or second constituent encoder), the proper sequence of information and parity bits is provided to memory/combiner 808. The APP obtained from a prior decoding iteration is also provided to memory/combiner 808 from APP storage unit 820. In an embodiment, memory/combiner 808 is designed to (1) receive the information bits 3c^ and compute the LLR for these bits, LLR(xJ, (2) combine<br>
+the LLR(jCjfc) computed in step (1) with the corresponding extrinsic information to generate APP, and (3) receive the parity bits (either yl or yl) and compute the LLR<br>
+for the these bits, LLR( yl) or LLR( y;).<br>
+[00S4]	In an embodiment, memory/combiner 808 is implemented using a<br>
+sliding window architecture (SWA) that temporarily stores, e.g., four windows worth of information and parity bits. While three windows of information and parity bits are being operated on by three state metric calculators within MAP decoder 810, the fourth window is updated with values for the information bits and the APP from storage unit 820. In an embodiment, each window has a size of 32, i.e., each window<br>
+holds 32 x^ symbols and 32 yl (or y^) symbols.   Other window lengths and/or<br>
+different number of windows may also be used, and this is within the scope of the invention.<br>
+[0085]	In an embodiment, MAP decoder 810 implements a SISO decoder that<br>
+executes a log-MAP algorithm. Any MAP-based decoding algorithm (e.g., a max log-MAP algorithm or a max* log-MAP algorithm, both of which arc known in the art) may also be used. In an embodiment, to implement the MAP algorithm, MAP decoder 810 includes one forward state metric calculator and two backward state metric calculators. Each forward (or backward) state metric calculator computes the logarithm of the probability of each of 2^'* states in the trellis at a given time instance k based on (1) the probabilities of the states at a previous (or future) time instance and (2) the probabilities of the path between the previous (or future) states and the state in the current time, where K is the constraint length of the constituent encoder. These forward and backward state metrics are then used to compute a posteriori probabilities for tfie information bits. The forward and backward state metric calculations are described above.<br><br>
+[0086]	Lookup tables 814 may be used to expedite the evaluation of the min*<br>
+function, which is used to compute the forward and reverse state metrics and the<br>
+branch metric, as described above,  A number of lookup tables may be provided for<br>
+different scale values w, and the particular lookup table to be used may be determined<br>
+by the scale selection (which may be provided by a controller 840).<br>
+[0087]	Perforaiance metric calculator 816 may be used to compute one or<br>
+more performance metrics for a candidate sequence, which is used to determine the quality of the decoded result. Performance metric calculator 816 may perform the CRC check and/or determine the minimum or average LLR, the correlation metric, the rc-eiKoded energy, the re-encoded BER, some other metrics, or any combination thereof.<br>
+[00^	Storage unit 820 stores the APP from a decoding iteration, which is<br>
+then used for the next decoding iteration. The APP arc stored to and retrieved from<br>
+Ac proper locations in storage unit 820 as directed by the write and read addresses<br>
+"provided by address generator 830, The addresses are generated such that the APP<br>
+arc property interleaved and dc-intcrieaved in accordance with the interleaving<br>
+scheme used to encoded the code segment at the transmitter unit<br>
+[0089]	ControDcr 840 may direct the operation of Turbo decoder 800.<br>
+Controller 840'inay formulate a number of hypotheses for a code segment and provides control signals indicative of the scaling factors and scale values to be used for the code segment. Controller 840 may further receive the values for the perfomiancc metrics computed for the hypotheses, and selects one of the hypotheses as the best hypothesis. The decoded bits for the best hypothesis are then provided from Turbo decoder 800.<br>
+[0090]	Various aspects of the decoding techniques have been described for a<br>
+Turbo decoder design that employs a set of lookup tables to implement the min*<br>
+function for different scale values w.  However, these decoding techniques are not<br>
+restricted to the use of lookup tables and the min* function may be evaluated using<br>
+other means, including hardware, software, firmware, or any combination thereof.<br>
+[0091]	The decoding techniques described herein may be advantageously used<br>
+for Turbo decoding a code segment when the scale inforaiation is not known. These techniques may be used for any communication system that employs Turbo decoding<br><br>
+such as cdma2000, W-CDMA, IS-856, and others.   These techniques may also be<br>
+employed on the forward link (i.e., downlink) as well as the reverse link (i.e., uplink).<br>
+[0092]	Beside the scaling factors and scale values, other parameters may be<br>
+adjusted for the Turbo decoding (e.g., the number of iterations, window size, and possibly others). Also, the techniques described herein may be applied to other types of decoder beside a Turbo decoder. For example, die scaling concept may also be applied to a Viterbi decoder, except that there is only one variable (the scaling factors S) since the Viterbi decoder is independent of w.<br>
+[0093]	The Turbo decoder described herein may be implemented in hardware,<br>
+software, firmware, or a combination thereof. For a hardware design, the Turbo decoder may be implemented within a digital signal processor (DSP), an application specific integrated circuit (ASIC), a processor, a micn^HX&gt;cessor, a controller, a microcontroller, a field progranunable gate array (FPGA). a programmable logic device, other electronic unit, or any combinaticm tf^rec^. And for a software or firmware design, the Turbo decoder may be implemented with codes executed by a processor (e.g., controller 840 in FIG. 8). The storage unit and lookup tables may also be implemented with various memory technologies such as, for example, random access memory (RAM), dynamic RAM (DRAM), Flash memory, and others. Various structures and implementations of the Turbo decoder and storage unit are possible and within the scc^ of the present invention.<br>
+[0094]	The foregoing description of the preferred embodiments is provided to<br>
+enable any person skilled in the art to make or use the present invention. Various modifications to diese embodiments will be readily apparent to those skilled in the art, and the generic principles defined herein may be applied to other embodiments without the use of the inventive faculty. Thus, the present invention is not intended to be limited to the embodiments shown herein but is to be accorded the widest scope consistent with the principles and novel features disclosed herein.<br><br><br><br>
+WE CLAIM :<br>
+1.	A method of decoding a Turbo encoded code segment, comprising: forming a plurality of hypotheses for the code segment, wherein each hypothesis corresponds to a particular set of one or more values for a set of one or more parameters used for decoding the code segment; decoding the code segment in accordance with each of the hypotheses; evaluating one or more performance metrics for a decoded result for each of the hypotheses; determining a particular hypothesis having a best decoded result based on the one or more evaluated performance metrics; and providing a sequence of decoded bits for the hypothesis with the best decoded result.<br>
+2.	The method of claim 1, wherein the decoding is performed for a particular number of iterations for each of the hypotheses, and wherein the one or more performance metrics are evaluated for each hypothesis after completing the particular number of iterations.<br>
+3.	The method of claim 2, wherein the particular number of iterations is less than that required to completely decode the code segment.<br>
+4.	The method of claim 1, wherein the decoding is performed based on a maximum a posteriori (MAP) decoding scheme.<br>
+5.	The method of claim 4, wherein the MAP decoding scheme utilizes a function for decoding the code segment, and wherein the set of one or more parameters includes at least one parameter for the function.<br>
+6.	The method of claim 5, wherein the function is a min* function.<br>
+7.	The method of claim 5, wherein the function is implemented in part with a set of lookup tables corresponding to different values for the function parameter.<br>
+8.	The method of claim 1, wherein the set of one or more parameters includes a parameter for a sequence of scaling factors used to scale bits received for the code segment to derive bits to be decoded.<br>
+9.	The method of claim 8, wherein the plurality of hypotheses correspond to a plurality of sequences of scaling factors.<br>
+10.	The method of claim 5, wherein the set of one or more parameters includes a parameter for a scale used to evaluate the function.<br>
+11.	The method of claun 10, wherein the plurality of hypotheses correspond to a plurality of scale values.<br><br>
+The method of claim 8, wherein the set of one or more parameters further includes a parameter for a scale used to evaluate a function for decoding the code segment, and wherein the plurality of hypotheses correspond to a plurality of combinations of sequences of scaling factors and scale values.<br>
+The method of claim 1, wherein the one or more performance metrics include a CRC check.<br>
+The method of claim 1, wherein the one or more performance metrics include a correlation metric.<br>
+The method of claim 1, wherein the one or more performance metrics include a re-encoded correlation metric.<br>
+The method of claim 1, wherein the one or more performance metrics include a minimum or average log likelihood ratio (LLR) of the decoded bits.<br>
+A method of decoding a Turbo encoded code segment, comprising: forming a plurality of hypotheses for the code segment, wherein each hypothesis corresponds to a particular set of one or more values for a set of one or more parameters used for decoding the code segment; decoding the code segment based on a maximum a posteriori (MAP) decoding scheme and in accordance with each of the hypotheses; evaluating one or more performance metrics for a decoded result for each of the hypotheses; determining a particular hypothesis having a best decoded result based on the one or more evaluated performance metrics; and providing a sequence of decoded bits for the hypothesis with the best decoded result, and wherein the set of one or more parameters includes a parameter for a scale for a min* function used to implement the MAP decoding scheme.<br>
+A Turbo decoder comprising: a constituent decoder configured to receive and decode bits for a code segment based on a particular decoding scheme and in accordance with a particular hypothesis to provide a decoded result for the hypothesis; and a performance metric calculator configured to evaluate one or more performance metrics for the decoded result for the hypothesis, and wherein a plurality of hypotheses are formed for the code segment, wherein each hypothesis corresponds to a particular set of one or more values for a set of one or more parameters used for decoding the code segment, and wherein the constituent decoder and performance metric calculator operate on the code segment for each of the hypotheses.<br>
+The Turbo decoder of claim 18, wherein the constituent decoder is a maximum a posteriori (MAP) decoder.<br><br>
+The Turbo decoder of claim 19, further comprising: a pluraUty of lookup tables configured to implement a function for the MAP decoder, wherein each lookup table corresponds to a particular scale value for the function, and wherein the plurality of hypotheses correspond to a plurality of scale values to be used for decoding the code segment.<br>
+The Turbo decoder of claim 20, wherein the plurality of lookup tables are configured to implement a min* function for the MAP decoder.<br>
+The Turbo decoder of claim 18, wherein the bits to be decoded are derived by scaling received bits with a sequence of scaling factors, and wherein the plurality of hypotheses correspond to a plurality of sequences of scaling factors.<br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzIGFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">2060-chenp-2003 abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzIGNsYWltcyBncmFudGVkLnBkZg==" target="_blank" style="word-wrap:break-word;">2060-chenp-2003 claims granted.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzIGZvcm0gMi5wZGY=" target="_blank" style="word-wrap:break-word;">2060-chenp-2003 form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzLWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">2060-chenp-2003-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzLWNvcnJlc3BvbmRuZWNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">2060-chenp-2003-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzLWNvcnJlc3BvbmRuZWNlLXBvLnBkZg==" target="_blank" style="word-wrap:break-word;">2060-chenp-2003-correspondnece-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzLWRlc2NyaXB0aW9uKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">2060-chenp-2003-description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzLWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">2060-chenp-2003-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzLWZvcm0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">2060-chenp-2003-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzLWZvcm0gMTMucGRm" target="_blank" style="word-wrap:break-word;">2060-chenp-2003-form 13.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzLWZvcm0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">2060-chenp-2003-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzLWZvcm0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">2060-chenp-2003-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA2MC1jaGVucC0yMDAzLXBjdC5wZGY=" target="_blank" style="word-wrap:break-word;">2060-chenp-2003-pct.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="229929-high-surface-area-small-crystallite-size-catalyst-for-fischer-tropsch-synthesis.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="229931-a-gripper-for-residual-coils-which-is-wound-from-residual-strip-running-from-strip-mills.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>229930</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2060/CHENP/2003</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>13/2009</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>27-Mar-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>24-Feb-2009</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>26-Dec-2003</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>QUALCOMM INCORPORATED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>5775 Morehouse Drive, San Diego, CalifoRnia 92121-1714,</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>SHIU, Da-shan</td>
+											<td>1280 San Tomas Aquino #204, San Jose, California 95117,</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>SUNDARESAN, Rajesh</td>
+											<td>3480 Granada Avenue, #270, Santa Clara, California 95051,</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H03M13/29</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2002/020345</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2002-06-26</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>09/893,046</td>
+									<td>2001-06-27</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/229930-a-method-of-decoding-a-turbo-encoded-code-segment-and-a-turbo-decoder-thereof by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 10:39:37 GMT -->
+</html>

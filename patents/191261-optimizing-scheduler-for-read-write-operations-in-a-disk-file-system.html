@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/191261-optimizing-scheduler-for-read-write-operations-in-a-disk-file-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 01:59:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 191261:&quot;OPTIMIZING SCHEDULER FOR READ/WRITE OPERATIONS IN A DISK FILE SYSTEM&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;OPTIMIZING SCHEDULER FOR READ/WRITE OPERATIONS IN A DISK FILE SYSTEM&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A system for optimizing the order of read/write commands irt a disk file system is described. An optimizing scheduler blocks the transmission of disk access requests from an application program to a disk controller until a relatively large set of read/write requests is collected. The scheduler then sorts the set of read/write requests into an order which corresponds to the physical distribution of sectors on the disk accessed by the set of read/write requests.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>OPTIMIZING SCHEDULER FOR READ/WRITE OPERATIONS IN A DISK FILE SYSTEM<br>
+A portion of the disclosure of this patent document contains material which is subject to copyright protection. The copyright owner has no objection to the facsimile reproduction by anyone of the patent disclosure, as it appears in the Patent and Trademark Office patent files or records, but otherwise reserves all copyright rights whatsoever.<br>
+FIELD OF THE INVENTION<br>
+The present invention relates generally to the field of computer operating systems, and more particularly to scheduling read/write requests in a disk-based file system.<br>
+BACKGROUND OF THE INVENTION<br>
+Disk based operating systems divide a disk into physical sectors which represent the fundamental units for data storage on the disk.  A sector is a portion of the circumference of a track on the disk, and the read/write mechanism within the disk drive can access specific sectors on the disk directly. When an application issues a command to read a specific byte from a disk file, the file system locates the correct surface, track, and sector, reads the entire sector into a memory buffer, and then locates the requested byte within that buffer.  Because sector sizes allocated on a disk may be small in relation to the total amount of data required in a typical data transaction, the read/write head may be forced to seek among several different sectors in response to a read or write command by an application program.<br>
+The physical read/write mechanism of a hard drive is generally in one of three states: idle, seek, or input/output (I/O). In order to maximize the I/O bandwidth of the disk drive, the time that the drive spends in the idle and seek states must be minimized.  A seek state corresponds to moving the read/write mechanism to the correct sector, and the time required by a seek operation is referred to as the seek time.<br>
+One method used in present disk drive systems of minimizing idle times is to ensure that new read/write requests are available as the previous read/write operations complete. This essentially creates a queue of read/write requests which minimizes the time gap (idle time) between individual read /write operations.  Likewise, a method used in present disk drive systems of minimizing seek times is to analyze the queued read/write requests and perform them in the most efficient order with regard to the order of the sectors as they are accessed on the disk. A shortcoming of these present systems is that because they attempt to minimize the latency between the time a request is initiated and the time the operation is performed, the number of requests that are queued at any given time is also minimized.  The minimal queue length consequently limits the number of requests which can be optimally ordered, thus resulting in a less than optimal ordering in cases where the number of requests exceeds the size of the queue.<br>
+Many general purpose file systems are suitable for use with applications for which minimal optimization of read/write requests occurs. Certain applications, however, require sets of data transfer operations to disk to be completed within a maximum time limit.   This time requirement translates to a minimum disk input/output bandwidth, and is typically measured in terms of number of bytes transferred to or from the disk per unit time.  For such applications, excessive seek times may increase disk access<br>
+times the beyond the minimum bandwidth requirements.  Examples of I/O intensive applications include real-time applications which require extensive disk access.  Although a common solution to this problem may be to use faster disk drives, design and cost constraints may prevent the use of adequately fast disk drives.<br>
+It is therefore an intended advantage of the present invention to provide a system for optimizing a large number of disk access requests in a disk file system for use with a broad range of disk drive devices.<br>
+SUMMARY OF THE INVENTION<br>
+The present invention discloses a method for increasing the disk I/O bandwidth in a disk based file system. Disk access requests from an application program to a drive controller are blocked until a relatively large set of read/write requests are collected. An optimizing scheduler sorts the order of the requests so that the order of the set of read/write requests corresponds to the physical distribution of sectors on a disk which are to be accessed by each read/write request. The ordered set of read/write requests are then transmitted to the drive controller.<br>
+According to one embodiment of the present invention the disk input/output queue is blocked from being processed for a fixed period of time while read/write requests accumulate in a buffer.  The optimizing scheduler then optimizes the entire queue in a single pass and sends the operations to the drive controller in the optimized order.<br>
+An embodiment of the present invention effectively increases the size of the queue of read/write requests to the disk drive, so that new requests inserted into the queue have a greater chance of being optimally placed between requests already in the queue, thus improving the average seek time for the set of requests.<br>
+Other features of the present invention will be apparent from the accompanying drawings and from the detailed description which follows.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+The present invention is illustrated by way of example and not limitation in the figures of the accompanying drawings, in which like references indicate similar elements, and in which:<br>
+Figure 1 is a block diagram of a computer system which may be used to implement an embodiment of the present invention.<br>
+Figure 2 illustrates an example of sector distribution on disk media.<br>
+Figure 3 is a block diagram of a disk file system which uses an optimizing command scheduler according to one embodiment of the present invention.<br>
+Figure 4 is a flowchart illustrating the process of re-ordering sets of read/write requests to optimize disk drive performance according to one embodiment of the present invention.<br>
+Figure 5 is a table which illustrates the relative seek distances required in different command queuing systems, including a system according to one embodiment of the present invention.<br>
+DETAILED DESCRIPTION<br>
+A system for collecting and optimizing read/write commands in a disk file system is described. In the following description, for purposes of explanation, numerous specific details are set forth in order to provide a thorough understanding of the present invention.  It will be evident, however, to one skilled in the art that the present invention may be practiced without these specific details.  In other instances, well-known structures and devices are shown in block diagram form to facilitate explanation. Hardware Overview<br>
+Figure 1 illustrates a block diagram of a computer which may be used to implement an embodiment of the present invention.   The computer system 100 includes a processor 102 coupled through a bus 101 to a random access memory (RAM) 104, a read only memory (ROM) 106, and display device 120. Keyboard 121 and cursor control unit 122 are coupled to bus 101 for communicating information and command selections to processor 102.   Also coupled to processor 102 through bus 101 is an input/output (I/O) interface 123 which can be used to control and transfer data to electronic devices connected to computer 100.<br>
+Mass storage device 107 is also coupled to processor 102 through bus 101. Mass storage device 107 represents a memory device which stores data accessible from processor 102 through a sector-based file system used by the computer system 100. Mass storage device 107 may be a persistent storage device, such as a floppy disk drive or a fixed disk drive (e.g., magnetic, optical, magneto-optical, or the like), which can directly access locations on the disk for reading and writing data to and from the disk media.  Alternatively, mass storage device 107 could be a tape drive which accesses data blocks placed sequentially on streaming tape media. It should be noted that the architecture<br>
+of Figure 1 is provided only for purposes of illustration, and that a computer<br>
+used in conjunction with the present invention is not limited to this specific<br>
+architecture.<br>
+Command Optimization<br>
+Disk file systems organize data on disks in sectors. Due to file fragmentation or sector interleaving, data relating to a particular file may be spread among several discontiguous sectors.  Figure 2 illustrates an example of the distribution of related sectors on a disk file.  Disk 200 contains several tracks and four sectors containing data. The sectors are numbered 1, 2, 3, and 4. If an application requests to read to data from these sectors, a file system which employs a simple command FIFO (first-in, first-out buffer) would simply access the sectors in the order the commands are received.  Thus, with reference to Figure 2, if the application requested data to be read from sector 1, sector 2, sector 3, and then sector 4, the read/write head of the disk drive would access the sectors in that order. As can be seen in Figure 2, however, this order requires several seek operations between each read operation since each sector is on a different track, and the sectors are not arranged on disk in the order in which they are requested.<br>
+Certain known disk file systems use a command queuing system to minimize the number of seeks between sector read operations by ordering the sequence of the sectors as they are accessed by the application to correspond to the physical order of the sectors on the disk. For example, given the sector distribution illustrated in Figure 3, an optimal order to the read/write requests would be 1, 4, 3, 2. As can be seen in Figure 2, this order eliminates any extra track crossings between sequential sector accesses.<br>
+Present systems of efficiently ordering disk read/write requests, such as command queuing systems, however, provide only a limited queue size in<br>
+which commands are re-ordered.  Queue size is limited because these systems also attempt to minimize the read/write cycle latency which is the measure of the amount of time between the time that a read/write request is initiated and the time that it is performed. As the length of the queue is increased, the latency correspondingly increases.  Thus, in the example provided above, if the queue can only accommodate two instructions while an access command is being completed, the system would cause the sectors to be read in the order of 1-3-2-4.  Given the distribution of the sectors in Figure 2, this re-ordered scheme does not reduce the number of seek operations from the original order of 1-2-3-4.  Although Figure 2 illustrates an example in which only four sectors are accessed, it will be appreciated that most applications request disk accesses which involve many sectors.  In these cases, the limitations of the simple FIFO and command queuing systems are amplified.<br>
+Figure 3 illustrates a system according to one embodiment of the present invention in which the effective size of the read/write command queue is increased so that more read/write commands are inserted in the queue to be placed in the optimum order. In Figure 3, application 302 generates read/write requests for data on a disk controlled by drive controller 306.  Drive controller 306 represents both the controller hardware circuit within the disk drive, as well as the driver firmware executed by the disk drive.  Drive controller 306 sends control signals which control the movement and read/write functionality of head mechanism 308.<br>
+In one embodiment of the present invention, an optimizing scheduler 304 receives the read/write requests from application 302.  Optimizing scheduler 304 collects a number of read/write requests, and then orders these requests so that seek operations between the accessed sectors is minimized.<br>
+In a method of the present invention, the optimizing scheduler 304 blocks the queue and holds the read/write requests in a buffer for a specified period of time.  This period of time defines a scheduler period which can be varied depending on factors such as the rate of requests issued by the application, the I/O bandwidth requirements of the system, and the amount of fragmentation on the disk.  When the end of the scheduler period is reached, the optimizing scheduler optimizes the entire queue in a single pass and sends the requests to the disk in the optimized order.<br>
+Alternatively, instead of a period of time representing the threshold condition for releasing the requests, the optimizing scheduler could be configured such that a specified number of accumulated requests serves as the threshold condition.   For example, the optimizing scheduler could accumulate 100 requests before optimizing the requests. For this embodiment, optimizing scheduler 304 includes a counter which maintains a count of the number of read/write requests received from application 302.<br>
+According to one embodiment of the present invention, the optimizing scheduler 204 sorts the read/write requests so that the order of the requests corresponds to the order in which the sectors to be read are sequentially distributed on the disk.  Thus, with reference to Figure 2, the optimum order of the sectors is 1-4-3-2, since these sectors are contained in sequential tracks from outermost to innermost track in this particular order. Furthermore, the sorting direction between sets of read/write requests is exchanged so that the drive mechanism sweeps across the disk in one direction first, then back in the other direction.  This eliminates the need for the drive mechanism to move back to the opposite side of the disk after the innermost or outermost track of the disk has been reached.<br>
+Figure 5 provides a table which summarizes the access request order and resulting number of seeks for the simple FIFO and two-command queue system described above, in comparison with the results obtained for a scheduler according to an embodiment of the present invention.  The sector numbers provided in the Request Order column of Figure 5 correspond to the sector numbers illustrated in Figure 2.<br>
+With regard to the method in which the optimizing scheduler 304 sorts the order of the read/write requests, a simple sorting algorithm is implemented in which the sort operation is performed on all collected requests in one pass.   Alternatively, the optimizing scheduler implements an incremental sorting algorithm in which requests are placed into their optimal order as they are received.<br>
+In a further alternative of the present invention, the read/write operations are prioritized, so that background operations can be performed without impacting the real-time performance of the system.  As the distribution of the read/write operations approaches worst case, background read/write requests can be deferred to a later set of requests so that higher priority read/write operations are completed in time. For better case sets of read/write operations, background read/write requests could be interleaved (and still seek-optimized) without causing real-time problems.<br>
+Figure 4 is a flowchart illustrating the major steps of optimizing the execution order of disk read/write commands according to a method for one embodiment of the present invention, and with reference to the file system illustrated in Figure 3.  In step 402, the optimizing scheduler 304 collects disk read/write requests sent from the application program 302 for one scheduler period. The scheduler period corresponds to the number of read/write requests which are held in the read/write queue before the order of the<br>
+read/write requests is optimized. After the specified number of read/write requests are collected in the optimizing scheduler buffer, the read/write requests are re-ordered so that the distance of seek operations between consecutive read/write operations is minimized, step 404.  The read/write commands are then transmitted from the optimizing scheduler 304 to the drive controller 306 in the optimized order, step 406. If there are additional disk read/write requests issued from the application, the process repeats from step 402, otherwise the process ends.<br>
+As has been mentioned earlier, increasing the command queue size increases the latency between the time a read/write request is initiated and the time the operation is performed.  This is not generally a problem for write operations and is not a problem for read operations if the disk locations to be accessed are known far enough in advance (as is usually the case for media tracks).  Moreover, a larger queue requires larger data buffers than conventional queuing methods, however, this is often an acceptable trade-off for increased disk I/O bandwidth.<br>
+One embodiment of the present invention provides a file system method which is suitable for use with applications with high disk I/O bandwidth requirements in which excessive disk access time may negatively impact application performance.   A method of the present invention provides a system for optimizing the order in which disk read/write commands are executed, so that disk seek operations may be reduced to satisfy the disk I/O bandwidth requirements of the application programs.<br>
+One exemplary application of the optimizing scheduler is its use in a computer implemented digital player/recorder including audio record and playback programs which read and write multiple tracks of data simultaneously to the disk.   Such an application has rigorous minimum disk<br>
+I/O bandwidth requirements for playback, and the disk head may be forced to seek among blocks on the disk in order to play a single track. In some instances, the data samples may not be read from the disk within the required time, in which case, the audio data played back may be interrupted or otherwise distorted. The ordering of large sets of read/write requests in accordance with the physical distribution of sectors on the disk, as described in reference to Figure 4, minimizes the chance that applications fail due to excessive seek operations causing increased data transfer cycles.<br>
+Although the above discussion was written in the context of  audio applications, it should be noted that a method of the present invention could be used in other similar applications, such as applications which involve both video and audio content, or applications which involve high-speed calculations on limited amounts of data.<br>
+In one embodiment of the present invention, the optimizing scheduler 304 illustrated in Figure 3 is implemented as a program which is executed by a processor coupled to the disk drive which is to be accessed (e.g., processor 102 in computer system 100). The optimizing scheduler program could be a program which is incorporated as part of the disk file system, or it could be a stand-alone program which can be called by the disk file system or an application program. Appendix A provides a detailed listing of C++ program code which implements an optimizing scheduler according to one embodiment of the present invention.  It will be appreciated however, that methods of the present invention are not limited to the programming language and exact code sequences provided.<br>
+The steps of a method of the present invention may be implemented by a central processing unit (CPU) in a computer executing sequences of instructions stored in a memory. The memory may be a random access<br>
+memory (RAM), read-only memory (ROM), a persistent store, such as a mass storage device, or any combination of these devices. Execution of the sequences of instructions causes the CPU to perform steps according to the present invention.   The instructions may be loaded into the memory of the computer from a storage device or from one or more other computer systems over a network connection.   Consequently, execution of the instructions may be performed directly by the CPU. In other cases, the instructions may not be directly executable by the CPU. Under these circumstances, the instructions may be executed by causing the CPU to execute an interpreter that interprets the instructions, or by causing the CPU to execute instructions which convert the received instructions to instructions which can be directly executed by the CPU. In other embodiments, hardwired circuitry may be used in place of, or in combination with, software instructions to implement the present invention.   Thus, the present invention is not limited to any specific combination of hardware circuitry and software, nor to any particular source for the instructions executed by the computer.<br>
+In the foregoing, a system has been described for collecting and optimizing the order of read/write requests in a disk file system.  Although the present invention has been described with reference to specific exemplary embodiments, it will be evident that various modifications and changes may be made to these embodiments without departing from the broader spirit and scope of the invention as set forth in the claims.  Accordingly, the specification and drawings are to be regarded in an illustrative rather than a restrictive sense.<br><br><br>
+CLAIMS<br>
+What is claimed is:<br>
+1.	A method of executing disk access requests issued by an application<br>
+program, the method comprising the steps of:<br>
+receiving a plurality of disk read/write requests from said application program;<br>
+collecting a set of said plurality of read/write requests until a predetermined threshold condition is reached;<br>
+sorting the order of said set of read/write requests in relation to the physical distribution on a disk of sectors to be accessed by each read/write request of said set of read/write requests; and<br>
+transmitting said read/write requests to a drive controller controlling said disk in the order created in said sorting step.<br>
+2.	A method according to claim 1 wherein said set of read/write requests<br>
+are stored in a buffer memory coupled to said drive controller.<br>
+3.	A method according to claim 2 wherein said collecting step further<br>
+comprises blocking said plurality of read/write requests from being<br>
+transmitted from said application to said drive controller for a predetermined<br>
+period of time.<br>
+4.	A method according to claim 2 wherein said collecting step further<br>
+comprises blocking said plurality of read/write requests from being<br>
+transmitted from said application to said drive controller until a<br>
+predetermined number of read/write requests is accumulated in said buffer.<br>
+5.	A method according to claim 3 wherein said sorting step is performed<br>
+on said set of read/write requests upon the collection of an entire set of<br>
+read/write requests within said time period.<br>
+6.	A method according to claim 3 wherein said sorting step is performed<br>
+on each read/write request as it is received into said buffer.<br>
+i •<br>
+7.	An apparatus for optimizing the order of disk access commands issued<br>
+by an application program, said apparatus comprising:<br>
+a buffer receiving a plurality of read/write requests issued by said application program, said buffer receiving said plurality of read/write requests until a threshold condition is reached, said read/write requests received when said threshold condition is reached defining a set of read/write requests;<br>
+a scheduler logically coupled to said buffer, said scheduler configured to sort said set of read/write requests wherein the order of said set of read/write requests corresponds to the physical distribution on a disk of sectors to be accessed by each read/write request of said set of read/write requests; and<br>
+a drive controller logically coupled to said scheduler for controlling access to said disk in accordance with said set of read/write requests.<br>
+8.	An apparatus according to claim 7 wherein said scheduler blocks said<br>
+plurality of read/write requests from being transmitted from said application<br>
+to said drive controller for a predetermined period of time.<br>
+9.	An apparatus according to claim 7 wherein said collecting step further<br>
+comprises a counter, said counter maintaining a count of read/write requests<br>
+received by said buffer, said scheduler configured to block said plurality of read/write requests from being transmitted from said application to said drive controller until said counter reaches a predetermined number of requests.<br>
+10.	An apparatus according to claim 8 wherein said scheduler sorts said set<br>
+of read/write requests upon the collection of an entire set of read/write<br>
+requests within said period of time.<br>
+11.	An apparatus according to claim 8 wherein said sorting step is<br>
+performed on each read/write request as it is received into said buffer.<br>
+12.	An apparatus for executing disk access requests issued by an application<br>
+program, the method comprising the steps of:<br>
+means for receiving a plurality of disk read/write requests from said application program;<br>
+means for collecting a set of said plurality of read/write requests until a predetermined threshold condition is reached;<br>
+means for sorting the order of said set of read/write requests in relation to the physical distribution on a disk of sectors to be accessed by each read/write request of said set of read/write requests; and<br>
+means for transmitting said read/write requests to a drive controller controlling said disk in the order created in said sorting step.<br>
+13.	An apparatus according to claim 12 further comprising buffer means<br>
+for storing said set of read/write requests.<br>
+14.	A computer readable medium having stored thereon sequences of<br>
+instructions which are executable by a processor, and which, which, when<br>
+executed by the processor, cause the processor to perform the steps of:<br>
+receiving a plurality of disk read/write requests from an application program;<br>
+collecting a set of said plurality of read/write requests until a predetermined threshold condition is reached;<br>
+storing said set of read/write requests in a buffer memory;<br>
+sorting the order of said set of read/write requests in relation to the physical distribution on a disk of sectors to be accessed by each read/write request of said set of read/write requests; and<br>
+transmitting said read/write requests to a drive controller controlling said disk in the order created in said sorting step.<br>
+15.	A computer according to claim 14 wherein the memory further<br>
+contains instructions which cause the processor to perform the step of<br>
+blocking said plurality of read/write requests from being transmitted from<br>
+said application to said drive controller for a predetermined period of time.<br>
+16.	A computer according to claim 14 wherein the memory further<br>
+contains instructions which cause the processor to perform the step of<br>
+blocking said plurality of read/write requests from being transmitted from<br>
+said application to said drive controller until a predetermined number of<br>
+read/write requests is accumulated in said buffer.<br>
+17. An apparatus for optimizing the order of disk access commands issued by an application program substantially as herein described with reference to the accompanying drawings.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1NC1kZWwtMTk5OC1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">2754-del-1998-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1NC1kZWwtMTk5OC1jbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">2754-del-1998-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1NC1kZWwtMTk5OC1jb3JyZXNwb25kZW5jZS1vdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">2754-del-1998-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1NC1kZWwtMTk5OC1jb3JyZXNwb25kZW5jZS1wby5wZGY=" target="_blank" style="word-wrap:break-word;">2754-del-1998-correspondence-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1NC1kZWwtMTk5OC1kZXNjcmlwdGlvbiAoY29tcGxldGUpLnBkZg==" target="_blank" style="word-wrap:break-word;">2754-del-1998-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1NC1kZWwtMTk5OC1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">2754-del-1998-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1NC1kZWwtMTk5OC1mb3JtLTEucGRm" target="_blank" style="word-wrap:break-word;">2754-del-1998-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1NC1kZWwtMTk5OC1mb3JtLTIucGRm" target="_blank" style="word-wrap:break-word;">2754-del-1998-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1NC1kZWwtMTk5OC1mb3JtLTQucGRm" target="_blank" style="word-wrap:break-word;">2754-del-1998-form-4.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1NC1kZWwtMTk5OC1mb3JtLTYucGRm" target="_blank" style="word-wrap:break-word;">2754-del-1998-form-6.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc1NC1kZWwtMTk5OC1ncGEucGRm" target="_blank" style="word-wrap:break-word;">2754-del-1998-gpa.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="191258-an-improved-process-for-the-preparation-of-pyridine-substituted-pyridine-derivative.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="191266-an-improved-process-for-the-production-of-amides-form-amines.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>191261</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2754/DEL/1998</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>31/2009</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>31-Jul-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>06-May-2004</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>14-Sep-1998</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>SONY PICTURES ENTERTAINMENT, INC.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>10202 W. WASHINGTON BOULEVARD, CULVER CITY, CALIFORNIA 90232, U.S.A.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>RICHARD JOSEPH OLIVER</td>
+											<td>21629 OCEAN VISTA DRIVE, LAGUNA BEACH, CALIFORNIA 92677, U.S.A.</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>RICHARD JOSEPH OLIVER</td>
+											<td>21629 OCEAN VISTA DRIVE, LAGUNA BEACH, CALIFORNIA 92677, U.S.A.</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>RICHARD JOSEPH OLIVER</td>
+											<td>21629 OCEAN VISTA DRIVE, LAGUNA BEACH, CALIFORNIA 92677, U.S.A.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 3/06</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>08/936,302</td>
+									<td>1997-09-24</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/191261-optimizing-scheduler-for-read-write-operations-in-a-disk-file-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 01:59:20 GMT -->
+</html>

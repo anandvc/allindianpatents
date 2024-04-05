@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/232630-motion-image-coding-apparatus-and-control-method-and-program-of-the-apparatus by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 13:15:44 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 232630:&quot;MOTION IMAGE CODING APPARATUS, AND CONTROL METHOD AND PROGRAM OF THE APPARATUS&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;MOTION IMAGE CODING APPARATUS, AND CONTROL METHOD AND PROGRAM OF THE APPARATUS&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A motion detector detects the motion of an imaging device. On the basis of the detected motion information, a selector selects, from a plurality of frame memories for storing a plurality of frame data, a frame memory for storing reference frame data to be referred to when frame data to be coded is coded. A motion estimator estimates a motion vector on the basis of the reference frame data stored in the selected frame memory and the frame data to be coded. The frame data to be coded is coded by using the estimated motion vector, and the coded data is output.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+DESCRIPTION<br>
+MOTION IMAGE CODING APPARATUS, AND CONTROL METHOD AND<br>
+PROGRAM OF THE APPARATUS<br>
+TECHNICAL FIELD<br>
+The present invention relates to a motion image coding apparatus which codes a motion image by-executing motion compensation for frame data to be coded by referring to a plurality of frame data in the motion image, and a control method and program of the apparatus.<br>
+BACKGROUND ART<br>
+Recently, the H.264 coding method is attracting attention as a new motion image coding method. This coding method is developed by the cooperation of ITU-T and ISO. This new standard was standardized in the summer of 2003.<br>
+The characteristic features of this new coding method are that 4x4 integer transformation is used, and a plurality of intra-predictions are prepared, unlike in the conventional MPEG-1, MPEG-2, and MPEG-4 coding methods.  In addition, an intra-loop filter is used, and motion compensation is performed by seven types of sub-blocks. Also, the pixel accuracy of the motion compensation is the same as the MPEG-4 coding method, i.e., the motion compensation can be performed<br><br>
+by 1/4 pixel accuracy. Furthermore, universal variable-length coding or context adaptive variable-length coding is used as entropy coding.<br>
+The more important characteristic feature is as follows.  That is, the MPEG-1, MPEG-2, and MPEG-4 coding methods perform motion compensation by using two reference images (frames) before and after a frame to be coded. However, this new coding method can use a larger number of reference images. A num_ref_frames code contained in the header of a bit stream can take a maximum of 16 values.<br>
+More specifically, in motion compensation, 16 frames before and after a frame to be coded can be referred to as reference images. A macroblock to be coded is processed as follows. As described above, a prediction error is calculated by 1/4 pixel accuracy for seven types of sub-blocks with respect to an image having a maximum of 16 frames, and a macroblock by which this prediction error is a minimum is selected. This largely increases the coding efficiency.<br>
+The arrangement of the conventional motion image coding apparatus using the H.264 coding method will be explained with reference to Fig. 13. This arrangement is also explained in reference 1 ("Overview of the H.264/AVC Video Coding Standard" (IEEE TRANSACTIONS ON CIRCUITS AND SYSTEMS FOR VIDEO TECHNOLOGY, JULY 2003)) or reference 2 ("H.264 Now Starts, Outrivaling<br><br>
+Slow-Going MPEG-4" (Nikkei Electronics 2003.7.7, pp. 65 - 74)).<br>
+Fig. 13 is a block diagram showing the arrangement of the conventional motion image coding apparatus.<br>
+Image data is input macroblock by macroblock to this motion image coding apparatus. A selector 1000 switches whether to perform intra-coding.  If intra-coding is to be performed, the image data is input to an intra-predictor 1001. The intra-predictor 1001 performs prediction in nine modes, and calculates a prediction error.<br>
+If coding to be performed is not intra-coding, the image data is input to a differential unit 1002 where the difference from a predicted image is calculated as a prediction error.<br>
+A transformer/quantizer 1003 transforms the calculated prediction error into an integer of 4 x 4 pixel blocks, and quantizes the obtained coefficient. This quantized efficient as the result of quantization undergoes variable-length coding performed by an entropy coder 1004, and is output to an output unit 1014. At the same time, the quantization result is input to a dequantizer/invert transformer 1005 to restore the prediction error, and this prediction error is added to the predicted image by an adder 1006. The result is suitably stored as a decoded image in frame<br><br>
+memories 1007 to 1010.<br>
+A motion estimator 1011 compares the decoded image stored in the frame memories 1007 to 1010 with the input image, and calculates a motion vector by 1/4 pixel accuracy for each sub-block. These motion vectors and the selected frame numbers are input to a motion compensator 1012, and reference images are loaded from the corresponding frame memories. A reference image having a minimum prediction error is selected and output as a predicted image to the differential unit 1002.<br>
+The motion vectors and selected frame numbers are also input to a motion coder 1013 and coded, and the coded data is output to the output unit 1014. The output unit 1014 shapes this coded data in accordance with a format, and outputs the shaped data.<br>
+Unfortunately, a coding method which refers to a plurality of frames such as the H.264 coding method described above poses the problem that motion vectors are searched for in order to execute motion compensation, and the calculation amount becomes enormous as the number of reference images increases.<br>
+In addition, especially when the H.264 coding method is used in an image sensing apparatus such as a video camera, the entire image largely changes whenever the video camera is panned or tilted. Therefore, although the frequency of reference of data of<br><br>
+temporally separated frame images decreases, this data must be held.<br>
+DISCLOSURE OF INVENTION The present invention has been made in consideration of the above situation, and has as its object to provide a motion image coding apparatus capable of efficiently using a memory used for motion image coding, and capable of performing efficient motion vector search, and a control method and program of the apparatus.<br>
+According to the present invention, the foregoing object is attained by providing a motion image coding apparatus which codes a motion image by executing motion compensation for frame data to be coded by referring to a plurality of frame data in the motion image, comprising: detecting means for detecting a motion of an imaging device; a plurality of storage means for storing the plurality of frame data; selecting means for selecting, from the plurality of storage means, on the basis of motion information detected by the detecting means, storage means for storing reference frame data to be referred to when the frame data to be coded is coded; estimating means for estimating a motion vector on the basis of the reference frame data stored in the storage means selected by the selecting means and the frame data to<br><br>
+be coded; coding means for coding the frame data to be coded by using the motion vector estimated by the estimating means; and output means for outputting the coded data which is coded by the coding means.<br>
+In a preferred embodiment, the detecting means detects the motion of the imaging device on the basis of a motion image sensed by the imaging device.<br>
+In a preferred embodiment, wherein the selecting means comprises control means for controlling write/read and power supply to the plurality of storage means on the basis of the motion information detected by the detecting means.<br>
+In a preferred embodiment, further comprises setting means for setting an image sensing mode of the imaging device, wherein the selecting means comprises control means for controlling write/read and power supply to the plurality of storage means on the basis of the image sensing mode set by the setting means.<br>
+In a preferred embodiment, the control means stops power supply to storage means not selected by the selecting means.<br>
+In a preferred embodiment, the apparatus further comprises search range control means for controlling a motion vector search range of the estimating means on the basis of the motion image detected by the detecting means.<br>
+According to the present invention, the foregoing<br><br>
+object is attained by providing a motion image coding apparatus which codes a motion image by executing motion compensation for frame data to be coded by referring to a plurality of frame data in the motion image, comprising:  setting means for setting an image sensing mode of an imaging device; a plurality of storage means for storing the plurality of frame data; selecting means for selecting, from the plurality of storage means, on the basis of the image sensing mode set by the setting means, storage means for storing reference frame data to be referred to when the frame data to be coded is coded; estimating means for estimating a motion vector on the basis of the reference frame data stored in the storage means selected by the selecting means and the frame data to be coded; coding means for coding the frame data to be coded by using the motion vector estimated by the estimating means; and output means for outputting the coded data which is coded by the coding means.<br>
+In a preferred embodiment, the selecting means comprises control means for controlling write/read and power supply to the plurality of storage means.<br>
+In a preferred embodiment, the control means stops power supply to storage means not selected by the selecting means.<br>
+In a preferred embodiment, the detecting means detects a motion of the imaging device on the basis of<br><br>
+a motion image sensed by the imaging device.<br>
+According to the present invention, the foregoing object is attained by providing a motion image coding apparatus which codes a motion image by executing motion compensation for, frame data to be coded by referring to a plurality of frame data in the motion image, comprising:  input means for inputting control information which controls an imaging device; storage means for storing a motion image sensed by the imaging device; setting means for setting the number of reference frame data to be referred to when the frame data to be coded is coded, on the basis of motion information of the imaging device, which is acquired on the basis of the control information input by the input means; acquiring means for acquiring reference frame data corresponding to the number of reference frame data set by the setting means; estimating means for estimating a motion vector on the basis of the reference frame data acquired by the acquiring means and the frame data to be coded; coding means for coding the frame data to be coded by using the motion vector estimated by the estimating means; and output means for outputting the coded data which is coded by the coding means.<br>
+In a preferred embodiment, the apparatus further comprises search range control means for controlling a motion vector search range of the estimating means on<br><br>
+the basis of the motion information.<br>
+According to the present invention, the foregoing object is attained by providing a control method of a motion image coding apparatus which comprises a plurality of storage units for storing a plurality of frame data in a motion image, and codes the motion image by executing motion compensation for frame data to be coded by referring to frame data stored in the plurality of storage units, comprising: a detection step of detecting a motion of an imaging device; a selection step of selecting, from the plurality of storage units, on the basis of motion information detected in the detection step, a storage unit for storing reference frame data to be referred to when the frame data to be coded is coded; an estimation step of estimating a motion vector on the basis of the reference frame data stored in the storage unit selected in the selection step and the frame data to be coded; a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and an output step of outputting the coded data which is coded in the coding step.<br>
+According to the present invention, the foregoing object is attained by providing a control method of a motion image coding apparatus which comprises a plurality of storage units for storing a plurality of frame data in a motion image, and codes a motion image<br><br>
+by executing motion compensation for frame data to be coded by referring to frame data stored in the plurality of storage units, comprising: a setting step of setting an image sensing mode of an imaging device; a selection step of selecting, from the plurality of storage units, on the basis of the image sensing mode set in the setting step, a storage unit for storing reference frame data to be referred to when the frame data to be coded is coded; an estimation step of estimating a motion vector on the basis of the reference frame data stored in the storage unit selected in the selection step and the frame data to be coded; a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and an output step of outputting the coded data which is coded in the coding step.<br>
+According to the present invention, the foregoing object is attained by providing a control method of a motion image coding apparatus which comprises a storage unit for storing a motion image, and codes the motion image by executing motion compensation for frame data to be coded by referring to frame data stored in the storage unit, comprising: an input step of inputting control information which controls an imaging device; a setting step of setting the number of reference frame data to be referred to when the frame data to be coded is coded, on the basis of motion information of the<br><br>
+imaging device, which is acquired on the basis of the control information input in the input step; an acquisition step of acquiring reference frame data corresponding to the number of reference frame data set in the setting step; an estimation step of estimating a motion vector on the basis of the reference frame data acquired in the acquisition step and the frame data to be coded; a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and an output step of outputting the coded data which is coded in the coding step.<br>
+According to the present invention, the foregoing object is attained by providing a program for implementing control of a motion image coding apparatus which comprises a plurality of storage units for storing a plurality of frame data in a motion image, and codes the motion image by executing motion compensation for frame data to be coded by referring to frame data stored in the plurality of storage units, comprising program codes of: a detection step of detecting a motion of an imaging device; a selection step of selecting, from the plurality of storage units, on the basis of motion information detected in the detection step, a storage unit for storing reference frame data to be referred to when the frame data to be coded is coded; an estimation step of estimating a motion vector on the basis of the reference frame data<br><br>
+stored in the storage unit selected in the selection step and the frame data to be coded; a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and an output step of outputting the coded data which is coded in the coding step.<br>
+According to the present invention, the foregoing object is attained by providing a program for implementing control of a motion image coding apparatus which comprises a plurality of storage units for storing a plurality of frame data in a motion image, and codes a motion image by executing motion compensation for frame data to be coded by referring to frame data stored in the plurality of storage units, comprising program codes of: a program code of a setting step of setting an image sensing mode of an imaging device; a program code of a selection step of selecting, from the plurality of storage units, on the basis of the image sensing mode set in the setting step, a storage unit for storing reference frame data to be referred to when the frame data to be coded is coded; an estimation step of estimating a motion vector on the basis of the reference frame data stored in the storage unit selected in the selection step and the frame data to be coded; a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and an output step of<br><br>
+outputting the coded data which is coded in the coding step.<br>
+According to the present invention, the foregoing object is attained by providing a program for implementing control of a motion image coding apparatus which comprises a storage unit for storing a motion image, and codes the motion image by executing motion compensation for frame data to be coded by referring to frame data stored in the storage unit, comprising program codes of:  an input step of inputting control information which controls an imaging device; a setting step of setting the number of reference frame data to be referred to when the frame data to be coded is coded, on the basis of motion information of the imaging device, which is acquired on the basis of the control information input in the input step; an acquisition step of acquiring reference frame data corresponding to the number of reference frame data set in the setting step; an estimation step of estimating a motion vector on the basis of the reference frame data acquired in the acquisition step and the frame data to be coded; a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and an output step of outputting the coded data which is coded in the coding step.<br>
+Other features and advantages of the present invention will be apparent from the following<br><br>
+description taken in conjunction with the accompanying drawings, in which like reference characters designate the same or similar parts throughout the figures thereof.<br>
+BRIEF DESCRIPTION OF DRAWINGS<br>
+The accompanying drawings, which are incorporated in and constitute a part of the specification, illustrate embodiments of the invention and, together with the description, serve to explain the principles of the invention.<br>
+Fig. 1 is a block diagram showing the arrangement of a motion image coding apparatus according to the first embodiment of the present invention;<br>
+Fig. 2 is a flowchart showing a motion image coding process performed by the motion image coding apparatus according to the first embodiment of the present invention;<br>
+Fig. 3 is a block diagram showing the arrangement of a motion image coding apparatus according to the second embodiment of the present invention;<br>
+Fig. 4 is a flowchart showing a motion image coding process performed by the motion image coding apparatus according to the second embodiment of the present invention;<br>
+Fig. 5 is a flowchart showing details of frame memory control M according to the second embodiment of<br><br>
+the present invention;<br>
+Fig. 6 is a flowchart showing details of frame memory control N according to the second embodiment of the present invention;<br>
+Fig. 7 is a block diagram showing the arrangement of a motion image coding apparatus according to the third embodiment of the present invention;<br>
+Fig. 8 is a flowchart showing a motion image coding process performed by the motion image coding apparatus according to the third embodiment of the present invention;<br>
+Fig. 9 is a block diagram showing the arrangement of a motion image coding apparatus according to the fourth embodiment of the present invention;<br>
+Fig. 10 is a view showing the data configuration of a memory according to the fourth embodiment of the present invention;<br>
+Fig. 11 is a flowchart showing processing executed by the motion image coding apparatus according to the fourth embodiment of the present invention;<br>
+Fig. 12 is a flowchart showing details of processing in step S305 according to the fourth embodiment of the present invention; and<br>
+Fig. 13 is a block diagram showing the arrangement of the conventional motion image coding apparatus.<br><br>
+BEST MODE FOR CARRYING OUT THE INVENTION<br>
+Preferred embodiments of the present invention will be described in detail in accordance with the accompanying drawings. <first embodiment><br>
+Fig. 1 is a block diagram showing the arrangement of a motion image coding apparatus according to the first embodiment of the present invention.<br>
+The first embodiment will be explained below by taking a camcoder as an example of the motion image coding apparatus.<br>
+In the first embodiment, a coding method used by the motion image coding apparatus will be explained by taking the H.264 coding method as an example. However, the coding method is not limited to this method. Also, to simplify the explanation, forward prediction by which frames in the past are referred to will be taken as an example.  In addition, the maximum number of reference frames is set to 5 in order to simplify the explanation, but this number is not limited to 5.<br>
+Referring to Fig. 1, an imaging device 1 generates a digital signal of an image in cooperation with an optical unit made up of lenses and the like. A frame memory 2 stores the digital signal. A selector 3 selects an output from the frame memory 2 in accordance with whether the coding mode is intra-frame coding or inter-frame coding.<br><br>
+An intra-predictor 4 executes intra-prediction by the H.264 coding method. A differential unit 5 calculates a motion prediction error. A transformer/quantizer 6 executes integer type orthogonal transformation, and quantizes the obtained coefficient. A dequantizer/invert transformer 10 dequantizes the quantized coefficient, and executes integer type orthogonal inversion.<br>
+An entropy coder 7 codes the quantization result from the transformer/quantizer 6.  A recorder 8 records the coded data on a recording medium 9. The recording medium 9 records the coded data. An adder 11 adds the prediction error obtained by the dequantizer/invert transformer 10 and a predicted value (predicted image).<br>
+Frame memories 12, 13, 14, 15, 16, and 17 store frames of locally decoded image data. A selector 18 controls inputs and outputs.<br>
+A motion estimator 19 extracts an optimum motion vector from the corresponding frame on the basis of the input image and decoded image. A motion compensator 20 generates a predicted image from the motion vector calculated by the motion estimator 19 and the corresponding frame information.<br>
+A motion coder 21 codes motion information on the basis of the calculated motion vector and the corresponding frame information. A motion detector 22 detects the motion of the motion image coding apparatus<br><br>
+by using a gyro, sensor, or the like. A motion determinator 23 determines the speed of the motion, which is detected by the motion detector 22, of the motion image coding apparatus.<br>
+The motion image coding apparatus shown in Fig. 1 further comprises a CPU which controls the entire apparatus, a ROM which stores various control programs for controlling the apparatus, and a RAM which functions as a work area and temporary save area of various data for executing various control operations.<br>
+The motion image coding operation of the motion image coding apparatus shown in Fig. 1 will be explained below.<br>
+Before coding, the entropy coder 7 generates header information containing, e.g., the number of frames which can be referred to, and records this header information on the recording medium 9 via the recorder 8.<br>
+Image data of frames sensed by the imaging device 1 is stored in the frame memory 2, and input to the selector 3. The selecting operation of the selector 3 is so controlled as to execute intra-frame coding at predetermined intervals, and execute inter-frame coding in other periods.<br>
+First, the execution of intra-frame coding for the first frame as a start frame will be explained below.<br><br>
+The input frame data is input macroblock by macroblock to the intra-predictor 4, and the intra-predictor 4 executes intra-prediction for each block. The prediction result is input to the transformer/quantizer 6, and the transformer/quantizer 6 executes integer type orthogonal transformation, and quantizes the obtained coefficient. This quantized coefficient as the quantization result is input to the entropy coder 7 and dequantizer/invert transformer 10.<br>
+The entropy coder 7 entropy-codes the input quantization result, and records the coded data on the recording medium 9 via the recorder 8.<br>
+The dequantizer/invert transformer 10 obtains a decoded image from the input quantization result, and inputs this decoded image to the adder 11.  Intra-frame coding uses no predicted image. Therefore, the adder 11 adds a predicted value 0, and stores the image in an empty frame memory or in a frame memory storing the oldest image data of reference images recorded in the frame memories.  Initially, no image data is stored in the frame memories 12 to 17, so the image is stored in the frame memory 12.<br>
+The execution of inter-frame coding for the subsequent second frame will be described below.<br>
+The motion detector 22 detects the motion of the motion image coding apparatus itself. For example, the motion detector 22 calculates vertical and horizontal<br><br>
+motion vectors MVx and MVy, and defines the square sum of these vectors as the magnitude of the motion of the motion image coding apparatus. The motion determinator 23 determines whether the magnitude of the motion of the motion image coding apparatus is larger than a predetermined value.<br>
+If the magnitude of the motion of the motion image coding apparatus is larger than the predetermined value, the motion determinator 23 controls the selector 18 so as to select outputs from the frame memories 12 to 17 such that two temporally newest frames from the frame memories 12 to 17 are used as reference images. If the magnitude of the motion of the motion image coding apparatus is equal to or smaller than the predetermined value, the motion determinator 23 controls the selector 18 so as to select all outputs from the frame memories 12 to 17.<br>
+The motion estimator 19 reads out the contents of the selected frame memory, and calculates a motion vector. The motion compensator 20 generates a predicted image, and inputs this image to the differential unit 5. The selector 3 selects the differential unit 5 as an output. The differential unit 5 calculates a prediction error.  The calculation result is inputted to the transformer/quantizer 6. Integer type orthogonal transformation is executed and quantized the obtained coefficient at the<br><br>
+transformer/quantizer 6. The quantized coefficient as the quantization result is input to the entropy coder 7 and dequantizer/invert transformer 10.<br>
+The entropy coder 7 entropy-codes the input quantization result, and records the coded data on the recording medium 9 via the recorder 8. Also, the motion vector calculated by the motion estimator 19 is coded by the motion coder 21, and the coded data is recorded on the recording medium 9 via the recorder 8.<br>
+The dequantizer/invert transformer 10 obtains a prediction error from the input quantization result, and inputs the prediction error to the adder 11. The adder 11 adds the predicted image (predicted value) from the motion compensator 20 to the prediction error, and stores the sum in an empty frame memory or in a frame memory storing the oldest image data of reference images recorded in the frame memories.<br>
+The process flow of the motion image coding process of the motion image coding apparatus according to the first embodiment will be described below with reference to Fig. 2.<br>
+Fig. 2 is a flowchart showing the motion image coding process of the motion image coding apparatus according to the first embodiment of the present invention.<br>
+First, in step S1, header information is generated and output.  In step S2, whether coding of<br><br>
+all frames is complete is determined.  If coding is complete (YES in step S2), the process is terminated. If coding is not complete (NO in step S2), the flow advances to step S3.<br>
+In step S3, frame data to be coded is input.  In step S4, the motion of the motion image coding apparatus is detected.<br>
+In step S5, the magnitude of the detected motion of the motion image coding apparatus is compared with a predetermined value.  If the magnitude of the motion is equal to or smaller than the predetermined value (NO in step S5), the flow advances to step S6 to set the number of reference frames to M (in this case, 5).  If the magnitude of the motion is larger than the predetermined value (YES in step S5), the flow advances to step S7 to set the number of reference frames to N (in this case, 2).  In this embodiment, M &gt; N always holds.<br>
+In step S8, the coding mode of the frame data to be coded is determined.<br>
+If the coding mode is intra-frame coding, the flow advances to step S9 to execute intra-frame coding for the input frame data. After that, the flow advances to step S11.<br>
+If the coding mode is inter-frame coding, the flow advances to step S10 to execute inter-frame coding by executing motion compensation while images in frame<br><br>
+memories equal in number to the reference frames are referred to. After that, the flow advances to step S11.<br>
+In step Sll, the decoded image is stored in an empty frame memory or in a frame memory storing the temporally oldest image data of the frame memories.<br>
+In step S12, the coded data is recorded on the recording medium 9. Then, the flow returns to step S2 to process the next frame.<br>
+In the first embodiment as described above, if the motion of the imaging device is large (lively), the frequency of reference of temporally separated frames extremely decreases, so these frames are not referred to.  This largely reduces the arithmetic processing amount pertaining to motion compensation. As a consequence, the processing speed can be increased.<br>
+In the first embodiment, the maximum number of reference frames is set to 5. However, it is obviously also possible to use any number of reference frames by using a necessary number of frame memories.<br>
+Also, in the first embodiment, the number of reference frames when the motion is large is not limited to the above-mentioned number. In addition, the number of frames to be selected may also be variable in accordance with the magnitude of the motion. For example, the number of frames which can be referred to can be determined inversely proportional to<br><br>
+the magnitude of the motion of the motion image coding apparatus, or some other standard may also be used.<br>
+In the first embodiment, the motion of the imaging device 1 is detected by the motion detector 22 (sensor). However, the motion of the imaging device 1 may also be detected on the basis of input image data. For example, it is also possible to detect a rough motion vector by generating a reduced image, or detect the motions of several points of an image and use the detection results as the motion of the imaging device 1.<br>
+The first embodiment is explained by taking only forward prediction as an example. However, backward prediction or bidirectional prediction may also be performed by using a necessary number of frame memories.<br>
+It is, of course, also possible to describe, in software, some or all of the various constituent elements of the motion image coding apparatus according to the first embodiment, and execute processing by an arithmetic unit such as a CPU. <second embodiment><br>
+Fig. 3 is a block diagram showing the arrangement of a motion image coding apparatus according to the second embodiment of the present invention.<br>
+The same reference numerals as in Fig. 1 of the first embodiment denote parts having the same functions<br><br>
+in Fig. 3, and an explanation thereof will be omitted.<br>
+Referring to Fig. 3, a motion estimator 100 refers to an input image and frame data which can be referred to from decoded image data in frame memories 12 to 17, and extracts an optimum motion vector from the corresponding frame data.<br>
+A motion compensator 101 generates a predicted image from the motion vector calculated by the motion estimator 100 and the corresponding frame information. A frame memory controller 102 controls the frame memories 12 to 17. That is, the frame memory controller 102 controls write and read and the supply of power to the frame memories 12 to 17.<br>
+The motion image coding operation of the motion image coding apparatus shown in Fig. 3 will be described below.<br>
+First, as in the first embodiment, header information is generated and recorded on a recording medium 9 via a recorder 8.<br>
+Then, as in the first embodiment, image data of frames sensed by an imaging device 1 are stored in a frame memory 2 and input to a selector 3.<br>
+When intra-frame coding is to be executed, processing is entirely the same as in the first embodiment, and the generated coded data is recorded on the recording media 9 via the recorder 8.<br>
+In addition, in accordance with instructions from<br><br>
+the frame memory controller 102, a decoded image is stored in an empty frame memory or in a frame memory storing the oldest image data of reference images recorded in the frame memories. That is, the frame memory controller 102 supplies power to one of unused frame memories to set it in a writable state, or sets a frame memory having the oldest frame of the frame memories in a writable state.<br>
+The execution of inter-frame coding will be explained below.<br>
+As in the first embodiment, a motion detector 22 detects the motion of the motion image coding apparatus itself. For example, the motion detector 2 2 calculates vertical and horizontal motion vectors MVx and MVy, and defines the square sum of these vectors as the magnitude of the motion of the motion image coding apparatus. A motion determinator 23 determines whether the magnitude of the motion of the motion image coding apparatus is larger than a predetermined value.<br>
+If the magnitude of the motion of the motion image coding apparatus is larger than the predetermined value, the motion determinator 23 notifies the frame memory controller 102 that the motion image coding apparatus has moved largely. When receiving this notification, the frame memory controller 102 sets two of the frame memories 12 to 17 in a readable state, and sets another frame memory in a writable state, in order<br><br>
+to selects outputs from the frame memories 12 to 17 so that the two temporally newest frames are chosen as reference images.  In addition, the frame memory controller 102 stops the supply of power to the other frame memories.<br>
+If the magnitude of the motion of the motion image coding apparatus is equal to or smaller than the predetermined value, the motion determinator 23 notifies the frame memory controller 102 that the motion image coding apparatus has not largely moved. When receiving this notification, the frame memory controller 102 sets a frame memory storing the frame data in a readable state. Also, the frame memory controller 102 supplies power to one of unused frame memories to set it in a writable state, or sets a frame memory having the oldest frame of the frame memories in a writable state.<br>
+The motion estimator 100 reads out the contents of the frame memory set in the readable state, and calculates a motion vector. The motion compensator 101 generates a predicted image, and inputs the image to a differential unit 5. After that, as in the first embodiment, inter-frame coding is performed, and the coded data is recorded on the recording medium 9 via the recorder 8.<br>
+A dequantizer/invert transformer 10 obtains a prediction error from the input quantization result.<br><br>
+and inputs this prediction error to an adder 11. The adder 11 adds the predicted image from the motion compensator 101 to the prediction error, and stores the addition result in the frame memory set in the writable state.<br>
+The process flow of the motion image coding process of the motion image coding apparatus according to the second embodiment will be described below with reference to Figs* 4 to 6.<br>
+Fig. 4 is a flowchart showing the motion image coding process of the motion image coding apparatus according to the second embodiment of the present invention.<br>
+The same reference numerals as in Fig. 2 of the first embodiment denote steps having the same functions in Fig. 4, and an explanation thereof will be omitted.<br>
+As in the first embodiment, after processes in steps SI to S4, if the magnitude of the motion is equal to or smaller than the predetermined value in step S5 (NO in step S5), the flow advances to step S100 to execute frame memory control M.  If the magnitude of the motion is larger than the predetermined value (YES in step S5), the flow advances to step S101 to execute frame memory control N.  In this embodiment, M &gt; N always holds.<br>
+Details of frame memory control M in step S100 will be explained below with reference to Fig. 5.<br><br>
+Fig. 5 is a flowchart showing the details of frame memory control M according to the second embodiment of the present invention.<br>
+In step S102, the number of reference frames is set to M (in this case, 5).  In step S103r the presence/absence of unused frame memories which are supplied with no power and kept unused is determined. If there is no unused frame memory (NO in step S103), the flow advances to step S104 to set a frame memory storing the temporally oldest image data (reference frame) in a writable state.<br>
+On the other hand, if unused frame memories exist (YES in step S103), the flow advances to step S105 to select one unused frame memory and make it usable by supplying power to it.  In step S106, this frame memory made usable in step S105 is set in a writable state.<br>
+In step S107, a maximum of M frame memories from the temporally newest one of the remaining frame memories are set in a readable state.  In this manner, the sequence of frame memory control M is complete, and the flow advances to step S8 in Fig. 4.<br>
+Details of frame memory control N in step S101 will be explained below with reference to Fig. 6.<br>
+Fig. 6 is a flowchart showing the details of frame memory control N according to the second embodiment of the present invention.<br>
+In step S110, the number of reference frames is<br><br>
+set to N (in this case, 2).<br>
+In step Sill, N frame memories from the temporally newest one of the remaining frame memories are set in a readable state. In step S112, one of the remaining frame memories is set in a writable state.<br>
+In step S113, power supply to the still remaining frame memories is stopped because they are unused frame memories.  In this way, the sequence of memory control N is complete, and the flow advances to step S8.<br>
+Referring back to Fig. 4, as in the first embodiment, after processes in steps S8 to S10, in step S102 the decoded image is stored in a writable one of the frame memories.  In step S12, the coded data is recorded on the recording medium 9, and the flow returns to step S2 to process the next frame.<br>
+In the second embodiment as described above, in addition to the effects explained in the first embodiment, the power consumption can be reduced by stopping power supply to unused frame memories. Therefore, especially in an environment in which the apparatus is operated by a limited power supply, the operation time of the apparatus can be prolonged.<br>
+In the second embodiment, the maximum number of reference frames is set to 5. However, it is obviously also possible to use any number of reference frames by using a necessary number of frame memories.<br>
+Also, in the second embodiment, the number of<br><br>
+reference frames when the motion is large is not limited to the above-mentioned number.  In addition, the number of frames to be selected may also be variable in accordance with the magnitude of the motion. For example, the number of frames which can be referred to can be determined inversely proportional to the magnitude of the motion of the motion image coding apparatus, or some other standard may also be used.<br>
+The second embodiment is explained by taking only forward prediction as an example. However, backward prediction or bidirectional prediction may also be performed by using a necessary number of frame memories.<br>
+It is, of course, also possible to describe, in software, some or all of the various constituent elements of the motion image coding apparatus according to the second embodiment, and execute processing by an arithmetic unit such as a CPU. <third embodiment><br>
+Fig. 7 is a block diagram showing the arrangement of a motion image coding apparatus according to the third embodiment of the present invention.<br>
+The same reference numerals as in Fig. 3 of the second embodiment denote parts having the same functions in Fig. 7, and an explanation thereof will be omitted.<br>
+Referring to Fig. 7, an image sensing mode<br><br>
+setting unit 200 sets the image sensing mode of the motion image coding apparatus. Examples of the image sensing mode are "automatic mode" as a standard, "sports mode" for sensing an image of an object having a high speed, and "scenery mode" for sensing images of scenes such as mountains, seas, and the like. However, the image sensing modes are not limited to these examples.<br>
+A frame memory controller 201 controls frame memories 12 to 17.  In accordance with the image sensing mode, the frame memory controller 201 controls write and read and power supply to the frame memories 12 to 17. An imaging device 202 can control the shutter speed, aperture value, and the like in accordance with instructions from the image sensing mode setting unit 200.<br>
+The motion image coding operation of the motion image coding apparatus shown in Fig. 7 will be described below.<br>
+First, a user (not shown) sets the image sensing mode of the imaging device 202 by using the image sensing mode setting unit 200 before starting image sensing. The set image sensing mode is input to the imaging device 202 and frame memory controller 201. The imaging device 202 selects and sets a shutter speed and F-number suited to the set image sensing mode.<br>
+When "automatic mode" is selected, the frame<br><br>
+memory controller 201 sets the number of reference frames to 3, and stops power supply to the frame memories 16 and 17 to keep them unused. When "sports mode" is selected, the frame memory controller 201 sets the number of reference frames to 1, and stops power supply to the frame memories 14 to 17 to keep them unused. When "scenery mode" is selected, the frame memory controller 201 sets the number of reference frames to 5.<br>
+After that, intra-frame coding or inter-frame coding of each frame is executed by using frame memories to which electric power is supplied.<br>
+When intra-frame coding is to be executed, the frame memory controller 201 sets, from the frame memories to which power is supplied, an empty frame memory or a frame memory storing the temporally oldest frame in a writable state in order, and stores the decoded image.<br>
+When inter-frame coding is to be executed, the frame memory controller 201 sets, from of the frame memories to which power is supplied, an empty frame memory or a frame memory storing the temporally oldest frame in a writable state in order, and sets the other frame memories in a readable state.<br>
+Note that in inter-frame coding, the number of reference frames is set for each image sensing mode. Therefore, in accordance with the number of reference<br><br>
+frames, motion vectors are calculated, and motion compensation is executed. The generated coded data is recorded on a recording medium 9 via a recorder 8. The decoded image is stored in the frame memories set in the writable state.<br>
+The process flow of the motion image coding process of the motion image coding apparatus according to the third embodiment will be described below with reference to Fig. 8.<br>
+Fig. 8 is a flowchart showing the motion image coding process of the motion image coding apparatus according to the third embodiment of the present invention.<br>
+The same reference numerals as in Fig. 2 of the first embodiment denote steps having the same functions in Fig. 8, and an explanation thereof will be omitted.<br>
+In step S200, the image sensing mode is set.<br>
+Assume that in Fig. 8, "sports mode", "scenery mode", and "automatic mode" are the image sensing modes.<br>
+In step S201, whether the image sensing mode is "sports mode" is determined.  If the image sensing mode is "sports mode" (YES in step S201), the flow advances to step S202 to set the number of reference frames to N (in this case, 1).  In step S203, power supply to unused frame memories are stopped. After that, the flow advances to step S1.<br><br>
+If the image sensing mode is not "sports mode" in step S201 (NO in step S201), the flow advances to step S204 to determine whether the image sensing mode is "scenery mode". If the image sensing mode is "scenery mode", the flow advances to step S205 to set the number of reference frames to P (in this case, 5). After that, the flow advances to step S1.<br>
+If the image sensing mode is not "scenery mode" (NO in step S204), the flow advances to step S206 to set the number of reference frames to M (in this case, 3). In step S207, power supply to unused frame memories is stopped. The flow then advances to step S1. In this embodiment, P ≥ M ≥ N always holds.<br>
+After that, as in the first embodiment, processes in steps S1 to S3 and S8 to S12 are executed on the basis of one of the set numbers of reference frames P, M, and N.<br>
+In the third embodiment as described above, the number of reference frames is controlled on the basis of the magnitude, which is expected by the image sensing mode, of the motion of a motion image to be coded. As a consequence, optimum processing can be executed in accordance with the motion.<br>
+Also, since the number of reference frames is preset on the basis of the image sensing mode, optimum reference can be performed.  In addition, the power consumption can be reduced by stopping power supply to<br><br>
+unused frame memories. Therefore, especially in an environment in which the apparatus is operated by a limited power supply, the operation time of the apparatus can be prolonged.<br>
+In the third embodiment, the maximum number of reference frames is set to 5. However, it is obviously also possible to use any number of reference frames by using a necessary number of frame memories.<br>
+Also, the third embodiment is explained by taking only forward prediction as an example. However, backward prediction or bidirectional prediction may also be performed by using a necessary number of frame memories.<br>
+It is, of course, also possible to describe, in software, some or all of the various constituent elements of the motion image coding apparatus according to the third embodiment, and execute processing by an arithmetic unit such as a CPU. <fourth embodiment><br>
+Fig. 9 is a block diagram showing the arrangement of a motion image coding apparatus according to the fourth embodiment of the present invention.<br>
+Referring to Fig. 9, a central processing unit (CPU) 300 controls the entire apparatus and performs various processes. A memory 301 provides storage areas for an operating system (OS), software, and arithmetic operations necessary to control this apparatus. A bus<br><br>
+302 interconnects various constituent elements forming the motion image coding apparatus, and transfers data and control signals.<br>
+A terminal 303 is used to activate the apparatus, set various conditions, and execute playback instructions. A storage device 304 stores software. A storage device 305 stores coded streams. The storage devices 304 and 305 may also be portable storage media which can be separated from the motion image coding apparatus and moved.<br>
+A camera (imaging device) 307 can sense motion images frame by frame. A camera panhead 306 of the camera 307 is controlled by software, and has a function of outputting, to the bus 302, image data from the camera 307, the state of the camera 307, and the state of the camera panhead 306 itself.<br>
+A monitor 308 displays images. A communication line 310 is, e.g., a LAN, public line, radio channel, or broadcasting radio wave. A communication interface (I/F) 309 transmits and receives streams via the communication line 310.<br>
+The memory 301 stores the OS for controlling the entire apparatus and operating various software, and also stores the software to be operated.  In addition, the memory 301 has an image area for storing image data, a code area for storing generated coded data, and a working area for storing, e.g., parameters for<br><br>
+various arithmetic operations and coding.<br>
+A process which, in the arrangement as described above, controls the camera panhead 306 and the camera 307 from an external terminal via the communication line 310, codes a motion image sensed by the camera 307, and transmits the coded motion image to the external terminal via the communication line 310, will be described below.<br>
+In the fourth embodiment, a coding method used by the motion image coding apparatus will be explained by taking the H.264 coding method as an example. However, any coding method can be used as long as an image is coded by referring to two or more frames. Also, to simplify the explanation, three frames before a frame to be coded and three frames after it are referred to. However, the number of reference frames is not limited.<br>
+Before the processing, the terminal 303 instructs the whole apparatus to perform activation, thereby initializing the individual constituent elements. Consequently, software stored in the storage device 304 is developed on the memory 301 via the bus 302, and activated.<br>
+The data configuration of the memory 301 will be explained below with reference to Fig. 10.<br>
+Fig. 10 is a view showing the data configuration of the memory according to the fourth embodiment of the present invention.<br><br>
+As shown in Fig. 10, the memory 301 stores the OS for controlling the whole apparatus and operating various software, motion image coding software for executing the H.264 coding method, communication software for controlling communication, and camera control software for controlling the camera panhead 306. The memory 301 also has image areas 1 to 7 for storing image data, a code area for storing coded data, and a working area.<br>
+The way the CPU 300 controls the motion image coding apparatus in the arrangement as described above will be explained below with reference to Fig. 11.<br>
+Fig. 11 is a flowchart showing processing executed by the motion image coding apparatus according to the fourth embodiment of the present invention.<br>
+In step S300, the CPU 300 activates the camera control software to initialize the individual parts, and starts sensing motion images.  In step S301, the CPU 300 activates the communication software to receive camera control information via the communication line 310, thereby making preparations for outputting coded data.<br>
+In step S302, the CPU 300 determines whether process termination is input from the terminal 303.  If termination is input (YES in step S302), the flow advances to step S307, and the CPU 300 terminates the communication software.  In step S308, the CPU 300<br><br>
+terminates the camera control software, and then terminates the entire process.<br>
+On the other hand, if termination is not input in step S302 (NO in step S302), the flow advances to step S303, and the CPU 300 determines whether a camera control request and motion image transmission request are input from the communication line 310 via the communication interface 309.  If no such requests are input (NO in step S303), the flow returns to step S302, and the CPU 300 waits until these requests are input. If these requests are input (YES in step S303), the flow advances to step S304.<br>
+In step S304, the CPU 300 activates the motion image coding software.  In step S305, the CPU 300 executes coding and transmits the coded data. Details of this process will be described later. When the communication is complete, the flow advances to step S306.  In step S306, the CPU 300 terminates the coding software. The flow then returns to step S302, and the CPU 300 waits for the next instruction.<br>
+The details of the process in step S305 will be explained below with reference to Fig. 12.<br>
+Fig. 12 is a flowchart showing the details of the process in step S305 according to the fourth embodiment of the present invention.<br>
+First, in step S351, header information is generated and stored in the code area on the memory<br><br>
+301. When the coded data is stored in the code area, the communication software transmits the data to the communication line 310 via the communication interface 309, and, after the transmission, clears the corresponding region of the code area. Transmission of the coded data in the code area will not particularly be described in the following explanation.<br>
+In step S352, the CPU 300 determines the presence/absence of a communication termination request.  If there is a communication termination request (YES in step S352), the CPU 300 terminates the process.  If there is no communication termination request (NO in step S352), the flow advances to step S353.<br>
+In step S353, if a camera control command for controlling the camera is received from the communication line 310 via the communication interface 309, the CPU 300 inputs the command to the camera panhead 306. On the basis of this camera control command, the camera panhead 306 performs operations such as panning, tilting, and zooming.<br>
+In step S354, the CPU 300 inputs frame data taken by the camera 307 via the camera panhead 306, and stores the data in image area 1 on the memory 301.<br>
+In step S355, the CPU 300 acquires data<br>
+concerning the motion of the camera 307 from the camera panhead 306. That is, the camera panhead 306 operates<br><br>
+the camera 307 after receiving the camera control command, and data concerning the motion of the camera 307 can be acquired by monitoring the status of a motor or the like. The CPU 300 writes the acquired data in the working area on the memory 301.<br>
+In step S356, the CPU 300 compares the obtained data (the magnitude of the motion) pertaining to the motion of the camera 307 with a predetermined value.<br>
+If the magnitude of the motion is equal to or smaller than the predetermined value (NO in step S356), the flow advances to step S357, and the CPU 300 sets the number of front and back reference frames to H (in this case, 3). Then, in step S358, the CPU 300 sets m x m as the range of search for motion vectors to be used when motion compensation is performed during inter-frame coding (to be described later).  In this case, m is, e.g., 32 pixels. After that, the flow advances to step S361.<br>
+If the magnitude of the motion is larger than the predetermined value (YES in step S356), the flow advances to step S359, and the CPU 300 sets the number of front and back reference frames to N (in this case, 1).  In this embodiment, M &gt; N always holds.  In step S360, the CPU 300 sets n x n as the range of search for motion vectors to be used when motion compensation is performed during inter-frame coding (to be described later).  In this case, n is, e.g., 55 pixels. After<br><br>
+that, the flow advances to step S361.<br>
+In step S361, the CPU 300 determines the coding mode of frame data to be coded.<br>
+If the coding mode is intra-frame coding, the flow advances to step S362, and the CPU 300 executes intra-frame coding for the input frame data. The CPU 300 then stores the generated coded data in the code area on the memory 301, and the flow advances to step S364.<br>
+If the coding mode is inter-frame coding, the flow advances to step S363, and the CPU 300 executes inter-frame coding by executing motion compensation by searching for motion vectors within the set range, while referring to an image in an image area having the set number of reference frames. The CPU 300 then stores the generated coded data in the code area on the memory 301, and the flow advances to step S364.<br>
+In step S364, the CPU 300 stores the decoded image in an empty image area or in an image area storing the temporally oldest image data of the image areas on the memory 301.  In step S365, the CPU 300 transmits the coded data stored in the code area to the communication line 310 via the communication interface 309, and the flow returns to step S352 to process the next frame.<br>
+In the fourth embodiment as described above, if the motion of the camera is large (lively), temporally<br><br>
+separated frames are not referred to because the reference frequency of these frames extremely decreases. In this manner, the arithmetic processing amount of motion compensation can be greatly reduced. As a consequence, the processing speed can be increased.<br>
+Also, if the motion of the camera is large (lively), accurate motion vector search can be performed by making the motion vector search range wider than that when the camera motion is small. That is, when the number of reference frames is reduced from 5 to 2, the arithmetic operation amount remains the same even if the motion vector search range is extended to (3025(55 x 55))/1024(32 x 32))1/2. This makes it possible to efficiently search for motion vectors without increasing the load on the CPU.<br>
+In the fourth embodiment, reference frames are three frames before a frame to be coded and three frames after it. However, it is obviously also possible to use any number of reference frames by securing a necessary amount of image areas for storing reference frames.<br>
+In the fourth embodiment, data is transmitted to the communication line 310 via the communication interface 309 by activating the communication software. However, data may also be stored in the storage device 305.<br><br>
+In addition, input images need not be sensed images from the camera.  It is also possible to use motion image data stored in the storage device 305, and change the number of reference frames while determining the magnitude of the motion of the frame. Furthermore, the number of reference frames may also be changed if a scene change or the like is detected.<br>
+It is, of course, also possible to implement embodiments by freely combining the arrangements of the first to fourth embodiments in accordance with the applications or purposes.<br>
+As many apparently widely different embodiments of the present invention can be made without departing from the spirit and scope thereof, it is to be understood that the invention is not limited to the specific embodiments thereof except as defined in the appended claims.<br>
+CLAIM OF PRIORITY<br>
+This application claims priority from Japanese Patent Application No. 2003-425826 filed on December 22, 2003, which is hereby incorporated by reference herein.<br><br><br>
+ CLAIMS<br>
+1.	A motion image coding apparatus which codes a<br>
+motion image by executing motion compensation for frame<br>
+data to be coded by referring to a plurality of frame<br>
+data in the motion image, comprising:<br>
+detecting means for detecting a motion of an imaging device;<br>
+a plurality of storage means for storing said plurality of frame data;<br>
+selecting means for selecting, from said plurality of storage means, on the basis of motion information detected by said detecting means, storage means for storing reference frame data to be referred to when the frame data to be coded is coded;<br>
+estimating means for estimating a motion vector on the basis of the reference frame data stored in said storage means selected by said selecting means and the frame data to be coded;<br>
+coding means for coding the frame data to be coded by using the motion vector estimated by said estimating means; and<br>
+output means for outputting the coded data which is coded by said coding means.<br>
+2.	The motion image coding apparatus according<br>
+to claim 1, wherein said detecting means detects the<br>
+motion of said imaging device on the basis of a motion<br>
+image sensed by said imaging device.<br><br>
+3- The motion image coding apparatus according to claim 1, wherein said selecting means comprises control means for controlling write/read and power supply to said plurality of storage means on the basis of the motion information detected by said detecting means.<br>
+4.	The motion image coding apparatus according<br>
+to claim 1, further comprising setting means for<br>
+setting an image sensing mode of said imaging device,<br>
+wherein said selecting means comprises control means for controlling write/read and power supply to said plurality of storage means on the basis of the image sensing mode set by said setting means,<br>
+5.	The motion image coding apparatus according<br>
+6.	to claim 3 or 4, wherein said control means stops power<br>
+7.	supply to storage means not selected by said selecting<br>
+8.	means.<br>
+9.	The motion image coding apparatus according<br>
+10.	to claim 1, further comprising search range control<br>
+11.	means for controlling a motion vector search range of<br>
+12.	said estimating means on the basis of the motion image<br>
+13.	detected by said detecting means.<br>
+14.	A motion image coding apparatus which codes a<br>
+15.	motion image by executing motion compensation for frame<br>
+16.	data to be coded by referring to a plurality of frame<br>
+17.	data in the motion image, comprising:<br>
+setting means for setting an image sensing mode<br><br>
+of an imaging device;<br>
+a plurality of storage means for storing said plurality of frame data;<br>
+selecting means for selecting, from said plurality of storage means, on the basis of the image sensing mode set by said setting means, storage means for storing reference frame data to be referred to when the frame data to be coded is coded;<br>
+estimating means for estimating a motion vector on the basis of the reference frame data stored in said storage means selected by said selecting means and the frame data to be coded;<br>
+coding means for coding the frame data to be coded by using the motion vector estimated by said estimating means; and<br>
+output means for outputting the coded data which is coded by said coding means.<br>
+8.	The motion image coding apparatus according<br>
+9.	to claim 7, wherein said selecting means comprises<br>
+10.	control means for controlling write/read and power<br>
+11.	supply to said plurality of storage means.<br>
+12.	The motion image coding apparatus according<br>
+13.	to claim 8, wherein said control means stops power<br>
+14.	supply to storage means not selected by said selecting<br>
+15.	means.<br>
+10.	The motion image coding apparatus according<br>
+to claim 7, wherein said detecting means detects a<br><br>
+motion of said imaging device on the basis of a motion image sensed by said imaging device.<br>
+11.	A motion image coding apparatus which codes<br>
+a motion image by executing motion compensation for<br>
+frame data to be coded by referring to a plurality of<br>
+frame data in the motion image, comprising:<br>
+input means for inputting control information which controls an imaging device;<br>
+storage means for storing a motion image sensed by said imaging device;<br>
+setting means for setting the number of reference frame data to be referred to when the frame data to be coded is coded, on the basis of motion information of said imaging device, which is acquired on the basis of the control information input by said input means;<br>
+acquiring means for acquiring reference frame data corresponding to the number of reference frame data set by said setting means;<br>
+estimating means for estimating a motion vector on the basis of the reference frame data acquired by said acquiring means and the frame data to be coded;<br>
+coding means for coding the frame data to be coded by using the motion vector estimated by said estimating means; and<br>
+output means for outputting the coded data which is coded by said coding means.<br>
+12.	The motion image coding apparatus according<br><br>
+to claim 11, further comprising search range control means for controlling a motion vector search range of said estimating means on the basis of the motion information.<br>
+13. A control method of a motion image coding apparatus which comprises a plurality of storage units for storing a plurality of frame data in a motion image, and codes the motion image by executing motion compensation for frame data to be coded by referring to frame data stored in the plurality of storage units, comprising:<br>
+a detection step of detecting a motion of an imaging device;<br>
+a selection step of selecting, from the plurality of storage units, on the basis of motion information detected in the detection step, a storage unit for storing reference frame data to be referred to when the frame data to be coded is coded;<br>
+an estimation step of estimating a motion vector on the basis of the reference frame data stored in the storage unit selected in the selection step and the frame data to be coded;<br>
+a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and<br>
+an output step of outputting the coded data which is coded in the coding step.<br><br>
+14.	A control method of a motion image coding<br>
+apparatus which comprises a plurality of storage units<br>
+for storing a plurality of frame data in a motion<br>
+image, and codes a motion image by executing motion<br>
+compensation for frame data to be coded by referring to<br>
+frame data stored in the plurality of storage units,<br>
+comprising:<br>
+a setting step of setting an image sensing mode of an imaging device;<br>
+a selection step of selecting, from the plurality of storage units, on the basis of the image sensing mode set in the setting step, a storage unit for storing reference frame data to be referred to when the frame data to be coded is coded;<br>
+an estimation step of estimating a motion vector on the basis of the reference frame data stored in the storage unit selected in the selection step and the frame data to be coded;<br>
+a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and<br>
+an output step of outputting the coded data which is coded in the coding step.<br>
+15.	A control method of a motion image coding<br>
+apparatus which comprises a storage unit for storing a<br>
+motion image, and codes the motion image by executing<br>
+motion compensation for frame data to be coded by<br><br>
+referring to frame data stored in the storage unit, comprising:<br>
+an input step of inputting control information which controls an imaging device;<br>
+a setting step of setting the number of reference frame data to be referred to when the frame data to be coded is coded, on the basis of motion information of the imaging device, which is acquired on the basis of the control information input in the input step;<br>
+an acquisition step of acquiring reference frame data corresponding to the number of reference frame data set in the setting step;<br>
+an estimation step of estimating a motion vector on the basis of the reference frame data acquired in the acquisition step and the frame data to be coded;<br>
+a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and<br>
+an output step of outputting the coded data which is coded in the coding step.<br>
+16. A program for implementing control of a motion image coding apparatus which comprises a plurality of storage units for storing a plurality of frame data in a motion image, and codes the motion image by executing motion compensation for frame data to be coded by referring to frame data stored in the plurality of storage units, comprising program codes<br><br>
+Of:<br>
+a detection step of detecting a motion of an imaging device;<br>
+a selection step of selecting, from the plurality of storage units, on the basis of motion information detected in the detection step, a storage unit for storing reference frame data to be referred to when the frame data to be coded is coded;<br>
+an estimation step of estimating a motion vector on the basis of the reference frame data stored in the storage unit selected in the selection step and the frame data to be coded;<br>
+a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and<br>
+an output step of outputting the coded data which is coded in the coding step.<br>
+17. A program for implementing control of a motion image coding apparatus which comprises a plurality of storage units for storing a plurality of frame data in a motion image, and codes a motion image by executing motion compensation for frame data to be coded by referring to frame data stored in the plurality of storage units, comprising program codes of:<br>
+a program code of a setting step of setting an image sensing mode of an imaging device;<br><br>
+a program code of a selection step of selecting, from the plurality of storage units, on the basis of the image sensing mode set in the setting step, a storage unit for storing reference frame data to be referred to when the frame data to be coded is coded;<br>
+an estimation step of estimating a motion vector on the basis of the reference frame data stored in the storage unit selected in the selection step and the frame data to be coded;<br>
+a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and<br>
+an output step of outputting the coded data which is coded in the coding step.<br>
+18- A program for implementing control of a motion image coding apparatus which comprises a storage unit for storing a motion image, and codes the motion image by executing motion compensation for frame data to be coded by referring to frame data stored in the storage unit, comprising program codes of:<br>
+an input step of inputting control information which controls an imaging device;<br>
+a setting step of setting the number of reference frame data to be referred to when the frame data to be coded is coded, on the basis of motion information of the imaging device, which is acquired on the basis of the control information input in the input step;<br><br>
+an acquisition step of acquiring reference frame data corresponding to the number of reference frame data set in the setting step;<br>
+an estimation step of estimating a motion vector on the basis of the reference frame data acquired in the acquisition step and the frame data to be coded;<br>
+a coding step of coding the frame data to be coded by using the motion vector estimated in the estimation step; and<br>
+an output step of outputting the coded data which is coded in the coding step.<br><br></fourth></third></second></first></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2IGFic3RyYWN0LWR1cGxpY2F0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">2706-chenp-2006 abstract-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2IGNsYWltcy1kdXBsaWNhdGUucGRm" target="_blank" style="word-wrap:break-word;">2706-chenp-2006 claims-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1DSEVOUC0yMDA2IENPUlJFU1BPTkRFTkNFIE9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">2706-CHENP-2006 CORRESPONDENCE OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1DSEVOUC0yMDA2IENPUlJFU1BPTkRFTkNFIFBPLnBkZg==" target="_blank" style="word-wrap:break-word;">2706-CHENP-2006 CORRESPONDENCE PO.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2IGRlc2NyaXB0aW9uIChjb21wbGV0ZSktZHVwbGljYXRlLnBkZg==" target="_blank" style="word-wrap:break-word;">2706-chenp-2006 description (complete)-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2IGRyYXdpbmdzLWR1cGxpY2F0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">2706-chenp-2006 drawings-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">2706-chenp-2006-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">2706-chenp-2006-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2LWNvcnJlc3BvbmRuZWNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">2706-chenp-2006-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2LWRlc2NyaXB0aW9uKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">2706-chenp-2006-description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">2706-chenp-2006-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2LWZvcm0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">2706-chenp-2006-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2LWZvcm0gMjYucGRm" target="_blank" style="word-wrap:break-word;">2706-chenp-2006-form 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2LWZvcm0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">2706-chenp-2006-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2LWZvcm0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">2706-chenp-2006-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2LWZvcm0xOC5wZGY=" target="_blank" style="word-wrap:break-word;">2706-chenp-2006-form18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjcwNi1jaGVucC0yMDA2LXBjdC5wZGY=" target="_blank" style="word-wrap:break-word;">2706-chenp-2006-pct.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="232629-cartridge-unit-having-negatively-pressurized-ink-storage.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="232631-variable-valve-lift-device-of-internal-combustion-engine.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>232630</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2706/CHENP/2006</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>13/2009</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>27-Mar-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>20-Mar-2009</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>21-Jul-2006</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>CANON KABUSHIKI KAISHA</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>3-30-2, Shimomaruko, Ohta-ku, Tokyo 146-8501,</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>MAEDA, Mitsuru</td>
+											<td>c/o Canon Kabushiki Kaisha, 3-30-2, Shimomaruko, Ohta-ku, Tokyo 146-8501,</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04N7/32</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/JP2004/018666</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2004-12-08</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>2003-425826</td>
+									<td>2003-12-22</td>
+								    <td>Japan</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/232630-motion-image-coding-apparatus-and-control-method-and-program-of-the-apparatus by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 13:15:45 GMT -->
+</html>

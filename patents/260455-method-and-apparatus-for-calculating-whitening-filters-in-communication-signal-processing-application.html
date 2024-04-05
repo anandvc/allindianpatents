@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/260455-method-and-apparatus-for-calculating-whitening-filters-in-communication-signal-processing-application by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 00:17:12 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 260455:METHOD AND APPARATUS FOR CALCULATING WHITENING FILTERS IN COMMUNICATION SIGNAL PROCESSING APPLICATION</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD AND APPARATUS FOR CALCULATING WHITENING FILTERS IN COMMUNICATION SIGNAL PROCESSING APPLICATION</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A frequency domain representation of a whitening filter is made to depend on essentially one unknown, namely, a scaling factor that is based on an estimated ratio of total base station power to the power spectral density (PSD) of inter-cell interference plus noise. In turn, that scaling factor can be computed based on the modeling terms used in a parametric model of the impairment correlations for a received communication signal. Preferably, the model comprises an interference impairment term scaled by a first model fitting parameter, and a noise impairment term scaled by a second model fitting parameter. Further, the scaling factor can be computed by directly estimating total base station transmit power and the PSD of inter-cell interference plus noise. In any case, the whitening filter can be used in whitening a received communication signal in conjunction with channel equalization processing or RAKE receiver processing, for example.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+BACKGROUND OF THE INVENTION<br>
+The present invention generally relates to wireless communication systems, and<br>
+particularly relates to interference suppression in wireless communication receivers.<br>
+Direct-sequence spread-spectrum modulation is commonly used in CDMA systems<br>
+(such as W-CDMA, IS-95, and IS-2000). Data to be transmitted via a spread spectrum<br>
+carrier is mapped into information symbols, and each information symbol is transmitted as<br>
+a sequence of chips, which gives rise to bandwidth spreading. The sequence of chips used<br>
+to spread the transmit symbols is referred to as the spreading code.<br>
+At the receiver, the received signal is despread using a despreading code, which<br>
+typically is the conjugate of the spreading code. RAKE receivers represent a traditional<br>
+approach to demodulating CDMA signals. RAKE receivers capitalize on the multipath<br>
+propagation that typically exists between the transmitter and the receiver. Multipath<br>
+propagation of the transmitted signal can lead to time dispersion, which causes multiple<br>
+resolvable echoes (or rays) of the signal to be received at the receiver. A RAKE receiver<br>
+aligns different ones of its "fingers" (correlators) with different ones of the signal echoes,<br>
+and each finger outputs despread values at the symbol rate. These despread values are<br>
+then weighted by the conjugate of the respective channel coefficient and then summed to<br>
+produce a soft estimate of the transmitted symbol. This weighting and summing process is<br>
+commonly referred to as RAKE combining.<br>
+Combining multipath echoes in the above manner yields an improved Signal-to-<br>
+interference Ratio (SIR) when white noise is the dominant received signal impairment<br>
+term at the receiver. However, RAKE combining is less than optimal when colored noise<br>
+is the dominant impairment term. Colored noise arises from self-interference (Inter-<br>
+Symbol Interference or ISI) and Multi-user Access Interference (MAI). As wireless<br>
+networks crowd more and more users onto the same spectrum, and as the signal data rates<br>
+increase, colored noise may become more problematic.<br>
+Thus, receiver structures capable of colored noise suppression represent an area of<br>
+increasing interest. Unfortunately, the conventional approaches to interference<br>
+suppression in colored noise environments entail potentially significant receiver<br>
+complexity. For the typical portable communication device, such as a cellular<br><br>
+radiotelephone, Portable Digital Assistant (PDA) or wireless pager, that complexity adds<br>
+cost and undesirably affects cost, design time, and battery life.<br>
+SUMMARY OF THE INVENTION<br>
+The present invention comprises a method and apparatus for calculating whitening<br>
+filters in communication signal processing applications, such as in wireless<br>
+communication receivers. As a simplifying construction, a frequency domain<br>
+representation of a whitening filter is made to depend on essentially one unknown,<br>
+namely, a scaling factor that is based on an estimated ratio of total base station power to<br>
+the power spectral density (PSD) of inter-cell interference plus noise. An exemplary<br>
+method reduces the computational complexity of calculating the scaling factor by<br>
+computing it based on the modeling terms used in a parametric model of the impairment<br>
+correlations for a received communication signal. Preferably, the model comprises an<br>
+interference impairment term scaled by a first model fitting parameter, and a noise<br>
+impairment term scaled by a second model fitting parameter. Alternatively, the scaling<br>
+factor can be computed by direct estimation, for example.<br>
+Thus, in an exemplary embodiment, the present invention comprises a method of<br>
+generating a whitening filter for a communication signal transmitted from a wireless<br>
+communication network base station comprising estimating a ratio of total base station<br>
+transmit power to the PSD of inter-cell interference plus noise, calculating a scaling factor<br>
+based on the estimated ratio of total base station transmit power to the PSD of inter-cell<br>
+interference plus noise, and determining a whitening filter for whitening the<br>
+communication signal. That whitening filter determination can be a function of the<br>
+scaling factor, a frequency response associated with a transmit pulse shaping filter used at<br>
+the base station, and a frequency response of a propagation channel through which the<br>
+communication signal is received.<br>
+	With the above basis for filter determination, the whitening filter determination can<br>
+be made using a stored or calculated value for the transmit pulse shaping filter's frequency<br>
+response, the medium channel coefficients calculated for the propagation channel, and the<br>
+scaling factor. Because the filter response can be stored at the receiver based on a priori<br>
+knowledge and the medium channel coefficient calculation can be made directly from<br>
+pilot channel measurements, whitening filter determination reduces to the task of scaling<br><br>
+factor determination. Basing scaling factor determination on the model fitting parameters<br>
+of a parametric impairment correlation model offers one method of simplifying<br>
+determination of the scaling factor. Using individualized signals—i.e., base-station-<br>
+specific signals—from each of the base stations contributing to the inter-cell interference,<br>
+if such signals are available, represents another simplified approach to calculating the<br>
+scaling factor.<br>
+In a circuit embodiment, a receiver circuit is configured to generate a whitening<br>
+filter for a communication signal transmitted from a wireless communication network base<br>
+station. The exemplary receiver circuit comprises a calculation circuit configured to<br>
+calculate a scaling factor based on an estimated ratio of total base station transmit power to<br>
+the PSD of inter-cell interference plus noise, and a filter circuit configured to determine a<br>
+whitening filter for whitening the communication signal as a function of the scaling factor,<br>
+a frequency response associated with a transmit pulse shaping filter used at the base<br>
+station, and a frequency response of a propagation channel through which the<br>
+communication signal is received.<br>
+In one embodiment, the whitening filter is implemented as a receiver circuit that<br>
+generates a filtered signal for input to a RAKE receiver. In this manner, colored<br>
+interference in the communication signal is suppressed in advance of RAKE processing,<br>
+which then provides multipath channel compensation and RAKE combining. In another<br>
+embodiment, the whitening filter is implemented as part of a chip equalizer filter that also<br>
+includes channel compensation filtering. In general, the whitening filter determination can<br>
+be separate from, or part of, channel compensation filtering. Likewise, whitening filter<br>
+circuit implementations can be separate from, or part of, channel compensation filter<br>
+circuits.<br>
+Thus, the advantageous whitening filter determination of the present invention may<br>
+be practiced as part of two-step signal processing method, wherein whitening is applied to<br>
+a received communication signal, and then channel compensation is applied, or a<br>
+combined-step method wherein whitening and channel compensation are performed<br>
+together. Those skilled in the art will appreciate that because such filtering processes are<br>
+linear, the filtering order for channel compensation and whitening may be reversed as<br>
+needed or desired.<br><br>
+Of course, the present invention is not limited to the above features and<br>
+advantages. Those skilled in the art will recognize additional features and advantages of<br>
+the present invention upon reading the following detailed description and upon viewing<br>
+the accompanying figures, in which like or similar elements are assigned like reference<br>
+numbers.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+Fig. 1 is a diagram of an exemplary wireless communication device that is<br>
+configured according to one or more embodiments of the present invention.<br>
+Fig. 2 is a diagram of an exemplary communication signal flow between a remote<br>
+transmitter and the device receiver depicted in Fig. 1<br>
+Fig. 3 is a diagram of a receiver circuit for whitening filter determination in<br>
+accordance with the present invention.<br>
+Fig. 4 is a diagram of exemplary processing logic embodying the circuit<br>
+functionality of Fig. 3.<br>
+Fig. 5 is a diagram of an exemplary RAKE-based receiver in accordance with the<br>
+present invention.<br>
+Fig. 6 is a diagram of an exemplary chip equalizer-based receiver in accordance<br>
+with the present invention.<br>
+Fig. 7 is a diagram of a Single-Input-Multiple-Output (SIMO) receiver<br>
+embodiment in accordance with the present invention.<br>
+Fig. 8 is a diagram of exemplary receiver details for the receiver of Fig. 7.<br>
+DETAILED DESCRIPTION OF THE INVENTION<br>
+The present invention addresses suppression of colored noise, and offers simplified<br>
+whitening filter generation. By way of non-limiting example, then, the present invention<br>
+can be implemented to significant advantage in the wireless communication device 10 of<br>
+Fig. 1. Device 10 comprises a receiver 12, a transmitter 14, one or more antennas 16, a<br>
+switch/duplexer 18, a system controller 20, and a user interface 22. Those skilled in the<br>
+art will appreciate that the actual architecture of device 10 can be varied without departing<br>
+from the scope of the present invention, and that the illustrated architecture provides a<br>
+non-limiting basis for discussing exemplary receiver operations.<br><br>
+With that in mind, Fig. 2 illustrates a fundamental signal flow for the wireless<br>
+transmission of data from a remote transmitter 24 to the receiver 12 of device 10.<br>
+Transmitter 24 can be, for example, a base station transmitter in a wireless communication<br>
+network. The received signal, r(t), comprises the transmitted signal, s(t), but with channel<br>
+distortions caused by propagation through the transmission medium channel, G(ω), and<br>
+with additive white noise. The medium channel imparts phase and attenuation distortions<br>
+that generally must be compensated for at the receiver 12 via some form of channel<br>
+compensation filter that applies the conjugate medium channel, represented as G*(ω), to<br>
+the received communication signal. However, application of the channel compensation<br>
+filter leaves the colored noise problem unaddressed. Colored noise in the received signal<br>
+generally arises in the form of ISI and MAI.<br>
+Therefore, Fig. 2 illustrates an optimal conceptual implementation of filtering at<br>
+receiver 12 that addresses the "matched filter in colored noise" by providing a signal-<br>
+whitening step followed by a matching step (matching to the composite of the true channel<br>
+and the whitening filter). The whitening filter, W(ω), compensates the received<br>
+communication signal for colored noise and the present invention provides an<br>
+advantageous method and apparatus for determining it in a computationally efficient<br>
+manner.<br>
+Fig. 3 broadly illustrates an exemplary receiver circuit 30 that is configured to<br>
+determine a whitening filter according to the present invention, and it may be configured<br>
+to determine a channel compensation filter, as well. Indeed, the two filters may be<br>
+determined together in some embodiments as a composite filter. It should be understood<br>
+that receiver circuit 30 can be implemented as part of the receiver processing circuitry<br>
+comprising receiver 12 of device 10, and that it can be embodied in hardware, software, or<br>
+some combination thereof. For example, receiver circuit 30 may be implemented as a<br>
+computer program comprising stored program instructions for execution by a<br>
+microprocessor, digital signal processor, or some other digital processor, or the like.<br>
+Alternatively, receiver circuit 30 may comprise all or part of an Application Specific<br>
+Integrated Circuit (ASIC), Field Programmable Gate Array (FPGA), Complex<br>
+Programmable Logic Device (CPLD), or the like.<br>
+Regardless, receiver circuit 30 can be implemented as part of the signal processing<br>
+chain for the communication signal(s) received by receiver 12 of device 10. In particular,<br><br>
+receiver circuit 30 can be configured to generate a filtered signal from the received<br>
+communication signal, wherein the filtered signal serves as the input to a subsequent<br>
+demodulation processor that demodulates/decodes the filtered signal to recover transmitted<br>
+data bits, for example.<br>
+Fig. 4 broadly illustrates exemplary whitening filter determination. While<br>
+whitening may be done in either the time or frequency domains, a frequency domain<br>
+representation of the desired whitening filter serves as the advantageous basis for reducing<br>
+its calculation essentially to the determination of one unknown. In an exemplary Single-<br>
+Input-Single-Output (SISO) context, this process is best understood by forming an<br>
+exemplary composite filter as,<br><br>
+where P(ω) equals the frequency response of the transmit pulse shaping filter associated<br>
+with transmission of the received communication signal, P*(ω) equals the conjugate of<br>
+that frequency response, i.e., it equals the receiver pulse shaping filter's frequency<br>
+response, G(ω) equals the frequency response of the propagation channel through which<br>
+the communication signal was received, G*(ω) equals the conjugate of that frequency<br>
+response, Ior equals the total transmit power of the transmitter transmitting the<br>
+communication signal (e.g., a network base station transmitter in a given cell or other<br>
+coverage area), Φ(ω) equals the PSD of inter-cell interference plus noise at the receiver<br>
+12, and A: is an arbitrary real constant.<br>
+To cast Eq. (1) in terms of the conceptual optimal receiver filtering structure<br>
+depicted in Fig. 2, one can rewrite the composite filter H(ω) as the product of the<br>
+whitening and channel compensation filters:<br><br>
+The form shown in Eq. (2) can be manipulated to provide more than one SISO<br>
+embodiment of the invention, and can be simplified based on the assumption that P(ω) is<br>
+known a priori by the receiver 12. That assumption is consistent with the practice of<br>
+configuring receiver filtering to impart the conjugate response of the transmit pulse<br>
+shaping filter. Such filter response information can be embodied in a fixed filter structure<br><br>
+at the receiver 12, or can be based on filter response information stored at receiver 12 for use in a<br>
+digital filtering algorithm.<br>
+A further assumption with respect to Eq. (2) is the existence of a pilot channel (e.g.<br>
+common pilot or CPICH in W-CDMA) and a means for estimating channel delays and net<br>
+channel coefficients at the receiver 12. In other words, from Eq. (2), the frequency responses for<br>
+the transmit and receiver pulse shaping filters, P(ω) and P*(ω) are known a priori at receiver 12,<br>
+and the frequency responses for the net propagation channel and its conjugate, G(ω) and G*(ω),<br>
+can be calculated directly from the pilot channel estimates. That leaves as unknowns the total<br>
+transmit power Ior and the PSD of the inter-cell interference plus noise, Φ(ω).<br>
+With the substitution the whitening filter representation is<br><br>
+where y may be viewed as a frequency domain scaling factor for the whitening filter expression.<br>
+Thus, whitening filter determination reduces to the determination of the y as the ratio of Ior to<br>
+Φ(ω).<br>
+Fig. 4 illustrates exemplary processing logic for determining the whitening filter, W(ω),<br>
+or the time-domain embodiment of it, w(t), based on the scaling factor y. Exemplary processing<br>
+begins with estimating Ior and Φ(ω) (Step 100). From there, processing continues with the<br>
+calculation of y based on a ratio of the estimates for Ior and Φ(ω) (Step 102). With the scaling<br>
+factor y thus determined, and with the transmit filter's frequency response known (or calculated),<br>
+and with estimation of the medium channel's frequency response, the whitening filter can be<br>
+determined according to Eq. (3) (Step 104).<br>
+The above exemplary processing can be applied in the context of specific receiver<br>
+structures. For example, Fig. 5 illustrates an exemplary chip-equalization embodiment of<br>
+receiver 12. In this embodiment, receiver 12 comprises a receiver front-end 40, a searcher 42, a<br>
+delay estimator 44, a channel estimator 46, pilot channel correlators 48, a medium channel<br>
+estimator 50, a ratio estimator 52 to estimate the ratio of Ior /Φ(ω), a chip equalizer 54, and a<br>
+traffic correlator 56.<br><br>
+The chip-equalization filter implemented by chip equalizer 54 can be derived by<br>
+rewriting Eq. (2) as<br><br>
+Recognizing that P*(ω) represents the receive pulse shaping filter in the received<br>
+signal processing path of receiver 12, a primary task for this embodiment lies in the<br>
+determination of H'(ω). By modeling the other-cell interference plus noise term as a<br>
+white Gaussian noise process with one-sided spectral density of NQ , H'(ω) can be<br>
+rewritten as<br><br>
+where y is now a real scale factor, and is equal to The magnitude of the scale factor<br>
+k does not affect the optimality of the final chip equalizer and is therefore assigned an<br>
+arbitrary value (e.g., 1). Thus, the main estimation task for the chip equalizer embodiment<br>
+is to compute G(ω) and y.<br>
+Considering the computation of G(ω) first, and per the above pilot channel<br>
+assumptions, the receiver 12 estimates the channel delays and the net channel coefficients,<br>
+which include the transmit/receive signal processing effects, as well as the medium<br>
+(propagation) channel effects. Given L channel delays in a multipath propagation channel,<br>
+the medium channel coefficients can be obtained from the net channel coefficients via<br><br>
+where r1 is the ith channel delay indicated by the delay searcher, ECPICH equals an energy<br>
+measurement of a common pilot channel (CPICH), g j equals the jth medium coefficient,<br><br>
+c(rk) is the net channel coefficient at delay xk and Rp{x) represents the pulse shape<br>
+correlation function given as £° pit + x)p* (x)dr. Eq. (6) can be rewritten in vector-matrix<br>
+notation by absorbing the constant factor of ECPICH into the medium channel coefficient as<br><br>
+Eq. (7) can be solved by direct matrix inversion or by application of an iterative<br>
+technique, such as Gauss-Seidel. The solution yields medium channel coefficients at the<br>
+path delays. A fast Fourier transform (FFT) can then be applied to the time domain<br>
+medium coefficients to obtain the frequency response G(ω) of the medium channel. Thus,<br>
+one or more FFT circuits can be included as part of receiver 12.<br>
+In considering the calculation of the scaling factor y, receiver 12 can be<br>
+configured to use a pilot channel-based estimation technique that is based on a parametric<br>
+model of the received communication signal's impairment correlations. An exemplary<br>
+parametric model is disclosed in the co-pending patent application, which is assigned<br>
+Serial No. 10/800,167, and which was filed on March 12, 2004. That application is<br>
+incorporated in its entirety herein by reference.<br>
+While the above-identified application includes additional background and<br>
+explanatory details, an exemplary parametric model of communication signal impairment<br>
+correlations includes one or more impairment terms, each scaled by a model fitting<br>
+parameter. The model fitting parameters are then updated on a recurring basis as part of<br>
+an ongoing fitting process wherein the model is fitted to impairment correlation estimates.<br>
+In more detail, an exemplary parametric model can be expressed as<br><br>
+where R? represents an interference correlation term (matrix) scaled by the first model<br>
+fitting parameter a and R# represents a noise correlation term (matrix) scaled by the<br>
+second model fitting parameter /?. The model fitting parameters are adapted during a<br>
+fitting process—e.g., during a Least Squares (LS) fitting process, wherein the model<br>
+fitting parameters are adapted to minimize the model error.<br>
+It can be shown that a = 1 l(Ec I Ior )CPICH, where (Ec I Ior )CPICH represents the<br>
+fraction of the base station energy given to the common pilot channel, and J3 = N0. Thus,<br>
+given an estimate of the pilot channel power and the values a and (5, the parameter y can<br>
+be determined from<br><br><br>
+where E{*} represents statistical expectation, and g represents a scaled medium<br>
+coefficient estimate. A statistical approximation can be used to solve the estimation<br>
+problem for y. An exemplary method is given as<br><br>
+In the above expression, ICPICH(N) is the pilot channel power at time index n (some<br>
+multiple of the pilot symbol rate) and X is a value between 0 and 1.<br>
+With the above in mind, then, the receiver embodiment illustrated in Fig. 5 may be<br>
+configured such that is operative to cany out whitening filter generation in accordance<br>
+with the present invention based on a number of exemplary processing steps. Those steps<br>
+include these items:<br>
+•	estimate channel delays by using searcher 42 and delay estimator 44;<br>
+•	estimate net channel coefficients via channel estimator 46;<br>
+•	estimate the scaled version of medium coefficients using equations (6) and (7)<br>
+as implemented in medium channel estimator 50;<br>
+•	estimate a and β using parametric modeling of received signal impairment<br>
+correlations in receiver circuit 30, an embodiment of which may be<br>
+implemented as part of chip equalizer 54;<br>
+•	compute medium coefficients as g = org in chip equalizer 54;<br>
+•	compute FFT of g to get G(ω), which may be done in chip equalizer 54;<br>
+•	compute y from Eqs. (9) and (10), which may be done in chip equalizer 54;<br>
+and<br>
+•	compute chip equalizer filter from Eq. (5), which may be done in chip<br>
+equalizer 54.<br>
+Note that chip equalizer may include one or more processing circuits configured to carry<br>
+out the above whitening/composite filter calculations. Further, note that the final filter<br>
+obtained from the last step can be implemented in either the time or frequency domain,<br>
+and received communication signal filtering as described herein can be carried out in<br>
+either the time domain, or the frequency domain.<br><br>
+In any case, the single traffic correlator 56 operates on the filtered (whitened and<br>
+channel equalized) signal output by chip equalizer 54. More particularly, traffic correlator<br>
+56 computes estimates of the transmitted symbols contained in the received<br>
+communication signal, r', which is input to the chip equalizer 54 from the receiver front-<br>
+end 40. As such, receiver front-end 40 can include low-noise amplifiers, filters, analog-to-<br>
+digital-converters, and other circuits as needed or desired to produce a digital samples<br>
+representing the received communication signal.<br>
+The present invention also can be implemented in an "over-whitening plus RAKE"<br>
+embodiment, wherein an over-whitening filter provides a filtered version of the received<br>
+communication signal for subsequent processing by a RAKE receiver. The over-<br>
+whitening filter suppresses colored noise from the received communication signal before<br>
+RAKE processing, thus improving the performance of RAKE combining.<br>
+In support of this RAKE-based embodiment of the present invention, Eq. (2) can be<br>
+rewritten as<br><br>
+Again, P (ω) represents the receive pulse shape filter, and G (ω) represents<br>
+channel compensation as implemented in the RAKE receiver circuit. Thus, as with the<br>
+chip equalization embodiment of Fig. 5, the primary effort for this embodiment lies in the<br>
+determination of W(ω) As before, by modeling the inter-cell interference plus noise term<br>
+as a white Gaussian noise process with one-sided spectral density of NQ , the whitening<br>
+filter W(ω) can be rewritten as<br><br>
+The scale factor k in the numerator does not affect the optimality of the final result,<br>
+so it can be assigned a convenient value, such as "1." The same methods for computing<br>
+G(ω) and y described above can be used here, and may be implemented in an exemplary<br>
+RAKE-based embodiment of receiver 12, such as illustrated in Fig. 6.<br>
+As shown in Fig. 6, receiver 12 comprises a receiver front-end circuit 60, a<br>
+searcher 62, a delay estimator 64, a channel estimator 66, pilot channel correlators 68, a<br><br>
+medium channel estimator 70, a ratio estimator 72 to estimate an over-whitening<br>
+filter 74, and a RAKE receiver circuit 76, including a plurality of traffic correlators<br>
+("fingers") 78, and a RAKE combining circuit 80. Note that the over-whitening filter 74<br>
+can be configured to include some or all of the functionality of the earlier-depicted<br>
+receiver circuit 30, and thus is adapted to carry out whitening filter determination.<br>
+That determination can be carried out according to an overall processing method<br>
+similar to that described for the chip equalization embodiment. Specifically, an exemplary<br>
+receiver processing method in the RAKE-based embodiment comprises these steps:<br>
+•	estimate channel delays by using searcher 62 and delay estimator 64;<br>
+•	estimate net channel coefficients via channel estimator 66;<br>
+•	estimate the scaled version of medium coefficients using equations (6) and (7)<br>
+as implemented in medium channel estimator 70;<br>
+•	estimate a and β using parametric modeling of received signal impairment<br>
+correlations in receiver circuit 30, an embodiment of which may be<br>
+implemented as part of over-whitening filter 74;<br>
+•	compute medium coefficients as g = ag in over-whitening filter 74;<br>
+•	compute FFT of g to get G(ω), which may be done in over-whitening filter 74;<br>
+•	compute y from Eqs. (9) and (10), which may be done in over-whitening filter<br>
+74;and<br>
+•	compute over-whitening filter from Eq. (12)—note that the final filter can be<br>
+implemented in either the time or frequency domain; and<br>
+•	RAKE combine over-whitened communication signal to compute estimates of<br>
+the transmitted symbols within the received communication signal—i.e.,<br>
+despread the over-whitened signal in each of one or more fingers 78<br>
+according to multipath delays, and combine the finger outputs to form a<br>
+RAKE-combined signal for subsequent demodulation processing.<br>
+While the above RAKE-based embodiment, and the earlier described chip-<br>
+equalization embodiment, represent exemplary SISO embodiments of the present<br>
+invention, the present invention can be readily extended to Single-Input-Multiple-Output<br>
+(SIMO) embodiments. Fig. 7 illustrates an exemplary SIMO embodiment, wherein<br>
+receiver 12 of device 10 includes M receive antennas (16-1 through 16-M), and the kth<br><br>
+antenna receives Sk(t). The antennas 16 are coupled to one or more receiver processing<br>
+circuits 82, which may be configured to implement an embodiment of the earlier<br>
+illustrated receiver circuit 30 for whitening filter determination.<br>
+In operation, each antenna 16-k receives signal Sk(t), which is obtained by passing<br>
+the data signal s(t) through propagation channel k. The impulse response of the<br>
+propagation channel from the base station (BTS) transmitter to the kth receive antenna at<br>
+receiver 12 is denoted by gk(t) with Fourier transform Gk(ω). Therefore, the noise-free<br>
+signal at the kth antenna is given by<br><br>
+where * denotes convolution. Considering Eq. (13), the total received signal at the kth<br>
+antenna can be expressed as<br><br>
+Here, vk (t) is a noise that models inter-cell interference and thermal noise at the<br>
+kth antenna.<br>
+It can be shown that a decision statistic for detecting data symbols has the form<br><br>
+where yk it) is the signal at the kth antenna after despreading the received signal rk(t), and<br>
+where h(t,k~) is the impulse response of the linear filter with frequency response<br><br>
+Noting that Eq. (15) essentially describes a receiver with M parallel sub-channels,<br>
+it is advantageous to rewrite (16) in the form<br>
+where <br>
+One can observe that the over-whitening filter in the above SIMO embodiment is<br>
+common across antennas 16, and the receiver structure illustrated in Fig. 8 represents an<br>
+exemplary capitalization on that commonality. In Fig. 8, receiver 12 is implemented as a<br><br>
+beamformer comprising a RAKE receiver circuit 84-k for each antenna 16-k, each circuit<br>
+84-k including a pulse shaping filter P*(ω) and a channel compensation filter Gk*(ω),a<br>
+RAKE combining circuit 86 for additively combining the antenna streams (the RAKE<br>
+outputs), and an over-whitening filter circuit 88 for over-whitening the RAKE combined<br>
+signal output from combiner circuit 86 by applying the over-whitening filter W{ω).<br>
+It should be noted that the RAKE receiver circuits 84 can include, or can be<br>
+associated with, one or more FFT circuits for converting the received communication<br>
+signal to a frequency domain for processing, or the above filters can be transformed into<br>
+the time domain for application to the time-domain received communication. Likewise,<br>
+the over-whitening filter implemented by circuit 88 can be determined based on the<br>
+exemplary frequency domain processing described herein, but applied to the received<br>
+communication signal in either the time or frequency domain.<br>
+Further, because of the linear nature of the described processing, over-whitening<br>
+could be performed in advance of each RAKE receiver circuit 84-1—i.e., the filtering<br>
+order could be swapped. While swapping the order might require replication of the over-<br>
+whitening filter in each RAKE processing path, such an arrangement may be advantageous<br>
+in some design implementations. For example, if the over-whitening-plus-RAKE<br>
+embodiment of Fig. 6 is implemented in modular integrated-circuit form, e.g., for<br>
+ASIC/FPGA implementation, that basic module could be replicated as many times as<br>
+needed for a given SIMO receiver implementation.<br>
+For the illustrated SIMO embodiment, the other-cell interference plus noise PSD<br>
+term again can be modeled as a white Gaussian noise process with one-sided spectral<br>
+density of No. Using this model, Eq. (18) can be rewritten in the form<br><br>
+As with the SISO embodiments, the scale factor in the numerator does not affect<br>
+the optimality of the final result, so it can be assigned a value of 1, for example. Again,<br>
+then, the primary computational task for whitening filter determination lies with<br>
+calculation of the scaling factory (and with the computation of Gk {w ) on which<br>
+7 depends).<br><br>
+An exemplary processing method for whitening filter determination in the SIMO<br>
+embodiment is similar to the SISO method(s) described earlier. Such processing includes<br>
+these steps:<br>
+•	For each antenna 16-k:<br>
+o Estimate channel delays;<br>
+o Estimate net channel coefficients;<br>
+o Estimate scaled version of medium coefficients using Eqs. (6) and (7);<br>
+o Estimate ak and pk using parametric modeling (or using direct<br>
+estimation);<br>
+o Compute medium coefficients as gk = agk;<br>
+o Compute FFT of gk to get Gk(ω);<br>
+o Rake combine traffic data;<br>
+o Compute yk from equations (9) and (10);<br>
+•	Compute final estimate of y as the arithmetic mean of the yk, or by selecting<br>
+one of the yk;<br>
+•	Compute the over-whitening filter from Eq. (19)—note that the final filter can<br>
+be implemented in either the time or frequency domain; and<br>
+•	Filter the combined signal with over-whitening filter to compute estimates of<br>
+transmitted symbols contained in the received communication signal.<br>
+Thus, the receiver processing steps for the exemplary SIMO embodiment are<br>
+similar to the processing steps for the exemplary SISO embodiments (RAKE, chip<br>
+equalizer), with the exception that some of the processing is done on a per-antenna basis<br>
+for SIMO. Regardless, those skilled in the art should appreciate that the present invention<br>
+provides an advantageous basis for whitening filter computation based on a frequency<br>
+domain representation of the whitening filter that reduces essentially to one unknown,<br>
+namely, a scaling factor that depends on an estimate of the ratio of total transmitter<br>
+power, Ior, to the PSD of other-cell interference plus noise, Φ(ω).<br>
+While that ratio can be estimated using the model fitting parameters from a<br>
+parametric model of received signal impairment correlations as described herein, it also<br>
+can be directly estimated from a direct estimate of total transmit power, and from a direct<br>
+estimate of the inter-cell interference plus noise. The direct estimate of total transmit<br>
+power can be based on a value received from the base station, or estimated from the pilot<br><br>
+power, or based on some configured value. The direct estimate of inter-cell interference<br>
+plus noise can be based on signal measurements, such as where each base station is<br>
+configured to transmit an individualized signal, much like a training sequence burst, or<br>
+other identifying data pattern, from which the device 10 can generate inter-cell<br>
+interference measurements based on receiving such signals from each of one or more<br>
+neighboring base station transmitters.<br>
+However, regardless of whether the ratio used for calculation of the scaling factor y<br>
+is indirectly estimated based on parametric modeling, the present invention provides many<br>
+advantages with respect to its method of whitening filter determination. For example, the<br>
+chip equalizer embodiment of Fig. 5, and the RAKE receiver embodiment of Fig. 6 can be<br>
+generally considered as "RAKE plus filter" implementations that can be cleanly realized<br>
+in modular chip set-type integrated circuit structures, or embodied as synthesizable library<br>
+modules for use in chip design software. For example, a basic chipset would include a<br>
+RAKE receiver circuit, and a higher-performance embodiment would add the over-<br>
+whitening filter function. Since the over-whitening filter function can be implemented in<br>
+hardware or software, or some combination thereof, the present invention provides system<br>
+designers with significant design flexibility.<br>
+It should be understood, then, that the present invention broadly provides a method<br>
+and apparatus for whitening filter determination in the context of received communication<br>
+signal processing. While the present invention can be implemented in conjunction with<br>
+RAKE receiver structures and chip equalization receiver structures, it is not limited to<br>
+those embodiments, nor is it limited to SISO or SIMO systems, as it has broad<br>
+applicability across a range of receiver types and system arrangements. Thus, the present<br>
+invention is not limited by the foregoing discussion, nor by the accompanying figures, but<br>
+rather is limited only by the following claims and their reasonable legal equivalents.<br><br>
+WE CLAIM :<br>
+1.	A method of generating a whitening filter for a communication signal transmitted from a<br>
+wireless communication network base station, the method being performed by a wireless<br>
+communication receiver and characterized by comprising:<br>
+estimating a ratio of total base station transmit power to the power spectral density of<br>
+inter-cell interference plus noise;<br>
+calculating a scaling factor based on the estimated ratio of total base station transmit<br>
+power to the power spectral density of inter-cell interference plus noise; and<br>
+determining a whitening filter for whitening the communication signal as a function of<br>
+the scaling factor, a frequency response associated with a transmit pulse shaping<br>
+filter used at the base station, and a frequency response of a propagation channel<br>
+through which the communication signal is received.<br>
+2.	The method of claim 1, wherein estimating the ratio of total base station transmit power<br>
+to the power spectral density of inter-cell interference plus noise comprises maintaining a<br>
+parametric model of communication signal impairment correlations based on fitting the model to<br>
+measured impairment correlations, and calculating the scaling factor from model fitting<br>
+parameters of the parametric model.<br>
+3.	The method of claim 2, wherein the model comprises an interference impairment<br>
+correlation term scaled by a first model fitting parameter and a noise impairment correlation term<br>
+scaled by a second model fitting parameter, and wherein calculating the scaling factor comprises<br>
+applying a ratio of the first and second model fitting parameters to an estimate of pilot channel<br>
+power.<br>
+4.	The method of claim 1, comprising pre-storing the frequency response associated with<br>
+the transmit pulse shaping filter as a known value.<br><br>
+5.	The method of claim 1, comprising calculating the frequency response of the propagation<br>
+channel based on pilot channel estimates.<br>
+6.	The method of claim 5, wherein calculating the frequency response of the propagation<br>
+channel based on pilot channel estimates comprises using pilot channel estimates to determine<br>
+medium channel coefficients for the propagation channel, and calculating the frequency response<br>
+of the propagation channel based on the medium channel coefficients.<br>
+7.	The method of claim 1, wherein estimating a ratio of total base station transmit power to<br>
+the power spectral density of inter-cell interference plus noise comprises directly estimating the<br>
+total base station transmit power, directly estimating the power spectral density of inter-cell<br>
+interference plus noise, and calculating a ratio of the two direct estimates.<br>
+8.	The method of claim 1, wherein the whitening filter comprises an over-whitening filter,<br>
+and further generating a RAKE combined signal based on processing the communication signal<br>
+in a RAKE receiver circuit, and then applying the over-whitening filter to the RAKE combined<br>
+signal to obtain a filtered signal for decoding.<br>
+9.	The method of claim 8, comprising receiving the communication signal as two or more<br>
+communication signals on two or more receiver antennas, generating a RAKE-combined signal<br>
+for each receiver antenna, and applying an over-whitening filter to the communication signal<br>
+received on each receiver antenna, or to a combination of the RAKE-combined signals obtained<br>
+from each receiver antenna.<br>
+10.	The method of claim 1, wherein the whitening filter comprises an over-whitening filter,<br>
+and further comprising applying the over-whitening filter to the communication signal to obtain<br>
+a filtered signal, and then inputting the filtered signal to a RAKE receiver circuit to obtain a<br>
+RAKE combined signal for decoding.<br><br>
+11.	The method of claim 1, wherein determining the whitening filter for whitening the<br>
+communication signal comprises determining a chip equalization filter for whitening and<br>
+equalizing the communication signal.<br>
+12.	The method of claim 11, comprising applying the chip equalization filter to the<br>
+communication signal to obtain a filtered signal, and then inputting the filtered signal to a<br>
+correlator circuit to obtain a data signal for decoding.<br>
+13.	A receiver circuit configured to generate a whitening filter for a communication signal<br>
+transmitted from a wireless communication network base station, the receiver circuit comprising:<br>
+a calculation circuit configured to calculate a scaling factor based on an estimated ratio of<br>
+total base station transmit power to the power spectral density of inter-cell<br>
+interference plus noise; and<br>
+a filter circuit configured to determine a whitening filter for whitening the<br>
+communication signal as a function of the scaling factor, a frequency response<br>
+associated with a transmit pulse shaping filter used at the base station, and a<br>
+frequency response of a propagation channel through which the communication<br>
+signal is received.<br>
+14.	The receiver circuit of claim 13, comprising an estimation circuit configured to estimate<br>
+the ratio of total base station transmit power to the power spectral density of inter-cell<br>
+interference plus noise by maintaining a parametric model of communication signal impairment<br>
+correlations based on fitting the model to measured impairment correlations, and wherein the<br>
+calculation circuit is configured to calculate the scaling factor from model fitting parameters of<br>
+the parametric model.<br>
+15.	The receiver circuit of claim 14, wherein the model comprises an interference impairment<br>
+correlation term scaled by a first model fitting parameter and a noise impairment correlation term<br>
+scaled by a second model fitting parameter, and wherein the calculation circuit calculates the<br>
+scaling factor by applying a ratio of the first and second model fitting parameters to an estimate<br>
+of pilot channel power.<br><br>
+16.	The receiver circuit of claim 13, wherein the receiver circuit is configured to access one<br>
+or more stored values defining a known frequency response of the transmit pulse shaping filter.<br>
+17.	The receiver circuit of claim 13, wherein the receiver circuit is configured to calculate the<br>
+frequency response of the propagation channel based on pilot channel estimates.<br>
+18.	The receiver circuit of claim 17, wherein the receiver circuit is configured to use pilot<br>
+channel estimates to determine medium channel coefficients for the propagation channel, and to<br>
+calculate the frequency response of the propagation channel based on the medium channel<br>
+coefficients.<br>
+19.	The receiver circuit of claim 13, wherein the receiver circuit is configured to estimate the<br>
+ratio of total base station transmit power to the power spectral density of inter-cell interference<br>
+plus by directly estimating the total base station transmit power, directly estimating the power<br>
+spectral density of inter-cell interference plus noise, and calculating a ratio of the two direct<br>
+estimates.<br>
+20.	The receiver circuit of claim 13, wherein the whitening filter comprises an over-<br>
+whitening filter, and further comprising a RAKE receiver that is configured to generate a RAKE<br>
+combined signal based on RAKE processing the communication signal, and wherein the receiver<br>
+circuit is configured to apply the over-whitening filter to the RAKE combined signal to obtain a<br>
+filtered signal for decoding.<br>
+21.	The receiver circuit of claim 13, comprising two or more receiver antennas configured to<br>
+provide received signals to the receiver circuit.<br>
+22.	The receiver circuit of claim 13, wherein the whitening filter comprises an over-<br>
+whitening filter, and wherein the receiver circuit is configured to apply the over-whitening filter<br>
+to the communication signal to obtain a filtered signal.<br><br>
+23.	The receiver circuit of claim 22, comprising a RAKE receiver that is configured to obtain<br>
+a RAKE-combined signal from the filtered signal for decoding.<br>
+24.	The receiver circuit of claim 13, wherein the filter circuit comprises part of a chip<br>
+equalization filter, and wherein the receiver circuit is configured to apply the chip equalization<br>
+filter to the communication signal to obtain a filtered signal for decoding.<br>
+25.	The receiver circuit of claim 13, comprising a searcher to identify multipath components<br>
+of the communication signal, a delay estimator to estimate corresponding multipath propagation<br>
+delays, a channel estimator to estimate net propagation channel responses, and a medium channel<br>
+estimator to estimate medium propagation channel responses.<br>
+26.	A Wideband Code Division Multiple Access (W-CDMA) receiver including a receiver<br>
+circuit configured to generate a whitening filter for a communication signal transmitted from a<br>
+base station in a W-CDMA network, the receiver circuit comprising:<br>
+a calculation circuit configured to calculate a scaling factor based on an estimated ratio of<br>
+total base station transmit power to the power spectral density of inter-cell<br>
+interference plus noise; and<br>
+a filter circuit configured to determine a whitening filter for whitening the<br>
+communication signal as a function of the scaling factor, a frequency response<br>
+associated with a transmit pulse shaping filter used at the base station, and a<br>
+frequency response of a propagation channel through which the communication<br>
+signal is received.<br><br><br><br>
+ABSTRACT<br><br><br>
+METHOD AND APPARATUS FOR CALCULATING<br>
+WHITENING FILTERS IN COMMUNICATION SIGNAL PROCESSING<br>
+APPLICATION<br>
+A frequency domain representation of a whitening filter is made to depend on essentially one<br>
+unknown, namely, a scaling factor that is based on an estimated ratio of total base station<br>
+power to the power spectral density (PSD) of inter-cell interference plus noise. In turn, that<br>
+scaling factor can be computed based on the modeling terms used in a parametric model of the<br>
+impairment correlations for a received communication signal. Preferably, the model comprises<br>
+an interference impairment term scaled by a first model fitting parameter, and a noise<br>
+impairment term scaled by a second model fitting parameter. Further, the scaling factor can be<br>
+computed by directly estimating total base station transmit power and the PSD of inter-cell<br>
+interference plus noise. In any case, the whitening filter can be used in whitening a received<br>
+communication signal in conjunction with channel equalization processing or RAKE receiver<br>
+processing, for example.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1hc3NpZ25tZW50ICAxLjEucGRm" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-assignment  1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1hc3NpZ25tZW50LnBkZg==" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1jbGFpbXMxLjAucGRm" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-claims1.0.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1jbGFpbXMxLjEucGRm" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-claims1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1jb3JyZXNwb25kZW5jZSBvdGhlcnMgMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-correspondence others 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1jb3JyZXNwb25kZW5jZSBvdGhlcnMgMS4yLnBkZg==" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-correspondence others 1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1jb3JyZXNwb25kZW5jZSBvdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-correspondence others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1kZXNjcmlwdGlvbiBjb21wbGV0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-description complete.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1mb3JtIDEucGRm" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1mb3JtIDIucGRm" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1mb3JtIDMucGRm" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1mb3JtIDUucGRm" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1ncGEucGRm" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1pbnRlcm5hdGlvbmFsIGV4bSByZXBvcnQucGRm" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-international exm report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1pbnRlcm5hdGlvbmFsIHB1YmxpY2F0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-international publication.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1pbnRlcm5hdGlvbmFsIHNlYXJjaCByZXBvcnQucGRm" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-international search report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1wY3QgcmVxdWVzdC5wZGY=" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-pct request.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDEyODIta29sbnAtMjAwNy1wcmlvcml0eSBkb2N1bWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">01282-kolnp-2007-priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxMS0wMy0yMDEzKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(11-03-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxMS0wMy0yMDEzKS1PVEhFUlMucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(11-03-2013)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxNC0xMi0yMDExKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(14-12-2011)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxNC0xMi0yMDExKS1QQS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(14-12-2011)-PA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxNi0wOS0yMDEzKS1BTk5FWFVSRSBUTyBGT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(16-09-2013)-ANNEXURE TO FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxNi0wOS0yMDEzKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(16-09-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxNi0xMi0yMDEzKS1QRVRJVElPTiBVTkRFUiBSVUxFIDEzNy5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(16-12-2013)-PETITION UNDER RULE 137.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxNy0xMC0yMDEyKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(17-10-2012)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxOS0wNC0yMDEzKS1BQlNUUkFDVC5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(19-04-2013)-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxOS0wNC0yMDEzKS1DTEFJTVMucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(19-04-2013)-CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxOS0wNC0yMDEzKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(19-04-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxOS0wNC0yMDEzKS1GT1JNIDEucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(19-04-2013)-FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxOS0wNC0yMDEzKS1GT1JNIDIucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(19-04-2013)-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxOS0wNC0yMDEzKS1GT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(19-04-2013)-FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxOS0wNC0yMDEzKS1GT1JNIDUucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(19-04-2013)-FORM 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxOS0wNC0yMDEzKS1PVEhFUlMucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(19-04-2013)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgxOS0wNC0yMDEzKS1QQS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(19-04-2013)-PA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgyMS0xMi0yMDEyKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(21-12-2012)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgyMS0xMi0yMDEyKS1GT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(21-12-2012)-FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgyMi0wOS0yMDExKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(22-09-2011)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgyMi0wOS0yMDExKS1PVEhFUlMucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(22-09-2011)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgyOC0wNS0yMDEzKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(28-05-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgyOC0wNS0yMDEzKS1GT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(28-05-2013)-FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgzMC0xMC0yMDEzKS1BTk5FWFVSRSBUTyBGT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(30-10-2013)-ANNEXURE TO FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LSgzMC0xMC0yMDEzKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-(30-10-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUFTU0lHTk1FTlQucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-ASSIGNMENT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIDEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-CORRESPONDENCE 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIDEuNC5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-CORRESPONDENCE 1.4.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIE9USEVSUyAxLjMucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-CORRESPONDENCE OTHERS 1.3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFLTEuNS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-CORRESPONDENCE-1.5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFLTEuNi5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-CORRESPONDENCE-1.6.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFLnBkZg==" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUVYQU1JTkFUSU9OIFJFUE9SVC5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUZPUk0gMTgtMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-FORM 18-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1rb2xucC0yMDA3LWZvcm0gMTgucGRm" target="_blank" style="word-wrap:break-word;">1282-kolnp-2007-form 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUdQQS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-GPA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUdSQU5URUQtQUJTVFJBQ1QucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-GRANTED-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUdSQU5URUQtQ0xBSU1TLnBkZg==" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-GRANTED-CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUdSQU5URUQtREVTQ1JJUFRJT04gKENPTVBMRVRFKS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-GRANTED-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUdSQU5URUQtRFJBV0lOR1MucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-GRANTED-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-GRANTED-FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAyLnBkZg==" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-GRANTED-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAzLnBkZg==" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-GRANTED-FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSA1LnBkZg==" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-GRANTED-FORM 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUdSQU5URUQtU1BFQ0lGSUNBVElPTi1DT01QTEVURS5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-GRANTED-SPECIFICATION-COMPLETE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUlOVEVSTkFUSU9OQUwgUFVCTElDQVRJT04ucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-INTERNATIONAL PUBLICATION.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LUlOVEVSTkFUSU9OQUwgU0VBUkNIIFJFUE9SVCAmIE9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-INTERNATIONAL SEARCH REPORT &amp; OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LU9USEVSUy0xLjEucGRm" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-OTHERS-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LU9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LVJFUExZIFRPIEVYQU1JTkFUSU9OIFJFUE9SVC5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-REPLY TO EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI4Mi1LT0xOUC0yMDA3LVRSQU5TTEFURUQgQ09QWSBPRiBQUklPUklUWSBET0NVTUVOVC5wZGY=" target="_blank" style="word-wrap:break-word;">1282-KOLNP-2007-TRANSLATED COPY OF PRIORITY DOCUMENT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QtMDEyODIta29sbnAtMjAwNy5qcGc=" target="_blank" style="word-wrap:break-word;">abstract-01282-kolnp-2007.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="260454-method-of-monitoring-treating-agent-residuals-and-controlling-treating-agent-dosage-in-water-treatment-processes.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="260456-a-method-for-the-synthesis-of-severely-sterically-hindered-secondry-aminoether-alcohols-of-the-formula-1.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>260455</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1282/KOLNP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>18/2014</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>02-May-2014</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>30-Apr-2014</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>12-Apr-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>TELEFONAKTIEBOLAGET LM ERICSSON (PUBL)</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>S-164 83 STOCKHOLM</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>CAIRNS, DOUGLAS</td>
+											<td>3905 SPRINGSTOP LANE, DURHAM, NC 27705</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>KRASNY, LEONID</td>
+											<td>111 GRAY MARE&#x27;S LANE, CARY, NC 27511</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04B 1/707</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/EP2005/009778</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-09-12</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/943,247</td>
+									<td>2004-09-17</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/260455-method-and-apparatus-for-calculating-whitening-filters-in-communication-signal-processing-application by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 00:17:13 GMT -->
+</html>

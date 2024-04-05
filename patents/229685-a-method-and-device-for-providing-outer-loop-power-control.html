@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/229685-a-method-and-device-for-providing-outer-loop-power-control by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 10:24:00 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 229685:A METHOD AND DEVICE FOR PROVIDING OUTER LOOP POWER CONTROL</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD AND DEVICE FOR PROVIDING OUTER LOOP POWER CONTROL</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>The present invention relates to adjusting a power control setpoint to compensate for imperfect signal detection in a communication channel capable of discontinuous transmission (DTX). The power control setpoint is compensated for false detections by adjusting the power control setpoint by a dynamically determined setpoint back off amount upon detection of a Good Frame. The amount of the setpoint back off is a function of the measured signal quality of the detected Good Frame and the number of Erasure indications received immediately preceding the Good Frame indication. In an alternative embodiment, an expected FER is scaled by one minus the probality of false DTX to compensate for the effects of false DTX. A state machine is implemented to compensate the setpoint for the effects of false erasure. The state machine estimates a number of false erasures by evaluating erasure detections in relation to consecutive DTX detections in the absence of good frame detections.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+POWER CONTROL OUTER LOOP FOR COMMUNICATION CHANNELS WITH DISCONTINUOUS TRANSMISSION<br>
+BACKGROUND OF THE INVENTION<br>
+FIELD OF THE INVENTION<br>
+[0001]	The invention relates to capacity optimization in communication channels.<br>
+More particularly, the invention relates to optimization of Outer Loop Power Control when the channel is capable of discontinuous transmission (DTX).<br>
+DESCRIPTION OF THE RELATED ART<br>
+[00021	Wireless communication systems are widely deployed to provide various types<br>
+of communication such as voice, data, and so on. These systems may be based on code division multiple access (CDMA), time division multiple access (TDMA), or some other modulation techniques. A CDMA system provides certain advantages over other types of systems. For example, a CDMA system provides increased system capacity.<br>
+[0003]	A CDMA system may be designed to support one or more CDMA standards<br>
+such as (1) the Telecommunications Industry Association (TIA)/Electronic Industries Association (EIA) "TIAyEIA-95-B Mobile Station-Base Station Compatibility Standard for Dual-Mode Wideband Spread Spectrum Cellular System" (the IS-95 standard), (2) the standard offered by a consortium named "3rd Generation Partnership Project" (3GPP) and embodied in a set of documents including Document Nos. 3G TS 25.211, 3G TS 25.212, 3G TS 25.213, and 3G TS 25.214 (the W-CDMA standard), (3) the standard offered by a consortium named "3rd Generation Partnership Project 2" (3GPP2) and embodied in a set of documents including "C.S0002-A Physical Layer Standard for cdma2000 Spread Spectrum Systems," the "C.S0005-A Upper Layer (Layer 3) Signaling Standard for cdma2000 Spread Spectrum Systems," and the "C.S0024 cdma2000 High Rate Packet Data Air Interface Specification" (the cdma2000 standard), and (4) some other standards.<br>
+[0004]	Wireless telephone systems, in general, are capable of supporting many user<br>
+phones, which may also be described as mobile phones, subscriber units, or mobile stations.  The mobile stations communicate over a wireless link to a Base Transceiver<br><br>
+System (BTS), sometimes termed a Base Station. The BTS provides a Radio Frequency (RF) interface to the mobile station. In a CDMA phone system, the link from a BTS to a mobile station is termed the forward link and is carried over a forward CDMA channel. Similarly, the link from a mobile station to a BTS is termed a reverse link and is carried over a reverse CDMA channel. A Base Station Controller (BSC) receives vocoded frames from the BTS units and converts the frames to Pulse Code Modulated (PCM) signals. The BSC also converts the landline voice signals from the Public Switched Telephone Network (PSTN) into vocoded frames and sends them to an appropriate BTS.<br>
+[0005]	Wireless telephone systems are capable of carrying both voice and data over<br>
+allocated communication channels. Digital wireless telephone systems are particularly suited to carrying data over the allocated communication channels. It is possible for the system to dedicate a channel to a user, via the user's Mobile Station (MS), in order to accomplish data transmission. A continuously active channel is preferable when the anticipated data transmission is continuous. With a continuously active channel, the user is able to efficiently transmit or receive a continuous data stream over the allocated active channel of the communication system. However, the exploding increase in the number of packet data applications, such as those used when communicating over the Internet, make allocating a continuously active channel to a single user an over allocation of resources. Additionally, because wireless telephone rates are often tied to connection times, a user may not be willing to use a MS to connect to a remote network if a continuous active channel must be dedicated to the connection.<br>
+[0006]	The designers of wireless telephone systems have recognized the desirability of<br>
+packet data applications over wireless channels. The designers have also recognized that packet data and the associated burst transmissions may be transmitted over channels that are not continuously active, but rather, allow for discontinuous transmission (DTX).<br>
+[0007]	In a CDMA communication system, active users in a cell may all simultaneously<br>
+share the same frequency bandwidth. However, because the frequency band is shared among all of the users, the signal to and from each user, i.e. in both the forward and reverse links, is seen as interference by all other users.<br>
+[0008]	To maximize channel capacity, a CDMA communication system incorporates<br>
+power control.    Within any cell of a CDMA system all users transmit in the same<br><br>
+bandwidth at the same time and each user's transmission contributes to the interference experienced by all other users. The power control process is used to adjust the transmit power to achieve a minimum desired signal quality at the receiver. The interference contribution experienced by other users is minimized because the transmit power ta each user is minimized. Because the interference level is minimized, the number of user's that can simultaneously communicate over the channel is maximized.<br>
+[0009]	Power control in is problematic because of the large dynamic range over which<br>
+transmit power must be controlled. A Mobile Station (MS) may be anywhere in a particular cell. A first MS may be directly underneath a base station antenna while another MS may be miles from that base station. The variations in distance, terrain, and multipart environments experienced by different MS result in variations in path loss. The path loss between two phones operating in the same cell may differ by 80dB.<br>
+[0010]	A closed loop control process is used to control transmission power on both the<br>
+forward and reverse links in a CDMA system. In closed loop control a transmission is made, a measurement of received power or signal quality is made at the receiver, and feedback is provided to the transmitter.<br>
+[0011]	Closed loop power control is used in the reverse link of a CDMA wireless<br>
+communication system to ensure the reverse link transmit power is accurately controlled. In reverse closed loop power control, a base station (BS) (or base station controller (BSC)) measures the signal level received from each mobile station (MS) and provides feedback to each MS with instructions to adjust the MS transmit power. The closed loop power control loop attempts to adjust each MS transmit power to cause the reverse link transmit signals from all of the MS in the cell to arrive at the minimum level of power required for each MS to achieve a desired Quality of Service (QoS).<br>
+[0012]	The forward link from the base station (BS) to the mobile station (MS) is no less<br>
+demanding on a power control loop even though all code channels transmitted from the base station take the same paths to the mobile station. The operation of the forward link power control process is similar to the reverse link process. In forward link power control the MS measures the signal level received from the BS and provides feedback to the BS with instructions to adjust the transmitted power of the code channel associated with that MS. The forward link power control process thus affects the power of the particular MS code channel relative to the other code channels.<br><br>
+[0013]	In the reverse link process, the base station or base station controller measures<br>
+the received signal-to-interference (Eb/lo) and compares the measured value to an adjustable threshold known as the power control setpoint. When the measured Eb/Io is above the setpoint, the base station instructs the MS to reduce the reverse link transmit power by a predetermined amount, e.g., 1 dB. When the measured Eb/Io is below the threshold, the BS sends the MS a command to increase the reverse link transmit power by a fixed amount.<br>
+[0014]	The forward link process may operate in a complementary manner.   The MS<br>
+measures a received signal-to-interference (Ei/N,) and compares the measured value to an adjustable power control setpoint within the MS used for the forward link signals. The forward link uses the interference measurement Nt rather than the lo value used in the reverse link. When the measured Eb/Nt is above the setpoint, the MS instructs the BS to reduce the forward link transmit power in the assigned code channel by a predetermined amount, typically fractions of a dB. When the measured Eb/Nt is below the threshold, the MS sends the BS a command to increase the forward link transmit power in the assigned code channel by a fixed amount.<br>
+[0015]	The values of the respective forward link and reverse link power control<br>
+setpoints, either at the MS or the BS, largely determine the QoS maintained at the receiver. The QoS is often measured as a Frame Erasure Rate (PER), alternatively known as a Frame Error Rate. As expected, increasing the value of the power control setpoint reduces the FER, thereby providing a higher QoS. Reducing the power control setpoint increases the raR. Adjusting the threshold of the power control setpoint occurs in a process known as Outer Loop Power Control (OLPC). In the forward link the process is known as Forward Outer Loop Power Control (FOLPC) and in the reverse link the process is known as Reverse Outer Loop Power Control (ROLPC). The forward link power control setpoint and the reverse link power control setpoint are independently controlled. There may or may not be any correspondence between the setpoint values used in the forward and reverse links because of the differences in signaling schemes and receiver structures used in the forward and reverse links. The similarity in nomenclature refers to the similarity in function, not to a conmionality of value or control.<br><br>
+[0016]	A manufacturer may choose to implement reverse outer loop power control such<br>
+that the power control setpoint is the same for every MS within the cell or may implement individual setpoints for each MS operating within the cell. The use of individual setpoints for each MS increases capacity on the channel because each MS is controlled to operate at the minimum power necessary to achieve the desired QoS.<br>
+[0017]	The implementation of OLPC for just one active channel (e.g., in an IS-2000<br>
+CDMA system operating in PI mode) is relatively straightforward because frames are continuously transmitted on the active channel by the MS and the Eb/Io or Ei/Nt and PER may be updated based on the active channel. However, when multiple channels are active and discontinuous transmission (DTX) is allowed for one or more channels, the implementation is substantially more complex. One difficulty is accurately distinguishing between frames that are DTX and frames that are not DTX but contain one or more bit errors after decoding. Imperfect determinations of DTX and non-DTX frames result in a power control setpoint threshold that is imperfect. A setpoint that is too high results in reduced channel capacity. The Outer Lx)op Power Control adjustment of the power control setpoint needs to compensate for inaccurate DTX and non-DTX indications in order to optimize the power control setpoint and thus the channel capacity.<br>
+[0018]	The receiver incorporates a DTX detection algorithm when the channel is DTX<br>
+capable. Imperfect determinations of DTX and non-DTX frames result in a power control setpoint threshold that is sub-optimal. A setpoint that is too high results in reduced channel capacity. It is desirable during OLPC to adjust the power control setpoint to compensate for inaccurate DTX and non-DTX indications and thus optimize the power control setpoint and the channel capacity. Thus, it would be a valuable improvement in the industry to provide a means and method by which a power control loop may accurately compensate for non-ideal DTX detection.<br>
+SUMMARY OF THE INVENTION<br>
+[0019]	A   method  and  device  are  disclosed  for  outer  loop  power  control   for<br>
+communication over a channel employing DTX. The method and device adjust a power control setpoint to compensate for imperfect signal detection in a communication channel capable of DTX. The power control setpoint is compensated by estimating a<br><br>
+number of erroneous detections and determining a compensation value based in part on the estimate. The power control setpoint is compensated for false Erasure detections by adjusting the power control setpoint by a dynamically determined setpoint back off amount upon detection of a Good Frame. The amount of the setpoint back off is a function of the measured signal quality of the detected Good Frame and a number of Erasure detections received immediately preceding the Good Frame indication. The number of Erasure detections is reset when a Good Frame is detected.<br>
+[0020]	In an alternative embodiment, a method and device are disclosed for an outer<br>
+loop power control for communication over a channel capable of DTX. A device having DTX detection compensates for a known non-zero probability of DTX detection given an Erasure frame, P(D|E), by determining a compensation factor and adjusting a desired or expected target FER with the compensation factor to achieve a compensated target FER. While the P(D|E) may be known or estimated to be a constant value, the value of P(D|E) may also be dynamically determined based on channel conditions.<br>
+[0021]	A state machine may be implemented to compensate the setpoint for the effects<br>
+of false erasure. An initial state decreases the setpoint for every good frame and increases the setpoint for every erasure. The state machine returns to the initial state following any good frame detection. The state machine estimates a number of false erasures by evaluating erasure detections in relation to consecutive DTX detections in the absence of good frame detections.<br>
+[0022]	In one embodiment, a method of providing outer loop power control includes<br>
+estimating a number of erroneous frame detections and adjusting a power control setpoint associated with the outer loop power control, wherein the adjustment is determined at least in part by the estimated number of erroneous frame detections.<br>
+[0023]	In another embodiment, a wireless communication device having discontinuous<br>
+transmission (DTX) detection and outer loop power control includes means for estimating a number of erroneous frame detections and means for adjusting a power control setpoint associated with the outer loop power control, wherein the adjustment is determined at least in part by the number of erroneous frame detections.<br>
+[0024]	In another embodiment, a method of providing outer loop power control in a<br>
+communication device includes determining a compensation factor on the basis of-a known non-zero P(D|E) value, determining an expected target frame error rate (FER),<br><br><br>
+and adjusting the expected target FER on the basis of the determined expected target FER and the compensation factor.<br>
+[0025]	In   still   another  embodiment,   a   wireless   communication   device   having<br>
+discontinuous transmission (DTX) detection and outer loop power control includes means for determining a compensation factor on the basis of a known non-zero P(D|E) value, means for determining an expected target frame error rate (FER), and means for adjusting the expected target FER on the basis of the determined expected target FER and the compensation factor.<br>
+[0026]	In another embodiment, a method of providing outer loop power control<br>
+includes compensating a power control setpoint for a non-zero P(Ep) value by reducing the power control setpoint.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[0027]	The features, objects, and advantages of the invention will become more<br>
+apparent from the detailed description set forth below when taken in conjunction with<br>
+the drawings in which like reference characters identify conespondingly throughout and<br>
+wherein:<br>
+[0028]	Figure   1   is   a   diagram   illustrating   a   wireless   communication   system<br>
+implementing power control setpoint optimization.<br>
+[0029]	Figure 2 is a state diagram of power control setpoint optimization for imperfect<br>
+DTX detection.<br>
+[0030]	Figures 3A-3D are flow diagrams showing the function of an outer loop power<br>
+control algorithm.<br>
+[0031]	Figure 4 is a graph of FER vs. threshold number N.<br>
+[0032]	Figure 5 is a graph of FER vs. margin value D.<br>
+[0033]	Figure 6 is a functional block diagram of Outer Loop Target FER compensation<br>
+for false DTX detection.<br>
+[0034]	Figures 7A-7D illustrate a flow chart of power control setpoint optimization for<br>
+imperfect DTX detection.<br>
+[0035]	Figure 8 is a flow chart of the subroutine to compensate the setpoint for a<br>
+predetermined number of consecutive DTX detection.<br><br><br>
+[0036]	Figure 9 is a state diagram of power control setpoint optimization for imperfect<br>
+DTX detection.<br>
+DETAILED DESCRIPTION OF EMBODIMENTS OF THE INVENTION<br>
+[0037]	The CDMA 2000 standard provides nine radio configurations for the Forward<br>
+Traffic Channel. The signals that may be transmitted on the Forward Traffic Channel are defined to include a Forward Dedicated Control Channel (F-DCCH), a Forward Fundamental Channel (F-FCH), a Forward Power Control Subchannel, Forward Supplemental Code Channels (F-SCCH), and Forward Supplemental Channels (F-SCH). Any one of the nine defined radio configurations may have all or a subset of all of the defined channels within the Forward Traffic Channel. The F-DCCH and F-SCH may be capable of discontinuous transmission. In the case of the F-DCCH, the decision to enable or disable transmission is made on a frame by frame basis.<br>
+[0038]	The CDMA 2000 standard also provides for six different radio configurations<br>
+for the Reverse Traffic Channel. The signals that may be transmitted on the Reverse Traffic Channel are defined to include a Reverse Dedicated Control Channel, a Reverse Fundamental Channel, a Reverse Supplemental Channel, and a Reverse Supplemental Code Channel. Only some of the channels will be present in any particular radio configuration. The CDMA 2000 standard allows an operating mode (referred to as P2 mode) in which the Reverse Dedicated Control Channel (R-DCCH) is used together with the Reverse Supplemental Channel (R-SCH) without the transmission of a Reverse Fundamental Channel (R-FCH).<br>
+[0039]	Furthermore, the CDMA 2000 standard allows both R-DCCH and R-SCH to<br>
+support DTX. Both channels independently have the possibility of a DTX occurrence due to a frame not having been transmitted by a Mobile Station (MS). This occurs when the MS has no data to be transmitted or, in case of the R-SCH, when the MS does not have enough available power to transmit the R-SCH. The DTX detection algorithm that may run independently on R-DCCH and R-SCH may also be referred to as an R-DCCH (or R-SCH) Rate Determination Algorithm (RDA).<br>
+[0040]	In both the forward link and reverse link channels capable of DTX, the decision<br>
+to transmit or not transmit a frame is determined at the transmitter. The receiver has no prior knowledge of when DTX will occur. Because of the receiver's lack of knowledge<br><br><br>
+as to the transmitter's decision to transmit DTX, some type of DTX detection occurs at the receiver to determine the presence of DTX. DTX detection may be implemented directly in the MS when the DTX transmission occurs on the forward link. Alternatively, DTX detection may occur in a signal processing stage coupled to an output of the MS, and in general may be implemented in any signal processing stage following the MS radio frequency (RF) receiver. Conversely, DTX detection may be implemented in the Base Station, Base Station Controller, or in any signal processing stage following receipt of the reverse link transmission when the DTX signals occur on the reverse link.<br>
+[0041]	The DTX detection  algorithm may provide one of the following possible<br>
+outcomes for every received frame:<br>
+Good Frame - the algorithm indicates a frame was  transmitted and the<br>
+successfully decoded frame does not contain bit errors.<br>
+Erasure - the algorithm indicates a frame was transmitted but the decoded frame<br>
+contains bit errors.<br>
+DTX - the algorithm indicates no frame was transmitted.<br>
+[0042]	Performance of the DTX detection algorithm may be measured in terms of the<br>
+following conditional probabilities:<br>
+P(D|E) = probability of declaring DTX when the event was Erasure, i.e., the MS<br>
+actually sent a frame but it was decoded with bit errors such that the DTX detection algorithm<br>
+erroneously indicated DTX.<br>
+P(E|D) = probability of declaring Erasure when the event was DTX, i.e., the MS<br>
+did not send the frame but the DTX detection algorithm erroneously indicated Erasure.<br>
+[0043]	A perfect DTX detection algorithm is characterized by P(D|E) = 0 and P(E|D) =<br>
+0. As a practical matter, P(D|E) and P(E|D) are typically non-zero probability values. The larger the value of these probabilities, the larger the effect on Outer Loop Power Control (OLPC).<br>
+[0044]	In a typical OLPC algorithm the power control setpoint is increased by a<br>
+predetermined UP step size upon receipt of an Erasure indication from the DTX detection algorithm. The power control setpoint is decreased by a predetermined DOWN step size upon receipt of a Good Frame indication from the DTX detectiqn<br><br><br>
+two base stations 110a, 110b are shown, it is understood that the communication system 100 may support any number of base stations. Each base station 110a, 110b provides coverage for a corresponding cell 120a, 120b. The coverage areas or cells 120a, 120b supported by the two base stations 110a, 110b are shown to be overlapping. However, it is understood that where more than one base station is supported in the communication system 100, the cells supported by each base station may or may not overlap. Additionally, the cells of any three or more base stations may have some common coverage areas or may be mutually exclusive.<br>
+[0049]	Since the operation of the communication system 100 within each cell is<br>
+substantially identical, the discussion will focus on the operation within a single cell. A base station 110a supports coverage over a cortesponding cell 12Da. There may be one or more Mobile Stations (MS) 130a, 130b, within the cell 120a simultaneously communicating with the base station 110a. The MS 130a, 130b are shown as portable phones but it is understood that the MS 130a, 130b may be portable phones, mobile phones operating within vehicles, fixed position phones, wireless local loop phones, or any other communication device. The base station 110a communicates to each MS 130a, 130b, over a forward link channel and each MS 130a, 130b communicates to the base station 110a over a reverse link channel. The communication links may be over a continuously active channel or may allow for DTX. The base station 110a also communicates with a Base Station Controller (BSC) 150 that provides the communication link to a Public Switched Telephone Network (PSTN) not shown. Power control is used on the forward link as well as on the reverse link, but the respective power control loops operate independently of each other. Closed loop power control converges the communication link to the minimum transmitted power required to achieve a desired Quality of Service (QoS).<br>
+[0050]	The operation of Outer Loop Power Control (OLPC) in the forward link is<br>
+similar to that in the reverse link. The following discussion will concentrate on the operation of OLPC in the forward link but it is understood that the concepts may also be used in the reverse link because of the similarities in the operation of the respective OLPC algorithms. Additionally, the OLPC algorithm functions similarly with respect to all MS within a coverage area although the description only describes the function of.a single MS.<br><br>
+[0051]	In the forward link, the signal received at the MS 130a is measured against a<br>
+power control setpoint as part of the power control loop. The power control setpoint typically represents a Signal to Noise Ratio (SNR) value that may be obtained from the received forward link signal. As an example, the power control setpoint may be compared to a measured energy per bit to noise power ratio (Eb/N,). It may be convenient to use the Eb/Nt value because a receiver may be able to determine the value quickly, thus allowing for faster power control loop performance. The power control setpoint corresponds to a level of QoS measured as PER. Alternatively, a particular PER value itself may be used for a power control setpoint but since the PER is determined at a rate that is slower than Eb/N„ the power control loop performance would need to be correspondingly slower. The setpoint comparison and PER measurement may be implemented in the MS 130a or may be implemented in a signal processing stage (not shown) following the MS 130a.<br>
+[0052]	The OLPC algorithm compensates for imperfect DTX detections by estimating a<br>
+number of incorrectly determined frames and modifying the setpoint value to correct for the incorrectly determined frames. It is extremely unlikely that a DTX detection algorithm will provide a false Good Frame indication. Therefore, the estimate of incorrectly determined frames likely is directed towards estimating a number of incorrectly determined Erasure or DTX frames.<br>
+[0053]	In one embodiment the algorithm estimates a number of incorrectly determined<br>
+Erasure frames and decreases the power control setpoint by a setpoint backoff value. The setpoint backoff value may be a constant or may be dynamically determined. The setpoint backoff value may be a function of a signal metric that is measured at the time the backoff value is dynamically determined. The measured signal metric may be the Eb/Nt of a Good Frame. It may be convenient to use the arrival of a Good Frame as the trigger to compensate the setpoint because the Eb/Ni of the most recently received Good Frame is likely a good estimate of the average Eb/Nt for received frames over a short time duration. Additionally, the Eb/Nt may already be measured as part of the power control process. Thus, the use of Eb/N, may not generate a greater processing burden on the receiver.<br>
+[0054]	The upper bound of the erroneous Erasure detections is the total number of<br>
+Erasure detections. When a Good Frame detection is used as the trigger to compensate<br><br><br>
+the power control setpoint, the upper bound of erroneous Erasure detections is the number of Erasure detections that occur between consecutive Good Frame detections. Of course, not all detected Erasures will be erroneous Erasure detections. Therefore, the setpoint backoff amount may be a function of the number of Erasure detections that occur between successive Good Frame detections.<br>
+[0055]	A detailed state diagram of the setpoint compensation algorithm 200 for OLPC<br>
+is shown in Figure 2. The state machine 200 is reset and entered 202 upon an initialization event. The initialization event may be when the MS is first turned on, upon registration of the MS in a coverage area, upon initialization of a traffic channel, upon initialization of communication over a DTX enabled channel, upon initialization of DTX communication, or upon any other initialization event.<br>
+[0056]	Following reset and initialization 202 the state machine enters State 0 210 where<br>
+it awaits detection of the next received frame. It is convenient to update the state machine 200 following each frame because the DTX decision may be made on a frame by frame basis. If the DTX algorithm determines that the next received frame is a DTX frame 214 the state machine remains in State 0 210 and awaits detection of the next received frame. If the DTX algorithm detects a Good Frame 212 the state machine advances to State G 220 and reduces the setpoint by a predetermined downward amount. The predetermined downward amount may be the predetermined DOWN step size as discussed above.<br>
+[0057]	While in State G 220, the state machine 200 awaits the next frame. If the next<br>
+frame is detected as a DTX 224 the state machine 200 remains in State G 220. Similarly, if the next frame is detected as a Good Frame 222 the state machine 200 remains in State G 220. The setpoint is also decreased by a predetermined downward step size upon detection of a Good Frame 222 while in State G 220. However, if the next frame is detected as an Erasure 226 the state machine 200 advances to State E 230. The Erasure detection 226 causes the state machine 200 to save the current setpoint value as a historical setpoint value, here given the name 01d_Setpoint. An Erasure count is also initialized to one and the setpoini value is increased by a predetermined upward amount. The predetermined upward amount that the setpoint is increased may be the predetermined UP step size as previously discussed.<br><br><br><br><br><br>
+ 058]	Returning to State 0 210, an Erasure detection 216 will also advance the state<br>
+machine to State E 230. An Erasure detection 216 while in State 0 210 also causes the state machine 200 to save the current setpoint as a historical setpoint value, initialize an Erasure count to one, and increase the setpoint by a predetermined amount.<br>
+[0059]	While in State E 230, the state machine counts the number of Erasure detections<br>
+in order to estimate a number of erroneous detections from which a setpoint compensation value may be derived. The state machine 200 remains in State E 230 if a DTX detection 234 occurs while in the state. If an Erasure detection 236 occurs while in State E 230 the state machine 200 increments the Erasure count and increases the setpoint by the predetermined upward amount. If a Good Frame detection 232 occurs while in State E 230 the state machine returns to State G 220. The Good Frame detection 232 is also used as the triggering event to compensate the power control setpoint for potentially erroneous frame detections. The state machine reduces the setpoint value by the predetermined downward amount and the Erasure count is reset to zero. The Erasure count is reset to zero because the setpoint compensation takes into account all Erasure detections that have occurred since the previous Good Frame detection (or since initialization of the state machine 200, whichever occurred most recently in time). The state machine 200 then makes the setpoint backoff determination to evaluate the amount, if any, that the setpoint should be further reduced to compensate for estimated erroneous Erasure detections. The setpoint backoff may be a constant value or may be dynamically determined. A dynamic setpoint backoff determination algorithm flow chart is shown in detail in Figure 3D and is described below.<br>
+[0060]	Figures 3A-3D illustrate a flow chart representation for an OLPC algorithm that<br>
+compensates for imperfect DTX detections. Referring to Figure 3A, the algorithm begins by entering initialization block 3102. Any number of events may be used as the triggering event for entry into the algorithm, as discussed above with respect to the state diagram. After initialization, the algorithm proceeds to block 3110 where it awaits the arrival of the next data frame. It is convenient to update the algorithm on a frame by frame basis when the decision to transmit DTX signals is made on a frame by frame basis. However, if the decision to transmit DTX is not made on a frame basis, if reduced computation complexity is required, if an accurate estimate of DTX detection errors can be made at another rate, or if other reasons exist, the algorithm may update on<br><br><br>
+a basis that is less frequent than the frame rate. Similarly, factors may make updating of the algorithm at a rate higher than the frame rate a desirable feature.<br>
+[0061]	Once a frame arrives at the receiver, the algorithm proceeds to block 3112 where<br>
+DTX detection is performed. As discussed above, a DTX detection algorithm typically returns one of three indications for the examined frame. The DTX detection algorithm represented by block 3112 will typically return an indication of a Good Frame, an Erasure, or a DTX. DTX detection may be based on the contents of the frame or may be based on a combination of factors including the received signal strength and received signal SNR. The frame may include signal quality indicators such as parity bits or Cyclic Redundancy Check (CRC) bits that allow DTX detection to verify a Good Frame or the existence of bit errors within the frame. Differentiating between an Erasure and a DTX may depend on the received SNR or some other measure of signal quality.<br>
+[0062]	Following DTX detection in block 3112, the algorithm proceeds to block 3120<br>
+to check to see if the DTX detection algorithm determined that a Good Frame was transmitted. The algorithm advances to block 3122 if a Good Frame was detected. In block 3122 the power control setpoint is reduced by a predetermined downward amount. This reduction in the power control setpoint is typically a reduction by a fixed predetermined amount. Alternatively, the setpoint may be reduced by a dynamic amount, for example, an amount relative to the received Eb/N,. The flow chart proceeds from block 3122 to point 3200 that connects the flow chart of Figure 3A with the flow chart of Figure 3B. Point 3200 is not a functional element but, rather, is a point to show the interconnection of the several flow charts.<br>
+[0063]	Returning to block 3120, if the DTX detection algorithm did not produce a Good<br>
+Frame indication, the flow chart advances to block 3130 to check to see if an Erasure was detected. If in block 3130 an Erasure detection was determined to be the output of the DTX detection algorithm, the flow chart proceeds to block 3132.<br>
+[0064]	The OLPC algorithm begins the process of estimating a number of erroneous<br>
+DTX detections by counting the number of Erasure detections that occur. In block 3132, the algorithm initializes the Erasure Count to one. The algorithm next proceeds to block 3134 where the current setpoint value is saved as a historical setpoint value denoted as 01d_Setpoint. The flow chart next proceeds to block 3136 where the power control setpoint is increased by a predetermined upward amount.   The power control<br><br>
+setpoint is typically increased by a predetermined fixed value, although a dynamic value may be used. Once the power control setpoint is increased in block 3136, the flow chart proceeds to point 3300 that is used to connect the flow chart of Figure 3A to the flow chart of Figure 3C.<br>
+[0065]	Returning to block 3130, if an Erasure detection has not occurred, the flow chart<br>
+proceeds to block 3140. In block 3140 the algorithm determines that a DTX detection occurred. Previous blocks have already determined that the received frame was not detected as a Good Frame or an Erasure. Therefore, the DTX detection algorithm likely detected a DTX frame and thus there is no reason to verify this in a decision block. A decision block may be desirable if the DTX detection algorithm has the ability to determine greater than three frame types. Once the flow chart determines in block 3140 that a DTX frame was received, the algorithm returns to block 3110 to await the arrival of the next frame.<br>
+[0066]	Referring to Figure 3B, this flow chart may be reached from either the flow<br>
+charts of Figure 3A or Figure 3C following a Good Frame indication. Point 3200 represents the entry into this portion of the OLPC algorithm. The algorithm in block 3210 awaits the arrival of the next frame. Following the arrival of the frame, the algorithm proceeds to the DTX detection algorithm of block 3212 where the received frame is characterized as a Good Frame, Erasure, or DTX. Once the DTX detection algorithm is complete, the flow chart proceeds to block 3220 to check to see if the DTX detection algorithm determined that a Good Frame was received. If the DTX detection algorithm indicates a Good Frame, the algorithm proceeds to block 3222 where the setpoint is reduced by the predetermined downward step size. The OLPC algorithm then returns to block 3210 to await the next frame. However, if a Good Frame has not been detected, the algorithm advances to block 3230 where the algorithm checks to see if the DTX detection algorithm of block 3212 indicated an Erasure. If no Erasure is indicated, the algorithm proceeds to block 3240 where it is determined that the DTX detection algorithm of block 3212 indicates the remaining frame type, DTX. The algorithm then returns to block 3210 to await the next frame.<br>
+[0067]	Returning to block 3230,  if the algorithm determines that an  Erasure is<br>
+indicated, the flow chart proceeds to block 3232 to begin counting the Erasure indications.  In block 3232 the Erasure count is initialized to a value of one.  Next, in<br><br><br>
+block 3234, the algorithm saves the setpoint value as a historical setpoint value, Oid_Setpoint. The flow chart then proceeds to block 3236 where the setpoint is increased by the predetermined upward step size value. The flow chart then proceeds to point 3300 that represents the linking point to the flow chart shown in Figure 3C.<br>
+[0068]	Referring to Figure 3C, entry point 3300 may be reached from either flow charts<br>
+of Figure 3A or Figure 3B following Erasure indications. Upon entry from point 3300 to the flow chart shown in Figure 3C, the algorithm proceeds to block 3310 to await the arrival of the next frame. After arrival of the next frame the algorithm proceeds to block 3312 where the DTX detection algorithm is performed.<br>
+[0069]	Following completion of the DTX detection algorithm, the flow chart proceeds<br>
+to block 3320 to determine whether or not a Good Frame is indicated. If a Good Frame is not indicated, the flow chart proceeds to block 3330 to check to see if the DTX detection algorithm of block 3312 indicates an Erasure. If an Erasure is not indicated, the routine proceeds to block 3340 where it is determined that DTX is indicated. Following block 3340 the flow chart returns to block 3310 to await the next frame.<br>
+[0070]	Returning to block 3330, if the DTX detection algorithm does indicate an<br>
+Erasure, the flow chart proceeds to block 3332 where the value in the Erasure count is incremented by one. The flow chart then proceeds to block 3334 and the power control setpoint is increased by the predetermined upward step size. The flow chart then returns to block 3310 to await the arrival of the next frame.<br>
+[0071]	Returning to block 3320 where the algorithm checks for a Good Frame<br>
+indication, if the algorithm determines that the DTX detection algorithm of block 3312 indicates a Good Frame, the flow chart proceeds to block 3322 where the power control setpoint is decreased by the predetermined downward step size. The flow chart next proceeds to block 3324 where a setpoint backoff value is determined and applied to the power control setpoint. In one embodiment the setpoint backoff value is a predetermined backoff constant value while in another embodiment the setpoint backoff value is dynamically determined by an algorithm such as the one shown in Figure 3D. Once the setpoint backoff value is determined and applied, the flow chart proceeds to block 3326 where the Erasure count is reset to zero. The Erasure count may be reset to zero because the application of the setpoint backoff value in block 3324 compensates the power control setpoint for all accumulated erroneous Erasure indications. The flow<br><br>
+chart then proceeds to point 3200 that links the flow chart of Figure 3C to the flow chart of Figure 3B.<br>
+[0072]	Block 3324, shown in Figure 3C as the block where the setpoint backoff is<br>
+determined and applied, is shown in detail in Figure 3D. The setpoint backoff algorithm is entered at block 3400. The flow chart first proceeds to block 3402 where it checks to see if a frame sequence number of the received Good Frame is continuous with a prior frame sequence number from a previously received Good Frame. The frame sequence number is defined in an upper layer of the CDMA 2000 standard and is an indicator of an order of the transmitted frames. If the frame sequence number is continuous, the flow chart proceeds to block 3404 where the setpoint is set to the value of the historic setpoint value, 01d_Setpoint. A continuous frame sequence number indicates that, no matter what the Erasure count value, no frames have been lost between the last two Good Frame indications. Thus, block 3404 resets the setpoint value to the historic value that it was equal to just after the previous Good Frame indication. From block 3404, the flow chart proceeds to block 3430 where it is done.<br>
+[0073]	Returning to block 3402, if the frame sequence number is not continuous, an<br>
+actual Erasure occurred since the last Good Frame. The flow chart next proceeds to decision block 3408 where the Erasure count is compared against a predetermined constant, N. The predetermined constant N represents a threshold number of Erasure detections that must occur between successive Good Frame detections before the power control setpoint will be compensated by the setpoint backoff algorithm. The value chosen for N varies depending on the design of the receiver and the implementation of the DTX detection algorithm. It may be preferable to choose a higher number for N when the confidence in the output of the DTX detection algorithm is high. Similarly, if the output of the DTX detection algorithm is unreliable, a lower number for N may be preferable. The number chosen for N may be roughly inversely proportional to the probability of false detection by the DTX detection algorithm. The number for N may be derived empirically by varying N and examining the actual FER under various operating conditions when the statistics of the DTX detection algorithm are not known or are not estimated to a desired degree of confidence.<br>
+[0074]	If the Erasure count does not exceed the threshold number N, the flow chart<br>
+proceeds to block 3430 and is done.   In this circumstance, it is not likely that an<br><br>
+erroneous Erasure detection occurred if the Erasure count has not exceeded the threshold number. Therefore, the number of erroneous detections is estimated to be zero and the power control setpoint is not compensated.<br>
+[0075]	Returning to decision block 3408, if the Erasure count does exceed the threshold<br>
+number, N, then it is likely that there were erroneous Erasure detections. The flow chart proceeds to block 3410 to make an estimate of a compensated power control setpoint. In block 3410 the algorithm sets the power control setpoint to the minimum of the historical setpoint and a measured SNR of the received Good Frame plus a predetermined margin, D. That is, the algorithm sets the setpoint to be equal to min(Old_Setpoint, measured SNR + D), where the Old_Setpoint, measured SNR, and predetermined margin, D, are all values expressed in dB. It may be convenient to use the Eb/Nt value measured for the Good Frame as the measured SNR value.<br>
+[0076]	The predetermined margin D represents a margin above the measured SNR. The<br>
+algorithm adds the margin to the measured SNR and compares the sum to the historical setpoint. D may be a predetermined constant or may be dynamically determined. Where D is dynamically determined, the value may be adjusted according to the quality of the received frame. A metric to use for the quality of the received frame may be a Symbol Error Rate count. As an example, the predetermined margin D may be reduced if the number of error symbols exceeds a threshold. Similarly, the predetermined margin, D, may be increased if the number of symbol errors is higher than a threshold. Regardless of the determination of the predetermined margin, D, the value of the setpoint is compensated to the minimum of 01d_Setpoint and the SNR + D value.<br>
+[0077]	The flow chart next proceeds to block 3420 to determine if the setpoint needs to<br>
+be reset to a minimum setpoint value. Block 3420 is optional and a designer may choose to exclude it without much detrimental effect on the performance of the OLPC algorithm. The minimum setpoint value, Min_Setpoint, represents a minimum predetermined setpoint value over which reliable communications will occur. In block 3420 the algorithm sets the setpoint to max(Min_Setpoint, setpoint), where Min_Setpoint represents the value in dB of a predetermined minimum setpoint value. The algorithm proceeds to block 3430 and is done once the setpoint is compared to the minimum setpoint value and adjusted if required.<br>
+7^<br><br>
+[0078]	Therefore, it can be seen from an examination of the flowcharts of Figures 3A-<br>
+3D that the OLPC algorithm counts a number of Erasure indications to determine an estimate of a number of erroneous frame detections. Then a setpoint backoff value is determined based in part on the number of Erasure detections and applied to the power control setpoint when a Good Frame is detected. A counter used to track the number of Erasure detections is reset to zero following each compensation of the power control setpoint.<br>
+[0079]	Figure 4 shows a graph of FER for varying values of the threshold number, N.<br>
+The OLPC algorithm is implemented in a MS to provide Forward OLPC and represents data for a radio operating in a cellular frequency band, having a single path, velocity of 1 km/h, configured for radio configuration 3 as defined in CDMA 2000 standard, using 2X data rate, and operating on convolutionally encoded data. The OLPC is configured for a target FER of 0.167. As can be seen from Figure 4, a smaller threshold value N results in a higher FER and a larger FER results in an FER that is closer to the target FER. An even higher threshold value, N, may result in an even lower FER but at a cost of reduced forward link capacity.<br>
+[0080]	Figure 5 shows a graph of FER for varying values of margin value, D, where the<br>
+OLPC, link parameters, and MS are all configured the same as they were for Figure 4. As can be seen from the figure, the FER increases for lower margin values and approaches the target FER for a margin value above three. However, the higher the margin value, D, the more the OLPC operates as an uncompensated loop, resulting in potentially reduced link capacity. The value of D = 2 provides a tradeoff of FER while still maintaining an OLPC setpoint that allows a higher capacity than an uncompensated OLPC setpoint. The value of 2 dB is not an exact figure. Other values for D may be substantially equal to 2 dB depending on the sensitivity of the OLPC to the setpoint value and the ability of an implementing hardware to represent the number in memory.<br>
+[0081]	Table 1 shows the performance of various MS configurations using the Forward<br>
+OLPC algorithm. Each of the MS is configured to operate in radio configuration 3 as defined in the CDMA 2000 standard and each MS is configured to have a target FER of 0.167. The MS differ in that the data rate varies from 2X to 16X (where the value X represents 9600 bps) and the data is either convolutionally encoded or turbo coded. The value of N was set to ten Erasures and the predetermined margin was set to two.<br>
+2 <br><br>
+[0082]	An alternative embodiment is described below for OLPC employing DTX<br>
+detection. The embodiment significantly mitigates the effects of false DTX indications, that result in an outer loop converging at too high of a FER, and the effects of false Erasure indications, that result in too high a setpoint.<br>
+[0083]	The initial hypotheses that need to be satisfied for the optimum functionality of<br>
+the proposed solution are the following:<br>
+a - P(E\D) is relatively small, less than or equal to 10% b - P(D\E) is less than or equal to 60%<br>
+c - P(D\E) is fairly constant when the communication channel conditions vary (i.e., different MS velocities and different multi-path profiles)<br>
+[0084]	Where hypothesis c is not satisfied, an additional enhancement may be included<br>
+to compensate for this. Such enhancement might include an estimation of the channel conditions.<br>
+[0085]	Most CDMA wireless communication systems utilizing DTX satisfy the above<br>
+hypothesis. Simulations of IS-2000 reverse links show for the R-DCCH, PCE|D) = approximately 0.1%, P(D|E) 
+Outer Lx)Op Target FER = Expected Target FER * (1 - P(D|E))<br>
+[0086]	In a simplified version of the proposed OLPC algorithm, a constant value for<br>
+P(D(E) is selected and used to compute the Outer Loop Target FER. A more complex implementation, might dynamically select a P(D|E) value based on an estimation of the communication channel conditions. This latter approach may be used to improve<br>
+72<br><br>
+performance, particularly if hypothesis c is not satisfied. By utilizing a compensation factor, the possibility of convergence of the power control loop to a higher PER is greatly reduced.<br>
+[0087]	Figure 6 shows a functional block diagram of an PER compensation block 600<br>
+used to compensate for imperfect DTX detections, where the DTX detection algorithm indicates DTX when the frame was actually an Erasure. An Expected Target PER is input to the PER compensation block 600. The Expected Target PER may be a value specified in a standard or operating guide or may be determined by calculating an PER required to achieve a desired level of Quality of Service. The Expected Target PER is coupled to the first input of a multiplier 610. The multiplier 610 has a second input that is provided the scaling factor. If the channel does not have DTX capability or the conditional probability of false DTX, P(D|E), is zero the scaling factor will be equal to unity.<br>
+[0088]	However, in a DTX enabled channel, the non-ideal performance of DTX<br>
+detection results in a non-zero probability of false DTX detection. Thus, the scaling factor provided to the multiplier 610 will not be unity. The actual scaling factor is calculated by estimating the conditional probability of a false DTX detection. As stated above, the estimate of the P(D(E) may be based on the hypothesis of fairly constant communication channels or may be based on an estimate of the cornmunication channels. When the value of P(D|E) is to be determined dynamically, the communication channel conditions are collected in a functional block 640 and provided to a P(D|E) estimator 630. The communication channel condition collection block 640 and the P(D(E) estimator 630 are optional when channel conditions are assumed to be fairly constant. The communication channel conditions may be collected or estimated from a variety of sources including, but not limited to, an average of the closed loop power control commands, initial open loop power control estimates, forward link received signal strength, running logs of slow or fast fades, or an actual estimate of channel conditions, if available. The P(D|E) estimator 630 receives the communication channel conditions and makes an estimate of the value of P(D|E). The output of the P(D(E) estimator 630 is coupled to a scale factor block 620 where the actual scale factor is determined as (1-P(D|E)). When channel conditions are assumed to be fairly constant, the scale factor block 620 may output &amp; constant. The value of P(D|E) has been shown<br>
+23<br><br>
+in simulations to be less than 55% for typical channel conditions and DTX detection<br>
+algorithms. If P(D|E) is estimated to be 0.55 to conrespond to 55%, then the scale factor<br>
+is equal to 0.45. The output of the scale factor block 620, whether dynamic or constant,<br>
+is provided as a second input to the multiplier 610. The resultant output of the<br>
+multiplier 610 is the output of the PER compensation block 600, and represents the<br>
+Outer Loop Target PER.<br>
+[0089]	In a further aspect, the technique for improved OLPC operates to lower the<br>
+power control setpoint when it is determined that the setpoint was previously increased<br>
+due to a false Erasure (the event was a DTX but the DTX detection algorithm declared it<br>
+as an Erasure). The computation of the setpoint is described by a finite state machine.<br>
+[0090]	First, the following quantities are defined.<br>
+SETP_UP_STEP_SIZE = step size for setpoint increase given target PER<br>
+SETP_DOWN_STEP_SIZE = step size for setpoint decrease given target FER<br>
+N_DTX_SO_TO_S1 = number of consecutive DTX events to trigger transition from State 0 to State 1<br>
+N_DTX_LOWER_S.ETPOINT = number of consecutive DTX events to trigger a decrease of the setpoint<br>
+S2_C0UNT = number of frames the state machine remains in State 2 before going back to State 0<br>
+S3_C0UNT = number of frames the state machine remains in State 3 before going to any other state<br>
+K = arbitrary coefficient used to control the setpoint decrease in State 3. Default<br>
+value is 1.<br>
+[0091]	The state description and the corresponding transitions are as follows:<br>
+State 0:<br>
+The outer loop performs as a typical, uncompensated, outer loop, i.e., the setpoint is increased by SETP_IJP_STEP_SIZE upon receipt of an Erasure and the setpoint is decreased by SETP_DOWN_STEP_SIZE upon receipt of a Good Frame. The setpoint is unchanged upon receipt of a DTX indication.<br>
+If N_DTX_SO_TO_S1 consecutive DTX indications are received, transition to State 1. Otherwise, remain in State 0. State 1:<br><br>
+If Good Frame is received, decrease the setpoint by SETP_DOWN_STEP_SIZE and transition to State 0.<br>
+If Erasure is received, increase the setpoint by SETP_UP_STEP_SIZE, set S2_C0UNT = 1 and transition to State 2.<br>
+If DTX is received, do not change the setpoint and remain in State 1. State 2:<br>
+If Good Frame is received, decrease the setpoint by SETP_DOWN_STEP_SIZE, set S2_C0UNT = 0 and transition to State 0.<br>
+If Erasure   is  received,   increase  the  setpoint  by  SETP_UP_STEP_SIZE, increment S2_C0UNT and remain in State 2.<br>
+If DTX is received, do not change the setpoint, set S3_COUNT = 1 and transition to State 3. State 3:<br>
+If Good Frame is received, decrease the setpoint by SETP_DOWN_STEP_SIZE, set S2_C0UNT = 0, set S3_C0UNT = 0 and transition to State 0.<br>
+If Erasure   is   received,   increase   the   setpoint   by  SETP_UP_STEP_SIZE, increment S2_C0UNT, set S3_C0UNT = 0 and transition to State 2.<br>
+If DTX is received, do not change the setpoint and increment S3_C0UNT.<br>
+[0092]	The state machine is updated after every frame.  Following each update of the<br>
+state machine an additional comparison may be made to determine whether or not a predetermined number (N_DTX_LOWER_SETPOINT) of consecutive DTX indications occurred. The comparison following each state machine update is performed in accordance with the following pseudo-code.<br>
+if (S3_C0UNT &gt;= N_DTX_LOWER_SETPOINT )<br>
+i if(S2_COUNT&gt;0)<br>
+{<br>
+decrease setpoint by S2_C0UNT * SETP_UP_STEP_SIZE * K<br>
+set S2_C0UNT = 0;<br>
+set S3_C0UNT = 0;<br>
+}<br>
+}<br>
+[0093]	The OLPC setpoint computation may be described in terms of a flow chart as<br>
+shown in Figures 7A-7D. The computation begins at point A 7100.  Point A 7100'is<br>
+not a functional block but rather indicates entry into State 0.  The algorithm, in block<br><br><br>
+7102 waits for the next frame to be determined. The algorithm shown in Figures 7A-7D is run following receipt of each frame. After a frame is received and determined to be one of Good Frame, Erasure, or DTX, the routine next determines what effect the frame has on the setpoint. The algorithm checks to see if the frame was determined to be a Good Frame 7110. If the frame is determined to be a Good Frame then the routine proceeds to block 7114 where the setpoint is decreased by a predetermined amount, represented by the constant SETP_DOWN_STEP_SIZE. The OLPC routine constantly seeks to maintain the minimum power required satisfying a desired Quality of Service. Following the decrease of the setpoint, the routine clears the DTX counter in block 7116 and returns to block 7102 to wait for the next frame. If the detected frame is determined in block 7110 to be not a Good Frame, the routine proceeds to block 7120.<br>
+[0094]	In block 7120, the routine checks to see if an Erasure was detected.   As noted<br>
+before, an Erasure indicates the MS sent a frame but the received frame contained bit errors. If an Erasure was detected in block 7120, the routine proceeds to block 7124 where the setpoint is increased by a predetermined amount. The predetermined upward step size is represented by the constant SETP_UP_STEP_SIZE, which may or may not be equal to the predetermined downward step size. The setpoint increase causes the power control loop to signal the MS to slightly increase its transmitted power, thereby ensuring a higher quality signal received at the base station. After the setpoint is increased, the routine clears the DTX counter 7126 and returns to block 7102 to await the next frame.<br>
+[0095]	If an Erasure was not detected in block 7120 the frame must have been a DTX<br>
+because this is the only remaining frame type that has not yet been checked. Thus, block 7130 determines that a DTX was detected and increments a consecutive DTX counter. The routine then proceeds to block 7140 to determine if a predetermined number, represented by the constant N_DTX_SO_TO_S1, of consecutive DTX frames were detected. If the predetermined number of consecutive DTX indications have not been reached, the routine returns to block 7103 to await the next frame. If the predetermined number of consecutive DTX indications have been reached, the routine proceeds to the beginning of State 1, represented by point B 7200.<br>
+[0096]	Continuing to Figure 7B at point B 7200, the routine proceeds to block 7202'<br>
+where it awaits the next frame.   Following receipt and characterization of the next<br><br>
+frame, the routine proceeds to block 7210 to check if a Good Frame was received. If a Good Frame is received after a number of consecutive DTX indications, the current setpoint is greater than or equal to the minimum setpoint required to achieve the desired QoS. The routine decreases the setpoint by the predetermined downward step size 7214, clears the DTX counter 7216, and returns to State 0 via point A 7100.<br>
+[0097]	If a Good Frame was not detected in block 7210, the routine next proceeds to<br>
+block 7220 and checks to see if DTX was detected. If so, the routine remains in State 1 and returns to block 7202 to await the next frame. If DTX is not detected, only one frame type remains and thus the routine proceeds to block 7230 where it determines that it was an Erasure that was detected. The routine proceeds by clearing the DTX counter in block 7232, increasing the setpoint by the predetermined upward step size in block 7234, initializing S2_C0UNT to one in block 7236, and proceeding to State 2 via point C 7300.<br>
+[0098]	Referring now to Figure 7C, point C 7300 provides the entry into State 2.  At<br>
+State 2, the routine awaits the receipt and characterization of the next frame in block 7302. The routine then proceeds to block 7310 and checks to see if the received frame was a Good Frame. As always, a Good Frame detection indicates the setpoint is likely at or above the minimum required to maintain the desired Quality of Service. Thus, the routine decreases the setpoint by the predetermined downward step size in block 7314, resets S2_C0UNT to zero in block 7316, clears the DTX counter in block 7318, and returns to State 0 (Figure 7A) via point A 7100.<br>
+[0099]	If a Good Frame was not detected in block 7310, the routine in block 7320<br>
+checks to see if an Erasure was detected. If so, it is possible that the setpoint is too low following the number of consecutive DTX detections indicated in State 0, but it is also possible that a false Erasure was indicated. Thus, in block 7324, the routine increases the setpoint by the predetermined upward step size and then increments S2_C0UNT in block 7326 to track the number of frames the algorithm stays in State 2 before going back to State 0 (Figure 7A). The routine next proceeds to block 7328 and clears the DTX counter since a frame other than DTX was detected, and remains in State 2, returning to block 7302 to await the next frame.<br>
+ 	If an Erasure was not detected in block 7320, the routine moves to block 7330<br>
+and indicates that it was a DTX that was detected. The DTX detection algorithm or the<br><br><br>
+Rate Determination Algorithm has detected a number of DTX and Erasure frames<br>
+without having detected a Good Frame if this point in the algorithm is reached. The<br>
+routine then proceeds to block 7332 and initializes the S3_C0UNT to one and then<br>
+proceeds to State 3 via point D 7400.	*<br>
+[0101]	Referring to Figure 7D, State 3 is entered via point D 7400. As in all previous<br>
+states, State 3 begins in block 7402 by awaiting receipt and detection of the next frame. Following detection of the frame, the routine moves to block 7410 and checks to see if a Good Frame was detected.<br>
+[0102]	If a Good Frame was detected, the routine decreases the setpoint by the<br>
+predetermined downward step size in block 7412, resets S2_C0UNT to zero in block 7414, resets S3_C0U]MT to zero in block 7416, clears the DTX counter in block 7418, and returns to State 0 (Figure 7A) via point A 7100.<br>
+[0103]	If a Good Frame was not detected in block 7410, the routine moves to block<br>
+7420 and checks to see if Erasure was detected. If so, the routine increases the setpoint by the predetermined upward step size in block 7422, increments S2_C0UNT in block 7424, resets S3_C0UNT in block 7426, clears the DTX counter in block 7428, and returns to State 2 (Figure 7C) via point C 7300.<br>
+[0104]	If Erasure was not detected in block 7420, the routine moves to block 7430 and<br>
+indicates that DTX was detected. The routine next moves to block 7432 and increments the S3_C0UNT to track the number of frames the algorithm stays in State 3 before going to any other state. The routine next performs an S3_C0UNT compensation in block 7440 and returns to block 7402 in State 3 to await the next frame.<br>
+[0105]	The S3_C0UNT compensation routine of block 7440 is detailed in Figure 8. In<br>
+block 810, the routine initially checks to see if the S3_C0UNT value is greater than or equal to a predetermined value represented by the constant N_DTX_LOWER_SETPOINT. S3_COUNT in effect tracks the number of consecutive DTX detections indicated after reaching State 3. The number of consecutive DTX indications is tracked to allow the OLPC routine to compensate for perceived erroneous Erasure detection indicated during an extended period of DTX. If it is determined in block 810 that the S3_C0UNT value is less than the predetermined threshold the routine moves to block 840 and indicates the compensation routine is done. If it is determined in block 810 that the S3_C0UNT value equals or exceeds the predetermined<br><br><br>
+threshold, the S3_C0UNT compensation routine 7440 checks in block 820 to see if the S2_C0UNT value is greater than zero. If S2_C0UNT is zero the compensation routine moves to block 840 where it is done. If the S2_C0U&gt;rr is non-zero, the compensation routine decreases the setpoint by an amount equal to S2_C0UNT * SETP_UP_STEP_SIZE * K in block 830. K is a constant used to weight the amount of setpoint decrease the compensation routine allows. If K is set to one, the S3_C0UNT compensation routine negates any increases in the setpoint believed to be false Erasure detections. After decreasing the setpoint the compensation routine moves to block 832 and resets S2_C0UNT to zero and then resets S3_C0UNT to zero in block 834. The S3_C0UNT compensation routine then moves to block 840 where it is done.<br>
+[0106]	The OLPC setpoint algorithm is succinctly shown in the state diagram of Figure<br>
+9. The algorithm begins in State 0, 910. The state machine advances to State 1, 914, upon an 'A' event, where 'A' is defined to be a number of consecutive DTX frames equal to N_DTX_S0_TO_S 1. There is no change to the setpoint or state counters upon the 'A' event. The state machine remains in State 0, 910, for any !A (NOT A) event 912. If the !A event 912 is instead Erasure, the setpoint is increased by SETP_UP_STEP_SIZE. If the !A event 912 is Good Frame the setpoint is decreased by SETP_DOWN_STEP_SIZE. If the !A event 912 is a DTX, there is no change to the setpoint.<br>
+[0107]	The state machine remains in State 1, 920, for any DTX detection 922 and for<br>
+this event there is no change to the setpoint or any state counters. If there is a Good Frame event 924 while in State 2, 920, the state machine returns to State 0, 910. The Good Frame event 924 also causes the setpoint to be decreased by SETP_DOWN_STEP_SIZE. If the State 2, 920, event is Erasure 926 the setpoint is increased by SETP_UP_STEP_SIZE and S2_C0UNT is set to one. The state machine also advances to State 2,930.<br>
+[0108]	In State 2, 930, an Erasure event 932 results in an increase in the setpoint by<br>
+SETP_UP_STEP_SIZE and increment of S2_C0UNT. The state machine remains in State 2, 930, following this event. If a Good Frame event occurs 934 the state machine returns to State 0, 910, decreases the setpoint by SETP_DOWN_STEP_SIZE, and resets S2_COUNT  to zero.   A DTX event 936 occurring while in State 2, 930, results in the<br><br><br>
+state machine advancing to State 3, 940. The setpoint does not change as a result of this event but the S3_C01INT is initialized to one.<br>
+[0109]	In State 3. 940, a DTX event 942 results in no change to the setpoint but an<br>
+increment of the S3_C0UNT. The state machine remains in State 3, 940, following the DTX event 942. If the event is a Good Frame 944, the state machine returns to State 0, 910, decreases the setpoint by SETP_DOWN_STEP_SIZE, resets S2_C0UNT to zero, and resets S3_C0UNT to zero. An Erasure event 946 while in State 3,940, results in an increase in the setpoint by SETP_UP_STEP_SIZE, increment of S2_C0UNT, and reset S3_C0UNT to zero.<br>
+[0110]	Those of skill in the art will understand that information and signals may be<br>
+represented using any of a variety of different technologies and techniques. For example, data, instructions, commands, information, signals, bits, symbols, and chips that may be referenced throughout the above description may be represented by voltages, currents, electromagnetic waves, magnetic fields or particles, optical fields or particles, or any combination thereof<br>
+[0111]	Those of skill will further appreciate that the various illustrative logical blocks,<br>
+modules, circuits, and algorithm steps described in connection with the embodiments disclosed herein may be implemented as electronic hardware, computer software, or combinations of both. To clearly illustrate this interchangeability of hardware and software, various illustrative components, blocks, modules, circuits, and steps have been described above generally in terms of their functionality. Whether such functionality is implemented as hardware or software depends upon the particular application and design constraints imposed on the overall system. Skilled persons may implement the described functionality in varying ways for each particular application, but such implementation decisions should not be interpreted as causing a departure from the scope of the present invention.<br>
+[0112]	The various illustrative logical blocks, modules, and circuits described in<br>
+connection with the embodiments disclosed herein may be implemented or performed with a general purpose processor, a digital signal processor (DSP), an application specific integrated circuit (ASIC), a field programmable gate array (FPGA) or other programmable logic device, discrete gate or transistor logic, discrete hardware components, or any combination thereof designed to perform the functions described<br><br><br>
+herein. A general purpose processor may be a microprocessor, but in the alternative, the processor may be any processor, controller, microcontroller, or state machine. A processor may also be implemented as a combination of computing devices, e.g., a combination of a DSP and a microprocessor, a plurality of microprocessors, one or more microprocessors in conjunction with a DSP core, or any other such configuration.<br>
+[0113]	The  steps  of a  method  or algorithm  described  in   connection  with  the<br>
+embodiments disclosed herein may be embodied directly in hardware, in a software module executed by a processor, or in a combination of the two. A software module may reside in RAM memory, flash memory, ROM memory, EPROM memory, EEPROM memory, registers, hard disk, a removable disk, a CD-ROM, or any other form of storage medium known in the art. An exemplary storage medium is coupled to the processor such the processor can read information from, and write information to, the storage medium. In the alternative, the storage medium may be integral to the processor. The processor and the storage medium may reside in an ASIC. The ASIC may reside in a mobile station, base station, or base station controller. In the alternative, the processor and the storage medium may reside as discrete components in a mobile station, base station, or base station controller.<br>
+[0114]	The above description of the disclosed embodiments is provided to enable any<br>
+person skilled in the art to make or use the invention. Various modifications to these embodiments will be readily apparent to those skilled in the art, and the generic principles defined herein may be applied to other embodiments without departing from the spirit or scope of the invention. Thus, the invention is not intended to be limited to the embodiments shown herein but is to be accorded the widest scope consistent with the principles and novel features disclosed herein.<br>
+WHAT IS CLAIMED IS:<br><br><br><br>
+WE CLAIM:<br>
+1.	A method of providing outer loop power control in a communication device<br>
+having discontinuous transmission (DTX) detection comprising:<br>
+determining a compensation factor on the basis of a known non-zero probability of DTX detection given an erasure frame p(D/E) value; determining an expected target frame error rate (PER); and adjusting the expected target PER on the basis of the determined expected target PER and the compensation factor   performing outer loop power control based on the expected target PER.<br>
+2.	The method as claimed in claim 1, wherein the outer loop power control is reverse outer loop power control.<br>
+3.	The method as claimed in claim 1, wherein the known non-zero P(D/E) is a constant value.<br>
+4.	The method as claimed in claim 1, wherein the known non-zero P(D/E) is dynamically determined.<br>
+5.	The method as claimed in claim 1, wherein the communication device is a CDMA base station, base station controller, or mobile station.<br>
+6.	The method as claimed in claim 1, wherein the adjusting occurs during non-DTX occurrences.<br>
+7.	The method as claimed in claim 1, comprising:<br>
+detecting consecutive DTX occurrences; and<br>
+in response to the detection of consecutive DTX occurrences, lowering a power control setpoint associated with the outer loop power control.<br>
+32<br><br>
+8.	A method of providing outer loop power control in a communication device<br>
+having discontinuous transmission detection comprising:<br>
+detecting consecutive DTX occurrences; and<br>
+in response to the detection of consecutive DTX occurrences, lowering a power control setpoint associated with the outer loop power control.<br>
+9.	The method as claimed in claim 8, wherein the outer loop power control is<br>
+reverse outer loop power control.<br>
+10.	The method as claimed in claim 8, wherein the wireless communication device is one of a CDMA base station, base station controller, or mobile station.<br>
+11.	A method of providing outer loop power control in a communication device having discontinuous transmission (DTX) detection comprising:<br>
+estimating a number of false erasure detections; and<br>
+reducing the power control setpoint in proportion to the estimated number of false erasure detections.<br>
+12.	The method as claimed in claim 11, wherein the power control setpoint is<br>
+reduced by a value equal to the estimated number of false erasure detections<br>
+multiplied by a predetermined downward step size.<br>
+13.	The method as claimed in claim 11, wherein the estimating comprises<br>
+determining the number of false erasure detections in a state machine comprising:<br>
+in an initial state:<br>
+adjusting the power control setpoint up by a predetermined upward step size following an erasure frame detection, and<br>
+adjusting the power control setpoint down by a predetermined downward step size following a good frame detection;<br>
+33<br><br>
+in a first state reached from the initial state following a predetermined<br>
+number of consecutive DTX detections in the initial state:<br>
+adjusting the power control setpoint as in the initial state,<br>
+returning to the initial state following the good frame detection, and<br>
+initializing an S2 counter following the erasure frame detection;<br>
+in a second state reached from the first state following the erasure frame<br>
+detection in the first state:<br>
+adjusting the power control setpoint as in the initial state,<br>
+returning to the initial state and clears the S2 counter following the good<br>
+frame detection,<br>
+initializing an S3 counter upon a DTX detection, and<br>
+incrementing the S2 counter following the erasure frame detection; and<br>
+in a third state reached from the second state following the DTX detection<br>
+in the second state:<br>
+adjusting the power control setpoint as in the initial state, incrementing the S3 count for each DTX detection while in the third state, returning to the second state, incrementing the S2 counter, and clearing the S3 counter following the erasure frame detection, and returning to the initial state, resetting the S2 counter, and resetting the S3 counter following the good frame detection.<br>
+14.	The method as claimed in claim 13, wherein the estimate of the number of false erasures is equal to the value of the S2 counter.<br>
+15.	The method as claimed in claim 13, wherein the estimate of the number of false erasures is equal to the value of the S2 counter when the S3 counter equals or exceeds a predetermined value.<br>
+34<br><br>
+16.	The method as claimed in claim 13, wherein the reducing the power control<br>
+setpoint involves reducing the power control setpoint by a value equal to the value<br>
+of the S2 counter multiplied by the predetermined downward step size muhiplied<br>
+by a constant K.<br>
+17.	The method as claimed in claim 16, wherein K equals 1.<br>
+18.	The method as claimed in claim 11, the method comprising:<br>
+determining a compensation factor on the basis of a known non-zero P(D|E)<br>
+value;<br>
+determining an expected target frame error rate (PER); and<br>
+adjusting the expected target PER in response to the determined expected<br>
+target PER and the compensation factor.<br>
+19.	The method as claimed in claim 18, wherein the compensation factor is equal<br>
+to(l-P(D/E)).<br>
+20.	The communication device for performing the method as claimed in any of<br>
+the preceding claim.<br><br>
+35<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGFic3RyYWN0LmpwZw==" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 abstract.jpg</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGNsYWltcyBkdXBsaWNhdGUucGRm" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 claims duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGNvcnJlc3BvbmRhbmNlIG90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 correspondance others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGNvcnJlc3BvbmRhbmNlIHBvLnBkZg==" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 correspondance po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGRlc2NyaXB0aW9uKGNvbXBsZXRlKSBkdXBsaWNhdGUucGRm" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 description(complete) duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGRlc2NyaXB0aW9uKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGRyYXdpbmdzIGR1cGxpY2F0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 drawings duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGZvcm0tMTgucGRm" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGZvcm0tMjYucGRm" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 form-26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IGZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IHBjdCBzZWFyY2ggcmVwb3J0LnBkZg==" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 pct search report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IHBjdC5wZGY=" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 pct.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDY3Mi1jaGVucC0yMDA0IHBldGl0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">0672-chenp-2004 petition.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="229684-combined-regulation-of-neural-cell-production.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="229686-somatostatin-or-bombesin-analogs-conjugate.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>229685</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>672/CHENP/2004</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>13/2009</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>27-Mar-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>19-Feb-2009</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>02-Apr-2004</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>QUALCOMM INCORPORATED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>5775 MOREHOUSE DRIVE, SAN DIEGO, CALIFORNIA 92121</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>YOON, STEVEN</td>
+											<td>5441 PANORAMIC LANE, SAN DIEGO, CALIFORNIA 92121,</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>BLESSENT, LUCA</td>
+											<td>8308 REGENTS ROAD, #3F, SAN DIEGO, CALIFORNIA 92122</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>SAINTS, KEITH, W</td>
+											<td>7160 SHORELINE DRIVE, APT 4212, SAN DIEGO, CALIFORNIA 92122,</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>LIN, YU-CHUAN</td>
+											<td>7883 SITIO ABETO, CARLSBAD, CALIFORNIA 92009,</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04B 7/216</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US02/13107</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2002-04-24</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>50/327,697</td>
+									<td>2001-10-05</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>10/042,071</td>
+									<td>2001-10-18</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>10/061,890</td>
+									<td>2002-01-31</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/229685-a-method-and-device-for-providing-outer-loop-power-control by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 10:24:01 GMT -->
+</html>

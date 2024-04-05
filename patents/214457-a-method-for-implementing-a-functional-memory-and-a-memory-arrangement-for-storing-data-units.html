@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/214457-a-method-for-implementing-a-functional-memory-and-a-memory-arrangement-for-storing-data-units by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 08:23:47 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 214457:A METHOD FOR IMPLEMENTING A FUNCTIONAL MEMORY AND A MEMORY ARRANGEMENT FOR STORING DATA UNITS</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD FOR IMPLEMENTING A FUNCTIONAL MEMORY AND A MEMORY ARRANGEMENT FOR STORING DATA UNITS</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>The present invention relates to a method for implementing a functional memory and to a memory arrangement. The memory is implemented as a directory structure comprising a tree-shaped hierarchy having nodes at several different hierarchy levels. In the directory structure, pointers are first added to nodes whose table contains a given first number of elements and which are width-compressed nodes. To maximize the performance of the functional trie structure, addition of a pointer to an individual width-compressed node is permitted until the number of pointers in the node corresponds to a given predetermined threshold value that is smaller than said first number. The width-compressed node is converted to a cluster of nodes made up by a parent node (N50) and separate child nodes (N51...N54) as soon as the number of pointers to be accommodated in the width-compressed node exceeds said threshold value.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>Functional memory based on a trie structure<br>
+Field of the Invention<br>
+The present invention generally relates to implementation of a<br>
+   5   ) memory. More specifically, the invention is intended to be used in connection<br>
+   with all such memories that are based on a functional digital trie structure. The<br>
+solution is,  however,  mainly  intended  for central   memory databases. A<br>
+functional structure denotes a memory in which updates, such as additions,<br>
+  are made in such a way that the path from the root to the point of addition is<br>
+10/ first copied, and the addition is made to the copied data (the addition is not<br>
+      made directly to the existing data). Such an updating procedure is also called<br>
+by the term "copy-on-write".<br>
+Background of the Invention<br>
+15 	The prior art unidimensional directory structure termed digital trie<br>
+" (the word "trie" is derived from the English word "retrieval") is the underlying basis of the principle of the present invention. Digital trie structures can be implemented in two types: bucket tries, and tries having no buckets.<br>
+A bucket digital trie structure is a tree-shaped structure composed<br>
+20 of two types of nodes: buckets and trie nodes. A bucket is a data stmcture that can accommodate a number of data units or a number of pointers to data units or a number of search key/data unit pairs or a number of search key/pointer pairs. A maximum size greater than one has been defined for said number. However, a bucket can contain a smaller number than said maximum number<br>
+25 of data units, pointers, or key/pointer pairs, in which case the bucket is not full. A trie node, on the other hand, is an array guiding the retrieval, having a size of two by the power of k (2k) elements. If an element in a trie node is in use, it refers either to a trie node at the next level in the directory tree or to a bucket. In other cases, the element is free (empty).<br>
+30	Search in the database proceeds by examining the search key<br>
+(which in the case of a subscriber database in a mobile telephone network or a telephone exchange, for instance, is typically the binary numeral corresponding to the telephone number of the subscriber) k bits at a time. The bits to be searched are selected in such a way that at the root level of the<br>
+35 structure (in the first trie node), k leftmost bits are searched; at the second level of the stmcture, k bits next to the leftmost bits are searched, etc. The bits to be searched are interpreted as an unsigned binary integer that is employed<br><br>
+directly to index the element table contained in the trie node, the index indicating a given elennent in the table. If the element indicated by the index is free, the search will terminate as unsuccessful. If the element refers to a trie node at the next level, k next bits extracted from the search key are searched<br>
+5 at that level in the manner described above. As a result of comparison, the routine branches off in the trie node either to a trie node at the next level or to a bucket. If the element refers to a bucket containing a key, the key stored therein is compared with the search key. The entire search key is thus compared only after the search has encountered a bucket. Where the keys are<br>
+10 equal, the search is successful, and the desired data unit is obtained at the storage address indicated by the pointer of the bucket. Where the keys differ, the search terminates as unsuccessful.<br>
+A  bucketless trie  structure  has  no  buckets,   but a  leaf node containing only one element that can be a data unit, a pointer to a data unit, a<br>
+15 search key/data unit pair or a search key/pointer pair corresponds to a bucket. In the present context, the nodes above the leaf nodes in the bucketless trie structure are called internal nodes; these correspond to trie nodes in a bucket structure (i.e., they comprise a similar table as trie nodes). In a bucketless digital tne structure, the nodes are thus either internal nodes or leaf nodes. By<br>
+20 means of buckets, the need for reorganizing the directory stmcture can be postponed, as a large number of pointers, data units, search key/data unit pairs or search key/pointer pairs can be accommodated in the buckets until a time when such a need arises.<br>
+Figure 1 shows an example of a digital trie structure in which the<br>
+25 key has a length of 4 bits and k=2, and thus each trie node has 2^=4 elements, and two bits extracted from the key are searched at each level. Leaves are denoted with references A, B, C, D...H...M, N, 0 and P. Thus a leaf is a node that does not point to a lower level in the tree. Intemal nodes are denoted with references IN1...IN5 and elements in the intemal node with reference NE in<br>
+30      Figure 1.<br>
+In the exemplary case of Figure 1, the search keys for the leaves<br>
+shown are as follows: A=0000, 8=0001, C=0010	H=0111,... and P=1111.<br>
+In this case, a pointer is stored in each leaf to that storage location in the database SD at which the actual data, e.g. the telephone number of the<br>
+35 pertinent subscriber and other infonmation relating to that subscriber, is to be found. The actual subscriber data may be stored in the database for instance as a sequential file of the type shown in the figure. The search is performed en<br>
+3<br><br>
+the basis of the search key of record H, for example, by first extracting from the search key the two leftmost bits (01) and interpreting them, which delivers the secend element of node IN1, containing a pointer to node INS at the next level. At this level, the two next bits (11) are extracted from the search key.<br>
+5     thus yiecing the fourth element of that node, pointing to record H.<br>
+Instead of a pointer, a leaf may contain (besides a search key) an actual cata file (also called by the more generic term data unit). Thus for example the data relating to subscriber A (Figure 1) may be located in leaf A, the data relating to subscriber B in leaf B, etc.<br>
+10	The present invention mainly relates to bucketless trie structures,<br>
+since the solution in accordance with the invention affords the same advantages as a bucket structure, and thus the invention yields greater benefit in bucketless structures. These facts will be described in detail hereinafter.<br>
+The search key may also be multidimensional. In other words, the<br>
+15 search key may comprise a number of attributes (for example the family name and one or more forenames of a subscriber). Such a multidimensional trie structure is disclosed in international application No. PCT/FI95/00319 (published under number WO 95/34155). In said structure, address com¬putation is performed in such a way that a given predetennined number of bits<br>
+20 at a time is selected from each dimension independently of the other dimensions. Hence, a fixed limit independent of the other dimensions is set for each dimension in any individual node of the trie stmcture, by predetermining the number of search key bits to be searched in each dimension. With such a structure, the memory circuit requirement can be curbed when the distribution<br>
+25 of the values of the search keys is known in advance, in which case the structure can be implemented in a static form.<br>
+If the possibility of reorganizing the structure in accordance with the current key distribution to be optimal in terms of efficiency and storage space occupancy is desired, the size of the nodes must vary dynamically as the key<br>
+30 distribution changes. When the key distribution is even, the node size may be increased to make the structure flatter (a flatter stnjcture entails faster retrievals). On the other hand, with uneven key distributions in connection with which storage space occupancy will present a problem in memory structures employing dynamic node size, the node size can be maintained small, which<br>
+35 will enable locally a more even key distribution and thereby smaller storage space occupancy. Dynamic changes of node size require the address computation to be implemented in such a way that in each node of the tree-<br><br>
+shaped hierarchy constituted  by the digital trie structure, a  node-specific<br>
+number cf bits is selected from the bit string constituted by the search keys<br>
+used.  Dynamic reorganizing  of the  nodes  naturally  requires  part cf the<br>
+processing capacity.<br>
+5	The choice between a fixed node size and a dynamically changing<br>
+node size is dependent for example on what type of application the memory is intended for, e.g. what the number of database searches, additions anc deletions is and what the proportions of said operations are.<br>
+The efficiency and performance of the memory are thus influenced,<br>
+10 among other things, by the storage space required by the trie structure and the depth cf the trie structure. In a functional digital trie structure, in which the entire search path from the root to the point of updating has to be copied in connection with updates, the performance of the memory is also influenced by how many words to be copied such a path contains. Thus, if compression is<br>
+15 performed in the memory, this should be done in such a way that the quantity of data to be copied does not increase as a result of compression to such an extent as to impair the performance of the memory.<br>
+U.S. Patent 5,276,868 discloses a compression method for a trie node. This system supports only two node sizes: quads and nodes of size 16.<br>
+20 in the method, some of the nil pointers are removed from the nodes in such a way that nodes having less than five non-nil pointers are converted to com¬pressed quads, whereas the remaining nodes are maintained uncompressed. The structure thus includes both compressed nodes and non-compressed nodes of size 16. Since nil pointers must still be stored in the structure, the<br>
+25 structure does not provide a very good result in view of storage space requirement and copying costs. Also, since only two node sizes are possible, the structure is not well suited to functional memories or other memories having efficient memory management that is capable of allocating memory for use a single word at a time.<br>
+30	Hence, the problem with a functional trie stmcture is how compres-<br>
+sion   should   be  carried   out   in  the   structure   in   order  for  the   miemcry performance to be as good as possible, observing all the above factors.<br>
+Summary of the Invention<br>
+35	It is an object of the present invention to provide a solution to the<br>
+problem described above. This object is achieved with the method defined in the incecendent claims.<br><br>
+The invention makes use of the prior art width compression, to which reference is made e.g. in the above U.S. Patent. For this reason, the node size for the trie tree is already initially selected to be as large as possible: the logical size of the nodes used in the structure is preferably 16, but can in<br>
+5 principle be even greater. In accordance with the invention, increasing the width-compressed node is permitted up to a maximum limit, which is smaller than the maximum size of the node. The node is split into a cluster of nodes as soon as it grows to be in excess of this threshold value. In the case of a width-compressed node having 16 elements, for example, it is preferred to employ<br>
+10      13 child nodes as the threshold value. If the number of child nodes exceeds<br>
+13, the parent node is disassembled into a cluster of compressed quad nodes.<br>
+The idea in accordance with the invention is based on the insight<br>
+that as the size of a width-compressed node increases, the copying costs<br>
+increase sharply at some stage, since the copying carried out in connection<br>
+15 with updates always takes place from the root of the tree up to the point of update and since the nodes in the upper part of the tree, which are copied at every copying round, are filled first and are normally fuller than the lower nodes. Hence, increasing the fill rate of a width-compressed node is of no avail when a certain stage has been reached, but the increase in copying costs<br>
+20 totally eliminates the advantage to be gained with width compression. In accordance with the invention, at this stage at the latest the width-compressed node is converted back to a cluster of nodes at two different hierarchy levels.<br>
+The idea is also to avoid such a sharp increase in copying costs, so that the cluster of nodes to be fomned is as advantageous as possible in view<br>
+25 of the requirements set out above. For example, the threshold value 13 stated above is advantageous for nodes of size 16 in the sense that the copying costs cannot increase sharply yet, and on the other hand, when the size is greater than 13, one can be certain that when a cluster of quad nodes is formed, the parent node will  contain no nil pointers.  Hence, the search<br>
+30 operation can be accelerated, since the number of pointers in said node need not be examined in connection with the search. Furthermore, one can be certain that in the node cluster to be formed, none of the child nodes in the cluster will be path-compressed (it is preferable to use path compression in the structure), since in this case the parent node is full and each child node has at<br>
+35 least twc child nodes (the path compression to be carried out in the quad cluster will retard the calculation).<br><br>
+In order for the memory performance to remain optimum the entire<br>
+time,  it  is  preferable  to  reassemble the cluster of nodes  into a width-<br>
+compressed node when the number of the grandchild nodes of the parent<br>
+node cf the cluster falls to said threshold value or below it.<br>
+5	When the solution in accordance with the invention is used, the<br>
+memory consumption of the functional structure can be diminished by means of width compression without the number of words to be copied in connection with updates substantially increasing and thereby diminishing the advantage to be gained by width compression.<br>
+10<br>
+Brief Description of the Drawings<br>
+In the following the invention and its preferred embodiments will be<br>
+described in closer detail with reference to examples in accordance with<br>
+Figures 2-11 in the accompanying drawings, in which<br>
+15	Figure 1 illustrates the use of a unidimensional digital trie structure<br>
+in the maintenance of subscriber data in a telephone exchange,<br>
+Figure 2 shows a node of size 16, having four non-nil pointers,<br>
+Figure 3 shows the node of Figure 2 width-compressed.<br>
+Figure  4  shows   a   situation  in  which  the  size  of the width-20     compressed node has become too large on account of an addition made to the node.<br>
+Figure 5 shows a quad node cluster disassembled from the node of Figure 4,<br>
+Figure 6 illustrates the increase of copying costs in a functional trie 25      structure as a function of the upper limit of non-nil pointers in the node,<br>
+Figure 7 illustrates the storage space requirement of a trie tree as a function of the upper limit of non-nii pointers in the node,<br>
+Figures 8 and 9 illustrate the change of a quad cluster back to a<br>
+width-compressed node of logical size 16,<br>
+30	Figure 10 illustrates the structure of a width-compressed node, and<br>
+Figure 11 shows a memory arrangement in accordance with the invention on block diagram level.<br>
+Detailed Description of the Invention<br>
+35	When width compression is used on the nodes of a functional trie<br>
+structure, it can be effectively utilized by selecting a large node size for the structure. Thus, in the structure in accordance with the invention the starting-<br><br>
+point is a node size distinctly larger than quads, preferably nodes of (logical) size 16. Figure 2 illustrates such a node N20, which in this exemplary case has four non-nil pointers pointing downward in the tree. Prior an width compression is carriec out on the nodes of the structure by storing only those pointers that<br>
+5 differ from nil. In addition to the non-nil pointers, a bit pattern or chart BP1 is stored in connection with the node, on the basis of which it can be determined whether the pointer corresponding to the logical index of the element table of the node is a nil pointer or not, and if not, where the pointer corresponding to said logical index is physically located in the node. When compression is used,<br>
+10 the standard-length element table (15 elements) of the node is represented by means of the bit pattern as a table of physical storage locations the length of which varies according to how many nil pointers the node contains in each case. It is to be noted, therefore, that in connection with width compression the logical size of the node (i.e. the size of the element table) does not change, but<br>
+15 the physical size of the node diminishes instead, since in a compressed node the nil pointers do not occupy any storage space. As a result, a width-compressed node N30 in accordance with Figure 3, in which all non-nil pointers are in succession, is obtained from the node of Figure 2. The node contains only four physical elements (pointers A...D), and in addition a bit<br>
+:o pattern BP1 is stored in the node, indicating the physical location of the pointer therein corresponding to the element table index formed from the search key. In this exemplary case, the bit pattern has one bit for each element (logical index) of the element table, and each bit indicates whether the corresponding element contains a non-nil pointer or a nil pointer. In the exemplary case<br>
+25 shown in the figure, one denotes a non-nil pointer and zero denotes a nil pointer. Since the pointers are stored in the compressed node presen/ing the order (and no space is reserved for nil pointers), it is known for the com¬pressed node of Figure 3 that a nil pointer corresponds to element table index 0, a non-nil pointer corresponds to element table index 1, its physical index<br>
+30 being zero, nil pointers correspond to element table indices 2...6, non-nil pointers con^espond to element table indices 7 and 8, their physical indices being one and two, nil pointers correspond to element table indices 9... 12, a non-nil pointer corresponds to element table index 13, its physical index being three, and nil pointers correspond to element table indices 14 and 15. Thus,<br>
+35 the pointer corresponding to the logical index formed from the search key bits is found in the node. Such a method of compression, in which the bit pattern of the compressed node has one bit fcr each element (Icgical index) of the<br><br>
+element table, is known per se. Such _ solution is referred to for example in the above U.S. Patent 5,276,868.<br>
+Address computation for the compressed node is performed in such a way that a (logical) element table index is first formed from the bits 5 extractec from the search key in the normal way. Thereafter, the bit correspcnding to this index is read from the bit pattern. If the bit indicates that a nil pointer is concerned, the search is terminated as unsuccessful. If the bi: indicates that a non-nil pointer is concerned, the physical location (physical index) of the pointer corresponding to said element table index is detemnined<br>
+10 by means of the bit pattern. When a bit pattern of the kind shown in Figure 3 is employed, having one bit for each index of the element table, the physical index is directly obtained by counting the number of 1-bits starting from the beginning of the bit pattern up to the bit corresponding to the element table index.<br>
+15	Another alternative is to continue the search without checking<br>
+whether the bit in the bit pattern corresponding to the logical index is zero or not, that is, the physical index can be retrieved without performing said check. In this case, the search is continued up to a leaf, in which a key comparison is performed. Failure of the search is detected on the basis of said comparison in<br>
+20     the leaf.<br>
+However, the number of bits used in the bit pattern can deviate from the number of logical indices, and the bit pattern can employ various coding methods by means of which the physical storage location correspcnding to the logical index is found. Yet the above-stated solution<br>
+25     enables a short bit pattern and a simple coding mechanism.<br>
+As was stated previously, the solution in accordance with the invention is based on the insight that when the size of a width-compressed node increases, the copying costs will at some stage increase so sharply that increasing the fill rate of the node is of no avail, but the increase in copying<br>
+.-0 costs tctally eliminates the advantage to be gained with increased width compression. When additions are made in the trie tree, the compressed nodes increase in size. In accordance with the invention, the width-compressed nodes are not penmitted to be filled, but an upper lim.it is set on their size (number of physical  elements,  i.e.  non-nil  pointers), whereafter they are<br>
+35 disassembled into node clusters. This limit is preferably 13 with a node of size 16, since additional advantages are gained with the use of this lim.it.<br><br>
+The procedure in accordance with the invention will be described in the following with reference to the example in accordance with Figures 4 and 5. When additions are made to the width-compressed node in accordance with Figure 3. the size of the node increases. At some stage, the node contains 13<br>
+5 pointers, which is the maximum number of child nodes for a width-compressed node in the structure in accordance with the invention (when nodes of size 16 are usee). When a fourteenth pointer (N, Figure 4) is added to such a node (node N40, Figure 4), the width-compressed node is disassembled into a cluster of compressed quad nodes in accordance with Figure 5, having a<br>
+10 parent ncde N50 and four child nodes (N51 ...N54) with a total of 14 pointers to grandchild nodes. Each of the quad nodes in the duster is similarly width-compressed as the original node of size 16, and thus each quad node has a bit pattern of four bits, each bit indicating whether the corresponding element has a nil pointer or a non-nil pointer.<br>
+15	Hence, the trie structure in accordance with the invention is prefer-<br>
+ably one having width-compressed nodes only. The nodes are otherwise of logical size 16, but each node in which the maximum fill rate has been exceeded has been converted to a cluster of width-compressed quads.<br>
+By means of the disclosed procedure, the adverse effect of copying<br>
+20 costs can be avoided in a highly advantageous way. This is due firstly to the fact that by selecting the value 13 as the maximum number of child nodes of a width-compressed node, one can be certain that the parent node (N50) to be formed is always full. Therefore, the number of pointers for said node need not be examined, and thus the retrieval process is rapid in this respect. On the<br>
+25 other hand, one can be certain that even though the stnjcture employs path compression, in the quad cluster to be formed none of the child nodes of the cluster will be path-compressed, since in this case each child node has at least two child nodes of its own (path compression to be carried out in a quad cluster will retard the computation).<br>
+30	In addition to the advantages set out above, the value 13 offers a<br>
+good compromise between copying costs and storage space requirement. This fact has been studied by experimentally measuring copying costs and trie tree storage space requirement in a trie tree in which the nodes are of size 16 and are width-compressed in the manner described above. An even key<br>
+35 distribution has been employed in the test. Figure 6 depicts the copying cost (number of words to be copied) as a function of the maximum number of child nodes of the width-compressed node. The maximum copying cost has been<br><br>
+shown by a continuous line and the average copying cost by a broken iine. As will be seen from the figure, the copying costs will increase sharply if filled nodes are permitted in the structure. Figure 7 shows correspondingly the space occupancy (memory requirement) of a trie tree as a function of the<br>
+5 maximum number of child nodes of the width-compressed node. As is apparent, the space occupancy will decrease in so far as fuller nodes are permitted. It is also to be seen from the figures that proceeding in accordance with the invention will afford a good compromise between space occupancy and copying costs.<br>
+10	When deletions are made in the quad cluster in accordance with<br>
+Figure 5 so that the number of grandchild nodes becomes less than 14, the cluster is reconverted to a single width-compressed node. This is illustrated in Figures 8 and 9. When one pointer, e.g. pointer K, is deleted from the child nodes in the cluster of Figure 5, a cluster of the kind shown in Figure 8 is<br>
+15 obtained, where the number of grandchild nodes has decreased to 13. As a result, a level compression by means of which the cluster is restored to a single width-compressed node is carried out. This will give the node N90 shown in Figure 9.<br>
+In addition to the type information of the node, each node must<br>
+20     contain only an element table (pointers) and a bit pattern.<br>
+Figure 10 illustrates the structure of a width-compressed node. In its minimum composition, the compressed node thus comprises three parts: a type information field indicating the type of the node (reference 111), field 112 containing a bit pattern, and an element table (reference 113) in which the<br>
+25 number of elements (pointers) is in accordance with the above. In addition to the node types stated above, the type information is used to indicate whether the node is a leaf node. The bit pattern and the node type information can in practice be accommodated in the same word, and thus the bit pattern requires no extra space.<br>
+30	As was indicated at the beginning, the principle described above<br>
+mainly pertains to a bucketless trie structure. This is due to the fact that the solution in accordance with the invention will as such afford the same advantages as buckets do (compact structure at the lower end of the tree as well), and thus it is preferable to use similar nodes in the entire tree. The leaf<br>
+35 nodes typically contain a pointer to a data unit (or a data unit). However, the use of buckets is not ruled out.<br><br>
+it is advantageous to incorporate into the memory in accordance with the invention also path compression to which brief reference was made above, since single-child nodes will be produced in the structure in spite of the compression described above. Path compression means that paths containing<br>
+5 successive single-child nodes are compressed in depth. Since path compres-sion can be implemented in known manner, it will not be described more closely in this context. One kind of path compression is disclosed in the Applicants" earlier patent application PCT/FI98/00191.<br>
+A unidimensional directory structure can be made multidimensional<br>
+:0 (generally n-dimensional) in the known manner by employing bit interieaving. Bit interieaving has been disclosed for example in the above intemational application PCT/F198/00191, wherefrom the interested reader can find background information relating to the invention, if so desired.<br>
+As will be noted from the above, in the functional structure in<br>
+15 accordance with the invention the starting-point is level compression that is cancelled when the fill rate of the level-compressed node reaches a given limit (that is, when the copying costs become inordinate). In conventional imperative structures, on the other hand, the starting-point is the smallest possible node size and the node size is increased (i.e., level compression is<br>
+20 performed) when there are a sufficient number of internal nodes among the child nodes for the node.<br>
+Figure 11 shows a memory in accordance with the invention on block diagram level. Each dimension has a dedicated input register, and hence there is a total of n input registers. The search key of each dimension is stored<br>
+25 in these input registers, denoted by references Ri...Rn, each key in a register of its own. The input registers are connected to a register TR in which the above-described search word is formed in accordance with the bit interieaving method employed. The register TR is connected via adder S to the address input of memory MEM. The output of the memory in turn is connected to<br>
+:-o address register AR the output of which in tum is connected to adder S. Initially the bits selected from each register are read into the common register TR in the correct order. The initial address of the first internal or trie node is first stored in the address register AR, and the address obtained as an offset address from register TR is added to the initial address in adder S. The<br>
+25 resulting address is supplied to the address input of the memory MEM, and the data output of the memory provides the initial address of the next node, the address being written into the address register AR over the previous address<br><br>
+stored therein. Thereafter the next selected bits are. as ain loaded from the input registers into the common register TR in the correct order, and the address (index) obtained thereby is added to the initial address of the relevant table (i.e., trie node), obtained from the address register AR. This address is<br>
+5 again supplied to the address input of the memory MEM, the data output of the memory thus providing the initial address of the next node. The above-deschbed procedure is repeated until the desired point has been accessec and recordal can be performed or the desired record read.<br>
+Control logic CL reads the element table index from register TR and<br>
+10 the corresponding bit from the bit pattern of the node. If said bit indicates that a non-nil pointer is concerned, the control logic determines the physical index on the basis of the bit pattern and stores it in register TR instead of the logical index. In such a case, the physical index is added (instead of the logical index) in adder S with the initial address of the node that is obtained from register AR.<br>
+15 The control logic also attends to the compression of the nodes and to the fact that a correct number of bits (2 or 4) is extracted from the registers in each node.<br>
+The rapidity of the address computation can be influenced by the type of hardware configuration chosen. Since progress is by way of the above-<br>
+20 stated bit manipulations, address computation can be accelerated by shifting from use of one processor to a multiprocessor environment in which parallel processing is carried out. An altemative implementation to the multiprocessor environment is an ASIC circuit.<br>
+The structure in accordance with the invention is preferably imple-<br>
+25 mented in such a manner that also the nodes (which are preferably leaves) at the lowermost level are compressed similarly as the other nodes (internal nodes). If a pointer is stored in a leaf, the structure of the leaves is the same as in the internal nodes. If data units are stored in the leaves, these can be of fixed length in order that also the leaves can be compressed similarly as the<br>
+30 internal nodes. However, it is possible that the nodes at the lowermost level are not similarly width-compressed. In that case, however, some of the advantages of the invention are lost, since in that case the search is slower at the leaves.<br>
+Even though the invention has been described in the above with<br>
+35 reference to examples in accordance with the accompanying drawings, it is obvious that the invention is not to be so rastricted, but it can be modified within the scope of the inventive idea disdcsed in the appended claims.<br><br>
+Although the invention has been described with reference to a preferred node size, the same principle can be applied also to nodes having a logical size greater tnan 16, e.g. 32 or 64. In such"a case, the nodes in the cluster to be construced from the node are also respectively larger than quad nodes. A leaf 5 node typically contains a pointer to a stored data unit, but it can also contain a data unit or a pointer to a node in another directory structure.<br><br><br>
+WE   CLAIM :<br>
+1. A method for implementing a functional memory, in which memory data is stored as data units for each of which a dedicated storage space is assigned in the memory, the method comprising<br>
+implementing the memory is implemented as a directory structure comprising a tree-shaped hierarchy having nodes at several different levels, wherein at least some of the nodes are such that the node is associated with a logical table wherein an individual element may contain a pointer pointing to a lower node in the tree-shaped hierarchy and wherein an individual element may also be empty, in which case the content of the element corresponds to a .nil pointer, the number of elements in the table corresponding to a power of two,<br>
+performing address computation performed in the directory structure by<br>
+(a)	selecting, in the node at the uppermost level of the tree-shaped hierarchy given number of bits from the bit string formed by the search keys employed, forming from the selected bits a search word with which the address of the next node is sought in the node, and proceeding to said node,<br>
+(b)	selecting a predetermined number of bits from the unselected bits in the bit string formed by the search keys employed and forming from the selected bits a search word with which the address of a further new node at a lower level is sought in the node that has been accessed,<br>
+repeating step (b) until an element containing a nil pointer is encountered or until a node at the lowermost level has been accessed,<br>
+adding to the nodes pointers by means of which a data unit can be retrieved by means of said address computation when the data unit is added to the structure,<br><br>
+adding pointers in the directory structure first to nodes whose table ccntains a given first number of elements and which are width- compressed nodes in which non-nil pointers are physically stored and additionally a bit pattern on the basis of which the physical storage location in the node, corresponding to the search word, can be determined,<br>
+characterized by<br>
+permitting addition of a pointer to an individual width-compressed node until the number of pointers in the node corresponds to a given predetemined threshold value that is smaller than said first number, and<br>
+converting the width-compressed node to a cluster of nodes made up by a parent node and separate child nodes as soon as the number of pointers to be accommodated in the width-compressed node exceeds said threshold value.<br>
+2.	The method as claimed in claim 1, wherein the first number is sixteen, comprising the steps of permitting addition of a pointer to a width- compressed node is permitted each time the number of pointers in the node after the addition is smaller than or equal to thirteen, and that the width-com- pressed node is converted to a cluster of width-compressed quad nodes each time the number of pointers to be accommodated in the width-compressed node exceeds the value thirteen.<br>
+3.	The method as claimed in claim 1, comprising the step of making width-compressed nodes from all nodes of the structure.<br>
+4.	A method as claimed in claim 1 or claim 2, comprising the step of reconverting the<br>
+cluster of nodes made up by said parent node and its child nodes to a single width-<br><br>
+compressed node as soon as the number of the grandchild nodes of the parent node decreases to said threshold value or below it.<br>
+5.	The method as claimed in claim 1, comprising the step of by stoning the non-nil pointers in the width-compressed node in succession in the same order as they have in said table.<br>
+6.	The method as claimed in claim 5, comprising the step of by providing one bit for each element in the table, each bit indicating whether the corresponding element has a nil pointer or a non-nil pointer.<br>
+7.	A memory arrangement for storing data units, said memory arrangement comprising a directory structure in which progress is made by using search words formed from a bit string constituted by the search keys employed in each case, said directory structure comprising a tree-shaped hierarchy having nodes at several different hierarchy levels, wherein at least some of the nodes are such that the node is associated with a logical table wherein an individual element may contain a pointer pointing to a lower node in the tree-shaped hierarchy and wherein an Individual element may also be empty, in which case the content of the element corresponds to a nil pointer, &amp; the number of elements in the table corresponding to a power of two, at least some of the nodes in said directory structure being width-compressed nodes in which only non-nil pointers are physically stored and additionally a bit pattern (BPl) on the basis of which the physical storage location In the node, corresponding to the search word, can be determined,<br>
+c h a r act e r i zed in that<br>
+a first part of the nodes are such in which the number of pointers stored in the node is always smaller than or equal to a given predetermined threshold value that is smaller than the number of elements in the table of the node, and<br>
+a second part of the nodes is constituted by clusters of nodes, each consisting of a parent node and its child nodes at a lower hierarchy level, the number of the<br><br>
+grandchild nodes of said parent node always exceeding said threshold value.<br>
+8.	The memory arrangement as claimed in claim 7, wherein at least the nodes in<br>
+the first part are width-compressed nodes.<br>
+9.	The memory arrangement as claimed in claim 7, wherein the nodes in both the first part and the second part are width-compressed.<br>
+10.	A  memory  arrangement  as  claimed  in  claim  7,   characterized  in that substantially all nodes in the directory structure are width- compressed nodes.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGFic3RyYWN0LmpwZw==" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che abstract.jpg</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGNsYWltcy1kdXBsaWNhdGUucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che claims-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGNvcnJlc3BvbmRlbmNlLXBvLnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che correspondence-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGRlc2NyaXB0aW9uKGNvbXBsZXRlKS1kdXBsaWNhdGUucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che description(complete)-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGRlc2NyaXB0aW9uKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGRyYXdpbmdzLWR1cGxpY2F0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che drawings-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGZvcm0tMTkucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che form-19.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIGZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIG90aGVycy1kb2N1bWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che others-document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIG90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDE2NzEtY2hlIHBjdC5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-01671-che pct.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="214456-a-method-of-manufacturing-a-brazing-sheet-product-and-a-brazing-sheet-product-made-thereby.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="214458-a-method-of-manufacturing-automated-banking-machine-enclosures.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>214457</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>IN/PCT/2001/1671/CHE</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>13/2008</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>31-Mar-2008</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>12-Feb-2008</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>28-Nov-2001</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>NOKIA CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>Keilalahdentie 4, FIN-02150 Espoo,</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>TIKKANEN, Matti</td>
+											<td>Jahtimestarintie 18, FIN-02940 Espoo,</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>IIVONEN, Jukka-Pekka</td>
+											<td>Franzeninkatu 3, B 58 FIN-00500 Helsinki,</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 17/30</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/FI00/00380</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2000-04-28</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>FI 991261</td>
+									<td>1999-06-02</td>
+								    <td>Finland</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/214457-a-method-for-implementing-a-functional-memory-and-a-memory-arrangement-for-storing-data-units by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 08:23:48 GMT -->
+</html>

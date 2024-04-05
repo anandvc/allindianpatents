@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/223902-improved-lost-frame-recovery-techniques-for-parametric-lpc-based-speech-coding-systems by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:21:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 223902:IMPROVED LOST FRAME RECOVERY TECHNIQUES FOR PARAMETRIC, LPC-BASED SPEECH CODING SYSTEMS</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">IMPROVED LOST FRAME RECOVERY TECHNIQUES FOR PARAMETRIC, LPC-BASED SPEECH CODING SYSTEMS</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A tost frame recovery technique for LPC-based systems employs interpolation of parameters from previous and subsequent good frames, selective attenuation of frame energy when the energy of a subframe exceeds a threshold, and energy tapering in the presence of multiple successive lost frames.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>IMPROVED LOST FRAME RECOVERY TECHNIQUES FOR<br>
+PARAMETRIC, LPC-BASED SPEECH CODING SYSTEMS<br>
+Background of the Invention<br>
+The transmission of compressed speech over packet-switching and mobile<br>
+communications networks involves two major systems. The source speech system<br>
+encodes the speech signal on a frame by frame basis, packetizes the compressed<br>
+speech into bytes of information, or packets, and sends these packets over the network.<br>
+Upon reaching the destination speech system, the bytes of information are<br>
+unpacketized into frames and decoded. The G.723.1 dual rate speech coder, described<br>
+in ITU-T Recommendation G.723.1, "Dual Rate Speech Coder for Multimedia<br>
+Communications Transmitting at 5.3 and 6.3 kbit/s," March 1996 (hereafter<br>
+"Reference 1", and incorporated herein by reference) was ratified by the ITU-T in<br>
+1996 and has since been used to add voice over various packet-switching as well as<br>
+mobile communications networks. With a mean opinion score of 3.98 out of 5.0 (see,<br>
+Thryft, A. R., "Voice over IP Looms for Intranets in '98," Electronic Engineering<br>
+Times, August, 1997, Issue: 967, pp. 79, 102, hereafter "Reference 2", and<br>
+incorporated herein by reference), the near toll quality of the G.723.1 standard is ideal<br>
+for real-time multimedia applications over private and local area networks (LANs)<br>
+where packet loss is minimal. However, over wide area networks (WANs), global<br>
+area networks (GANs), and mobile communications networks, congestion can be<br>
+severe, and packet loss may result in heavily degraded speech if left untreated. It is<br>
+therefore necessary, to develop techniques to reconstruct lost speech frames at the<br>
+receiver in order to minimize distortion and maintain output intelligibility.<br>
+The following discussion of the G.273.1 dual rate coder and its error<br>
+concealment will assist in a full understanding of the invention.<br>
+The G.723.1 dual rate speech coder encodes 16-bit linear pulse-code<br>
+modulated (PCM) speech, sampled at a rate of 8 KHz, using linear predictive analysis-<br>
+by-synthesis coding. The excitation, for the high rate coder is Multipulse Maximum<br>
+Likelihood Quantization (MP-MLQ) while the excitation for the low rate coder is<br>
+Algebraic-Code-Excited Linear-Prediction (ACELP). The encoder operates on a 30<br>
+ms frame size, equivalent to a frame length of 240 samples, and divides every frame<br>
+into four subframes of 60 samples each. For every 30 ms speech frame, a 10th order<br>
+Linear Prediction Coding (LPC) filter is computed and its coefficients are quantized in<br>
+the form of Line Spectral Pair (LSP) parameters for transmission to the decoder. An<br>
+adaptive codebook pitch lag and pitch gain are then calculated, for every subframe and<br>
+transmitted to the decoder. Finally, the excitation signal, consisting of the fixed<br>
+codebook gain, pulse positions, pulse signs, and grid index, is approximated using<br>
+either MP-MLQ for the high rate coder or ACELP for the low rate coder, and<br>
+transmitted to the decoder. In sum, the resulting bitstream sent from encoder to<br>
+decoder consists of the LSP parameters, adaptive codebook lags, fixed and adaptive<br>
+codebook gains, pulse positions, pulse signs, and the grid index.<br>
+At the decoder, the LSP parameters are decoded and the LPC synthesis filter<br>
+generates reconstructed speech. For every subframe, the fixed and adaptive codebook<br>
+contributions are sent to a pitch postfilter, whose output is input to the LPC synthesis<br>
+filter. The output of the synthesis filter is then sent to a foimant postfilter and gain<br>
+scaling unit to generate the synthesized output. In the case of indicated frame<br>
+erasures, an error concealment strategy, described in the following subsection, is<br>
+provided. Figure 1 displays a block diagram of the G.723.1 decoder.<br>
+In the presence packet of losses, current G.723.1 error concealment involves<br>
+two major steps. The first step is LSP vector recovery and the second step is<br>
+excitation recovery. In the first step, the missing frame's LSP vector is recovered by<br>
+applying a fixed linear predictor to the previously decoded LSP vector. In the second<br>
+step, the missing frame's excitation is recovered using only the recent information<br>
+available at the decoder. This is achieved by first determining the previous frame's<br>
+voiced/unvoiced classifier using a cross-correlation maximization function and then<br>
+testing the prediction gain for the best vector. If the gain is more than 0.58 dB, the<br>
+frame is declared as voiced, otherwise, the frame is declared as unvoiced. The<br>
+classifier then returns a value of 0 if the previous frame is unvoiced, or the estimated<br>
+pitch lag if the previous frame is voiced. In the unvoiced case, the missing frame's<br>
+excitation is then generated using a uniform random number generator and scaled by<br>
+the average of the gains for subframes 2 and 3 of the previous frame. Otherwise, for<br>
+the voiced case, the previous frame is attenuated by 2.5 dB and regenerated with a<br>
+periodic excitation having a period equal to the estimated pitch lag. If packet losses<br>
+continue for the next two frames, the regenerated excitation is attenuated by an<br>
+additional 2.5 dB for each frame, but after three interpolated frames, the output is<br>
+completely muted, as described in Reference 1.<br>
+The G.723.1 error concealment strategy was tested by sending various speech<br>
+segments over a network with packet loss levels of 1%, 3%, 6%, 10%, and 15%.<br>
+Single as well as multiple packet losses were simulated for each level. Through a<br>
+series of informal listening tests, it was shown that although the overall output quality<br>
+was very good for lower levels of packet loss, a number of problems persisted at all<br>
+levels and became increasingly severe as packet loss increased.<br>
+First, parts of the output segment sounded unnatural and contained many<br>
+annoying, metallic-sounding artifacts. The unnatural sounding quality of the output<br>
+can be attributed to LSP vector recovery based on a fixed predictor as previously<br>
+described. Since the missing frame's LSP vector is recovered by applying a fixed<br>
+predictor to the previous frame's LSP vector, the spectral changes between the<br>
+previous and reconstructed frames are not smooth. As a result of the failure to<br>
+generate smooth spectral changes across missing frames, unnatural sounding output<br>
+quality occurs, which increases unintelligibility during high levels of packet loss. In<br>
+addition, many high-frequency, metallic-sounding artifacts were heard in the output.<br>
+These metallic-sounding artifacts primarily occur in unvoiced regions of the output,<br>
+and are caused by incorrect voicing estimation of the previous frame during excitation<br>
+recovery. In other words, since a missing, unvoiced frame may incorrectly be<br>
+classified as voiced, then transition into the missing frame will generate a high-<br>
+frequency glitch, or metallic-sounding artifact, by applying the estimated pitch lag<br>
+computed for the previous frame. As packet loss increases, this problem becomes<br>
+even more severe, as incorrect voicing estimation generates increased distortion.<br>
+Another problem using G.723.1 error concealment was the presence of high-<br>
+energy spikes in the output. These high-energy spikes, which are especially<br>
+uncomfortable for the ear, are caused by incorrect estimation of the LPC<br>
+coefficients during formant postfiltering, due to poor prediction of the LSP or gain<br>
+parameter, using G.723.1 fixed LSP prediction and excitation recovery. Once<br>
+again, as packet loss increases, the number of high-energy spikes also<br>
+increases, leading to greater listener discomfort and distortion.<br>
+Finally, "choppy" speech, resulting from complete muting of the output,<br>
+was evident. Since G.723.1 error concealment reconstructs no more than three<br>
+consecutive missing frames, all remaining missing frames are simply muted,<br>
+leading to patches of silence in the output, or "choppy" speech. Since there is a<br>
+greater probability that more than three consecutive packets may be lost in a<br>
+network, when packet loss increases, this will lead to increased "choppy" speech<br>
+and hence, decreased intelligibility and distortion at the output.<br>
+Summary of the Invention<br>
+It is an object of the present invention to eliminate the above problems<br>
+and improve upon the error concealment strategy defined in Reference 1 This<br>
+and other objects are achieved by an improved lost frame recovery technique<br>
+employing linear interpolation, selective energy attenuation, and energy tapering.<br>
+Accordingly, the present invention provides a method of recovering a lost<br>
+frame in a system of the type wherein information is transmitted as successive<br>
+frames of encoded signals having at least LSP parameters and excitation gain,<br>
+and the information is reconstructed from said encoded signals at a receiver,<br>
+said method comprising:<br>
+storing encoded signals from a first frame prior to said lost frame ;<br>
+storing encoded signals from a second frame subsequent to said lost<br>
+frame; and<br>
+interpolating between the LSP parameters from said first and second<br>
+frames and between said excitation gain from said first and second frames to<br>
+obtain recovered encoded signals for said lost frame.<br>
+Linear interpolation of the speech model parameters is a technique<br>
+designed to smooth spectral changes across frame erasures and hence,<br>
+eliminate any unnatural sounding speech and metallic-sounding artifacts from<br>
+the output. Linear interpolation operates as follows: 1) At the decoder, a buffer is<br>
+introduced to store a future speech frame or packet. The previous and future<br>
+information stored in the buffer are used to interpolate the speech model<br>
+parameters for the missing frame, thereby generating smoother spectral changes<br>
+across missing frames than if a fixed predictor were simply used, as in G.723.1<br>
+error concealment, 2) Voicing classification is then based on both the estimated<br>
+pitch value and predictor gain for the previous frame, as opposed to simply the<br>
+predictor gain as in G.723.1 error concealment; this improves the probability of<br>
+correct voicing estimation for the missing frame. By applying the first part of the<br>
+linear interpolation technique, more natural-sounding speech is achieved;<br>
+by applying the second part of the linear interpolation technique, almost all unwanted<br>
+metallic-sounding artifacts are effectively masked away.<br>
+To eliminate the effects of high-energy spikes, a selective energy attenuation<br>
+technique was developed. This technique checks the signal energy for every<br>
+synthesized sub frame against a threshold value, and attenuates all signal 'energies for<br>
+the entire frame to an acceptable level if the threshold is exceeded. Combined with<br>
+linear interpolation, this selective energy attenuation technique effectively eliminates<br>
+all instances of high-energy spikes from the output.<br>
+Finally, an energy tapering technique was designed to eliminate the effects of<br>
+"choppy" speech. Whenever multiple packets are lost in excess of one frame, this<br>
+technique simply repeats the previous good frame for every missing frame by<br>
+gradually decreasing the repeated frame's signal energy. By employing this<br>
+technique, the energy of the output signal is gradually smoothed or tapered over<br>
+multiple packet losses, thus eliminating any patches of silence or a "choppy" speech<br>
+effect evident in G.723.1 error concealment. Another advantage of energy tapering is<br>
+the relatively small amount of computation time required for reconstructing lost<br>
+packets. Compared to G.723.1 error concealment, since this technique only involves<br>
+gradual attenuation of the signal energies for repeated frames, as opposed to<br>
+performing G.723.1 fixed LSP prediction and excitation recovery, the total algorithmic<br>
+delay is considerably less.<br>
+Brief Description of the Drawing<br>
+The invention will be more clearly understood from the following description<br>
+in conjunction with the accompanying drawing, wherein:<br>
+Fig. 1 is a block diagram showing G.723.1 decoder operation;<br>
+Fig. 2 is a block diagram illustrating the use of Future, Ready and Copy buffers<br>
+in the interpolation technique according to the present invention;<br>
+Figs. 3a-3c are waveforms illustrating the elimination of high energy spikes by<br>
+the error concealment technique of the present invention; and<br>
+Figs. 4a-4c are waveforms illustrating the elimination of output muting by the<br>
+error concealment technique according to the present invention.<br>
+Detailed Description of the Invention<br>
+The present invention comprises three techniques used to eliminate the<br>
+problems discussed above that arise from G.723.1 error concealment, namely,<br>
+unnatural sounding speech, metallic-sounding artifacts, high-energy spikes, and<br>
+"choppy" speech. It should be noted that the described error concealment techniques<br>
+are applicable to different types of parametric, Linear Predictive Coding (LPC) based<br>
+speech coders (e.g. APC, RELP, RPE-LPC, MPE-LPC, CELP, SELP, CELP-BB, LD-<br>
+CELP, and VSELP) as well as different packet-switching (e.g. Internet, Asynchronous<br>
+Transfer Mode, and Frame Relay) and mobile communications (e.g., mobile satellite<br>
+and digital cellular) networks. Thus, while the invention will be described in the<br>
+context of the G.723.1 MP-MLQ 6.3 Kbps coder over the Internet, with the<br>
+description using terminology associated with this particular speech coder and<br>
+network, the invention is not to be so limited, but is readily applicable to other<br>
+parametric, LPC-based speech coders (e.g., the low rate ACELP coder as well as other<br>
+similar coders) and to different networks.<br>
+Linear Interpolation<br>
+Linear interpolation of the speech model parameters was developed to smooth<br>
+spectral changes across a single frame erasure (i.e. a missing frame in between two<br>
+good speech frames) and hence, generate more natural sounding output while<br>
+eliminating any metallic-sounding artifacts from the output. The setup of the linear<br>
+interpolation system is illustrated in Figure 2. Linear interpolation requires three<br>
+buffers - the Future Buffer, Ready Buffer, and Copy Buffer, each of which is<br>
+equivalent to one 30 ms frame length. These buffers are inserted at the receiver before<br>
+decoding and synthesis takes place. Before describing this technique, it is first<br>
+necessary to define the following terms as applied to linear interpolation:<br>
+previous frame, is the last good frame that was processed by the decoder, and<br>
+is stored in the Copy Buffer.<br>
+current frame, is a good or missing frame that is currently being processed by<br>
+the decoder, and is stored in the Ready Buffer.<br>
+future frame, is a good or missing frame immediately following the current<br>
+frame, and is stored in the Future Buffer.<br>
+Linear interpolation is a multi-step procedure that operates as follows:<br>
+1. The Ready Buffer stores the current good frame to be processed while<br>
+the Future Buffer stores the future frame of the encoded speech sequence. A<br>
+copy of the current frame's speech model parameters is made and stored in the<br>
+Copy Buffer.<br>
+2. The status of the future frame, either good or missing, is determined. If<br>
+the future frame is good, no linear interpolation is necessary; and the linear<br>
+interpolation flag is reset to 0. If the future frame is missing, linear<br>
+interpolation might be necessary; and the linear interpolation flag is<br>
+temporarily set to 1. (In a real-time system, a missing frame is detected by<br>
+either a receiver timeout or Cyclical Redundancy Check (CRC) failure. These<br>
+missing frame detection algorithms however, are not part of the invention, but<br>
+must be recognized and incorporated at the decoder for proper operation of any<br>
+packet reconstruction strategy.)<br>
+3. The current frame is decoded and synthesized. A copy of the current<br>
+frame's LPC synthesis filter and pitch postfiltered excitation are made.<br>
+4. The future frame, originally in the Future Buffer, becomes the current<br>
+frame and is stored in the Ready Buffer. The next frame in the encoded speech<br>
+sequence arrives as the future frame in the Future Buffer.<br>
+5. The value of the linear interpolation flag is checked. If the flag is set to<br>
+0, the process jumps back to step (1). If the flag is set to 1, the process jumps<br>
+to step (6).<br>
+6. The status of the future frame is determined. If the future frame is<br>
+good, linear interpolation is applied; the linear interpolation flag remains set to<br>
+1 and the process jumps to step (7). If the future frame is missing, energy<br>
+tapering is applied; the energy tapering flag is set to 1 and the linear<br>
+interpolation flag is reset to 0. (Note: The energy tapering technique is applied<br>
+only for multiple frame losses and will be described later herein.)<br>
+7. LSP recovery is performed. Here, the 10th order LSP vectors from the<br>
+previous and future good frames, stored in the Copy and Future Buffers<br>
+respectively, are averaged to obtain the LSP vector for the current frame.<br>
+8. Excitation recovery is performed. Here, the fixed codebook gains from<br>
+the previous and future frames, stored in the Copy and Future Buffers, are<br>
+averaged to obtain the fixed codebook gain for the missing frame. All<br>
+remaining speech model parameters are taken from the previous frame.<br>
+9. Pitch lag and predictor gain estimation are performed for the previous<br>
+frame, stored in the Copy Buffer, with the identical procedure to G.723.1 error<br>
+concealment.<br>
+10. If the predictor gain is less than 0.58 dB, the frame is declared<br>
+unvoiced, and the excitation signal for the current frame is generated using a<br>
+random number generator and scaled by the previously calculated averaged<br>
+fixed codebook gain in step (8).<br>
+11. If the predictor gain is greater than 0.58 dB and the estimated pitch lag<br>
+exceeds a threshold value Pthresh, the frame is declared- voiced, and the<br>
+excitation signal for the current frame is generated by first attenuating the<br>
+previous excitation by 1.25 dB for every two subframes, and then regenerating<br>
+this excitation with a period equal to the estimated pitch lag. Otherwise, the<br>
+current frame is declared unvoiced and the excitation is recovered as in step<br>
+(10).<br>
+12. After LSP and excitation recovery, the current frame, with its newly<br>
+interpolated LSP and gain parameters, is decoded and synthesized and the<br>
+process jumps back to step (13).<br>
+13. The future frame, originally in the Future Buffer, becomes the current<br>
+frame and is stored in the Ready Buffer. The next frame in the encoded speech<br>
+sequence arrives as the future frame in the Future Buffer. The process then<br>
+returns to step (1).<br>
+There are at least two important advantages of linear interpoiation over<br>
+G.723.1 error concealment. The first advantage occurs in step (7), during LSP<br>
+recovery. In Step (7), since linear interpolation determines the missing frame's LSP<br>
+parameters based on the previous and future frames, this provides a better estimate for<br>
+the missing frame's LSP parameters, thereby enabling smoother spectral changes<br>
+across the missing frame, than if fixed LSP prediction were simply used, as in G.723.1<br>
+error concealment. As a result, more natural sounding, intelligible speech is<br>
+generated, thereby increasing comfortability for the listener.<br>
+The second advantage of linear interpolation occurs in steps (8) to (11), during<br>
+excitation recovery. First, in step (8), since linear interpolation generates the missing<br>
+frame's gain parameters by averaging the fixed codebook gains between the previous<br>
+and future frames, it provides a better estimate for the missing frame's gain, as<br>
+opposed to the technique described in G.723.1 error concealment. This interpolated<br>
+gain, which is then applied for unvoiced frames in step (10), thereby generates<br>
+smoother, more comfortable sounding gain transitions across frame erasures.<br>
+Secondly, in step (11), voicing classification is based on the both the predictor gain<br>
+and estimated pitch lag, as opposed to the predictor gain alone, as in G.723.1 error<br>
+concealment. That is, frames whose predictor gain is greater than 0.58 dB are also<br>
+compared against a threshold pitch lag, Pthresh. Since unvoiced frames are primarily<br>
+composed of high-frequency spectra, those frames that have low estimated pitch lags,<br>
+and hence, high estimated pitch frequencies, thereby have a higher probability of<br>
+being unvoiced. Thus, frames whose estimated pitch lags fall below Pthresh are<br>
+declared unvoiced and those whose estimated pitch lags exceed Pthresh, are declared<br>
+voiced. In sum, by selectively determining a frame's voicing classification based on<br>
+both the predictor gain and estimated pitch lag, the technique of this invention<br>
+effectively masks away all occurrences of high-frequency, metallic-sounding artifacts<br>
+occurring in the output. As a result, overall intelligibility and listener comfortability is<br>
+increased.<br>
+Selective Energy Attenuation<br>
+Selective energy attenuation was developed to eliminate instances of high-<br>
+energy spikes heard using G.723.1 error concealment. Referring to Figure 1, these<br>
+high-energy spikes are caused by incorrect estimation of the LPC coefficients during<br>
+formant post-filtering, due to poor prediction of the LSP or gain parameters by<br>
+G.723.1 error concealment. To provide better estimates for a missing frame's LSP<br>
+and gain parameters, linear interpolation was developed as previously described. In<br>
+addition, the signal energy for every synthesized subframe, after formant postfiltering,<br>
+is checked against a threshold energy, Sthresh. If the signal energy for any one the four<br>
+subframes exceeds Sthresh, then the signal energies for all remaining subframes are<br>
+attenuated to an acceptable energy level, Smax. Combined with linear interpolation,<br>
+this selective energy attenuation technique effectively eliminates all instances of high-<br>
+energy spikes, without adding noticeable degradation to the output. Overall, speech<br>
+intelligibility and especially, listener comfortability is increased. Figure 3b shows the<br>
+presence of a high-energy spike due to G.723.1 error concealment; Figure 3c shows<br>
+elimination of the high-energy spike due to selective energy attenuation and linear<br>
+interpolation.<br>
+Energy Tapering<br>
+Energy tapering was developed to eliminate the effects of "choppy" speech<br>
+generated by G.723.1 error concealment. As recalled, "choppy" speech results when<br>
+G.723.1 error concealment completely mutes the output after three missing frames are<br>
+reconstructed. As a result, patches of silence are generated at the output, thereby<br>
+decreasing intelligibility and producing "choppy" speech. To eliminate this problem,<br>
+a multi-step energy tapering technique was designed. By referring to Figure 2, this<br>
+technique operates as follows:<br>
+1. The Ready Buffer stores the current good frame to be processed while<br>
+the Future Buffer stores the future frame of the encoded speech sequence. A<br>
+copy of the current frame's speech model parameters is made and stored in the<br>
+Copy Buffer.<br>
+2. The status of the future frame, either good or missing, is determined. If<br>
+the future frame is good, no linear interpolation is necessary; the linear<br>
+interpolation is reset to 0. If the future frame is missing, linear interpolation<br>
+might be necessary; the linear interpolation flag is temporarily set to 1.<br>
+3. The current frame is decoded and synthesized. A copy of the current<br>
+frame's LPC synthesis filter and pitch postfiltered excitation is made.<br>
+4. The future frame, originally in the Future Buffer, becomes the current<br>
+frame and is stored in the Ready Buffer. The next frame in the encoded speech<br>
+sequence arrives as the future frame in the Future Buffer.<br>
+5. The value of the linear interpolation flag is checked. If the flag is set to<br>
+0, the process jumps back to step (1). If the flag is set to 1, the process jumps<br>
+to step (6).<br>
+6. The status of the future frame is determined. If the future frame is<br>
+good, linear interpolation is applied as described in subsection 3.1. If the<br>
+future frame is missing, energy tapering is applied; the energy tapering flag is<br>
+set to 1, the linear interpolation flag is reset to 0, and the process jumps to step<br>
+(7).<br>
+7. The copy of the previous frame's pitch postfiltered- excitation, from<br>
+step (3), is attenuated by (0.5 x value of energy tapering flag) dB.<br>
+8. The copy of the previous frame's LPC synthesis filter, from step (3), is<br>
+used to synthesize the current frame using the attenuated excitation in step (7).<br>
+9. The future frame, originally in the Future Buffer, becomes the current<br>
+frame and is stored in the Ready Buffer. The next frame in the encoded speech<br>
+sequence arrives as the future frame in the Future Buffer.<br>
+10. The current frame is synthesized using steps (7) to (9)., then jumps to<br>
+step (11).<br>
+11. The status of the future frame is determined. If the future frame is<br>
+good, no further energy tapering is applied; the energy tapering flag is reset to<br>
+0, and the process jumps to step (12). If the future frame is missing, further<br>
+energy tapering is applied; the energy tapering flag is incremented by 1, and<br>
+the process jumps to step (11).<br>
+12. The future frame, originally in the Future Buffer, becomes the current<br>
+frame and is stored in the Ready Buffer. The next frame in the encoded speech<br>
+sequence arrives as the future frame in the Future Buffer. The process jumps<br>
+back to step (1).<br>
+By employing this technique, the energy of the output signal is gradually<br>
+tapered over multiple packet losses, and hence, eliminates the effects of "choppy"<br>
+speech by complete output muting. Figure 4b shows the presence of complete output<br>
+muting due to G.723.1 error concealment; Figure 4c shows elimination of output<br>
+muting due to energy tapering. As Figure 4c illustrates, the output is gradually tapered<br>
+over multiple packet losses, thereby eliminating any segments of pure silence from the<br>
+output and generating greater intelligibility for the listener.<br>
+As discussed above, one of the clear advantages of energy tapering over<br>
+G.723.1 error concealment, besides improved output intelligibility, is the relatively<br>
+lower amount of computation time required. Since energy tapering only repeats the<br>
+previous frame's LPC synthesis filter and attenuates the previous frame's pitch<br>
+postfiltered gain, the total algorithmic delay is considerably less compared to<br>
+performing full-scale LSP and excitation recovery, as in G.723.1 error concealment.<br>
+This approach minimizes the overall delay in order to provide the user with a more<br>
+robust, real-time communications system.<br>
+Improved Results of the Invention<br>
+The three error concealment techniques were tested for various speakers under<br>
+the identical levels of packet loss carried out using G.723.1 error concealment. A<br>
+series of informal listening tests indicated that for all levels of packet loss, the quality<br>
+of the output speech segment was significantly improved in the following ways: First,<br>
+more natural sounding speech and effective masking away of all metallic-sounding<br>
+artifacts were achieved due to smoother spectral transitions across missing frames<br>
+based on linear interpolation and improved voicing classification. Secondly, all high-<br>
+energy spikes were eliminated due to selective energy attenuation and linear<br>
+interpolation. Finally, all instances of "choppy" speech were eliminated due to energy<br>
+tapering. It is important to realize that as network congestion levels increase, the<br>
+amount of packet loss also increases. Thus, in order to maintain real-time speech<br>
+intelligibility, it is essential to develop techniques to successfully conceal frame<br>
+erasures while minimizing the amount of degradation at the output. The strategies<br>
+developed by the authors represent techniques which provide improved output speech<br>
+quality, are most robust in the presence of frame erasures compared to the techniques<br>
+described in Reference 1, and can be easily applied with any parametric, LPC-based<br>
+speech coder over any packet-switching or mobile communications network.<br>
+It will be appreciated that various changes and modifications may be made to<br>
+the specific embodiments described above without departing from the spirit and scope<br>
+of the invention as defined in the appended claims.<br>
+WE CLAIM:<br>
+1. A method of recovering a lost frame in a system of the type wherein<br>
+information is transmitted as successive frames of encoded signals having at<br>
+least LSP parameters and excitation gain, and the information is reconstructed<br>
+from said encoded signals at a receiver, said method comprising:<br>
+storing encoded signals from a first frame prior to said lost frame;<br>
+storing encoded signals from a second frame subsequent to said lost<br>
+frame; and<br>
+interpolating between the LSP parameters from said first and second<br>
+frames and between said excitation gain from said first and second frames to<br>
+obtain recovered encoded signals for said lost frame.<br>
+2. A method as claimed in claim 1, wherein said encoded signals comprise a<br>
+plurality of Line Spectral Pair (LSP) parameters corresponding to each frame,<br>
+and said interpolating step comprises interpolating between the LSP parameters<br>
+of said first frame and the LSP parameters of said second frame, as well as the<br>
+pitch and excitation parameters of said first and second frames.<br>
+3. A method of recovering a lost frame in a system of the type wherein<br>
+information is transmitted as successive frames of encoded signals and the<br>
+information is reconstructed from said encoded signals at a receiver, said<br>
+method comprising:<br>
+storing encoded signals from a first frame prior to said lost frame;<br>
+storing encoded signals from a second frame subsequent to said lost<br>
+frame; and interpolating between the encoded signals from said first and second<br>
+frames to obtain recovered encoded signals for said lost frame,<br>
+wherein each frame has a plurality of subframes, said method comprising<br>
+the step of comparing a signal energy for each subframe of a particular frame<br>
+against a threshold, and attenuating signal energies for all subframes in said<br>
+particular frame if the signal energy in any subframe exceeds said threshold.<br>
+4. A method of recovering a lost frame in a system of the type wherein<br>
+information is transmitted as successive frames of encoded signals and the<br>
+information is reconstructed from said encoded signals at a receiver, said<br>
+method comprising:<br>
+storing encoded signals from a first frame prior to said lost frame;<br>
+storing encoded signals from a second frame subsequent to said lost<br>
+frame; and<br>
+interpolating between the encoded signals from said first and second<br>
+frames to obtain recovered encoded signals for said lost frame; and<br>
+wherein on loss of multiple successive frames, said method comprises the<br>
+step of repeating the encoded signals for a frame immediately preceding said<br>
+multiple successive frames while gradually reducing the signal energy for each<br>
+recovered frame.<br>
+5. A method of recovering a lost frame in a system of the type wherein<br>
+information is transmitted as successive frames of encoded signals and the<br>
+information is reconstructed from said encoded signals at a receiver, said<br>
+method comprising:<br>
+storing encoded signals from a first frame prior to said lost frame;<br>
+storing encoded signals from a second frame subsequent to said lost<br>
+frame; and<br>
+interpolating between the encoded signals from said first and second<br>
+frames to obtain recovered encoded signals for said lost frame, and<br>
+wherein said encoded signals have said LSP parameters, fixed codebook<br>
+gains and excitation signals, said method comprising interpolating said fixed<br>
+codebook gain of said lost frame from the fixed codebook gains of said first and<br>
+second frames, and adopting said excitation signals from said first frame as the<br>
+excitation signals of said lost frame.<br>
+6. A method of recovering a lost frame in a system of the type wherein<br>
+information is transmitted as successive frames of encoded signals, each frame<br>
+having plural subframes, and the information is reconstructed from said encoded<br>
+signals at a receiver, said method comprising:<br>
+comparing a signal energy for each subframe of a particular frame against<br>
+a threshold; and<br>
+attenuating signal energies for all subframes in said particular frame if the<br>
+signal energy in any subframe exceeds said threshold.<br>
+7. The method as claimed in claim 1, wherein :<br>
+on loss of multiple successive frames, the encoded signals for a frame are<br>
+repeated immediately preceding said multiple successive frames, while the<br>
+signal energy for each recovered frame is gradually reduced.<br>
+8. The method as claimed in claim 6, wherein:<br>
+on loss of multiple successive frames, the encoded signals for a frame are<br>
+repeated immediately preceding said multiple successive frames, while the<br>
+signal energy for each recovered frame is gradually reduced.<br>
+9. A method of recovering a lost frame substantially as hereinbefore<br>
+described with reference to the accompanying drawings.<br>
+A tost frame recovery technique for LPC-based systems employs interpolation of parameters from previous and subsequent good<br>
+frames, selective attenuation of frame energy when the energy of a subframe exceeds a threshold, and energy tapering in the presence of<br>
+multiple successive lost frames.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+		<br>
+		<div class="pull-left">
+			<a href="223901-a-programmable-electronic-electricity-meter.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="223903-a-melt-blown-device-for-the-production-of-melt-blown-products.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>223902</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>IN/PCT/2000/00519/KOL</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>39/2008</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>26-Sep-2008</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>23-Sep-2008</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>15-Nov-2000</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>COMSAT CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>6560 ROCK SPRING DRIVE, BETHESDA, MD 20817</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>YELDENER SUAT</td>
+											<td>19606 CRYSTAL ROCK DRIVE #14 GERMANTOWN, MD 20874</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>HO GRANT IAN</td>
+											<td>84 NOTH HILLS TERRACE, DON MILLS ONTARIO M3C 1M6</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>BARANIECKI MARION</td>
+											<td>4781 FARNDON COURT,FAIRFAX VA 22032</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G 10 L 21/02</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US99/12804</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>1999-06-16</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>09/099.952</td>
+									<td>1998-06-19</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/223902-improved-lost-frame-recovery-techniques-for-parametric-lpc-based-speech-coding-systems by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:21:27 GMT -->
+</html>

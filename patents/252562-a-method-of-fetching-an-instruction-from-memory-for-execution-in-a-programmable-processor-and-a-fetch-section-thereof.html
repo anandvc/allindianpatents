@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/252562-a-method-of-fetching-an-instruction-from-memory-for-execution-in-a-programmable-processor-and-a-fetch-section-thereof by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 13:18:07 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 252562:A METHOD OF FETCHING AN INSTRUCTION FROM MEMORY FOR EXECUTION IN A PROGRAMMABLE PROCESSOR AND A FETCH SECTION THEREOF</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD OF FETCHING AN INSTRUCTION FROM MEMORY FOR EXECUTION IN A PROGRAMMABLE PROCESSOR AND A FETCH SECTION THEREOF</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A fetch section of a processor comprises an instruction cache and a pipeline of several stages for obtaining instructions. Instructions may cross cache line boundaries. The pipeline stages process two addresses to recover a complete boundary crossing instruction. During such processing, if the second piece of the instruction is not in the cache, the fetch with regard to the first line is invalidated and recycled. On this first pass, processing of the address for the second part of the instruction is treated as a pre-fetch request to load instruction data to the cache from higher level memory, without passing any of that data to the later stages of the processor. When the first line address passes through the fetch stages again, the second line address follows in the normal order, and both pieces of the instruction are can be fetched from the cache and combined in the normal manner.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>FORM 2<br>
+THE PATENTS ACT, 1970<br>
+(39 of 1970)<br>
+&amp;<br>
+THE PATENTS RULES, 2003<br>
+COMPLETE SPECIFICATION<br>
+(See section 10, rule 13)<br>
+HANDLING CACHE MISS IN AN INSTRUCTION CROSSING A CACHE LINE BOUNDARY<br>
+QUALCOMM INCORPORATED,<br>
+an American company of 5775 Morehouse Drive , San Diego, California 92121-1714, United States of America<br>
+The following specification particularly describes the invention and the manner in which it is to be performed.<br><br>
+WO 2006/125220<br><br><br><br>
+PCT/US2006/019789<br><br>
+HANDLING CACHE MISS IN AN INSTRUCTION CROSSING A CACHE LINE BOUNDARY<br>
+Technical Field<br>
+[0001]	The   present   subject   matter   relates   to   techniques   and   processor<br>
+architectures to effectively handle fetching of an instruction crossing a cache line boundary, particularly where a second portion of the instruction is not yet in the cache from which the processor attempts to fetch the instruction (cache miss).<br>
+Background<br>
+[0002]	Modern microprocessors and other programmable processor circuits<br>
+utilize a hierarchy of memories to store and supply instructions. A common hierarchy includes an instruction cache or LI cache that is relatively close to the core of the processor, for example, on the processor chip. Instructions are loaded to the LI instruction cache from a somewhat more remote or L2 cache, which stores both instructions and data. One or both caches are loaded with instructions from main memory, and the main memory may be loaded from more remote sources, such as disk drives of the device that incorporates the processor. The cache memories enhance performance. Because of its proximity to the processor core, for example, fetching of instructions from the LI cache is relatively fast.<br>
+[0003]	In many implementations, a line of the instruction cache holds a number<br>
+of instructions. If the number of bits per instruction is fixed for all instructions, a cache line can be sized to hold an integer number of such instructions. For example, if each instruction is 32 bits, a 256-bit cache line will hold eight such instructions, and the boundaries of the first and last instructions stored in the line match or align with the boundaries of the cache line. However, if the processor handles instructions of different lengths, e.g. 32-bit instructions and 16-bit instructions, then the instructions in a given cache line may not align with the boundaries of that line. If the processor architecture mandates that an instruction may not overlap two cache lines, then there will be some wastage. However, many architectures do not impose such a cache restriction. In the later cases, problems occur in reading an instruction that has part stored in one line and the rest stored in another line, e.g. a 32-bit instruction having 16 bits at the end of one line of the cache and the other 16 bits stored at the beginning of the next cache line.<br><br>
+WO 2006/125220	 	PCT/US2006/019789<br><br>
+[0004]	Modern programmable processor circuits  often rely on a pipeline<br>
+processing architecture, to improve execution speed. A pipelined processor includes multiple processing stages for sequentially processing each instruction as it moves through the pipeline. Of course while one stage is processing an instruction, other stages along the pipeline are concurrently processing other instructions. Each stage of a pipeline performs a different function necessary in the overall processing of each program instruction. Although the order and/or functions may vary slightly, a typical simple pipeline includes an instruction Fetch stage, an instruction Decode stage, a memory access or Readout stage, an instruction Execute stage and a result Write-back stage. More advanced processor designs break some or all of these stages down into several separate stages for performing sub-portions of these functions. Super scalar designs break the functions down further and/or provide duplicate functions, to perform operations in parallel pipelines of similar depth.<br>
+[0005]	The Fetch stage is the portion of the pipeline processor that obtains the<br>
+instructions from the hierarchical memory system. In many pipeline designs, the Fetch<br>
+operation is broken down into two or more stages.  Of these stages, one stage collects<br>
+the instructions when fetched from the LI cache and communicates with the higher<br>
+level memories to obtain instruction data not found in the LI cache.<br>
+[0006]	A problem can occur in such a fetch operation where the boundaries of<br>
+the instructions cross the cache line boundaries, and part of a desired instruction is not yet present in the LI cache. For example, if the stage that collects the instructions fetched from the LI cache receives a first part of the instruction, it will not communicate with the higher level memories because the instruction was found in the LI cache. Similarly, if that stage has already obtained the line containing the first piece from the higher level memory, it will not initiate a second request for the line containing the other piece of the instruction. Instead, it waits to receive the rest of the instruction from processing of the next cache line by the preceding stage. However, if the preceding stage detects that the rest of the desired instruction is not in the appropriate line of the LI cache (a miss), it can not provide the remaining part of the instruction, and it does not have the capability to access the higher level memories to obtain the missing piece of the instruction. Normally, in the case of a miss, this stage would drop the address down to the next stage to request the data from higher level memory, but that next stage is waiting for the second piece of a split instruction to come from the<br><br>
+WO 2006/125220	 	PCT/US2006/019789<br>
+preceding stage.  In some extreme cases, the Fetch processing may lock up for some<br>
+period waiting for a portion of the instruction that neither stage can request.<br>
+[0007]	It might be possible to allow more than one stage in the fetch section of<br>
+the pipeline to request instructions from the other memory resources, to avoid the above-identified problem. Such a solution, however, adds complexity, in construction of the fetch stages, in the interconnection of the fetch stages to other memory resources and in the management of flow of instructions to and through the fetch stages. For a high performance processor design, it is desirable to make requests to higher level memory resources from as few places as possible, e.g. because each such request delays other processing while waiting for return of requested data. Hence, there is still further room for improvement in fetching instructions, where instructions may cross cache line boundaries.<br>
+Summary<br>
+[0008]	The teachings herein provide more effective handling of the cache miss,<br>
+where an instruction crosses a cache line boundary. Essentially, an address<br>
+corresponding to the cache line for the first part of the instruction is recycled to the head<br>
+of the fetch part of the pipeline, without any of the associated first part of the instruction<br>
+from the cache line dropping down to the later stages of the pipeline. The address<br>
+corresponding to the line for the second part of the instruction, that is to say the address<br>
+that resulted in the cache miss, is treated as a pre-fetch request. Since there is a miss,<br>
+the processor begins loading the necessary instruction data to the instruction cache, but<br>
+this data also is not dropped to the later stages of the pipeline on this pass through the<br>
+fetch stages. When the first line address passes through the fetch stages again, and the<br>
+second line address follows in normal sequence, all of the pieces of the instruction are<br>
+available and can be fetched and combined in the normal manner.<br>
+[0009]	Hence, aspects of the present teaching encompass methods of fetching an<br>
+instruction from memory for execution in a programmable processor, in which instructions may cross a line boundary. An example of such a method might involve detecting that an instruction to be fetched crosses a boundary between instruction lines. Upon fetching a first line of instruction data containing a first piece of the boundary crossing instruction, a determination is made whether or not a second piece of the boundary crossing instruction is in cache memory. If not, the fetch of the first line of instruction data is recycled, without output of any of the instruction from the first line of<br><br>
+WO 2006/125220	 	PCT/US2006/019789<br>
+data. Then, the method involves pre-fetching a second line of instruction data, which includes the absent piece of the instruction. Having recycled the fetch for the first line, processing then entails fetching the first line of instruction data and fetching the second line of instruction data. The pieces from the fetched first and second lines of instruction data are combined to output the boundary crossing instruction.<br>
+[0010]	If there is any later fetch that has begun before the second fetch regarding<br>
+the first line, that is to say, if there would be any other fetch operation in progress between the recycled fetch and the pre-fetch for the second line, any such intervening fetch processing is flushed from the fetch pipeline. When the fetch regarding the first line is recycled, the data resulting from the fetch during the initial pass is invalidated, so that no data drops out of the fetch section.<br>
+[0011]	Other aspects of the present teachings encompass fetch sections or<br>
+systems, for fetching instructions for processing through a programmable processor, such as a pipeline processor. In an example, such a fetch section comprises an instruction cache and at least one processing stage for processing addresses in sequence. For each address, the processing identifies a line of memory in the instruction cache that may contain an instruction or a portion thereof corresponding to each respective address. The processing also reads data from the identified line. Means are provided for recycling a fetch with regard to a first address to the first instruction cache processing stage and for converting a fetch with regard to second address to a pre-fetch to enable loading of a line of instruction data from the higher level memory resource to the instruction cache, in the event that an instruction that crosses a boundary between lines and a line of the cache corresponding to the second address for that instruction does not initially contain a piece of the boundary crossing instruction.<br>
+[0012]	Other  aspects  of the present  teachings   encompass  programmable<br>
+processors, particularly pipeline processors, incorporating such a fetch section.<br>
+[0013]	Additional objects, advantages and novel features will be set forth in part<br>
+in the description which follows, and in part will become apparent to those skilled in the art upon examination of the following and the accompanying drawings or may be learned by production or operation of the examples. The objects and advantages of the present teachings may be realized and attained by practice or use of the methodologies, instrumentalities and combinations particularly pointed out in the appended claims.<br><br>
+WO 2006/125220	 	PCT/US2006/019789<br>
+Brief Description of the Drawings<br>
+[0014]	The drawing figures depict one or more implementations in accord with<br>
+the present teachings, by way of example only, not by way of limitation. In the figures,<br>
+like reference numerals refer to the same or similar elements.<br>
+[0015]	Fig. 1 is a high level block diagram of a portion of programmable<br>
+processor, including exemplary elements of a fetch section implementing techniques for<br>
+efficient handling of boundary crossing instructions.<br>
+[0016]	Fig. 2 is a functional block diagram of a pipeline implementation of a<br>
+programmable processor, which may incorporate the elements shown in Fig. 1.<br>
+[0017]	Fig. 3 depicts instruction data from a line of the instruction cache,<br>
+wherein the cache line contains eight 32-bit instructions.<br>
+[0018]	Fig. 4 depicts instruction data from a line of the instruction cache,<br>
+wherein the cache line contains sixteen 16-bit instructions.<br>
+[0019]	Fig. 5 depicts instruction data from two lines of the instruction cache,<br>
+each of which includes a mix of 16-bit and 32-bit instructions and a portion of a<br>
+boundary crossing 32-bit instruction.<br>
+[0020]	Fig. 6 depicts data in a 64 bit register, before instruction data alignment<br>
+processing to compile selected bits into one 32-bit instruction.<br>
+[0021]	Fig. 7 depicts the resulting 32-bit instruction, recovered by fetching the<br>
+two lines containing portions of the boundary crossing instruction<br>
+Detailed Description<br>
+[0022]	In the following detailed description, numerous specific details are set<br>
+forth by way of examples in order to provide a thorough understanding of the relevant teachings. However, it should be apparent to those skilled in the art that the present teachings may be practiced without such details. In other instances, well known methods, procedures, components, and circuitry have been described at a relatively high-level, without detail, in order to avoid unnecessarily obscuring aspects of the present teachings.<br>
+[0023]	As discussed herein, an example of a system or section of a processor<br>
+intended to fetch instructions for the processor comprises an instruction cache and a plurality of processing stages. As such, the fetch section itself typically is formed of a pipeline of processing stages.  Instructions are allowed to cross cache line boundaries.<br><br>
+WO 2006/125220	 	PCT/US2006/019789<br>
+When a stage from which requests to higher level memories are made has a first part of an instruction that crosses a cache line boundary, it checks the next line. If that stage determines that the second part of the boundary crossing instruction data is not contained in the cache (LI), it invalidates the initial fetch of the part of the instruction from the first line and returns the first fetch address back to start of fetch pipeline. When the processing for the second address moves to that stage, the second fetch has been converted to a touch or pre-fetch operation. Processing therefore loads data to the instruction cache, but does not pass the second line to the decode stage on this first pass through the fetch pipeline. As a result, the instruction line containing the second piece of the instruction is in the cache. When the fetch stages process the first address again (after re-cycling), the second address follows again in the normal order, and the line in the cache for the second address now contains the necessary second piece of the boundary crossing instruction. The part for the desired instruction from the second line can be dropped down into the fetched first line (replacing an otherwise unneeded piece of data in the first line), to complete the desired instruction within one cycle of output from the fetch stage.<br>
+[0024]	In the example, any stages of the pipeline higher than (preceding) the<br>
+stage containing the second fetch address are flushed.  As a result, no instruction line<br>
+data is output from the fetch pipeline until the desired instruction is combined in one<br>
+cycle during the second pass through the instruction fetch pipeline.<br>
+[0025]	Reference now is made in detail to the examples illustrated in the<br>
+accompanying drawings and discussed below. Fig. 1 illustrates several stages of a pipeline processor and associated memories. Fig. 2 depicts the overall pipeline, whereas Fig. 1 shows somewhat more detail of a first section of the pipeline, as will be involved in fetching instructions from the memories and handling instructions crossing cache line boundaries as discussed herein.<br>
+[0026]	With reference to Fig. 2, the simplified pipeline processor 10 includes<br>
+five major categories of pipeline processing stages, Fetch 11, Decode 13, Readout 15, Execute 17 and Write-back 19. The arrows in the diagram represent logical data flows, not necessarily physical connections. Those skilled in the art will recognize that any or all of these stages may be broken down into multiple stages performing portions of the relevant function, or that the pipeline may include additional stages for providing additional functionality.  An actual super scalar example may consist of two or more<br><br>
+WO 2006/125220	 	PCT/US2006/019789<br>
+parallel pipelines, each for example comprising multiple stages. For discussion<br>
+purposes, several of the major categories of stages are shown as single stages, although<br>
+typically each is broken down into two or more stages. The section of particular interest<br>
+to the present discussion of the handling of instructions crossing cache line boundaries<br>
+is the Fetch section 11, hence the separate stages forming that section are shown in more<br>
+detail in Fig. 1. Although not shown separately in Figs. 1 and 2, each stage of the<br>
+pipeline 10 typically comprises a state machine or the like implementing the relevant<br>
+logic functions and an associated register for passing the instruction and/or any<br>
+processing results to the next stage or back to the GPR register file 29.<br>
+[0027]	In the exemplary pipeline 10, the first section of the pipeline processor<br>
+10 performs an instruction Fetch function 11. The Fetch section comprises one or more<br>
+stations for obtaining instructions for processing by later stages. The Fetch stage(s) 11<br>
+obtain the instructions from a hierarchy of memories represented generically by the<br>
+memories 21. The memories 21 typically include an instruction cache (iCache)<br>
+sometimes referred to as a level 1 (LI) cache 23, a level 2 (L2) cache 25 and main<br>
+memory 27. Instructions may be loaded to main memory from other sources, e.g. a boot<br>
+ROM or disk drive. Although some of the memories, such as the instruction cache, may<br>
+be in or close to the core of the processor 10, other memories such as the main memory<br>
+will be outside or separate from the processor 10. In some architectures, the instruction<br>
+cache 23 may be an element of the Fetch section 11 (as shown for example in Fig. 1).<br>
+[0028]	The L2 cache 27 stores both instructions and data to be processed<br>
+(operand data). The L2 cache 27 is shared by both the instruction cache 23 and a data<br>
+cache (not shown) used during operand data readout, e.g. by stage 15. The L2 cache 27<br>
+is both larger and slower to access than the instruction cache 23. Main memory 27, in<br>
+turn is still larger and slower to access, but stores considerably more information. A<br>
+fetch from the instruction cache 23, for example, may require three processing cycles, a<br>
+fetch from L2 cache 25 may consume 10 or so processing cycles, whereas a fetch from<br>
+main memory 27 may require something on the order of 100 processing cycles.<br>
+[0029]	The Fetch stage 11 supplies each instruction to a Decode stage 13. Logic<br>
+of the instruction Decode stage 13 decodes the instruction bytes received and supplies the result to the next stage of the pipeline.<br>
+[0030]	The next major category of stages provides data access or Readout, as<br>
+represented collectively by the stage 15.   Logic of the Readout stage(s) 15 accesses<br><br>
+WO 2006/125220	 	PCT/US2006/019789<br>
+operand data in specified registers in a general purpose register (GPR) file 29. In some cases, the logic of the Readout stage(s) 15 may obtain operand data from memory or other resources (not shown).<br>
+[0031]	The instruction and operand data are passed to one or more stages 17<br>
+providing the Execute function. The Execute stage(s) 17 essentially execute the<br>
+particular function of each instruction on the retrieved operand data and produce a<br>
+result. The stage or stages 17 providing the Execute function may, for example,<br>
+implement an arithmetic logic unit (ALU). The stage 19 writes the results back to a<br>
+register in the file 29 or to memory such as the L2 cache 25 and/or main memory 27.<br>
+[0032]	As noted, Fig. 1 shows the stages of a pipeline and associated elements<br>
+forming the Fetch section 11 in somewhat more detail. As shown there, an exemplary Fetch section 11 comprises three pipeline stages 31, 33 and 35 for sequentially processing addresses. As addresses flow through the stages of the Fetch pipeline section 11, only one address is in and being processed in each one of the stages at any given time. Generally, for a given address, a first cycle (in the IC1 stage 31) processes the address to identify the tag for the appropriate memory line of the instruction cache 23. The second cycle (in the IC2 stage 33) uses the tag to access the particular line of the instruction cache 23. The instruction data alignment (IDA) section of the fetch pipeline includes an IDA stage 35 for processing the address data dropped down from the IC2 stage 33 and an IDA data stage 39 for processing data dropped down from the iCache 23 to extract actual instructions. Hence, the third cycle (in IDA elements 35 and 39) processes the data from the particular line of the instruction cache 23 to recover at least the one instruction, e.g. a 16 or 32 bit instruction from 8 or more on the line, for output to the Decode stage 13. Those skilled in the art will understand that the processor may be designed to extract two or more instructions from a line of cache data in the IDA stage.<br>
+[0033]	More specifically, addresses for instructions are supplied to the first<br>
+stage IC1 31 in the order of intended execution. Often, the order is sequential, although program execution may change the order, e.g. upon occurrence of the condition for a conditional branch instruction. A line of memory of the instruction cache 23 is accessed using a corresponding tag. The first instruction cache processing stage (IC1) 31 uses a content addressable memory (CAM) to identify tags for cache lines, in response to the received instruction addresses.   The tag is a subset of the address used to search for<br><br>
+WO 2006/125220	                            PCT/US2006/019789<br><br>
+cached instructions. Essentially, the CAM (IC1) stage 31 takes the address (tag) and compares it to the possible tags that it could match in the cache 23, creating a set of search results. These are captured at the end of the CAM cycle and used during the RAM (IC2) cycle when the address is in stage 33, so as to steer the correct data out of the cache 23 to be captured into IDA data stage 39. The latch 37 shown at the output of the cache 23 in Fig. 1 is a transparent latch, in case pipeline holds prevent immediate capture of the data output by the cache into EDA.<br>
+[0034]	As noted above, one tag corresponds to one line of memory in the<br>
+instruction cache 23, but each line holds a number of instructions. Hence, processing of one tag to recover a specified line from memory recovers a plurality of stored instructions at the IC2 stage 33. The third stage 35, referred to here as the EDA (instruction data alignment) stage, controls an IDA data processing section 39 to receive and process data from the selected instruction line. The bottom line or register 37 of the instruction cache 23 holds the instruction data from the selected memory line. The IDA Data section 39 includes register 41 to receive and process data from the latch 37. In an example, the register 41 may be a 64 bit latch. The IDA processing in the stage 35 and the register 37 essentially selects appropriate bits from the bottom 39 of the instruction cache 23, reorganizes those bits as necessary so as to align the bits to reform them as an instruction, and outputs the recovered instruction to the decode stage 13. As discussed more later, other elements of the EDA Data section 39 perform related functions, such as obtaining instruction data from higher level memories 25 and 27 in the event of a cache miss.<br>
+[0035]	Some processor architectures, such as 'ARM' type processors licensed<br>
+by Advanced Rise Machines Limited, support at least two instruction sets, where the instructions of one set have a different length than those in the other set. In an ARM type processor, for example, the standard instructions are 32 bits long. The second or 'Thumb' instruction set consists of 16-bit compressed instructions and 32-bit instructions encoded differently than their counterparts in ARM state. 16-bit Thumb instructions are decompressed to their 32-bit ARM equivalents and then can be processed in the normal manner. However, because of the reduced length, the 16-bit Thumb instructions require less storage in the various memory devices in or associated with the processor 10. Typically, the instructions having the longer word length offer a wider range of operations and/or more powerful or more involved operations. As noted,<br><br>
+WO 2006/125220		PCT/US2006/019789<br>
+the instructions having shorter word length provide memory savings for programs or sub-routines for which the limited capabilities of the smaller instruction set are adequate.<br>
+[0036]	The machine operates in one of several "States" - ARM, Thumb, Jazelle-<br>
+X/T2EE, etc... and only may act on instructions that are architected for that State. ARM State includes only 32-bit instructions, and any encoding is legal in the five most significant bits. Thumb State includes a mixture of 16- and 32-bit instructions, as does T2EE. In these States, the five most significant bits determine whether the instruction in question is a 16-bit instruction or a 32-bit instruction.<br>
+[0037]	As shown in Fig. 3, an example of a 256-bit cache memory line may hold<br>
+eight 32-bit instructions. In ARM, every instruction consists of a 32-bit word, and every 32-bit instruction aligns with a 32-bit word line boundary, e.g. in lines of the instruction cache 23. If a cache line includes only 16-bit Thumb instructions, e.g. when the processor is operating in a Thumb mode, the same cache line may hold sixteen 16-bit instructions, as shown in Fig. 4. Some processors and/or some operations modes, including Thumb, will permit mixing of 32-bit and 16-bit instructions, and thus one cache line will contain a mix of 32-bit and 16-bit instructions.<br>
+[0038]	Fig 5 shows two successive lines, holding different combinations of 32-<br>
+bit and 16-bit instructions on each cache line. The arrangement of the instructions in the lines is purely arbitrary and will vary over time as the processor 10 operates on different ARM and Thumb instructions. At times, the instructions will align with cache line boundaries. However, situations will occur at times, as represented by the example of Fig. 5, in which a 32-bit instruction crosses a boundary between two cache lines. In this example, the last 16-bits on the first line CL1 hold half A of a 32-bit instruction. The first 16-bits on the second line CL2 hold the other half B of the same 32-bit instruction. Consider now the processing of the A-B instruction through the Fetch pipeline 11 of Fig. 1.<br>
+[0039]	During a first processing cycle, the IC1 stage 31 initially receives the<br>
+address corresponding to the line CL1 containing part A and processes that address to recover the tag for line CL1. In the next processing cycle, the IC2 stage 33 uses that tag to access the CL1 line and move the data on that line to the latch 37 at the bottom of the instruction cache 23. The cache 23 also provides a hit indication on hit (H) or miss (M) line 43 indicating that the CL1 line now in latch 37 at the bottom of the cache contains<br><br>
+WO 2006/125220	                           PCT/US2006/019789<br>
+the desired part A of the instruction. While IC2 is processing the search results for CL1,<br>
+that is to say during the second processing cycle, the ICl stage 31 receives the next<br>
+address, in this case, the address corresponding to the line CL2 containing part B. The<br>
+ICl stage 31 processes that address to recover the search results for line CL2.<br>
+[0040]	In the third cycle of fetch processing, the address for the line CL1<br>
+containing part A drops down to the IDA stage 35. In response to the hit (H) indication from the earlier cycle, the processing of the IDA stage 35 causes the register 41 in the IDA Data section 39 to capture bits, including the 16 bits of part A of the instruction, from the latch 37 at the bottom of the instruction cache 23. At the same time, the IC2 stage 33 uses the tag for line CL2 to recover data from that line of memory and loads the data to the latch 37 at the bottom of the instruction cache 23.<br>
+[0041]	When the IDA stage 35 receives the first address, it examines the data<br>
+coming down from the latch 37. Essentially, it is looking for the data for the desired instruction. As part of its analysis, it will identify whether the requested instruction crosses a cache line boundary.<br>
+[0042]	Using ARM and Thumb as the examples of the instructions, a 32-bit<br>
+Thumb instruction always begins with one of three possible values for the 5 most significant bits (11101; 11110; or 11111). Essentially, the logic can look at each 16-bit piece of the data in the latch 41. If the 5 most significant bits do not have one of the three required values for an a 32-bit instruction, then the 16-bits represent a Thumb instruction. However, each time the logic finds that the 5 most significant bits have one of the three values required for 32-bit instructions, then it recognizes the 16-bits as the first half of a 32-bit instruction. Assuming that the slot is not at the trailing end of the cache line, the next 16 bits on the line will be the other half of the 32-bit instruction. If the slot with one of the three values for 32-bit instructions, as the 5 most significant bits, is at the trailing end of the cache line, then the 32-bit instruction crosses the cache line boundary. Hence, the IDA stage 35 can determine that part A of the instruction is at the end of the first line CL1 but it needs to look to another line to find part B of the desired instruction.<br>
+[0043]	Initially, we assumed for this example that the other part of the<br>
+instruction was contained in the next cache line CL2. During the second cycle of fetch processing, the cache 23 also provides a hit (H) indication on the H/M line 43 indicating that the CL2 line now in the latch 37 at the bottom of the cache 23 contains the desired<br><br>
+WO 2006/125220		PCT/US2006/019789<br>
+part B of the instruction. In this way, the part B appears at the bottom of the cache. The IDA stage 35 again examines the 16-bit sections of the cache line data, and finds the 16-bit second piece of the instruction that crossed the boundary between line CL1 and line CL2. The IDA stage 35 causes the register 41 to capture that additional part B of the desired instruction. The 64-bit latch forming the register 41 now contains both pieces of the desired instruction, although the pieces may not be properly aligned, as represented diagrammatically by Fig. 6. Further processing by the IDA data stage 39 and the register 41 aligns and combines the data bits of the two parts A and B into one 32-bit instruction, as represented diagrammatically by Fig. 7, and passes the combined instruction to the Decode stage 13.<br>
+[0044]	The preceding example, assumed that both parts A and B of the desired<br>
+instruction were present in the CL1 and CL2 cache lines in instruction cache 23, that is to say, a hit-hit situation. Those skilled in the art will understand, however, that this will not always be the case. Situations will arise where the attempt to fetch the second part of the instruction will result in a cache miss, with respect to the instruction data in the accessed line of the instruction cache 23. Consider now the hit-miss case. The first part A is present in the CL1 line (hit), but part B is not initially present in the CL2 line when recovered by the processing of the IC2 stage 33 (miss).<br>
+[0045]	As in the earlier example, during a first processing cycle, the IC1 stage<br>
+31 initially receives the address corresponding to the line CL1 containing part A and processes that address to recover search results for line CL1. In the next processing cycle, the IC2 stage 33 uses those search results to access the CL1 line and move the data on that line to the latch 37 at the bottom of the instruction cache 23. The cache 23 also provides a hit (H) indication on line 43 indicating that the CL1 line now in latch 37 at the bottom of the cache contains the desired part A of the instruction. While IC2 is processing the search results for CL1, that is to say during the second processing cycle, the IC1 stage 31 receives the next address, in this case, the address corresponding to the line CL2 expected to contain part B. The IC1 stage 31 processes that address to recover the search results for line CL2.<br>
+[0046]	In the third cycle of fetch processing, the address for the line CL1<br>
+containing part A drops down to the IDA stage 35. In response to the hit (H) indication from the earlier cycle, the processing of the IDA stage 35 causes the register 41 in the IDA Data section 39 to capture bits, including the 16 bits of part A of the instruction,<br><br>
+WO 2006/125220		PCT/US2006/019789<br>
+from the latch 37 at the bottom of the instruction cache 23. At the same time, the IC2<br>
+stage 33 attempts to use the search results for line CL2 to recover data from that line of<br>
+memory and to load the data to the latch 37 at the bottom of the instruction cache 23.<br>
+[0047]	To this point, processing of the hit-miss example is essentially the same<br>
+as in the first hit-hit example. In this second example, however, when the IC2 stage 33<br>
+would otherwise move the data from the CL2 line to the latch 37, the cache 23 provides<br>
+a miss (M) indication on the H/M line 43 indicating that the CL2 line now at the bottom<br>
+of the cache 23 does not contain the desired part B of the instruction.<br>
+[0048]	In this example, the A-B instruction crosses a cache line boundary, and<br>
+the logic in the section 11 has determined that it has (successfully fetched) first part A of the instruction data in first line CL1 of data accessed from the instruction cache 23, but the second part B of the instruction data is not in the second line CL2 of data accessed from the cache 23. Hence, the logic of the IDA stage 35 invalidates the fetch of the address corresponding to the CL1 line (so as not to pass any instruction data to the Decode stage 13). Also, any stages of the pipeline higher than (preceding) the stage containing the second fetch address are flushed. In the illustrated three stage Fetch architecture, the IC1 stage 31 is the only stage above the IC2 stage that holds the address for the CL2 line, so the IC1 stage 31 is flushed.<br>
+[0049]	At this point, the logic of the IDA stage 35 also return the first fetch<br>
+address corresponding to CL1 back to the start of fetch pipeline 11, via a Re-Fetch stage 45. The Re-Fetch stage 45 serves to provide the recycled address as the next address input to the IC1 stage 31 in the next cycle and to reset the string of address inputs to that first address, so that subsequent input addresses are those that appropriately follow in order after the recycled address, in this case, after the address that identified the CL1 line and part A of the instruction. Of particular note, this means that when processing resumes with regard to that first address, the address corresponding to the line CL2 expected to contain part B, will again flow through the stages immediately after that first address, as in the first pass through the fetch pipeline 11.<br>
+[0050]	During the third processing cycle, when it was determined that the<br>
+second line CL2 produced a miss, the IC2 stage 33 converted the fetch for that line from a fetch (F) to a touch (T) or pre-fetch operation. A fetch operation retrieves an instruction and passes the instruction to the Decode stage 13, which in turn passes it on for eventual execution. A touch (T) or pre-fetch operation only pulls out the instruction,<br><br>
+WO 2006/125220		PCT/US2006/019789<br>
+knowing that if the instruction is not yet in the instruction cache 23, the processing will load the instruction to that cache 23. The pre-fetch insures that the instruction data is in the instruction cache 23, for later processing, without dropping the instruction down to the later stages for execution. Where the operation resulted in a miss, that means that the touch processing will obtain the necessary instruction data from other memory resources, such as the L2 cache 25 and/or main memory 27, and the line of instruction data will be present the next time that the relevant address flows through the stages of the Fetch section 11.<br>
+[0051]	The logic of the IC2 stage 33 includes a latch or the like containing a T/F<br>
+type field 47, typically a flag bit, which indicates when an address in-process in that stage 33 relates to a Touch or a Fetch type operation. The logic of the IDA stage 35 includes a latch or the like containing a similar T/F type field 49. When the IC2 stage 33 passes an address to the IDA stage 35, the IC2 stage 33 passes the T or F type indication from its field 47 to the field 49 in the IDA stage 35.<br>
+[0052]	Of note for purposes of this discussion, when the second address is<br>
+initially received in the IC2 stage 33, the IC2 stages treats it as a fetch (F) operation. However, for the instruction crossing a cache line boundary, when the cache provides the miss (M) indication on line 43 indicating that the second piece B is not on the CL2 cache line, the IC2 stage changes the F in the type filed 47 to a T, effectively converting the fetch to a touch. Then, it passes the touch (T) indication to the IDA stage 35, as represented by the dotted line arrow in Fig. 1.<br>
+[0053]	During the fourth processing cycle, when the first address has been<br>
+passed to the Re-Fetch stage 45, the second address is passed to the IDA stage 35. With that address, the IC2 stage 33 now passes an indication that the address is to be used only for pre-fetch processing, e.g. by passing the touch indication (T) for use in the field 49 in the IDA stage logic. The IDA stage 35 also knows that the desired instruction data is not on the line in the cache, from the miss (M) indication on line 43. Hence, the IDA stage 35 and IDA Data section 39 can initiate steps to load the necessary instruction data from the higher level memory resource(s). The IDA elements 35, 39 and 41 treat the touch processing with respect to the second address as a pre-fetch, essentially to load data to the instruction cache 23, but do not pass any results to the Decode stage 13. As a result, an instruction line is loaded from higher level memory into the cache 23 and is available for later processing.<br><br>
+WO 2006/125220		PCT/US2006/019789<br>
+[0054]	When the Fetch section 11 processes the first fetch with regard to the<br>
+first address again, after re-cycling, the second address follows again, but the line for the<br>
+second address is now in the LI instruction cache 23. The part B for the desired<br>
+instruction from the second line CL2 can be dropped down in with part A from the<br>
+fetched first line CL2 during the IDA processing, replacing an otherwise unneeded piece<br>
+of data in the line, to complete the desired instruction within one line of output from the<br>
+Fetch section 11, exactly as in the hit-hit example discussed above. To appreciate these<br>
+operations, however, it may be helpful to consider the operations of the touch for the<br>
+second line address reaching the IDA stage in somewhat more detail.<br>
+[0055]	The Fetch section 11 of the pipeline includes two fill buffers 51 and 53,<br>
+used for transfer of instruction data from the L2 cache 25 to the register 41 in the IDA Data section 39. When a fetch type operation for a specified address reaches the IDA stage 35 and results in a miss (M), the IDA Data section 39 sends a request for the missing instruction line to the L2 cache 25. The L2 cache 25 may contain the data for the requested line, or if not, the L2 cache 25 obtains the data for the requested line, typically from main memory 27. The L2 cache 25 loads half of the line into the buffer 51 and the other half into the buffer 53. The logic of the IDA Data section 39 loads the relevant portion of the cache line data into the register 41, in a manner analogous to the loading of that data from the latch 37 in the cache 23 into the register 41. At the same time, the buffers 51 and 53 provide the entire line of instruction data to the instruction cache 23 for storage and future use.<br>
+[0056]	In our hit-miss example, the touch for the second cache line address uses<br>
+these operations of the IDA elements and the fill buffers to load the data for the necessary line CL2 into the instruction cache 23. Portions may go to the IDA data section but typically are not loaded into the IDA register 41, since no data is dropped to the Decode stage. The IDA stage considers this first flow with regard to that address to be a touch type operation, i.e. a pre-fetch only.<br>
+[0057]	In the next cycle after the touch is complete, the first address is processed<br>
+again at the IC1 stage 31 to identify the tag for the first cache line CL1. The IC1 stage 31 passes the first tag to the IC2 stage 33. In the next cycle, the IC2 stage reads the cache line IC1, while the second address is processed again at the IC2 stage 33 to identify the tag for the first cache line CL2. The processing of the IC2 stage 33 loads the data from the CL1 line to the latch 37, and in the next cycle, that line of data drops<br><br>
+WO 2006/125220		PCT/US2006/019789<br>
+down with selected portions flowing to the IDA register 41. With the relevant CLl data in the register 41, the IC2 stage 33 reads the cache line CL2 and loads the data from that line to the latch 37. On this second pass, the readings of both cache lines produce hits, as in the earlier hit-hit example.<br>
+[0058]	In this way, the part B appears at the bottom of the cache on the second<br>
+pass of the instructions through the pipeline of Fetch section 11, and the IDA stage 35 causes the register 41 to capture that additional part of the desired instruction. The 64-bit latch forming the register 41 now contains both pieces of the desired instruction, although the pieces may not be properly aligned, again as represented diagrammatically by Fig. 6. Further processing by the IDA data stage 39 and the register 41 aligns and combines the data bits of the two parts A and B into one 32-bit instruction, as represented diagrammatically by Fig. 7, and passes the combined instruction to the Decode stage 13, as in the earlier example.<br>
+[0059]	In the example, when the processing returned the first fetch address to<br>
+the start of the fetch pipeline 11, its initial pass was concurrently invalidated, so as not to pass to the Decode stage. Also, any stages of the pipeline higher than (preceding) the stage containing the second fetch address was flushed. When the first address is recycled, there are no address in-flight between it and the touch for the second address. When the pre-fetch is complete, the IDA stage 35 discards the address and the associated data in the IDA register 41. As a result, no instruction line data is output from the fetch pipeline 11 until the desired instruction is combined during the second pass through the instruction fetch pipeline.<br>
+[0060]	With this type of processing, only the IDA elements can initiate a fetch<br>
+from the higher level memory resources. This facilitates a high performance processor<br>
+design, in that there is only one stage in the instruction fetch processing that makes<br>
+requests to higher level memory resources. The recycled first address usually only<br>
+spends one cycle in Refetch 45 before dropping back into IC1, IC2, and then IDA. In<br>
+these cases, it usually is not possible that the L2 cache 25 has already returned the<br>
+second piece of the instruction data to the cache 23 in time for the second pass through<br>
+the fetch stages. Hence, IDA stage sits and waits on the L2 cache 25 and receives the<br>
+second half of the instruction data directly from the fill buffers 51, 53.<br>
+[0061]	In the preceding example, the processing of the two lines for the<br>
+instruction crossing the cache line boundary resulted in a hit-miss, in that the first line<br><br>
+WO 2006/125220	                                PCT/US2006/019789<br><br>
+contained part of the instruction but the second line did not. Substantially similar processing applies in the case where neither cache line contains the desired part of the instruction, that is to say the miss-miss case. In this later case, the processing for the first line obtains the data from the L2 cache 25 or main memory 27 and loads the line of instruction data into the instruction cache 23. Upon determining that the second line is a miss, the first address is recycled; the second fetch is converted to a touch; and processing continues as in the hit-miss example.<br>
+[0062]	The case where the first cache line does not contain part of the desired<br>
+instruction but the second line does (miss-hit) flows through the stages of the Fetch<br>
+section 11 very much like for the case of a hit-hit. The processing of the first line<br>
+results in a miss, but the IDA processing obtains the necessary line of instruction data<br>
+from higher level memory resources. The bits are selected from the fill buffers 51, 53 to<br>
+populate the IDA register 41 for the first line. After that, the processing of the second<br>
+line from the latch 37 (the hit on the second line) is the same as in the hit-hit example.<br>
+[0063]	To summarize the processing logic, a determination is made when an<br>
+instruction fetch operation first reaches the IDA stage 35 and has all of the instruction data for its targeted cache line available. The IDA stage determines if the instruction crosses a line boundary. If not, the IDA stage processes the instruction in the normal manner. If there is a line boundary crossing, however, the logic of the IDA stage 35 looks to the hit/miss indication from the cache 23 to determine if there is a hit on the next line that should contain the second piece of the boundary crossing instruction. If so, then the IDA stage can capture the second piece from the cache and provide the complete instruction to the Decode stage 13. However, if there is a miss on the next line pending in the IC2 stage 33, that is to say if the next cache line does not contain the necessary second piece of the boundary crossing instruction, then the IDA and IC2 stages implement the processing taught herein.<br>
+[0064]	In such a case, the IDA stage 35 invalidates the current fetch regarding<br>
+the first address and recycles the address for the first cache line, e.g. through the Re-Fetch stage 45. The address for the second line drops down to the IDA stage 35. However, in so doing, the process for the second address has been converted from a fetch type operation to a pre-fetch type operation. The IC1 stage is flushed. The IDA stage initiates operations to load the necessary instruction data from the L2 cache 25 and/or from the main memory 27.   By the time this upload is complete, the data is<br><br>
+WO 2006/125220	 	PCT/US2006/019789<br>
+stored in the instruction cache 23, and the IC1 stage 31 can resume processing from the recycled first address. As the two addresses flow through the stages of the Fetch section 11a second time, all necessary data for the boundary crossing instruction is present on the appropriate two lines in the cache memory 23, and the Fetch section can retrieve those pieces, compile the bits thereof into one instruction and output the instruction to the next stage down the pipeline 10, e.g. for decoding.<br>
+[0065]	The processing outlined above applies when the instruction cache 23 is<br>
+fully operational. However, similar processing may be applied to loading of data via the fill buffers 51 and 53, at times when the instruction cache 23 is disabled, e.g. during start-up. In that case, the process flow essentially results in a miss-miss situation in the lines of the cache 23. When the second address is converted to a touch, one of the fill buffers is used as a temporary cache to hold the relevant half of the line for the instruction piece B. When the first instruction cycles back through, the relevant portion of the first line is loaded to the other fill buffer, and the IDA Data section can compile the instruction from the two buffers 51 and 53, essentially as it would for an instruction that had not crossed a line boundary.<br>
+[0066]	The numbers of bits given in the discussion above, such as the 16 and 32<br>
+bit lengths of the different types of instructions, the 8-word length of the cache lines and the various sizes of the latches, registers and buffers are representative examples, only. Those skilled in the art will recognize that instruction lengths and the sizes of various components may be longer or shorter in different processor architectures and implementations. Also, there may be a wider range of possible instruction sizes in the mix, e.g. 16-bit, 32-bit, 64-bit or more. Further, the number of stages in the Fetch section 11 or even in the pipeline 10 may vary considerably, yet the processor may implement its fetch processing of instructions crossing line boundaries in accord with teachings discussed herein.<br>
+[0067]	While the foregoing has described what are considered to be the best<br>
+mode and/or other examples, it is understood that various modifications may be made therein and that the subject matter disclosed herein may be implemented in various forms and examples, and that the teachings may be applied in numerous applications, only some of which have been described herein. It is intended by the following claims to claim any and all applications, modifications and variations that fall within the true scope of the present teachings.<br><br>
+WO 2006/125220	 	PCT/US2006/019789<br><br>
+We Claim :<br>
+1.	A method of fetching an instruction from memory for execution in a<br>
+programmable processor, in which instructions may cross a memory line boundary, the<br>
+method comprising:<br>
+initially fetching a first line of instruction data in response to a first address;<br>
+determining from the first line of instruction data if an instruction to be fetched crosses a boundary between the first line of instruction data and a second line of instruction data, wherein the fetched first line of instruction data contains a first piece of the instruction to be fetched;<br>
+upon determining that the instruction to be fetched crosses the boundary, determining whether or not a line of cache memory corresponding to a second address contains a second piece of the instruction to be fetched;<br>
+upon determining that the cache memory corresponding to the second address does not contain the second piece of the instruction to be fetched:<br>
+(a)	invalidating the  initial  fetching of the  first  line  of instruction data and recycling the first address;<br>
+(b)	pre-fetching the second line of instruction data from a higher level memory resource;<br>
+(c)	in response to the recycled first address, fetching the first line of instruction data;<br>
+(d)	fetching the pre-feteched second line of instruction data in response to the second address; and<br>
+(e)	compiling the pieces of the instruction to be fetched from the fetched first and second lines of instruction data.<br><br>
+2.	The method of claim 1, wherein the invalidating the of initial fetching of the first line of instruction data prevents output of any of the instruction to be fetched from the initially fetched first line of instruction data to other elements of the processor.<br>
+3.	The method of claim 2, wherein the pre-fetching loads the second line of instruction data from the higher level memory resource into the cache memory without output of any of the second line of instruction data to other elements of the processor prior to the subsequent fetching of the second line of instruction data from the cache memory.<br><br>
+WO 2006/125220							PCT/US2006/019789<br><br>
+4.	The method of claim 3, wherein the step of pre-fetching entails converting a fetch operation with regard to the second address to a touch operation with regard to the second address.<br>
+5.	The method of claim 1, further comprising flushing any fetch related processing that may have already begun with respect to a subsequent address, upon the determining that the cache memory corresponding to the second address does not contain the second piece of the instruction to be fetched.<br>
+6.	A method of fetching an instruction for a programmable processor, comprising:<br>
+detecting that an instruction to be fetched crosses a boundary between instruction lines;<br>
+upon fetching a first line of instruction data containing a first piece of the boundary crossing instruction, detecting that a second piece of the boundary crossing instruction is not in cache memory;<br>
+in response to detecting that the second piece is not in the cache memory, recycling the fetch of the first line of instruction data without output of any of the instruction to be fetched from the first line of instruction data;<br>
+pre-fetching a second line of instruction data;<br>
+based on the recycling, fetching the first line of instruction data, and fetching the pre-fetched second line of instruction data; and<br>
+combining the pieces from the fetched first and second lines of instruction data to output the boundary crossing instruction.<br>
+7.	The method of claim 6, wherein the recycling of the fetch of the first line comprises invalidating any portion of the instruction to be fetched from the first line that has been fetched prior to the detection that the second piece is not in the cache memory.<br>
+8.	The method of claim 6, wherein the pre-fetching of the second line includes converting a fetching operation with regard to the second line to the prefetching with regard to the second line.<br>
+9.	The method of claim 6, further comprising flushing any fetch operation in progress between the pre-fetching of the second line and the re-cycled fetching of the first line.<br><br>
+WO 2006/125220	PCT/US2006/019789<br>
+10.	A fetch section for a pipeline processor, comprising:<br>
+an instruction cache;<br>
+a first instruction cache processing stage for identifying a cache line corresponding to each respective address in an input string of addresses;<br>
+a second instruction cache processing stage, responsive to each identification of a cache line, for reading instruction data from a line of memory in the cache corresponding to the respective address;<br>
+an instruction data alignment section, responsive to one or more lines of instruction data read by the second instruction cache processing stage for outputting fetched instructions, the instruction data alignment section also obtaining data from a higher level memory resource for any instruction or portion thereof not initially found in the instruction cache; and<br>
+means for recycling a fetch with regard to a first address to the first instruction cache processing stage and for converting a fetch with regard to second address to a pre-fetch to cause the instruction data alignment section to load a line of instruction data from the higher level memory resource to the instruction cache, upon detecting an instruction crosses a boundary between lines corresponding to the first and second addresses and a line of the cache corresponding to the second address does not initially contain a piece of the boundary crossing instruction.<br>
+11.	The fetch stage of claim 10, wherein each line of the instruction cache can store a plurality of instructions of two or more different lengths.<br>
+12.	The fetch stage of claim 10, wherein the means for recycling include a re-fetch stage for passing the first address back to an input of the first instruction cache processing stage.<br>
+13.	The pipeline processor comprising the fetch stage of claim 10, further comprising a decode stage for decoding the fetched instructions, a readout stage for obtaining operand data for processing in accord with decoded instructions, an execution stage for executing decoded instructions on operand data, and a write-back stage for writing execution results to storage.<br>
+14.	A fetch section for a pipeline processor, comprising:<br>
+an instruction cache;<br><br>
+WO 2006/125220		PCT/US2006/019789<br><br>
+at least one processing stage for processing each of a plurality of addresses in sequence, to identify a line of memory in the instruction cache that may contain an instruction or a portion thereof corresponding to each respective address and to read data from the identified line; and<br>
+means for detecting an instruction to be fetched crossing a cache line boundary and absence of a portion of the boundary crossing instruction in a second of two addressed cache lines, and in response, for invalidating a fetch with regard to an address corresponding to a first of the two cache lines and recycling the corresponding address for input to the at least one processing stage and pre-fetching data containing the absent portion to the second cache line from higher level memory to enable complete fetching of the instruction crossing the boundary on a second flow of the corresponding address through the fetch section.<br>
+15.	The fetch section as in claim 14, wherein the at least one processing<br>
+stage includes:<br>
+a first instruction cache processing stage for identifying a cache line corresponding to each respective address in an input string of addresses;<br>
+a second instruction cache processing stage, responsive to each identification of a cache line, for reading instruction data from a line of memory in the cache corresponding to the respective address; and<br>
+an instruction data alignment section, responsive to one or more lines of instruction data read by the second instruction cache processing stage for outputting fetched instructions, the instruction data alignment section also obtaining data from a higher level memory resource for any instruction or portion thereof not initially found in the instruction cache.<br>
+16.	The fetch stage of claim 14, wherein each line of the instruction cache can store a plurality of instructions of two or more different lengths.<br>
+17.	The fetch stage of claim 14, wherein the means for recycling include a re-fetch stage for passing the first address back to an input of the at least one processing stage.<br>
+18.	The pipeline processor comprising the fetch stage of claim 14, further comprising:   a decode stage for decoding the fetched instructions, a readout stage for<br><br>
+WO 2006/125220		PCT/US2006/019789<br><br>
+obtaining operand data for processing in accord with decoded instructions, an execution stage for executing decoded instructions on operand data, and a write-back stage for writing execution results to storage.<br><br><br><br>
+ABSTRACT<br>
+"HANDLING CACHE MISS IN AN INSTRUCTION CROSSING A CACHE LINE BOUNDARY"<br>
+A fetch section of a processor comprises an instruction cache and a pipeline of several stages for obtaining instructions. Instructions may cross cache line boundaries. The pipeline stages process two addresses to recover a complete boundary crossing instruction. During such processing, if the second piece of the instruction is not in the cache, the fetch with regard to the first line is invalidated and recycled. On this first pass, processing of the address for the second part of the instruction is treated as a prefetch request to load instruction data to the cache from higher level memory, without passing any of that data to the later stages of the processor. When the first line address passes through the fetch stages again, the second line address follows in the normal order, and both pieces of the instruction are can be fetched from the cache and combined in the normal manner.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUFCU1RSQUNUKDMtMTItMjAwNykucGRm" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-ABSTRACT(3-12-2007).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUFCU1RSQUNUKDUtMS0yMDEyKS5wZGY=" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-ABSTRACT(5-1-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUFCU1RSQUNUKEdSQU5URUQpLSgyMy01LTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-ABSTRACT(GRANTED)-(23-5-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWFic3RyYWN0LmRvYw==" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-abstract.doc</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUNBTkNFTExFRCBQQUdFUygyLTUtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-CANCELLED PAGES(2-5-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUNMQUlNUygzLTEyLTIwMDcpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-CLAIMS(3-12-2007).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUNMQUlNUyhBTUVOREVEKS0oMi01LTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-CLAIMS(AMENDED)-(2-5-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUNMQUlNUyhBTUVOREVEKS0oNS0xLTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-CLAIMS(AMENDED)-(5-1-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUNMQUlNUyhHUkFOVEVEKS0oMjMtNS0yMDEyKS5wZGY=" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-CLAIMS(GRANTED)-(23-5-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUNMQUlNUyhNQVJLRUQgQ09QWSktKDItNS0yMDEyKS5wZGY=" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-CLAIMS(MARKED COPY)-(2-5-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUNMQUlNUyhNQVJLRUQgQ09QWSktKDUtMS0yMDEyKS5wZGY=" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-CLAIMS(MARKED COPY)-(5-1-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWNsYWltcy5kb2M=" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-claims.doc</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWNvcnJlc3BvbmRlbmNlKDE5LTUtMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-correspondence(19-5-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUNPUlJFU1BPTkRFTkNFKDIyLTctMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-CORRESPONDENCE(22-7-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUNPUlJFU1BPTkRFTkNFKElQTyktKDIzLTUtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-CORRESPONDENCE(IPO)-(23-5-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWNvcnJlc3BvbmRlbmNlLXJlY2VpdmVkLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-correspondence-received.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LURFU0NSSVBUSU9OKENPTVBMRVRFKS0oMy0xMi0yMDA3KS5wZGY=" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-DESCRIPTION(COMPLETE)-(3-12-2007).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LURFU0NSSVBUSU9OKEdSQU5URUQpLSgyMy01LTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-DESCRIPTION(GRANTED)-(23-5-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LURSQVdJTkcoMy0xMi0yMDA3KS5wZGY=" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-DRAWING(3-12-2007).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LURSQVdJTkcoNS0xLTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-DRAWING(5-1-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LURSQVdJTkcoR1JBTlRFRCktKDIzLTUtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-DRAWING(GRANTED)-(23-5-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUZPUk0gMSg1LTEtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-FORM 1(5-1-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUZPUk0gMihDT01QTEVURSktKDMtMTItMjAwNykucGRm" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-FORM 2(COMPLETE)-(3-12-2007).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUZPUk0gMihHUkFOVEVEKS0oMjMtNS0yMDEyKS5wZGY=" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-FORM 2(GRANTED)-(23-5-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWZvcm0gMih0aXRsZSBwYWdlKS0oMy0xMi0yMDA3KS5wZGY=" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-form 2(title page)-(3-12-2007).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUZPUk0gMihUSVRMRSBQQUdFKS0oNS0xLTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-FORM 2(TITLE PAGE)-(5-1-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUZPUk0gMihUSVRMRSBQQUdFKS0oR1JBTlRFRCktKDIzLTUtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-FORM 2(TITLE PAGE)-(GRANTED)-(23-5-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUZPUk0gMjYoNS0xLTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-FORM 26(5-1-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWZvcm0gMygxOS01LTIwMDgpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-form 3(19-5-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUZPUk0gMygyMi03LTIwMTEpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-FORM 3(22-7-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LUZPUk0gMyg1LTEtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-FORM 3(5-1-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWZvcm0tMTgucGRm" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWZvcm0tMi5kb2M=" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-form-2.doc</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWZvcm0tMjYucGRm" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-form-26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LWZvcm0tcGN0LWliLTMwNC5wZGY=" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-form-pct-ib-304.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LXBjdC1zZWFyY2ggcmVwb3J0LnBkZg==" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-pct-search report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LVBFVElUSU9OIFVOREVSIFJVTEUgMTM3KDUtMS0yMDEyKS5wZGY=" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-PETITION UNDER RULE 137(5-1-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LVBST1NFQ1VUSU9OIEhJU1RPUlkgT0YgVVMgRE9DVU1FTlQoNS0xLTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-PROSECUTION HISTORY OF US DOCUMENT(5-1-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LVJFUExZIFRPIEVYQU1JTkFUSU9OIFJFUE9SVCg1LTEtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-REPLY TO EXAMINATION REPORT(5-1-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1NVU1OUC0yMDA3LVJFUExZIFRPIEhFQVJJTkcoMi01LTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">2043-MUMNP-2007-REPLY TO HEARING(2-5-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjA0My1tdW1ucC0yMDA3LXdvIGludGVybmF0aW9uYWwgcHVibGljYXRpb24gcmVwb3J0KDMtMTItMjAwNykucGRm" target="_blank" style="word-wrap:break-word;">2043-mumnp-2007-wo international publication report(3-12-2007).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QxLmpwZw==" target="_blank" style="word-wrap:break-word;">abstract1.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="252561-process-for-the-continuous-drying-of-polymers-containing-n-or-amino-ammonium-or-spirobicyclic-ammonium-groups.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="252563-titanium-dioxide-pigment-coated-with-hollow-bodies-and-production-method.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>252562</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2043/MUMNP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>21/2012</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>25-May-2012</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>23-May-2012</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>03-Dec-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>QUALCOMM INCORPORATED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>5775 MOREHOUSE DRIVE, SAN DIEGO, CALIFORNIA 92121-1714.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>STEMPEL, BRIAN, MICHAEL</td>
+											<td>1309 WELLWATER COURT, RALEIGH, NORTH CAROLINA 27614.</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>BRIDGES, JEFFREY, TODD</td>
+											<td>3513, TIMBERWOOD COURT, RALEIGH, NORTH CAROLINA 27606,</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>SMITH, RODNEY, WAYNE</td>
+											<td>1400 BASCOMB DRIVE, RALEIGH, NORTH CAROLINA 27614.</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>SARTORIUS, THOMAS, ANDREW</td>
+											<td>1600 OLDE CHIMNEY COURT, RALEIGH NORTH CAROLINA 27614.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F9/38,G06F12/08</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2006/019789</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2006-05-18</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>11/132,749</td>
+									<td>2005-05-18</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/252562-a-method-of-fetching-an-instruction-from-memory-for-execution-in-a-programmable-processor-and-a-fetch-section-thereof by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 13:18:08 GMT -->
+</html>

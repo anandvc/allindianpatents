@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/222748-a-transaction-queue-for-an-agent-a-managment-method-for-external-transactions-and-a-bus-sequencing-unit-of-an-agent by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 07:46:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 222748:A TRANSACTION QUEUE FOR AN AGENT, A MANAGMENT METHOD FOR EXTERNAL TRANSACTIONS, AND A BUS SEQUENCING UNIT OF AN AGENT.</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A TRANSACTION QUEUE FOR AN AGENT, A MANAGMENT METHOD FOR EXTERNAL TRANSACTIONS, AND A BUS SEQUENCING UNIT OF AN AGENT.</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>Embodiments of the present invention provide a multi-mode transaction queue 300 for a computer processing agent that prov ides a measured response to congestion events. The transaction queue may initially operate according to a default priority scheme. When a congestion event is detected, the transaction queue may engage a second priority scheme to selectively invalidate stored transactions in the queue that are pending, that is, transactions that have not been posted to the external bus. In one embodiment, the transaction queue may invalidate blind prefetch requests first. The transaction queue may also invalidate non-posted prefetch requests that are stored with an associated posted prefetch request. Finally, in an extreme congestion case, as when there is no available room for new requests from the processing agent, the transaction queue may invalidate a pair of non-posted patterned prefetch requests.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>FIELD OF THE INVENTION<br>
+The present invention relates to a transaction queue for an agent, a<br>
+management method for external transactions, and a bus sequencing unit of an<br>
+agent.<br>
+BACKGROUND<br>
+As is known, many modern computing systems employ a multi-agent<br>
+architecture. A typical system is shown in FIG. 1. There, a plurality of agents 110-160<br>
+communicates over an external bus 170 according to a predetermined bus protocol.<br>
+"Agents" may include general-purpose processors 110-140, memory controllers 150,<br>
+interface chipsets 160, input output devices and/or other integrated circuits that process<br>
+data requests (not shown). The bus 170 may permit several external bus transactions to<br>
+be in progress at once.<br>
+An agent (e.g., 110) typically includes a transaction management system that<br>
+receives requests from other components of the agent and processes external bus<br>
+transactions to implement the requests. A bus sequencing unit 200 ("BSU"), shown in<br>
+FIG. 2, is an example of one such transaction management system. The BSU 200 may<br>
+include an arbiter 210, an internal cache 220, an internal transaction queue 230, an<br>
+external transaction queue 240, an external bus controller 250 and a prefetch queue 260.<br>
+The BSU 200 manages transactions on the external bus 170 in response to data requests<br>
+issued by, for example, an agent core (not shown in FIG. 2).<br>
+The arbiter 210 may receive data requests not only from the core but also from<br>
+a variety of other sources such as the prefetch queue 260. Of the possibly several data<br>
+requests received simultaneously by the arbiter 210, the arbiter 210 may select and<br>
+output one of them to the remainder of the BSU 200.<br>
+The internal cache 220 may store data in several cache entries. It may possess<br>
+logic responsive to a data request to determine whether the cache 220 stores a valid<br>
+copy of requested data. "Data," as used herein, may refer to instruction data and<br>
+variable data that may be used by the agent. The internal cache 220 may furnish<br>
+requested data in response to data requests.<br>
+The internal transaction queue 230 also may receive and store data requests<br>
+issued by the arbiter 210. For read requests, it coordinates with the internal cache 220<br>
+to determine if the requested data "hits" (may be furnished by) the internal cache 220.<br>
+If not, if a data request "misses" the internal cache 220, the internal transaction queue<br>
+230 forwards the data request to the external transaction queue 240.<br>
+The external transaction queue 240 may interpret data requests and generate<br>
+external bus transactions to fulfill them. The external transaction queue 240 may be<br>
+populated by several queue registers. It manages the agent's transactions as they<br>
+progress on the external bus 170. For example, when data is available in response to<br>
+a transaction, the external transaction queue 240 retrieves the data and forwards it to a<br>
+requestor within the agent (for example, the core).<br>
+The prefetch queue 260 may identify predetermined patterns in read requests<br>
+issued by the core (not shown). For example, if the core issues read requests directed<br>
+to sequentially advancing memory locations (addresses A, A+l, A+2, A+3, ...) the<br>
+prefetch queue 260 may issue a prefetch request to read data from a next address in the<br>
+sequence (A+4) before the core actually requests the data itself. By anticipating a need<br>
+for data, the prefetch queue 260 may cause the data to be available in the internal cache<br>
+220 when the core issues a request for the data. The data would be furnished to the core<br>
+from the internal cache 220 rather than from external memory - a much faster<br>
+operation. Herein, this type of prefetch request is called a "patterned prefetch."<br>
+A BSU 200 may implement a second type of prefetch, herein called a "blind<br>
+prefetch." When a core issues a read request to data at an address (say, address B) that<br>
+will be fulfilled by an external bus transaction, a blind prefetch mechanism may cause<br>
+a second external bus transaction to retrieve data at a second memory address (B+l).<br>
+A blind prefetch may cause every read request from a core that cannot be fulfilled<br>
+internally to spawn a pair of external bus transactions. Blind prefetches may improve<br>
+processor performance by retrieving twice as many cache lines (or cache sectors) as are<br>
+necessary to satisfy the core read request. Again, if the core eventually requires data<br>
+from the data prefetched from the other address (B+l), the data may be available in the<br>
+internal cache 220 when the core issues a read request for the data. A blind prefetch<br>
+request also may be generated from a patterned prefetch request. Using the example<br>
+above, a patterned prefetch request to address A+4 may be augmented by a blind<br>
+prefetch to address A+5.<br>
+Returning to FIG. 1, it is well known that, particularly in multiprocessor<br>
+computer systems, the external bus 170 can limit system performance. The external bus<br>
+170 often operates at clock speeds that are much slower than the internal clock speeds<br>
+of the agents. A core often may issue several requests for data in the time that the<br>
+external bus 170 can complete a single external bus transaction. Thus, a single agent<br>
+can consume much of the bandwidth of an external bus 170. When a plural number of<br>
+agents must share the external bus 170, each agent is allocated only a fraction of the<br>
+bandwidth available on the bus 170. In multiple agent systems, agents very often must<br>
+wait idle while an external bus retrieves data that they need to make forward progress.<br>
+An external transaction queue 240 (FIG. 2) may include control logic that<br>
+prioritizes pending requests for posting to the external bus. Generally, core reads<br>
+should be prioritized over prefetch reads and prefetch reads should be prioritized over<br>
+writes. Core read requests identify data for which the core has an immediate need.<br>
+Prefetch read requests identify data that the core is likely to need at some point in the<br>
+future. Write requests identify data that the agent is returning to system storage.<br>
+Accordingly, the external transaction queue 240 may include control logic that posts<br>
+requests on the external bus according to this priority.<br>
+The predetermined priority scheme has its disadvantages. A request typically<br>
+is stored in the transaction queue 240 until it is completed on the external bus. During<br>
+periods of high congestion, when the transaction queue 240 is entirely or nearly full,<br>
+prefetch and write requests may prevent new core requests from being stored in the<br>
+queue 240. These lower priority requests would remain stored in the queue until an<br>
+external bus transaction for the request completes. Thus, the lower priority requests<br>
+may prevent higher priority requests from being implemented. This would limit system<br>
+performance.<br>
+Accordingly, there is a need in the art for a congestion management system for<br>
+an external transaction queue in an agent. There is a need in the art for such a system<br>
+that provides a dynamic priority system - maintaining a first priority scheme in the<br>
+absence of system congestion but implementing a second priority when congestion<br>
+events occur.<br>
+SUMMARY<br>
+Embodiments of the present invention provide a multi-mode transaction queue<br>
+for an agent. The transaction queue may operate according to a default priority scheme.<br>
+When a congestion event is detected, the transaction queue may engage a second<br>
+priority scheme.<br>
+Accordingly, the present invention provides a transaction queue for an<br>
+agent that operates according to a dynamic priority scheme, the transaction<br>
+queue operating to a default priority scheme and engaging a second priority<br>
+scheme when a congestion event is detected.<br>
+Accordingly, there is provided in an agent, a management method for<br>
+external transactions, comprising : queuing data of a plurality of read requests, for<br>
+each queued request, storing data of a blind prefetch transaction associated with<br>
+the respective request, when a transaction congestion event occurs, disabling<br>
+selected stored prefetch requests.<br>
+There is also provided in an agent, a management method for external<br>
+transactions, comprising : queuing data of a plurality of external bus transactions,<br>
+for at least one queued transaction, storing data of a blind prefetch transaction in<br>
+association with the respective transaction, when a transaction congestion event<br>
+occurs, disabling the blind prefetch transaction.<br>
+There is also provided in an agent, a management method for external<br>
+transactions, comprising : queuing data of a plurality of read requests, certain<br>
+read requests related to executions being performed by an agent core, certain<br>
+other read requests related to data being prefetched, when a transaction<br>
+congestion event occurs, disabling the prefetch requests.<br>
+There is further provided in an agent, a multi-mode management method<br>
+for external transactions, comprising : queuing data of a plurality of core read<br>
+requests, for each core read request, storing data of a blind prefetch transaction<br>
+associated with the respective core read request, queuing data of prefetch<br>
+requests related to patterns of core read requests, in a first mode, when a<br>
+transaction congestion event occurs, disabling the blind prefetch transactions, in<br>
+a second mode, when a transaction congestion event occurs, disabling the<br>
+prefetch requests.<br>
+The present invention also provides a transaction queue comprising : a<br>
+controller, a plurality of queue registers, each having an address field and status<br>
+fields associated with a pair of transactions related to the address, wherein, in<br>
+response to a congestion event, the controller modifies one of the status fields in<br>
+a register to invalidate the respective transaction.<br>
+The present invention further provides a bus sequencing unit of an agent,<br>
+comprising : an arbiter, an internal cache coupled to the arbiter, a transaction<br>
+queue coupled to the arbiter and storing data of external transactions to be<br>
+performed by the agent, the transactions selected from the group of core read<br>
+requests, blind prefetch requests and patterned prefetch requests, and an<br>
+external bus controller coupled to the transaction queue, wherein, in response to<br>
+a congestion event in the bus sequencing unit, the transaction queue invalidates<br>
+selected transactions.<br>
+The present invention further provides a congestion a management<br>
+method for external transactions, the external transactions stored in the<br>
+transaction queue in pairs and taken from the set of a core read requests-blind<br>
+prefetch request pair and a patterned prefetch request pair, comprising : receiving<br>
+a new request at a transaction queue, determining whether the transaction queue<br>
+has space to store the new request, if not, removing a pair of patterned prefetch<br>
+request from the transaction queue and storing the new request in the transaction<br>
+queue.<br>
+The present invention further provides a method comprising : operating a<br>
+transaction queue for an agent according to a default priority scheme ; and<br>
+operating the transaction queue according to a second priority scheme after a<br>
+congestion event is detected.<br>
+The present invention further provides a management method comprising :<br>
+queuing data of a plurality of read requests in an agent, for each queued request,<br>
+storing data of a blind prefetch transaction associated with the respective request,<br>
+if a transaction congestion event occurs, disabling second request stored prefetch<br>
+requests.<br>
+The present invention further provides a management method for external<br>
+transactions, comprising : queuing data of a plurality of external bus transactions<br>
+in an agent, for at least one queued transaction, storing data of a blind prefetch<br>
+transaction in association with the respective transaction, and if a transaction<br>
+congestion event occurs, disabling the blind prefetch transaction.<br>
+The present invention further provides a management method for external<br>
+transactions, comprising : queuing data of a plurality of read requests in an agent,<br>
+certain read requests related to executions to be performed by a core of the<br>
+agent, certain other read requests related to data to be prefetched, if a<br>
+transaction congestion event occurs, disabling the prefetch requests.<br>
+The present invention further provides a multi-mode management method<br>
+for external transactions, comprising : queuing data of a plurality of core read<br>
+requests in an agent, for each core read request, storing data of a blind prefetch<br>
+transaction associated with the respective core read request, queuing data of<br>
+prefetch requests related to patterns of core read requests, in a first mode, if a<br>
+transaction congestion event occurs, disabling the blind prefetch transactions, in<br>
+a second mode, if a transaction congestion event occurs, disabling the prefetch<br>
+requests.<br>
+The present invention further provides a transaction queue of an agent,<br>
+comprising : a plurality of queue registers, each comprising an address field and<br>
+status fields for a pair of transactions related to the address, and a controller to<br>
+respond to a congestion event by modifying a status field in a register to<br>
+invalidate the respective transaction.<br>
+The present invention further provides a bus sequencing unit of an agent,<br>
+comprising : an arbiter, an internal cache coupled to the arbiter, a transaction<br>
+queue, coupled to the arbiter, to store data of external transactions to be<br>
+performed by the agent, the transactions selected from the group of core read<br>
+requests, blind prefetch requests and patterned prefetch requests, the transaction<br>
+queue to invalidate a selected transaction in response to a congestion event in<br>
+the bus sequencing unit, and an external bus controller coupled to the transaction<br>
+queue.<br>
+The present invention also provides a congestion management method for<br>
+external transactions, comprising : receiving a new request at a transaction<br>
+queue, determining whether the transaction queue has space to store the new<br>
+request, if not removing a pair of patterned prefetch requests from the transaction<br>
+queue, and storing the new request in the transaction queue, wherein the<br>
+external transactions are stored in the transaction queue in pairs and taken from<br>
+a set of a core read request-blind prefetch request pair and a patterned prefetch<br>
+request pair.<br>
+BRIEF DESCRIPTION OF THE ACCOMPANYING DRAWINGS<br>
+Fig.1 is a block diagram of a multi-agent computer system.<br>
+Fig.2 is a block diagram of an exemplary bus sequencing unit of an agent.<br>
+Fig.3 is a block diagram of an external transaction queue of an agent<br>
+according to an embodiment of the present invention.<br>
+FIG. 4 is a flow diagram of a congestion management method according to an<br>
+embodiment of the present invention.<br>
+DETAILED DESCRIPTION<br>
+Embodiments of the present invention provide a transaction queue that provides<br>
+a measured response to congestion events. The transaction queue selectively invalidates<br>
+stored transactions in the queue that are pending - they are not currently posted to the<br>
+external bus. In one embodiment, the transaction queue invalidates blind prefetch<br>
+requests first. The transaction queue may also invalidate non-posted prefetch requests<br>
+that are stored with an associated posted prefetch request. Finally, in an extreme<br>
+congestion case, as when there is no available room for new requests, the transaction<br>
+queue may invalidate a pair of non-posted patterned prefetch requests.<br>
+These embodiments advantageously provide a transaction queue having a<br>
+dynamic priority scheme. In the absence of congestion, the transaction queue may<br>
+operate in accordance with a first priority scheme. For example, the transaction queue<br>
+may prioritize core read requests over prefetch requests and may prioritize prefetch<br>
+requests over write requests as is discussed above. When congestion events occur,<br>
+however, the transaction queue may engage a second priority scheme. For example, the<br>
+transaction queue may maintain core read requests as highest priority requests and<br>
+reprioritize write requests as the next-highest priority requests. The transaction queue<br>
+may invalidate prefetch requests that are stored in the transaction queue.<br>
+FIG. 3 is a block diagram of an external transaction queue 300 of an agent<br>
+according to an embodiment of the present invention. The external transaction queue<br>
+300 may include a controller 310 and a plurality of queue registers 320-1 through 320-N<br>
+(labeled 320 collectively). Each queue register may be populated by several fields<br>
+including an address field 330, a first status field 340 and a second status field 350.<br>
+The external transaction queue 300 may be appropriate for use in agents that<br>
+perform blind prefetches. The status fields 340, 350 each may store information about<br>
+a respective one of the external bus transactions that will be performed according to the<br>
+blind prefetch pair. The address field 330 may store a base address to which the<br>
+transactions will be directed. Typically there will be a predetermined relationship<br>
+between the address field 330 and the status fields 340,350. For example, if an address<br>
+D is stored the address field 330 of register 320-1, status field 340 may maintain status<br>
+information about a transaction directed to address D and status field 350 may maintain<br>
+status information about a second transaction directed to address D+l.<br>
+The status fields 340, 350 may store administrative information regarding the<br>
+respective transactions. Such information may include a request type, information<br>
+regarding the respective transaction's status on the external bus (i.e., whether it has been<br>
+posted, which transaction stage the request may be in, whether the transaction is<br>
+completed, etc.) and information regarding a destination of data that may be received<br>
+pursuant to the transaction. Typically, a transaction is cleared from a register 320 when<br>
+the status fields 340, 350 both indicate that their respective transactions have<br>
+completed.<br>
+According to an embodiment of the present invention, the status fields 340,350<br>
+each may include a sub-field that identifies whether the corresponding transaction is<br>
+generated pursuant to a core request ("C") or pursuant to a prefetch request ("P"). FIG.<br>
+3 illustrates an example where seven requests are core requests and the remainder are<br>
+prefetch requests. In this example, the transactions stored in registers 320-1, 320-4,<br>
+320-5, 320-6, 320-8, 320-11 and 320-N store transactions that were initiated by a core<br>
+requests. One of the status fields 340 or 350 of those registers identify the transaction<br>
+as originating from a core request; the other status field indicates a blind prefetch<br>
+requests.<br>
+The other registers 320-2, 320-3, 320-7, 320-9 and 320-10 identify patterned<br>
+prefetch requests augmented by blind prefetches. Both of the status fields 340, 350<br>
+indicate that the requests are prefetch requests.<br>
+The controller 310 interfaces the external transaction queue 300 to other<br>
+elements within the agent (See, for example, FIG. 2). The controller 310 may cause<br>
+transactions to be entered or removed from the queue registers 320 and may write data<br>
+into the address field 330 and to the status fields 340,350. The controller 310 also may<br>
+schedule an order for transactions to be posted on the external bus 170 (FIG. 1). In one<br>
+embodiment, the controller 310 may be a state machine.<br>
+According to an embodiment of the present invention, the controller 310 may<br>
+selectively disable prefetch requests during congestion events within the BSU 200. In<br>
+a first embodiment, when the transaction queue 300 experiences congestion, the<br>
+transaction queue may disable any blind prefetch transactions that have not been posted<br>
+on the external bus. This may be accomplished, for example, by marking the status<br>
+field of the blind prefetch transaction as completed even though the transaction was<br>
+never posted. In this embodiment, when the core read request is completed on the<br>
+external bus, the transaction may be evicted from the transaction queue 300.<br>
+In another embodiment, when the transaction queue experiences congestion, the<br>
+transaction queue 300 may evict any patterned prefetch request stored in the queue that<br>
+has not been posted on the external bus. The transaction queue 300 may evict non-<br>
+started prefetch requests simply by de-allocating the associated queue register.<br>
+In a further embodiment, when the transaction queue experiences congestion and<br>
+the transaction queue 300 stores patterned prefetch transactions that have been started,<br>
+the transaction queue 300 may disable any non-posted prefetch transaction in the<br>
+prefetch pair. Consider the patterned prefetch request illustrated in register 320-2 of<br>
+FIG 3. As shown, the status field 350 indicates that the first prefetch transaction is<br>
+pending but has not been posted on the external bus. By contrast, the status field 340<br>
+indicates that the second prefetch transaction has been posted on the external bus. In<br>
+this embodiment, the transaction queue 300 may mark the first transaction as completed<br>
+in response to a congestion event. In this case, the second prefetch request would be<br>
+permitted to continue to completion. When it completed, the transaction queue 300<br>
+could de-allocate register 320-2 because both status fields 340,350 identify completed<br>
+transactions.<br>
+FIG. 4 is a flow diagram of a method 1000 that may be performed by the<br>
+transaction queue 300 (FIG. 3) according to an embodiment of the present invention.<br>
+Upon a congestion event, the transaction queue may determine whether a new request<br>
+is input to the transaction queue (Step 1010). Upon receipt of a new request, the<br>
+transaction queue may determine whether a register is available for the new request<br>
+(Step 1020). If so, it stores the request in an available register (Step 1030). Storage of<br>
+requests may be performed according to conventional methods in the art. The<br>
+transaction queue 300 may determine a base address of the request and enter appropriate<br>
+information in the various fields 330-350 of the allocated register.<br>
+If at step 1020 there was no register available, then the transaction queue 300<br>
+may de-allocate a register associated with a pair of non-posted patterned prefetch<br>
+requests (Step 1040). In performance of this step, the transaction queue 300 may de-<br>
+allocate a patterned prefetch request for which both status fields 340, 350 indicate that<br>
+the respective transactions have not been posted to the external bus. If none of the<br>
+registers 320 identify a pair of prefetch requests that are not started, then the newly<br>
+received request may be stalled (step not shown). The request is prevented from<br>
+entering the transaction queue.<br>
+At the conclusion of step 1030 or if there was no received request at step 1010,<br>
+the transaction queue determines whether it is operating in a congested mode (Step<br>
+1050). If not, the transaction queue 300 may cease this iteration of the method 1000.<br>
+If the transaction queue 300 is operating in a congested mode, the transaction<br>
+queue determines whether it stores any pending blind prefetch transactions (Step 1060).<br>
+If so, the transaction queue 300 may disable one of the blind prefetch transactions (Step<br>
+1070). Step 1070 may apply to blind prefetches associated with a core request or a<br>
+patterned prefetch request. If not, or at the conclusion of Step 1070, the method may<br>
+conclude.<br>
+The method 1000 advantageously provides a measured response to congestion.<br>
+As a first response, the transaction queue invalidates blind prefetch requests from the<br>
+transaction queue. As discussed above, prefetch requests as a class are subordinated to<br>
+core requests. Experience also teaches that it is appropriate to subordinate blind<br>
+prefetches to patterned prefetches. Patterned prefetches are likely to be more efficient<br>
+than blind prefetches. Patterned prefetches are issued in response to an established<br>
+pattern of core reads from memory. Blind prefetches are not tied to any kind of<br>
+measurable indicia. Thus, patterned prefetches may be more likely to retrieve data that<br>
+the core eventually will request and should be retained in favor of blind prefetches.<br>
+When a blind prefetch is invalidated, it increases the rate at which registers 320<br>
+will be made available for use to newly received requests. As noted, blind prefetches<br>
+are associated with core read requests. Core read requests are the highest priority<br>
+request that is handled by the transaction queue - they are posted on the external bus at<br>
+the highest priority.<br>
+At a second level of priority, if the congestion continues even after all blind<br>
+prefetches have been invalidated, the transaction queue may invalidate pending<br>
+patterned prefetch requests that are associated with in-progress prefetch requests (Step<br>
+1080). Because one of the prefetch requests has already been posted to the external bus,<br>
+it is likely to conclude in a predetermined amount of time. However, even if it<br>
+concluded the status of the second pending prefetch request (the one that is invalidated<br>
+in step 1080) would prevent the associated register from being de-allocated. Step 1080,<br>
+by marking the pending prefetch request as completed, ensures that a register will be<br>
+de-allocated when the posted prefetch request concludes.<br>
+At a third level of priority, the transaction queue de-allocates a register that<br>
+stores a pair of pending prefetch requests in favor of a newly received request. This<br>
+occurs only when there are no registers available to the newly received request.<br>
+The principles of the present invention permit several different triggering events<br>
+to cause the transaction queue 300 to decide that it is operating in a congested mode.<br>
+In a first embodiment, the transaction queue 300 may determine that it is congested<br>
+based on a number of allocated or unallocated registers 320 in the queue. For example,<br>
+if the transaction queue determines that the registers were 90% or 100% full, it may<br>
+decide that it is operating in a congested mode.<br>
+In a second example, the transaction queue may determine that a congestion<br>
+event has occurred based on measured latency of the external bus. As is known, agents<br>
+typically operate according to a predetermined bus protocol. The bus protocol may<br>
+establish rules governing when new requests may be posted on the external bus and<br>
+which of possibly many agents may post a new request on the bus for each request<br>
+"slot," each opportunity to post a new request on the bus. In such an embodiment, the<br>
+transaction queue 300 may measure a number of request slots that pass before the<br>
+transaction queue 300 acquires ownership of the bus. If the measured number of slots<br>
+exceeds some predetermined threshold, the transaction queue 300 may determine that<br>
+a congestion event has occurred.<br>
+According to another embodiment, the transaction queue 300 may respond to<br>
+a congestion event differently depending upon a type of congestion that is detected.<br>
+Consider an example where the transaction queue can detect the two types of triggering<br>
+events described above: 1) that the number of available registers drops below some<br>
+threshold number (say, the transaction queue is entirely full), and 2) that measured<br>
+latency on the external bus exceeds a threshold amount. According to an embodiment,<br>
+the transaction queue 300 may invalidate all prefetch requests when the transaction<br>
+queue 300 is entirely full but it may invalidate only the blind prefetch requests when the<br>
+measured latency on the external bus exceeds the threshold. This embodiment may be<br>
+advantageous because it provides for a simple implementation and distinguishes<br>
+between congestion events of low and high severity.<br>
+The preceding discussion has distinguished among pending and posted requests.<br>
+Herein, a posted request is one that has begun on the external bus. Typically, an<br>
+external bus is defined by a predetermined bus protocol, one that specifies incremental<br>
+stages that a transaction undergoes toward completion. The congestion management<br>
+methods described in the foregoing embodiments do not disturb transactions that have<br>
+been posted. By contrast, a pending request is one that is stored within the BSU but has<br>
+not begun on the external bis. The congestion management methods of the present<br>
+invention may invalidate pending requests according to those techniques described in<br>
+the foregoing embodiments.<br>
+As shown above, embodiments of the present invention provide a transaction<br>
+queue 300 that may operate according to a dynamic priority scheme. A first priority<br>
+scheme may be defined for the transaction queue in the absence of congestion. But<br>
+when congestion is detected, the transaction queue may implement a second priority<br>
+scheme. In the embodiments described above, the transaction queue may invalidate<br>
+prefetch requests.<br>
+The congestion management techniques described in the foregoing embodiments<br>
+are directed to read requests that are processed by transaction management systems. As<br>
+is known, a BSU may process other types of requests, such as write requests, that are<br>
+not intended to cause data to be read into an agent. The congestion management<br>
+techniques described in the foregoing embodiments are not intended to disturb the<br>
+methods by which a transaction management system processes these other types of<br>
+requests.<br>
+Several embodiments of the present invention are specifically illustrated and<br>
+described herein. However, it will be appreciated that modifications and variations of<br>
+the present invention are covered by the above teachings and within the purview of the<br>
+appended claims without departing from the spirit and intended scope of the invention.<br>
+WE CLAIM :<br>
+1. A transaction queue for an agent that operates according to a dynamic<br>
+priority scheme, the transaction queue operating to a default priority scheme and<br>
+engaging a second priority scheme when a congestion event is detected.<br>
+2. In an agent, a management method for external transactions, comprising :<br>
+queuing data of a plurality of read requests,<br>
+for each queued request, storing data of a blind prefetch transaction<br>
+associated with the respective request,<br>
+when a transaction congestion event occurs, disabling selected stored<br>
+prefetch requests.<br>
+3. The management method as claimed in claim 1, wherein the transaction<br>
+congestion event occurs when a number of queued requests exceeds a<br>
+predetermined threshold.<br>
+4. The management method as claimed in claim 1, wherein the transaction<br>
+congestion event occurs when a queue that stores the queued request becomes<br>
+full.<br>
+5. The management method as claimed in claim 1, wherein the transaction<br>
+congestion event occurs when a measured latency of posted transactions<br>
+exceeds a predetermined threshold.<br>
+6. In an agent, a management method for external transactions, comprising :<br>
+queuing data of a plurality of external bus transactions,<br>
+for at least one queued transaction, storing data of a blind prefetch<br>
+transaction in association with the respective transaction,<br>
+when a transaction congestion event occurs, disabling the blind prefetch<br>
+transaction.<br>
+7. The management method as claimed in claim 6, wherein the transaction<br>
+congestion event occurs when a number of queued requests exceeds a<br>
+predetermined threshold.<br>
+8. The management method as claimed in claim 6, wherein the transaction<br>
+congestion event occurs when a queue that stores the queued request becomes<br>
+full.<br>
+9. The management method as claimed in claim 6, wherein the transaction<br>
+congestion event occurs when a measured latency of posted transactions<br>
+exceeds a predetermined threshold.<br>
+10. In an agent, a management method for external transactions, comprising :<br>
+queuing data of a plurality of read requests, certain read requests related<br>
+to executions being performed by an agent core, certain other read requests<br>
+related to data being prefetched,<br>
+when a transaction congestion event occurs, disabling the prefetch<br>
+requests.<br>
+11. The management method as claimed in claim 10, wherein the transaction<br>
+congestion event occurs when a number of queued requests exceeds a<br>
+predetermined threshold.<br>
+12. The management method as claimed in claim 10, wherein the transaction<br>
+congestion event occurs when a queue that stores the queued request becomes<br>
+full.<br>
+13. The management method as claimed in claim 10, wherein the transaction<br>
+congestion event occurs when a measured latency of posted transactions<br>
+exceeds a predetermined threshold.<br>
+14. In an agent, a multi-mode management method for external transactions,<br>
+comprising :<br>
+queuing data of a plurality of core read requests,<br>
+for each core read request, storing data of a blind prefetch transaction<br>
+associated with the respective core read request,<br>
+queuing data of prefetch requests related to patterns of core read<br>
+requests,<br>
+in a first mode, when a transaction congestion event occurs, disabling the<br>
+blind prefetch transactions,<br>
+in a second mode, when a transaction congestion event occurs, disabling<br>
+the prefetch requests.<br>
+15. The management method as claimed in claim 14, wherein the transaction<br>
+congestion event occurs when a number of queued requests exceeds a<br>
+predetermined threshold.<br>
+16. The management method as claimed in claim 14, wherein the transaction<br>
+congestion event occurs when a queue that stores the queued request becomes<br>
+full.<br>
+17. The management method as claimed in claim 14, wherein the transaction<br>
+congestion event occurs when a measured latency of posted transactions<br>
+exceeds a predetermined threshold.<br>
+18. A transaction queue comprising :<br>
+a controller,<br>
+a plurality of queue registers, each having an address field and status<br>
+fields associated with a pair of transactions related to the address,<br>
+wherein, in response to a congestion event, the controller modifies one of<br>
+the status fields in a register to invalidate the respective transaction.<br>
+19. The transaction queue as claimed in claim 18, wherein<br>
+the transaction queue stores core read requests, blind prefetch requests<br>
+and patterned prefetch requests, and<br>
+the invalidated transaction is a blind prefetch request.<br>
+20. The transaction queue as claimed in claim 19, wherein, when there are no<br>
+valid blind prefetch requests, the controller invalidates a patterned prefetch<br>
+request.<br>
+21. A bus sequencing unit of an agent, comprising :<br>
+an arbiter,<br>
+an internal cache coupled to the arbiter,<br>
+a transaction queue coupled to the arbiter and storing data of external<br>
+transactions to be performed by the agent, the transactions selected from the<br>
+group of core read requests, blind prefetch requests and patterned prefetch<br>
+requests, and<br>
+an external bus controller coupled to the transaction queue,<br>
+wherein, in response to a congestion event in the bus sequencing unit, the<br>
+transaction queue invalidates selected transactions.<br>
+22. The bus sequencing unit as claimed in claim 21, wherein the selected<br>
+transaction is a blind prefetch request.<br>
+23. The bus sequencing unit as claimed in claim 21, wherein when there are<br>
+no blind prefetch requests in the transaction queue, the selected transaction is a<br>
+patterned prefetch request.<br>
+24. A congestion a management method for external transactions, the external<br>
+transactions stored in the transaction queue in pairs and taken from the set of a<br>
+core read requests-blind prefetch request pair and a patterned prefetch request<br>
+pair, comprising :<br>
+receiving a new request at a transaction queue,<br>
+determining whether the transaction queue has space to store the new<br>
+request,<br>
+if not,<br>
+removing a pair of patterned prefetch request from the transaction<br>
+queue and<br>
+storing the new request in the transaction queue.<br>
+25. The congestion management method as claimed in claim 24, comprising<br>
+invalidating a blind prefetch request.<br>
+26. The congestion management method as claimed in claim 24, comprising<br>
+invalidating a first patterned prefetch request when a second patterned prefetch<br>
+request in the pair has been posted.<br>
+27. The transaction queue as claimed in claim 1, wherein the default priority<br>
+scheme prioritizes core read requests over prefetch requests and the prefetch<br>
+requests over write requests, and<br>
+when the second priority scheme prioritizes core read requests over the<br>
+write requests and the write requests over the prefetch requests.<br>
+28. A method comprising :<br>
+operating a transaction queue for an agent according to a default priority<br>
+scheme; and<br>
+operating the transaction queue according to a second priority scheme<br>
+after a congestion event is detected.<br>
+29. A management method comprising :<br>
+queuing data of a plurality of read requests in an agent,<br>
+for each queued request, storing data of a blind prefetch transaction<br>
+associated with the respective request,<br>
+if a transaction congestion event occurs, disabling second request stored<br>
+prefetch requests.<br>
+30. The management method as claimed in claim 29, wherein the transaction<br>
+congestion event occurs if a number of queued requests exceeds a<br>
+predetermined threshold.<br>
+31. The management method as claimed in claim 29, wherein the transaction<br>
+congestion event occurs if a queue that stores the queued request becomes full.<br>
+32. The management method as claimed in claim 29, wherein the transaction<br>
+congestion event occurs if a measured latency of posted transactions exceeds a<br>
+predetermined threshold.<br>
+33. A management method for external transactions, comprising :<br>
+queuing data of a plurality of external bus transactions in an agent,<br>
+for at least one queued transaction, storing data of a blind prefetch<br>
+transaction in association with the respective transaction, and<br>
+if a transaction congestion event occurs, disabling the blind prefetch<br>
+transaction.<br>
+34. The management method as claimed in claim 33, wherein the transaction<br>
+congestion event occurs if a number of queued requests exceeds a<br>
+predetermined threshol.<br>
+35. The management method as claimed in claim 33, wherein the transaction<br>
+congestion event occurs if a queue that stores the queued request becomes full.<br>
+36. The management method as claimed in claim 33, wherein the transaction<br>
+congestion event occurs if a measured latency of posted transactions exceeds a<br>
+predetermined threshold.<br>
+37. A management method for external transactions, comprising :<br>
+queuing data of a plurality of read requests in an agent, certain read<br>
+requests related to executions to be performed by a core of the agent, certain<br>
+other read requests related to data to be prefetched,<br>
+if a transaction congestion event occurs, disabling the prefetch requests.<br>
+38. The management method as claimed in claim 37, wherein the transaction<br>
+congestion event occurs if a number of queued requests exceeds a<br>
+predetermined threshold.<br>
+39. The management method as claimed in claim 37, wherein the transaction<br>
+congestion event occurs if a queue that stores the queued request becomes full.<br>
+40. The management method as claimed in claim 37, wherein the transaction<br>
+congestion event occurs if a measured latency of posted transactions exceeds a<br>
+predetermined threshold.<br>
+41. A multi-mode management method for external transactions, comprising :<br>
+queuing data of a plurality of core read requests in an agent,<br>
+for each core read request, storing data of a blind prefetch transaction<br>
+associated with the respective core read request,<br>
+queuing data of prefetch requests related to patterns of core read<br>
+requests,<br>
+in a first mode, if a transaction congestion event occurs, disabling the blind<br>
+prefetch transactions,<br>
+in a second mode, if a transaction congestion event occurs, disabling the<br>
+prefetch requests.<br>
+42. The management method as claimed in claim 41, wherein the transaction<br>
+congestion event occurs if a number of queued requests exceeds a<br>
+predetermined threshold.<br>
+43. The management method as claimed in claim 41, wherein the transaction<br>
+congestion event occurs if a queue that stores the queued request becomes full.<br>
+44. The management method as claimed in claim 41, wherein the transaction<br>
+congestion event occurs if a measured latency of posted transactions exceeds a<br>
+predetermined threshold.<br>
+45. A transaction queue of an agent, comprising :<br>
+a plurality of queue registers, each comprising an address field and status<br>
+fields for a pair of transactions related to the address, and<br>
+a controller to respond to a congestion event by modifying a status field in<br>
+a register to invalidate the respective transaction.<br>
+46. The transaction queue as claimed in claim 45, wherein :<br>
+the status field indicates a type of request including core read requests,<br>
+blind prefetch requests and patterned prefetch requests, and<br>
+the invalidated transaction is a blind prefetch request.<br>
+47. The transaction queue as claimed in claim 46, wherein, if there are no<br>
+valid blind prefetch requests in the transaction queue, the controller is to modify a<br>
+status field in a register to invalidate a patterned prefetch request.<br>
+48. A bus sequencing unit of an agent, comprising :<br>
+an arbiter,<br>
+an internal cache coupled to the arbiter,<br>
+a transaction queue, coupled to the arbiter, to store data of external<br>
+transactions to be performed by the agent, the transactions selected from the<br>
+group of core read requests, blind prefetch requests and patterned prefetch<br>
+requests, the transaction queue to invalidate a selected transaction in response<br>
+to a congestion event in the bus sequencing unit, and<br>
+an external bus controller coupled to the transaction queue.<br>
+49. The bus sequencing unit as claimed in claim 48, wherein the selected<br>
+transaction is a blind prefetch request.<br>
+50. The bus sequencing unit as claimed in claim 48, wherein, if there are no<br>
+blind prefetch requests in the transaction queue, the selected transaction is a<br>
+patterned prefetch request.<br>
+51. A congestion management method for external transactions, comprising :<br>
+receiving a new request at a transaction queue,<br>
+determining whether the transaction queue has space to store the new<br>
+request,<br>
+if not<br>
+removing a pair of patterned prefetch requests from the transaction<br>
+queue, and<br>
+storing the new request in the transaction queue,<br>
+wherein the external transactions are stored in the transaction<br>
+queue in pairs and taken from a set of a core read request-blind prefetch request<br>
+pair and a patterned prefetch request pair.<br>
+52. The congestion management method as claimed in claim 51, comprising<br>
+invalidating a blind prefetch request.<br>
+53. The congestion management method as claimed in claim 51, comprising<br>
+invalidating a first patterned prefetch request if a second patterned prefetch<br>
+request in a pair has been posted.<br>
+54. The method as claimed in claim 28,<br>
+wherein the default priority scheme prioritizes core read requests over<br>
+prefetch requests and the prefetch requests over write requests, and<br>
+wherein the second priority scheme prioritizes the core read requests over<br>
+the write requests and the write requests over the prefetch requests.<br>
+55. A transaction queue for an agent, substantially as herein described,<br>
+particularly with reference to and as illustrated in the accompanying drawings.<br>
+56. A management method for external transactions, substantially as herein<br>
+described, particularly with reference to and as illustrated in the accompanying<br>
+drawings.<br>
+57. A bus sequencing unit of an agent, substantially as herein described,<br>
+particularly with reference to and as illustrated in the accompanying drawings.<br>
+58. A congestion management method, substantially as herein described,<br>
+particularly with reference to and as illustrated in the accompanying drawings.<br>
+Embodiments of the present invention provide a multi-mode transaction<br>
+queue 300 for a computer processing agent that prov ides a measured<br>
+response to congestion events. The transaction queue may initially operate<br>
+according to a default priority scheme. When a congestion event is detected,<br>
+the transaction queue may engage a second priority scheme to selectively<br>
+invalidate stored transactions in the queue that are pending, that is,<br>
+transactions that have not been posted to the external bus. In one<br>
+embodiment, the transaction queue may invalidate blind prefetch requests first.<br>
+The transaction queue may also invalidate non-posted prefetch requests that<br>
+are stored with an associated posted prefetch request. Finally, in an extreme<br>
+congestion case, as when there is no available room for new requests from the<br>
+processing agent, the transaction queue may invalidate a pair of non-posted<br>
+patterned prefetch requests.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+		<br>
+		<div class="pull-left">
+			<a href="222747-a-method-and-system-for-providing-efficiency-and-cost-analysis-for-a-power-generation-unit.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="222749-method-and-apparatus-for-calling-up-an-internet-or-e-mail-address.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>222748</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>IN/PCT/2002/00767/KOL</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>34/2008</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>22-Aug-2008</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>21-Aug-2008</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>10-Jun-2002</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>INTEL CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>2200 MISSION COLLEGE BOULEVARD, SANTA CLARA, CALIFORNIA 95052-8119 U.S.A</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>HILL DAVID L</td>
+											<td>37000 S.W. GODDARD ROAD CORNELIUS, OREGON 97113 U.S.A</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>BACHAND DEREK T</td>
+											<td>821 N.W. 11TH AVENUE # 411 PORTLAND, OREGON 97209 U.S.A</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>PRUDVI CHINNA B</td>
+											<td>17924 NW DEERFIELD DRIVE PORTLAND,OREGON 97229</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>MARR DEBORAH T</td>
+											<td>2564 NW PETTYGROVE STREET PORTLAND, OREGON 97210</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 13/368,13/16</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US00/32154</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2000-11-28</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td></td>
+									<td></td>
+								    <td>NA</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/222748-a-transaction-queue-for-an-agent-a-managment-method-for-external-transactions-and-a-bus-sequencing-unit-of-an-agent by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 07:46:52 GMT -->
+</html>

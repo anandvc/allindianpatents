@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/257749-method-and-apparatus-for-handling-data-blocks-in-a-mobile-communications-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 07:34:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 257749:METHOD AND APPARATUS FOR HANDLING DATA BLOCKS IN A MOBILE COMMUNICATIONS SYSTEM</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD AND APPARATUS FOR HANDLING DATA BLOCKS IN A MOBILE COMMUNICATIONS SYSTEM</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method and apparatus for handling data blocks in a mobile communications system are disclosed. The method comprises receiving, at a receiving module, data blocks associated with a sequence number; determining, using a determining module, whether the sequence number of the received data blocks is outside a receiver window; comparing, using a comparing module, a next-expected transmission sequence number (NET) with a range of an updated receiver window when the sequence number of the received data blocks is determined to be outside the receiver window; and setting, using a setting module, the NET such that the NET is within the updated receiver window, if the NET is found to be outside that range of the updated receiver window as a result of the comparison.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+Description<br>
+Technical Field<br>
+[1]	The present invention relates to wireless (radio) communications, and in particular,<br>
+to handling data blocks by updating a next-expected TSN and receiver window to<br>
+avoid stall conditions.<br>
+Background Art<br>
+[2]	The present invention relates to controlling a reordering buffer by a user equipment<br>
+(UE) that employs a next-expected transmission sequence number (TSN) and a<br>
+receiver window for a HSDPA (High-Speed Downlink Packet Access) system in a<br>
+UMTS (Universal Mobile Telecommunications System), which is a European type<br>
+IMT-2000 system, and more particularly, to controlling the reordering buffer to<br>
+prevent stall conditions due to MAC-hs PDUs not being delivered to the upper layer<br>
+when the next-expected TSN Ms outside the receiver window range.<br>
+[3]	The UMTS (Universal Mobile Telecommunications System) is a third generation<br>
+mobile communications system that evolved from the European GSM (Global System<br>
+for Mobile Communications) system, with the purpose of providing farther improved<br>
+mobile communications service based upon a GSM core network and W-CDMA<br>
+(Wideband Code Division Multiple Access) technology.<br>
+[4]	Figure 1 depicts a typical UMTS network (100) architecture. The UMTS broadly<br>
+consists of user equipment (UE 110), a UMTS Terrestrial Radio Access Network<br>
+(UTRAN120), and a core network (CN130). The UTRAN consists of one or more<br>
+radio network sub-systems (RNS 121,122), and each RNS consists of one radio<br>
+network controller (RNC 123,124) and one or more base stations (Node Bs 125,126)<br>
+mat are managed by the RNC The Node B, being managed by the RNC, receives data<br>
+sent from a physical layer of the UE via the uplink and transmits data to the UE via the<br>
+downlink, to thus act as an access point of the UTRAN with respect to the UE The <br>
+RNC handles the allocation and management of radio resources, and acts as an access<br>
+point with the CN.<br>
+[5]	An RNC that manages dedicated radio resources for a particular UE is called a<br>
+serving RNC (SRNC 123), and an RNC that manages common radio resources for a<br>
+plurality of UEs within one cell is called a controlling RNC (CRNC). Also, when the<br>
+UE moves, all RNCs that the UE goes through (excluding the SRNC) are called drift<br><br>
+RNCs (DRNCs 124). The drift RNCs 124 facilitate the routing of user data and<br>
+allocate codes as common resources.<br>
+[6]	The interface between the RNC and the CN is called an Iu interface. The interface<br>
+between the SRNC and the DRNC is called an Iur interface. The interface between the<br>
+RNC and Node B is called an Iub interface. Each interface provides control data or<br>
+data transmission services via a transport bearer. For example, the bearer provided in<br>
+the Iub interface is called a Iub transport bearer, which provides control data or data<br>
+transmission services between the RNC and Node B.<br>
+[7]	Figure 2 depicts a radio interface protocol architecture based upon a 3GPP radio<br>
+access network specification between the UE and the UTRAN. The radio interface<br>
+protocol of Figure 2 is divided horizontally into a physical layer, a data link layer, and<br>
+a network layer, and is divided vertically into a user plane for data information<br>
+transmissions and a control plane for transfer of control signaling. Namely, the user<br>
+plane is the region in which traffic information of the user (such as voice, IP (Internet<br>
+Protocol) packets, and the like) is transferred, while the control plane is the region in<br>
+which control information (such as the interface of the network, maintaining and<br>
+managing calls, and the like) is transferred. The protocol layers of Figure 2 may be<br>
+divided into a first layer (L1), a second layer (L2), and a third layer (L3) based upon<br>
+the lower three layers of an open system interconnection (OSI) model that is a well-<br>
+known in communications systems. <br>
+[8]	Each layer depicted in Figure 2 will now be described in more detail. The first layer<br>
+(L1) is a physical layer (PHY) that provides information transfer service to upper<br>
+layers by using various radio transmission techniques, and is connected to a medium<br>
+access control (MAC) layer that is located thereabove via a transport channel through<br>
+which data travels between the MAC layer and the physical layer.<br>
+[9]	The MAC layer provides data transfer, reallocation of radio resources and MAC<br>
+parameters. The MAC layer is connected to a radio link control (RLC) layer, which is<br>
+an upper layer, via a logical channel, and various logical channels are provided<br>
+depending upon the type of data that is transmitted.<br>
+[10]	In general, when information of the control plane is transmitted, a control channel is<br>
+used. When information of the user plane is transmitted, a traffic channel is used.<br>
+[11]	The MAC layer is sub-divided into a MAC-b sub-layer, a MAC-d sub-layer (310), a<br>
+MAC-c/sb sub-layer (320), and a MAC-hs sub-layer (330), according to the type of<br>
+transport channel that is managed.<br>
+[ 12]	The MAC-b sub-layer manages a BCH (Broadcast Channel), which is a transport<br><br>
+channel handling the broadcasting of system information.<br>
+[13]	The MAC-d sub-layer (310) manages a dedicated channel (DCH), which is a<br>
+dedicated transport channel for a specific terminal. Accordingly, the MAC-d sub-layer<br>
+of the UTRAN is located in a serving radio network controller (SRNC) that manages a<br>
+corresponding terminal, and one MAC-d sub-layer also exists within each UE<br>
+[14]	The MAC-c/sh sub-layer (320) manages a common transport channel, such as a<br>
+forward access channel (FACH) or a downlink shared channel (DSCH), which is<br>
+shared by a plurality of terminals. In the UTRAN, the MAC-c/sh sub-layer exists for<br>
+each cell and is located in a controlling radio network controller (CRNC), and one<br>
+MAC-c/sh sub-layer exists in each UE<br>
+[ 15]	The MAC-hs sub-layer (330) performs the functions related to HSDPA<br>
+(High-Speed Data Packet Access) such as packet scheduling, HARQ (Hybrid ARQ)<br>
+operations, and the like.<br>
+[16]	The RLC layer supports reliable data transmissions, and performs a segmentation<br>
+and concatenation function on a plurality of RLC service data units (RLC SDUs)<br>
+delivered from an upper layer. When the RLC layer receives the RLC SDUs from the<br>
+upper layer, the RLC layer adjusts the size of each RLC SDU in an appropriate manner<br>
+upon considering processing capacity, and then creates certain data units with header<br>
+information added thereto. The created data units are called protocol data units<br>
+(PDUs), which are men transferred to the MAC layer via a logical channel.'The RLC<br>
+layer includes a RLC buffer for storing the RLC SDUs and/or the RLC PDUs.<br>
+[17]	The BMC (Broadcast/Multicast Control) layer is located above the RLC layer, and<br>
+schedules cell broadcast messages (referred to as 'CB messages', hereinafter) received<br>
+from the core network, and broadcasts the CB messages to UEs located in a specific<br>
+cell(s).<br>
+[18]	The PDCP (Packet Data Convergence Protocol) layer is located above the RLC<br>
+layer, and allows the data transmitted through a network protocol (such as an IPv4 or<br>
+IPv6) to be effectively transmitted on a radio interface with a relatively small<br>
+bandwidth. To achieve this, the PDCP layer performs the function of reducing un-<br>
+necessary control information used for a wire-line network, and this type of function is<br>
+called, header compression.<br>
+[ 19]	There is a radio resource control (RRC) layer at a lowermost portion of the L3<br>
+layer. The RRC layer is defined only in the control plane, and handles the controlling<br>
+of logical channels, transport channels, and physical channels with respect to es-<br>
+tablishment, reconfiguration, and release of radio bearers (RBs). The radio bearer<br><br>
+service refers to a service that the second layer (L2) provides for data transmission<br>
+between the terminal and the UTRAN in order to guarantee a predetermined quality of<br>
+service by the UE and UTRAN. And in general, the radio bearer (RB) establishment<br>
+refers to regulating the protocol layers and the channel characteristics of the channels<br>
+required for providing a specific service, as well as respectively setting substantial<br>
+parameters and operation methods.<br>
+[20]	When the RRC layer of a particular UE and that of the UTRAN are connected to<br>
+allow RRC messages to be sent and received therebetween, that UE is said to be in<br>
+RRC connected state. If there is no such connection, that UE is said to be in idle state.<br>
+[21]	The HSDPA system is based on WCDMA, supports a maximum speed of 10 Mbps,<br>
+and provides shorter delay times and improved capacity compared to existing systems.<br>
+[22]	Figure 3 shows a radio interface protocol structure for supporting a HSDPA system.<br>
+A terminal (UE) and a network (UTRAN) respectively contain corresponding protocol<br>
+layers. For example, the MAC layer is divided into a MAC-d sub-layer, a MAC c/sh<br>
+sub-layer, and a MAC-hs sub-layer. At the network, the MAC-hs sub-layer can be<br>
+positioned above the physical layer (PHY) of a Node B (base station). The MAC-c/sh<br>
+and the MAC-d sub-layers are located in the CRNC and the SRNC, respectively. A<br>
+new transmission protocol called the HS-DSCH frame protocol (FP) is used between<br>
+the RNC and the Node B, or among the RNCs for the delivery of HSDPA data.<br>
+[23] Figure 4 also shows a more detailed terminal side MAC architecture for supporting<br>
+the HSDPA system. As shown, the MAC layer is divided into a MAC-d sub-layer<br>
+(310), a MAC-c/sh sub-layer (320), and a MAC-hs sub-layer (330).<br>
+[24]	The manner in which the MAC layer receives the data from the physical layer and<br>
+delivers it to the RLC layer will now be described. The data block (MAC-hs PDU)<br>
+delivered to the MAC-hs sub-layer (330) through the HS-DSCH (High-Speed<br>
+Downlink Shared Channel) is first stored in one of the HARQ processes within the<br>
+HARQ block (331). In which process the data block is stored can be known from the<br>
+HARQ process identifier included in the downlink control signal.<br>
+[25]	The HARQ process, in which the data block is stored, transmits the NACK<br>
+(Negative Acknowledgement) to the UTRAN when there are errors in the data block<br>
+and requests the re-transmission of the data block. When no errors exist, the HARQ<br>
+process delivers the data block to a reordering buffer (shown in Figure 5) and transmits<br>
+the ACK (Acknowledgement) to the UTRAN. The reordering queue distribution block<br>
+(333) and the reordering blocks (334,335) are employed to handle the data blocks<br>
+delivered to the reordering buffer.<br><br>
+[26]	Multiple reordering buffers can exist per priority level. The HARQ process delivers<br>
+the data block to the corresponding reordering buffer by using the Queue ID (identity)<br>
+included in the data block. A significant characteristic of the reordering buffer is that it<br>
+supports in-sequence delivery of data.<br>
+[27]	Data blocks are sequentially delivered to an upper layer based on a transmission<br>
+sequence number (TSN). More specifically, when a data block is received while one or<br>
+more previous data blocks are missing, the data block is stored in the reordering buffer<br>
+and is not delivered to the upper layer. Rather, the stored data block is delivered to the<br>
+upper layer only when all previous data blocks are received and delivered to the upper<br>
+layer. The TSN is 6 bits in length and modulo operations are performed.<br>
+[28]	Typically, because several HARQ processes operate, a reordering buffer may<br>
+receive data blocks out of sequence. Therefore, a reordering buffer must be employed<br>
+so that the data blocks can be delivered to the upper layer in sequence.<br>
+[29]	When the data blocks (MAC-hs PDUs) are delivered to the upper layer, they are<br>
+sent to a disassembly block (336,337). This disassembly block disassembles the<br>
+MAC-hs PDU (formed by a plurality of MAC-d PDUs combined together) and thus<br>
+performs segmentation into MAC-d PDUs. Thereafter, the disassembly block delivers<br>
+the corresponding MAC-d PDUs to the MAC-d sub-layer (310). A transport channel<br>
+multiplexing block (312) in the MAC-d sub-layer (310) refers to the logical channel<br>
+identifier (C/T field) included in each MAC-d PDU to deliver the MAC-d PDU to the<br>
+RLC layer via the corresponding logical channel.<br>
+[30]	Figure 5 depicts an exemplary transmission and reception procedure in a general<br>
+HSDPA system. Here, the MAC-d PDU is actually stored in the transmission buffer,<br>
+but for the sake of explanation, a MAC-hs PDU (= one or more MAC-d PDUs) is<br>
+depicted. Also, the size of each MAC-hs PDU may be different, but are conceptually<br>
+depicted to be of equal size Additionally, it is assumed mat there are eight (8) HARQ<br>
+processes.<br>
+[31]	In more detail, Figure 5 depicts the procedures of transmission to the receiving side<br>
+(receiver) when MAC-hs PDU with TSN=13 through TSN=22 are stored in the<br>
+transmission buffer. First, the MAC-hs PDUs with relatively low TSN values are<br>
+delivered to an empty HARQ process. Here, the MAC-hs PDU with TSN=13 being<br>
+delivered to HARQ process #1, and the MAC-hs PDU with TSN=14 being delivered to<br>
+HARQ process #8 are shown by way of example. Namely, the TSN is not related to<br>
+the HARQ process number, and delivery to any empty HARQ process is performed.<br>
+[32]	When the HARQ process receives an arbitrary data block (MAC-hs PDU), the<br><br>
+HARQ process transmits the data block to the receiving side in a specific TTI<br>
+(transmission time interval) and stores the data block for re-transmission that might be<br>
+performed later. Only one data block can be transmitted in a certain TTI. Accordingly,<br>
+only one HARQ process is activated in a single TTI. The HARQ process that<br>
+transmitted the data block informs the receiving side of its process number through a<br>
+downlink control signal which is transmitted through a different channel than that of<br>
+the data block.<br>
+[33]	The reason for matching the HARQ process of the transmitting side (transmitter)<br>
+with the HARQ process of the receiving side is because a stop-and-wait ARQ method<br>
+is used by each HARQ process pair. That is, HARQ process #1 that transmitted MAC-<br>
+hs PDU with TSN=13 does not transmit another data block until this data block is suc-<br>
+cessfully transmitted. Because a receiving side HARQ process #1 can know that data is<br>
+transmitted thereto for a corresponding TTI through the downlink control signal, the<br>
+receiving side HARQ process #1 transmits the NACK to the transmitting side through<br>
+an uplink control signal when the data block is not successfully received within a<br>
+defined transmission time interval (TTI). In contrast, when a data block is successfully<br>
+received, the receiving side HARQ process #1 transmits the ACK to the transmitting<br>
+side, and at the same time delivers the corresponding data block to the reordering<br>
+buffer according to the priority (Queue ID).<br>
+[34]	The multiple reordering buffers can exist per priority level. The HARQ process<br>
+checks the priority (Queue ID) included in the MAC-hs PDU and delivers this MAC-<br>
+hs PDU to the reordering buffer according to the priority. The data block delivered to<br>
+the reordering buffer is then delivered to the upper layer when all of the previous data<br>
+blocks are successfully received. However, when one or more previous data blocks are<br>
+not successfully received and delivered to the upper layer, the data block is stored in<br>
+the reordering buffer. That is, the reordering buffer must support in-sequence delivery<br>
+of data blocks to the upper layer. A data block that is not delivered to the upper layer is<br>
+stored in the reordering buffer.<br>
+[35]	To illustrate the foregoing, Figure 5 shows that when the MAC-hs PDU with<br>
+TSN=14 is received but the MAC-hs PDU with TSN=13 is not received, the MAC-hs<br>
+PDU with TSN=14 is stored in the reordering buffer (420) until the MAC-hs PDU with<br>
+TSN=13 is received. When the MAC-hs PDU with TSN=13 is received, both data<br>
+blocks are delivered to the upper layer in the order of TSN=13 and TSN=14. When the<br>
+data blocks are delivered to the upper layer, they are disassembled in units of MAC-d<br>
+PDUs and are delivered as described above.<br><br>
+[36]	However, during the transmission of data via radio (wireless) channels, certain<br>
+PDUs may not be properly delivered from the UTRAN to the UE despite numerous re-<br>
+transmissions. Particular MAC-hs PDUs that that are not delivered for a prolonged<br>
+period of time causes the problems of degrading transmission efficiency of the HSDPA<br>
+system. That is, although the HSDPA system was developed for high speed data com-<br>
+munications, if one MAC-hs PDU is not properly received for a long time or<br>
+permanently, this causes many subsequent MAC-hs PDUs remain in the MAC-hs<br>
+buffer for a prolonged period of time without delivery, and thus the overall data<br>
+transmission efficiency deteriorates and undermines the reasons for employing a<br>
+HSDPA system.<br>
+[37]	In order to prevent the stalling of the MAC-hs PDUs, the HSDPA has adopted a<br>
+stall avoidance method employing a window technique.<br>
+[38]	Before explaining the window-based stall avoiding method, the operation en-<br>
+vironment parameters used for the reordering buffer will first be explained.<br>
+[39]	The next-expected TSN (referred to as NET hereafter) refers to the immediately<br>
+subsequent value after the TSN of the last PDU of the sequentially received MAC-hs<br>
+PDUs. Namely, the NET refers to the TSN of the first MAC-hs PDU to be sub-<br>
+sequently received in-sequence. Whenever a PDU having a TSN that equals the NET<br>
+is received, the NET is updated. The initial NET value is set to zero (0).<br>
+[40]	The end point of the receive window (RcvWindow_UpperEdge) refers to the largest<br>
+TSN value in the receive window of the reordering buffer. When a MAC-hs PDU first<br>
+arrives at the receiving side, the end point (i.e., upper edge) is set as the value cor-<br>
+responding to the largest TSN among those of the received PDUs. The initial value of<br>
+the upper edge of the receive window is set to 63.<br>
+[41 ]	The start point of the receiver window (RcvWindow_LowerEdge) refers to the<br>
+smallest TSN value in the receiver window of the reordering buffer. The start point<br>
+(i.e., lower edge) of the receiver window can be calculated by subtracting the receiver<br>
+window size from the end point of the receiver window and adding 1 thereto<br>
+(RcvWindow_LowerEdge = RcvWindow_UpperEdge - receiver window size + 1).<br>
+[42]	The receiver window prescribes (regulates) the TSN values of the MAC-hs PDUs<br>
+that may be received when the window position does not change. The receiver window<br>
+includes the TSN values from the lower edge to the upper edge of the receiver<br>
+window.<br>
+[43]	The size of the receiver window (Receive_Window_Size) refers to the range of the<br>
+receiver window, and is established by an upper layer of the MAC entity.<br><br>
+[44]	In a window based stall avoidance method, the receiving side moves (updates) the<br>
+receiver window upon receiving a MAC-hs PDU having a TSN that is larger than the<br>
+RcvWindow_UpperEdge. For those MAC-hs PDUs with a TSN that is smaller than the<br>
+RcvWindow_LowerEdge of the updated receiver window, the receiving side no longer<br>
+waits (i.e., ends reception stand-by) for those MAC-hs PDUs that have not yet been<br>
+received and the MAC-hs PDUs previously received and stored in the reordering<br>
+buffer are delivered (transferred) to the upper layers, such that stall situations for the<br>
+MAC-hs PDUs can be prevented.<br>
+[45]	Figure 6 depicts a more detailed operation, which can be summarized as follows:<br>
+[46]	In step 510, a MAC-hs PDU with a transmission sequence number (TSN) having<br>
+the sequence number (SN) (= a random number) value is received.<br>
+[47]	In step 520, the SN value is compared with the receiver window range, and if the<br>
+SN value is within the range, the following step 230 is performed, but if outside the<br>
+range, the following step 522 is performed.<br>
+[48]	In step 530, when the SN value falls within the receiver window range, this SN<br>
+value is compared with the NET, and it is checked as to whether the MAC-hs PDU<br>
+corresponding to this SN had been previously received. If this SN is smaller than the<br>
+NET or if the MAC-hs PDU corresponding to this SN had been previously received,<br>
+the received MAC-hs PDU (in step 510) is discarded (step 540). If this SN equals to or<br>
+is greater than the NET, and if the MAC-hs PDU corresponding to this SN had not<br>
+been previously received, the corresponding MAC-hs PDU is stored in the location<br>
+indicated by the SN value (step 550). Then, the following step 560 is performed.<br>
+[49]	In previous step 520, if the SN value falls outside the receiver window range, the<br>
+following steps (steps 522-528) are sequentially performed: The received MAC-hs<br>
+PDU is stored in the reordering buffer at a location indicated by the SN value that is<br>
+greater than the RcvWindowJLJpperEdge, and the RcvWindcw.UpperEdge value is<br>
+updated to the SN value. Then, among the MAC-hs PDUs stored in the reordering<br>
+buffer, those MAC-hs PDUs having a TSN value that is smaller than the<br>
+RcvWindow_LowerEdge are delivered from the reordering buffer to a disassembly<br>
+block. Also, the NET is updated to be the RcvWindow_LowerEdge, and the following<br>
+step 560 is performed.<br>
+[50]	In step 560, all the MAC-hs PDUs starting from the MAC-hs PDU having a<br>
+TSN=NET and up to the MAC-hs PDU that immediately precedes the first MAC-hs<br>
+PDU that has not been received, are delivered to the disassembly block. Here, "the first<br>
+MAC-hs PDU that has not been received" refers to the MAC-hs PDU having the<br><br>
+smallest TSN among all the not received MAC-hs PDUs having a TSN that is equal to<br>
+or greater than the NET.<br>
+[51]	In step 570, the NET is updated to equal the TSN of the first not received MAC-hs<br>
+PDU of the previous step 560.<br>
+[52]	According to the related art stall avoidance method using a window, the receiving<br>
+side sets the NET value to 0 at the first initialization stage and the receiver window<br>
+upper edge is set to 60L Thus, assuming that if the receiver window size is 32, based<br>
+upon the definition of the receiver window, the initial receiver window is determined<br>
+to have TSN values from 32 to 63. For the first MAC-hs PDU transmitted from the<br>
+transmitting side, the TSN is set to 0 and for subsequently transmitted MAC-hs PDUs,<br>
+the TSN values of 1,2,3, etc. will be sequentially used. If mere are no losses in the<br>
+radio (wireless) region, the very first MAC-hs PDU arriving at the receiving side<br>
+would have a PDU with TSN=0.<br>
+[53]	However, because this MAC-hs PDU is located outside the receiver window<br>
+defined previously, the receiving side advances the receiver window according to the<br>
+TSN of the MAC-hs PDU. Thus, according to Figure 6, the re-established (updated)<br>
+receiver window is set to have a TSN from 33 to 0. Also, even though the receiving<br>
+side actually expects to receive a MAC-hs PDU with TSN=1 (i.e., NET=1), there is a<br>
+problem with the related art because the NET will be set to 33.<br>
+[54]	Additionally, an even greater problem occurs because even though a received<br>
+MAC-hs PDU can be immediately delivered to the upper layer, such MAC-hs PDUs<br>
+are not delivered to the upper disassembly block, but are accumulated in the reordering<br>
+buffer, thus causing unnecessary delivery delays. Here, in order to deliver the MAC-hs<br>
+PDU to the upper layer, all of the MAC-hs PDUs having a TSN that is smaller than the<br>
+receiver window lower edge value (i.e., those MAC-hs PDUs with TSN=33 through<br>
+63) must be received, or alternatively, if the receiver window is moved due to a sub-<br>
+sequently received MAC-hs-PDU, and the MAC-hs PDU with TSN=0 must be located<br>
+at a point smaller (less) than the receiver window lower edge. This situation will also<br>
+occur whenever a MAC-hs PDU having a relatively small TSN (such as TSN=0,1,2,<br>
+3, etc.) arrives at the receiving side during the initial operation of the receiver window.<br>
+Accordingly, those MAC-hs PDUs that are sequentially received and that can be<br>
+delivered to the upper layer unnecessarily remain in the reordering buffer to thus cause<br>
+undesirable delivery delay situations.<br>
+[55]	Such unnecessary delivery delay situations do not only occur during the initial<br>
+stages of HSDPA system operation.<br><br>
+[56]	If all the MAC-hs PDUs falling within the receiver window were properly<br>
+received, the receiver window does not move and the NET is updated to be<br>
+RcvWindow_UpperEdge + 1. When the NET refers to RcvWindow_UpperEdge + 1,<br>
+and a MAC-hs PDU with NET= RcvWindow_UpperEdge + 1 arrives at the receiving<br>
+side, the receiving side newly adjusts the receiver window range (because this MAC-<br>
+hs PDU falls outside the current receiver window range) such that the NET is updated<br>
+to RcvWindowJLowerEdge, and this received MAC-hs PDU is stored in the<br>
+reordering buffer. Even though this PDU was sequentially received and can thus be<br>
+immediately delivered to the upper layer, the receiver window operation according to<br>
+the related art does not deliver this MAC-hs PDU to the disassembly block, but stores<br>
+it in the reordering buffer, causing an unnecessary delivery delay situation.<br>
+[57]	The above problematic situation is caused by the NET value being outside the<br>
+receiver window. Also, the previously explained problem during the initial operation at<br>
+the receiving side is caused by the NET value being outside the receiver window,<br>
+whereby NET=0 but the receiver window range is set as TSN=32 to 63.<br>
+[58]	Whenever the NET value falls outside the receiver window, the receiving side<br>
+stores the received MAC-hs PDU in the reordering buffer even though such may be<br>
+immediately delivered to the upper layer, resulting in a delay in delivering the MAC-hs<br>
+PDU. [59]	Such delivery delays cause errors in the upper layer and/or result in severe service<br>
+quality degradation.<br>
+Disclosure of Invention<br>
+Technical Solution<br>
+[60]	A gist of the present invention involves the recognition by the present inventors of<br>
+the drawbacks in the related art. Namely, the present invention has been developed to<br>
+address and/or solve the problems of the related art, such that the NET value always<br>
+falls within the receiver window to prevent unnecessary delivery delays of MAC-hs<br>
+PDUs that occur in the related art, in order to achieve rapid data transmission ca-<br>
+pabilities for a HSDPA system.<br>
+[61]	To achieve this, the present invention adjusts the initial range of the receiver<br>
+window such that the NET falls within the receiver window from the start of protocol<br>
+operations. If the NET or receiver window is updated and the NET falls outside the<br>
+receiver window, the NET or receiver window is re-updated such that the NET again<br>
+falls within the receiver window. More specifically, the initial value of the receiver<br>
+window upper edge is not set to be 63, but changed to 0 (such as the NET value) such<br><br>
+that the NET falls within the receiver window range. Also, upon updating of the<br>
+receiver window, if the NET value becomes smaller than the receiver window lower<br>
+edge, the NET is re-updated to the TSN value of the receiver window lower edge, and<br>
+if the NET value becomes larger man the receiver window upper edge, the NET is re-<br>
+updated to the TSN value of the receiver window upper edge.<br>
+[62]	Here, it should be noted that if the NET becomes greater man the receiver window<br>
+upper edge due to the initial protocol operation or upon NET updating, the non-<br>
+limiting exemplary embodiment of the present invention provides that the receiver<br>
+window upper edge is to be set as the NET. However, this is not mandatory, as the<br>
+receiver window may be updated to various appropriate positions as long as the NET<br>
+falls within the receiver window range. Namely, the setting of the receiver window<br>
+upper edge to equal the NET is merely one example, as me receiver window lower<br>
+edge may be set as the NET, and other values within the receiver window range may<br>
+also be set as the NET.<br>
+Brief Description of the Accompanying Drawings<br>
+[63]	The features and advantages of the present invention will become more apparent<br>
+from the following detailed description of the non-limiting exemplary embodiment(s)<br>
+of the invention taken in conjunction with the drawings.<br>
+[64]	Figure 1 depicts a general UMTS network architecture.<br>
+[65]	Figure 2 depicts a radio (wireless) protocol structure.<br>
+[66]	Figure 3 depicts a radio mterface protocol stnrture for supporting a HSDPA<br>
+system.<br>
+[67]	Figure 4 depicts a MAC architecture in the UE for supporting HSDPA.<br>
+[68]	Figure 5 depicts an example of a process for transmitting and receiving MAC-hs<br>
+PDUs in a HSPDA system.<br>
+[69]	Figure 6 depicts a window-based stall avoidance method according to the related<br>
+art<br>
+[70]	Figure 7 depicts a window-based stall avoidance method according to one non-<br>
+ limiting exemplary embodiment of the present invention.<br>
+[71]	Figure 8 depicts an exemplary situation where the NET has become smaller man<br>
+the receiver window lower edge value, according to one non-limiting exemplary<br>
+embodiment of the present invention.<br>
+[72]	Figure 9 depicts an exemplary situation where all PDUs within the receiver<br>
+window have been successfully received and the NET is greater man the receiver<br>
+window upper edge value, according to one non-limiting exemplary embodiment of<br><br>
+the present invention.<br>
+Mode for Invention<br>
+[73]	The present invention is described as being implemented in a W-CDMA mobile<br>
+communications system. However, the present invention may also be adapted and im-<br>
+plemented in communications systems operating under other types of communications.<br>
+[74]	A non-limiting exemplary embodiment of the present invention is depicted in<br>
+Figure 7, which is an improvement over the related art procedures shown in Figure 6<br>
+[75]	In step 610, a MAC-hs PDU with a transmission sequence number (TSN) having<br>
+the sequence number (SN) (= a random number) value is received.<br>
+[76]	In step 620, the SN value is compared with the receiver window range, and if the<br>
+SN value is within the range, the following step 630 is performed, but if outside the<br>
+range, the following step 622 is performed.<br>
+[77]	In step 630, when the SN value falls within the receiver window range, this SN<br>
+value is compared with the NET, and it is checked as to whether the MAC-hs PDU<br>
+corresponding to this SN had been previously received. If this SN is smaller than the<br>
+NET or if the MAC-hs PDU corresponding to this SN had been previously received,<br>
+the received MAC-hs PDU (in step 610) is discarded (step 640). If this SN equals to or<br>
+is greater than the NET, and if the MAC-hs PDU corresponding to this SN had not<br>
+been previously received, the corresponding MAC-hs PDU is stored in the reordering<br>
+buffer at a location indicated by the SN value (step 650). Then, the following step 660<br>
+is performed.<br>
+[78]	In previous step 620, if the SN value falls outside the receiver window range, the<br>
+following steps (622-628) are sequentially performed: The received MAC-hs PDU is<br>
+stored in the reordering buffer at a location indicated by the SN value that is greater<br>
+than the RcvWindow_UpperEdge, and the RcvWindow_UpperEdge value is updated<br>
+to the SN. Then, among the MAC-hs PDUs stored in the reordering buffer, those<br>
+MAC-hs PDUs having a TSN that is smaller than the RcvWindow_LowerEdge arc<br>
+delivered from the reordering buffer to a disassembly block. Also, the NET is<br>
+compared with the RcvWindowJLowerEdge, and the NET is updated to be the<br>
+RcvWindow_LowerEdge only when the NET is smaller than the<br>
+RcvWindowJLowerEdge, and then the following step 660 is performed.<br>
+[79]	In step 660, all the MAC-hs PDUs starting from the MAC-hs PDU having a<br>
+TSN=NET and up to the MAC-hs PDU that immediately precedes the first MAC-hs<br>
+PDU that has not been received, are delivered to the disassembly block. Here, "the first<br>
+MAC-hs PDU that has not been received" refers to the MAC-hs PDU having the<br><br>
+smallest TSN among all the not received MAC-hs PDUs having a TSN that is equal to<br>
+or greater than the NET.<br>
+[80]	In step 670, the NET is updated to equal the TSN of the first not received MAC-hs<br>
+PDU of the previous step 660.<br>
+[81]	In step 680, the updated NET is compared with the receiver window upper edge<br>
+value, and the receiver window is updated (step 690) only if the NET is greater than<br>
+the receiver window upper edge value so that the receiver window upper edge value is<br>
+matched with the NET, and the steps are completed.<br>
+[82]	In the above step 690, when the receiver window is updated, the receiver window<br>
+upper edge can be set as the NET, but also, other points within the receiver window<br>
+range can be set as the NET to achieve updating.<br>
+[83]	Figure 8 depicts the situation where the receiver window is moved due to the<br>
+reception of a new PDU and the NET is smaller than the receiver window lower edge.<br>
+Here, the exemplary situation assumes the receiver window size to be 5, the NET=4,<br>
+and a MAC-hs PDU with TSN=10 is received, while a MAC-hs PDU with TSN=5 and<br>
+a MAC-hs PDU with TSN=7 have already been received.<br>
+[84]	During the situation shown in Figure 8-(a), a MAC-hs PDU with TSN=10 arrives.<br>
+Here, because the PDU with TSN=10 falls outside the receiver window, the receiver<br>
+window is moved as shown in Figure 8-(b).<br>
+[85]	Any previously received PDU that falls-outside the moved receiver window (i.e., a<br>
+received PDU with TSN 
+movement, namely, the MAC-hs PDU with TSN=5, is delivered to the upper layer.<br>
+Also, because the NET is smaller than the receiver window lower edge value (i.e.,<br>
+NET 
+[86]	Figure 9 depicts the situation where all PDUs within the receiver window have<br>
+been successfully received and the NET is greater than the receiver window upper<br>
+edge value. Here, it is also assumed that the receiver window size is 5, the NET=4, and<br>
+a MAC-hs PDU with TSN=4 is received while the MAC-hs PDUs with TSN=5,6,7,8<br>
+have been received.<br>
+[87]	During the situation shown in Figure 9-(a), a MAC-hs PDU with TSN=4 arrives.<br>
+This MAC-hs PDU with TSN=4 is stored at position 4 in the reordering buffer as<br>
+shown in Figure 9-(b), and those PDUs starting from the MAC-hs PDU with TSN=4<br>
+up to the MAC-hs PDU with TSN=8 (which is the MAC-hs PDU just prior to the first<br>
+MAC-hs PDU that has not yet been received (i.e., MAC-hs PDU with TSN=9)) are<br>
+delivered to the disassembly block. Also, the NET is updated to 9.<br><br>
+[88]	As in Figure 9-(c), if the NET is greater than the receiver window upper edge<br>
+value, the receiver window upper edge value is updated to the NET, and the receiver<br>
+window is moved as shown in Figure 9-(d).<br>
+[89]	When using the related art for HSDPA, even if the UE could immediately deliver<br>
+the received MAC-hs PDU to the upper layer, prolonged storage in the reordering<br>
+buffer causes unnecessary data delivery delays to occur. However, when the UE<br>
+employs the present invention to update the NET value and the receiver window, and<br>
+processes the MAC-hs PDUs accordingly, unnecessary data delivery delays are<br>
+prevented, and thus data transmission errors can be avoided and high speed data<br>
+transmissions are made possible.<br>
+[90]	The present invention provides a method of handling data blocks, comprising:<br>
+receiving data blocks associated with a sequence number; processing the received data<br>
+blocks in a receiver window; comparing a next-expected transmission sequence<br>
+number (NET) with a range of the receiver window; and setting the NET or the<br>
+receiver window such that the NET is within the receiver window, if the NET is found<br>
+to be outside that range of the receiver window as a result of the comparison.<br>
+[91]	In the above method, the NET is a transmission sequence number (TSN) following<br>
+the TSN of the last in-sequence data block received. Here, the TSN is an identifier for<br>
+the transmission sequence number on the HS-DSCH, and the TSN is used for<br>
+reordering purposes to support in-sequence delivery to a higher layer.	<br>
+[92]	If the NET is above a receiver window upper edge, the NET is set as the receiver<br>
+window upper edge, or the NET is set as any appropriate position within the receiver<br>
+window range. If the NET is above the receiver window, the receiver window is<br>
+updated to any appropriate position as long as the NET falls within the receiver<br>
+window range.<br>
+[93]	If me NET is below a receiver window lower edge, the NET is set as the receiver<br>
+window lower edge. If the NET is below the receiver window, setting the NET =<br>
+receiver window upper edge value - receiver window size + 1. Here, the NET is a<br>
+variable managed by the receiving side, and the NET is updated upon the delivery to<br>
+the disassembly entity of the data block with TSN equal NET. In the above method,<br>
+the initial value of the NET is zero (0), and the data blocks are MAC-hs PDUs<br>
+(protocol data units).<br>
+[94]	In the above method, the steps are performed for a HSDPA (high-speed downlink<br>
+packet access) system, and the steps are performed to avoid stall conditions. Also, if<br>
+the received data block associated with the sequence number had been previously<br><br>
+received, the received data block is discarded.<br>
+[95]	The present invention also provides a method of processing data blocks,<br>
+comprising: a first step of receiving a data block (PDU) having a sequence number<br>
+(SN); a second step of comparing the SN with a receiver window range; a third step of<br>
+delivering certain PDUs stored in the buffer, starting from the PDU having the NET up<br>
+to the PDU just prior to the PDU not yet received, to a disassembly block; and a fourth<br>
+step of updating the NET to equal the SN of the first PDU not yet received.<br>
+[96]	In the second step, if the SN is within the receiver window range, and if SN 
+(a next expected SN) or the PDU had been previously received, then discarding the<br>
+PDU, and processing is ended, but if SN (NET or the PDU had not been previously<br>
+received, then storing the PDU in a buffer at location specified by the SN, and<br>
+proceeding to a third step.<br>
+[97]	If the SN is not within the receiver window range, storing the PDU in a buffer at<br>
+the location specified by the SN, updating the receiver window such that its upper edge<br>
+= SN, delivering all PDUs with SN 
+disassembly block, and checking whether the NET 
+window; if so, updating the NET to equal the lower edge of the receiver window, and<br>
+proceeding to a third step, if not, proceeding to a third step.<br>
+[98]	The above method further comprising: after the fourth step, checking whether the<br>
+updated NET &gt; the upper edge of the receiver window, if so, setting the NET = the<br>
+upper edge of the receiver window, and if not, processing is ended or repeating the<br>
+procedures from the first step.<br>
+[99]	To implement the above procedures, the present invention can employ various<br>
+types of hardware and/or software components (modules). For example, different<br>
+hardware modules may contain various circuits and components necessary to perform<br>
+the steps of the above method Also, different software modules (executed by<br>
+processors and other hardware) may contain various codes and protocols necessary to<br>
+perform the steps of the above method.<br>
+[100]	Namely, as shown in Figures 1 through 5, the present invention provides an<br>
+apparatus to handle data blocks, comprising: a receiving module to receive data blocks<br>
+associated with a sequence number; a processing module to process the received data<br>
+blocks in a receiver window; a comparing module to compare a next-expected<br>
+transmission sequence number (NET) with a range of the receiver window; and a<br>
+setting module to set the NET or the receiver window such that the NET is within the<br>
+receiver window, if the NET is found to be outside that range of the receiver window<br><br>
+as a result of the comparison by the comparing module.<br>
+[101]	Preferably, the modules are part of a MAC entity. Preferably, the modules are part<br>
+of a MAC-hs entity. Preferably, the modules are part of a mobile station, a wireless<br>
+handset, a network, a base station, a Node B or a RNC (radio network controller).<br>
+[ 102]	This specification describes various illustrative embodiments of the present<br>
+invention. The scope of the claims is intended to cover various modifications and<br>
+equivalent arrangements of the illustrative embodiments disclosed in the specification.<br>
+Therefore, the following claims should be accorded the reasonably broadest inter-<br>
+pretation to cover modifications, equivalent structures, and features that are consistent<br>
+with the spirit and scope of the invention disclosed herein.<br>
+Industrial Applicability<br>
+[103]	Certain embodiments of the present invention can be applied to a mobile commu-<br>
+nications system, such as a HSDPA (High-Speed Downlink Packet Access) system in<br>
+a UMTS (Universal Mobile Telecommunications System), and the disclosed methods<br>
+and apparatuses can be part of a MAC entity, preferably, part of a MAC-hs entity, for a<br>
+mobile station, a wireless handset, a network, a base station, a Node B or a RNC (radio<br>
+network controller).	<br><br><br>
+WE CLAIM :<br>
+1.	A method of handling data blocks in a mobile communications<br>
+system, comprising:<br>
+receiving data blocks associated with a sequence number;<br>
+determining whether the sequence number of the received data<br>
+blocks is outside a receiver window;<br>
+comparing a next-expected transmission sequence number (NET)<br>
+with a range of an updated receiver window when the sequence number of<br>
+the received data blocks is determined to be outside the receiver window;<br>
+and<br>
+setting the NET such that the NET is within the updated receiver<br>
+window, if the NET is found to be outside that range of the updated receiver<br>
+window as a result of the comparison.<br>
+2.	The method as claimed in claim 1, wherein the NET is a transmission<br>
+sequence number (TSN) following the TSN of the last in-sequence data<br>
+block received.<br>
+3.	The method as claimed in claim 2, wherein the TSN is an identifier for<br>
+the transmission sequence number on a HS-DSCH (High Speed Downlink<br>
+Shared Channel).<br>
+4.	The method as claimed in claim 2, wherein the TSN is used for<br>
+reordering purposes to support in-sequence delivery to a higher layer.<br>
+5.	The method as claimed in claim 1, wherein if the NET is above the<br>
+updated receiver window upper edge, the NET is set as the updated receiver<br>
+window upper edge.<br><br>
+6.	The method as claimed in claim 1, wherein if the NET is above the<br>
+updated receiver window upper edge, the NET is set as any appropriate<br>
+position within the updated receiver window range.<br>
+7.	The method as claimed in claim 1, wherein if the NET is above the<br>
+updated receiver window, the receiver window is advanced to any<br>
+appropriate position as long as the NET falls within the updated receiver<br>
+window range.<br>
+8.	The method as claimed in claim 1, wherein if the NET is below the<br>
+updated receiver window lower edge, the NET is set as the updated receiver<br>
+window lower edge.<br>
+9.	The method as claimed in claim 1, wherein if the NET is below the<br>
+updated receiver window, setting the NET=receiver window upper edge<br>
+value-receiver window size+1.<br>
+10.	The method as claimed in claim 1, wherein the NET is a variable<br>
+managed by a receiving side.<br>
+11.	The method as claimed in claim 1, wherein the NET is updated upon<br>
+a delivery to a disassembly entity of the data block with TSN equal to the<br>
+NET.<br>
+12.	The method as claimed in claim 1, wherein the initial value of the NET<br>
+is zero (0).<br>
+13.	The method as claimed in claim 1, wherein the data blocks are MAC-<br>
+hs (Medium Access Control-high speed) PDUs (protocol data units).<br>
+14.	The method as claimed in claim 1, wherein the steps are performed<br><br>
+for a HSDPA (high-speed downlink packet access) system.<br>
+15.	The method as claimed in claim 1, wherein the steps are performed to<br>
+avoid stall conditions.<br>
+16.	The method as claimed in claim 1, wherein the received data block is<br>
+discarded if the received data block associated with the sequence number<br>
+had been previously received.<br>
+17.	An apparatus to handle data blocks in a mobile communications<br>
+system, the apparatus comprising:<br>
+a receiver for receiving data blocks associated with a sequence<br>
+number;<br>
+a comparing module to compare a next-expected transmission<br>
+sequence number (NET) with a range of an updated receiver window;<br>
+a setting module to set the NET, such that the NET is within the<br>
+updated receiver window, if the NET is found to be outside the range of the<br>
+updated receiver window as a result of a comparison performed by the<br>
+comparing module; and<br>
+a processor to process the received data blocks in a receiver window,<br>
+control the comparing module to perform the comparison, and control the<br>
+setting module to set the NET.<br>
+18.	The apparatus as claimed in claim 17, wherein the NET, which is<br>
+handled by the modules, is a transmission sequence number (TSN)<br>
+following the TSN of the last in-sequence data block received.<br>
+19.	The apparatus as claimed in claim 18, wherein the TSN is an identifier<br>
+for the transmission sequence number on the HS-DSCH (High Speed<br>
+Downlink Shared Channel).<br><br>
+20.	The apparatus as claimed in claim 18, wherein the TSN is used for<br>
+reordering purposes to support in-sequence delivery to a higher layer.<br>
+21.	The apparatus as claimed in claim 17, wherein if the NET, which is<br>
+handled by the modules, is above the updated receiver window upper edge,<br>
+the NET is set as the updated receiver window upper edge.<br>
+22.	The apparatus as claimed in claim 17, wherein if the NET is above the<br>
+updated receiver window upper edge, the NET is set as any appropriate<br>
+position within the updated receiver window range.<br>
+23.	The apparatus as claimed in claim 17, wherein if the NET is above the<br>
+updated receiver window, the receiver window is advanced to any<br>
+appropriate position as long as the NET falls within the updated receiver<br>
+window range.<br>
+24.	The apparatus as claimed in claim 17, wherein if the NET, which is<br>
+handled by the modules, is below a the updated receiver window lower<br>
+edge, the NET is set as the receiver window lower edge.<br>
+25.	The apparatus as claimed in claim 17, wherein if the NET, which is<br>
+handled by the modules, is below the updated receiver window, setting the<br>
+NET=receiver window upper edge value-receiver window size+1.<br>
+26.	The apparatus as claimed in claim 17, wherein the NET, which is<br>
+handled by the modules, is a variable managed by a receiving side.<br>
+27.	The apparatus as claimed in claim 17, wherein the NET is updated<br>
+upon the delivery to the disassembly entity of the data block with TSN equal<br>
+NET.<br><br>
+28.	The apparatus as claimed in claim 17, wherein the initial value of the<br>
+NET is zero (0).<br>
+29.	The apparatus as claimed in claim 17, wherein the data blocks, which<br>
+are handled by the modules, are MAC-hs (Medium Access Control-high<br>
+speed) PDUs (protocol data units).<br>
+30.	The apparatus as claimed in claim 17, wherein the modules operate<br>
+for a HSDPA (high-speed downlink packet access) system.<br>
+31.	The apparatus as claimed in claim 17, wherein the modules operate<br>
+to avoid stall conditions.<br>
+32.	The apparatus as claimed in claim 17, wherein if the received data<br>
+block associated with the sequence number had been previously received,<br>
+the received data block is discarded.<br>
+33.	The apparatus as claimed in claim 17, wherein the modules are part<br>
+of a MAC entity.<br>
+34.	The apparatus as claimed in claim 17, wherein the modules are part<br>
+of a MAC-hs entity.<br>
+35.	The apparatus as claimed in claim 17, wherein the modules are<br>
+implemented in a mobile station.<br>
+36.	The apparatus as claimed in claim 17, wherein the modules are part<br>
+of a wireless handset.<br>
+37.	The apparatus as claimed in claim 17, wherein the modules are part<br>
+of a network.<br><br>
+38.	The apparatus as claimed in claim 17, wherein the modules are part<br>
+of a base station.<br>
+39.	The apparatus as claimed in claim 17, wherein the modules are part<br>
+of a Node B.<br>
+40.	The apparatus as claimed in claim 17, wherein the modules are part<br>
+of a RNC (radio network controller).<br><br><br><br>
+ABSTRACT<br><br><br>
+METHOD AND APPARATUS FOR HANDLING DATA BLOCKS<br>
+IN A MOBILE COMMUNICATIONS SYSTEM<br>
+A method and apparatus for handling data blocks in a mobile<br>
+communications system are disclosed. The method comprises receiving, at a<br>
+receiving module, data blocks associated with a sequence number; determining,<br>
+using a determining module, whether the sequence number of the received data<br>
+blocks is outside a receiver window; comparing, using a comparing module, a<br>
+next-expected transmission sequence number (NET) with a range of an updated<br>
+receiver window when the sequence number of the received data blocks is<br>
+determined to be outside the receiver window; and setting, using a setting module,<br>
+the NET such that the NET is within the updated receiver window, if the NET is<br>
+found to be outside that range of the updated receiver window as a result of the<br>
+comparison.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1hc2lnbm1lbnQucGRm" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-asignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1hc3NpZ25tZW50LTEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-assignment-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1jbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1jb3JyZXNwb25kZW5jZSBvdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-correspondence others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1jb3ZlciBsZXR0ZXIucGRm" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-cover letter.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1kZXNjcmlwdGlvbiBjb21wbGV0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-description complete.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1mb3JtIDEucGRm" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1mb3JtIDMucGRm" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1mb3JtIDUucGRm" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1mb3JtLTMtMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-form-3-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1pbnRlcm5hdGlvbmFsIHB1YmxpY2F0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-international publication.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1pbnRlcm5hdGlvbmFsIHNlYXJjaCBhdXRob3JpdHkgcmVwb3J0LnBkZg==" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-international search authority report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1wY3QgZm9ybS5wZGY=" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-pct form.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA4ODgta29sbnAtMjAwNi1wcmlvcml0eSBkb2N1bWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">00888-kolnp-2006-priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtKDExLTA5LTIwMTMpLUFOTkVYVVJFIFRPIEZPUk0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-(11-09-2013)-ANNEXURE TO FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtKDExLTA5LTIwMTMpLUNPUlJFU1BPTkRFTkNFLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-(11-09-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtKDExLTA5LTIwMTMpLU9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-(11-09-2013)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtKDI0LTA5LTIwMTMpLUNMQUlNUy5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-(24-09-2013)-CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtKDI0LTA5LTIwMTMpLUNPUlJFU1BPTkRFTkNFLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-(24-09-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtKDI0LTA5LTIwMTMpLU9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-(24-09-2013)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtQUJTVFJBQ1QgMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-ABSTRACT 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtQUJTVFJBQ1QucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtQU1FTkRFRCBDTEFJTVMgMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-AMENDED CLAIMS 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtQU1FTkRFRCBDTEFJTVMucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-AMENDED CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtQU1FTkRFRCBQQUdFUyBPRiBTUEVDSUZJQ0FUSU9OLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-AMENDED PAGES OF SPECIFICATION.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtQ0FOQ0VMTEVEIFBBR0VTLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-CANCELLED PAGES.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtQ0FOQ0VMTEVEIFBBR0VTMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-CANCELLED PAGES1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtQ09SUkVTUE9OREVOQ0UucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtQ09SUkVTUE9OREVOQ0UxLjEucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-CORRESPONDENCE1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtREVTQ1JJUFRJT04gKENPTVBMRVRFKS5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtRFJBV0lOR1MucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtRVhBTUlOQVRJT04gUkVQT1JULnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtRk9STSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtRk9STSAxOC5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-FORM 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtRk9STSAxODEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-FORM 181.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtRk9STSAyLjEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-FORM 2.1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtRk9STSAyLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtRk9STSAzLjEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-FORM 3.1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtR1BBLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-GPA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtR1JBTlRFRC1BQlNUUkFDVC5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-GRANTED-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtR1JBTlRFRC1DTEFJTVMucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-GRANTED-CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtR1JBTlRFRC1ERVNDUklQVElPTiAoQ09NUExFVEUpLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-GRANTED-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtR1JBTlRFRC1EUkFXSU5HUy5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-GRANTED-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtR1JBTlRFRC1GT1JNIDEucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-GRANTED-FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtR1JBTlRFRC1GT1JNIDIucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-GRANTED-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtR1JBTlRFRC1GT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-GRANTED-FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtR1JBTlRFRC1GT1JNIDUucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-GRANTED-FORM 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtR1JBTlRFRC1TUEVDSUZJQ0FUSU9OLUNPTVBMRVRFLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-GRANTED-SPECIFICATION-COMPLETE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtSU5URVJOQVRJT05BTCBQVUJMSUNBVElPTi5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-INTERNATIONAL PUBLICATION.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtSU5URVJOQVRJT05BTCBTRUFSQ0ggUkVQT1JUICYgT1RIRVJTLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-INTERNATIONAL SEARCH REPORT &amp; OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtT1RIRVJTIDEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-OTHERS 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtT1RIRVJTLTEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-OTHERS-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtT1RIRVJTLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtUEEucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-PA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtUENUIFBSSU9SSVRZIERPQ1VNRU5UIE5PVElGSUNBVElPTi5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-PCT PRIORITY DOCUMENT NOTIFICATION.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtUEVUSVRJT04gVU5ERVIgUlVMRSAxMzctMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-PETITION UNDER RULE 137-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtUEVUSVRJT04gVU5ERVIgUlVMRSAxMzcucGRm" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-PETITION UNDER RULE 137.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtUkVQTFkgVE8gRVhBTUlOQVRJT04gUkVQT1JUIDEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-REPLY TO EXAMINATION REPORT 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtUkVQTFkgVE8gRVhBTUlOQVRJT04gUkVQT1JULnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-REPLY TO EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODg4LUtPTE5QLTIwMDYtUkVQTFkgVE8gRVhBTUlOQVRJT04gUkVQT1JUMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">888-KOLNP-2006-REPLY TO EXAMINATION REPORT1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QtMDA4ODgta29sbnAtMjAwNi5qcGc=" target="_blank" style="word-wrap:break-word;">abstract-00888-kolnp-2006.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="257748-decoder-encoder-and-methods-of-encoding-decoding-precision-scalable-bit-stream-with-encoded-predetrmined-picture.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="257750-method-and-apparatus-for-authentication-of-data-to-be-sent-verification-of-data-received-in-a-digital-transmission-system.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>257749</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>888/KOLNP/2006</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>44/2013</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>01-Nov-2013</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>31-Oct-2013</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>10-Apr-2006</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>LG ELECTRONICS INC.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>20, YOIDO-DONG, YONGDUNGPO-GU SEOUL</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>CHUN, SUNG-DUCK</td>
+											<td>202, 1430-17, SILLIM 5-DONG, GWANAK-GU, SEOUL 151-891</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>YI SEUNG-JUNE</td>
+											<td>DAESEONG YOUNEED 101-1203, 1641-3 SEOCHO 1-DONG, SEOCHO-GU, SEOUL, 137-880</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>LEE, YOUNG-DAE</td>
+											<td>370-43,DUCKPOONG 2-DONG, HANAM, GYEONGGI-DO, 465-711</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04B 7/26</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/KR2004/002815</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2004-11-03</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>60/518,325</td>
+									<td>2003-11-10</td>
+								    <td>Republic of Korea</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>79216/2003</td>
+									<td>2003-11-10</td>
+								    <td>Republic of Korea</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/257749-method-and-apparatus-for-handling-data-blocks-in-a-mobile-communications-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 07:34:07 GMT -->
+</html>

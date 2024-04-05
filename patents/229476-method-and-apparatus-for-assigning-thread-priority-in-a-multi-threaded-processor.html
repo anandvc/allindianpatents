@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/229476-method-and-apparatus-for-assigning-thread-priority-in-a-multi-threaded-processor by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 10:10:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 229476:METHOD AND APPARATUS FOR ASSIGNING THREAD PRIORITY IN A MULTI-THREADED PROCESSOR</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD AND APPARATUS FOR ASSIGNING THREAD PRIORITY IN A MULTI-THREADED PROCESSOR</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>In a multi-threaded processor, thread priority variable are set up in memory. The actual assignment of thread priority is based on the expiration of a thread precedence counter. To further augment, the effectiveness of the thread precedence counters, starting counters are associated with each thread that serve as a multiplier for the value to be used in the thread precedence counter. The value in the starting counters are manipulated so as to prevent one thread from getting undue priority to the resources of the multi-threaded processor.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>METHOD AND APPARATUS FOR ASSIGNING THREAD<br>
+PRIORITY IN A MULTI-THREADED PROCESSOR<br>
+Background of the Invention<br>
+The present invention relates to a method and apparatus for assigning thread priority<br>
+in a multi-threaded processor. More particularly, the present invention pertains to assigning<br>
+priority to a thread in a multi-threaded processor.<br>
+As is known in the art, a processor includes a variety of sub-modules, each adapted to carry out<br>
+specific tasks. In one known processor, these sub-modules include the following: an instruction cache, an<br>
+instruction fetch unit for fetching appropriate instructions from the instruction cache; decode logic that<br>
+decodes the instruction into a final or intermediate format, microoperation logic that converts intermediate<br>
+instructions into a final format for execution; and an execution unit that executes final format instructions<br>
+(either from the decode logic in some examples or from the microoperation logic in others). As used herein<br>
+final format instructions are referred to as microoperations.<br>
+Programming code to be executed by the processor can sometimes be broken down into smaller<br>
+components referred to as "threads." A thread is a series of instructions whose execution achieves a given<br>
+task. For example, in a video phone application, the processor may be called upon to execute code to handle<br>
+video image data as well as audio data. There may be separate code sequences whose execution is designed<br>
+to handle each of these data types. Thus, a first thread may include instructions for video image data<br>
+processing and a second thread may be instructions for audio data processing. Stated another way, a thread<br>
+is a self contained program that is usually associated with a thread identifier and during execution in a multi-<br>
+threaded environment its architectural state can be maintained while executing instructions from another<br>
+thread.<br>
+The use of multi-threaded processors has been suggested in the art. In such a processor, it may<br>
+switch between execution of two or more threads. In other multi-threaded processors, the threads may be<br>
+executed simultaneously. In either of these processors, there is no delineation between how the threads are<br>
+treated. In particular, code from one thread is given the same priority as code from another thread. This<br>
+could lead to a negative impact on overall system performance, especially when execution of critical code is<br>
+suspended or slowed by the execution of non-critical code.<br>
+In view of the above, there is a need to assign priority between two or more threads.<br><br>
+Brief Description of the Accompanying Drawings<br>
+Fig. 1 is a block diagram of a computer system operated according to an embodiment of the present<br>
+invention.<br>
+Fig. 2 is a block diagram of a portion of a processor constructed according to an embodiment of the<br>
+present invention.<br>
+Fig. 3 is a state diagram for the assignment of thread priority according to an embodiment of the<br>
+present invention.<br>
+Fig. 4 is a state diagram for setting the starting counter of one of threadO and thread I according to<br>
+an embodiment of the present invention.<br>
+Detailed Description<br>
+Referring to Fig. 1 a block diagram of a computer system operated according to an embodiment of<br>
+the present invention is shown. In this example the computer system 1 includes a processor 3 which is<br>
+capable of executing code stored in memory 5. In this example, memory 5 stores code for several threads,<br>
+such as code for thread 0 (8), thread I (9), etc. As known in the art, code for two threads may be part of user<br>
+applications and for the operating system.<br>
+Referring to Fig. 2, a block diagram of a processor (e.g., a microprocessor, a digital signal<br>
+processor, or the like) operated according to an embodiment of the present invention is shown. In this<br>
+embodiment, the processor is a multi-threaded processor where the processor 10 is theoretically divided into<br>
+two or more logical processors. As used herein, the term "thread" refers to an instruction code sequence.<br>
+For example, in a video phone application, the processor may be called upon to execute code to handle video<br>
+image data as well as audio data. There may be separate code sequences whose execution is designed to<br>
+handle each of these data types. Thus, a first thread may include instructions for video image data<br>
+processing and a second thread may be instructions for audio data processing. In this example, there are one<br>
+or more execution units (eg., including execution unit 41), which may execute one or more instructions at a<br>
+time. The processor 10, however, may be treated as two logical processors, a first logical processor<br>
+executing instructions from the first thread and a second logical processor executing instructions from the<br><br>
+second thread.<br>
+In this embodiment of the processor 10, instructions and/or bytes of data are fetched by fetch unit<br>
+11 and supplied to a queue 13 and stored as part of the thread 0 queue or the thread I queue. One skilled in<br>
+the art will appreciate that the queues used in processor 10 may be used to store more than two threads.<br>
+Instructions from the two threads are supplied to a mulitplexer (MUX) 15, and control logic 17 is used to<br>
+control whether instructions from thread 0 or thread 1 are supplied to a decode unit 21. Decode unit 21 may<br>
+convert an instruction into two or more microinstructions and supplies the microinstructions to queue 23 (in<br>
+a RISC (reduced instruction set code) processor, the instructions may already be in a decoded format and the<br>
+decode unit 21 converts them into a format for execution). The outputs of queue 23 are supplied to a MUX<br>
+25 which supplies instructions from thread 0 or thread 1 to a rename/allocation unit 31 based on operation of<br>
+control logic 27. The rename/allocation unit 31, in turn, supplies instructions to queue 33. MUX 35 selects<br>
+between the thread 0 queue and me thread 1 queue based on the operation of schedule control logic 37,<br>
+which can, Tor example, select instructions from threadO and thread 1 based on available resources in<br>
+execution unit 41. The output of MUX 35 is supplied to an out of order execution unit 41, in this<br>
+embodiment, which executes the instruction. The instruction is then placed in queue 43. The outputs of<br>
+queue 43 are supplied to a MUX 45 which sends instructions from thread 0 and thread 1 to a retire unit 5 2<br>
+based on the operation of control logic 47.<br>
+In Fig. 2, branch prediction circuitry may be added to assist in the efficiency of processor 10. For<br>
+example, branch prediction circuitry may be added to fetch unit 11. As known in the art, branch prediction<br>
+concerns predicting based on past history of execution code sequences, for example, whether a branch<br>
+instruction (e.g., BNE - Branch if Not Equal) will be taken. Once a branch has been predicted, the next<br>
+instruction can be loaded into the "pipeline" (e.g., the units leading up to the execution unit 41), so that if the<br>
+branch is taken as predicted, the appropriate instructions are immediately available for the execution unit If<br>
+the branch prediction is incorrect, then the instructions in the pipeline are incorrect and must be flushed out<br>
+and the appropriate instructions loaded into the pipeline.<br>
+In one example of a multi-threaded processor, two threads may be processed in parallel. Given the<br>
+teachings herein, the present invention can be expanded to three or more threads processed in parallel. In<br>
+this embodiment, the term "parallel" includes simultaneous and/or successive processing/execution of<br><br>
+instructions. As used herein, thread priority is used to determine which thread gets to use shared resources<br>
+when both threads need to use the same resource simultaneously. Thread priority could be indicated by one<br>
+or more signals stored in a storage area 4 in the processor 10 (Fig. 1). For example, ThreadOPriority and<br>
+Thread 1 Priority would indicate which of the two threads (threadO or threadl) has priority over the other. In<br>
+5 one example, if both signals are turned off, men neither of the threads has priority over the other. In<br>
+addition, three "counters" may be provided to assist in the assignment of thread priority. In Fig. 2, these<br>
+counters may be provided as part of the retire unit 51. First, a precedence counter 52 is provided, which is<br>
+set to an initial value (described below) and counts down to 0 in this embodiment. When the precedence<br>
+counter 52 expires (e.g., 0 is reached), it is an indication to the processor 10 that the priority shouid be<br>
+shifted from the thread that has priority to the thread that does not A threadO starting counter 53 and a<br>
+threadl starting counter 55 are also provided which store a value that will be used to set the initial value of<br>
+the precedence counter (described below).<br>
+According to embodiments of the present invention, the thread precedence counter is adjusted to<br>
+provide an appropriately sized time window based on the progress of a thread. For example, the progress of<br>
+the thread can be based on the number of microoperations that are retired. When the thread precedence<br>
+counter is set (e.g., after it expires), it can be reloaded with a value equal to a multiple of this value (up to a<br>
+predetermined maximum) from the starting counter associated with the thread that will soon have priority.<br>
+Accordingly, the starting counter should have a minimum value of 1. Thus, when a microoperation is retired<br>
+by the retire unit 51, the starting counter for that thread can be set to 1 so that when it regains thread priority,<br>
+the thread precedence counter will be set to a relatively low number. If, while a thread has priority, the<br>
+thread precedence counter retires, and the thread was unable to retire a microoperation during that time<br>
+window, the starting counter is incremented by a value (e.g., 1) so that the next time the thread has priority,<br>
+it will have more time to retire at least one microoperation.<br>
+Using this method to assign precedence has at least two drawbacks. First, there is the chance that a<br>
+thread will continue to have thread priority even though it is retiring microoperations, while the other thread<br>
+is not able to retire microoperations during its thread priority time windows. For example, if threadO<br>
+includes one thousand consecutive division operations and a large thread priority window while threadl<br>
+includes one divide instruction, threadl could be blocked until the execution of threadO finishes the one<br><br>
+thousand division operations or until the thread priority time window ends. In this embodiment, the thread<br>
+priority time window is based on the amount of time it takes the thread precedence counter to expire after it<br>
+is set. Second, if a thread is "starved" for instructions (i.e., resources are available for the execution of<br>
+rnicrooperations, but the fetching of instructions is curtailed), when that thread gets priority, the time made<br>
+available by the thread precedence counter may be insufficient to allow the fetching of an instruction. This<br>
+can be seen, for example, when using a page mis-handler or PMH which handles Data Translation<br>
+Lookaside Buffers and Instruction Translation Lookaside Buffers and page and cache-line boundary issues.<br>
+In such a case, the PMH may need to fetch instructions quickly because of a TLB miss, but will be unable to<br>
+do so. Accordingly, the incrementing of the starting counter for that thread may need to be done a number<br>
+of times before the resulting time made available by the thread precedence counter is sufficient to allow the<br>
+fetching of instructions (which would eventually lead to the execution and retirement of rnicrooperations for<br>
+that thread). Thus, each time the execution of thread 1 attempts and fails to load instructions, processing time<br>
+for thread0 may be lost and the processing time for the instruction load failure is lost as well.<br>
+According to an embodiment of the present invention, a system and method is presented that<br>
+improves the performance of a multithreaded processor through the assignment of thread priority. Referring<br>
+to Fig. 3, a state diagram for the assignment of thread priority according to an embodiment of the present<br>
+invention is shown. In state 61, thread priority points to a first thread, thread0. The thread precedence<br>
+counter is decremented 63 according to a system clock for the processor, in this embodiment As indicated<br>
+by block 65, the state changes from state 61 to state 67 when one of the following conditions is satisfied:<br>
+1.	The thread precedence counter has reached 0;<br>
+2.	Thread0 retires a microoperation;<br>
+3.	There is no longer an indication of approaching Instruction side (Iside) starvation for threadO.<br>
+Iside starvation is when a thread cannot fetch instructions because the other thread(s) has/have<br>
+effectively blocked it from doing so. As used herein, an indication of approaching Iside starvation is an<br>
+indication that such a situation may be approaching for a thread. An indication of approaching Iside<br>
+starvation can be anticipated through the monitoring of one or more conditions. In one embodiment, the<br>
+conditions may include one or more of the following:<br>
+I.	The processor is in a multi-threaded processing mode as compared to a single threaded processing<br><br>
+mode and more than one thread is active.<br>
+2	The thread under consideration does not have any instructions in the execution pipeline (e.g., there<br>
+are no instructions waiting at MUX 35 for the schedule control logic 37 to cause microoperations<br>
+for that thread to be passed to the execution unit 41 (Fig. 2).<br>
+3.	The issuing of new instructions to the execution pipeline is not blocked because the thread under<br>
+consideration has filled a needed resource. In this embodiment, the execution pipeline includes the<br>
+processing of instructions from the MUX 35 through the execution unit 41. For example, the<br>
+execution unit 41 may include a store buffer for the thread under consideration that is filled with<br>
+store instructions. In such a case, the processing of the thread has not necessarily been negatively<br>
+impacted by the lack of instruction fetching, but the delay in execution of store instructions.<br>
+4.	A thread other than the one under consideration has not been given full or exclusive access to the<br>
+processor modules. In other words, this condition is not satisfied if another thread has been given<br>
+full or exclusive access to processor modules. In such a situation, any instruction starvation on the<br>
+part of the thread under consideration would be intended.<br>
+5.	The thread under consideration is in a state where it is trying to fetch instructions. For example,<br>
+many processors including those manufactured by Intel Corporation (Santa Clara, California)<br>
+include a "Stop Clock" pin. An assertion of a signal on this pin results in the processor clearing out<br>
+its resources. In this case, ail resources may be clear of executable instructions for the thread under<br>
+consideration. Accordingly, the lack of instruction fetching would not be considered starvation in<br>
+such a case. Switching from a multi-thread mode to a single thread mode is another example in<br>
+which instruction starvation should not be considered a problem.<br>
+6.	A higher order performance saving protocol is not active. For example, if there is another protocol<br>
+in effect to switch priority from one thread to another, then running this protocol with instruction<br>
+starvation handling of the present invention may have a negative impact on processor performance.<br>
+7.	An instruction starvation enable bit is set (i.e, bit that can be set by control logic to turn off Iside<br>
+starvation detection/resolution).<br>
+8.	The thread under consideration is not waiting for an instruction fetch that has gone off-chip (e.g.,<br>
+off the processor such as main memory).<br><br>
+In this embodiment, if all monitored conditions are met then there is an indication of approaching<br>
+Iside starvation for thread0. Though eight conditions are presented above, the present invention can be<br>
+expanded to additional conditions or a fewer number of conditions. For example, the indication of<br>
+approaching Iside starvation could be based solely on conditions 1, 2, and 5 above being true.<br>
+5	In block 67, thread priority is being changed from thread0 to thread 1. The thread precedence<br>
+counter is loaded with a value equal to 16 multiplied by the value in a second thread's (thread 1) starting<br>
+counter. At this time, the thread priority signals are switched to indicate that thread 1 has priority over<br>
+thread0. Control then passes to block 69 where thread 1 has priority and the thread precedence counter is<br>
+decrementing according to a system clock (block 70). As indicated by the conditions in block 71, the state<br>
+changes from block 69 to block 73 when one or more conditions are met In this embodiment, the state<br>
+changes when any of the following three conditions are met<br>
+1.	The thread precedence counter reaches 0;<br>
+2.	thread0 retires a microoperation;<br>
+3.	There is no longer an indication of approaching Iside (Instruction side) starvation for thread 1.<br>
+In state 73, the thread precedence counter is loaded with sixteen multiplied by the value in threadl's<br>
+starting counter and the appropriate thread priority signals are switched to indicate that thread0 has priority.<br>
+Control then passes back to block 61. Upon reset of the processor (block 75), the actions of state 73 are<br>
+taken and thread0 is given priority in this embodiment<br>
+Referring to Fig. 4, a state diagram for setting the starting counter of one of thread0 and thread! is<br>
+shown according to an embodiment of the present invention. Upon reset (block 80), control passes to block<br>
+81 where the value for the starting counter is set to I. To go from block 81 to block 82, one of two<br>
+conditions (block 85) are to be met:<br>
+1.	Thread priority has switched to another thread before the current thread was able to retire a<br>
+microoperation;<br>
+2.	There is an indication of approaching instruction side starvation for the current thread.<br>
+In Mock 82, the value in the starting counter is modified geometrically (e.g., by shifting in a binary<br>
+1 bit and shifting all bits to the left). For example, a 1 value would be made a 3 value, a 3 value would be<br>
+made a 7 value and a 2"-l value would be made a 2n+1-l value (where n &gt; 0). Control remains in state 82<br><br>
+while there is an indication of an approaching fside starvation (block 86). In this embodiment, for every<br>
+system clock, the value in the starting counter is incremented as discussed above until a maximum value is<br>
+reached. Control moves back to block 81 if one of the following conditions occur (block 84):<br>
+1.	A microoperation for that thread is retired;<br>
+5 2.	There is no indication of approaching Instruction side starvation for the thread.<br>
+Control passes from block 82 to block 83 if "Other conditions" are not satisfied. In this<br>
+embodiment, if control passed from block 81 to block 82 because thread priority has switched to another<br>
+thread before the current thread was able to retire a microoperation, then control passes from block 82 to 83<br>
+if the following "other" conditions are not satisfied:<br>
+1.	The thread under consideration has retired a microoperation; and<br>
+2.	The thread priority signal has not switched to the thread under consideration, (block 87). In other<br>
+words, the value in the counter is to be maintained at the same value if the thread has not retired a<br>
+microoperation and this thread has thread priority. Control remains in block 83 where the current value in<br>
+the starting counter is held at the same value as long as the other conditions are not satisfied (block 88).<br>
+Control returns to block 82 if one of the following conditions are met (block 89):<br>
+1.	Thread priority switched from the current thread to another thread before a microoperation could be<br>
+retired;<br>
+2.	There is an indication of approaching Instruction side starvation for the thread.<br>
+Control passes from block 83 to block 81 if the thread retires a microoperation (block 90). Finally,<br>
+control passes from block 81 to block 83 when other conditions are not satisfied (block 91). Using the<br>
+method and system of the present invention, the problems referred to above may be avoided. The<br>
+implementation of the flow diagrams of Figs. 3 and 4 can be performed by properly configured control logic<br>
+(eg., including control logic 37 in Fig. 2). Alternatively, control logic can be a sub-module of the processor<br>
+10 that executes instructions to implement the flow diagrams of Figs. 3 and 4.<br>
+Although several embodiments are specifically illustrated and described herein, it will be<br>
+appreciated that modifications and variations of the present invention are covered by the above teachings and<br>
+within the purview of the appended claims without departing from the spirit and intended scope of the<br>
+invention.<br><br>
+WE CLAIM:<br>
+1. A method of assigning thread priority comprising:<br>
+assigning priority to a first thread in a multi threaded processor;<br>
+loading a preliminary value to a thread precedence counter;<br>
+assigning priority to a second thread in response to expiration of said thread<br>
+precedence counter;<br>
+determining if there is an indication of approaching instruction side starvation<br>
+for said first thread wherein instruction fetching for said first thread would be blocked<br>
+due to processing one or more instructions from another thread; and<br>
+incrementing a value stored in a first starting counter in response to an<br>
+indication of approaching instruction side starvation for said first thread.<br>
+2. The method as claimed in claim 1 wherein said preliminary value is based on<br>
+a value stored in the first starting counter associated with said first thread.<br>
+3. The method as claimed in claim 2 wherein determining if there is an indication<br>
+of approaching instruction side starvation for said first thread comprises determining<br>
+if each of a plurality of conditions are true, the plurality of conditions consisting of<br>
+each of the following:<br>
+if the processor is operating in a multithreaded processing mode;<br>
+if the first thread has no instructions in an execution pipeline of said processor,<br>
+and<br>
+if the first thread is attempting to fetch instructions from a memory.<br>
+4.	The method as claimed in claim 3 wherein said value is incremented<br>
+geometrically.<br>
+5.	The method as claimed in claim 5 wherein said value is incremented<br>
+geometrically by left-shifting a binary 1 bit into said value.<br>
+6.	A method of assigning thread priority comprising:<br><br>
+assigning priority to a first thread in a muiti threaded processor; and<br>
+assigning priority to a second thread in response to one of a plurality of<br>
+conditions being true, the conditions consisting of<br>
+if a thread processor counter expires;<br>
+if processing of said first thread retires an instruction from said first<br>
+thread; and<br>
+if there is not an indication of approaching instruction side starvation for<br>
+said first thread wherein instruction fetching for said first thread would be blocked<br>
+due to processing one or more instructions from another thread.<br>
+7. The method as claimed in claim 6 wherein said indication of approaching<br>
+instruction side starvation for said first thread comprises each of a plurality of<br>
+conditions being true, the plurality of conditions consisting of each of the following<br>
+if a processor is operating in a multithreaded processing mode;<br>
+if the first thread has no instructions in an execution pipeline of said processor;<br>
+and<br>
+if the first thread is attempting to fetch instructions from a memory.<br>
+8. A processor comprising:<br>
+control logic to assign priority to one of at least first and second threads; and<br>
+a thread precedence counter coupled to said control logic wherein priority is<br>
+assigned to said second thread after said thread precedence counter expires<br>
+wherein said control logic is to determine if there is an indication of approaching<br>
+instruction side starvation for said first thread wherein instruction fetching for said first<br>
+thread would be blocked due to processing one or more instructions from another<br>
+thread, and to increment a value stored in said first starting counter if there is an<br>
+indication of approaching instruction side starvation for said first thread.<br>
+9. The processor as claimed in claim 8 wherein a preliminary value for said<br>
+thread precedence counter is based on a value stored in a first starting counter<br>
+associated with said first thread.<br><br>
+10. The processor as claimed in claim 8 wherein said control logic is to determine<br>
+if there is an indication of approaching instruction side starvation for said first thread<br>
+by determining if each of a plurality of conditions are true, the plurality of conditions<br>
+consisting of each of the following<br>
+if the processor is operating in a multithreaded processing mode;<br>
+if the first thread has no instructions in an execution pipeline of said processor;<br>
+and<br>
+if the first thread is attempting to fetch instructions from a memory.<br>
+11.	The processor as claimed in claim 10 wherein said control logic is to<br>
+increment the value stored in the first starting counter geometrically.<br>
+12.	The processor as claimed in claim 11 wherein said value is to be incremented<br>
+geometrically by left-shifting a binary 1 bit into said value.<br>
+13.	A processor comprising:<br>
+control logic to assign priorities to a first thread and to assign priority to a<br>
+second thread in response to one of a plurality of conditions being true, the<br>
+conditions consisting of<br>
+if the processing counter expires;<br>
+if processing of said first thread retires an instruction from said first thread;<br>
+and<br>
+if there is not an indication of approaching instruction side starvation for said<br>
+first thread wherein instruction fetching for said first thread would be blocked due to<br>
+processing one or more instructions from another thread.<br>
+14. The processor as claimed in claim 13 wherein said indication of approaching<br>
+instruction side starvation for said first thread comprises each of a plurality of<br>
+conditions being true, the plurality of conditions consisting of each of the following:<br>
+if the processor is operating in a multithreaded processing mode;<br><br>
+if the first thread has no instructions in an execution pipeline of said processor;<br>
+and<br>
+if the first thread is attempting to fetch instructions from a memory.<br>
+15. A computer system comprising:<br>
+a memory to store instructions for first and second threads;<br>
+a processor having<br>
+control logic coupled to said memory to assign priority between said first<br>
+and second threads; and<br>
+a thread precedence counter coupled to said control logic wherein<br>
+priority is assigned to said second thread after said thread precedence counter<br>
+expires wherein said control logic is to determine if there is an indication of<br>
+approaching instruction side starvation for said first thread wherein said instruction<br>
+fetching for said first thread would be blocked due to processing one or more<br>
+instructions from another thread and to increment a value stored in said first starting<br>
+counter in response to an indication of approaching instruction side starvation for<br>
+said first thread.<br>
+16.	The computer system as claimed in claim 15 wherein a preliminary value for<br>
+said thread precedence counter is based on a value stored in a first starting counter<br>
+associated with said first thread.<br>
+17.	The computer system as claimed in claim 16 wherein said control logic is to<br>
+determine if there is an indication of approaching instruction side starvation for said<br>
+first thread by determining if each of a plurality of conditions are true, the plurality of<br>
+conditions consisting of each of the following<br>
+if the processor is operating in a multithreaded processing mode;<br>
+-if the first thread has no instructions in an execution pipeline of said<br>
+processor; and<br>
+if the first thread is attempting to fetch instructions from a memory.<br><br>
+18.	The processor as claimed in claim 17 wherein said control logic is to<br>
+increment the value stored in the first starting counter geometrically.<br>
+19.	The processor as claimed in claim 18 wherein said value is to be incremented<br>
+geometrically by left-shifting a binary 1 bit into said value.<br>
+20.	A computer system comprising:<br>
+a memory to store instructions for first and second threads;<br>
+a processor comprising<br>
+control logic to assign priorities to said first thread and to assign priority<br>
+to a second thread in response to one of a plurality of conditions being true, the<br>
+conditions consisting of<br>
+if the processing counter expires;<br>
+if processing of said first thread retires an instruction from said<br>
+first thread; and<br>
+if there is not an indication of approaching instruction side<br>
+starvation for said first thread wherein instruction fetching for said first thread would<br>
+be blocked due to processing one or more instructions from another thread.<br>
+21. The computer system as claimed in claim 20 wherein said indication of<br>
+approaching instruction side starvation for said first thread comprises each of a<br>
+plurality of conditions being true, the plurality of conditions consisting of each of the<br>
+following<br>
+if the processor is operating in a multithreaded processing mode;<br>
+if the first thread has no instructions in an execution pipeline of said processor;<br>
+and<br>
+if the first thread is attempting to fetch instructions from a memory.<br>
+22. A set of instructions residing in a storage medium, said set of instructions to<br>
+be executed by a processor to handle processing of at least first and second threads<br>
+in parallel and assign thread priority comprising:<br><br>
+assigning priority to said first thread;<br>
+loading a preliminary value to a thread precedence counter;<br>
+assigning priority to said second thread after said thread precedence counter<br>
+expires;<br>
+determining if there is an indication of approaching instruction side starvation<br>
+for said first thread wherein instruction fetching for said first thread would be blocked<br>
+due to processing one or more instructions from another thread; and<br>
+incrementing a value stored in a first starting counter in response to an<br>
+indication of approaching instruction side starvation for said first thread.<br>
+23.	The set of instructions as claimed in claim 22 wherein said preliminary value is<br>
+based on a value stored in a first starting counter associated with said first thread.<br>
+24.	The method as claimed in claim 23 wherein determining if there is an<br>
+indication of approaching instruction side starvation for said first thread comprises<br>
+determining if each of a plurality of conditions are true, the plurality of conditions<br>
+consisting of each of the following:<br>
+if the processor is operating in a multithreaded processing mode;<br>
+if the first thread has no instructions in an execution pipeline of said processor,<br>
+and<br>
+if the first thread is attempting to fetch instructions from a memory.<br>
+25.	The set of instructions as claimed in claim 24 wherein said value is<br>
+incremented geometrically.<br>
+26.	The set of instructions as claimed in claim 25 wherein said value is<br>
+incremented geometrically by left-shifting a binary 1 bit into said value.<br><br>
+In a multi-threaded processor, thread priority variable are set up in memory. The<br>
+actual assignment of thread priority is based on the expiration of a thread<br>
+precedence counter. To further augment, the effectiveness of the thread precedence<br>
+counters, starting counters are associated with each thread that serve as a multiplier<br>
+for the value to be used in the thread precedence counter. The value in the starting<br>
+counters are manipulated so as to prevent one thread from getting undue priority to<br>
+the resources of the multi-threaded processor.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1LT0xOUC0yMDAzLUZPUk0tMjctMS5wZGY=" target="_blank" style="word-wrap:break-word;">1299-KOLNP-2003-FORM-27-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1LT0xOUC0yMDAzLUZPUk0tMjcucGRm" target="_blank" style="word-wrap:break-word;">1299-KOLNP-2003-FORM-27.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtYWJzdHJhY3QucGRm" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtYXNzaWdubWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtY2xhaW1zLnBkZg==" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtY29ycmVzcG9uZGVuY2UucGRm" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-correspondence.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtZGVzY3JpcHRpb24gKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtZHJhd2luZ3MucGRm" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtZXhhbWluYXRpb24gcmVwb3J0LnBkZg==" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-examination report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtZm9ybSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtZm9ybSAxOC5wZGY=" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-form 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtZm9ybSAzLnBkZg==" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtZm9ybSA1LnBkZg==" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtZ3BhLnBkZg==" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtcmVwbHkgdG8gZXhhbWluYXRpb24gcmVwb3J0LnBkZg==" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-reply to examination report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTI5OS1rb2xucC0yMDAzLWdyYW50ZWQtc3BlY2lmaWNhdGlvbi5wZGY=" target="_blank" style="word-wrap:break-word;">1299-kolnp-2003-granted-specification.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="229475-method-and-device-for-collecting-fresh-water.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="229477-locally-propelled-intraluminal-device-with-cable-loop-track-and-method-of-use.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>229476</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1299/KOLNP/2003</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>08/2009</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>20-Feb-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>18-Feb-2009</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>13-Oct-2003</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>INTEL CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>2200 MISSION COLLEGE BOULEVARD, SANTA CLARA, CA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>BOGGS DARRELL</td>
+											<td>2200 S.W. 195TH AVENUE, ALOHA, OR 97006</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>SAGER DAVID</td>
+											<td>9540 N.W. SKYVIEW DRIVE, PORTLAND, OR 97231</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>UPTON MICHAEL</td>
+											<td>1410 NW 24TH AVENUE, PORTLAND, OR 97210</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>ALLEN JAMES</td>
+											<td>14800 NW CORNELL ROAD, #12H, PORTLAND, OR 97229</td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td>BURNS DAVID</td>
+											<td>10080 NW PRISCILLA COURT, #12H, PORTLAND, OR 97229</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 9/38</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2002/12339</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2002-04-18</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>09/888,273</td>
+									<td>2001-06-22</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/229476-method-and-apparatus-for-assigning-thread-priority-in-a-multi-threaded-processor by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 10:10:18 GMT -->
+</html>

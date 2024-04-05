@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/212609-a-method-of-processing-data-in-a-computer-system-and-a-content-addressable-storage-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 02:46:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 212609:&quot;A METHOD OF PROCESSING DATA IN A COMPUTER SYSTEM AND A CONTENT ADDRESSABLE STORAGE SYSTEM&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;A METHOD OF PROCESSING DATA IN A COMPUTER SYSTEM AND A CONTENT ADDRESSABLE STORAGE SYSTEM&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>One embodiment is a system for locating content on a storage system, in which the storage system provides a location hint to the host of where the data is physically stored, which the host can resubmit with future access requests. In another embodiment, an index that maps content addresses to physical storage locations is cached on the storage system. In yet another embodiment, intrinsic locations are used to select a storage location for newly written data based on an address of the data. In a further embodiment, units of data that are stored at approximately the same time having location index entries that are proximate in the index.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>1. Field of Invention<br>
+The present invention relates to a method of processing data in a<br>
+computer system and a content addressable storage system.<br>
+2. Description of the Related Art<br>
+Content Addressed Storage (CAS) is a technique by which a unit of data stored<br>
+on a storage system is accessed using an address that is derived from the content of the<br>
+unit of data. As an example, the unit of data may be provided as an input to a hashing<br>
+function which generates a hash value that is used as the content address for the unit of<br>
+data. An example of a hashing function suitable for generating content addresses is the<br>
+message digest 5 (MD5) hashing algorithm. When a host computer sends a request to a<br>
+content-addressable storage system to retrieve a unit of data, the host provides the<br>
+content address (e.g., hash value) of the unit of data. The storage system then<br>
+determines, based on the content address, the physical location of the unit of data in the<br>
+storage system, retrieves the unit of data from that location, and returns the unit of data to<br>
+the host computer.<br>
+The task of determining the physical location of the unit of data may involve<br>
+several aspects, particularly when the storage system is a distributed storage system. A<br>
+distributed storage system is one made up of a number of separate nodes, where each<br>
+node may be a separate machine with separate resources (e.g., processor, memory, disk).<br>
+The nodes communicate with each other (e.g., through a network) to handle data access<br>
+requests from one or more host computers. To determine the physical location of a unit<br>
+of data on the storage system based on the content address of the unit of data, the storage<br>
+system first determines on which node the unit of data is stored. Then, the storage<br>
+system determines which disk on that node the unit of data is stored (if the node has<br>
+multiple disks), as well as the physical location on the disk at which the unit of data is<br>
+stored (e.g., cylinder, head, sector).<br>
+Figure 1 shows an example of a distributed storage system. The distributed<br>
+storage system includes a plurality of access nodes (AN) 101a, 101b,...,101n, a plurality<br>
+of storage nodes (SN) 105a, 105b, 105c,...,105n, and a network 103 that couples them<br>
+together. Access nodes 101 may be used to process access requests (e.g., read/write<br>
+requests) from host computers (not shown), while storage nodes 105 may be used to<br>
+store data. When an access node receives a request from a host to read a unit of data, the<br>
+access node determines on which storage node(s) the unit of data, is stored, and requests<br>
+the unit of data from the appropriate storage node(s).<br>
+One known method of determining which storage node stores a particular unit of<br>
+data is referred to herein as a multicast location query (MLQ). In a multicast location<br>
+query, an access node 101 receives a request to access a unit of data from a host. The<br>
+access node then broadcasts a network message to each storage node 105, asking if the<br>
+storage node stores the particular unit of data. Each storage node 105 then determines if<br>
+the requested unit of data is stored thereon. Each storage node 105 may include a data<br>
+( set (e.g., a database or table) that lists the content addresses of the units of data stored on<br>
+that storage node, along with the disk in the storage node on which the unit of data is<br>
+stored. That is, if the storage node has four disks, the table may indicate on which of the<br>
+four disks each unit of data is stored. Thus, when a storage node 105 receives the MLQ<br>
+network message from an access node 101, the storage node may scan its data set to<br>
+determine if the requested unit of data is stored thereon.<br>
+Once a storage node 105 determines that it stores the requested unit of data, the<br>
+storage node, using the same data set, may determine on which physical disk the unit of<br>
+data is stored. Then, the storage node may determine the physical location on the<br>
+appropriate disk at which the unit of data is stored. The units of data may be stored as<br>
+files in a file system on the storage node. Thus, to determine the physical disk location<br>
+of a unit of data, the storage node may locate the corresponding file in the file system<br>
+that includes the data unit and rely on the storage node's operating system to map the file<br>
+system location, to a physical disk location. For example, when storing a unit of data, the<br>
+storage node may create a file having the content address of the unit of data as its<br>
+filename and store the unit of data in that file.<br>
+Figure 2 is an illustrative file system for storing units of data in a distributed<br>
+content-addressable storage system. The file system of Figure 2 includes a number of<br>
+hierarchical directories. The directory at the top of the hierarchy is termed the root<br>
+directory. At the second level in the hierarchy are a number of subdirectories. Each of<br>
+these subdirectories represents the first character in the content address of a unit of data.<br>
+That is, a unit of data having a content address beginning with the character 'A' will be<br>
+stored in one of the subdirectories of directory 'A.' The subdirectory in which the unit of<br>
+data will be stored is dependent on the second character of the content address. When<br>
+the storage system later attempts to access the unit of data (e.g., in response to a read<br>
+request), the storage system may locate the unit of data by traversing the file system<br>
+hierarchy to locate the subdirectory whose name matches the first two characters of the<br>
+content address of the unit of data. If the storage system locates the unit of data in its file<br>
+system, it may open the file containing the unit of data to verify that the storage node<br>
+does indeed have the unit of data stored thereon. Then, the storage node may return the<br>
+. unit of data to the access node that issued the multicast request. The access node may<br>
+\ then return the unit of data to the host that requested the unit of data.<br>
+An MLQ is a computationally-expensive process, as it requires each storage node<br>
+to perform an exhaustive database search for each unit of data requested. Further, most<br>
+of these exhaustive searches will fail, as a unit of data typical resides on only one or a<br>
+small number of storage nodes (assuming the unit of data is replicated on one or more<br>
+storage nodes).<br>
+To reduce the computational expense of using an MLQ to locate units of data on<br>
+the storage system, another technique has been developed that employs an index to locate<br>
+units of data. The index is referred to herein as a blob location index (BLI), with the<br>
+term "blob" referring to a unit of data The BLI is a database that maps the content<br>
+addresses of units of data ("blobs") to the storage node or nodes on which the content is<br>
+stored. In much the same manner as in the MLQ scheme, units of data are stored in a<br>
+location in the file system selected based on the content address of the unit of data.<br>
+However, the administration of the BLI is split among the storage nodes, so that each<br>
+storage node administers a portion of the BLI. Thus, access requests for a unit of data<br>
+need not be broadcast to all storage nodes, but just to the one that administers the portion<br>
+of the BLI that includesthe requested unit of data.<br>
+A configuration of the BLI is shown in Figure 3. The responsibility of<br>
+(administering the BLI is split evenly across storage nodes 301, 303, 305, and 307.<br>
+Storage node 301 administers the portion of the BLI that contains content addresses<br>
+beginning with characters 'A' - 'F', storage node 303 administers the portion of the BLI<br>
+that contains content addresses beginning with characters 'G' - 'L', storage node 305<br>
+administers the portion of the BLI that contains content addresses beginning with<br>
+characters 'M' - 'R', and storage node 307 administers the portion of the BLI that<br>
+contains content addresses beginning with characters 'S' - 'Z'. Each portion of the BLI<br>
+includes an entry for every content address within the specified range that is stored on<br>
+the storage system, and indicates on which storage node the corresponding unit of data is<br>
+stored. The storage nodes also have local databases 309, 311, 313, and 315, which store<br>
+the content addresses of units of data stored on their respective storage nodes and<br>
+indicate on which physical disk of that storage node these content addresses are stored.<br>
+The access nodes maintain a record of which portions of the BLI are administered<br>
+by each storage node. Thus, when an access node receives a request from a host to<br>
+retrieve a particular unit of data, the access node determines which storage node<br>
+administers the portion of the BLI that contains the content address of the requested unit<br>
+of data. For example, if a host sends a request to an access node for a unit of data having<br>
+a content address beginning with 'S', the access node queries storage node 307 to<br>
+determine which storage node stores the requested unit of data. Storage node 307<br>
+searches the BLI to determine which storage node or nodes store the requested unit of<br>
+data and returns this information to the requesting access node. The access node may<br>
+request the unit of data directly from the appropriate storage node. In this manner, other<br>
+storage nodes that do not store the unit of data are not queried. Thus, unlike an MLQ,<br>
+using the BLI does not require each storage node to perform an exhaustive database<br>
+search. Instead, only one storage node queries the BLI, and one storage node queries its<br>
+local database, thereby reducing the overall computational expense on the storage<br>
+system.<br>
+In case of a failure in the BLI to return the storage node for a requested unit of<br>
+data (i.e., if a content address requested by a host is not found in the BLI), the storage<br>
+system may fall back on the MLQ scheme, and issue an MLQ to determine on which<br>
+storage node the unit of data corresponding to the requested content address resides.<br>
+By distributing the BLI administration responsibilities evenly among the storage<br>
+nodes, the computational burden of locating a particular unit of data on the storage<br>
+system is shared equally among the storage nodes. The randomness of the hashing<br>
+function used to generate the content addresses is relied upon to distribute an<br>
+approximately equal number of content addresses to each storage node. -When new<br>
+storage nodes are added to the storage system or when storage nodes are removed from<br>
+the storage system, the administration responsibilities of the BLI are redistributed among<br>
+the storage nodes so that the administration responsibilities are evenly shared among all<br>
+the storage nodes. Further, when new units of data are stored on the storage system, the<br>
+storage node updates the BLI, updates the local database of the storage node on which<br>
+the unit of data is stored, and writes the content itself to the storage system. This three-<br>
+tiered write impacts the performance of the storage system in processing writes.<br>
+SUMMARY OF INVENTION<br>
+One illustrative embodiment is directed to a method of processing data in a<br>
+computer system comprising at least one host and at least one storage system which<br>
+stores data for the at least one host. The method comprises acts of: (a) receiving, at the<br>
+storage system, a request from the at least one host to access a unit of data stored on the<br>
+at least one storage system; and (b) in response to the request, returning to the at least<br>
+one host information related to where the unit of data is physically stored on the at least<br>
+one storage system. Another illustrative embodiment is directed to at least one computer<br>
+readable medium encoded with instructions that, when executed on a computer system,<br>
+perform the above-described method.<br>
+A further illustrative embodiment is directed to a storage system for use in a<br>
+computer system that includes at least one host, wherein the storage system stores data<br>
+for the at least one host. The storage system comprises: at least one storage device to<br>
+store data received from the at least one host; and at least one controller that: receives a<br>
+request from the at least one host to access a unit of data stored on the content<br>
+addressable storage system, the request identifying the unit of data using a content<br>
+address, and in response to the request, returns to the at least one host information related<br>
+to where the unit of data is physically stored on the content addressable storage system.<br>
+Another illustrative embodiment of the invention is directed to a method of<br>
+processing data in a computer system comprising at least one host and at least one<br>
+storage system which stores data for the at least one host. The method comprises acts of:<br>
+(a) sending, to the at least one storage system, a request to access a unit of data stored on<br>
+the storage system; and (b) receiving, from the at least one storage system, information<br>
+related to where the unit of data is physically stored on the at least one storage system.<br>
+Another illustrative embodiment is directed to at least one computer readable medium<br>
+encoded with instructions that, when executed on a computer system, perform the above-<br>
+described method.<br>
+A further illustrative embodiment is directed to a host computer for use in a<br>
+computer system that includes the host computer and at least one storage system,<br>
+wherein the host computer accesses data stored on the at least one storage system. The<br>
+host computer comprises: at least one storage device; and at least one controller that:<br>
+sends, to the at least one storage system, a request to access a unit of data stored on the at<br>
+least one storage system; and in response to the request, receives from the at least one<br>
+storage system, information related to where the unit of data is physically stored on the at<br>
+least one storage system and stores the information in the at least one storage device.<br>
+Another illustrative embodiment is directed to a method of processing data in a<br>
+computer system comprising at least one host and at least one storage system. The<br>
+method comprises acts of: (a) receiving, at the at least one storage system, a request from<br>
+the at least one host to access a unit of data, the request having an identifier that can be<br>
+used to access the unit of data; and (b) in response to the request, returning to the at least-<br>
+one host an identifier that can be used to access the unit of data and additional<br>
+information, separate from the identifier, related to where the unit of data is physically<br>
+stored on the at least one storage system. Another illustrative embodiment is directed to<br>
+at least one computer readable medium encoded with instructions that, when executed on<br>
+a computer system, perform the above-described method.<br>
+A further illustrative embodiment is directed to a storage system for use in a<br>
+computer system, including the storage system and at least one host. The storage system<br>
+comprises: at least one storage device to store data received from the at least one host;<br>
+and at least one controller that: receives, at the at least one storage system, a request from<br>
+the at least one host to access a unit of data, the request having an identifier that can be<br>
+used to access the unit of data; and in response to the request, returns to the at least one<br>
+host an identifier that can be used to access the unit of data and additional information,<br>
+separate from the identifier, related to where the unit of data is physically stored on the at<br>
+least one storage system.<br>
+Another illustrative embodiment is directed to a method of processing data in a<br>
+computer system comprising at least one host and at least one storage system. The<br>
+method comprises acts of: (a) sending, to the at least one storage system, a request from<br>
+the at least one host to access a unit of data, the request having an identifier that can be<br>
+used to access the unit of data; and (b) receiving, from the at least one storage system, an<br>
+identifier that can be used to access the unit of data and additional information, separate<br>
+from the identifier, related to where the unit of data is physically stored on the at least<br>
+one storage system. Another illustrative embodiment is directed to at least one computer<br>
+readable medium encoded with instructions that, when executed on a computer system,<br>
+perform the above-described method.<br>
+A further illustrative embodiment is directed to a host computer for use in a<br>
+computer system including the host computer and at least one storage system. The host<br>
+computer comprises: at least one storage device; and at least one controller that: sends, to<br>
+the at least one storage system, a request from the at least one host to access a unit of<br>
+data, the request having an identifier that can be used to access the unit of data; and in<br>
+response to the request, receives from the at least one storage system an identifier that<br>
+can be used to access the unit of data and additional information, separate from the<br>
+identifier, related to where the unit of data is physically stored on the at least one storage<br>
+system, and stores the additional information on the at least one storage device.<br>
+Another illustrative embodiment is directed to a method of processing data in a<br>
+computer system comprising at least one host and at least one content addressable<br>
+storage system which stores data for the at least one host, wherein the at least one host<br>
+accesses data units stored on the at least one storage system using content addresses<br>
+generated based on the content of the data units. The method comprises: (a) maintaining<br>
+at least one index that maps a content address of at least one data unit to a storage<br>
+location within the at least one storage system at which the data unit is stored; and (b)<br>
+maintaining a cache of the location index. Another illustrative embodiment is directed to<br>
+at least one computer readable medium encoded with instructions that, when executed on<br>
+a computer system, perform the above-described method.<br>
+A further illustrative embodiment is directed to a content addressable storage<br>
+system for use in a computer system, that includes the content addressable storage<br>
+system and at least one host, wherein the at least one host accesses data units stored on<br>
+the content addressable storage system using content addresses generated based on the<br>
+content of the data units. The content addressable storage system comprises: at least one<br>
+storage device to store data received from the at least one host; and at least one controller<br>
+that: maintains at least one index that maps a content address of at least one data unit to a<br>
+storage location within the content addressable storage system at which the data unit is<br>
+stored; and maintains a cache of the location index.<br>
+Another illustrative embodiment is directed to a method of processing data in a<br>
+computer system comprising at least one host and at least one content addressable<br>
+storage system which stores data for the at least one host, wherein the at least one host<br>
+accesses data units stored on the at least one storage system using content addresses<br>
+generated based on the content of the data units. The method comprises an act of: (a) in<br>
+response to an access request from the at least one host computer for a unit of data<br>
+identified by a content address parsing the content address to determine at least one<br>
+aspect of a physical storage location for the unit of data on the at least one storage<br>
+system. Another illustrative embodiment is directed to at least one computer readable<br>
+medium encoded with instructions that, when executed on a computer system, perform<br>
+the above-described method.<br>
+A further illustrative embodiment is directed to a content addressable storage<br>
+system for use in a computer system, including the content addressable storage system<br>
+and at least one host, wherein the at least one host accesses data units stored on the<br>
+content addressable storage system using content addresses generated based on the<br>
+content of the data units. The content addressable storage system comprises: at least one<br>
+storage device to store data received from the at least one host; and at least one controller<br>
+that, in response to an access request from the at least one host comguter for a unit of<br>
+data identified by a content address, parses the content address to determine at least one<br>
+aspect of a physical storage location for the unit of data on the at least one storage<br>
+system.<br>
+Another illustrative embodiment is directed to a method of processing data in a<br>
+computer system comprising at least one host and at least one content addressable<br>
+storage system which stores data for the at least one host, wherein the at least one host<br>
+accesses data units stored on the at least one storage system using content addresses<br>
+generated based on the content of the data units. The method comprises acts of: (a)<br>
+receiving, from the host, a request to store a unit of data on the storage system, the unit<br>
+of data having a content address based on the content of the unit of data; (b) determining,<br>
+based on the content address, a first storage location on the storage; system to which the<br>
+content address maps;<br>
+(c) storing a pointer for the first unit of data at the first storage location, the pointer<br>
+pointing to a second storage location; and (d) storing the unit of data at the second<br>
+storage location on the storage system. Another illustrative embodiment is directed to at<br>
+least one computer readable medium encoded with instructions that, when executed on a<br>
+computer system, perform the above-described method.<br>
+A further illustrative embodiment is directed to a content addressable storage<br>
+system for use in a computer system that includes at least one host, wherein the at least<br>
+one host accesses data units stored on the content addressable storage system using<br>
+content addresses generated based on the content of the data units. The content<br>
+addressable storage system comprises: at least one storage device to store data received<br>
+from the at least one host; and at least one controller that: receives, from the host, a<br>
+request to store a unit of data on the storage system, the unit of data having a content<br>
+address based on the content of the unit of data; determines, based on the content<br>
+address, a first storage location on the storage system to which the content address maps;<br>
+stores a pointer for the first unit of data at the first storage location, the pointer pointing<br>
+to a second storage location; and stores the unit of data at the second storage location on<br>
+the storage system.<br>
+Another illustrative embodiment is directed to a method of processing data in a<br>
+computer system comprising at least one host and at least one content addressable<br>
+storage system which stores units of data for the at least one host, wherein the at least<br>
+one host accesses a unit of data using a content address based at least in part on the<br>
+content of the unit of data. The method comprises an act of: (a) creating the content<br>
+addresses for units of data to comprise first information that provides an indication of<br>
+which units of data are written to the storage system proximate in time. Another<br>
+illustrative embodiment is directed to at least one computer readable medium encoded<br>
+with instructions that, when executed on a computer system, perform the above-<br>
+described method.<br>
+A further illustrative embodiment is directed to a host computer for use in a<br>
+computer system comprising the host computer and a content addressable storage<br>
+system, wherein the host computer accesses the data on the content addressable storage<br>
+system using content addresses generated based on the content of the data units. The<br>
+host computer comprises: at least one processor that generates the units of data; and at<br>
+least one controller that creates the content addresses for units of data to comprise first<br>
+information that provides an indication of which units of data are written to the content<br>
+addressable storage system proximate in time.<br>
+Another illustrative embodiment is directed to a method of processing data in a<br>
+computer system comprising at least one host and at least one content addressable<br>
+storage system which stores units of data for the at least one host, wherein the at least<br>
+one host accesses a unit of data using a content address based at least in part on the<br>
+content of the unit of data, wherein the at least one storage system comprises an index<br>
+that maps content addresses for units of data to storage locations within the at least one<br>
+storage system where the units of data are stored. The method comprises acts of: (a)<br>
+receiving, from the at least one host, a request to store one of the units of data, the<br>
+request identifying the one of the units of data with its associated content address; and<br>
+(b) storing the one of the units of data in a storage location selected so that an entry in the<br>
+index for the storage location is proximate to entries in the index for other units of data<br>
+written to the at least one storage system proximate in time to the one of the units of data.<br>
+Another illustrative embodiment is directed to at least one computer readable medium<br>
+encoded with instructions that, when executed on a computer system, perform the above-<br>
+described method.<br>
+A further illustrative embodiment is directed to a content addressable storage<br>
+system for use in a computer system that comprises the content addressable storage<br>
+system and at least one host, wherein the at least one host accesses data units stored on<br>
+the content addressable storage system using content addresses generated based on the<br>
+content of the data units. The content addressable storage system comprises: at least one<br>
+storage device to store data received from the at least one host; and at least one controller<br>
+that maintains an index that maps content addresses for units of data to storage locations<br>
+within the at least one storage system where the units of data are stored so that units of<br>
+data written to the at least one storage system proximate in time have proximate entries<br>
+in the index.<br>
+Accordingly, the present invention provides a method of processing data in a<br>
+computer system comprising at least one host and at least one content addressable<br>
+storage system which stores units of data for the at least one host, and wherein the at<br>
+least one host accesses a unit of data using a content address based at least in part<br>
+on the content of the unit of data, the method comprising an act of: (a) creating the<br>
+content addresses for units of data to comprise first information that provides an<br>
+indication of which units of data are written to the storage system proximate in time.<br>
+The present invention also provides a method of processing data in a computer<br>
+system comprising at least one host and at least one content addressable storage<br>
+system which stores units of data for the at least one host, wherein the at least one<br>
+host accesses a unit of data using a content address based at least in part on the<br>
+content of the unit of data, and wherein the at least one storage system comprises an<br>
+index that maps content addresses for units of data to storage locations within the at<br>
+least one storage system where the units of data are stored, the method comprising<br>
+acts of: (a) receiving, from the at least one host, a request to store one of the units of<br>
+data, the request identifying the one of the units of data with its associated content<br>
+address; and (b) storing the one of the units of data in a storage location selected so<br>
+that an entry in the index for the storage location is proximate to entries in the index for<br>
+other units of data written to the at least one storage system proximate in time to the<br>
+one of the units of data.<br>
+The present invention further provides a content addressable storage system for<br>
+use in a computer system that comprises the content addressable storage system and<br>
+at least one host, wherein the at least one host accesses data units stored on the<br>
+content addressable storage system using content addresses generated based on the<br>
+content of the data units, the content addressable data storage system comprising: at<br>
+least one storage device to store data received from the at least one host; and at least<br>
+one controller that maintains an index that maps content addresses for units of data to<br>
+storage locations within the at least one storage system where the units of data are<br>
+stored so that units of data written to the at least one storage system proximate in time<br>
+have proximate entries in the index.<br>
+BRIEF DESCRIPTION OF THE ACCOMPANYING DRAWINGS<br>
+In the drawings:<br>
+Figure 1 is a block diagram of an illustrative prior art distributed storage<br>
+system;<br>
+Figure 2 is a diagram of a file system hierarchy in which units of data are stored<br>
+in a prior art content-addressable storage system;<br>
+Figure 3 is a block diagram illustrating a blob location index shared among<br>
+multiple storage nodes in a prior art content-addressable storage system;<br>
+Figure 4 is a block diagram illustrating a storage system and host configuration<br>
+on which aspects of the invention can be implemented;<br>
+Figure 5 is a block diagram illustrating intrinsic locations assigned to a plurality<br>
+of storage nodes in accordance with one embodiment of the invention;<br>
+Figure 6 is a block diagram illustrating intrinsic locations assigned to a plurality<br>
+of storage devices within a storage node, in accordance with one embodiment of the<br>
+invention; and<br>
+Figure 7 illustrates locality information being added to the content address for a<br>
+unit of data in accordance with one embodiment of the present invention.<br>
+DETAILED DESCRIPTION<br>
+Aspects of the present invention relate to improved techniques for accessing<br>
+content in a storage system.<br>
+In accordance with one embodiment of the present invention, the storage system<br>
+may provide hints to the host as to the location where a unit of data is stored within the<br>
+storage system. On subsequent access requests to the unit of data, the host can provide<br>
+the location hint back to the storage system, to facilitate the storage system locating the<br>
+unit of data, and thereby increase the efficiency of the storage system in locating the unit<br>
+data.<br>
+In an alternate embodiment of the present invention, a content-addressable<br>
+storage system is provided with an index that maps a content address of at least one unit<br>
+of data to a storage location at which the unit of data is stored. The storage system<br>
+maintains a cache of the location index to achieve performance improvements in<br>
+accessing the information contained within the index.<br>
+In a further embodiment of the present invention, a technique is employed for<br>
+facilitating the processing of a request from a host to access a unit of data in a content-<br>
+addressable storage system. The technique includes parsing the content address to<br>
+determine at least one aspect of a physical storage location at which the unit of data is<br>
+stored. By employing at least one aspect of the content address to be determinative of at<br>
+least one aspect of the physical storage location wherein the unit of data can be stored,<br>
+locating a unit of data in response to an access request can be achieved efficiently, as<br>
+discussed below.<br>
+In another embodiment of the present invention, a technique is employed to<br>
+create content addresses for units of data, such that the content addresses include<br>
+information that provides an indication of which units of data were written to the storage<br>
+system proximate in time. As will be appreciated from the discussion below, providing<br>
+content addresses that have some similarity in at least a portion thereof for units of data<br>
+that are written proximate in time can increase efficiencies in a storage system locating<br>
+units of data in response to access requests from a host.<br>
+As should be appreciated from the foregoing, several of the aspects of the present<br>
+invention are specifically directed to content-addressable storage systems. However, this<br>
+is not true for other aspects of the present invention, which have broader applications.<br>
+Thus, although the specific implementations described below relate particularly to a<br>
+content-addressable storage system, it should be appreciated that all aspects of the<br>
+present invention are not limited in this respect, as they can be employed on other types<br>
+of storage systems.<br>
+An illustrative computer system configuration on which aspects of the present<br>
+invention can be employed is shown in Figure 4, which illustrates a host computer 401<br>
+coupled to a storage system 407.<br>
+Host computer 401 executes an application program 403 that reads and writes<br>
+units of data, and an application programming interface (API) 405 that is adapted to<br>
+interface with the storage system 407. Host 401 may be, for example, a server that<br>
+provides resources (e.g., data storage, email, and other services), a client (e.g., a general-<br>
+purpose computer system operated by a user), a network component (e.g., a switch) or<br>
+any other type of computer. Host 401 is coupled by a communication link 404 to storage<br>
+system 407 so that the host 401 can use the storage system 407 to store and retrieve data.<br>
+The link 404 can be any type of communication link, including any type of network or<br>
+direct connection.<br>
+Application 403 may be any computer application program that a user or<br>
+administrator of host 401 uses and that stores data to and/or retrieves data from storage<br>
+system 407. Application program 403 is linked with API 405 so that application<br>
+program 403 may use API 405 to communicate with storage system 407.<br>
+API 405 may include, for example, computer object code that is provided to the<br>
+programmer of application program 403. The computer object code includes routines<br>
+that may be used to communicate with the storage system. When linked with API 405,<br>
+an application program may call these routines to communicate with storage system 407.<br>
+API 405 may be linked with any number of applications, and shields the programmer of<br>
+application program 403 from the internal protocol by which storage system 407<br>
+communicates. It should be appreciated that the aspects of the present invention<br>
+described herein are not limited to use in a system that employs an API on the host<br>
+specifically dedicated to facilitating communication between the host 401 and the storage<br>
+system 407, as the nature of the host/storage system interface can be implemented in any<br>
+of numerous ways, as the present invention is not limited to any particular<br>
+implementation technique. As an example of one alternative implementation, application<br>
+403 can be customized to communicate directly with the storage system 407.<br>
+In one embodiment of the invention, storage system 407 may be a content<br>
+addressable storage (CAS) system of the type described in commonly assigned<br>
+co-pending applications serials nos. 09/236,366, entitled "Content Addressable<br>
+Information Encapsulation, Representation, and Transfer", filed January 21,1999;<br>
+09/235,146 entitled "Access to Content Addressable Data Over A Network", filed<br>
+January 21 1999; 09/391,360, entitled System and Method for Secure Storage, Transfer<br>
+and Retrieval of Content Addressable Information, filed September 7,1999; and the<br>
+application entitled "Method And Apparatus For Data Retention In A Storage System",<br>
+filed on even date herewith, and not yet assigned a serial number, each of which is<br>
+incorporated herein by reference. These applications relate to content addressable<br>
+storage (CAS) and are referred to collectively as "the CAS applications".<br>
+As discussed above, in a content-addressable system, data is stored using a<br>
+content address generated based upon the content of the data itself. The content address<br>
+may be generated by applying a hash function to the data to be stored. The output of the<br>
+hash function may be used as at least part of the content address used in communication<br>
+between the host and storage system to refer to the data. The content address can be<br>
+mapped (e.g., within the storage system 407) to one or more physical storage locations<br>
+within the storage system.<br>
+One example of a hash function that may be used to generate the content address<br>
+is message digest 5 (MD5). The content address can correspond directly to the result of<br>
+the hash of the content, or additional information can be added to the hash result to<br>
+generate the address. It should be understood that any type of hash function may be<br>
+used, as the aspects of the invention described herein are not limited to the use of any<br>
+particular type of hash function, and some aspects are not even limited to use in a content<br>
+addressable system.<br>
+In one embodiment of the invention, a guaranteed unique identifier (GUID) may<br>
+be added to one or more of the hash results to ensure that the content addresses for units<br>
+of data are unique. The GUID may be generated, for example, based on the MAC<br>
+address of the host computer that generates the content address, a timestamp, and a<br>
+random number, or in any other suitable manner. One example for generating GUIDs<br>
+that may be used in embodiments of the present invention is described in the<br>
+International Standards Organization (ISO) specification ISO/IEC 11578:1996.<br>
+When a host sends data to the storage system to be stored therein, both the host<br>
+and the storage system may independently compute the content address of the data. The<br>
+host may retain the content address for future use to retrieve the data from the storage<br>
+system. Alternatively, only the storage system may compute the content address and<br>
+return the computed content address to the host for later use in accessing the data. As yet<br>
+another alternative, both the storage system and the host may compute the content<br>
+address, and the storage system can return its generated content address to the host. The<br>
+host can compare its independently computed content address to the one received from<br>
+the storage system to verify that they match.<br>
+In the illustrative configuration of Figure 4, storage system 407 is a distributed<br>
+storage system including a plurality of access nodes 409a, 409b, 409c, and 409d and a<br>
+plurality of storage nodes 411a, 411b, 411c, and 411d. The access nodes 409 and storage<br>
+nodes 411 may be coupled in any suitable way, such as by a communications network<br>
+(not shown) that employs the TCP/IP network protocol. Each access node 409 and<br>
+storage node 411 may be, for example, a separate computer having independent<br>
+hardware and software resources (i.e., processor or processors, memory, disk resources,<br>
+operating system, storage system software), although the aspects of the present invention<br>
+are not limited in this respect.<br>
+As mentioned above, host computer 401 issues access requests (e.g., reads, writes<br>
+or other requests) to one of access nodes 409. In the case of write requests, access nodes<br>
+409 may receive the write request (and the data to be written) from the host computer,<br>
+select a storage node 411 to store the data, and send the data to that storage node for<br>
+storage. In some embodiments, access nodes 409may select a storage node 411 in any<br>
+suitable manner. For example, access nodes 409 may employ a load balancing scheme to<br>
+distribute data evenly across the storage nodes, or access nodes 409 may employ a<br>
+different selection technique. As mentioned above in connection with Figure 2, when<br>
+storing a unit of data, a storage node may create a file having the content address of the<br>
+unit of data as its filename and may store the unit of data in that file.<br>
+In the case of read requests, access nodes 409 may receive the request from the<br>
+host computer, determine on which storage node 411 the requested data is stored,<br>
+retrieve the requested data from the appropriate storage node 411, and return the<br>
+requested data to the host computer. The aspects of the present invention described<br>
+herein are not limited to this or any other particular configuration, as any suitable<br>
+configuration of the storage system can be employed. For example, rather than having<br>
+the access nodes retrieve the requested data from storage nodes and forward the data to<br>
+the host 401, the storage system could alternatively be configured so that the access node<br>
+simply instructs the storage node to return the data directly to the host 401.<br>
+Storage nodes 411 may receive read and write requests from access nodes 409<br>
+and, in response, retrieve and store data. As such, storage nodes 411 may include one or<br>
+more storage devices (e.g., disk drives or any other type of storage device) on which<br>
+units of data are stored. It should be appreciated that access nodes 409 may also include<br>
+one or more storage devices, such that access nodes 409 and storage nodes 411 may have<br>
+the same (or approximately the same) or different hardware configurations.<br>
+Figure 4 illustrates a storage system having four access nodes and four storage<br>
+nodes. However, it should be appreciated that this configuration is merely illustrative, as<br>
+the storage system may include any suitable number of access nodes and any suitable<br>
+number (which may differ from the number of access nodes) of storage nodes, as the<br>
+invention is not limited to use on a storage system configured in any particular manner<br>
+in this respect.<br>
+Further, it should be appreciated that while the example of Figure 4 includes<br>
+access nodes with which host computers communicate to access the storage system and<br>
+storage nodes that store the units of data, the invention is not limited in this respect. For<br>
+example, the storage system may include nodes which both communicate with host<br>
+computers and store units of data. That is, one or more nodes may serve (at least in part)<br>
+as both a storage node and access node.<br>
+Location Hints<br>
+In one embodiment of the invention, the storage system may provide location<br>
+hints to the host to increase the efficiency of accesses to the storage system. A location<br>
+hint is information provided from the storage system to the host and relating to where a<br>
+particular unit of data is stored on the storage system. The information provided in the<br>
+location hint can then be passed back from the host to the storage system in connection<br>
+with future access requests for the unit of data, and the information can be used by the<br>
+storage system to efficiently access the unit of data. The location hint for a particular<br>
+unit of data may include information regarding the storage node on which the unit of data<br>
+is stored, the physical storage device on that storage node that stores the unit of data, the<br>
+file system location of the file containing that unit of data on that physical storage device,<br>
+the location on the physical device of which the unit of data is stored, or any combination<br>
+thereof. In addition, as opposed to information that directly identifies one or more<br>
+aspects of the physical storage location for the unit of data, the information provided in a<br>
+location hint can be related to where the unit of data is physically stored in other ways.<br>
+For example, the storage system could include a index of the physical storage location<br>
+for units of data and the location hint provided to the host could provide a key into this<br>
+index. Thus, the information provided in the location hint can be related to where the<br>
+unit of data is physically stored in any suitable way.<br>
+The storage system may provide the location hint to the host in any one of a<br>
+variety of ways, as the invention is not limited in this respect. For example, in response<br>
+to a write request from the host computer to write a unit of data, the storage system may<br>
+return the location hint information (e.g., as a token or in any form) for the unit of data.<br>
+The location hint may be the only information returned, or it may be sent back to the host<br>
+with other information returned to the host in response to a write request. For example,<br>
+in one embodiment, the storage system responds to a write request by returning the<br>
+content address (e.g., the MD5 hash value) corresponding to the unit of data so that the<br>
+host may verify that the storage system has computed the content address correctly. In<br>
+one embodiment, when returning the content address to the host in response to the write<br>
+request, the storage system may also send the location hint, as shown conceptually at 406<br>
+in Figure 4.<br>
+The storage system may also provide location hint information to the host in<br>
+response to a read request. For example, when the storage system returns the requested<br>
+unit of data to the host, the storage system may also send the location hint information<br>
+for the requested unit of data.<br>
+The storage system may also provide location hint information to the host in<br>
+response to query requests, or any other type of request. A query request is a request to<br>
+the storage system in which a host may request units of data based on information about<br>
+the units of data. Such information may be, for example, the time at which the units of<br>
+data were stored on the storage system, part of the metadata stored in a CDF, a partial<br>
+content address, or any other suitable information.<br>
+For example, instead of providing a content address to the storage system (as in a<br>
+typical read request), the host may provide a time range (e.g., a start time and an end<br>
+time) to the storage system. In response, the storage system returns to the host a list of<br>
+the content addresses corresponding to units of data that were stored on the storage<br>
+system during the period of time indicated by the time range. The storage system may<br>
+send location hint information to the host for each of the units identified in response to<br>
+the query request. Providing location hints in response to a query request may be useful<br>
+because it is likely that the host will issue read requests for at least some of the content<br>
+addresses returned by the storage system in response to the query request. If the host can<br>
+inform the storage system of the location of the units of data corresponding to these<br>
+content addresses (i.e., from the location hint), computational resources (and time) on the<br>
+storage system expended in locating the units of data on the storage system can be<br>
+reduced.<br>
+As mentioned above, the information that may be provided to the storage system<br>
+in a query request is not limited to a time range. The information may additionally or<br>
+alternatively include part of the metadata stored in a CDF, a partial content address, or<br>
+any other suitable information. For example, if the query request includes metadata<br>
+stored in a CDF or a partial content address, the storage system may return the content<br>
+addresses of any CDFs that include the specified metadata or partial content address.<br>
+The host may use the location hint information received from the storage system<br>
+in any of a variety of ways, as the invention is not limited in this respect. As mentioned<br>
+above, an application program 403 (Figure 4) executing on the host may communicate<br>
+with the storage system through an API 405. When the API receives a location hint from<br>
+the storage system (e.g., in response to a read, write, query request, or other access<br>
+request), the API may provide the location hint to the application program. The<br>
+application program may then store the location hint information in a manner that<br>
+associates it with the corresponding content address. Thus, the next time the application<br>
+program requests access to the unit of data corresponding to that content address (i.e.,<br>
+through the API), the application program may provide the location hint information<br>
+along with the content address.<br>
+Alternatively, instead of passing the location hint information to the application<br>
+program, the API may store the location hint information itself. Thus, the API may<br>
+receive from the application program a request to access a unit of data on the storage<br>
+system, with the request including the content address for the desired unit of data. The<br>
+API may determine if it has stored a location hint corresponding to that content address.<br>
+If so, the API may provide the location hint to the storage system along with the access<br>
+request.<br>
+The host (e.g., the API or the application program) may store the location hint<br>
+information in any suitable manner. In one embodiment, the host (e.g., the API)<br>
+maintains a cache of stored location hints and their corresponding content addresses for<br>
+performance reasons. When the cache is full, the API or application program may<br>
+replace items in the cache using a least-recently used replacement scheme, most-recently<br>
+used replacement scheme, or any other suitable cache replacement scheme.<br>
+It should be appreciated that the use of location hints shifts some of the<br>
+computational burden of locating data on the storage system from the storage system to<br>
+the host, as the host computer maintains and accesses records of location information.<br>
+When issuing an access request to the storage system, the host computer may search<br>
+these records and provide location information, if available, to the storage system. This<br>
+enables the storage system to avoid at least some of the searching of records on the<br>
+storage system to determine the physical location for a stored data unit.<br>
+In another embodiment, the host may simply ignore any location hints that it<br>
+receives from the storage system. That is, the host may choose not to bear any of the<br>
+computational burden of locating data and may rely on the storage system to locate the<br>
+content.<br>
+In another embodiment, the use of location hints is provided as an optional<br>
+feature to the host, such that the feature can be turned on or off.<br>
+It should be appreciated that the location hint information can be determined by<br>
+the storage system in any of numerous ways, as the present invention is not limited to<br>
+any particular implementation technique. In accordance with one embodiment of the<br>
+present invention for use with a storage system having the configuration shown in Figure<br>
+4, the location information can be generated by the access nodes 409 and possibly also<br>
+by the storage nodes 411 depending upon the granularity of the location information<br>
+provided. In this respect, and as discussed above, the location information can be<br>
+provided in any of numerous levels of granularity, as the present invention is not limited<br>
+in this respect. For example, the location information can provide a hint only as to which<br>
+access node controls access to the physical storage location, or can provide additional<br>
+information relating to a specific storage node that stores the unit of data. Similarly, the<br>
+information relating to the particular storage node that stores the unit of data can also be<br>
+provided at numerous levels of granularity, as this information can merely identify the<br>
+storage node, or can alternatively be more descriptive and can identify a file system<br>
+location and optionally also a particular storage device (e.g., disk drive) on which the<br>
+unit of data is stored. It should be appreciated that in response to an access request, it is<br>
+a fairly simple process for the storage system to generate the location information,<br>
+because, as of a result of accessing the unit of data, the storage system will go through<br>
+the process of determining the physical storage location and will have this information<br>
+available to provide in a hint to the host. For example, in one embodiment of the present<br>
+invention, when a unit of data is accessed, the storage node on which the data is stored<br>
+identifies to the appropriate access node the file system and disk drive on which the data<br>
+is stored, and the access node then passes this information along to the host in the form<br>
+of the location hint described above. It should be appreciated that the levels of<br>
+granularity and the manner in which the location information is generated is not limited<br>
+to the examples described herein, nor to a storage system having the type of<br>
+configuration shown in Figure 4, as this aspect of the present invention can be used in<br>
+connection with numerous other types of storage system configurations, including those<br>
+that do not employ an access node and storage node structure.<br>
+If location hints are not used (i.e., the feature is turned off), or if the host does not<br>
+have location information for a particular unit of data, the storage system may use a<br>
+multi-cast location query, BLI lookup, or any other suitable technique to locate the data.<br>
+Further, in some circumstances, a location hint may not correctly identify the location of<br>
+the content on the storage system. Such a situation may occur, for example, when the<br>
+storage system moves the content to a new location after the host has received the<br>
+location hint. If a location hint fails to identify the correct location of the content on the<br>
+storage system, the storage system may use another method of locating the content, such<br>
+as MLQ, BLI lookup, or any other suitable technique.<br>
+BLI Caching<br>
+In one embodiment of the invention, the storage system maintains a data set (e.g.,<br>
+a database) referred to as a blob location index (BLI) that works in the manner of the BLI<br>
+described above in connection with a known system. In one embodiment, the<br>
+responsibility of administering the BLI is distributed among storage nodes 411 (Figure<br>
+4), with each having a designated range of addresses (e.g., content addresses) that it is<br>
+responsible for and an index for the addresses in that range to identify where the<br>
+corresponding data units are stored. The BLI itself (in addition to the administration<br>
+responsibilities) may also be distributed across multiple nodes of the storage system. To<br>
+increase the efficiency of accesses to the BLI, portions of the BLI are cached in<br>
+accordance with one embodiment of the invention.<br>
+The blob location index may be a database (or other data set) that maps, for units<br>
+of data stored on the storage system, the content address corresponding to the unit of data<br>
+to the storage node on which the unit of data is stored. The BLI may be stored in its<br>
+entirety on one storage node (and optionally mirrored on one or more other storage<br>
+nodes) or may be distributed among two or more storage nodes as discussed above. In<br>
+response to an access request to a particular address, the access node 409 that receives<br>
+the request directs it to a storage node 411 that administers the portion of the BLI that<br>
+includes that address, and the BLI is read by the appropriate storage node to determine<br>
+the location of the requested unit of data on the storage system.<br>
+It should be understood that the administration of a single portion of the BLI may<br>
+be shared by more than one storage node, in which case the access node 409 may direct<br>
+such requests to one or all of the storage nodes that administer that portion of the BLI.<br>
+It should also be understood that in some embodiments of the invention, storage<br>
+of the BLI or administration of the BLI may be performed by both access nodes and<br>
+storage nodes, or solely by access nodes, as the invention is not limited in this respect. It<br>
+should further be appreciated that the techniques discussed below for caching portions of<br>
+the BLI are equally applicable to both access nodes and storage nodes.<br>
+In the prior art system, the BLI is stored in secondary memory (e.g., magnetic<br>
+disk), which is slower to access than primary memory. When the access request is a ¦<br>
+write request for a new unit of data with no entry on the BLI, the BLI is updated to<br>
+include the content address and storage node location of the newly stored data. The<br>
+storage system waits for the BLI to be updated before indicating to the host that the write<br>
+has been successfully completed. If the portion of the BLI to be updated is not already in<br>
+the primary memory of the storage node, the storage node updating the BLI performs a<br>
+disk read to read the BLI into primary memory (i.e., RAM), updates the BLI in primary<br>
+memory, and then performs a disk write to write the updated BLI back to disk. Thus,<br>
+from the point of view of an application program, there is some latency from the time a<br>
+write request is issued to the time that the storage system confirms a successful write and<br>
+returns the content address of the written data, and this latency is increased when the<br>
+confirmation is not returned until the BLI is updated.<br>
+In accordance with one embodiment of the invention, the storage system<br>
+maintains a BLI cache in primary memory (e.g., RAM) to provide for improved access<br>
+performance. For example, in response to a write request, the storage system can write<br>
+the new entry into the BLI cache in primary memory and respond to the requesting host<br>
+that the write has completed successfully. The contents of the BLI cache can be destaged<br>
+to the BLI on disk at a later time. As a result, the latency caused by updating the BLI is<br>
+reduced.<br>
+The BLI cache also increases the efficiency of the read accesses to the storage<br>
+system. When a read request is received, the storage system may search the BLI cache to<br>
+determine if location of the requested unit of data is stored in the BLI cache. If it is, the<br>
+need for a disk read to the BLI is obviated.<br>
+The BLI cache can be arranged and stored in any suitable manner as the present<br>
+invention is not limited to any particular implementation technique. For example, when<br>
+the BLI is stored entirely on a single storage node, the BLI cache may be maintained<br>
+entirely on the same storage node or distributed among multiple storage nodes.<br>
+Similarly, when the BLI is distributed across multiple storage nodes, one storage node<br>
+may be used to store the BLI cache or each storage node could store the portion of the<br>
+BLI cache (412a-d in Figure 4) corresponding to the portion of the BLI stored by that<br>
+storage node.<br>
+It should be understood that the above described locations of the BLI cache are<br>
+given only as examples, as the BLI cache may be located anywhere in the storage system<br>
+and/or distributed across the storage system in any manner, with entries of a distributed<br>
+BLI cache not necessarily being limited to being on the same machine as corresponding<br>
+entries for the BLI. It should further be appreciated that the BLI cache may be destaged<br>
+to the BLI in any suitable manner, as the invention is not limited in this respect. For<br>
+example, entries in the BLI cache may be destaged to the BLI whenever the BLI cache is<br>
+full according to any suitable replacement algorithm. Alternatively, BLI cache entries<br>
+may be destaged to the BLI during periods of light processor usage within the storage<br>
+system. As yet another alternative, BLI cache entries may be destaged to the BLI after a<br>
+fixed period of time has elapsed.<br>
+In one embodiment, access nodes may also cache BLI entries, either instead of or<br>
+in addition to storing BLI cache entries on the storage nodes. When an access node<br>
+processes a write request from a host, the access node selects on which storage node the<br>
+data is written, so the access node has this information along with the content address of<br>
+the newly written data and can add it in its BLI cache. In one embodiment, after the<br>
+storage node stores the newly written data, it can return information to the access node<br>
+regarding the file system and disk on the storage node where the data is stored so that<br>
+this information also can be added to the cache entry on the access node. It should be<br>
+appreciated that the present invention is not limited in this respect, as the BLI cache<br>
+entries can, alternatively, identify only the storage node on which the data units are<br>
+stored.<br>
+When the access node receives a read request, it may search for the requested<br>
+content address in its BLI cache. If there is a cache hit (i.e., the content address is found<br>
+in the cache), then the access node need not query the BLI on the storage system, as the<br>
+access node determines the storage location for the requested unit of data from its own<br>
+BLI cache. Thus, the response time in returning the requested unit of data may be further<br>
+reduced.<br>
+It should be appreciated that the BLI cache on the access nodes can be used with<br>
+or without another layer of BLI caching on the storage nodes. It should also be<br>
+understood that the BLI, as described above, maps content addresses to storage nodes<br>
+which store the units of data corresponding to those content addresses. However, the<br>
+BLI.may also include information about the particular physical disk device and/or file<br>
+system location of the unit of data, as the invention is not limited in this respect.<br>
+In one embodiment, BLI caching is provided as an optional feature to the user of<br>
+the storage system, such that the feature can be turned on or off.<br>
+As discussed above, when a new unit of data is written to the storage system, in<br>
+addition to writing the data to a storage node and updating the metadata in the storage<br>
+system that relates to where the unit of data is stored, in the embodiment that employs a<br>
+BLI cache, the BLI cache may be updated as well. As further mentioned above, the<br>
+updating of numerous areas in the storage system may provide some latency in terms of<br>
+when a confirmation is sent from the storage system to the host that a write request has<br>
+been processed. In accordance with one embodiment of the present invention, the write<br>
+to the BLI cache can be done after the confirmation is provided to the host, as the failure<br>
+to have an entry in the BLI cache for a unit of data will only impact the performance of a<br>
+future access to the unit of data, but will not preclude the unit of data from being<br>
+accessed by the storage system. In a further embodiment of the present invention, the<br>
+confirmation can also be provided even before any appropriate entries are written to the<br>
+BLI, to further improve write performance. In this respect, it should be appreciated that<br>
+in accordance with one embodiment of the present invention, if an access request is<br>
+received to read data and no corresponding entry is provided in the BLI, the storage<br>
+system may issue a multicast location query for the unit of data to see whether it is stored<br>
+on any of the storage nodes. Thus, in accordance with this embodiment of the present<br>
+invention, the storage system is able to locate units of data even if they do not include a<br>
+corresponding entry in the BLI.<br>
+It should be appreciated that the above discussion relating to implementing a<br>
+cache of a location index in a content-addressable storage system having the<br>
+configuration shown in Figure 4 is provided merely for illustrative purposes, and that the<br>
+present invention is not limited in this respect. The aspect of the present invention<br>
+relating to the use of a cache for a location index in a content-addressable storage system<br>
+can be employed with storage systems having configurations other than the access<br>
+node/storage node configuration shown in Figure 4.<br>
+Furthermore, it should be appreciated that the aspects of the present invention<br>
+relating to caching a location index and the use of a location hint that can be passed to<br>
+the host computer are not mutually exclusive, and that these two features can be used<br>
+together as well as separately.<br>
+Intrinsic Locations<br>
+An alternate embodiment uses a technique (referred to herein as intrinsic<br>
+locations) that employs at least a portion of the content address to determine at least one<br>
+aspect of the storage location for units of data on the storage system. Figure 5 shows an<br>
+illustrative storage system 507 using intrinsic locations. Storage system 507 includes a<br>
+plurality of access nodes 503a, 503b, and 503c and a plurality of storage nodes 505a,<br>
+505b, 505c, 505d, 505e, and 505f. The storage nodes may be divided into groups such<br>
+that each group of storage nodes is assigned a range of content address. In the example<br>
+of Figure 5, storage nodes 505a and 505b are assigned content addresses beginning with<br>
+characters 'A' - 'I', storage nodes 505c and 505d are assigned content addresses<br>
+beginning with characters 'J'-'R', and storage nodes 505e and 505f are assigned content<br>
+addresses beginning with characters 'S'-'Z'. In Figure 5, each group of storage nodes<br>
+includes two storages nodes. However, it should be understood that a storage node group<br>
+may include only one storage node or may include three or more storage nodes. Further,<br>
+it is not necessary that each group of storage nodes include an equal number of storage<br>
+nodes.<br>
+In one embodiment, each group of storage nodes stores the data units<br>
+corresponding to its assigned range of content addresses. Access nodes 503 maintain<br>
+information of which range of content addresses are assigned to each group of storage<br>
+nodes and, as such, may select the appropriate storage node to access units of data in<br>
+response to an access request.<br>
+For example, if access node 503a receives from host 501a a request to write a unit<br>
+of data whose content address begins with the character 'J', access node will select either<br>
+storage node 505c or 505d to store the data. In one embodiment, access node 503a<br>
+selects one of these two storage nodes based on another part of the content address. For<br>
+example, access node 503a may examine the second character of the content address to<br>
+select the appropriate storage node within the selected group. For example, storage node<br>
+505c may store data units whose content addresses have a second character of 'A'-'M'<br>
+and storage node 505d may store data units whose content addresses have a second<br>
+character of 'N'-'Z'. It should be appreciated that any character(s) in the content address<br>
+may be used to select the appropriate storage node within a group of multiple storage<br>
+nodes, as the invention is not limited in this respect.<br>
+Once access node 503a has selected a storage node to store the unit of data, the<br>
+selected storage node may select a physical storage device (e.g., disk) on which to store<br>
+the unit of data. Figure 6 conceptually shows a storage node 601 having four physical<br>
+storage devices, 603a, 603b, 603c, and 603d. The storage node 601 may select one of<br>
+these storage devices to store a unit of data based on one or more characters in the<br>
+content address. For example, storage node 601 may select one of the storage devices<br>
+603 based on the third character of the content address. If the third character of the<br>
+content address is 'A'-'F', storage device 603a may store the data. If the third character<br>
+is 'G'-'L', storage device 603b may store the data. If the third character is 'M'-'R',<br>
+storage device 603c stores the data. If the third character is 'S'-'Z' storage device 603d<br>
+stores the data.<br>
+By selecting the physical storage location (e.g., storage node and storage device)<br>
+of a unit of data based on the content address of the unit of data, an access node may later<br>
+determine the physical location without a database lookup or multicast location query.<br>
+That is, the access node may simply examine the content address and determine the<br>
+location of the unit of data based on the content address.<br>
+While the illustrative example described above uses the intrinsic location<br>
+technique to determine not only the storage node on which a unit of data is stored based<br>
+upon its content address, but also the file system and storage device within that node, it<br>
+should be appreciated that the aspect of the present invention relating to the use of<br>
+intrinsic locations is not limited in this respect, as it can be employed to determine only<br>
+some aspects of the physical storage location of a unit of data but not others. For<br>
+example, the intrinsic locations technique could alternatively be used to select only a<br>
+storage node on which a unit of data is stored, and to thereby eliminate the need to<br>
+perform lookups or broadcast queries to determine the storage node, but the<br>
+determination of the file system and/or physical storage device on which the unit of data<br>
+is stored can be performed in other ways, including through the use of indexing<br>
+techniques as described above.<br>
+Applicants have appreciated that for some units of data, it may be desirable to not<br>
+store them in the particular physical storage location specified for the unit of data by the<br>
+intrinsic locations technique based upon its content address, and Applicants have<br>
+developed a technique to address such units of data. This can occur for any of numerous<br>
+reasons, an example of which is a particularly large unit of data. For a large unit of data,<br>
+there may not be room on the physical storage location specified by the mapping<br>
+performed by the intrinsic locations technique to store the data, or it may be preferable to<br>
+store it elsewhere for load balancing purposes. In addition, some application programs<br>
+that write a particularly large unit of data to a storage system may wish to begin the write<br>
+operation before generating a content address based upon the entire unit of data, such<br>
+that the write operation may begin for a unit a data before the content address has been<br>
+determined. Thus, when the intrinsic locations technique is employed, there may not be<br>
+a content address to determine where to store the unit of data when the unit of data is<br>
+passed to the storage system. In accordance with one embodiment of the present<br>
+invention, the above-described situations can be addressed by using the intrinsic<br>
+locations technique and pointers. For example, if it is desired to store a unit of data (e.g.,<br>
+a relatively large one) in a location other than that specified by the intrinsic location<br>
+mapping technique described above, a pointer can be stored in the storage location<br>
+specified by the content address for the unit of data, with the pointer pointing to another<br>
+physical storage location at which it is more desirable to store the unit of data. Thus,<br>
+when future access requests are received for the unit of data, the intrinsic location<br>
+mapping techniques will map to the pointer for the unit of data, which can then be read<br>
+and used to retrieve the data.<br>
+The pointer technique can also be employed when handling a write request for a<br>
+unit of data for which no content address has yet been generated. In this respect, when<br>
+the unit of data is received, the storage location can place it in any suitable storage<br>
+location, and then once the content address for the unit of data is determined and/or<br>
+provided, a pointer can be placed in the appropriate location determined by the intrinsic<br>
+location mapping technique for the newly provided content address, with the pointer<br>
+pointing to the storage location that was chosen for the unit of data. Of course, it should<br>
+be appreciated that the data could alternatively be moved to the storage location specified<br>
+by the intrinsic location mapping technique once the content address is provided.<br>
+Further, in one embodiment, in which the pointer technique is used to store data,<br>
+the storage system may execute a background process that periodically searches the<br>
+storage system for pointers pointing to other storage locations at which units of data are<br>
+stored. If any such pointer is found, the process may move the unit of data from the<br>
+storage location pointed to by the pointer to the storage location specified by the intrinsic<br>
+location mapping (i.e., the location of the pointer), thereby replacing the pointer with the<br>
+corresponding unit of data. Thus, the storage system's efficiency in accessing the units<br>
+of data (e.g., in response to a read request from a host computer) may be increased, as the<br>
+storage system need not access both the storage location of the pointer and the storage<br>
+location of the unit of data.<br>
+It should be understood that the background process for replacing pointers with<br>
+their corresponding units of data may be executed on any the storage system in any<br>
+suitable way. For example, the process may be executed only on storage nodes that are<br>
+idle. Alternatively, the process may be executed on every storage node after a<br>
+predetermined period of time has elapsed. Many other alternatives are available and the<br>
+invention is not limited in this respect.<br>
+In accordance with one embodiment of the present invention, if a unit of data<br>
+cannot be found using the intrinsic location technique, alternative look up techniques can<br>
+be employed, such as performing a multicast location query.<br>
+Temporal Locality of Reference<br>
+As mentioned above, in one embodiment, units of data are stored in files on a file<br>
+system of the corresponding storage node. Such files may have a filename<br>
+corresponding, at least in part, to the content address of the unit of data stored therein,<br>
+and the file system may be organized in directories and subdirectories with the name of<br>
+the subdirectory in which a particular unit of data is stored corresponding at least in part<br>
+to at least a portion of the filename of the unit of data. As mentioned above, the file<br>
+system may be organized based on the first characters of the content addresses of the<br>
+units of data stored in the file system. However, it should be appreciated that the<br>
+invention is not limited in this respect, as the file system may be organized using any<br>
+portion of the content address including, but not limited to, the first letters or bits, the<br>
+middle portion, or the end portion. The hashing algorithm used to generate content<br>
+addresses may yield fairly random values (as is the case with the MD5 hashing<br>
+algorithm). As a result Applicants have appreciated that units of data written at<br>
+approximately the same time may be stored in different locations in the file system<br>
+hierarchy. That is, despite the fact that the units of data are written in close proximity in<br>
+time, these units of data may be scattered across the file system. Thus, the randomness<br>
+of the hashing algorithm precludes any locality of reference in the file system.<br>
+Operating systems typically maintain a file system map that maps file system<br>
+locations to physical disk locations. When the file system is large (i.e., a large hierarchy<br>
+of directories and subdirectories) and there are many files stored in the file system, the<br>
+file system map maintained by the operating system may also be quite large. As a result,<br>
+the operating system may only keep a small portion of the file system map in the primary<br>
+memory (e.g., RAM) of the storage node at one time. The rest of the file system map<br>
+may remain in secondary memory (e.g., disk). As various portions of the file system<br>
+map are needed (i.e., when files are accessed), they may be brought into primary<br>
+memory, with other portions being swapped out to disk. It should be appreciated that<br>
+access performance is better when accessing portions of the file system in memory rather<br>
+than disk.<br>
+If two units of data are written to the storage node proximate in time but stored in<br>
+different portions of the file system map, the operating system first must load from disk<br>
+the portion of the file system map having the file system location of the first unit of data<br>
+(i.e., to determine the physical disk location of that unit of data) and then must return to<br>
+disk to load the portion of the file system map having the file system location of the<br>
+second unit of data. These repeated disk accesses slow the write response time of the<br>
+storage system. In addition, since units of data written proximate in time are also often<br>
+read proximate in time, a similar access delay may be encountered when reading the data<br>
+units.<br>
+Applicants have appreciated that in a storage system that employs a file system<br>
+structure, it is desirable to store units of data that are stored at approximately the same<br>
+time in the approximately the same file system location, to minimize the likelihood of the<br>
+operating system having to go to disk to load different portions of the file system for<br>
+sequentially accessed data units. As mentioned above, in one embodiment of the<br>
+invention, the file system location of a file is determined based on the filename of the<br>
+file. Thus, in accordance with one embodiment of the invention, information is added to<br>
+the filename of the file that is similar for files written at approximately the same time.<br>
+This provides temporal locality of reference for files written at approximately the same<br>
+time, and tends to result in those filed being stored in proximate file system locations.<br>
+It should be appreciated that in embodiments of the invention that employ content<br>
+addressable storage, the information that is added to the filename of the file may also be<br>
+added to the content address of the data stored in the file. For example, the information<br>
+may be added to the hash of the content of the file to generate a content address based on<br>
+the hash and the additional information. The information may be added at any suitable<br>
+position in the hash. For example, the information may be added to the beginning, the<br>
+end, or at any other position in the hash. The host computer may use the content address<br>
+to access the file in the manner described above.<br>
+In one embodiment of the invention, the information added to establish temporal<br>
+locality of reference may be added to the content address at the storage system. That is,<br>
+for example, when a unit of data is stored to the storage system, the storage system may<br>
+generate the temporal locality of reference information, include the information in the<br>
+hash, and return the resulting content address to the host computer that submitted the<br>
+storage request.<br>
+In an alternate embodiment, the host computer generates the temporal locality of<br>
+reference information and adds the information to the hash to generate the content<br>
+address. The host computer may send the content address to the storage system or may<br>
+just send the temporal locality of reference information to the storage system and allow<br>
+the storage system to add the information to the hash to determine the content address.<br>
+By computing the temporal locality of reference information at the host computer, if the<br>
+host computer stores the unit of data on multiple storage systems at the same time (or<br>
+approximately the same time), e.g., for backup or replication purposes, the content<br>
+address for the unit of data is the same on each of the storage systems.<br>
+In another embodiment, temporal locality of reference information may be<br>
+generated by the storage system and the host computer, and both sets of information may<br>
+be added to the hash, at any suitable position in the hash, to generate the content address<br>
+of the unit of data.<br>
+The above example was described as providing temporal locality of reference<br>
+with respect to files stored in a file system. However it should be appreciated that such a<br>
+technique is applicable to other logical data storage constructs. For example, adding<br>
+temporal locality of reference information to content addresses (or other information<br>
+stored in a database) may increase access efficiency of database tables that are accessed<br>
+using a content address (or other information) as a key, and can also be used with other<br>
+logical constructs.<br>
+The information added to the filename may be any information that is similar for<br>
+data units written at approximately the same time. For example, a timestamp may be<br>
+added to the file names, and the timestamp can be examined by the file system in<br>
+determining where to store the data units. Alternatively, a counter value may be added to<br>
+the file names with the counter value being incremented each time a new data unit is<br>
+written to the storage system. Again, any suitable information may be used, as the<br>
+invention is not limited in this respect.<br>
+It should be appreciated that the aspect of the present invention that relates to<br>
+adding information to a content address that provides an indication of which units of data<br>
+are written to the storage system proximate in time is not limited to a storage system<br>
+having the particular access node and storage node configuration described, or to<br>
+employing a file system on the storage node as described above, as this aspect of the<br>
+present invention can be used in connection with storage systems having numerous<br>
+different configurations.<br>
+Figure 7 conceptually illustrates the temporal locality of reference aspect of the<br>
+present invention, as it illustrates locality information 703 being added to a content<br>
+address 701. It should be appreciated that this aspect of the present invention is not<br>
+limited to providing locality information at the beginning of the content address as<br>
+shown in Figure 7, as the locality information can be added to the content address in any<br>
+suitable manner, including providing it at the end of the content address, or within the<br>
+range of the content address, and including providing locality information as a<br>
+contiguous block as shown in Figure 7, or dispersed throughout the content address<br>
+information 701.<br>
+The above-described embodiments of the present invention can be implemented<br>
+in any of numerous ways. For example, the embodiments may be implemented using<br>
+hardware, software or a combination thereof. When implemented in software, the<br>
+software code can be executed on any suitable processor or collection of processors,<br>
+whether provided in a single computer or distributed among multiple computers. It<br>
+should be appreciated that any component or collection of components that perform the<br>
+functions described above can be generically considered as one or more controllers that<br>
+control the above-discussed functions. The one or more controllers can be implemented<br>
+in numerous ways, such as with dedicated hardware, or with general purpose hardware<br>
+(e.g., one or more processors) that is programmed using microcode or software to<br>
+perform the functions recited above.<br>
+In this respect, it should be appreciated that one implementation of the<br>
+embodiments of the present invention comprises at least one computer-readable medium<br>
+(e.g., a computer memory, a floppy disk, a compact disk, a tape, etc.) encoded with a<br>
+computer program (i.e., a plurality of instructions), which, when executed on a processor,<br>
+performs the above-discussed functions of the embodiments of the present invention.<br>
+The computer-readable medium can be transportable such that the program stored<br>
+thereon can be loaded onto any computer system resource to implement the aspects of<br>
+the present invention discussed herein. In addition, it should be appreciated that the<br>
+reference to a computer program which, when executed, performs the above-discussed<br>
+functions, is not limited to an application program running on a host computer. Rather,<br>
+the term computer program is used herein in a generic sense to reference any type of<br>
+computer code (e.g., software or microcode) that can be employed to program a<br>
+processor to implement the above-discussed aspects of the present invention.<br>
+It should be appreciated that in accordance with several embodiments of the<br>
+present invention wherein processes are implemented in a computer readable medium,<br>
+the computer implemented processes may, during the course of their execution, receive<br>
+input manually (e.g., from a user).<br>
+In various examples described above, content addresses were described to include<br>
+alphabetic characters 'A'-'Z'. It should be understood that these content addresses were<br>
+given only as examples, and that content addresses may include any alphanumeric<br>
+character, series of bits, or any other suitable character, as the invention is not limited in<br>
+this respect.<br>
+The phraseology and terminology used herein is for the purpose of description<br>
+and should not be regarded as limiting. The use of "including," "comprising," or<br>
+"having," "containing", "involving", and variations thereof herein, is meant to<br>
+encompass the items listed thereafter and additional items.<br>
+Having described several embodiments of the invention in detail, various<br>
+modifications and improvements will readily occur to those skilled in the art. Such<br>
+modifications and improvements are intended to be within the spirit and scope of the<br>
+invention. Accordingly, the foregoing description is by way of example only, and is not<br>
+intended as limiting. The invention is limited only as defined by the following claims<br>
+and the equivalents thereto.<br>
+WE CLAIM :<br>
+1. A method of processing data in a computer system comprising at least one host<br>
+and at least one content addressable storage system which stores units of data for the<br>
+at least one host, and wherein the at least one host accesses a unit of data using a<br>
+content address based at least in part on the content of the unit of data, the method<br>
+comprising an act of:<br>
+(a) creating the content addresses for units of data to comprise first<br>
+information that provides an indication of which units of data are written to the storage<br>
+system proximate in time.<br>
+2. The method as claimed in claim 1, also comprising the acts of:<br>
+(b) accessing one of the units of data by providing the content address for<br>
+the one of the units of data to the storage system;<br>
+(c) considering the first information as the content address for the one of the<br>
+units of data in determining where to store the one of the units of data within the<br>
+storage system.<br>
+3. The method as claimed in claim 1, wherein the act (a) comprises, for one of the<br>
+units of data, acts of:<br>
+creating a hash of at least a portion of the unit of data; and<br>
+inserting the first information in the hash to create the content address for the<br>
+one of the units of data.<br>
+4. The method as claimed in claim 3, wherein the first information comprises at<br>
+least a portion of a timestamp relating to when the one of the units of data is written to<br>
+the at least one storage system.<br>
+5. The method as claimed in claim 2, wherein the act (b) comprises an act of using<br>
+at least a portion of the first information to select a storage location within the at least<br>
+one storage system for storing the one of the units of data, and wherein the method<br>
+also comprises an act of storing the one of the units of data in the selected storage<br>
+location.<br>
+6. A method of processing data in a computer system comprising at least one host<br>
+and at least one content addressable storage system which stores units of data for the<br>
+at least one host, wherein the at least one host accesses a unit of data using a content<br>
+address based at least in part on the content of the unit of data, and wherein the at<br>
+least one storage system comprises an index that maps content addresses for units of<br>
+data to storage locations within the at least one storage system where the units of data<br>
+are stored, the method comprising acts of:<br>
+(a) receiving, from the at least one host, a request to store one of the units of<br>
+data, the request identifying the one of the units of data with its associated content<br>
+address; and<br>
+(b) storing the one of the units of data in a storage location selected so that<br>
+an entry in the index for the storage location is proximate to entries in the index for<br>
+other units of data written to the at least one storage system proximate in time to the<br>
+one of the units of data.<br>
+7. The method as claimed in claim 6, wherein the content address for the one of<br>
+the units of data is created, at least in part, by hashing at least a portion of the unit of<br>
+data.<br>
+8. The method as claimed in claim 7, wherein the content address contains first<br>
+information that can be used to determine which units of data are written to the storage<br>
+system proximate in time, and wherein the method also comprises receiving, from the<br>
+at least one host, the first information.<br>
+9. The method as claimed in claim 7, wherein the content address contains first<br>
+information that can be used to determine which units of data are written to the storage<br>
+system proximate in time and the method also comprises acts of:<br>
+generating a first portion of the first information at the at least one storage<br>
+system;<br>
+receiving a second portion of the first information from the at least one host; and<br>
+adding the first portion and the second portion to the content address.<br>
+10. A content addressable storage system for use in a computer system that<br>
+comprises the content addressable storage system and at least one host, wherein the<br>
+at least one host accesses data units stored on the content addressable storage<br>
+system using content addresses generated based on the content of the data units, the<br>
+content addressable data storage system comprising:<br>
+at least one storage device to store data received from the at least one host;<br>
+and<br>
+at least one controller that maintains an index that maps content addresses for<br>
+units of data to storage locations within the at least one storage system where the units<br>
+of data are stored so that units of data written to the at least one storage system<br>
+proximate in time have proximate entries in the index.<br>
+11. A method of processing data in a computer system, substantially as herein<br>
+described, particularly with reference to the accompanying drawings.<br>
+12. A content addressable storage system for use in a computer system,<br>
+substantially as herein described, particularly with reference to the accompanying<br>
+drawings.<br>
+One embodiment is a system for locating content on a storage system, in<br>
+which the storage system provides a location hint to the host of where the<br>
+data is physically stored, which the host can resubmit with future access<br>
+requests. In another embodiment, an index that maps content addresses to<br>
+physical storage locations is cached on the storage system. In yet another<br>
+embodiment, intrinsic locations are used to select a storage location for newly<br>
+written data based on an address of the data. In a further embodiment, units<br>
+of data that are stored at approximately the same time having location index<br>
+entries that are proximate in the index.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtYWJzdHJhY3QucGRm" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtYXNzaWdubWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtY2xhaW1zLnBkZg==" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtY29ycmVzcG9uZGVuY2UucGRm" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-correspondence.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtZGVzY3JpcHRpb24gKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtZHJhd2luZ3MucGRm" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtZm9ybSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtZm9ybSAyLnBkZg==" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtZm9ybSAzLnBkZg==" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtZm9ybSA1LnBkZg==" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtZ3BhLnBkZg==" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtbGV0dGVyIHBhdGVudC5wZGY=" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-letter patent.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtcmVwbHkgdG8gZXhhbWluYXRpb24gcmVwb3J0LnBkZg==" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-reply to examination report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtc3BlY2lmaWNhdGlvbi5wZGY=" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-specification.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzUwLWtvbC0yMDA0LWdyYW50ZWQtdHJhbnNsYXRlZCBjb3B5IG9mIHByaW9yaXR5IGRvY3VtZW50LnBkZg==" target="_blank" style="word-wrap:break-word;">750-kol-2004-granted-translated copy of priority document.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="212608-a-hydroelectric-power-station-and-a-hydroelectric-power-unit-therefor.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="212610-a-tumor-targeting-unit.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>212609</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>750/KOL/2004</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>49/2007</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>07-Dec-2007</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>04-Dec-2007</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>22-Nov-2004</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>EMC CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>176 SOUTH STREET, HOPKINTON, MASSACHUSETTS</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>KILIAN MICHAEL</td>
+											<td>25 CANDLEBERRY LANE, HARVARD, MASSACHUSETTS 01451</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>TODD STEPHEN</td>
+											<td>36 THOMAS FARM CIRCLE, SHREWSBURY, MASSACHUSETTS 01545</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>TEUGELS TOM</td>
+											<td>ROZENLANN 26, 2900 SCHOTEN</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>VAN RIEL JAN</td>
+											<td>GOOREIND 43C, B-2440 GEEL</td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td>D&#x27;HALLUIN CARL</td>
+											<td>SINT-ELOOISDREEF 10 8500 KORTRIJK</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>GO6F 3/06, G06F 7/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/731,845</td>
+									<td>2003-12-09</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/212609-a-method-of-processing-data-in-a-computer-system-and-a-content-addressable-storage-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 02:46:51 GMT -->
+</html>

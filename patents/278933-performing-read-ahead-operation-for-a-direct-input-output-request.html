@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/278933-performing-read-ahead-operation-for-a-direct-input-output-request by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 23:55:24 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 278933:PERFORMING READ-AHEAD OPERATION FOR A DIRECT INPUT/OUTPUT REQUEST</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">PERFORMING READ-AHEAD OPERATION FOR A DIRECT INPUT/OUTPUT REQUEST</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A system includes a storage subsystem (114), a storage controller (116), and a cache (117) associated with the storage controller. A file system logic (110) receives a direct I/O request for a first data portion stored in the storage subsystem. The file system logic (110) performs a read-ahead operation in response to the direct I/O request to request at least one other data portion stored in the storage subsystem. The cache (117) associated with the storage controller stores the at least one other data portion requested by the read-ahead operation.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>PERFORMING READ-AHEAD OPERATION <br>
+FOR A DIRECT INPUT/OUTPUT REQUEST<br>
+BACKGROUND<br>
+[0001]        Typically, data stored in a storage subsystem is accessed by a file system, which is usually associated with an operating system such as Unix, DOS, Microsoft WINDOWS®, Mac OS, and so forth. Software, such as application software, in a computer can access data stored in the storage subsystem through the file system. There are generally two types of requests that can be issued by application software or other software for data stored in the storage subsystem: cached input/output (I/O) requests and direct I/O requests. In response to a cached I/O request, the file system performs a speculative read-ahead operation to retrieve read-ahead data (in addition to the data requested by the cached I/O request). The read-ahead data is stored in an operating system buffer cache maintained by the operating system.<br>
+[0002]        The speculative read-ahead operation is generally performed to pre-populate the operating system buffer cache with data. If a subsequent request from the application software can be satisfied from the operating system buffer cache, then system performance is enhanced since the data can be retrieved more quickly from the operating system buffer cache than from the storage subsystem, which is usually implemented with relatively slow mass storage devices such as disk drives and the like.<br>
+<br>
+[0003]       In contrast, for a direct I/O request, a conventional file system does not cache data in the operating system buffer cache. For direct I/O requests, read-ahead is not performed to pre-populate the operating system buffer cache. Direct I/O requests are used by certain types of applications to avoid the expense associated with buffering data in the operating system buffer cache.<br>
+ <br>
+[0004]        Generally, software applications have to choose between using either direct I/O or cached I/O requests. If direct I/O is chosen, speculative read-ahead is not performed so that any subsequent requests for data will result in access of the slower storage devices in the storage subsystem, since read ahead was not performed for caching read-ahead data.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[0005]        Fig. 1 is a block diagram of an example system that includes file system logic according to an embodiment.<br>
+[0006]        Fig. 2 is a flow diagram of a process of performing a direct input/output (I/O) request, according to an embodiment.<br>
+DETAILED DESCRIPTION<br>
+[0007]        As depicted in Fig. 1, a host system 100 is coupled to a storage subsystem 114, where the storage subsystem 114 includes a storage medium 118 for storing data. Note that although the storage subsystem 114 is shown as separate from the host system 100, the storage subsystem 114 can be part of the host system 100. Also, the label “host” is used for exemplary purposes, as mechanisms according to some embodiments can be used in other types of computer systems in other implementations. The storage subsystem 114 can be implemented with various types of storage devices, including disk-based storage devices, integrated circuit storage devices, and other types of storage devices. Examples of the storage medium 118 include disk-based storage medium (e.g., magnetic or optical disk or disks), integrated circuit-based storage medium, nanotechnology or microscopy-based storage medium, or other types of storage media. The term “storage medium” refers to either a single storage medium or multiple storage media (e.g., multiple disks, multiple chips, etc.).<br>
+[0008]         A storage controller 116 in the storage subsystem 114 controls access of data contained on the storage medium 118. Examples of the data contained on the<br>
+ <br>
+storage medium 118 include user data 122 and file system metadata 120. The term “user data” broadly refers to data that is associated with either a user, application, or other software in a computer system. Examples of user data include, but are not limited to, user files, software code, and data maintained by applications or other software.<br>
+[0009]        File system metadata generally refers to data that describes the user data (e.g., structure, content, and attributes of the user data). Examples of file system metadata include, but are not limited to, file names, information relating to ownership and access rights, last modified date, file size, and so forth.<br>
+[0010]        The storage controller 116 includes a storage controller cache 117 for temporarily storing data (e.g., a portion of the user data 122 and/or file system metadata 120) retrieved from the storage medium 118. As depicted in Fig. 1, the data retrieved from the storage medium 118 is stored as blocks 124 (block 1), 126 (block 2), 128 (block 3), and 130 (block 4). The storage controller cache 117 can store more blocks. A “block” of data refers to some predefined collection or portion of data. Although depicted as being inside the storage controller 116, the storage controller cache 117 can alternatively be located outside of the storage controller 116. More generally, the storage controller cache 117 is coupled to or associated with the storage controller 116.<br>
+[0011]        The host system 100 includes an operating system (OS) 106. The operating system 106 includes file system logic 110 and a device driver 112. The operating system 106 is associated with an operating system buffer cache 108 that is used to buffer certain data, as described further below. In response to requests from application software 102 (or other software), the file system logic 110 issues access requests (read requests and/or write requests) to the storage subsystem 114 through<br>
+ <br>
+the device driver 112. Although only one application software 102 is depicted in Fig. 1, it is noted that the host system 100 can include multiple application software 102.<br>
+[0012]        In addition, an application-level buffer cache 104 can be maintained for each application software 102. The application-level buffer cache 104 is maintained by the application software to buffer data requested by the application software 102. The application-level buffer cache 104 and operating system buffer cache 108 can be stored in a memory 134 of the host system 100. The memory 134 can be implemented with non-persistent storage devices such as dynamic random access memories (DRAMs), synchronous DRAMs (SDRAMs), and so forth.  Alternatively, the memory 134 can be implemented with persistent storage devices. The memory 134 is more closely coupled to a central processing unit (CPU) 132 (or plural CPUs) such that the CPU(s) 132 can more quickly access the content of the memory 134 than the content of the storage subsystem 114. The software in the host system 100, including the application software 102, operating system 106, file system logic 110, and device driver 112, are executable on the CPU 132.<br>
+[0013]        The file system logic 110 is part of a file system. The file system also includes the file system metadata 120 stored on the storage medium 118. A “file system” refers to the mechanism used for storing and organizing user data on the storage medium 118. The file system logic 110 performs access control and other management and storage tasks (e.g., create, move, and delete files; modify files; deny or allow access to files).<br>
+[0014]        There are two types of requests that can be issued by application software (or other software) in the host system 100: cached I/O requests or direct I/O requests. In the ensuing discussion, reference is made to “direct I/O software” and “cached I/O software.” “Direct I/O software” refers to software that issues direct I/O requests, and “cached I/O software” refers to software that issues cached I/O requests. Normally,<br>
+ <br>
+an application software (or other software) is configured to perform either cached I/O requests or direct I/O requests. Thus, in one scenario, a first application software performs cached I/O requests, while second application software performs direct I/O requests. However, in other scenarios, a single application software (or other software) is able to perform both cached I/O requests and direct I/O requests, depending upon the context of each particular request.<br>
+[0015]        A “cached I/O request” is a request for access of data stored on the storage medium 118 in which a speculative read-ahead or prefetch operation is performed by the file system logic 110 for the purpose of reading other data (referred to as “read-ahead data”), in addition to the data requested by the cached I/O request. To perform a read-ahead operation, the file system logic 110 issues one or more read-ahead requests to the storage subsystem 114. The read-ahead data retrieved in response to the read-ahead requests is stored in the operating system buffer cache 108. Any subsequent requests for data issued by software can be satisfied from the operating system buffer cache 108 if the data was previously retrieved based on a read-ahead operation and stored in the operating system buffer cache 108. Speculative read-ahead operations performed for cached I/O requests are performed for the purpose of pre-populating the operating system buffer cache 108 so that performance of subsequent requests can be enhanced if the data can be retrieved from the operating system buffer cache 108 instead of from the slower storage subsystem 114.<br>
+[0016]        A “direct I/O request” differs from the cached I/O request in that the direct I/O request does not cause the file system logic 110 to perform a read-ahead operation for the purpose of pre-populating the operating system buffer cache 108. A “direct I/O request” is thus a request that is issued by software where the operating system buffer cache 108 is bypassed such that the operating system buffer cache 108 is not pre-populated with read-ahead data. However, in accordance with some<br>
+ <br>
+embodiments of the invention, to enhance performance of software that issues direct I/O requests, read-ahead requests are issued by the file system logic 110 for the purpose of pre-populating the storage controller cache 117. The read-ahead requests are submitted to request data not specified in the original direct I/O request.<br>
+[0017]       Note that the difference between cached I/O read-ahead operations and direct I/O read-ahead operations, according to some embodiments, is that the cached I/O read-ahead operations pre-populate the operating system buffer cache 108, whereas the direct I/O read-ahead operations pre-populate the storage controller cache 117 but not the operating system buffer cache 108. Subsequent requests from a direct I/O software that can be satisfied from the storage controller cache 117 (instead of from the storage medium 118) results in enhanced data throughput since data can be retrieved from the storage controller cache 117 more quickly than from the storage medium 118. The storage controller cache 117 can be implemented with faster storage device(s) than the storage medium 118.<br>
+[0018]        Fig. 2 shows a process of performing direct I/O requests according to an embodiment. Reference is made to both Fig. 1 and Fig. 2 in the following discussion. Upon receipt of a direct I/O request (at 202) from the application software 102, the file system logic 110 processes the request by bypassing (at 204) the operating system buffer cache 108. Bypassing the operating system buffer cache 108 means that the file system logic 110 does not perform read-ahead operations for the purpose of pre-populating the operating system buffer cache 108.<br>
+[0019]        The file system logic 110 issues (at 206) requests) for requested block(s) of data on the storage medium 118. The requested block(s) refer(s) to the data requested by the direct I/O request received at 202.<br>
+[0020]        In addition to issuing request(s) for the requested block(s) of data, the file system logic 110 also issues (at 208) a read-ahead request (or plural read-ahead<br>
+ <br>
+requests) for at least one other block not in the received direct I/O request. The read-ahead request(s) is (are) generated based on file access patterns by direct I/O software.<br>
+[0021]        The file system logic 110 is able to monitor the file access patterns of a direct I/O software. A “file access pattern” or “access pattern” refers to prior or historical access behavior of the direct I/O software, such as repetitive access behavior (where the software tends to repeat accesses of certain blocks of data), sequential access behavior (where the software tends to access consecutive blocks of data from a current block), or other regular access behavior that can be used to predict what the software is likely to do after accessing a current block.<br>
+[0022]        Based on these monitored patterns, the file system logic 110 is able to generate predictions for what data may be requested next. The read-ahead requests) issued at 208 is (are) based on such predictions. As an example, a direct I/O software includes software that sequentially accesses large blocks of data. By monitoring this sequential behavior, the file system logic 110 is able to predict, based on an access request of a particular block of data, the direct I/O software will likely request consecutive blocks of data in future requests. Based on such a prediction in the example scenario, the read-ahead request(s) issued by the file system logic 110 will retrieve data in consecutive blocks of data following the block(s) requested in the direct I/O request.<br>
+[0023]        Prediction information developed by the file system logic 110 based on monitoring patterns of direct I/O software can be stored in the memory 134 or in the storage subsystem 114. This prediction information is accessed to determine read-ahead requests that should be generated in response to a particular access request from the direct I/O software.<br>
+ <br>
+[0024]        The prediction information provides information regarding prior or historical access behaviors of the direct I/O software that can be used to derive a likely subsequent behavior of the directi I/O software. As examples, the prediction information indicates whether the direct I/O software is likely to repeat access of certain blocks of data, perform sequential access of blocks of data, jump between blocks of data at different locations, and so forth. Based on examination of the prediction information and the current direct I/O request, the file system logic 110 develops appropriate read-ahead request(s) for data that will likely be subsequently accessed by the direct I/O software.<br>
+[0025]        In response to the requests issued by the file system logic 110 at 206 and 208, the storage controller 116 retrieves (at 210) the requested block(s) and the read-ahead block(s) from the storage medium 118. The requested block(s) and read-ahead block(s) are then stored in the storage controller cache 117. The requested block(s) is (are) further forwarded (at 214) to the file system logic 110, which in turns forwards the requested data to the requesting application software. Note that the read-ahead block(s) performed in response to the read-ahead request(s) remain in the storage controller cache 117, and is (are) not forwarded to be stored in the operating system buffer cache 108. Any subsequent request issued by application software can be satisfied from the storage controller cache 117 (if the requested data is stored in the storage controller cache 117) for faster access.<br>
+[0026]        By using techniques according to some embodiments of the invention, the combination of the benefits associated with direct I/O and read-ahead can be provided. Use of direct I/O requests by certain application software is possible to avoid the costs associated with populating the operating system buffer cache 108. At the same time, read-ahead can be performed to pre-populate a storage controller cache 117 so that the benefit of using read-ahead data to satisfy subsequent requests may be achieved.<br>
+ <br>
+[0027]        The flow diagram of Fig. 2 is exemplary, where the acts/blocks of the figure can be added, removed, altered, and so forth, and still be covered by embodiments of the invention.<br>
+[0028]         Instructions of software routines (including the operating system 106, file system logic 110, device driver 112, and application software 102 in Fig. 1) are loaded for execution on a processor (e.g., CPU 132). The processor includes microprocessors, microcontrollers, processor modules or subsystems (including one or more microprocessors or microcontrollers), or other control or computing devices.<br>
+[0029]         Data and instructions (of the software) are stored in respective storage devices, which are implemented as one or more machine-readable storage media. The storage media include different forms of memory including semiconductor memory devices such as dynamic or static random access memories (DRAMs or SRAMs), erasable and programmable read-only memories (EPROMs), electrically erasable and programmable read-only memories (EEPROMs) and flash memories; magnetic disks such as fixed, floppy and removable disks; other magnetic media including tape; and optical media such as compact disks (CDs) or digital video disks (DVDs).<br>
+[0030]        In the foregoing description, numerous details are set forth to provide an understanding of the present invention. However, it will be understood by those skilled in the art that the present invention may be practiced without these details. While the invention has been disclosed with respect to a limited number of embodiments, those skilled in the art will appreciate numerous modifications and variations therefrom. It is intended that the appended claims cover such modifications and variations as fall within the true spirit and scope of the invention<br>
+ <br>
+1	1.        A system comprising:<br>
+2	a storage subsystem (114);<br>
+3	a storage controller (116);<br>
+4	a cache (117) associated with the storage controller (116); and<br>
+5	file system logic (110) to receive a direct input/output (I/O) request for a first<br>
+6	data portion stored in the storage subsystem (114),<br>
+7	the file system logic to perform a read-ahead operation in response to the<br>
+8	direct I/O request to request at least one other data portion stored in the storage<br>
+9	subsystem,<br>
+10	the cache (117) associated with the storage controller to store the at least one<br>
+11	other data portion requested by the read-ahead operation.<br>
+1	2.        The system of claim 1, wherein the at least one other data portion is not<br>
+2	specified in the direct I/O request.<br>
+<br>
+1	3.        The system of claim 2, the storage controller (116) to return the first data<br>
+2	portion to the file system logic (110) in response to the direct I/O request, but the<br>
+3	storage controller (116) to not return the at least one other data portion to the file<br>
+4	system logic in response to the direct I/O request.<br>
+<br>
+1	4.        The system of claim 1, farther comprising an operating system (106) and a<br>
+2	cache (108) associated with the operating system,<br>
+3	the file system logic (110) to bypass the cache (108) associated with the<br>
+4	operating system (106) in processing the direct I/O request.<br>
+ <br>
+1	5.        The system of claim 4, further comprising software (102) to submit a cached<br>
+2	I/O request to the file system logic (110),<br>
+3	the file system logic (110) to, in response to the cached I/O request, perform a<br>
+4	read-ahead operation to request one or more data portions for storing in the cache<br>
+5	(108) associated with the operating system (106).<br>
+1	6.        The system of claim 1, further comprising:<br>
+2	a first application software to issue the direct I/O request to the file system<br>
+3	logic (110);<br>
+4	an operating system (106);<br>
+5	a cache (108) associated with the operating system; and<br>
+6	a second application software to issue a cached I/O request to the file system<br>
+7	logic (110),<br>
+8	the file system logic to, in response to the cached I/O request, issue a read-<br>
+9	ahead request to retrieve a further data portion from the storage subsystem for storage<br>
+10	in the cache (108) associated with the operating system.<br>
+1	7.        A method comprising:<br>
+2	receiving, by a file system logic (110), a direct input/output (I/O) request for a<br>
+3	first data portion stored in a storage subsystem (114);<br>
+4	in response to the direct I/O request, the file system logic (110) to submit a<br>
+5	request for the first data portion and a read-ahead request to retrieve a second data<br>
+6	portion stored in the storage subsystem (114);<br>
+7	retrieving, by a storage controller (116), the first data portion in response to<br>
+8	the first request and the second data portion in response to the read-ahead request; and<br>
+9	storing, by the storage controller, the second data portion in a cache (117)<br>
+10	associated with the storage controller (116).<br>
+ <br>
+8.	The method of claim 7, further comprising forwarding, by the storage<br>
+controller (116), the first data portion to the file system logic (110) in response to the<br>
+direct I/O request, but not forwarding the second data portion to the file system logic<br>
+(110) in response to the direct I/O request.<br>
+9.	The method of claim 7, further comprising the file system logic (110)<br>
+bypassing a cache (108) associated with an operating system (106) in response to the<br>
+direct I/O request.<br>
+10.	An article comprising at least one storage medium containing instructions that<br>
+when executed cause a file system of a computer (100) to:<br>
+receive a direct input/output (I/O) request for a first data portion stored in a storage subsystem (114);<br>
+in response to the direct I/O request, submit a request for the first data portion and a read-ahead request to retrieve a second data portion stored in the storage subsystem (114), the read-ahead request to cause the second data portion to be stored in a cache (117) associated with a storage controller (116), the storage controller associated with the storage subsystem;<br>
+receive the first data portion from the storage controller in response to the request for the first data portion; and<br>
+receive the second data portion from the cache (117) of the storage controller in response to a subsequent request for the second data portion.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=Rj/PTVKUzTa1+mEk6eUvNQ==&amp;amp;loc=egcICQiyoj82NGgGrC5ChA==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=Rj/PTVKUzTa1+mEk6eUvNQ==&amp;amp;loc=egcICQiyoj82NGgGrC5ChA==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="278932-modified-diphtheria-toxins-or-fragment-thereof.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="278934-a-process-for-extraction-of-bioactive-psoralen-compound.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>278933</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>626/CHE/2006</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>01/2017</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>06-Jan-2017</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>04-Jan-2017</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>05-Apr-2006</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>SAMSUNG ELECTRONICS CO., LTD</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>KOREAN CORPORATION OF 129, SAMSUNG-RO, YEONGTONG-GU, SUWON-SI, GYEONGGI-DO 443-742</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>TMIOTHY W MARK</td>
+											<td>27 PEPPERMINT STREET, GOFFSTOWN NEW HAMPSHIRE 03045 USA</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>D.JOHN SHAKSHOBER</td>
+											<td>28 LAUREL WOOD DRIVE, TOWNSEND MASSACHUSETTS 01474 U.S.A</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F17/30,17/60</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>US 11/141,340</td>
+									<td>2005-05-31</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/278933-performing-read-ahead-operation-for-a-direct-input-output-request by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 23:55:25 GMT -->
+</html>

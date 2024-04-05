@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/207279-a-method-for-managing-faulty-data-in-a-multichannel-memory-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 01:39:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 207279:A METHOD FOR MANAGING FAULTY DATA IN A MULTICHANNEL MEMORY SYSTEM</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD FOR MANAGING FAULTY DATA IN A MULTICHANNEL MEMORY SYSTEM</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A RAID (3, 4, or 5) disk array memory system incorporates a method for the management of faulty data that eliminates the unintentional creation of spurious data when a double fault occurs. For example, when a disk drive failure occurs in one channel and the failed disk is replaced, reconstruction of the data can be achieved because a parity drive channel is provided for correcting errors. If a read error occurs during reconstruction of the failed disk data, the block ~orresponding to the error block does not allow the reconstruction of the corresponding failed disk block. To prevent the misuse of the two data blocks, a bad data table (BDT) is constructed that lists the addresses of the block just read and the block to be reconstructed. Also a standard filler block is written into the two bad blocks and a new parity block is created. The addresses of all access requests to the memory array are compared with the BDT and, if not listed, the access proceeds. If an address is listed, a~ error signal is returned. For a listed write request, the bad block address is deleted from the BDT, new data written into the block and a new parity block computed and stored. FIG 6</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+The present invention relates to an apparatus and a method for managing faulty data in a multichannel memory system.<br>
+The invention pertains to the field of fault tolerant arrays of hard disks that are known as Redundant Arrays of Inexpensive Disks (RAID). More specifically the invention relates to the management and correction of undetected read errors in a RAID system that are discovered when a disk failure requires the replacement and build-up of a disk other than that containing the undetected read error.<br>
+This invention provides a faulty data management subsystem that avoids the potential generation of spurious data when two bad data blocks exist within the same RAID data group because of a disk recording medium error in one channel of the array and the failure, replacement, and rebuild of a disk drive on another channel. The faulty data management subsystem of the invention includes:<br>
+a)	a disk rebuild routine for rebuilding a failed drive that checks for a bad data block amongst the channels being used to reconstruct the data on the failed disk and, if found, scrubbing the bad data block by writing a filler code in that block and in the corresponding block of the disk that is being rebuilt;<br>
+b)	computing a new parity block corresponding to the bad data block by using all channels including those with filler code;<br>
+c)	updating  a  bad  data  table that lists all bad data blocks; and<br><br>
+d)   checking each disk array access request to<br>
+determine if the data address of that request is listed in the bad data table, and, if not, allowing the access to proceed, otherwise checking if the access request is for a write and, if so, allowing the write, deleting the block address from the bad data table and generating a new parity block, and, if not, generating an error signal. The present invention provides means for managing faulty data in RAID systems without incurring the potential problems described above.<br>
+Because a byte stripe is a single address block, it may be seen that a RAID-3 and RAID-4 system are the same except for block length.  Consequently, all following references to a block will be understood to include the RAID-3 byte stripe unless otherwise indicated.<br>
+Also, "RAID system" will be used to indicate RAID-3, -4 and -5 systems unless indicated otherwise.<br>
+RAID systems, based on magnetic disk technology developed for personal computers, offer an attractive alternative to single large expensive disk memories by providing improved performance, reliability, and power consumption.  The manufacturers of small disks can offer such performance because of the efforts at standardization in defining higher level peripheral interfaces such as the ANSI X3.131-1986 Small Computer Synchronous Interface (SCSI) .  This has led to the development of arrays of inexpensive disks which are organized in an interleaved manner for large block transfers of -data, or arranged for independent parallel access for small transaction processing.<br>
+The formation of large disk arrays introduces reliability problems which result from the use of a large<br><br>
+multiplicity of electromechanical devices. The mean-tim-to-failure (MTTF) for an array has been estimated to increase with the number of disks in an array (Patterson, D.A., Gibson, G., and Katz, R.H., "A Case for Redundant Arrays of Inexpensive Disks (RAID), Report No. UCB/CSD 87/391, Dec. 1987, Computer Science Division (EECS), University of California, Berkeley, CA 94720).<br>
+Accordingly, the present invention an apparatus for managing faulty data in a multichannel memory system having a memory array controller for controlling access to the memory system, for memory failure detection, for memory error detection, and for reconstruction of a failed memory channel, the memory system having at least three memory channels where each channel has one or more modules, each module having a failure and read error detection means, and each memory module being separately replaceable upon failure, the apparatus, accessible to the memory controller, comprising a) a bad data table (BDT) for storing addresses of non-recoverable data blocks in a replacement memory module, where the replacement memory module stores data reconstructed from a failed first memory module in the memory system, and addresses of other non-recoverable data blocks associated with other memory modules in the memory system, the non-recoverable data blocks arising upon an occurrence of a fault in a second memory module in the memory system prior to completion of reconstruction and storage of data in the replacement memory module; b) a write circuit operable after the initiation of a reconstruction of a failed first memory module for writing filler data to a bad block location in the second memory module when a fault is detected in the second memory module during reconstruction of data stored in the first memory module, for writing<br><br>
+filler data to an associated location in the replacement memory module and for writing to the BDT addresses of bad data blocks representing non-recoverabie data; and c) detection circuitry for detecting memory access requests to addresses stored in the BDT, for returning a non-recoverable data error signal to a host system if the access request is a read request, and, if the access request is a write request, permitting the write to the BDT listed address and deleting the listed address from the BDT.<br>
+The present invention also provides a method for managing faulty data in a memory system having memory error detection and single memory module correction means, the memory system having at least three memory modules capable of detecting failure and read errors, each memory module being separately replaceable upon failure, the method comprising the steps of a) detecting a first read error of a memory module; b) determining if the first read error is due to a failure of the memory module and, if so, replacing the failed memory module and using the single memory module correction means for reconstructing data and storing the reconstructed data in the replacement memory module; c) monitoring all other memory modules during the reconstruction process for a second read error that would prevent reconstructing data for a first block in the replaced memory module where the second read error is associated with a second block in a second memory module, if such a second read error is detected in a second memory module in the memory system at a second block during the reconstruction of a first block in the replaced memory module and, if neither the first nor second block is a parity block, i) entering addresses of the first and second blocks into a bad data table (BDT), ii) writing a filler block to both the first and the second blocks, and iii) computing<br><br>
+ana replacing a corresponding parity block in an associated stripe of the memory system using the first and the second blocks together with all corresponding data blocks in the associated stripe of the memory system, otherwise, i) writing a filler block to whichever of the first block and the second block is a data block, and ii) computing and writing a corresponding parity block to the other of the first and second block which is designated to contain parity information using the filler block with all corresponding data blocks, and, then continuing reconstructing data in the replaced memory module until finished; and d) monitoring all memory access requests to the memory system by comparing a requested address to the BDT listed addresses, and, if the address is not listed in the BDT, allowing the access request to proceed, otherwise checking if the request is a write request, and, if not, returning a non-recoverable data error signal, otherwise allowing the write request to proceed so that an addressed filler block is replaced by a valid data block, and then computing and entering a new corresponding parity data block, whereby data stored in blocks in a same group as the first and second block m a y be recovered if a single subsequent failure occurs in any module in the memory system using the computed parity information, filler data and remaining group data.<br>
+The present invention may be more fully understood from the detailed description given below and from the accompanying drawings of the preferred embodiments of the invention, which, however should not be taken to limit the invention to the specific embodiment but are for explanation and understanding only.<br>
+FIG. 1 is a block diagram of a prior art MxN disk array, including a disk array controller.<br><br>
+FIG. 2 shows the prior art logical disk area configuration based on the array of FIG. 1.<br>
+FIG. 3(a) shows the memory map of a prior art RAID-1 system.<br>
+FIG. 3(b) shows the memory map of a prior art RAID-3 system.<br>
+FIG. 3(c) shows the memory map of a prior art RAID-4 system.<br>
+FIG. 3(D) shows the memory map of a prior art RAID-5 system.<br>
+FIGS. 4(a), 4(b), and 4(c) show an initial RAID-1 memory map, a double faulted memory RAID-1 memory map, and a rebuilt, but double faulted RAID-1 memory map, respectively, according to the prior art.<br>
+FIGS. 5(a), 5(b), and 5(c) show an initial RAID-5 memory map, a double faulted RAID-5 memory map, and a rebuilt, but double faulted, RAID-5 memory map, respectively, according to the prior art.<br>
+FIG. 6 is a flow diagram of the disk rebuild and reconstruct method of the invention.<br>
+FIG. 7 is a flow diagram of the method of the invention for accessing the array.<br>
+FIG. 8 shows the hardware configuration of the invention for a RAID faulty data management system.<br><br>
+FIG. 6 is a flow diagram of the disk rebuild and reconstruction method 100 used to circumvent the problem of generating spurious data because a disk read fault has occurred on a channel of a RAID system while reconstructing a corresponding data block on another channel. The reconstruction of a data block or rebuild of a disk drive is accomplished by bit-by-bit EXORing of the corresponding bits of the remaining blocks belonging to the same group that share a common parity block.<br>
+Disk rebuild and reconstruction method 100 begins at step 101 in which the EXOR method of reconstruction begins. During reconstruction, step 104 checks for an indication that one of the blocks needed for reconstruction is bad. If the reconstruction is completed without detecting a bad block, the process terminates at step 111. Otherwise, step 105 checks if the bad data block needed for reconstruction is a parity block. If so, step 107 writes a filler block to the block that is to be reconstructed and step 109 updates the bad data table (BDT) by recording that the data block is non-recoverable (bad). (The filler block may contain any convenient alphanumeric code.) If the bad data block of step 104 is not a parity block, step 106 scrubs the bad data block by writing a filler block to replace the bad data block and, in step 107, also writes a filler block to the corresponding block that was to be reconstructed. Step 109 updates the BDT by recording that both the block in step 104 and the corresponding block of the channel being reconstructed is bad. Each entry in the BDT identifies a block as containing artificial data and hence non-recoverable data. Step 108 computes new parity data by EXORing all of the data channel blocks including the filler blocks and writes a new parity block and step 110 resumes the reconstruction process by returning to step 104.<br><br>
+The procedure of Fig, 6 ensures that (1) if a read error occurs during reconstruction in one of the data blocks, all of the remaining "good" data blocks are recoverable, and (2) the artificial data of the filler blocks can not be confused with real data.<br>
+Step 109 updates a "bad data table*', or BDT, that is located in disk controller 12, and may also be located in a reserved section of each of the disks. The BDT contains a list of all bad data blocks (filler blocks) so that any read request to the disk array first compares the target address with the addresses listed in the BDT and retums an appropriate error signal to the requesting agent if the address is listed. After the BDT update, the process of reconstruction continues in step 110, and the monitoring in step 104 continues until completed. If additional bad data blocks are found in step 104, steps 105-110 are repeated as required.<br>
+The method for operating a comparator for checking array access 200, shown in the flow diagram of FIG. 7, is used to manage the use of a BDT in conjunction with the RAID memory system. The method is invoked whenever an access is requested and begins in step 201 by checking if an access request is to a bad data block whose address is listed in the BDT, and, if not, proceeds with the access in the normal operating mode. If the address is listed in the BDT, step 203 determines if the access is for a write operation, and, if not, an error flag is generated<br><br>
+in step 204.  The error flag advises the host system that the read request is to a non-recoverable data block.  If the request is for a write access, step 205 deletes the block address from the BDT and permits the write circuitry to write the new data to the block address in step 206, thus scrubbing the bad data block status.  Step 207 is for computing the new block parity and writing it into the corresponding parity block associated with the accessed data group.<br>
+FIG. 8 is a block diagram that shows the architecture of a RAID system of this invention using the methods outlined in FIGS. 6 and 7.  Typically, RAID system 20 with faulty data management of the type described above is interfaced through its controller 22 from a SCSI bus 21.  (SCSI stands for a well known industry standard bus as described in "Small Computer System Interface-2", American National Standard X3T9.2/86-109).  Bus 21 connects RAID system 20 to the host system.  Disk array controller 22 provides the necessary logic to map any logical address associated with a memory access into the corresponding physical address, directs data traffic, controls the operation of each disk drive and provides status information to the host.  BDT 23 is shown coupled to controller 22 but may also be an integral part of an integrated chip disk array controller.  Also, each disk 11 of the array is shown having a local BDT 24 in which the bad data information for each disk is optionally stored so that an access address can be checked at the disk level rather than at the array level in disk controller 22.<br>
+As will be understood by those skilled in the art, many changes in the methods and apparatus described above may be made by the skilled practitioner without departing from the spirit and scope of the invention, which should be limited only as set forth in the claims which follow.<br><br><br>
+WE CLAIM :<br>
+1. An apparatus for managing faulty data in a multichannel memory system having a memory array controller for controlling access to the memory system, for memory failure detection, for memory error detection, and for reconstruction of a failed memory channel, the memory system having at least three memory channels where each channel has one or more modules, each module having a failure and read error detection means, and each memory module being separately replaceable upon failure, the apparatus, accessible to the memory controller, comprising a) a bad data table (BDT) for storing addresses of non-recoverable data blocks in a replacement memory module, where the replacement memory module stores data reconstructed from a failed first memory module in the memory system, and addresses of other non-recoverable data blocks associated with other memory modules in the memory system, the non-recoverable data blocks arising upon an occurrence of a fault in a second memory module in the memory system prior to completion of reconstruction and storage of data in the replacement memory module; b) a write circuit operable after the initiation of a reconstruction of a failed first memory module for writing filler data to a bad block location in the second memory module when a fault is detected in the second memory module during reconstruction of data stored in the first memory module, for writing filler data to an associated location in the replacement memory module and for writing to the BDT addresses of bad data blocks representing non-recoverable data; and c) detection circuitry for detecting memory access requests to addresses stored in the BDT, for retuming a non-recoverable data error signal to a host system if the access request is<br><br>
+a read request, and, if the access request is a write request, permitting the write to the BDT listed address and deleting the listed address from the BDT.<br>
+2.       The apparatus as claimed in claim 1, wherein the multichannel memory system is a RAID-3 memory array.<br><br>
+3.<br><br>
+The apparatus as claimed in claim 1, wherein the multichannel memory system is a RAID-4 memory array.<br><br>
+4.	The apparatus as claimed in claim 1, wherein the multichannel memory system is a RAID-5 memory array.<br>
+5.	The apparatus as claimed in claim 1, wherein the BDT is part of the memory array controller.<br>
+6.	The apparatus as claimed in claim 1, wherein the BDT is stored in a reserved section of each memory module.<br>
+7.	The apparatus as claimed claim 1, wherein the BDT is stored in a memory in the memory array controller and in a reserved section of each memory module.<br>
+8.	A method for managing faulty data in a memory system having memory error detection and single memory module correction means, the memory system having at least three memory modules capable of detecting failure and read errors, each memory module being separately replaceable upon<br><br>
+failure, the method comprising the steps of a) detecting a first read error of a memory module; b) determining if the first read error is due to a failure of the memory module and, if so, replacing the failed memory module and using the single memory module correction means for reconstructing data and storing the reconstructed data in the replacement memory module; c) monitoring all other memory modules during the reconstruction process for a second read error that would prevent reconstructing data for a first block in the replaced memory module where the second read error is associated with a second block in a second memory module, if such a second read error is detected in a second memory module in the memory system at a second block during the reconstruction of a first block in the replaced memory module and, if neither the first nor second block is a parity block, i) entering addresses of the first and second blocks into a bad data table (BDT), ii) writing a filler block to both the first and the second blocks, and iii) computing and replacing a corresponding parity block in an associated stripe of the memory system using the first and the second blocks together with all corresponding data blocks in the associated stripe of the memory system, otherwise, i) writing a filler block to whichever of the first block and the second block is a data block, and ii) computing and writing a corresponding parity block to the other of the first and second block which is designated to contain parity information using the filler block with all corresponding data blocks, and, then continuing reconstructing data in the replaced memory module until finished; and d) monitoring all memory access requests to the memory system by comparing a requested address to the BDT listed addresses, and, if the address is not listed in the<br><br>
+BDT, allowing the access request to proceed, otherwise checking if the request is a write request, and, if not, returning a non-recoverable data error signal, otherwise allowing the write request to proceed so that an addressed filler block is replaced by a valid data block, and then computing and entering a new corresponding parity data block, whereby data stored in blocks in a same group as the first and second block may be recovered if a single subsequent failure occurs in any module in the memory system using the computed parity information, filler data and remaining group data.<br>
+9.	The method as claimed in claim 8, wherein the memory system is a RAID-3 memory.<br>
+10.	The method as claimed in claim 8, wherein the memory system is a RAID-4 memory array.<br>
+11.	The method as claimed in claim 8, wherein the memory system is a RAID-5 memory array.<br>
+12.	A memory array system with a faulty data management system handling multiple faults, comprising a) a memory array including at least three memory modules, each memory module being separately replaceable upon failure, and each module having a failure and read error detector; b) a memory array controller for coupling the memory array to a memory bus, for Controlling access to the memory array, for memory array failure detection and single memory module correction and for communicating<br><br>
+memory status over the memory bus, the memory array controller further having, i) a bad data table (BDT) for storing addresses of non-recover able data blocks detected during a reconstruction of a first memory module, the reconstruction due to the occurrence of a fault in a first memory module requiring the replacement thereof and the bad data table for storing addresses of non-recoverable data blocks arising after a subsequent fault is detected in a second memory module prior to completion of the reconstruction of data stored in the first memory module, ii) write circuitry for writing filler data blocks to blocks corresponding to non-recoverable data blocks in the replaced first memory module and the second memory module and for writing non-recoverable data block addresses to the BDT, and iii) a comparator for detecting memory access requests to bad data blocks by comparing a memory access request address with the BDT stored addresses, for returning a non-recoverable error signal to a requesting agent if the access request is a read request and the address is stored in the BDT, and for permitting the access request to proceed if the request is for a write access.<br>
+13.	The memory array system as claimed in claim 12, wherein each memory module has a reserved memory area for storing the BDT.<br>
+14.	The memory array system as claimed in claim 12, wherein the memory array system is a RAID-3 memory system.<br>
+15.	The memory array system as claimed in claim 12, wherein the memory array system is a RAID-4 memory system.<br><br>
+16.	The memory array system as claimed in claim 12, wherein the memory<br>
+array system is a RAID-5 memory system.<br>
+17.	An apparatus for managing faulty data in a multichannel memory system, substantially as herein described with reference to figures 6 to 8 of the accompanying drawings.<br>
+18.	A method for managing faulty data in a memory system, substantially as herein described with reference to figures 6 - 8 of the accompanying drawings.<br>
+Dated this 13 day of December 1996<br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">2263-mas-1996-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1hc3NpZ25tZW50LnBkZg==" target="_blank" style="word-wrap:break-word;">2263-mas-1996-assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1jbGFpbXMgZHVwbGljYXRlLnBkZg==" target="_blank" style="word-wrap:break-word;">2263-mas-1996-claims duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1jbGFpbXMgb3JpZ2luYWwucGRm" target="_blank" style="word-wrap:break-word;">2263-mas-1996-claims original.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1jb3JyZXNwb25kYW5jZSBvdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">2263-mas-1996-correspondance others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1jb3JyZXNwb25kYW5jZSBwby5wZGY=" target="_blank" style="word-wrap:break-word;">2263-mas-1996-correspondance po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1kZXNjcmlwdGlvbiBjb21wbGV0ZSBkdXBsaWNhdGUucGRm" target="_blank" style="word-wrap:break-word;">2263-mas-1996-description complete duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1kZXNjcmlwdGlvbiBjb21wbGV0ZSBvcmlnaW5hbC5wZGY=" target="_blank" style="word-wrap:break-word;">2263-mas-1996-description complete original.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">2263-mas-1996-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1mb3JtIDEucGRm" target="_blank" style="word-wrap:break-word;">2263-mas-1996-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1mb3JtIDI2LnBkZg==" target="_blank" style="word-wrap:break-word;">2263-mas-1996-form 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjI2My1tYXMtMTk5Ni1vdGhlciBkb2N1bWVudHMucGRm" target="_blank" style="word-wrap:break-word;">2263-mas-1996-other documents.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzLTIyNjMtbWFzLTE5OTYuanBn" target="_blank" style="word-wrap:break-word;">abs-2263-mas-1996.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="207278-a-digital-modulation-apparatus-for-converting-data-words-to-runlength-limited-code-words.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="207280-method-and-system-for-presenting-a-plurality-of-animated-display-objects-to-a-user-for-selection-on-a-graphical-user-interface-in-a-data-processing-system.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>207279</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2263/MAS/1996</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>26/2007</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>29-Jun-2007</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>04-Jun-2007</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>13-Dec-1996</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>INTERNATIONAL BUSINESS MACHINE CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>NEW ORCHARD ROAD, ARMONK, NEW YORK 10504.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>ASHWATH NAGARAJ</td>
+											<td>33701 WHIMBREL ROAD, EREMONT, CALIFORNIA 94555.</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>ASHOK BHASKAR</td>
+											<td>4869 HUFFMAN TERRACE, FREMONT, CALIFORNIA 94555.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F11/34</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>08/573,127</td>
+									<td>1995-12-15</td>
+								    <td>Russia</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/207279-a-method-for-managing-faulty-data-in-a-multichannel-memory-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 01:39:32 GMT -->
+</html>

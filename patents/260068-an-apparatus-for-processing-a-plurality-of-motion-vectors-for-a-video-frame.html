@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/260068-an-apparatus-for-processing-a-plurality-of-motion-vectors-for-a-video-frame by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:53:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 260068:&quot;AN APPARATUS FOR PROCESSING A PLURALITY OF MOTION VECTORS FOR A VIDEO FRAME &quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;AN APPARATUS FOR PROCESSING A PLURALITY OF MOTION VECTORS FOR A VIDEO FRAME &quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method for processing a plurality of motion vectors for a video frame, the method comprising: determining a number of different block sizes in the video frame; and, performing a variable block size motion vector process if the number of different block sizes in the video frame is greater than one, the variable block size motion vector process comprising constructing a pyramid of motion vectors from the plurality of motion vectors, the pyramid having at least a first layer and a second layer of motion vectors, each of the first and second layers having a set of motion vectors based on a particular block size.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>The present invention relates to a method for processing a plurality of motion vectors for a video frame, an apparatus and a motion vector thereof.<br>
+[0001]	The present Application for Patent claims priority to Provisional Application<br>
+No. 60/589,900, filed July 20, 2004, and assigned to the assignee hereof and hereby expressly incorporated by reference herein.<br>
+BACKGROUND<br>
+Field<br>
+[0002]	The embodiments described herein relate generally to motion vector processing,<br>
+and more particularly, to a method and apparatus for fixed block-size and variable block-size motion vector processing, content adaptive motion vector smoothing, motion vector scaling, motion vector labeling, motion vector classification, and video processing.<br>
+Background<br>
+[0003]	Low bitrate video compression is very important in many multimedia<br>
+applications such as wireless video streaming and video telephony due to both the limited bandwidth resources and the variability of available bandwidth. Bandwidth adaptation of video coding at low bitrates can be accomplished by reducing the temporal resolution. In other words, instead of compressing and sending a thirty (30) frame per second (fps) bit-stream, the temporal resolution can be halved to fifteen (15) fps to reduce the transmission bit-rate. However, the consequence of reducing temporal resolution is the introduction of temporal domain artifacts, such as motion jerkiness, that significantly degrades the visual quality of the decoded video.<br>
+[0004]	To display the full frame rate at the receiver side, a recovery mechanism, called<br>
+frame rate up conversion (FRUC), is needed to re-generate the skipped frames and to reduce temporal artifacts. Generally, the FRUC process is the process of video interpolation to create additional frames at the video decoder to increase the perceived frame rate of the (reconstructed) video. Typically, each frame is divided into specific graphics elements such as individual pixels or blocks of pixels referred to as "macro blocks." Motion vectors, which describes the movement of these elements from one reference frame to the next, are used to predict the position of each element on an interpolated frame between the two reference frames. The creation and processing of<br>
+the group of motion vectors for a particular frame, which are referred to as a motion vector field or motion field, is an important part of achieving a reconstructed video stream with a desired quality within particular processing boundaries. However, without proper processing of the motion field, which includes the elimination of outlier motion vectors—i.e., motion vectors that do not accurately describe the movement of the graphical elements, the quality of the reconstructed video will be significantly reduced.<br>
+Summary<br>
+[0005]	The embodiments described herein provide a motion vector processing system to<br>
+assist in the creation of interpolated frames, referred to herein as "F-frames," with higher quality in a frame rate up conversion (FRUC) process.<br>
+[0006]	In one embodiment, a method for processing a plurality of motion vectors for a<br>
+video frame is described. The method includes determining a number of different block sizes in the video frame; and performing a variable block size motion vector process if the number of different block sizes in the video frame is greater than one. Further, the variable block size motion vector process includes constructing a pyramid of motion vectors from the plurality of motion vectors, the pyramid having at least a first layer and a second layer of motion vectors, each of the first and second layers having a set of motion vectors based on a particular block size.<br>
+[0007]	In another embodiment, a computer readable medium having instructions stored<br>
+thereon is provided for causing a computer to execute a method for processing a plurality of motion vectors for a video frame. The motion vector processing includes determining a number of different block sizes in the video frame. Further, the processing includes performing a variable block size motion vector process if the number of different block sizes in the video frame is greater than one, where the variable block size motion vector process includes constructing a pyramid of motion vectors from the plurality of motion vectors, the pyramid having at least a first layer and a second layer of motion vectors, each of the first and second layers having a set of motion vectors based on a particular block size.<br>
+[0008]	In yet another embodiment, an apparatus is described for processing a plurality<br>
+of motion vectors for a video frame. The apparatus including a programmable circuit configured to determine a number of different block sizes in the video frame; and, a<br>
+programmable circuit configured to perform a variable block size motion vector process if the number of different block sizes in the video frame is greater than one. The variable block size motion vector process includes a programmable circuit configured to construct a pyramid of motion vectors from the plurality of motion vectors, the pyramid having at least a first layer and a second layer of motion vectors, each of the first and second layers having a set of motion vectors based on a particular block size.<br>
+[0009]	In still yet another embodiment, a motion vector processor is provided for<br>
+processing a plurality of motion vectors for a video frame. The motion vector processor includes means for determining a number of different block sizes in the video frame; and, means for performing a variable block size motion vector process if the number of different block sizes in the video frame is greater than one. The means for performing the variable block size motion vector process includes means for constructing a pyramid of motion vectors from the plurality of motion vectors, the pyramid having at least a first layer and a second layer of motion vectors, each of the first and second layers having a set of motion vectors based on a particular block size.<br>
+[0010]	Other objects, features and advantages will become apparent to those skilled in<br>
+the art from the following detailed description. It is to be understood, however, that the detailed description and specific examples, while indicating exemplary embodiments, are given by way of illustration and not limitation. Many changes and modifications within the scope of the following description may be made without departing from the spirit thereof, and the description should be understood to include all such variations.<br>
+Brief Description of the Drawings<br>
+[0011]	The embodiments described herein may be more readily understood by<br>
+referring to the accompanying drawings in which:<br>
+[0012]	FIG. lisa flow diagram of the operation of a motion vector processing system;<br>
+[0013]	FIG. 2 is a block diagram of a motion vector extraction subsystem of a motion<br>
+vector processing system;<br>
+[0014]	FIG. 3 is a block diagram of a motion vector processor in the motion vector<br>
+processing system;<br>
+[0015]	FIG. 4 is a diagram used to describe motion vector scaling for an F-frame;<br>
+[0016]	FIG. 5 is a diagram used to describe motion vector scaling for an P-frame;<br>
+[0017]	FIG. 6 is a figure illustrating the various classes assigned to pixels inside a video<br>
+frame; and,<br>
+[0018]	FIG. 7 is a block diagram of an access terminal and an access point of a wireless<br>
+system.<br>
+[0019]	Like numerals refer to like parts throughout the several views of the drawings.<br>
+[0020]	The embodiments described herein provide methods and apparatus for motion<br>
+vector processing that assists in the creation of interpolated frames, also referred to as "F-frames," with higher quality in a frame rate up conversion (FRUC) process. The methods and apparatus also extend the functionality of motion vector smoothing for fixed block sizes to apply to variable block sizes. A method of building a hierarchical motion vector pyramid based on different motion block sizes and layered motion vector smoothing techniques is also provided. Moreover, supplementary information contained in the decoded video data are utilized as inputs to the motion vector processor. Supplementary information may include, for example, a description of the type of graphic elements that make up each frame, referred to as "content maps," as well as a description of the complexity and movement of the elements, referred to as "complexity maps" and "activity maps," respectively.<br>
+[0021]	FIG. 1 illustrates an exemplary process 100 of operation for a motion vector<br>
+processing system 300, as shown in FIG. 3, with inputs used in system 300 as detailed in FIG. 2. It should be noted that the functional blocks shown herein correspond to specific modules that may be implemented using one or more software algorithms. The operation of the algorithms is described at a high-level with sufficient detail to allow those of ordinary skill in the art to implement them using a combination of computer hardware and software approaches. For example, the components described herein may be implemented as software executed on a general-purpose computer processor; as "hardwired" circuitry in an Application Specific Integrated Circuit (ASIC); or any combination thereof. It should be noted that various other approaches to the implementation of the modules described herein may be employed and should be within the realm of those of ordinary skill of the art who practice in the vast field of image and video processing.<br>
+[0022]	Further, the inventive concepts described herein may be used in decoder/encoder<br>
+systems that are compliant with H.26x-standards as promulgated by the International Telecommunications Union, Telecommunications Standardization Sector (ITU-T); or<br>
+with MPEGx-standards as promulgated by the Moving Picture Experts Group, a working group of the International Standardization Organization/International Electrotechnical Commission, Joint Technical Committee 1 (ISO/EEC JTC1). The ITU-T video coding standards are called recommendations, and they are denoted with H.26x (e.g., H.261, H.262, H.263 and H.264). The ISO/IEC standards are denoted with MPEG-x (e.g., MPEG-1, MPEG-2 and MPEG-4). For example, multiple reference frames and variable block size are special features required for the H.264 standard. In other embodiments, the decoder/encoder systems in which the invention concepts are implemented may be proprietary.<br>
+[0023]	In one embodiment, process 100 operates differently based on different<br>
+complexity requirements. For example, a high complexity configuration may include multiple reference frames; variable block sizes; previous reference frame motion vector extrapolation with motion acceleration; pyramid layered smoothing; and, motion estimation assisted motion field smoothing. In contrast, a low complexity mode of operation may only utilize a single reference frame and fixed block sizes. Other configurations are also valid for different application.<br>
+[0024]	System 300 receives input from a plurality of data storage units in a data<br>
+subsystem 200 used to store and extract information about the video frames used in the processing. As illustrated in FIG. 2, these storage units include including a multiple previous frames' content maps storage unit (MULTIPLE F_PREV CONTENT MAP) 202; a multiple previous frames' extrapolated motion fields storage unit (EXTRAPOLATED MULTIPLE F_PREV MOTION FIELDS) 204; a single previous frame content map storage unit (F_PREV CONTENT MAP) 206; and a single previous frame extrapolated motion field storage unit (EXTRAPOLATED F_PREV MOTION FIELD) 208. A multiple reference frame mode controller module 214 couples the appropriate storage units to the next stage of input depending on whether system 300 is operating in a mode that utilizes multiple reference frames. Specifically, when system 300 utilizes multiple previous reference frames, the inputs are taken from multiple previous frames' content maps storage unit 202 and multiple previous frames' extrapolated motion fields storage unit 204. For the single previous reference frame mode of operation, the inputs are taken from single previous frame content map storage unit 206 and single previous frame extrapolated motion field storage unit 208.<br>
+[0025]	Although the figure illustrates the use of two different sets of storage units for<br>
+storing content maps and motion fields—one set for where multiple reference frames are used (i.e., multiple previous frames' content maps storage unit 202 and multiple previous frames' extrapolated motion fields storage unit 204) and another for where a single reference frame is used (i.e., single previous frame content maps storage unit 206 and single previous frame extrapolated motion field storage unit 208), it should be noted that other configurations are possible. For example, the functionality of the two different content map storage units may be combined such that one storage unit may be used to store the content maps for multiple frames or a single content map for a single frame. Further, the storage units may also store data for the current frame as well.<br>
+[0026]	The output from multiple reference frame mode controller module 214 as well as<br>
+a current frame motion field storage unit (F_CURR MOTION FIELD) 210 and a current frame content map storage unit (F_CURR CONTENT MAP) 212 are fed into a motion vector extrapolation unit 216. Motion vector extrapolation unit 216 extracts the motion vectors as well as the supplemental information used for motion vector processing in system 300, as described herein. Thus, the input motion vectors utilized in system 300 may be from the current frame, or may be from both the current frame and one or more of the previously decoded frames. In addition, the other input to system 300 is side-band information from the decoded frame data, which may include, but is not limited to, the regions of interest, variations in texture information, and variations in luminance background values. This information may provide guidance for motion vector classification and adaptive smoothing algorithms, as further discussed below.<br>
+[0027]	In one embodiment, system 300 can perform motion vector processing in a<br>
+mode of operation where the macro blocks of a frame to be interpolated (i.e., an F-frame) are of a fixed-size (referred to as "fixed block size motion vector processing"), as well as motion vector processing for block sizes that are variable (referred to as "variable block size motion vector processing"). Each of these modes of operation will be described below, beginning with fixed block size motion vector processing. As illustrated in FIG. 1, it is determined in block 118 whether variable block sizes are used. Fixed Block-Size Motion Vector Processing<br>
+[0028]	In system 300, fixed block size motion vector processing involves a motion<br>
+vector scaling stage 120, a motion vector labeling stage 122, a content adaptive motion<br>
+vector classification stage 124, and a content adaptive filtering stage 126; with each stage performed by respective module shown in FIG. 1. Motion Vector Scaling<br>
+[0029]	In one embodiment, the motion vector scaling unit 302 scales the motion vector<br>
+based on the location of the F-frame (i.e., the frame to be interpolated) with respect to the two received reference frames between which it will be inserted. For example, as shown in FIG. 4, an interpolated F-frame 402 will be inserted between a previous reference frame 406 and a current reference frame 404. In one embodiment, the formulae used to create a scaled motion vector are:<br>
+[0030]	MV_f_x = MV_x*n/M; and,<br>
+[0031]	MV_f_y = MV_y*n/M,<br>
+[0032]     where MV_x and MV_y are the x-axis and y-axis components of the motion vector as measured from the previous reference frame to the current reference frame; n is the distance in time of the F-frame from the previous reference frame at the chosen insertion point; M is the total distance in time between the previous reference frame to the current reference frame; and MV_f_x and MV_f_y are the calculated x-axis and y-axis components, respectively, of the scaled motion vector.<br>
+[0033]	Continuing to refer to FIG. 4, for a linear macro block motion model (where the<br>
+macro block is moving at a constant velocity), the scaled motion vector's magnitude is proportional to the current motion vector's magnitude with regards to the distance ratio between: (1) the frame-to-be-interpolated to the previous reference frame (shown by distance 410), and (2) the current reference frame to the previous reference frame (shown by distance 420), while its direction is the same as that of the current frame's motion vector. For a non-linear motion (i.e., motion acceleration) model, the direction and the magnitude of the scaled motion vector depend on both: (1) the distance of the frame-to-be-interpolated between the current reference frame and the previous reference frame, and (2) the calculated motion acceleration.<br>
+[0034]	In the case where there are multiple previous reference frames that are used, the<br>
+previous reference frame is a reference frame in a reference frame list to which the current motion vector points. Specifically, the references frames in the reference frame list include all the reference frames to which the motion vectors of the current video frame can refer. For example, in one profile as provided by the H.264 standard, the reference frame list includes 5 reference frames. Not all reference frames in the<br>
+reference frame list may be referred to by the motion vectors of the current video frame.<br>
+A data structure referred to as a "reference frame set" or a "motion vector reference<br>
+frame index" identifies the reference frames pointed to by each motion vector in the<br>
+current video frame. For example, if the current video frame includes three (3) motion<br>
+vectors, and the notation of (v,f) identifies the reference frame (f) pointed to by each<br>
+motion vector (v), then an example reference frame set may be:<br>
+[0035]	[(1,4), (2,5), (3, 2)3<br>
+[0036]     where motion vector 1 points to reference frame 4, motion vector 2 points to reference<br>
+frame 5, and motion vector 3 points to reference frame 2 (reference frame 1 being the<br>
+temporally closest reference frame to the current video frame).<br>
+[0037]	The concepts described herein may be applied to the processing of motion<br>
+vectors for actual video frames such as P-frames and B-frames. In this embodiment, the reference frames used would be the temporally closest reference frame in the reference frame list and the reference frame to which the motion vector points. For example, as illustrated in FIG. 5, the scaled motion vector's magnitude is proportional to the current motion vector's magnitude with regards to the distance ratio between: (1) an actual video frame 504 to a first reference frame 502 (shown by distance 510), and (2) actual video frame 504 to a second reference frame 506 (shown by distance 520).<br>
+Motion Vector Labeling<br>
+[0038]	Once the motion vector has been scaled, operation continues with motion vector<br>
+labeling stage 122, where a motion vector labeling module 304 receives and then processes the scaled input motion vector from motion vector scaling unit 302 to label the scaled input motion vector. In one embodiment, depending on the motion vector's content, magnitude, direction and, in the case where multiple reference frames are used, the reference frame to which the motion vector points, the input motion vector is labeled as a particular type of motion vector. Thus, motion vector labeling module 304 is used to the label the motion vectors based on their characteristics so that specific operations may be applied to motion vectors meeting a certain criteria, as discussed below. In one embodiment, the inputs to motion vector labeling module 304 include motion vectors, a motion vector reference frame index (in the case where multiple reference frames are used), content maps, and activity/complexity maps. Given these inputs, the motion vector labeling module 304 will label each motion vector with attributes in one or more of these four areas: a) direction; b) magnitude; c) content; d) reference frame.<br>
+Direction Label<br>
+[0039]	With regard to determining the direction label for each motion vector, in one<br>
+embodiment all input motion vectors are identified as pointing to one of N+l directional classes, where N is the evenly distributed number of regions that cover a 360 degrees plane. In one embodiment, the number for N is four, and each label is 90 degrees (i.e., 360 degrees/4) apart. Thus, in this case, all input motion vectors may be labeled as one of horizontal_right, vertical_up, horizontal_left, or vertical_down, or zero_motion in the directional class. It should be noted that other labels may be used for indicating the direction of the vector. For example, the direction label can be based on the markers on the face of a clock, with 12 o'clock being up, 6 o'clock being down, 3 o'clock being right, 9 o'clock being left, and 0 being zero motion. In another example, if the motion vector is a motion vector pointing to North, then the motion vector is labeled as a North motion vector. In one embodiment, the class includes North, South, West, and East (and combinations thereof), and none (for zero size motion vectors) for direction. In other embodiments, other suitable labels may be used. Magnitude Label<br>
+[0040]	Based on the complexity and activity maps of the input frame, all input motion<br>
+vectors can be adaptively labeled based on its motion vector magnitude with one of the following labels: small motion, medium motion or large motion. In one embodiment, the thresholds for the magnitude label is determined adaptively based on the complexity and activity maps of the input frame. For example, the threshold for small motion content may be set to 4-pel, 8-pel for medium motion content, and 16-pel for high-motion content. In another embodiment, a numerical value may be assigned to represent the magnitude of the motion vector, such as 1-10 (with 10 being assigned to the largest magnitude motion vectors, and 1 being assigned to the smallest magnitude motion vectors). Other appropriate classes may be used. Content Label<br>
+[0041]	The motion vectors are assigned content label based on the content maps of the<br>
+current frame and reference frame. In one embodiment, each content map may contain 5 types of content:<br>
+[0042]	1.        static background (SB);<br>
+[0043]	2.         moving object (MO);<br>
+[0044]	3.        appearing object AO);<br>
+[0045]	4.        disappearing object (DO); and,<br>
+ [0046]	5.        edges (EDGE).<br>
+[0047]     Thus, the type of region of the frame at which the current motion vector is pointing is<br>
+analyzed and will affect the processing of the frames that are to be interpolated. The<br>
+introduction of the EDGE label to the content labels adds an additional label for content<br>
+identification and provides an improvement in other processing, as described herein.<br>
+[0048]	FIG. 6 provides an illustration of the assignment of the above-listed types of<br>
+regions to the various regions in a particular frame, which is based on an analysis of the change in the status of the region from one frame to another. The figure illustrates a moving object (MO) 608, an appearing object (AO) 604, a disappearing object (DB) 610, a static background (SB) 602 and an edge 606, where a set of arrows 612 denotes the motion trajectory of the pixels in the three illustrated frames: F(t-l), F(t) and F(t+l). Specifically, each pixel or region inside each video frame can be placed into one of the above-listed five types and an associated motion vector may be processed in a particular fashion based on a comparison of the change (if any) in type assignment. For example, as discussed below, if a motion vector that is pointed at a region that is a static background in the previous reference frame but which changes to a moving object in the current frame, the motion vector may be marked as an outlier motion vector. In addition, the above-mentioned five content types can be group into three less-restricted types when the differences between the SB, AO and DO classes are minor:<br>
+[0049]	1.         SB 602, AO 604, DO 610;<br>
+[0050]	2.        MO 608; and,<br>
+[0051]	3.         EDGE 606.<br>
+[0052]	In one embodiment, two different approaches are used to perform the<br>
+determination of DO, SB, AO and MO content, each based on different computational complexities. In the low-complexity approach, for example, the following formulas may be used to determine content type:<br>
+[0053]	Qc=abs(Fc[yn][xn]-Fp[yn][xn]);<br>
+[0054]	Qp=abs(Fp[yn][xn]-Fpp[yn][xn]);<br>
+[0055]	Qc=(Qc&gt;threshold); and,<br>
+[0056]	Qp=(Qp&gt;threshold);<br>
+[0057]     where:<br>
+[0058]	yn and xn are the y and x coordination positions of the pixel;<br>
+[0059]	Fc is the current frame's pixel value;<br>
+ [0060]	Fp is the previous frame's pixel value;<br>
+[0061]	Fpp is the previous-previous frame pixel value;<br>
+[0062]	Qc is the absolute pixel value difference between collocated pixels (located at<br>
+[yn][xn]) in current- and previous- frames; and,<br>
+[0063]	Qp is the absolute pixel value difference between collocated pixels (located at<br>
+[yn][xn]) in previous- and previous-previous- frames;<br>
+[0064]     and:<br>
+[0065]	if (Qc &amp;&amp; Qp) then assign type as moving object;<br>
+[0066]	else if (!Qc &amp;&amp; !Qp) then assign type as stationary background;<br>
+[0067]	else if (Qc &amp;&amp; !Qp) then assign type as disappearing object;<br>
+[0068]	else if (!Qc &amp;&amp; Qp) the assign type as appearing object.<br>
+[0069]	In the high-complexity approach, in one embodiment, the determination is based<br>
+on object segmentation and morphological operations, with the content type determination being performed by tracing the motion of the segmented object. Thus:<br>
+[0070]	1.        perform object segmentation on the motion field;<br>
+[0071]	2.        trace the motion of the segmented object (e.g., by morphological<br>
+operations); and,<br>
+[0072]	3.        mark the object as SB, AO, DO, and MO, respectively.<br>
+[0073]	It should be noted that edges characterize boundaries and therefore are of<br>
+fundamental importance in image processing, especially the edges of moving objects. Edges in images are areas with strong intensity contrasts (i.e., a large change in intensity from one pixel to the next). There are many ways to perform edge detection. However, the majority of the different methods may be grouped into two categories: gradient and Laplacian. The gradient method detects the edges by looking for the maximum and minimum in the first derivative of the image. The Laplacian method searches for zero crossings in the second derivative of the image to find edges. The techniques of the gradient or Laplacian methods, which are one-dimensional, is applied to two-dimensions by the Sobel method.<br>
+[0074]	By assigning the various macroblocks with one of the MO, SB, AO, DO and<br>
+EDGE classes, all input motion vectors can then be labeled, based on the type(s) of content touched by the motion vector's starting point and ending points, as a MO motion vector (MV), a SB MV, an AO MV, a DO MV or an EDGE MV. In addition, in one embodiment, an additional label of "suspicious MV" is added to the MO MV, SB<br>
+MV, AO MV, DO MV and EDGE MV labels and a motion vector is labeled as a "suspicious MV" if the motion vector's starting and ending points belong to different content classes.<br>
+Reference Frame Index Label<br>
+[0075]	In the case where multiple reference frames are used, each motion vector may<br>
+point to a different reference frame in the reference frame list. Which reference frame each motion vector points to is tracked in the motion vector reference frame index, as discussed above. In one embodiment, each motion vector that does not refer to the temporally closest reference frame is labeled as a "suspicious" motion vector. In another embodiment, each motion vector that points to a reference frame different from its neighboring motion vector is labeled as a "suspicious" motion vector. Where some, but not all, neighboring motion vectors agree, if there is a majority of the motion vectors that point to the same reference frame, then any motion vector that does not agree with the majority-i.e., any motion vector that does not point to the same reference frame, will be labeled as a "suspicious" motion vector. In other embodiments, a.voting system such as the "most votes," where the reference frame with the largest number of neighboring motion vectors pointing to it is considered the reference frame to which a neighboring motion vector must point for that motion vector to not be labeled as "suspicious," or other voting-type mechanisms may be used. As described below, in one embodiment, any motion vector having a "suspicious" reference frame index label will be classified as an outlier motion vector. In other embodiments, instead of being labeled as "suspicious," a motion vector may be directly labeled as an outlier motion vector.<br>
+[0076]	Once the motion vector has been labeled using one or more of the above labels,<br>
+operation continues with motion vector classification stage 124 as performed by a motion vector classification module 306. Motion Vector Classification<br>
+[0077]	After motion vector labeling module 304 has labeled each motion vector, motion<br>
+vector classification module 306 will perform classification of the motion vector by determining if it is an outlier motion vector. In one embodiment, the motion vector classification module 306 determines if the input motion vector is an outlier vector based on its label information (as assigned by motion vector labeling module 304), including the content information from a decoded data storage unit 222, as described<br>
+above. Specifically, the classification can be conducted by a threshold operation based on the motion vector's direction, magnitude, content and/or reference frame index (where multiple reference frames are used) labels. In one embodiment, the magnitude and direction of the current motion vector may be compared to the magnitude and direction of other motion vectors surrounding the current vector. For example, if the current motion vector is labeled as a small vertical_down motion vector (i.e., a small magnitude motion vector pointed down), while its neighboring motion vectors are labeled as large vertical_up motion vectors (i.e., a large magnitude motion vector pointed up), then the current motion vector is marked as an outlier motion vector.<br>
+[0078]	In one embodiment, a majority voting mechanism is used to determine if a<br>
+motion vector is an outlier motion vector. For example, if there are three classes (e.g., low, medium and high) of magnitudes, and four classes (e.g., south, east, west, and north) of directions, then there is a total of twelve (3 magnitude by 4 direction classes) possible variations of motion vector class combinations. Further, given a smoothing window with a 3x3 size, if the majority of the motion vectors are of a certain class combination (e.g., five motion vectors have a high magnitude and point south), and the current motion vector's class combination is different from the class combination of this majority, then the current motion vector is labeled as an outlier. Many methods may be used to determine whether a an outlier motion vector. For example, a simple sorting algorithm may be used to sort the nine (9) motion vectors in a 3x3-sized window.<br>
+[0079]	In another embodiment, a single attribute alone may be used to determine if a<br>
+motion vector is an outlier. For example, if the motion vector's content attribute (i.e., label) indicates that the motion vector is a "suspicious MV," while the content labels of its neighboring motion vectors are of another single type, then that particular motion vector can be classified as an outlier because its content attribute is different from the content attributes of its neighbors. In another example, if a motion vector has been labeled as "suspicious" as it points to a reference frame that is not the temporally closest reference frame (i.e., the first embodiment described in the reference frame index label section, above), or it points to a reference frame different from the reference frame pointed to by a majority of its neighboring motion vectors (i.e., the second embodiment described in the reference frame index label section, above), then the motion vector will be classified as an outlier motion vector.<br>
+ [0080]	Once the motion vector has been classified based on one or more of its labels,<br>
+operation continues with content adaptive filtering stage 126 as performed by a content adaptive filter (smoothing) module 308. Content Adaptive Filtering<br>
+[0081]	The content information from the decoded data and labeling of the motion vector<br>
+provide the needed inputs for an adaptive window size selection algorithm in a content adaptive filtering module 308. The removal of outlier motion vector(s) from the previous processing is performed based on the selected processing window. Content adaptive filtering module 308, in one embodiment, processes the motion vector in three stages:<br>
+[0082]	1.        Select content adaptive filter window size: based on the content or the<br>
+block size, a 3x3 or 5x5 sized operation window, which refers to a portion of interest of a frame, is selected. In one embodiment, a 3x3 window size is selected where the block has a block size of 16x16 while a 5x5 window size is selected where the block size is 8x8. The rational behind the selection is based on a statistical analysis of a moving object from the most common video content, and of the size of a window that will just cover a moving object. In one embodiment, a window size should be large enough to entirely cover a moving object. Thus, if the window size is too small for a small block-size, it may only cover a portion of a moving object, and the same logic holds for the large block-size case. Where the window size is selected based on video content, a 3x3 window size is selected where there is detailed content, while a 5x5 window size is used for smooth (less detailed) areas. Thus, in general, it is more desirable to use a smaller window size for more detailed areas.<br>
+[0083]	2.        Replace outlier motion vectors: perform a median operation of the<br>
+motion vectors within the operation window.<br>
+[0084]	3.         Smooth motion vector field: a low-pass filtering operation is performed<br>
+within the operation window. In one embodiment, a suitable low-pass filter is an averaging filter [1/N, 1/N,... 1/N], where N is the window size.<br>
+[0085]	In one embodiment, the smoothing method implemented in content adaptive<br>
+smoothing filter 308 is a median operation. In other embodiments, the median operation can be replaced by a mean (average) or Gaussian type filtering operation. Further, other type of linear/non-linear filters may be used.<br>
+Variable Block Size Motion Vector Processing<br>
+[0086]	In a fixed block size system, a frame must be divided into blocks of one fixed<br>
+size. However, in a system that supports variable block sizes, a frame may be divided into blocks that have different sizes and shapes. For video codecs that support variable block sizes, system 300 can also perform motion vector processing for the motion vectors associated with these blocks. One such standard is the H.264 standard, as mentioned above, which supports block sizes of 16x16, 16x8, 8x16, 8x8, 8x4, 4x8, and 4x4.<br>
+[0087]	In one embodiment, the approach used for motion vector processing in the<br>
+variable block-size mode is similar to the fixed block-size mode. Accordingly, referring again to FIG. 1, the process for the variable block-size motion vector processing mode includes motion vector scaling stage 120; motion vector labeling stage 122; content adaptive motion vector classification stage 124 and content adaptive filtering stage 126 implemented using the corresponding modules of FIG. 3 as described for the fixed block size mode. However, there are aspects of the process for variable block-size motion vector processing that are different from the process for fixed block size motion vector processing. One distinguishing feature, for example, is the construction of a "pyramid" of motion vectors of different block sizes, and performing a motion vector smoothing operation for a layer within the pyramid that is higher than the current layer. Another distinguishing feature is the modification of the operation of the content adaptive filter module 308 to be able to process the motion vectors of each layer, as described below.<br>
+[0088]	The building of the pyramid using a content adaptive approach is provided by a<br>
+motion vector pyramid construction module 310 and the modification of the filter to use the smoothed motion vector from an upper layer of a pyramid to replace the outlier motion vectors of the current layer is provided by use of an outlier motion vector replacement module 312 to modify. Pyramid Construction<br>
+[0089]	One possible approach to implementing the construction of each pyramid is as<br>
+follows:<br>
+[0090]	1.        The input motion vectors (i.e., the variable block-size motion vectors) is<br>
+first over-sampled to a particular granularity (e.g., 4x4) to create level 1 of the pyramid.<br>
+The oversampling ensures that the first layer of the pyramid is composed of the smallest block size of the block sizes used.<br>
+[0091]	2.        Level 2 of the pyramid is built by merging the corresponding 4x4 motion<br>
+vectors in level 1. For instance, if the motion vector granularity in level 2 is 8x8, one 8x8 motion vector in level 2 corresponds to four of the 4x4 motion vectors in level 1. In one embodiment, the merging operation may be either an averaging or median operation, with the median operation being more.<br>
+[0092]	3.        To build level 3 of the pyramid from level 2, repeat the approaches of<br>
+steps 1 and 2, as appropriately modified for the larger sizes of levels 2 and 3.<br>
+[0093]	For example, in the H.264 standard, the block size may be one of seven shapes<br>
+and, consequently, up to nine 3-level pyramids may be constructed, with each level composed of motion vectors for block sizes of different granularity. Specifically, the macroblocks in each frame may be subdivided into smaller blocks using the seven block sizes described above, which results in variability of block sizes within each frame. In one embodiment, as applied to the H.264 standard, level 1 of the pyramid is always built of motion vectors for 4x4 blocks; level 2 of the pyramid is built of motion vectors from one of the following three types of blocks: 8x8, 8x4, or 4x8; and, level 3 of the pyramid is built from the motion vectors of one of the following three types of blocks: 16x16, 16x8, or 8x16. Thus, there are nine possible combinations of the various sizes. Content Adaptive Pyramid<br>
+[0094]	A pyramid for each frame may also be created based on the frame's content. In<br>
+one embodiment, the content adaptive pyramid is constructed in two stages:<br>
+[0095]	1.        Adaptively determine the size/shape of the blocks used for the lowest<br>
+level of the pyramid, based on either content classifications or complexity map or a combination thereof. For example, a frame that has very high complexity may use smaller block sizes.<br>
+[0096]	2.        If the level of the pyramid from step 1 is not comprised of the largest<br>
+block size available (e.g., 16x16 or 8x8 blocks), an additional level is built on top of the level from step 1. The shape of the block for the motion vector is of a default shape. For example, the default shape used for level 3 is 16x16 and 8x8 for level 2.<br>
+Outlier Replacement Using Motion Vectors from a Higher Level of the Pyramid<br>
+[0097]	In an outlier motion vector replacement stage 136, an outlier motion vector<br>
+replacement module 312 enables support of a pyramid model with layers having motion<br>
+vector for variable block sizes. In one embodiment, the replacement of outlier motion vectors using this approach is as follows:<br>
+[0098]	1.        Perform motion vector scaling, motion vector labeling and motion vector<br>
+classification on the motion vectors of the current level of the pyramid (determined by content maps);<br>
+[0099]	2.        If a higher level of the pyramid is available, perform a full set of motion<br>
+vector processing (smoothing) operations on the motion vectors of this higher level (e.g., motion vector scaling, motion vector labeling, motion vector classification and motion vector filtering); and,<br>
+[00100]	3.        replacing the outlier motion vector(s) by a corresponding higher-level<br>
+smoothed motion vector.<br>
+[00101]   Thus, when an outlier is identified and if an upper-level of the pyramid is available, then the outlier is replaced with a corresponding collocated motion vector in the upper layer. Otherwise, a median operation is performed on the motion vectors within the operation window.<br>
+[00102]	It should be noted that the motion vector inputs may come from several sources.<br>
+In one, the input motion vectors come from the motion vectors of the current decoded frame. In another embodiment, the input motion vectors come from both the current frame and one or more of the previously decoded frames. For example, by combining the current frame's motion vectors and previous frames' motion vectors, the constant motion model can be extended to include motion acceleration, which may provide more accurate motion trajectory creation for the F-frame. When a previous frame's motion vector is reversed (being a so-called extrapolated motion vector), the reversed motion vector will point from previous frame to the current frame, and it will be used as the backward motion vector. If the motion is constant, the backward motion vector and the forward motion vector (the current frame's motion vector) should be aligned with each other and pointing in opposite directions. If the forward and backward motion vectors are not aligned, the difference is assumed to be caused by motion acceleration.<br>
+[00103]	As discussed above, motion vector scaling module 302 performs the scaling of<br>
+an input motion vector based on the distance of the frame-to-be-interpolated between the current and previous frames, and the calculated motion acceleration model. In addition to the scaling function, in another embodiment motion vector scaling module 302 may include a merging function that merges several small block-size motion<br>
+vectors into a larger block size motion vector. Although the size of the shape that is arrived at after the merging function is content dependent, in one embodiment, an 8x8 block size is used for the merging function. In one embodiment, the merging function is implemented as an average function. In another embodiment, the merging function is implemented as a median function. In yet another embodiment, the merging function is implemented as a weighted sum function. In still yet other embodiments, different functions may be combined to implement the merging function.<br>
+[00104]	The inventive concepts described herein are also applicable to encoder assisted<br>
+FRUC (EA-FRUC), where an encoder is configured to send extra information to assist a<br>
+decoder FRUC module on a client. For example, the encoder can send motion vectors,<br>
+coefficient residue, or FRUC instructions for "difficult" (with respect to FRUC<br>
+operations) macroblocks to the decoder FRUC module.<br>
+[00105]	FIG. 7 shows a block diagram of an access terminal 702x and an access point<br>
+704x in a wireless system. An "access terminal," as discussed herein, refers to a device providing voice and/or data connectivity to a user. The access terminal may be connected to a computing device such as a laptop computer or desktop computer, or it may be a self contained device such as a personal digital assistant. The access terminal can also be referred to as a subscriber unit, mobile station, mobile, remote station, remote terminal, user terminal, user agent, or user equipment. The access terminal may be a subscriber station, wireless device, cellular telephone, PCS telephone, a cordless telephone, a Session Initiation Protocol (SIP) phone, a wireless local loop (WLL) station, a personal digital assistant (PDA), a handheld device having wireless connection capability, or other processing device connected to a wireless modem. An "access point," as discussed herein, refers to a device in an access network that communicates over the air-interface, through one or more sectors, with the access terminals. The access point acts as a router between the access terminal and the rest of the access network, which may include an IP network, by converting received air-interface frames to IP packets. The access point also coordinates the management of attributes for the air interface.<br>
+[00106]	For the reverse link, at access terminal 702x, a transmit (TX) data processor 714<br>
+receives traffic data from a data buffer 712, processes (e.g., encodes, interleaves, and symbol maps) each data packet based on a selected coding and modulation scheme, and provides data symbols. A data symbol is a modulation symbol for data, and a pilot<br>
+symbol is a modulation symbol for pilot (which is known a priori). A modulator 716 receives the data symbols, pilot symbols, and possibly signaling for the reverse link, performs (e.g., OFDM) modulation and/or other processing as specified by the system, and provides a stream of output chips. A transmitter unit (TMTR) 718 processes (e.g., converts to analog, filters, amplifies, and frequency upconverts) the output chip stream and generates a modulated signal, which is transmitted from an antenna 720.<br>
+[00107]	At access point 704x, the modulated signals transmitted by access terminal 702x<br>
+and other terminals in communication with access point 704x are received by an antenna 752. A receiver unit (RCVR) 754 processes (e.g., conditions and digitizes) the received signal from antenna 752 and provides received samples. A demodulator (Demod) 756 processes (e.g., demodulates and detects) the received samples and provides detected data symbols, which are noisy estimate of the data symbols transmitted by the terminals to access point 704x. A receive (RX) data processor 758 processes (e.g., symbol demaps, deinterleaves, and decodes) the detected data symbols for each terminal and provides decoded data for that terminal.<br>
+[00108]	For the forward link, at access point 7,04x, traffic data is processed by a TX data<br>
+processor 760 to generate data symbols. A modulator 762 receives the data symbols, pilot symbols, and signaling for the forward link, performs (e.g., OFDM) modulation and/or other pertinent processing, and provides an output chip stream, which is further conditioned by a transmitter unit 764 and transmitted from antenna 752. The forward link signaling may include power control commands generated by a controller 770 for all terminals transmitting on the reverse link to access point 704x. At access terminal 702x, the modulated signal transmitted by access point 704x is received by antenna 720, conditioned and digitized by a receiver unit 722, and processed by a demodulator 724 to obtain detected data symbols. An RX data processor 726 processes the detected data symbols and provides decoded data for the terminal and the forward link signaling. Controller 730 receives the power control commands, and controls data transmission and transmit power on the reverse link to access point 704x. Controllers 730 and 770 direct the operation of access terminal 702x and access point 704x, respectively. Memory units 732 and 772 store program codes and data used by controllers 730 and 770, respectively.<br>
+[00109]	The disclosed embodiments may be applied to any one or combinations of<br>
+the following technologies: Code Division Multiple Access (CDMA) systems, Multiple-<br>
+Carrier CDMA (MC-CDMA), Wideband CDMA (W-CDMA), High-Speed Downlink Packet Access (HSDPA), Time Division Multiple Access (TDMA) systems, Frequency Division Multiple Access (FDMA) systems, and Orthogonal Frequency Division Multiple Access (OFDMA) systems.<br>
+[00110]	It should be noted that the methods described herein may be implemented on a<br>
+variety of communication hardware, processors and systems known by one of ordinary skill in the art. For example, the general requirement for the client to operate as described herein is that the client has a display to display content and information, a processor to control the operation of the client and a memory for storing data and programs related to the operation of the client. In one embodiment, the client is a cellular phone. In another embodiment, the client is a handheld computer having communications capabilities. In yet another embodiment, the client is a personal computer having communications capabilities. In addition, hardware such as a GPS receiver may be incorporated as necessary in the client to implement the various embodiments. The various illustrative logics, logical blocks, modules, and circuits described in connection with the embodiments disclosed herein may be implemented or<br>
+;?	,<br>
+performed with a general purpose processor, a digital signal processor (DSP), an application specific integrated circuit (ASIC), a field programmable gate array (FPGA) or other programmable logic device, discrete gate or transistor logic, discrete hardware components, or any combination thereof designed to perform the functions described herein. A general-purpose processor may be a microprocessor, but, in the alternative, the processor may be any conventional processor, controller, microcontroller, or state machine. A processor may also be implemented as a combination of computing devices, e.g., a combination of a DSP and a microprocessor, a plurality of microprocessors, one or more microprocessors in conjunction with a DSP core, or any other such configuration.<br>
+[00111]	The various illustrative logics, logical blocks, modules, and circuits described in<br>
+connection with the embodiments disclosed herein may be implemented or performed with a general purpose processor, a digital signal processor (DSP), an application specific integrated circuit (ASIC), a field programmable gate array (FPGA) or other programmable logic device, discrete gate or transistor logic, discrete hardware components, or any combination thereof designed to perform the functions described herein. A general-purpose processor may be a microprocessor, but, in the alternative,<br>
+the processor may be any conventional processor, controller, microcontroller, or state machine. A processor may also be implemented as a combination of computing devices, e.g., a combination of a DSP and a microprocessor, a plurality of microprocessors, one or more microprocessors in conjunction with a DSP core, or any other such configuration.<br>
+[00112]	The steps of a method or algorithm described in connection with the<br>
+embodiments disclosed herein may be embodied directly in hardware, in a software module executed by a processor, or in a combination of the two. A software module may reside in RAM memory, flash memory, ROM memory, EPROM memory, EEPROM memory, registers, a hard disk, a removable disk, a CD-ROM, or any other form of storage medium known in the art. An exemplary storage medium is coupled to the processor, such that the processor can read information from, and write information to, the storage medium. In the alternative, the storage medium may be integral to the processor. The processor and the storage medium may reside in an ASIC. The ASIC may reside in a user terminal. In the alternative, the processor and the storage medium may reside as discrete components in a user terminal.<br>
+[00113]	The embodiments described above are exemplary embodiments. Those skilled<br>
+in the art may now make numerous uses of, and departures from, the above-described embodiments without departing from the inventive concepts disclosed herein. Various modifications to these embodiments may be readily apparent to those skilled in the art, and the generic principles defined herein may be applied to other embodiments, e.g., in an instant messaging service or any general wireless data communication applications, without departing from the spirit or scope of the novel aspects described herein. Thus, the scope of the invention is not intended to be limited to the embodiments shown herein but is to be accorded the widest scope consistent with the principles and novel features disclosed herein. The word "exemplary" is used exclusively herein to mean "serving as an example, instance, or illustration." Any embodiment described herein as "exemplary" is not necessarily to be construed as preferred or advantageous over other embodiments. Accordingly, the novel aspects of the embodiments disclosed herein is to be defined solely by the scope of the following claims.<br><br><br><br><br><br>
+WE CLAIM:<br>
+1.	A method for processing a plurality of motion vectors for a video frame, the<br>
+method comprising:<br>
+Determining (118, 730) a number of different block sizes in the video frame; and,<br>
+Performing (310, 770) a variable block size motion vector process if the number of different block sizes in the video frame is greater than one, the variable block size motion vector process comprising constructing a pyramid of motion vectors from the plurality of motion vectors, the pyramid having at least a first layer and a second layer of motion vectors, each of the first and second layers having a set of motion vectors based on a particular block size.<br>
+2.	The method as claimed in claim 1, comprising:<br>
+performing a fixed block size motion vector process if the number of different block sizes in the video frame is less than two, the fixed block size motion vector process comprising:<br>
+scaling the plurality of motion vectors;<br>
+attaching a label to each motion vector in the plurality of motion vectors;<br>
+determining a classification of each motion vector; and,<br>
+filtering the plurality of motion vectors based on the classification of each motion vector.<br>
+3.	The method as claimed in claim 1, wherein constructing the pyramid of<br>
+motion vectors from the plurality of motion vectors comprises:<br>
+oversampling the plurality of motion vectors to create the first layer of motion vectors at a first predetermined block size granularity.<br>
+4.	The method as claimed in claim 3, wherein constructing the pyramid of<br>
+motion vectors from the plurality of motion vectors comprises:<br>
+merging at least two of the motion vectors from the set of motion vectors in the first layer of motion vectors to create the second layer of motion vectors at a second predetermined granularity, the second predetermined block size granularity being greater than the first predetermined block size granularity.<br>
+5.	The method as claimed in claim 4, wherein merging at least two of the motion<br>
+vectors from the set of motion vectors in the first layer of motion vectors comprises:<br>
+performing an averaging operation on at least two of the motion vectors from the set of motion vectors in the first layer of motion vectors.<br>
+6.	The method as claimed in claim 4, wherein merging at least two of the motion<br>
+vectors from the set of motion vectors in the first layer of motion vectors comprises:<br>
+performing a median operation on at least two of the motion vectors from the set of motion vectors in the first layer of motion vectors.<br>
+7.	The method as claimed in claim 2, wherein each motion vector in the plurality<br>
+of motion vectors has a magnitude and scaling the plurality of motion vectors<br>
+comprises:<br>
+calculating a ratio of: (i) a first distance between the video frame to a first reference frame; and (ii) a second distance between the reference frame to a second reference frame; and,<br>
+scaling each motion vector by adjusting the magnitude of the motion vector based on the ratio of the first distance and the second distance.<br>
+8.	The method as claimed in claim 7, wherein the video frame is a frame to be interpolated, the first reference frame is a current frame and the second reference frame is a reference frame to which the motion vector points.<br>
+9.	The method as claimed in claim 7, wherein the video frame is an actual video frame, the first reference frame is a temporally closest frame and the second reference frame is a reference frame to which the motion vector points.<br>
+10.	The method as claimed in claim 2, wherein attaching the label to each motion vector in the plurality of motion vectors comprises:<br>
+determining at least one of a content, a magnitude, a direction, and a reference frame index characteristic of each motion vector in the plurality of motion vectors; and,<br>
+assigning a label to each motion vector based on one or more of the determined characteristics.<br>
+11.	The method as claimed in claim 10, wherein determining at least one of the<br>
+content, the magnitude, the direction and the reference frame index characteristic of<br>
+each motion vector in the plurality of motion vectors comprises:<br>
+for each motion vector, determine a starting content type for a starting point of the motion vector and an ending content type for an ending point of the motion vector.<br>
+12.	The method as claimed in claim 11, wherein assigning the label to each<br>
+motion vector based on one or more of the determined characteristics comprises:<br>
+if the starting content type of the motion vector is not the same as the ending content type of the motion vector, then labeling the motion vector as a suspicious motion vector.<br>
+13.	The method as claimed in claim 2, wherein each motion vector is associated<br>
+with a group of neighboring motion vectors, and determining the classification of<br>
+each motion vector comprises:<br>
+examining at least one characteristic of each motion vector;<br>
+comparing the at least one characteristic with an aggregate characteristic of the group of neighboring motion vectors; and,<br>
+classifying each motion vector as an outlier motion vector if the difference between the at least one characteristic and the aggregate characteristic of the group of neighboring motion vectors is above a predetermined threshold.<br>
+14.	The method as claimed in claim 2, wherein filtering the plurality of motion<br>
+vectors based on the classification of each motion vector comprises:<br>
+selecting an operation window, the operation window having a size based on a selected one of a content type and a block size;<br>
+replacing each motion vector classified as an outlier motion vector in the operation window; and,<br>
+performing a smoothing operation within the operation window.<br>
+15.	The method as claimed in claim 14, wherein replacing each motion vector<br>
+classified as an outlier motion vector in the operation window comprises:<br>
+performing one of a median operation, a mean operation, and a Gaussian-type filter operation in the operation window.<br>
+16.	The method as claimed in claim 14, wherein performing a smoothing<br>
+operation within the operation window comprises:<br>
+performing a low pass filter, operation in the operation window.<br>
+17.	An apparatus for processing a plurality of motion vectors for a video frame,<br>
+the apparatus comprising:<br>
+a programmable circuit configured to determine a number of different block sizes in the video frame; and,<br>
+a programmable circuit configured to perform a variable block size motion vector process if the number of different block sizes in the video frame is greater than one, the programmable circuit configured to perform the variable block size motion vector process comprising a programmable circuit configured to construct a pyramid of motion vectors from the plurality of motion vectors, the pyramid having at least a first layer and a second layer of motion vectors, each of the first and second layers having a set of motion vectors based on a particular block size.<br>
+18.	The apparatus as claimed in claim 17, comprising:<br>
+a programmable circuit configured to perform a fixed block size motion vector process if the number of different block sizes in the video frame is less than two, the programmable circuit configured to perform the fixed block size motion vector process comprising:<br>
+a programmable circuit configured to scale the plurality of motion vectors;<br>
+a programmable circuit configured to attach a label to each motion vector in the plurality of motion vectors;<br>
+a programmable circuit configured to determine a classification of each motion vector; and, a programmable circuit configured to filter the plurality of motion vectors based on the classification of each motion vector.<br>
+19.	The apparatus as claimed in claim 17, wherein the programmable circuit<br>
+configured to construct the pyramid of motion vectors from the plurality of motion<br>
+vectors comprises:<br>
+a programmable circuit configured to oversample the plurality of motion vectors to create the first layer of motion vectors at a first predetermined block size granularity.<br>
+20.	The apparatus as claimed in claim 18, wherein the programmable circuit<br>
+configured to construct the pyramid of motion vectors from the plurality of motion<br>
+vectors comprises:<br>
+a programmable circuit configured to merge at least two of the motion vectors from the set of motion vectors in the first layer of motion vectors to create the second layer of motion vectors at a second predetermined block size granularity, the second predetermined block size granularity being greater than the first predetermined block size granularity.<br>
+21.	The apparatus as claimed in claim 20, wherein the programmable circuit<br>
+configured to construct the pyramid of motion vectors from the plurality of motion<br>
+vectors comprises:<br>
+a programmable circuit configured to average at least two of the motion vectors from the set of motion vectors in the first layer of motion vectors.<br>
+22.	The apparatus as claimed in claim 20, wherein the programmable circuit<br>
+configured to construct the pyramid of motion vectors from the plurality of motion<br>
+vectors comprises:<br>
+a programmable circuit configured to perform a median operation on at least two of the motion vectors from the set of motion vectors in the first layer of motion vectors.<br>
+23.	The apparatus as claimed in claim 18, wherein each motion vector in the<br>
+plurality of motion vectors has a magnitude, and a programmable circuit configured<br>
+to scale the plurality of motion vectors comprises:<br>
+a programmable circuit configured to calculate a ratio of: (i) a first distance between the video frame to a first reference frame; and (ii) a second distance between the reference frame to a second reference frame; and<br>
+a programmable circuit configured to scale each motion vector by adjusting the magnitude of the motion vector based on the ratio of the first distance and the second distance.<br>
+24.	The apparatus as claimed in claim 18, wherein the programmable circuit<br>
+configured to attach the label to each motion vector in the plurality of motion vectors<br>
+comprises:<br>
+a programmable circuit configured to determine at least one of a content, a magnitude, a direction, and a reference frame index characteristic of each motion vector in the plurality of motion vectors; and,<br>
+a programmable circuit configured to assign a label to each motion vector based on one or more of the determined characteristics.<br>
+25.	The apparatus as claimed in claim 24, wherein the programmable circuit<br>
+configured to determine at least one of the content, the magnitude, the direction and<br>
+the reference frame index characteristic of each motion vector in the plurality of<br>
+motion vectors comprises:<br>
+a programmable circuit configured to determine, for each motion vector, a starting content type for a starting point of the motion vector and an ending content type for an ending point of the motion vector.<br>
+26.	The apparatus as claimed in claim 25, wherein the programmable circuit<br>
+configured to assign the label to each motion vector based on one or more of the<br>
+determined characteristics comprises:<br>
+a programmable circuit configured to label the motion vector as a suspicious motion vector if the starting content type of the motion vector is not the same as the ending content type of the motion vector.<br>
+27.	The apparatus as claimed in claim 18, wherein each motion vector is<br>
+associated with a group of neighboring motion vectors, and the processing circuit<br>
+configured to determine the classification of each motion vector comprises:<br>
+a programmable circuit configured to examine at least one characteristic of each motion vector;<br>
+a programmable circuit configured to compare at least one characteristic with an aggregate characteristic of the group of neighbor motion vectors; and,<br>
+a programmable circuit configured to classify each motion vector as an outlier motion vector if the difference between the at least one characteristic and the aggregate characteristic of the group of neighbor motion vectors is above a predetermined threshold.<br>
+28.	The apparatus as claimed in claim 18, wherein the programmable circuit<br>
+configured to filter the plurality of motion vectors based on the classification of each<br>
+motion vector comprises:<br>
+a programmable circuit configured to select an operation window, the operation window having a size based on a selected one of a content type and a block size;<br>
+a programmable circuit configured to replace each motion vector classified as an outlier motion vector in the operation window; and,<br>
+a programmable circuit configured to perform a smoothing operation within the operation window.<br>
+29.	The apparatus as claimed in claim 28, wherein the programmable circuit<br>
+configured to replace each motion vector classified as an outlier motion vector in the<br>
+operation window comprises:<br>
+a programmable circuit configured to perform one of a median operation, a mean operation, and a Gaussian-type filter operation in the operation window.<br>
+30.	The apparatus of claim 28, wherein the programmable circuit configured to<br>
+perform the smoothing operation within the operation window comprises:<br>
+a programmable circuit configured to perform a low pass filter operation in the operation window.<br>
+31.	A motion vector processor(300) for processing a plurality of motion vectors<br>
+for a video frame, the motion vector processor comprising:<br>
+means for determining (118, 730) a number of different block sizes in the video frame; and,<br>
+means for performing(310, 770) a variable block size motion vector process if the number of different block sizes in the video frame is greater than one, the means for performing the variable block size motion vector process comprising means for constructing a pyramid of motion vectors from the plurality of motion vectors, the pyramid having at least a first layer and a second layer of motion vectors, each of the first and second layers having a set of motion vectors based on a particular block size.<br>
+32.	The motion vector processor (300) as claimed in claim 31, comprising:<br>
+means for performing a fixed block size motion vector process if the number of different block sizes in the video frame is less than two, the means for performing the fixed block size motion vector process comprising:<br>
+means(302)for scaling the plurality of motion vectors;<br>
+means(304) for attaching a label to each motion vector in the plurality of motion vectors; means for determining a classification of each motion vector; and,<br>
+means(306) for filtering the plurality of motion vectors based on the classification of each motion vector.<br>
+33.	The motion vector processor (300) as claimed in claim 31, wherein the<br>
+means(310) for constructing the pyramid of motion vectors from the plurality of<br>
+motion vectors comprises:<br>
+means for oversampling the plurality of motion vectors to create the first layer of motion vectors at a first predetermined block size granularity.<br>
+34.	The motion vector processor(300) as claimed in claim 31, wherein the<br>
+means(310) for constructing the pyramid of motion vectors from the plurality of<br>
+motion vectors comprises:<br>
+means for merging at least two of the motion vectors from the set of motion vectors in the first layer of motion vectors to create the second layer of motion vectors at a second predetermined block size granularity, the second predetermined block size granularity being greater than the first predetermined block size granularity.<br>
+35.	The motion vector processor as claimed in claim 34, wherein the means for<br>
+merging at least two of the motion vectors from the set of motion vectors in the first<br>
+layer of motion vectors comprises:<br>
+means for performing an averaging operation on at least two of the motion vectors from the set of motion vectors in the first layer of motion vectors.<br>
+36.	The motion vector processor as claimed in claim 34, wherein the means for<br>
+merging at least two of the motion vectors from the set of motion vectors in the first<br>
+layer of motion vectors comprises:<br>
+means for performing a median operation on at least two of the motion vectors from the set of motion vectors in the first layer of motion vectors.<br>
+37.	The motion vector processor as claimed in claim 32, wherein each motion<br>
+vector in the plurality of motion vectors has a magnitude, and the means for scaling<br>
+the plurality of motion vectors comprises:<br>
+means for calculating a ratio of: (i) a first distance between the video frame to a first reference frame; and (ii) a second distance between the reference frame to a second reference frame; and,<br>
+means for scaling each motion vector by adjusting the magnitude of the motion vector based on the ratio of the first distance and the second distance.<br>
+38.	The motion vector processor as claimed in claim 32, wherein the means for<br>
+attaching a label to each motion vector in the plurality of motion vectors comprises:<br>
+means for determining at least one of a content, a magnitude, and a direction characteristic of each motion vector in the plurality of motion vectors; and,<br>
+means for assigning a label to each motion vector based on one or more of the determined characteristics.<br>
+39.	The motion vector processor as claimed in claim 38, wherein the means for<br>
+determining at least one of the content, the magnitude, the direction and the reference<br>
+frame index characteristic of each motion vector in the plurality of motion vectors comprises:<br>
+means for determining, for each motion vector, a starting content type for a starting point of the motion vector and an ending content type for an ending point of the motion vector.<br>
+40.	The apparatus as claimed in claim 39, wherein the means for assigning the<br>
+label to each motion vector based on one or more of the determined characteristics<br>
+comprises:<br>
+means for labeling the motion vector as a suspicious motion vector if the starting content type of the motion vector is not the same as the ending content type of the motion vector.<br>
+41.	The motion vector processor of claim 48, wherein each motion vector is<br>
+associated with a group of neighboring motion vectors, and the means for<br>
+determining a classification of each motion vector comprises:<br>
+means for examining at least one characteristic of each motion vector;<br>
+means for comparing the at least one characteristic with an aggregate characteristic of the group of neighboring motion vectors; and,<br>
+means for classifying each motion vector as an outlier motion vector if the difference between the at least one characteristic and the aggregate characteristic of the group of neighboring motion vectors is above a predetermined threshold.<br>
+42.	The motion vector processor as claimed in claim 32, wherein the<br>
+means for filtering the plurality of motion vectors based on the classification of each<br>
+motion vector comprises:<br>
+means for selecting an operation window, the operation window having a size based on a selected one of the content and block size;<br>
+means for replacing each motion vector classified as an outlier motion vector in the operation window; and,<br>
+means for performing a smoothing operation within the operation window.<br>
+43.	The motion vector processor as claimed in claim 42, wherein the means for<br>
+replacing each motion vector classified as an outlier motion vector in the operation<br>
+window comprises:<br>
+means for performing one of a median operation, a mean operation, and a Gaussian-type filter operation in the operation window.<br>
+44.	The motion vector processor as claimed in claim 42, wherein the means for<br>
+performing the smoothing operation within the operation window comprises:<br>
+means for performing a low pass filter operation in the operation window.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctQWJzdHJhY3QtKDE5LTAzLTIwMTQpLnBkZg==" target="_blank" style="word-wrap:break-word;">780-delnp-2007-Abstract-(19-03-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctQWJzdHJhY3QtKDI0LTAxLTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Abstract-(24-01-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctYWJzdHJhY3QucGRm" target="_blank" style="word-wrap:break-word;">780-delnp-2007-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctYXNzaWdubWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">780-delnp-2007-assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctQ2xhaW1zLSgyNC0wMS0yMDEyKS5wZGY=" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Claims-(24-01-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctY2xhaW1zLnBkZg==" target="_blank" style="word-wrap:break-word;">780-delnp-2007-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctQ29ycmVzcG9uZGVuY2UgT3RoZXJzLSgyNC0wMS0yMDEyKS5wZGY=" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Correspondence Others-(24-01-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctQ29ycmVzcG9uZGVuY2UgT3RoZXJzLSgyNS0wNy0yMDExKS5wZGY=" target="_blank" style="word-wrap:break-word;">780-delnp-2007-Correspondence Others-(25-07-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctQ29ycmVzcG9uZGVuY2UtT3RoZXJzLSgxNy0wMi0yMDExKS5wZGY=" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Correspondence-Others-(17-02-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctY29ycmVzcG9uZGVuY2Utb3RoZXJzLTEucGRm" target="_blank" style="word-wrap:break-word;">780-delnp-2007-correspondence-others-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctQ29ycmVzcG9uZGVuY2UtT3RoZXJzLnBkZg==" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Correspondence-Others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctRGVzY3JpcHRpb24gKENvbXBsZXRlKS0oMjQtMDEtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Description (Complete)-(24-01-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctRGVzY3JpcHRpb24gKENvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Description (Complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctRHJhd2luZ3MtKDI0LTAxLTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Drawings-(24-01-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctZHJhd2luZ3MucGRm" target="_blank" style="word-wrap:break-word;">780-delnp-2007-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctRm9ybS0xLSgyNC0wMS0yMDEyKS5wZGY=" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Form-1-(24-01-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctZm9ybS0xLnBkZg==" target="_blank" style="word-wrap:break-word;">780-delnp-2007-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctZm9ybS0xOC5wZGY=" target="_blank" style="word-wrap:break-word;">780-delnp-2007-form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctRm9ybS0yLSgyNC0wMS0yMDEyKS5wZGY=" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Form-2-(24-01-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctZm9ybS0yLnBkZg==" target="_blank" style="word-wrap:break-word;">780-delnp-2007-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctRm9ybS0zLSgxNy0wMi0yMDExKS5wZGY=" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Form-3-(17-02-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctRm9ybS0zLSgyNS0wNy0yMDExKS5wZGY=" target="_blank" style="word-wrap:break-word;">780-delnp-2007-Form-3-(25-07-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctRm9ybS0zLnBkZg==" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-Form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctZm9ybS01LnBkZg==" target="_blank" style="word-wrap:break-word;">780-delnp-2007-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctR1BBLSgyNC0wMS0yMDEyKS5wZGY=" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-GPA-(24-01-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctZ3BhLnBkZg==" target="_blank" style="word-wrap:break-word;">780-delnp-2007-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLURFTE5QLTIwMDctUENULTIxMC5wZGY=" target="_blank" style="word-wrap:break-word;">780-DELNP-2007-PCT-210.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctcGN0LTIyMC5wZGY=" target="_blank" style="word-wrap:break-word;">780-delnp-2007-pct-220.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctcGN0LTIzNy5wZGY=" target="_blank" style="word-wrap:break-word;">780-delnp-2007-pct-237.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctcGN0LTMwNC5wZGY=" target="_blank" style="word-wrap:break-word;">780-delnp-2007-pct-304.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NzgwLWRlbG5wLTIwMDctUGV0aXRpb24gMTM3LSgyNS0wNy0yMDExKS5wZGY=" target="_blank" style="word-wrap:break-word;">780-delnp-2007-Petition 137-(25-07-2011).pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="260067-process-for-the-preparation-of-trivalent-iron-complexes-with-mono-di-and-polysaccharide-sugars.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="260069-a-process-for-the-preparation-of-lanthanum-based-plastic-material-for-use-in-optical-lenses-and-coatings.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>260068</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>780/DELNP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>14/2014</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>04-Apr-2014</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>31-Mar-2014</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>31-Jan-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>QUALCOMM INCORPORATED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>5775 MOREHOUSE DRIVE, SAN DIEGO, CALIFORNIA 92121-1714, USA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>FANG SHI</td>
+											<td>4460 CALLE MAR DE ARMONIA, SAN DIEGO, CALIFORNIA 92130, USA</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>VIJAYALAKSHMI RAVEENDRAN</td>
+											<td>4272 CALLE MAR DE BALLENAS, SAN DIEGO, CALIFORNIA 92130, USA</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04N 7/01</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2005/025801</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-07-20</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>60/589,900</td>
+									<td>2004-07-20</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/260068-an-apparatus-for-processing-a-plurality-of-motion-vectors-for-a-video-frame by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:53:02 GMT -->
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/272238-a-method-of-branch-prediction-and-a-processor-to-perform-branch-prediction by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:43:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 272238:A METHOD OF BRANCH PREDICTION AND A PROCESSOR TO PERFORM BRANCH PREDICTION</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD OF BRANCH PREDICTION AND A PROCESSOR TO PERFORM BRANCH PREDICTION</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>In response to a property of a conditional branch instruction associated with a loop, such as a property indicating that the branch is a loop-ending branch, a count of the number of iterations of the loop is maintained, and a multi-bit value indicative of the loop iteration count is stored in a Branch History Register (BHR). In one embodiment, the multi-bit value may comprise the actual loop count, in which case the number of bits is variable. In another embodiment, the number of bits is fixed (e.g., two) and loop iteration counts are mapped to one of a fixed number of multi-bit values (e.g., four) by comparison to thresholds. Separate iteration counts may be maintained for nested loops, and a multi-bit value stored in the BHR may indicate a loop iteration count of only an inner loop, only the outer loop, or both.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>REPRESENTING LOOP BRANCHES IN A BRANCH HISTORY REGISTER WITH<br>
+<br>
+MULTIPLE BITS<br>
+<br>
+FIELD<br>
+<br>
+[0001] The present disclosure relates generally to the field of processors and in particular to a method of representing loop branches in a branch history register with multiple bits.<br>
+<br>
+BACKGROUND<br>
+<br>
+[0002] Microprocessors perform computational tasks in a wide variety of applications. Improved processor performance is almost always desirable, to allow for faster operation and/or increased functionality through software changes. In common embedded applications, such as portable electronic devices, conserving power is also desirable.<br>
+<br>
+[0003] Common modern processors employ a pipelined architecture, where sequential instructions, each having multiple execution steps, are overlapped in execution. For maximum performance, the instructions should flow continuously through the pipeline. Any situation that causes instructions to stall in the pipeline detrimentally affects performance. If instructions must be flushed from the pipeline and subsequently re-fetched, both performance and power consumption may suffer. [0004] Commonly all real-world programs include conditional branch instructions, the actual branching behavior of which is commonly not known until the instruction is evaluated deep in the pipeline. To avoid a stall that may result from waiting for actual evaluation of the branch instruction, common modern processors employ some form of branch prediction, whereby the branching behavior of conditional branch instructions is predicted early in the pipeline. Based on the predicted branch evaluation, the processor speculatively fetches (prefetches) and executes instructions from a predicted address - either the branch target address (if the branch is predicted taken) or the next sequential address after the branch instruction (if the branch is predicted not taken). <br>
+<br>
+When the actual branch behavior is determined, if the branch was mispredicted, the speculatively fetched instructions must be flushed from the pipeline, and new instructions fetched from the correct next address. Prefeteching instructions in response to an erroneous branch prediction adversely impacts processor performance and power consumption. Consequently, improving the accuracy of branch prediction is desirable.<br>
+<br>
+[0005] Known branch prediction techniques include both static and dynamic predictions. The likely behavior of some branch instructions can be statically predicted by a programmer and/or compiler. One example is an error checking routine. Common code executes properly, and errors are rare. Hence, the branch instruction implementing a "branch on error" function will evaluate "not taken" a very high percentage of the time. Such an instruction may include a static branch prediction bit in the op code, set by a programmer or compiler with knowledge of the common likely outcome of the branch condition.<br>
+<br>
+[0006] Dynamic prediction is generally based on the branch evaluation history (and in some cases the branch prediction accuracy history) of the branch instruction being predicted and/or other branch instructions in the same code. Extensive analysis of actual code indicates that recent past branch evaluation patterns may be a good indicator of the evaluation of future branch instructions.<br>
+<br>
+[0007] One known form of dynamic branch prediction, depicted in Figure 1 , utilizes a Branch History Register (BHR) 100 to store the past n branch evaluations. In a simple implementation, the BHR 30 comprises a shift register. The common recent branch evaluation result is shifted in (for example, a 1 indicating taken and a 0 indicating not taken), with the oldest past evaluation in the register being displaced. A processor may maintain a local BHR 100 for each branch instruction. Alternatively (or additionally), a BHR 100 may contain the recent past evaluations of all conditional <br>
+<br>
+branch instructions, sometimes known in the art as a global BHR, or GHR. As used herein, BHR refers to both local and global Branch History Registers. [0008] As depicted in Figure 1 , the BHR 100 may index a Branch Predictor Table (BPT) 102, which again may be local or global. The BHR 100 may index the BPT 102 directly, or may be combined with other information, such as the Program Counter (PC) of the branch instruction in BPT index logic 104. Other inputs to the BPT index logic 104 may additionally be utilized. The BPT index logic 104 may concatenate the inputs (known in the art as gselect), XOR the inputs (gshare), perform a hash function, or combine or transform the inputs in a variety of ways.<br>
+<br>
+[0009] As one example, the BPT 102 may comprise a plurality of saturation counters, the MSBs of which serve as bimodal branch predictors. For example, each table entry may comprise a 2-bit counter that assumes one of four states, each assigned a weighted prediction value, such as: [0010] 11 - Strongly predicted taken [0011] 10 - Weakly predicted taken [0012] 01 - Weakly predicted not taken [0013] 00 - Strongly predicted not taken<br>
+<br>
+[0014] The counter increments each time a corresponding branch instruction evaluates "taken" and decrements each time the instruction evaluates "not taken." The MSB of the counter is a bimodal branch predictor; it will predict a branch to be either taken or not taken, regardless of the strength or weight of the underlying prediction. A saturation counter reduces the prediction error of an infrequent branch evaluation direction. A branch that consistently evaluates one way will saturate the counter. An infrequent evaluation the other way will alter the counter value (and the strength of the prediction), but not the bimodal prediction value. Thus, an infrequent evaluation will only mispredict once, not twice. The table of saturation counters is an illustrative <br>
+<br>
+example only; in general, a BHT may index a table containing a variety of branch prediction mechanisms.<br>
+<br>
+[0015] Regardless of the branch prediction mechanism employed in the BPT 102, the BHR 100 - either alone or in combination with other information such as the branch instruction PC - indexes the BPT 102 to obtain branch predictions. By storing prior branch evaluations in the BHR 100 and using the evaluations in branch prediction, the branch instruction being predicted is correlated to past branch behavior - its own past behavior in the case of a local BHR 100 and the behavior of other branch instructions in the case of a global BHR 100. This correlation is the key to accurate branch predictions, at least in the case of highly repetitive code.<br>
+<br>
+[0016] Note that Figure 1 depicts branch evaluations being stored in the BHR 100 - that is, the actual evaluation of a conditional branch instruction, which may only be known deep in the pipeline, such as in an execute pipe stage. While this is the ultimate result, in practice, common high performance processors store the predicted branch evaluation from the BPT 102 in the BHR 100, and correct the BHR 100 later as part of a misprediction recovery operation if the prediction turns out to be erroneous. The drawing figures do not reflect this implementation feature, for clarity. [0017] A common code structure that may reduce the efficacy a branch predictor employing a BHR 100 is the loop. A loop ends with a conditional branch instruction that tests a loop-ending condition, such as whether an index variable that is incremented each time through the loop has reached a loop-ending value. If not, execution branches back to the beginning of the loop for another iteration, and another loop-ending conditional branch evaluation.<br>
+<br>
+[0018] If the loop executes through a large number of iterations, the "taken" backwards branches of the loop-ending branch instruction partially or fully saturate the BHR 100. Where the number of loop iterations equals or exceeds the BHR 100 width, at the end of the loop an n-bit BHR will contain precisely n-1 ones (taken) followed by a <br>
+<br>
+single zero (not taken), corresponding to a long series of branch taken evaluations resulting from the loop iterations, and ending with a single not-taken branch evaluation when the loop terminates. This effectively destroys the efficacy of the BHR 100, as all correlations with prior branch evaluations (for either a local or global BHR 100) are lost. In this case, the BHR 100 will likely map to the same BPT 102 entry for a given branch instruction (depending on the other inputs to the BPT index logic 104), rather than to an entry containing a branch prediction that reflects the correlation of the branch instruction to prior branch evaluations.<br>
+<br>
+[0019] Additionally, the saturated BHR 100 may increase aliasing in the BPT 102. That is, all branch instructions following loops with common iterations will map to the same BPT 102 entry, if the BHR 100 directly indexes the BPT 102. Even where the BHR 100 is combined with other information, the chance of aliasing is increased. This adversely impacts prediction accuracy not only for the branch instruction following the loop, but also for all of the branch instructions that alias to its entry in the BPT 102. [0020] If the loop executes through fewer iterations than the width of the BHR 100, the BHR 100 is not saturated and some prior branch evaluation history is retained. However, the bits representing the prior branch evaluation history are displaced in the BHR 100 by numerous "taken" results of the loop-ending branch instruction. Particularly where the number of loop iterations varies, this has two deleterious effects on branch prediction. First, the branch instruction will map to a much larger number of entries in the BPT 102 to capture the same correlation with prior branch evaluations, requiring a larger BPT 102 to support the same accuracy for the same number of branch instructions than would be required without the loop-ending branch affecting the BHR 30. Second, the branch predictors in the BPT 102 will take longer to "train," increasing the amount of code that must execute before the BPT 102 begins to provide accurate branch predictions. <br>
+<br>
+[0021] Patent application Serial No. 1 1/066,508, assigned to the assignee of the present application and incorporated herein by reference, proposes to suppress updating the BHR 100 for loop-ending branch instructions. This resolves common of the deleterious effects of BHR 100 saturation or partial saturation on branch prediction accuracy. However, it fails to capture and exploit correlations that may exist between loop behavior and subsequent branch evaluation.<br>
+<br>
+[0022] In common applications, the evaluation of a branch instruction may be correlated to the number of iterations of a preceding loop. For example, a scientific program may capture data points in a loop and, following the loop, branch to a statistical analysis subroutine where the captured data is analyzed. However, if the loop iterates relatively few times, capturing few data points and yielding a small sample, statistical analysis may be unreliable, and may be skipped. In this case, the evaluation of the conditional instruction branching to the statistical analysis subroutine is strongly correlated to the number of iterations of the data acquisition loop. [0023] In another example, an application may use a loop structure to search through a list, transaction log, history file, or similar data structure. If an item matching the search parameters appears frequently in the list, relatively few loop iterations will be required to locate the item. Consequently, an item appearing infrequently may require a large number of iterations through the search loop. The evaluation of a subsequent branch instruction may be correlated to the frequency with which a particular item appears in the list, and hence correlated to the number of loop iterations required to locate the item.<br>
+<br>
+[0024] Suppressing the update of the BHR 100 in response to loop-ending branch instruction evaluations fails to capture any correlation between the number of loop iterations and the branch behavior of a subsequent branch instruction. On the other hand, maintaining a full history of the evaluations of the loop-ending branch instruction <br>
+<br>
+fully or partially saturates the BHR 100, losing the correlation to branch instruction evaluations prior to the loop.<br>
+<br>
+SUMMARY<br>
+<br>
+[0025] In response to a property of a conditional branch instruction associated with a loop, such as a property indicating that the branch is a loop-ending branch, a count of the number of iterations of the loop is maintained, and a multi-bit value indicative of the loop iteration count is stored in the BHR. In one embodiment, the multi-bit value may comprise the actual loop count, in which case the number of bits is variable. In another embodiment, the number of bits is fixed (e.g., two) and loop iteration counts are mapped to a multi-bit value by comparison to thresholds. Separate iteration counts may be maintained for nested loops, and a multi-bit value stored in the BHR may indicate a loop iteration count of only an inner loop, only the outer loop, or both. [0026] One embodiment relates to a method of branch prediction. A property of a branch instruction associated with a loop is identified. In response to the property, a multi-bit value is stored in a BHR, the multi-bit value indicative of the number of iterations of a loop associated with the branch instruction.<br>
+<br>
+[0027] Another embodiment relates to a processor. The processor includes a branch predictor operative to predict the evaluation of conditional branch instructions, and an instruction execution pipeline operative to speculatively fetch and execute instructions based on a prediction from the branch predictor. The processor also includes a BHR operative to store the evaluation of conditional branch instructions, and a loop counter operative to count the number of iterations of a code loop. The processor further includes a control circuit operative to store in the BHR a multi-bit value indicative of the number of iterations of a loop associated with a conditional branch instruction. <br>
+<br>
+BRIEF DESCRIPTION OF DRAWINGS<br>
+<br>
+[0028] Figure 1 is a functional block diagram of a prior art branch predictor circuit. [0029] Figure 2 is a functional block diagram of a processor. [0030] Figure 3 is a flow diagram of a method of executing a branch instruction. [0031] Figure 4 is a functional block diagram of a branch predictor circuit including one or more Last Branch PC registers and Loop Counters.<br>
+<br>
+DETAILED DESCRIPTION<br>
+<br>
+[0032] Figure 2 depicts a functional block diagram of a processor 10. The processor 10 executes instructions in an instruction execution pipeline 12 according to control logic 14. In some embodiments, the pipeline 12 may be a superscalar design, with multiple pipelines. The pipeline 12 includes various registers or latches 16, organized in pipe stages, and one or more Arithmetic Logic Units (ALU) 18. A General Purpose Register (GPR) file 20 provides registers comprising the top of the memory hierarchy.<br>
+<br>
+[0033] The pipeline 12 fetches instructions from an instruction cache (l-cache) 22, with memory address translation and permissions managed by an Instruction-side Translation Lookaside Buffer (ITLB) 24. When conditional branch instructions are decoded early in the pipeline 12, a branch predictor 26 predicts the branch behavior, and provides the prediction to an instruction prefetch unit 28. The instruction prefetch unit 28 speculatively fetches instructions from the l-cache 22, at a branch target address calculated in the pipeline 12 for "taken" branch predictions, or at the next sequential address for branches predicted "not taken." In either case, the prefetched instructions are loaded into the pipeline 12 for speculative execution. [0034] The branch predictor 26 includes a Branch History Register (BHR) 30, a Branch Predictor Table (BPT) 32, BPT index logic 34, and BHR update logic 36. The <br>
+<br>
+branch predictor 26 may additionally include one or more Last Branch PC registers 38, and one or more loop counters 37 providing inputs to the BHR update logic 36. [0035] Data is accessed from a data cache (D-cache) 40, with memory address translation and permissions managed by a main Translation Lookaside Buffer (TLB) 42. The TLB 42 may be a dedicated data TLB, or may comprise an integrated TLB that manages address translations and permissions for both instructions and data. Additionally, in various embodiments of the processor 10, the l-cache 22 and D-cache 40 may be integrated, or unified. Misses in the l-cache 22 and/or the D-cache 40 cause an access to main (off-chip) memory 44, under the control of a memory interface 46.<br>
+<br>
+[0036] The processor 10 may include an Input/Output (I/O) interface 48, controlling access to various peripheral devices 50, 52. Those of skill in the art will recognize that numerous variations of the processor 10 are possible. For example, the processor 10 may include a second-level (L2) cache for either or both the I and D caches 22, 40. In addition, one or more of the functional blocks depicted in the processor 10 may be omitted from a particular embodiment. [0037] Multi-Bit Indications of Loop Iterations<br>
+<br>
+[0038] According to one or more embodiments, branch prediction accuracy is improved by correlating branch evaluation to both previous branch evaluations and the iteration count of previous loops. This is accomplished by storing a multi-bit value indicative of loop iteration count(s) in the BHR 30. By mapping potentially large loop iteration counts to relatively few bits, characteristic information about the loop is preserved while preventing the loop-ending branches from fully or partially saturating one or more BHRs 30 in the branch predictor 26.<br>
+<br>
+[0039] This process is depicted as a flow diagram in Figure 3. An instruction is fetched and decoded (block 52). If the instruction is a not conditional branch instruction (block 53), it proceeds in the pipeline and the process returns to fetch the <br>
+<br>
+next instruction (block 52). If the instruction is a conditional branch instruction (block 53), a determination is made whether the branch is a loop-ending branch (block 54). If not, when the branch evaluates (such as in an execute stage of the pipeline) the BHR 30 is updated to record the branch evaluation using a single bit (block 56), i.e., whether the branch instruction evaluated as "taken" or "not taken." Execution then continues (block 64) at the branch target address or the next sequential address, respectively. If the branch is a loop-ending branch (block 54), a loop iteration count is incremented (block 58). When the loop completes (block 60), a multi-bit value indicative of the number of loop iterations is written to the BHR 30 (block 62). The loop iteration counter is then cleared (block 63) and execution continues (block 64) at the next sequential address.<br>
+<br>
+[0040] Both the query (block 54) - that is, identifying a branch instruction as a loop- ending branch instruction - and maintaining the loop iteration count (block 58) may be accomplished in a variety of ways. In one embodiment, one or more Loop Counters (LC) 37 are incremented when a conditional branch instruction that is determined to be a loop-ending branch evaluates "taken." The value of the LC 37, or a value derived therefrom (as discussed more fully herein), is written to the BHR 30 when the loop- ending branch evaluates "not taken," indicating an exit of the loop. The LC 37 is also cleared at that time.<br>
+<br>
+[0041] Identifying Loop-Ending Branch Instructions<br>
+<br>
+[0042] Loops iterate by branching backwards from the end of the loop to the beginning of the loop. According to one embodiment, every conditional branch instruction with a branch target address less than the branch instruction address, or PC - that is, a backwards branch - is assumed to be a loop-ending branch instruction. This method of identifying Loop-Ending branches offers simplicity. As depicted in Figure 4, the branch instruction PC is compared to the branch target address (BTA) in Loop-Ending Branch Detection logic 35 when the branch instruction is actually <br>
+<br>
+evaluated in the pipeline. If BTA 
+<br>
+[0043] Another way to detect a loop-ending branch is to recognize repeated execution of the same branch instruction. In one embodiment, as depicted in Figure 4, a Last Branch PC (LBPC) register 38 stores the PC of the last branch instruction executed. In the case of a simple loop, if the PC of a branch instruction matches the LBPC 38 in the Loop-Ending Branch Detection logic 35 - that is, the branch instruction was the last branch instruction evaluated - the branch instruction is assumed to be a loop-ending branch instruction, and a LC 37 is incremented. [0044] Code that includes conditional branch instructions within a loop can complicate loop-ending branch detection. For example, common algorithms for searching an array or linked list create a loop. A branch within the loop checks for a match and exits the loop early if a match is found, while a loop-ending branch checks for the end of the array or linked list. In this case, a single LBPC 38 cannot detect the loop-ending branch, because it will be alternately overwritten by the two branch PCs. Accordingly, in one embodiment, two or more LBPC registers 38 may be provided (as depicted in Fig. 4), with the PCs of successively evaluated branch instructions stored in corresponding LBPC registers (LBPC0, LBPCi, ¦¦ ¦ LBPCM) 38. This allows for the detection of loop-ending branches even in the presence of other conditional branches within the loop.<br>
+<br>
+[0045] Loop-ending branch instructions may also be statically marked by a compiler or assembler. In one embodiment, a compiler generates a particular type of branch instruction that is only used for loop-ending branches, for example, "BRLP". The BRLP instruction is recognized, and a LC 37 is incremented every time a BRLP instruction evaluates as taken in an execution pipe stage. In another embodiment, a <br>
+<br>
+compiler or assembler may embed a loop-ending branch indication in a branch instruction, such as by setting one or more predefined bits in the instruction op code. The loop-ending branch bits are detected, and a LC 37 is incremented when that branch instruction evaluates as taken in an execute pipe stage. In general, a Loop- Ending Indicator may be provided to the Loop-Ending Branch Detection logic 35. Static identification of loop-ending branches reduces hardware and computational complexity by moving the loop-ending identification function into the compiler or assembler.<br>
+<br>
+[0046] Generating and Storing an Indicator of the Number of Loop Iterations [0047] Regardless of the technique used to identify a loop-ending branch instruction (for either an inner or outer loop), according to one or more embodiments, an indication of the number of times the loop iterates is stored in the BHR 30, to exploit any correlation between the number of loop iterations and subsequent conditional branch instruction evaluation.<br>
+<br>
+[0048] In one embodiment, the actual count of loop iterations is stored in the BHR 30. That is, the multi-bit count from, e.g., a LC 37 is shifted into the BHR 30, displacing prior branch evaluations in the MSBs of the BHR 30. For very large loops, this count will require log2 (n) bits for n loop iterations, displacing a corresponding number of prior branch evaluations. However, even for large loop iteration counts, the binary representation is a significant compression of the loop-ending branch behavior stored in prior art branch history registers (i.e., n-1 ones followed by a single zero). In one embodiment, the iteration count is accumulated in a LC 37 and shifted into the BHR 30. In another embodiment (not shown), at least the lower k bits of the BHR 30 may be implemented as a dual-mode shift-register/counter, and the loop iteration count may be incremented directly in the BHR 30 (with prior BHR 30 contents shifting left as the count grows). <br>
+<br>
+[0049] In another embodiment, a fixed, multi-bit indication of the number of loop iterations is stored in the in the BHR 30. For example, two bits may be allocated to record an indication of the number of loop iterations, with the following meanings:<br>
+<br>
+[0050] 11 - Very large number of loop iterations<br>
+<br>
+[0051] 10 - Large number of loop iterations<br>
+<br>
+[0052] 01 - Moderate number of loop iterations<br>
+<br>
+[0053] 00 - Small number of loop iterations<br>
+<br>
+[0054] In this example, three threshold values - between small and moderate (00 -<br>
+<br>
+&gt; 01 ); between moderate and large (01 -&gt; 10), and between large and very large (10 -&gt;<br>
+<br>
+11 ) - are used to map the actual loop iteration count to a two-bit representation, as indicated by Thresholding logic 39. In one embodiment, the threshold values may be fixed for a given processor implementation, such as for certain embedded applications where common loop sizes are generally known. In another embodiment, the mapping may be scalable, with the threshold values read from GPRs 20, a table in memory 44, or the like. In common applications, a fixed multi-bit indication of the number of loop iterations may provide sufficient indication of the loop iteration count to allow for meaningful correlation with branch evaluation behavior, while at the same time limiting the number of prior branch evaluations displaced from the BHR 30 by loop-ending branches.<br>
+<br>
+[0055] Of course, actual loop iteration counts may be mapped to any fixed number of bits, with the corresponding number of threshold values, e.g., three bits and seven thresholds; four bits and fifteen thresholds; etc., to achieve the desired or required balance between loop iteration count accuracy and branch evaluation displacements in the BHR 30.<br>
+<br>
+[0056] Nested Loops<br>
+<br>
+[0057] A loop may contain one or more nested, or inner, loops. Accordingly, in one embodiment, a plurality of LC counters (LC0, LCi, ... LCM) 37 are provided, which may <br>
+<br>
+correspond to the number of LBPC 38 registers. A LC 37 is incremented upon a taken evaluation and a match with the relevant LBPCM 38, to maintain the iteration counts of nested loops.<br>
+<br>
+[0058] By storing a multi-bit indication of the number of iterations of an inner loop every time the inner loop exits, the BHR 30 may become partially or completely saturated by the time the outer loop iterates relatively few times. Accordingly, in one embodiment, once a loop is determined to be an inner loop, subsequent iteration counts after an initial execution of the inner loop may be suppressed from updating the BHR 30. In this embodiment, by the time the outer loop exits, the BHR 30 will include an indication of the iteration count of the inner loop only for the first iteration of the outer loop, and an indication of the iteration count of the outer loop. [0059] In another embodiment, the inner loop iteration count may be discarded by overwriting its value in the BHR 30 with an indication of the outer loop iteration count. This preserves the greatest number of prior branch evaluations in the BHR 30, while allowing for correlation of subsequent branch evaluations with the iteration count of the outer loop.<br>
+<br>
+[0060] In another embodiment, the outer loop iteration count may be discarded by suppressing an update of the BHR 30 when the outer loop exits. This again preserves the greatest number of prior branch evaluations in the BHR 30, while allowing for correlation of subsequent branch evaluations with the iteration count of the inner loop, which may be more predictive of subsequent branch evaluation in some applications. [0061] A conditional branch instruction has common properties, including for example the branch instruction address or PC, the instruction type, and the presence, vel non, of indicator bits in the op code. As used herein, properties of the branch operation, and/or properties of the program that relate to the branch, are considered properties of the branch instruction. For example, whether the branch instruction PC matches the contents of one or more LBPC registers 38, and whether the branch target <br>
+<br>
+address is forward or backward relative to the branch instruction PC, are properties of the branch instruction.<br>
+<br>
+[0062] Although the present disclosure has been described herein with respect to particular features, aspects and embodiments thereof, it will be apparent that numerous variations, modifications, and other embodiments are possible within the broad scope of the present disclosure, and accordingly, all variations, modifications and embodiments are to be regarded as being within the scope of the disclosure. The present embodiments are therefore to be construed in all aspects as illustrative and not restrictive and all changes coming within the meaning and equivalency range of the appended claims are intended to be embraced therein.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=e0l1OlJl6xi0aXuZ01P8wQ==&amp;amp;loc=vsnutRQWHdTHa1EUofPtPQ==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=e0l1OlJl6xi0aXuZ01P8wQ==&amp;amp;loc=vsnutRQWHdTHa1EUofPtPQ==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="272237-a-filter-device-for-an-aircraft-hydraulic-circuit.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="272239-self-aligned-drain-channel-junction-in-vertical-pass-transistor-dram-cell-design-for-device-scaling.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>272238</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1845/MUMNP/2008</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>14/2016</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>01-Apr-2016</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>23-Mar-2016</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>27-Aug-2008</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>QUALCOMM INCORPORATED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>5775 MOREHOUSE DRIVE, SAN DIEGO, CALIFORNIA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>DIEFFENDERFER, JAMES NORRIS</td>
+											<td>4000 INKBERRY, COURT APEX, NORTH CAROLINA 27539,</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>RYCHLIK, BOHUSLAV</td>
+											<td>1017 SWEET SPOT CIRCLE MORRISVILLE NORTH CAROLINA 27560.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F9/38</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2007/064331</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2007-03-19</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>11/378,712</td>
+									<td>2006-03-17</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/272238-a-method-of-branch-prediction-and-a-processor-to-perform-branch-prediction by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:43:50 GMT -->
+</html>

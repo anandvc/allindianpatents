@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/201045-a-method-for-recovering-from-a-failure-of-a-first-processing-node-in-a-database-processing-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 02:32:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 201045:A METHOD FOR RECOVERING FROM A FAILURE OF A FIRST PROCESSING NODE IN A DATABASE PROCESSING SYSTEM</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD FOR RECOVERING FROM A FAILURE OF A FIRST PROCESSING NODE IN A DATABASE PROCESSING SYSTEM</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method and system for recovering from a failure of a processing node in a partitioned shared nothing database processing system are provided. The processing system may include a pair of processing nodes having twin-tailed-connected thereto a storage device. A first processing node of the pair of processing nodes has a first database instance running thereon which accesses a firs! data partition on the storage device prior to the failure. Upon detection of the failure, access to the first data partition on the storage device is provided to a third, spare processing node through the second processing node of the pair of processing nodes. The third processing node runs a replacement database instance for me first database instance which was running on the first processing node prior to the failure thereof. The replacement database instance accesses the first data partition on the storage device through the second processing node, thereby recovering from the failure of the first processing node. Access to the first data partition may include using a virtual shared disk utility having a server portion on the second processing node and a client portion on the third processing node.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>This invention relates to a method	for recovering<br>
+from a failure of a first processing node in a database processing system having a plurality of processing nodes,<br>
+This application relates to the following commonly assigned u.s. Patent Applications: "METHOD AND SYSTEM FOR DATABASE LOAD BALANCING", Serial No.08/332,323, filed on October 31, 1994 and "APPLICATION-TRANSPARENT RECOVERY FOR VIRTUAL SHARED DISKS", Serial No.08/332,157, filed on October 31,1994.<br>
+Each of these Applications is hereby incorporated by reference herein in its entirety.<br>
+This invention relates to computer database processing systems. More particularly, this invention relates to recovery from a processing mode failure in a shared nothing database processing system.<br>
+Modern computer systems often involve multiple, individual processors or nodes which are interconnected via a communication network. Large amounts of information are often stored and processed in such systems. In addition to processing equipment, each node typically has digital storage devices (e.g., magnetic disks) for storing the information. The information is often arranged as a database that occupies the available storage space at the various nodes in the system.<br><br>
+The techniques employed for arranging the required storage of, and access to a database in a computer system with multiple nodes are dependent on the requirements for the specific system.  However, certain requirements are common to most systems.  All data in the database should be available for access from any node in the system. The amount of storage overhead and processing overhead must be kept at a minimum to allow the system to operate efficiently, and the storage/access strategy must generally be immune to failure occurring at any one node.<br>
+Two general techniques for database storage, or partitioning, are employed in modern systems.  The first, data sharing, involves providing physical access to all disks from each node in the system.  However, to maintain coherency of the database, global locking or change lists are necessary to ensure that no two nodes inconsistently change a portion of the database.<br>
+The second technique of data storage involves physically partitioning the data and distributing the resultant partitions to responsible or owner nodes in the system which become responsible for transactions involving their own, corresponding partitions.<br>
+This "shared nothing" architecture requires additional communication overhead to offer access to all of the data to all nodes. A requesting node must issue database requests to the owner node. The owner node then either:  (i) performs the requested database request related to its corresponding partition (i.e., function shipping) or (ii) transfers the data itself to the requesting node (i.e., I/O shipping).<br><br>
+A problem with the shared nothing approach is the potential for failure at any one node and the resultant inability of that node to accept or process database requests relating to its partition.<br>
+Two principal methods are currently known for recovery of a node failure in a shared nothing database system:  (i) asynchronous replication, where updates to the data are sent to a replica asynchronously (see e.g., "An Efficient Scheme for Providing High Availability,"  A. Bhide, A. Goyal, H. Hsiao and A. Jhingran, SIGMOD '92, pgs. 236-245, incorporated herein by reference); and (ii) recovery on a buddy node to which disks of the failed node are twin-tailed-connected.  Twin-tailing disk units to buddy processing nodes is known in the art, and involves a physical connection between a single disk and more than one processing node.  In one mode of twin-tailing, only one node is active and accesses the disk at any one time.  In another mode of twin-tailing, both nodes are allowed to access the disk simultaneously, and conflict prevention/resolution protocols are provided to prevent data corruption.<br>
+The primary advantage of method (i) is that it can recover from either disk or node failures, however the primary disadvantages of this method are that data is mirrored, consuming twice the disk capacity, and the overhead involved during normal failure-free operation for propagating data to the replica. The primary advantage of method (ii) is that there is no overhead during normal operations, however the primary disadvantage is that after a failure, twice the load is imposed on the buddy node and this can lead to half the throughput for the entire cluster, because query scans or transaction function calls to the buddy node of the failed node become the bottleneck for the entire cluster.<br><br>
+What is required, therefore, is a technique for recovery from a processing node failure in a shared nothing database processing system, which does not incur significant processing overhead during normal operation, or storage space overhead for full data replication.<br>
+Summary of the Invention<br>
+A processing node failure recovery technique is provided by the instant invention, which in one aspect relates to a method and system for recovering from a failure of a first processing node in a database processing system having a plurality of processing nodes.  A first database instance is run on the first processing node prior to its failure.  The first processing node and the second processing node have commonly connected thereto a first storage device for storing first data for the first database instance. After detecting a failure of the first processing node, access to the first data is provided to a third processing node through the second processing node. The first database instance is then run on the third processing node which accesses the first data on the first storage device through the second processing node.  Recovery from the failure of the first processing node is therefore provided.<br>
+In a modified embodiment, the first data is copied from the first storage device to a second storage device connected to the third processing node. While running the first database instance on the third processing node, subsequent updates to the first database instance may be mirrored to the first storage device and the copied data on the second storage device. Following a restart of the first processing node, the first processing node may be designated as a spare processing node in the system for subsequent node failures.<br><br>
+The first storage device may comprise two storage devices each twin-tailed-connected to the first and second processing nodes.<br>
+Access to the first data through die second processing node includes using a virtual shared disk utility having a server portion on the second processing node and a client proportion on the third processing node.<br>
+Because the second processing node may also have running thereon a second database instance of its own, access to second data for the second database instance may be provided to a fourth processing node through the second processing node. In that case, the second database instance can be thereafter run on the fourth processing node by accessing the second data on the first storage device through the second processing node.  The second processing node therefore would only be required to support a server portion thereon, and the database instance processing is completely offloaded from the second processing node to the third and fourth processing nodes, which have running thereon respective client portions of the virtual shared disk utility.<br>
+Additional embodiments and modifications to these techniques are disclosed herein, including recovering the first database instance on the second processing node, during which an attempt is made to restart the first processing node. If the attempting results in a successful restart, the first database instance is restarted on the first processing node. If the attempting does not result in a successful restart, the database instance is started on the second processing node, or a spare processing node, as discussed above.<br><br>
+Accordingly the present invention provides a method for recovering from a failure of a first processing node in a database processing system having a plurality of processing nodes, comprising the steps of running a first database instance on the first processing node, the first processing node and a second processing node having commonly connected thereto at least one first storage device for storing first data for the first database instance; detecting a failure of the first processing node; providing, to a third processing node, access to the first data on the at least one storage device through the second processing node, via a utility program at least part of which runs on the second processing node; and running the first database instance on the third processing node, comprising accessing the first data on the at least one first storage device through the second processing node, thereby using spare capacity of the third processing node to recover from the failure of the first processing node.<br>
+The invention also provides a system for recovering from a failure of a first processing node in a database processing system having a plurality of processing nodes, comprising: means for running a first database instance on the first processing node, the first processing node and a second processing node having commonly connected there-to at least one first storage device for storing first data for the first database instance; means for detecting a failure of the first processing node; means for providing, to a third processing node, access to the first data on the at least one storage device through the second processing node via a utility program at least part of which runs on the second processing node; and means for running the first database instance on the third processing node, comprising means for accessing the first data on the at least one first storage device through the second processing node, thereby using spare capacity of the third processing node to recover from the failure of the first processing node.<br><br>
+The instant invention therefore provides an effective recovery technique in a shared nothing database processing system, which does not incur significant processing overhead during normal operation, or storage space overhead for fiill data replication.<br>
+Brief Description of the Drawings<br>
+The subject matter which is regarded as the invention is particularly pointed out and distinctly claimed in the concluding portion of the specification.  The invention, however, both as to organization and method of practice, together with further objects and advantages thereof, may best be understood by reference to the following detailed description of the preferred embodiments) and the accompanying drawings in which:<br>
+fig. 1 depicts a database processing system having a plurality of processing nodes, two spare processing nodes, and storage devices connected to at least some of the processing nodes;<br>
+Fig. 2 depicts a first embodiment of the present invention wherein, following a node failure, a database instance is run on one of the spare processing nodes and accesses data through a virtual shared disk utility on the processing node to which is connected a storage device having data for the database instance thereon;<br>
+fig. 3 is a flow diagram of the recovery steps involved following the failure of one of the nodes;<br>
+Fig. 4 is a modified embodiment of the present invention wherein two database instances are run on two respective spare<br><br>
+processing nodes, each accessing a virtual shared disk server on another processing node to which is connected a storage device having data for the two database instances;<br>
+Fig. 5 is yet another modified embodiment of the present invention in which a copy is made of the data to storage devices on the formerly spare processing nodes to support recovery from future node failures;<br>
+Fig. 6 is a flow diagram depicting yet another modified embodiment of the present invention wherein an attempt to reboot the failed node is accompanied by a simultaneous recovery of the database instance.<br>
+Detailed Description of the Preferred Embodiment^<br>
+With reference to Fig. 1, a database processing system 10 is shown having a set of database processing nodes 201,...,20„each nonnally running a respective database instance DB„...,DBN. A suitable network (not shown) provides communication between the nodes. Disks 30k and 30k+1 are twin-tailed-connected to buddy processing nodes 20,. and 20k+1 using connections 25.  Shown here is an exemplary twin-tailed implementation, but in fact the disks in general can be multi-tailed connected to multiple processing nodes.  Fig. 1 therefore shows node 2^ running a database instance DBk and its buddy node 20k+l running database instance DBk+1<br>
+Under normal operation, the disks are logically partitioned among the buddy nodes, so that one node logically owns one subset of the twin-tailed disks and the buddy node the remainder. There may be on the order<br><br>
+of tens, possibly up to hundreds, of database processing nodes.  In addition, a set of spare processing nodes 40,, 403 are configured in the system. There may be at least one spare node, preferably two, and possibly more spare nodes in the system.<br>
+The technique of the present invention for recovering from a processing node failure is illustrated in Fig. 2.  This figure illustrates me case when the node 20k+1, that was running database instance DBk+1 fails. The prior art method (ii) (discussed above) would recover database instance DBk+1 on buddy node 20k, so that node 20k would run both of the database instances DBk+1 and DBk+1, after a failure.  As discussed above, this could lead to twice the load on node 20k with a resultant loss of performance for the entire system.  Kg. 2 illustrates the disclosed technique to solve this problem:   After failure, database instance DBk+1 is run on a separate, spare node 40k  This database instance still needs to access the same disks that were logically assigned to it prior to the failure.  As illustrated in Fig. 2, after a failure, the disks that were in the logical partition of the failed node 20k+1 are reconfigured with access through the buddy node 20,. via communication path SO over a suitable communication network (not shown). This access is provided, for example, by a Recoverable Virtual Shared Disks (RVSD) utility disclosed in the above-incorporated U.S. Patent Application entitled, "Application-Transparent Recovery for Virtual Shared Disks". On failure of a node, RVSD transparently switches over to provide access to disks 30k and 30k+, via the buddy node 20*, from any node in the system.  Following RVSD recovery, the database instance DBk+l that had been running on the failed node is restarted on one of the backup nodes 40,. Instance DBk+1 logically owns the same disks and accesses the database partition of the failed instance by making disk read/write requests through an RVSD client portion on node 40, to a server portion on node 20k. The<br><br>
+RVSD utility transparently ships the requests to node 20k and retrieves the proper data.<br>
+Using the technique depicted in Fig. 2, node 20k has a load corresponding to the database load of instance DB,. and the VSD server load supporting instance DBk+, on node 40,.  This load would be less than that of recovering a full instance of DB, on node 20* after a failure. Thus, with this option, the throughput after a failure will be somewhat degraded because of the dual responsibilities of node 20k, but this throughput is considerably more than in the prior art approaches discussed above.<br>
+Fig. 3 is a flow diagram of the steps necessary to implement the recovery technique of Fig. 2. Following a failure of node 20k+1, in Step 100, a spare node 40, is selected to run the instance DBk+, in Step 110. Assuming that disk 30k+1 holds the partitions relevant to instance DBk+l, node 20k performs a VSD takeover of disk 30k+1, in Step 120.  A proper client portion of VSD is configured on node 40, in Step 130.  In Step 140, all other nodes are then informed (via update of the appropriate tables on the system) that instance DBk+1, will now be running on node 40,. Therefore, all relevant requests for database instance DBk+1, will be directed to node 40,.  Finally, in Step ISO, instance DBk+1 is started on node 40,.<br>
+A modified embodiment of the present invention is depicted in Fig. 4.  Fig. 4 shows database instance DBk also being restarted on another spare node 402, with remote VSD access to its data via path 60 through node 20k- By running both database instances DBk and DBk+,1 on spare nodes 401 and 40,, the load on node 20k is only that required to handle the VSD accesses from both of these instances. Measurements indicate that, with this configuration, the VSD load on node 20k is likely to be less than<br><br>
+that for normal operation.   Further, sequential access throughput over VSD is very close to the sequential access throughput of a local disk, and random access throughput can also be sustained by VSD.  Therefore, this configuration will lead to performance after failure of node 20k+1 very close to normal performance.  However, one trade-off is that moving database instance DBt may entail bringing down that instance and restarting it on the spare node.  The impact of this depends on the workload.  For decision support, failure of node 20k+1 will likely impact most, if not all, of the running queries; thus, bringing down and restarting DBk+1 as well will likely be acceptable.   For OLTP, this choice will depend on the fraction of the workload impacted by node 20k failure versus the impact if both nodes 2Gk and 20k+l are brought down on failure.<br>
+One potential problem with this technique is handling reintegration after node 20k+1 comes back up.  In the simplest case, node 20k+l may have failed due to an operating system crash, and a mere reboot may bring it back up.  Ideally, one would like to restore the system to a configuration that can handle a subsequent failure (i.e., a mode which has enough spare nodes designated).  One alternative is to move database instances DBk and DBk+1 back to nodes 20k and 20k+1 respectively. However, this typically requires bringing down the database instances and then restarting them at the original nodes.  An extension to the technique disclosed herein that handles reintegration without bringing down the database instances involves copying the data from disks 30k and 30k+1 to twin-tailed (65) disks 70t and 702 on the spare nodes.  This can be done concurrently with database operation after failure reconfiguration.  By access through VSD the data can be mirrored to twin-tailed disks on the spare nodes, and any concurrent updates to the disks must be mirrored at both node 20k and the formerly spare nodes 401, and 402  Those skilled in the art will readily appreciate<br><br>
+that this can be accomplished by appropriate synchronization.   Nodes 20k and 20k+1 can thereafter be designated as spare nodes in the system for recovering from future failures of other nodes.<br>
+As mentioned above, a mere reboot may suffice to restore the failed node 20k+1 to working condition.  In such a case, it may be desirable to avoid takeover altogether. However, this requires deferring the takeover decision until after the failed node has been restarted and has attempted to reboot, which increases recovery time accordingly.  The following technique depicted in the flow diagram of Big. 6 can be used to overlap recovery actions with the attempted reboot of the failed node.  When node 20k fails (Step 200), its buddy node 20k takes over its disks and initiates recovery, i.e., performs file system recovery and log-based database instance recovery (Step 210).  During this recovery period, the failed node 20k+1 can attempt to reboot (Step 220).  If it succeeds (Decision 230, "Y"), it resumes control of its original disks and restarts a database instance locally (Step 250).  If it fails to reboot (Decision 230, "N"). the database instance is started on the buddy node 20k or on a spare node, as discussed above (Step 240).  In all cases, restart of the database instance is immediate, since recovery of the disks has already been performed by the buddy node 20k<br>
+The techniques of the instant invention are applicable to database processing systems, and in particular to any partitioned (shared nothing) database systems.<br>
+The present invention can be included in an article of manufacture (e.g., one or more computer program products) having, for instance, computer useable media.  The media has embodied therein, for instance.<br><br>
+computer readable program code means for providing and facilitating the mechanisms of the present invention.  The article of manufacture can be included as part of a computer system or sold separately.<br>
+While the invention has been particularly shown and described with reference to preferred embodiment(s) thereof, it will be understood by those skilled in the art that various changes in form and details may be made therein without departing from me spirit and scope of the invention.<br><br><br>
+WE CLAIM :<br>
+1.	A method for recovering from a failure of a first processing node<br>
+(20k+1) in a database processing system having a plurality of processing<br>
+nodes (201, ..20n), comprising the steps of<br>
+running a first database instance (DBK+i) on the first processing node, the first processing node and a second processing node (20k) having commonly connected thereto at least one first storage device (3(\+ i) for storing first data for the first database instance;<br>
+detecting a failure (100) of the first processing node;<br>
+providing, to a third processing node (40]), access (120) to the first data on the at least one storage device through the second processing node, via a utility program at least part of which runs on the second processing node; and<br>
+running (150) the first database instance on the third processing node, comprising accessing the first data on the at least one first storage device through the second processing node, thereby using spare capacity of the third processing node to recover from the failure of the first processing node.<br>
+2.	The method as claimed in claim 1, comprising: copying the first data<br>
+from the at least one first storage device (30k+1) to at least one second<br>
+storage device (700 connected to the third processing node (40,);<br>
+wherein said running (150) the first database instance (DBK+1) on the third processing node comprises mirroring subsequent updates to the first database instance to the first data on the at least one first storage device and the copied first data on the at least one second storage device.<br><br>
+3.	The method as claimed in claim 1 or claim 2, comprising, after a<br>
+restart of the first processing node (20k+1):<br>
+designating the first processing node as a first spare processing node in the database processing system.<br>
+4.	The method as claimed in anyone of claims 1 to 3, wherein the at least<br>
+one first storage device comprises two storage devices (30k, 30k+i) each<br>
+twin-tailed-connected to the first and second processing nodes.<br>
+5.	The method as claimed in anyone of claims 1 to 3, wherein the at least one first storage device comprises multiple storage devices each multi-tailed-connected to the first, second and other processing nodes in the database processing system.<br>
+6.	The method as claimed in anyone of the preceding claims, wherein the first data comprises a partition of a partitioned shared nothing database resident on the database processing system.<br>
+7.	The method as claimed in anyone of the preceding claims, wherein<br>
+said providing, to the third processing node, access to the first data<br>
+comprises using a Virtual Shared Disk utility program having a server<br>
+portion on the second processing node (20k) and a client portion on the<br>
+third processing node (40]).<br>
+8.	The method as claimed in anyone of the preceding claims, wherein the<br>
+third processing node (40,) is a designated spare processing node in the<br>
+database processing system.<br><br>
+9.	The method as claimed in anyone of the preceding claims, comprising:<br>
+prior to said detecting the failure of the first processing node, running a<br>
+second database instance (DBk) on the second processing node (20k), the at<br>
+least one first storage device (30k, 30k+1) having stored therein second data<br>
+for the second database instance; and<br>
+after said detecting the failure (100) of the first processing node:<br>
+providing, to a fourth processing node (4O2), access to the second data on the at least one first storage device through the second processing node (20k) via a utility program, and<br>
+running the second database instance on the fourth processing node including accessing the second data on the at least one first storage device through the second processing node.<br>
+10.	The method as claimed in claim 9, comprising:<br>
+copying the first data and the second data from the at least one first storage device to at least one second storage device commonly connected to the third and fourth processing nodes;<br>
+wherein said running the first database instance on the third processing node comprises mirroring subsequent updates to the first database instance to the first data on the at least one first storage device and to the copied first data on the at least one second storage device; and<br>
+wherein said running the second database instance on the fourth processing node includes mirroring subsequent updates to the second database instance to the second data on the at least one first storage device and to the copied second data on the at least one second storage device.<br><br>
+11.	The method as claimed in claim 9 or 10, comprising, after a restart of<br>
+the first processing node:<br>
+designating the  first processing  node  (20k+i)  as  a  first  spare processing node in the database processing system; and<br>
+designating the second processing node (20k) as a second spare processing node in the database processing system.<br>
+12.	The method as claimed in anyone of the claims 9 to 11, wherein the first and second data each comprise respective partitions of a partitioned shared nothing database resident on the database processing system.<br>
+13.	The method as claimed in anyone of claims 9 to 12, wherein said providing, to the fourth processing node, access to the second data comprises using a Virtual Shared Disk utility program having a server portion on the second processing node and a first client portion on the fourth processing node.<br>
+14.	The method as claimed in claim 13, wherein said providing, to the third processing node, access to the first data comprises using the Virtual Shared Disk utility program having the server portion on the second processing node and a second client portion on the third processing node.<br><br>
+15.	The method as claimea in claim I0, wnerein tne third processing node and the fourth processing node are designated spare processing nodes in the database processing system.<br>
+16.	A method according to claim 1, comprising the steps of<br>
+performing database recovery of the first data-base instance on the second processing node (2(\), comprising accessing the first data on the at least one storage device (30k+i) through the second processing node via a utility program;<br>
+during said performing database recovery, attempting to restart the first processing node (20k+1); and<br>
+if said attempting results in a successful restart of the first processing node, thereafter restarting the first database instance on the first processing node comprising accessing the first data on the at least one storage device through the first processing node, or<br>
+if said attempting does not result in a successful restart of the first processing node, thereafter executing said steps of:<br>
+providing, to a third processing node, access to the first data on the at least one storage device through the second processing node via a utility program; and running the first database instance on the third processing node, comprising accessing the first data on the at least one storage device through the second processing node.<br><br>
+17.	A method as claimed in claim 1 for recovering from a failure of a<br>
+first processing node of a pair of processing nodes having twin-tailed-<br>
+connected thereto at least one storage device, the first processing node<br>
+having a first database instance running thereon and accessing a first data<br>
+partition on the at least one storage device prior to the failure, the method<br>
+comprising:<br>
+providing, to a third processing node, access to the first data partition on the at least one storage device through a second processing node of the pair of processing nodes via a utility program at least part of which runs on the second processing node; and<br>
+running, on the third processing node, a first replacement database instance for the first data-base instance which was running on the first processing node prior to the failure thereof, comprising accessing the first data partition on the at least one storage device through the second processing node, thereby using spare capacity of the third processing node to recover from the failure of the first processing node.<br>
+18.	A method for recovering from a failure of a first processing node in a<br>
+database processing system having a plurality of processing nodes,<br>
+substantially as hereinabove described and illustrated with reference to the<br>
+accompanying drawings.<br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBhYnN0cmFjdCBkdXBsaWNhdGUucGRm" target="_blank" style="word-wrap:break-word;">1046-mas-1998 abstract duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBhYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">1046-mas-1998 abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBhc3NpZ25tZW50LnBkZg==" target="_blank" style="word-wrap:break-word;">1046-mas-1998 assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBjbGFpbXMgZHVwbGljYXRlLnBkZg==" target="_blank" style="word-wrap:break-word;">1046-mas-1998 claims duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBjbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">1046-mas-1998 claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBjb3JyZXNwb25kZW5jZS1vdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">1046-mas-1998 correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBjb3JyZXNwb25kZW5jZS1wby5wZGY=" target="_blank" style="word-wrap:break-word;">1046-mas-1998 correspondence-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBkZXNjcmlwdGlvbiAoY29tcGxldGUpIGR1cGxpY2F0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">1046-mas-1998 description (complete) duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBkZXNjcmlwdGlvbiAoY29tcGxldGUpLnBkZg==" target="_blank" style="word-wrap:break-word;">1046-mas-1998 description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBkcmF3aW5ncyBkdXBsaWNhdGUucGRm" target="_blank" style="word-wrap:break-word;">1046-mas-1998 drawings duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBkcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">1046-mas-1998 drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBmb3JtLTE5LnBkZg==" target="_blank" style="word-wrap:break-word;">1046-mas-1998 form-19.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBmb3JtLTIucGRm" target="_blank" style="word-wrap:break-word;">1046-mas-1998 form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBmb3JtLTI2LnBkZg==" target="_blank" style="word-wrap:break-word;">1046-mas-1998 form-26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBmb3JtLTQucGRm" target="_blank" style="word-wrap:break-word;">1046-mas-1998 form-4.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBmb3JtLTUucGRm" target="_blank" style="word-wrap:break-word;">1046-mas-1998 form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBvdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">1046-mas-1998 others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTA0Ni1tYXMtMTk5OCBwZXRpdGlvbi5wZGY=" target="_blank" style="word-wrap:break-word;">1046-mas-1998 petition.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="201044-methods-and-system-for-resource-allocation-in-an-integrated-3g-wlan-mobile-wireless-multimedia-network.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="201046-a-process-for-preparing-aliphatic-alpha-omege-amino-nitriles.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>201045</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1046/MAS/1998</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>30/2009</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>24-Jul-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>14-May-1998</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>INTERNATIONAL BUSINESS MACHINE CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>ARMONK, NEW YORK 10504</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>DANIEL MANUEL DIAS</td>
+											<td>16 PIKE PLACE,MAHOPAC, NEW YORK 10541</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>CHRISTOS POLYZOIS</td>
+											<td>16 HERITAGE DRIVE, CHATHAM, NEW JERSEY 07928-2990</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>ANANT DEEP JHINGRAN</td>
+											<td>47 NOB HILL DRIVE, ELMSFORD, NEW YORK 10523</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>RICHARD PERVIN KING</td>
+											<td>540 WARREN AVENUE, THORNWOOD, NEW YORK 10584</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06K5/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>08/865,156</td>
+									<td>1997-05-29</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/201045-a-method-for-recovering-from-a-failure-of-a-first-processing-node-in-a-database-processing-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 02:32:14 GMT -->
+</html>

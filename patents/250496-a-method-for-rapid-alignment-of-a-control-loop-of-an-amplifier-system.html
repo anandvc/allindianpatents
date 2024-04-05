@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/250496-a-method-for-rapid-alignment-of-a-control-loop-of-an-amplifier-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 14:24:24 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 250496:A METHOD FOR RAPID ALIGNMENT OF A CONTROL LOOP OF AN AMPLIFIER SYSTEM</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD FOR RAPID ALIGNMENT OF A CONTROL LOOP OF AN AMPLIFIER SYSTEM</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A tast search algorithm for loop alignment of a feed forward amplifier is disclosed. The algorithm controls a processor (202) that adjusts, digitally, the gain and phase of the loop alignment based on power measurements at the input and output of cancellation combiners, to find the optimal setting. A &quot;non-collinear descent&quot; algorithm is used to search, iteratively, for the minimum within an error surface. For loop alignment, the error surface is defined by the set of measurement points comprising the alignment settings and the associated cancellation residuals. For the case of first loop alignment, the cancellation residual is measured using the ratio of two power detectors (214, 218) located at the input and after the cancellation (error) combiner. For second loop alignment, cancellation is estimated using the residual pilot power detected at the output of the amplifier. The preferred alignment method uses three successive measurements to estimate the gradient direction with respect to gain and phase shifter settings. The actual descent direction is selected to be close to the gradient direction without being collinear with the most recent alignment adjustments. Quantization of the descent direction simplifies the implementation as well as the enforcement of the non-collinearity constraint on successive alignment settings. Two different step size selection approaches are disclosed, however, any standard step size selection approach may be employed.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>SYSTEM AND METHOD FOR CONTROL OF LOOP ALIGNMENT IN ADAPTIVE<br>
+FEED FORWARD AMPLIFIERS<br>
+RELATED APPLICATION INFORMATION<br>
+The present application claims priority to provisional application serial no. 60/552,405 filed March 11, 2004, the disclosure of which is incorporated by reference herein in its entirety.<br>
+FIELD OF THE INVENTION<br>
+The present invention relates to power amplifiers. In particular, it relates to adaptive feed forward power amplifiers and methods for controlling feed forward amplifiers.<br>
+BACKGROUND, PRIOR ART AND RELATED INFORMATION<br>
+RF amplifiers are devices that attempt to replicate an RF signal present at an input, producing an output signal with a much higher power level. The increase in power from the input to output is referred to as the 'gain' of the amplifier. When the gain is constant across the dynamic range of the input signal, the amplifier is said to be 'linear'. Amplifiers have limited capacity in terms of power delivered because of gain and phase variances, particularly saturation at high power, which makes all practical amplifiers nonlinear when the input power level varies. The ratio of the distortion power generated relative to the signal power delivered is a njeasure of the non-linearity of the amplifier.<br>
+In RF communication systems, the maximum allowable non-linearity of the amplifier is specified by government agencies such as the FCC or the ITU. Because amplifiers are inherently nonlinear when operating near saturation, the linearity requirements often become the limitation on rated power delivering capability. In general, when operating near saturation, the linearity of the amplifier degrades rapidly because the incremental signal power delivered by an amplifier is proportionally less than the incremental distortion power generated.<br>
+Various compensation approaches are conventionally applied to reduce the distortion at the output of the system, which in turn increases the rated power delivering capability. The preferred approach is feed forward compensation. In feed forward RF power amplifiers an error amplifier is employed to amplify main amplifier distortion components which are then combined out of phase with the main amplifier output to cancel the main amplifier distortion component. In general, feed forward compensation provides the power capability of the main amplifier and the linearity of the error amplifier.<br>
+Feed forward linearization of an amplifier is based on the matching of the gain and phase of parallel RF paths to either cancel the carrier (input) signal (loop 1) or to cancel the distortion (loop 2). The carrier cancellation is usually referred to as the 'loop 1 error', which is an estimate of the distortion of the main amplifier path. The distortion cancellation occurs within loop 2, and uses the loop 1 error to cancel the distortion of the main amplifier. The matching of the gain and phase in the respective loops is referred to as 'loop alignment control'. When the alignment of loop 2 is correct, the distortion at the output is minimized, making the entire feed forward system more linear than the main amplifier alone. When the alignment of loop 1 is correct, the power through the error amplifier (which amplifies the loop 1 error) is limited. In most cases, the loop 1 alignment must be completed before the error amplifier of loop 2 is enabled. This ensures that the error amplifier is not over-driven, a condition that could produce unwanted distortion or device damage.<br>
+There have been numerous prior approaches to feed forward linearization, the earliest dating to the 1920's. In earlier approaches, the alignment settings were static, with fixed settings for gain and phase, optimized for nominal operating conditions. Later adaptive methods were applied where the misalignments of the loops were measured internally and used for subsequent alignment adjustments. Adaptive feed forward control systems can provide for compensation of dynamically changing parameters, such as temperature and DC supply variations, which affect amplifier performance. Generally, it is desirable to have the feed forward amplifier control system adapt to the optimal settings as fast as possible to minimize the amount of time the amplifier operates at a less than optimal setting.<br>
+Adaptive feed forward control methods employ alignment control algorithms to adjust the alignment settings (gain and phase) from any initial setting to that which results in the best measured alignment. Prior alignment control algorithms rely on either the "steepest descent" or the "coordinate descent" algorithms. The steepest descent algorithm adjusts the alignment settings in a direction of the gradient within the 2D gain-phase space. Dithering the alignment in orthogonal directions and measuring the changes in measured misalignment provides an estimate of the gradient. The coordinate descent algorithm performs two separate 1D searches along pre-defined orthogonal directions (usually the gain and phase axes). The alignments are dithered to determine which direction along the respective coordinates reduces measured misalignment. Both these approaches have disadvantages in practical systems which employ control processors with Jimited processing power and where fast loop alignment is desired. As a result the desired fast and accurate loop convergence has not been achieved in practical adaptive feed forward systems.<br>
+Accordingly, a need presently exists for a system and method for rapid loop alignment control in a feed forward amplifier system which avoids the above noted limitations of the prior art.<br>
+SUMMARY OF THE INVENTION<br>
+In a first aspect the present invention provides a method for rapid alignment of a control loop of an amplifier system. The method comprises obtaining a plurality of prior alignment settings, each defining a point in a space of alignment settings, including at least three prior settings which are non-collinear in the space of alignment settings. The method further comprises determining an adjustment direction using the non-collinear prior adjustment settings and adjusting one or more of the control loop settings using the adjustment direction.<br>
+In a preferred embodiment of the method for rapid alignment of a control loop of an amplifier system the space of alignment settings comprises a three dimensional space defined by possible gain adjustment settings, phase adjustment settings and detected alignment error values. Adjusting one or more of the control loop settings preferably comprises adjusting the gain setting or adjusting the phase setting. The amplifier system may be a feed forward amplifier comprising a carrier cancellation control loop and an error cancellation control loop. Adjusting one or more of the control loop settings may comprise adjusting the gain setting or adjusting the phase setting of the carrier cancellation control loop. The carrier cancellation control loop may also comprise an input test coupler and a carrier cancellation test coupler and the detected alignment error values may comprise the ratio of detected carrier power between the carrier cancellation test coupler and the input test coupler. Adjusting one or more of the control loop settings may also comprise adjusting the gain setting or adjusting the phase setting of the error cancellation control loop. The error cancellation control loop may comprise an error cancellation test coupler and the detected alignment error values may comprise detected error signal power at the test coupler. The feed forward amplifier may further comprise a source of a pilot signal and the detected alignment error values may comprise detected residual pilot signal power. The adjustment direction may take discrete values in the space of alignment settings. According to another aspect the present invention provides a method for controlling an amplifier system having a control loop comprising a control loop input, a first signal path, a second signal path, a control loop output, and a control loop error test coupler, at least one of the first and second signal paths including an amplifier. The method comprises detecting a control loop error value using a signal sampled by the control loop error test coupler and determining a point in a space of loop control settings using the detected error value and two or more loop control parameters. The method further comprises determining a plane in the space of loop control settings and determining a gradient in the space of loop control settings. The method further comprises selecting an adjustment direction in the space of loop control settings using the plane and gradient information and adjusting one or more of the loop control parameters using the adjustment direction.<br>
+In a preferred embodiment the method for controlling an amplifier system further comprises sampling the signal at the control loop input and detecting a control loop error value comprises determining the ratio of the signal sampled by the control loop error test coupler and the signal sampled at the control loop input. The control loop may further comprise a gain adjuster and a phase adjuster and the two or more loop control parameters may comprise gain and phase adjuster settings. The space of loop control settings may comprise a three dimensional space defined by possible gain adjuster settings, phase adjuster settings and loop error values. Determining a plane in the space of loop control settings preferably comprises obtaining a plurality of successive prior settings each defining a point in the space of loop control settings, determining if at least three non-collinear prior setting points are available, and if they are, determining a plane in thé space of loop control settings using the at least three non-collinear prior setting points. Determining a plane in the space of loop control settings preferably further comprises determining the normal vector to the plane from the at least three non- collinear prior setting points. The method may further comprise determining the slope of the plane and determining if the slope has a zero value, wherein the gradient direction is determined only if the slope has a nonzero value. Selecting an adjustment direction in the space of loop control settings preferably comprises selecting a direction close to the gradient direction without being collinear with the last two prior setting points. For example, selecting an adjustment direction in the space of loop control settings may comprise comparing plural discrete directions to the gradient direction and selecting the closest non-collinear direction. Adjusting one or more of the loop control parameters using the adjustment direction may further comprise using a step size for adjusting the one or more loop control parameters and altering the step size by comparing the step size to bounding step size values. Alternatively, the step size may be altered based on the detected control loop error value.<br>
+According to another aspect the present invention provides a feed forward amplifier system comprising an input for receiving an RF input signal and a first control loop coupled to the input. The first control loop comprises a main amplifier, a main amplifier sampling coupler, a delay element, and a cancellation combiner. A second control loop is coupled to the first control loop and comprises a first signal path, a second signal path comprising an error amplifier, and an error coupler coupling the first and second signal paths. An output is coupled to the error coupler. The feed forward amplifier system further comprises a control system, coupled to and controlling at least one of the first and second control loops employing adjustable loop control settings. The control system comprises a processor programmed with a non-collinear descent algorithm which selects a control setting adjustment direction which is non-collinear with plural recent prior settings.<br>
+In a preferred embodiment of the feed forward amplifier system the first control loop further comprises a gain adjuster and a phase adjuster. The control system is coupled to the gain adjuster and phase adjuster and the adjustable loop control settings comprise a loop 1 gain adjuster setting and a loop 1 phase adjuster setting. The second control loop may also include a gain adjuster and a phase adjuster. The control system is coupled to the loop 2 gain adjuster and phase adjuster, and the adjustable loop control settings comprise a loop 2 gain adjuster setting and a loop 2 phase adjuster setting. The first control loop further may comprise an input test coupler, coupled to sample the input signal, which provides a sampled input signal to the processor and a loop 1 test coupler coupled to sample the output of the carrier cancellation combiner which provides a sampled loop 1 test signal to the processor. The algorithm preferably employs the ratio of the sampled loop 1 test signal and sampled input signal to adjust the gain and phase settings. The feed forward amplifier may further comprise a source of a pilot signal and the second control loop may further comprise a loop 2 test coupler for sampling the loop 2 output. The feed forward amplifier may further comprise a pilot signal detector, coupled to the loop 2 test coupler and providing a detected residual pilot power signal to the processor, and the algorithm may employ the detected residual pilot power signal to adjust the gain and phase settings. The non-collinear descent algorithm preferably uses at least three successive prior settings to estimate a gradient direction for adjusting the control settings. The non- collinear descent algorithm preferably selects the adjustment direction to be close to the gradient direction without being collinear with the most recent alignment adjustment settings. For example, the non-collinear descent algorithm may select the adjustment direction by comparing quantized descent directions to the gradient direction.<br>
+According to another aspect the present invention provides an adaptive controller for aligning a control loop of an amplifier system. The adaptive controller comprises one or more inputs for receiving one or more test signals corresponding to alignment error of the amplifier system control loop. The adaptive controller further comprises a processor coupled to the one or more inputs and having one or more control outputs. The processor is programmed with an algorithm to provide loop adjustment settings to the control outputs to control the loop of the amplifier system. The algorithm retrieves plural recent prior settings and selects a control setting adjustment direction which is non-collinear with the plural recent prior settings.<br>
+In a preferred embodiment of the adaptive controller for aligning a control loop of an amplifier system the algorithm retrieves at least three successive most recent prior settings. The algorithm preferably determines a plane and a gradient direction in a space of settings and determines the non-collinear adjustment direction using the plane and the gradient direction. The space of settings may comprise a three dimensional space defined by possible gain adjustment settings, phase adjustment settings and alignment error values. The one or more inputs for receiving test signals may receive a sampled output signal including a pilot signal. The adaptive controller may include a pilot signal detector, coupled to the test signal input and providing a detected residual pilot power signal to the processor, and the algorithm employs the detected residual pilot power signal to control the loop of the amplifier system.<br>
+Further features and advantages of the present invention are set out in the following detailed description.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+Figure 1 is a block schematic diagram of a feed forward power amplifier in accordance with a preferred embodiment of the present invention.<br>
+Figure 2 is a block schematic drawing of a loop control system in accordance with a preferred embodiment of the present invention.<br>
+Figure 3 is a flow diagram of a loop alignment control algorithm in accordance with a preferred embodiment of the present invention.<br>
+Figure 4 is a flow diagram of a gradient estimation process flow in accordance with a preferred embodiment of the present invention.<br>
+Figure 5 is a flow diagram of a process flow for selection of a non-collinear descent direction in accordance with a preferred embodiment of the present invention.<br>
+Figure 6 is a flow diagram of a first embodiment of alignment and step size update process flow in accordance with the present invention.<br>
+Figure 7 is a flow diagram of a second embodiment of alignment and step size update process flow in accordance with the present invention.<br>
+Figure 8 is a flow diagram of the process flow for initialization of a loop alignment search, in accordance with a preferred embodiment of the present invention.<br>
+DETAILED DESCRIPTION OF THE INVENTION<br>
+The block diagram of a feed forward compensated power amplifier (PA) in accordance with a preferred embodiment of the present invention is shown in<br>
+Figure 1 and 2. Figure 1 illustrates the basic feed forward amplifier and Figure 2 illustrates the control system.<br>
+As shown in Figure 1, the feed forward amplifier has a conventional architecture employing two control loops. Loop 1 comprises signal input 103, sampling coupler 106, gain adjuster 108, phase adjuster 109, pilot signal input coupler 112, main amplifier 115, main sampling coupler 118, input test coupler 130, delay 133, cancellation combiner 136, and loop 1 (or carrier cancellation) test coupler 139. Loop 2 comprises main sampling coupler 118, main path delay 121, error coupler 124, carrier cancellation combiner 136, loop 2 gain adjuster 141, loop 2 phase adjuster 142, error amplifier 145, loop 2 (or error cancellation) test coupler 148 and output 127.<br>
+As shown in Figure 2, the control system may comprise a processor 202 which is programmed to implement loop control processing employing an adaptive controller algorithm described in detail below. The loop 1 alignment involves the adjustment of the gain and phase shifter control settings, denoted by a-i and <t>i, to minimize the power detected at 'loop 1 test', within Figure 1. The processor may also (optionally) receive input test data corresponding to detected input power and operate to minimize the ratio of the power detected at loop 1 test to detected input power. The loop 2 alignment involves the adjustment of the gain and phase shifter control settings, denoted by c*2 and <i>2, to minimize the power detected at 'loop 2 test' within Figure 1. This power may (optionally) correspond to a residual (uncancelled) pilot signal.<br>
+More specifically, as shown in Figure 2, processor 202 receives input test data x(t) from (optional) input test coupler 130 via power detector 214 and A/D converter 212 and loop 1 test data e(t) from loop 1 test coupler 139 via power detector 218 and A/D converter 216. An (optional) pilot generator 220 generates a pilot signal which is provided to pilot signal input coupler 112 (shown in Figure 1). A pilot signal receiver 222 detects any uncancelled pilot signal z(t) from the loop 2 test coupler 148 (shown in Figure 1) and provides the detected pilot signal in digital form to processor 202. The processor 202 generates a sequence of alignment settings to reduce the cancellation residual (defined below). Digital to analog converters 204, 206, 208, 210 convert the loop 1 and loop 2 digital gain adjust and phase adjust control signals to analog signals ch, a2, 02 which are provided to the gain and phase adjusters 108, 109,141 and 142 (shown in Figure 1). Adjuster settings along with associated loop error values are stored in a suitable memory 224 associated with processor 202 to allow plural successive settings to be used by the loop control algorithm as discussed below.<br>
+The algorithm for the first loop alignment control preferably minimizes the normalized error power at the first test loop. The normalization can have various forms depending on the type of detectors used to measure the input and error powers. If RMS (Root Mean Square) detectors are used, and the input and error measurements are averaged over time, the normalized squared error is<br>
+I{|x| }<br>
+where L{} indicates a linear operator such as averaging or filtering; the subscript k indicates time. If logarithmic detectors are used, and the input and power measurements are averaged over time, the normalized squared error is<br>
+(Eq.2) 10 logi0 {Pk } = X{|i|2} - Z{jx|2}.<br>
+The former normalization is the ratio of arithmetic means. The latter normalization, after conversion from log-to-linear, is the ratio of geometric means. The below described algorithm can be applied to either type of error function.<br>
+The measured normalized squared error is a function of the alignment settings at time k:<br>
+(Eq.3) Pk=P(cck,tk).<br>
+The set of possible alignment settings forms an error surface. The task of the alignment control algorithm is to adjust the alignment from any initial setting to that which results in the minimum normalized squared error.<br>
+In the above, it is assumed that the detected error is used for the alignment of the first loop. The second loop alignment is similar to the first loop, except that a pilot signal is preferably used. The pilot signal is injected into coupler 112 (shown in Figure 1). For the case when the pilot signal is a tone of fixed amplitude, the normalized power described in (Eq. 1) is not required. The residual pilot detected at the output coupler 148 is used directly as the estimate of the cancellation residual. Filtering is preferably used to separate the pilot from the carrier (input) signal. Various pilot generation and detection circuits may be employed. For example, pilot generation and detection circuits are disclosed in US patent application serial no. 10/761,788 filed January 21, 2004 and in US patent application serial no. 10/838,985 filed May 5, 2004, which claims the benefit of provisional application serial no. 60/468,444 filed May 7, 2003, the disclosures of which are incorporated herein by reference in their entirety. The application of the technique described below may therefore be used for the alignment of the first loop or second loop, or both loops, using the appropriate detected error power as will be apparent to those skilled in the art. In the following, the term "cancellation residual" will therefore refer to Pk as defined above in (Eq. 1) for loop 1 control or detected pilot power for loop 2 control. Other forms of detected loop alignment error may also be used, however, depending on the specifics of the control loop and the amplifier system.<br>
+Before describing the algorithm of the present invention details of prior search algorithms will first be described to introduce common background terminology and search algorithm concepts. As noted above, prior search methods rely on either the "steepest descent" or the "coordinate descent" algorithms. The steepest descent algorithm adjusts the alignment settings in a direction of the gradient within the 2D gain-phase space. Dithering the alignment in orthogonal directions and measuring the changes in Pk provides an estimate of the gradient. The coordinate descent algorithm performs two separate 1D searches along pre¬defined orthogonal directions (usually the gain and phase axes). The alignments are dithered to determine which direction along the respective coordinates reduces<br>
+Pk-<br>
+The steepest descent algorithm is well known in the field of applied mathematics and its convergence properties have been studied thoroughly. In the direct application of the steepest descent algorithm to loop alignment, the algorithm generates a sequence of alignment settings, (ak<j>k), which produce, ideally, successively smaller values of the normalized squared error. Using directional derivatives, the sequence is defined recursively as<br>
+(Eq. 4) (cck+1,tM) = (ak,tk) + (Acck,A0k)<br>
+where<br>
+(Eq. 5) (AakMkh("A7P--AIb<br>
+dak d<j>k<br>
+and Pk is a positive scalar term referred to as a "discount factor". The sequence is considered converged when<br>
+dPk dPk _ (Eq.6) — - = -*- = (). dak dfa<br>
+An alternative definition of the alignment update, (Eq. 5), uses a step size and a gradient direction, denoted by Sk and egrad, respectively:<br>
+(Eq. 7) (AockMk) = ™sdsrad-sk sw.0gmd) where <br>
+It is apparent that even when pk is constant, the desired step size sk varies over time, as a function of the magnitude of the gradient.<br>
+The selection of the step size is an important practical problem for steepest descent algorithms. Underestimating sk allows the sequence to converge, but increases the number of iterations, and hence the time, to reach the minimum. Overestimating the step size causes the sequence to overshoot the minimum, resulting in a limit cycle about the minimum. Choosing sk (or pk) to balance convergence speed and steady-state error is a perennial problem. <br>
+The gradient is often computed using two directional derivatives each following a coordinate axis. Because power detectors are used, the derivative information is not available from a single measurement. Each derivative is approximated by the difference of two measurements whose alignment is displaced in the specified direction. For example, the directional derivative associated with the phase is approximated as derivatives are not necessarily coupled to the step size used to improve the alignment (see (Eq. 7)). To distinguish between the two step sizes, the former will be referred to as the "derivative step size", while the latter will retain the term "step size."<br>
+The desired step size defined by (Eq. 10) is proportional to the magnitude of the gradient; the desired direction of the alignment adjustment is the gradient direction. For bowl-shaped error surfaces, the gradient decreases towards zero as the search converges towards the desired alignment setting. Because of difficulties associated with measuring the gradient, some known methods use other means of selecting the direction and decreasing the step size as the search converges.<br>
+The coordinate descent method restricts the direction of alignment adjustments to 0, rc/2, 7t, or 37t/4 radians. These directions correspond to an increase in the gain setting, an increase in the phase setting, a decrease in the gain setting, or a decrease in the phase setting, respectively.<br>
+One approach is to choose a fixed step size and move in a selected direction, making adjustments if needed. If the direction is chosen correctly (to within n/2 radians of the gradient direction), a small step will improve the alignment, as indicated by a decrease in Pk. A step size that is too large will increase Pk despite proper direction selection because the minimum is grossly overshot. Thus, it is possible to use changes in Pk to determine if the step size and direction are appropriate. If the iterative sequence experiences a slow monotonic decrease in Pk, the direction is correct, but the step size is too small. If Pk increases despite large changes in the direction (n radians), then the step size is too large.<br>
+In terms of a step size selection algorithm, the step size is reduced by a scalar multiple each time the direction is reversed by % radians (referred to as a "sign change" in the step size) in search of lower Pk's. The step size is increased by a scalar multiple if Pk is decreasing after N steps in a given direction. This method of step size selection is referred to as the "sign reversal method".<br>
+The magnitude of the step can also be varied as a function of Pk, which decreases as the alignment search converges. The method is referred to as "direct power mapping" because it maps the step size to the normalized squared error Pk.<br>
+The three key problems with prior implementations of the steepest descent algorithm are the estimation of the gradient, the computation of square roots, and the selection of the step size.<br>
+It is apparent that more alignment adjustments are made to estimate the gradient than to minimize the normalized squared error, Pk. That is, there are conflicting requirements on the sequence of adjustments of the loop alignment settings. On one hand, alignment adjustments that reduce the normalized squared error are desired, as described by (Eq. 4); on the other hand, the search must deviate from the optimal path to obtain reliable estimates of the derivatives (see (Eq. 11)). The additional alignment changes slow the convergence speed.<br>
+When using a microprocessor to control the alignment, the available computational power may be small. Estimation of the gradient direction using (Eq. 8) and (Eq. 9) is made challenging for a microprocessor because of the square root and division operations.<br>
+The step size selection in (Eq. 10) is made difficult by uncertainties in the gradient estimate. As a result, the accuracy of the derivative estimates has significant impact on the stability of the search algorithm. The selection of the derivative step size becomes of critical importance because an insufficient step size can result in the derivative estimate being corrupted excessively by noise, PA distortion, and detector quantization. An excessive derivative step size can straddle the minimum, underestimating the gradient, thereby slowing the convergence. The coordinate descent method has similar shortcomings to the steepest descent. Instead of a gradient, the directional derivative must be computed.<br>
+With the inherent inaccuracies in the difference approximation of the derivatives, it is important to decouple the step size from the gradient estimation. Basing the step size selection on direct power mapping or sign reversals reduces effect of inaccuracies in the gradient estimation. The power mapping approach is well suited to the gradient method; however, the mapping must be obtained experimentally.<br>
+Combining the "power to step size" mapping and the coordinate descent is less effective because the ideal step size for each coordinate direction is different. Compared to the gradient direction step size, the ideal coordinate step size is less by a factor of cos(9c - 0grad), where 9C is the coordinate direction. That is, the ideal step size can be zero (when |8C - 6grad| = TC/2) even though Pk is larger than the minimum value. In general, the step size for one (or both) of the coordinate directions will be too large, leading to many incorrect steps, thereby slowing the convergence.<br>
+The sign reversal approach to step size selection performs equally well for both the steepest descent and coordinate descent methods. However, it requires more time to reach the minimum because it tends to enter a decaying limit cycle around the optimal alignment setting before settling to the desired value. That is, the search over-shoots the optimal setting and reverses the direction, repeatedly, before reaching the minimum.<br>
+The present invention provides an improved adaptive feed forward loop control search algorithm. The advantages of the approach of the present invention over prior art alignment systems include reduced convergence time, simplified implementation, and increased stability.<br>
+The algorithm of the present invention computes gradient directions using past alignment settings (referred to as "points" in a space of alignment settings which comprises a three dimensional space defined by possible gain adjustment settings, phase adjustment settings and detected loop alignment error values), thus eliminating the need for separate alignment adjustments for derivative estimation. As a result, the convergence speed is increased. The algorithm does not, in general, use the gradient as the descent direction. Instead, it chooses a "non-collinear" descent trajectory that allows the current gradient to be estimated reliably from past alignment settings. The non-collinear descent is chosen close to the gradient descent, on average (discussed later).<br>
+The implementation is preferably simplified for use on a microprocessor. The requirement for the gradient estimation is that the three points are non-collinear. Enforcing non-collinear points is made easier by quantizing the permitted descent directions, thus forming a finite set. The descent direction selected from the set is the one closest to the gradient direction that is not collinear with the two most recent points. The selection of a descent direction from a finite set can be done without square root and division operations shown in (Eq. 8) and (Eq. 9).<br>
+To improve stability, the alignment step size is not a direct function of the gradient measurement. Two embodiments of the step size selection are disclosed. In the first embodiment, the step size is quantized for ease of microprocessor implementation. The current step size is compared to a range derived from the gradient estimate. The step size is raised or lowered to an adjacent quantized value, moving the step size towards the desired range. This gradual adjustment of the step size makes the iterative sequence less sensitive to errors in the derivative estimation. In the second embodiment, the step size is mapped to the cancellation residual. Since the non-collinear descent trajectory is close to the gradient descent, the uncertainty in the step size mapping is reduced compared to a coordinate descent implementation.<br>
+Next a specific implementation of the loop control search algorithm of the present invention will be described. A preferred embodiment of the basic process flow of the algorithm is shown in Figure 3. The system is first initialized (303). (One preferred initialization process flow is shown in Figure 8 described below.) The iterative process begins with a measurement (306) of the cancellation residual, Pk. A point, denoted by pk, is created that is a triple comprising the gain and phase settings (denoted by ak and <j respectively as well the cancellation residual pk:></j>
+The point is stored for later use (309). The planar approximation and the gradient direction are computed from the past points (312). The non-collinear descent direction is determined (315). The alignment and step size are adjusted (318). The iterative process continues with the next measurement of the cancellation residual (306).<br>
+The blocks associated with 303, 312, 315, and 318 are discussed below in greater detail.<br>
+Gradient Estimation<br>
+The gradient estimation approximates the local error surface as a plane. A vector normal to the surface, denoted by npiane. defines the plane. It is the cross-product of two vectors formed using the three points:<br>
+(Eq. 13) ft plane = ("«&gt;"*,"/&gt;) = (Pk ~ Pk-l)X (Pk ~ Pk-z)<br>
+where pk, pk-i, and pk-2 are the three most recent points created as part of the iterative process. New planes are computed as the search process progresses, with the most recent plane being approximately tangent to the error surface at current point pk.<br>
+For a given iteration, the planar approximation models the relationship between changes in the cancellation residual and adjustments in the alignment settings: that is,<br>
+(Eq. 14) naAak + n^<f>k = -nPAPk<br>
+where (Aak,A<j>k) is the change in the alignment setting and APk is the resulting change in the cancellation residual. The gradient direction is<br>
+The preferred adjustment in the gain and phase shifters, without consideration of collinearity, is<br>
+(Eq. 17) (LcCtMu)^ =sk where sk is the step size.<br>
+It is apparent from (Eq. 17) that the gradient is undefined when<br>
+(Eq. 18) (na2+n/)= 0.<br>
+Since the three-point plane is a secant, rather than a tangent, it is possible to straddle the minimum without any of the three points reaching the optimal alignment setting. In the following, separate processing algorithms are used depending on whether (Eq. 18) is true or false.<br>
+The processing sequence for the gradient estimation is shown in Figure 4. The past points are checked to determine if three non-collinear points are available (403). The disclosed algorithm guarantees that three successive points, if available, will be non-collinear (as described later). However, if the algorithm is modified to allow a collinear descent, it would be necessary to test additional (older) points to form the non-collinear triangle. The required test for non- collinearity is defined later in (Eq. 21).<br>
+If three non-collinear points are available, the points are retrieved (406) and the normal vector is computed (409). If the slope of the plane is zero, making (Eq. 18) true, the gradient is marked as undefined (415). If not, the gradient is computed (421). The gradient and the normal vector are stored for later subroutines (418).<br>
+If three non-collinear points are unavailable (for example, at start-up of the search progress), only the most recent point is retrieved (424). The target alignment, defined during the initialization stage (303), is retrieved (427). The target alignment, denoted by (aT,<t>T), is a best guess at the final alignment setting. It does not have to be accurate; it is designed to stabilize the algorithm during start-up. The gradient direction is computed (430) as the direction from the target alignment setting to the current alignment:<br>
+(Eq. 19) cosfl^ = ,<br>
+j(aT-akf + (0T-0k)2<br>
+(Eq. 20) sin^ = .	.<br>
+WT-ak) +y&gt;T-0k)<br>
+The gradient is stored for later subroutines (418); the normal vector is set to (run^np) = (cosegrad,sinegrad,0).<br>
+Non-collinear Descent Direction<br>
+If the gradient is defined (that is, (Eq. 18) is false), the non-collinear descent direction is chosen as discussed below. When (Eq. 18) is true, an alternative approach to maintaining both convergence and a non-collinear descent is preferably used (see later, (Eq. 26)).<br>
+The descent direction must be non-collinear with the most recent alignment adjustment to ensure that the gradient estimate is reliable. The third element of the normal vector, nP, will be zero if the three points are collinear. The test for non- coliinearity is<br>
+(Eq. 21) where y &gt; 0 and<br>
+(Eq. 22) dp =(a2-ajmfa +	-&gt;,).<br>
+Note that arctan(nP/dP) is equal to one of the three angles within the triangle whose vertices are the three points. The recommended value for y is tan(7t/4). The preferred approach restricts the descent direction to enforce (Eq. 21), while attempting to follow the gradient as close as possible.<br>
+To improve the computational efficiency, it is desirable to quantize the permitted descent directions to a small set. The alignment adjustment becomes<br>
+(Eq. 23) (Aat, = (sk cos e„c(k),-sk sm0„c(k)) where<br>
+(Eq. 24) 8nc{k) = mk»&amp;e<br>
+and mk is an integer. If, for example, eight descent directions are permitted, then AG = 7t/4 radians.<br>
+The selection of the non-collinear descent direction, 9nc, is shown in Figure 5. The gradient direction is retrieved (503) and checked to determine if it is defined (506). If the gradient is undefined (506), the non-collinear descent is also undefined (533). This is stored for later use (524).<br>
+If the gradient is defined, the vector (n«,^) is projected onto to each of the permitted descent directions (509); the largest inner product is found (512) and selected as the candidate descent direction (515). If the candidate descent direction is not collinear with the past alignment adjustment (518), the candidate direction becomes the non-collinear descent (521). The non-collinear descent direction is stored for later use (524).<br>
+If the candidate descent direction is collinear with the past alignment adjustment (518), the second largest inner product is found (527). It becomes the non- collinear descent direction (530) and is stored for later use (524). Note that if the last step was in a given direction, that direction and it's negative are disallowed in the current step. As a result, the angle defined by |arctan(np/dp)| will be greater than ti/4 radians and less than ZitlA radians.<br>
+Also note that since the gradient vector does not have to be normalized by [na2 + n/]0-5 in order to select the non-collinear descent direction, the computational burden on the microprocessor is reduced.<br>
+Alignment and Step Size Update The update of the alignment setting is as follows: (Eq. 25) (
+where (Aak,A<j>k) is the alignment adjustment for the iteration k and pk is a discount factor (0 
+In the following, two embodiments of the alignment and step size update are discussed. <br>
+First Embodiment<br>
+The first embodiment of the alignment and step size update processing is shown in Figure 6. Within the first embodiment, there are three ways to compute the alignment adjustment. To select the correct method, the processing tests if the descent direction is undefined and if the descent direction has reversed from its most recent value. The two most recent non-collinear descent directions are retrieved (603). If the most recent non-collinear descent enc(k) is undefined, the alignment adjustment (645) is computed as follows:<br>
+(Eq. 26)<br>
+The alignment is updated (648) using (Eq. 25), with the discount factor set to unity (Pk =1). Using (Eq. 26) reduces the size of the triangle defined by the three points while ensuring that the next three points are non-collinear. As a result, the iterative sequence will not stall before reaching the minimum. For the next iteration, the step size is reduced (651):<br>
+(Eq. 27)<br>
+The new step size is stored for use in the next iteration (630).<br>
+If the most recent non-collinear descent 9nc(k) is defined (606), a second test is applied to determine if the descent direction has reversed (609). A direction reversal occurs when previous alignment adjustment overshot the optimal alignment setting. This condition is indicated as follows:<br>
+(Eq. 28) cos[9nc{k)-dnc{k-l)]
+where Gnc(k-1) is the previous descent direction. If (Eq. 28) is true (609), the alignment adjustment is computed (639) using (Eq. 23). The alignment is updated (642) using (Eq. 25), with the discount factor set to 0.7 (pk = 0.7). For the next iteration, the step size is reduced (636):<br>
+(Eq-29)<br>
+The new step size is stored for use in the next iteration (630).<br>
+If the descent direction is defined (606) and (Eq. 28) is false (609), the alignment adjustment (612) proceeds using (Eq. 23). The alignment is updated (615) using (Eq. 25), with the discount factor set to unity (pk = 1). The step size adjustment is described below.<br>
+The step size for the next iteration is computed from the planar approximation in (Eq. 14). Since AP ideally reduces the current Pk to the minimum value, the result is<br>
+(Eq. 30) naAcck + n^<j>k « np [Pk - PkMn J<br>
+where Pkimin is the target minimum for the normalized squared error. Using (Eq. 17) and (Eq. 30), the approximate step size is<br>
+(Eq.31)	J.<br>
+Unfortunately, the step size in (Eq. 31) is not stable when the slope of the plane (na2 + r&gt;+2) is small. In addition, the minimum value, Pk&gt;msn» is not known exactly (although it can be estimated as the iterations progress).<br>
+To limit the effect of uncertainties regarding the target minimum and the error surface shape, the step size selection is preferably decoupled from the current planar estimate. This is achieved by limiting the change in the step size between iterations. The step size is increased or decreased when the previous adjustment (Aak,Ak) is outside an allowable range. The range parameters are computed (618) as follows:<br>
+(Eq. 32) A = naLak+nfifk (Eq. 33) B = np[Pk-Pk^\.<br>
+If A &gt; 1.5 B, the current step size exceeds the higher bound (621). The step size is reduced (636):<br>
+(Eq. 34)<br>
+If A 
+(Eq. 35) sk+1=^*sk.<br>
+If neither boundary test (621 or 624) is active, the step size remains the same (627). The new step size is stored for the next iteration (630).<br>
+If it is determined that the most recent non-collinear direction, enc(k), is defined, but the previous descent direction, enc(k-1), is not, the processing proceeds as if test 609 was false.<br>
+In the first embodiment of the alignment and step size update, the step size is quantized. As a result, the step size updates do not have to be computed. The index of the look-up table can be incremented or decremented as needed.<br>
+Note that the high and low bound (A &gt; 1.5B and A 
+Second Embodiment<br>
+A second embodiment of the alignment and step size update is shown in Figure 7. The primary difference is that it selects the step size based on the cancellation residual: that is,<br>
+(Eq. 36) sk=f{Pk} where f{} is a specified function.<br>
+In the second embodiment, the most recent values of the non-collinear descent direction and measurement Pk are retrieved (703). The descent direction is tested (706). If it is undefined, the alignment adjustment (718) defined by (Eq. 26) is used. The alignment is updated (721) using (Eq. 25), with the discount factor set to unity (pk = 1)-<br>
+If the descent direction is defined (706), the step size is computed (709) using the mapping in (Eq. 36). The alignment adjustment (712) is based on (Eq. 23). The alignment is updated (715) using (Eq. 25), with the discount factor set to 0.7 (pk = 0.7). Although the mapping in (Eq. 36) can be obtained from experiments, it can be seen that (Eq. 31) is a potential cancellation residual to step size mapping.<br>
+The residual mapping assumes that the descent direction is equal to the gradient direction, which is only true on average. For the non-collinear descent, the step size is in error by a factor of the cos(enc - 6grad). where 0nc is the non-collinear descent direction. The worst-case difference between the non-collinear descent and the gradient is 7t/4 radians for the 8-direction quantization. As a result, the maximum error in the step size is a factor of 1.4. This is easily handled by assigning the discount factor of pk = 0.7.<br>
+Initialization of Search<br>
+The initialization process flow is shown in Figure 8. The detectors are calibrated (803), and the initial values of the alignment settings (806), the target alignment settings (809), and the step size (812) are loaded. The details of calibration and the target alignment are discussed below.<br>
+Preferably the error and input detectors are either matched or calibrated for the first loop alignment so that the ratio of the power measurements is an estimate of the cancellation residual. As an example it may be assumed that both the input and error power measurements are obtained using log-detectors. During the calibration, the main amplifier is turned off. Since there is no cancellation, the two power detectors should have the same value; any differences are removed using calibration terms. By repeating these measurements at a set of input power levels, it is possible to compute the dB per DAC LSB (Least Significant Bit) scale factor. It is assumed that the cancellation measurements are converted from dB into linear terms resulting in a bowl-shaped error surface.	
+When the alignment search is initiated, only one point, pk, is available. As a result, the gradient direction cannot be computed using the three-point method. A target alignment setting (best guess of the location of the minimum) is selected to allow a gradient direction to be specified.<br>
+For the first embodiment of the step size update, it is necessary to specify an initial step size. The initial selection of the step size is based on the initial normalized squared error, not unlike the second embodiment of the step size update. The required accuracy of the initial step size for the first embodiment is modest because the step size will adjust to compensate.<br>
+The present invention has been described in relation to a presently preferred embodiment, however, it will be appreciated by those skilled in the art that a variety of modifications, too numerous to describe, may be made while remaining within the scope of the present invention. Accordingly, the above detailed description should be viewed as illustrative only and not limiting in nature.<br><br><br><br><br><br><br><br>
+WHAT IS CLAIMED IS:<br>
+1.	A method for rapid alignment of a control loop of an amplifier system, comprising:<br>
+obtaining a plurality of prior alignment settings, each defining a point in a space of alignment settings, including at least three prior settings which are non- collinear in the space of alignment settings;<br>
+determining an adjustment direction using said non-collinear prior adjustment settings; and<br>
+adjusting one or more of the control loop settings using said adjustment direction.<br>
+2.	A method for rapid alignment of a control loop of an amplifier system as set out in claim 1, wherein said space of alignment settings comprises a three dimensional space defined by possible gain adjustment settings, phase adjustment settings and detected alignment error values.<br>
+3.	A method for rapid alignment of a control loop of an amplifier system as set out in claim 2, wherein adjusting one or more of the control loop settings comprises adjusting the gain setting or adjusting the phase setting.<br>
+4.	A method for rapid alignment of a control loop of an amplifier system as set out in claim 2, wherein said amplifier system is a feed forward amplifier comprising a carrier cancellation control loop and an error cancellation control loop and wherein adjusting one or more of the control loop settings comprises adjusting the gain setting or adjusting the phase setting of the carrier cancellation control loop.<br>
+5.	A method for rapid alignment of a control loop of an amplifier system as set out in claim 4, wherein the carrier cancellation control loop comprises an input test coupler and a carrier cancellation test coupler and wherein the detected alignment error values comprise the ratio of detected carrier power between the carrier cancellation test coupler and the input test coupler.<br>
+6.	A method for rapid alignment of a control loop of an amplifier system as set out in claim 2, wherein said amplifier system is a feed forward amplifier comprising a carrier cancellation control loop and an error cancellation control loop and wherein adjusting one or more of the control loop settings comprises adjusting the gain setting or adjusting the phase setting of the error cancellation control loop.<br>
+7.	A method for rapid alignment of a control loop of an amplifier system as set out in claim 6, wherein the error cancellation control loop comprises an error cancellation test coupler and wherein the detected alignment error values comprise detected error signal power at the test coupler.<br>
+8.	A method for rapid alignment of a control loop of an amplifier system as set out in claim 7, wherein the feed forward amplifier further comprises a source of a pilot signal and wherein the detected alignment error values comprise detected residual pilot signal power.<br>
+9.	A method for rapid alignment of a control loop of an amplifier system as set out in claim 2, wherein said adjustment direction takes discrete values in the space of alignment settings.<br>
+10.	A method for controlling an amplifier system having a control loop comprising a control loop input, a first signal path, a second signal path, a control loop output, and a control loop error test coupler, at least one of said first and second signal paths including an amplifier, said method comprising:<br>
+detecting a control loop error value using a signal sampled by the control loop error test coupler;<br>
+determining a point in a space of loop control settings using the detected error value and two or more loop control parameters;<br>
+determining a plane in the space of loop control settings; determining a gradient in the space of loop control settings; selecting an adjustment direction in the space of loop control settings using the plane and gradient information; and<br>
+adjusting one or more of the loop control parameters using the adjustment direction.<br>
+11.	A method for controlling an amplifier system as set out in claim 10, further comprising sampling the signal at the control loop input and wherein said detecting a control loop error value comprises determining the ratio of the signal sampled by the control loop error test coupler and the signal sampled at the control loop input.<br>
+12.	A method for controlling an amplifier system as set out in claim 10, wherein said control loop further comprises a gain adjuster and a phase adjuster and wherein said two or more loop control parameters comprise gain and phase adjuster settings.<br>
+13.	A method for controlling an amplifier system as set out in claim 12, wherein said space of loop control settings comprises a three dimensional space defined by possible gain adjuster settings, phase adjuster settings and loop error values.<br>
+14.	A method for controlling an amplifier system as set out in claim 10, wherein said determining a plane in the space of loop control settings comprises obtaining a plurality of successive prior settings each defining a point in the space of loop control settings, determining if at least three non-collinear prior setting points are available, and if they are, determining a plane in the space of loop control settings using the at least three non-collinear prior setting points.<br>
+15.	A method for controlling an amplifier system as set out in claim 14, wherein said determining a plane in the space of loop control settings further comprises determining the normal vector to the plane from said at least three non-collinear prior setting points.<br>
+16.	A method for controlling an amplifier system as set out in claim 15, further comprising determining the slope of the plane, determining if the slope has a zero value, and wherein the gradient direction is determined only if the slope has a nonzero value.<br>
+17.	A method for controlling an amplifier system as set out in claim 10, wherein selecting an adjustment direction in the space of loop control settings comprises selecting a direction close to the gradient direction without being collinear with the last two prior setting points.<br>
+18.	A method for controlling an amplifier system as set out in claim 17, wherein selecting an adjustment direction in the space of loop control settings comprises comparing plural discrete directions to the gradient direction and selecting the closest non-collinear direction.<br>
+19.	A method for controlling an amplifier system as set out in claim 10, wherein adjusting one or more of the loop control parameters using the adjustment direction further comprises using a step size for adjusting the one or more loop control parameters and altering the step size by comparing the step size to bounding step size values.<br>
+20.	A method for controlling an amplifier system as set out in claim 10, wherein adjusting one or more of the loop control parameters using the adjustment direction further comprises using a step size for adjusting the one or more loop control parameters and altering the step size based on the detected control loop error value.<br>
+21.	A feed forward amplifier system, comprising: an input for receiving an RF input signal;<br>
+a first control loop coupled to the input and comprising a main amplifier, a main amplifier sampling coupler, a delay element, and a cancellation combiner;<br>
+a second control loop coupled to the first control loop and comprising a first signal path, a second signal path comprising an error amplifier, and an error coupler coupling the first and second signal paths; an output coupled to the error coupler; and<br>
+a control system, coupled to and controlling at least one of the first and second control loops employing adjustable loop control settings, said control system comprising a processor programmed with a non-collinear descent algorithm which selects a control setting adjustment direction which is non- collinear with plural recent prior settings.<br>
+22.	A feed forward amplifier system as set out in claim 21, wherein said first control loop further comprises a gain adjuster and a phase adjuster, wherein said control system is coupled to said gain adjuster and phase adjuster, and wherein said adjustable loop control settings comprise a loop 1 gain adjuster setting and a loop 1 phase adjuster setting.<br>
+23.	A feed forward amplifier system as set out in claim 21, wherein said second control loop further comprises a gain adjuster and a phase adjuster, wherein said control system is coupled to said gain adjuster and phase adjuster, and wherein said adjustable loop control settings comprise a loop 2 gain adjuster setting and a loop 2 phase adjuster setting.<br>
+24.	A feed forward amplifier system as set out in claim 22, wherein said first control loop further comprises an input test coupler coupled to sample the input signal and providing a sampled input signal to the processor and a loop 1 test coupler coupled to sample the output of the carrier cancellation combiner and providing a sampled loop 1 test signal to the processor and wherein said algorithm employs the ratio of the sampled loop 1 test signal and sampled input signal to adjust said gain and phase settings.<br>
+25.	A feed forward amplifier system as set out in claim 23, wherein the feed forward amplifier further comprises a source of a pilot signal and wherein said second control loop further comprises a loop 2 test coupler for sampling the loop 2 output.<br>
+26.	A feed forward amplifier system as set out in claim 25, wherein the feed forward amplifier further comprises a pilot signal detector, coupled to the loop 2 test coupler and providing a detected residual pilot power signal to the processor, and wherein said algorithm employs the detected residual pilot power signal to adjust said gain and phase settings.<br>
+27.	A feed forward amplifier system as set out in claim 21, wherein the non- collinear descent algorithm uses at least three successive prior settings to estimate a gradient direction for adjusting the control settings.<br>
+28.	A feed forward amplifier system as set out in claim 27, wherein the non- collinear descent algorithm selects the adjustment direction to be close to the gradient direction without being collinear with the most recent alignment adjustment settings.<br>
+29.	A feed forward amplifier system as set out in claim 28, wherein the non- collinear descent algorithm selects the adjustment direction by comparing quantized descent directions to the gradient direction.<br>
+30.	An adaptive controller for aligning a control loop of an amplifier system, comprising:<br>
+one or more inputs for receiving one or more test signals corresponding to alignment error of the amplifier system control loop; and<br>
+a processor coupled to said one or more inputs and having one or more control outputs, wherein said processor is programmed with an algorithm to provide loop adjustment settings to said control outputs to control the loop of the amplifier system, wherein said algorithm retrieves plural recent prior settings and selects a control setting adjustment direction which is non-collinear with said plural recent prior settings.<br>
+31.	An adaptive controller for aligning a control loop of an amplifier system as set out in claim 30, wherein said algorithm retrieves at least three successive most recent prior settings.<br>
+32.	An adaptive controller for aligning a control loop of an amplifier system as set out in claim 30, wherein said algorithm determines a plane and a gradient direction in a space of settings and determines said non-collinear adjustment direction using said plane and said gradient direction.<br>
+33.	An adaptive controller for aligning a control loop of an amplifier system as set out in claim 32, wherein said space of settings comprises a three dimensional space defined by possible gain adjustment settings, phase adjustment settings and alignment error values.<br>
+34.	An adaptive controller for aligning a control loop of an amplifier system as set out in claim 32, wherein said one or more inputs for receiving test signals receives a sampled output signal including a pilot signal and wherein said adaptive controller further comprises a pilot signal detector, coupled to the test signal input and providing a detected residual pilot power signal to the processor, and wherein said algorithm employs the detected residual pilot power signal to control the loop of the amplifier system.<br></j></j></t></j></f></j></j></i></t></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgIEFNRU5ERUQgIFBBR0VTIE9GIFNQRUNJRklDQVRJT04gICAyOS0xMi0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006    AMENDED  PAGES OF SPECIFICATION   29-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgIEFNRU5ERUQgQ0xBSU1TICAgMjktMTItMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006    AMENDED CLAIMS   29-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgIENPUlJFU1BPTkRFTkNFIE9USEVSUyAgICAxNi0xMi0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006    CORRESPONDENCE OTHERS    16-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgIEZPUk0tMSAgIDI5LTEyLTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006    FORM-1   29-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgIFBPV0VSIE9GIEFUVE9STkVZICAgMTYtMTItMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006    POWER OF ATTORNEY   16-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgQU1FTkRFRCAgUEFHRVMgT0YgU1BFQ0lGSUNBVElPTiAgMTQtMTItMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006   AMENDED  PAGES OF SPECIFICATION  14-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgQU1FTkRFRCBDTEFJTVMgIDE0LTEyLTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006   AMENDED CLAIMS  14-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1jaGVucC0yMDA2ICAgY29ycmVzcG9uZGVuY2UgIG90aGVycyAgICAgMDctMDMtMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3763-chenp-2006   correspondence  others     07-03-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgQ09SUkVTUE9OREVOQ0UgT1RIRVJTICAgMjktMTItMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006   CORRESPONDENCE OTHERS   29-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgRk9STS0xIDE0LTEyLTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006   FORM-1 14-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgRk9STS0zIDE0LTEyLTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006   FORM-3 14-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgT1RIRVIgUEFURU5UIERPQ1VNRU5UIDEgMTQtMTItMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006   OTHER PATENT DOCUMENT 1 14-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICAgT1RIRVIgUEFURU5UIERPQ1VNRU5UIDE0LTEyLTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006   OTHER PATENT DOCUMENT 14-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1jaGVucC0yMDA2ICBjbGFpbXMgIDExLTEwLTIwMDYucGRm" target="_blank" style="word-wrap:break-word;">3763-chenp-2006  claims  11-10-2006.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1jaGVucC0yMDA2ICBkZXNjcmlwdGlvbiAoY29tcGxldGUpICAxMS0xMC0yMDA2LnBkZg==" target="_blank" style="word-wrap:break-word;">3763-chenp-2006  description (complete)  11-10-2006.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1DSEVOUC0yMDA2ICBFWEFNSU5BVElPTiBSRVBPUlQgUkVQTFkgUkVDRUlWRUQgMTQtMTItMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3763-CHENP-2006  EXAMINATION REPORT REPLY RECEIVED 14-12-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1jaGVucC0yMDA2LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">3763-chenp-2006-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1jaGVucC0yMDA2LWNvcnJlc3BvbmRuZWNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">3763-chenp-2006-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1jaGVucC0yMDA2LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">3763-chenp-2006-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1jaGVucC0yMDA2LWZvcm0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">3763-chenp-2006-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1jaGVucC0yMDA2LWZvcm0gMTgucGRm" target="_blank" style="word-wrap:break-word;">3763-chenp-2006-form 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1jaGVucC0yMDA2LWZvcm0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">3763-chenp-2006-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1jaGVucC0yMDA2LWZvcm0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">3763-chenp-2006-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzc2My1jaGVucC0yMDA2LXBjdC5wZGY=" target="_blank" style="word-wrap:break-word;">3763-chenp-2006-pct.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="250495-danger-detection-system.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="250497-reinforcement-fitting.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>250496</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>3763/CHENP/2006</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>02/2012</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>13-Jan-2012</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>06-Jan-2012</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>11-Oct-2006</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>POWERWAVE TECHNOLOGIES, INC.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>1801 E. ST. ANDREW PLACE, SANTA ANA, CALIFORNIA 92705, USA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>BRAITHWAITE, RICHARD, NEIL</td>
+											<td>1677 N. YUROK STREET, ORANGE, CA 92867, USA</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H03F1/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US05/04437</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-02-14</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>60/552,405</td>
+									<td>2004-03-11</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>11/018,216</td>
+									<td>2004-12-21</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/250496-a-method-for-rapid-alignment-of-a-control-loop-of-an-amplifier-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 14:24:25 GMT -->
+</html>

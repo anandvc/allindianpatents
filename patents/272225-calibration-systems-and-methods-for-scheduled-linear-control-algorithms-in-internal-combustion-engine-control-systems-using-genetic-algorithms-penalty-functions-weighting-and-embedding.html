@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/272225-calibration-systems-and-methods-for-scheduled-linear-control-algorithms-in-internal-combustion-engine-control-systems-using-genetic-algorithms-penalty-functions-weighting-and-embedding by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:47:58 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 272225:CALIBRATION SYSTEMS AND METHODS FOR SCHEDULED LINEAR CONTROL ALGORITHMS IN INTERNAL COMBUSTION ENGINE CONTROL SYSTEMS USING GENETIC ALGORITHMS, PENALTY FUNCTIONS, WEIGHTING, AND EMBEDDING</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">CALIBRATION SYSTEMS AND METHODS FOR SCHEDULED LINEAR CONTROL ALGORITHMS IN INTERNAL COMBUSTION ENGINE CONTROL SYSTEMS USING GENETIC ALGORITHMS, PENALTY FUNCTIONS, WEIGHTING, AND EMBEDDING</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method for calibrating an engine control system comprises identifying engine calibration sub-problems for an engine calibration; seeding an initial generation for one of the engine calibration sub-problems with known/good individuals; optimizing free parameters in the one of the engine calibration sub-problem over a parameter/coefficient scheduling space using a genetic algorithm; using penalty functions; identifying a next one of the engine calibration sub-problems containing a prior one of the engine calibration sub-problems; seeding an initial population of the next one of the engine calibration sub-problems with know/good individuals; repeating until the engine calibration containing the engine calibration sub-problems is solved; and operating an engine control system of a vehicle using the engine calibration.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>CALIBRATION SYSTEMS AND METHODS FOR SCHEDULED LINEAR<br>
+CONTROL ALGORITHMS IN INTERNAL COMBUSTION ENGINE CONTROL<br>
+SYSTEMS USING GENETIC ALGORITHMS, PENALTY FUNCTIONS,<br>
+WEIGHTING, AND EMBEDDING<br>
+FIELD<br>
+[0001] The present disclosure relates to engine control systems for<br>
+vehicles, and more particularly calibration of engine control systems for vehicles.<br>
+BACKGROUND<br>
+[0002] The statements in this section merely provide background<br>
+information related to the present disclosure and may not constitute prior art.<br>
+[0003] Vehicle manufacturers typically use dynamic compensation in<br>
+internal combustion engine (ICE) control systems. Examples include cylinder air<br>
+rate prediction, fuel dynamics compensation, idle speed control, and closed-loop<br>
+fuel control. Some manufacturers use control systems that are derived from<br>
+scheduled, linear models of the process under control or feature scheduled,<br>
+linear models in their implementation. For example, see Dudek et al., U.S.<br>
+Patent No. 7,246,004, "Nonlinear Fuel Dynamics Control with Lost Fuel<br>
+Compensation".<br>
+[0004] Analytical methods that derive control systems from models<br>
+usually require calibrated models. Calibrated models may be personalized to the<br>
+particular product using the control system. There are a variety of methods for<br>
+calibrating these kinds of models. Most methods involve some form of<br>
+optimization. For example see, Dudek, U.S. Patent No. 7,212,915, "Application<br>
+ <br>
+of Linear Splines to Internal Combustion Engine Control", which uses Least<br>
+Squares. Alternatively, any other multivariabie optimization method can be used.<br>
+SUMMARY<br>
+[0005] A method for calibrating an engine control system comprises<br>
+identifying engine calibration sub-problems for an engine calibration; seeding an<br>
+initial generation for one of the engine calibration sub-problems with known/good<br>
+individuals; optimizing free parameters in the one of the engine calibration sub-<br>
+problem over a parameter/coefficient scheduling space using a genetic algorithm;<br>
+using penalty functions; identifying a next one of the engine calibration sub-<br>
+problems containing a prior one of the engine calibration sub-problems; seeding<br>
+an initial population of the next one of the engine calibration sub-problems with<br>
+know/good individuals; repeating until the engine calibration containing the<br>
+engine calibration sub-problems is solved; and operating an engine control<br>
+system of a vehicle using the engine calibration.<br>
+[0006] Further areas of applicability will become apparent from the<br>
+description provided herein. It should be understood that the description and<br>
+specific examples are intended for purposes of illustration only and are not<br>
+intended to limit the scope of the present disclosure.<br>
+DRAWINGS<br>
+[0007] The drawings described herein are for illustration purposes only<br>
+and are not intended to limit the scope of the present disclosure in any way.<br>
+ <br>
+[0008] FIG. 1 is a functional block diagram of an exemplary vehicle<br>
+engine control system; and<br>
+[0009] FIG. 2 is a flowchart illustrating step of a method for calibrating<br>
+a vehicle.<br>
+DETAILED DESCRIPTION<br>
+[0010] The following description is merely exemplary in nature and is<br>
+not intended to limit the present disclosure, application, or uses. It should be<br>
+understood that throughout the drawings, corresponding reference numerals<br>
+indicate like or corresponding parts and features. As used herein, the term<br>
+module refers to an Application Specific Integrated Circuit (ASIC), an electronic<br>
+circuit, a processor (shared, dedicated, or group) and memory that execute one<br>
+or more software or firmware programs, a combinational logic circuit, and/or<br>
+other suitable components that provide the described functionality.<br>
+[0011] The present disclosure relates to systems and methods for<br>
+calibrating scheduled, linear models and control systems, which are increasingly<br>
+being used for internal combustion engine (ICE) control systems. Most<br>
+optimization methods lend themselves to embedding methods described in the<br>
+present disclosure. Some standard methods, such as regression via least<br>
+squares, are incapable of ensuring that the models (and their inverses) are stable<br>
+and non-oscillatory. The primary benefit of least squares is the efficient numerical<br>
+methods for calculating solutions.<br>
+ <br>
+[0012] Other methods, like multivariate optimization and similar<br>
+gradient search methods can be used, together with properly chosen penalty<br>
+functions to ensure stability and non-oscillatory behavior. However, these<br>
+methods can easily get stuck on local optima and fail to find the best solutions.<br>
+These methods are also sensitive to a starting point, so starting fairly near the<br>
+optimal solution may be desirable.<br>
+[0013] Even when it is possible to start near the optimum solution, the<br>
+additional of one or more penalty functions can make the cost function ill-<br>
+behaved and cause the gradient search method to fail. In the example set forth<br>
+below, prior attempts using gradient search methods failed for this reason.<br>
+[0014] Genetic algorithms (GA's) work well for smaller problems with<br>
+few parameters because GA's can discover the optimal solution even when there<br>
+is no initial guess. In these circumstances, the standard procedure is to have the<br>
+GA start with an initial population selected randomly from all possible solutions.<br>
+Moreover, because GA's rarely get stuck on local minima (for small problems<br>
+with few parameters), GA's often converge to the true, optimal solution if they<br>
+have had sufficient time.<br>
+[0015] With higher order problems, these desirable features break<br>
+down. In particular, it is necessary to employ extra steps presented herein to<br>
+reduce the problem size and to provide some individuals in the initial population<br>
+that are good enough to at least satisfy the constraints imposed by the penalty<br>
+functions.<br>
+ <br>
+[0018] The present disclosure interleaves optimization problems with<br>
+small and large number parameters to find nearly optimal solutions for<br>
+increasingly larger sub-problems. Because the method seeds the initial<br>
+population of each sub-problem with the solution of the preceding sub-problem,<br>
+the method ensures that the GA does not spend an inordinate (possibty infinite)<br>
+amount of time searching for a set of individuals that reasonably meet the<br>
+additional criteria imposed by the penalty functions.<br>
+[0017] More particularly, the present disclosure employs the following<br>
+techniques'. (1) embedding methods, (2) seeding the initial population with some<br>
+good individuals (from the preceding problem in the sequence of optimization<br>
+problems), (3) use of penalty functions to ensure stability of forward and inverse<br>
+models; and (4) use of penalty functions to ensure non-oscillatory control.<br>
+[0018] The present disclosure proposes using an optimization scheme<br>
+featuring genetic algorithms (GA's), cost functions that balance model (algorithm)<br>
+performance, weighting, penalty functions, and/or embedding.<br>
+[0019] GA's help ensure that the optimizations do not get stuck on local<br>
+minima, even when the cost functions are itt-behaved (as they often are when<br>
+multiple penalty functions are used). Specially chosen cost functions ensure that<br>
+model (algorithm) performance is balanced over all operating regions. Weighting<br>
+adjusts model or control performance in critical regions. Penalty functions<br>
+ensure that the models and control algorithms calibrated in this manner meet the<br>
+additional requirements (beyond mere optimality) necessary for use in typical<br>
+internal engine control algorithms. Embedding overcomes the shortcomings of<br>
+ <br>
+GA's when solving problems with large number of parameters and rigorous<br>
+constraints (as captured in the penalty functions).<br>
+[0020] GA's are optimization schemes that mimic biological properties<br>
+of evolution: selection, inheritance, and variation. In GA's, an individual is a set<br>
+of parameters that characterize a potential solution to the problem at hand. To<br>
+start the process, an initial population of individuals (i.e., sets of parameters that<br>
+are potential solutions) is created and evaluated. Next, pairs of individuals in the<br>
+population are allowed to "breed," producing offspring that contain elements of<br>
+the parameters from both parents.<br>
+[0021] The probability that an individual is allowed to breed is a<br>
+function of the individual's fitness. The more fit an individual is (i.e., the better<br>
+the solution the parameters achieve), the higher the probability that the individual<br>
+will be chosen to breed (and pass on some part of his parameters). After a new<br>
+population of offspring is created, its individuals are evaluated, and bred to<br>
+produce a new generation of offspring per the foregoing description. The<br>
+process stops when the fittest individual in the population is good enough or no<br>
+further improvements in fitness from generation to generation are apparent.<br>
+[0022] The standard references on GA's suggest starting with a<br>
+completely random initial population. This approach, however, is ineffective for<br>
+the highly constrained problems considered here. In fact, it appears to be<br>
+necessary to "seed* the initial population with a few "good" individuals that satisfy<br>
+the constraints penalized by the penalty functions discussed in the sequel.<br>
+ <br>
+Penalty Functions<br>
+[0023] In order for scheduled linear models and control algorithms to<br>
+be useful in ICE control system, the models and control algorithms should be<br>
+stable. In some cases, it may be desirable for models to have stable inverses.<br>
+For example only, a fuel dynamics model should have a stable inverse because<br>
+the inverse is the fuel dynamics control. Moreover, it may be necessary for either<br>
+the model or its inverse to be non-oscillatory.<br>
+[0024] In order to ensure these additional attributes (stability, non-<br>
+oscillation), calibrators usually augment the cost function with a series of penalty<br>
+functions that penalize violation of the desired attributes. To that end, a standard<br>
+formulation would cast the calibration problem as an optimization problem<br>
+wherein the calibrator is to find the set of model parameters that minimizes some<br>
+cost function, C. To limit solutions to those that are stable, augment the cost<br>
+function with a penalty term, Ci = Ki*l, where Ki is a gain and I is a measure of<br>
+instability (of either the forward or / and the inverse model).<br>
+[0025] Now the calibration (optimization) problem is to find the set of<br>
+model parameters that minimizes C + Ci. Similarly, if non-oscillatory behavior is<br>
+required, the disclosure proposes to add a penalty function to penalize oscillatory<br>
+behavior. If O is a measure of oscillatory behavior, and Co = Ko*O is a cost<br>
+function that penalizes oscillatory behavior, then the calibration problem is to find<br>
+the set of model parameters that minimizes C + Co. If both stability and non-<br>
+oscillatory behavior are required, minimize C + Ci + Co.<br>
+ <br>
+Exemplary Cost Function<br>
+[0026] Consider a scheduled linear model of an engine process to be<br>
+controlled:<br>
+ <br>
+where the αi and β1 are functions of engine operating condition. When the αi and<br>
+β1 are linear spline functions of multiple variables, Va, Vb, ..., V., with knots, Ka.i,<br>
+Kb,i . . ., Ks,i, then the hyper-rectangular regions formed by the knots:<br>
+ <br>
+are called "zones." In order to balance model (or control algorithm) performance<br>
+over all operating regions, use a cost function that is based on instantaneous<br>
+percent error (i.e., the percent error at each point) and accurate statistics over<br>
+each "zone" (2). Let,<br>
+ <br>
+Here, ymod(k) is the model (1) evaluated at time k and yact(k) is the actual signal<br>
+being modeled at time k. Define a local cost for each zone, m,<br>
+ <br>
+Then, a cost function that balances model accuracy over all the different zones<br>
+is:<br>
+ <br>
+ <br>
+Here, C is the cost function and n is the total number of zones. Often times, the<br>
+zones are chosen to isolate different operating behavior for the model under<br>
+construction. Moreover, zones so chosen often segregate by the average size of<br>
+the signal being modeled. In these cases, the cost function (4) has the added<br>
+benefit of balancing model accuracy over small and large signals so that neither<br>
+unduly influences model parameter choice.<br>
+Weighting<br>
+[0027] Many times model or control performance is more critical in<br>
+certain zones. In this case, zone costs in the cost function (4) can be used to<br>
+enhance model or control performance in the critical zones. For this<br>
+circumstance, the cost function becomes:<br>
+ <br>
+where Wm is the weighting for zone m.<br>
+Stability Penalty Functions<br>
+[0028] If the true engine behavior that is being modeled is stable, it is<br>
+desirable that the model (1) be stable as well. At any single point in the<br>
+operating region, one can define a transfer function for the model (1) and<br>
+examine its poles. The poles of (1) are the roots of the polynomial:<br>
+ <br>
+ <br>
+where the on are constants (evaluated at a single operating point). A sufficient<br>
+condition for the stability of (1) is that the modulus of each of the poles of (1) is<br>
+less than unity for each point in the operating region. Because the roots of a<br>
+polynomial are a continuous function of the polynomial's coefficients, one<br>
+measure of the stability of (1) is to examine the poles of (1) at a sufficient number<br>
+of points over the expected operating region. Moreover, like the cost function,<br>
+one can define a penalty function that penalizes instability over a zone by<br>
+evaluating the roots of the polynomial N(z) for points in the zone. Let<br>
+ <br>
+be the maximum modulus of any root of N(z) over a zone, m, and define<br>
+ <br>
+A typical value of thresh is 0.985. Then, a cost function that penalizes unstable<br>
+models is:<br>
+ <br>
+[0029] Notice that the penalty function (7) is zero when the maximum<br>
+module of a pole anywhere in the zone is less than the threshold. The penalty<br>
+increases very quickly when this is not the case. Applying the penalty on a zone<br>
+ <br>
+by zone basis allows the optimization to violate the stability constraint (mildly) in<br>
+some zones while in pursuit of the optimum set of coefficients.<br>
+[0030] If stability of the inverse model is required, treat the zeros of the<br>
+transfer function for the model (1) is a fashion analogous to the poles. The zeros<br>
+of (1) are the roots of the polynomial:<br>
+ <br>
+where the βi are constants (evaluated at a single operating point). A sufficient<br>
+condition for the stability of the inverse of (1) is that the modulus of each of the<br>
+zeros of (1) is less than unity for each point in the operating region. Because the<br>
+roots of a polynomial are a continuous function of the polynomial's coefficients,<br>
+one measure of the stability of (1) is to examine the zeros of (1) at a sufficient<br>
+number of points over the expected operating region. Moreover, like the cost<br>
+function, one can define a penalty function that penalizes instability of the inverse<br>
+over a zone by evaluating the roots of the polynomial D(z) for points in the zone.<br>
+Let.<br>
+ <br>
+be the maximum modulus of any root of D(z) over a zone, m, and define<br>
+ <br>
+A typical value of thresh is 0.985. Then, a cost function that penalizes unstable<br>
+inverse models is:<br>
+ <br>
+ <br>
+Of course, if both stable models and stable inverses are required, then the cost<br>
+functions (8) and (11) can be combined. Note, that it is precisely the case with<br>
+fuel dynamics models, which model a process that is inherently stable, and which<br>
+require stable inverses because the control is the inverse of the forward model.<br>
+For this case, the cost function becomes:<br>
+ <br>
+Oscillation Penalty Functions<br>
+[0031] In some circumstances, models or controls that are non-<br>
+oscillatory are required. Fuel dynamics compensation, for example, requires that<br>
+the inverse model of the fuel dynamics (which is the control) be non-oscillatory.<br>
+This can be handled in a fashion similar to the stability requirement by<br>
+construction of an appropriate penalty function.<br>
+[0032] For models, oscillatory behavior can be detected by examining<br>
+the impulse or step response of the model (1) with the coefficients evaluated at<br>
+various operating conditions within a zone, in a manner similar to the stability<br>
+penalty function described above. Similarly, for inverse models, the impulse or<br>
+step response of the inverse of model (1) can be used to construct a penalty<br>
+ <br>
+function. To that end, let pulse(k) be the response of model (1) at time k to a unit<br>
+impulse at time 0. By definition,<br>
+ <br>
+Let,<br>
+pulse maxm = max(0,pulse(l) - pulse(Q),pulse(2) - pulse(l),.. ., pulse(j) - pulse(j -1))<br>
+then, a cost function that penalizes oscillation in the model (1) over a zone based<br>
+on the impulse response could be:<br>
+ <br>
+A typical value of thresh is 0.05. With these definitions, a cost function that<br>
+penalizes oscillatory models is:<br>
+ <br>
+Clearly, the penalty function (13) can also be included with any of the other<br>
+penalty functions described above penalize instability in the model and / or its<br>
+inverse and oscillatory behavior.<br>
+[0033] It is possible to force other features as well. For example, in<br>
+fuel dynamics compensation, it is desirable for the inverse model to be critically<br>
+damped, in addition to being stable and non-oscillatory. For this situation, a<br>
+penalty function on the step response of the inverse model can be used. Let<br>
+ <br>
+step(k) be the response of the inverse of model (1) at time k to a unit step at time<br>
+0. By definition,<br>
+ <br>
+Let,<br>
+step maxw = max(0,step(1)-step(0),step(2)-step(1),...,step(j)-step(j-1)) ,<br>
+Zone.<br>
+then, a cost function that penalizes non-critically damped behavior and oscillation<br>
+in the inverse of model (1) over a zone is:<br>
+ <br>
+As before, a typical value of thresh is 0.05. With these definitions, a cost function<br>
+that penalizes non-critically damped and oscillatory inverse models is:<br>
+ <br>
+Clearly, the penalty function (15) can also be included with any of the other<br>
+penalty functions described above penalize instability in the model and / or its<br>
+inverse, and non-critically damped or oscillatory behavior in the inverse model.<br>
+Embedding<br>
+[0034] Finally, the disclosure proposes calibrating the scheduled, linear<br>
+models and control algorithms by solving a series of optimization problems, each<br>
+ <br>
+one embedded in the next. The optimization sub-problems have three elements:<br>
+(1)	parameter space; (2) coefficient scheduling space; and (3) a set of "good"<br>
+individuals that can be used to "seed" the initial population (for the genetic<br>
+optimization).<br>
+[0035] Each of the sub-problems is embedded in its sequel in the<br>
+sense that: (1) a sub-problem's parameter and/or coefficient scheduling space is<br>
+contained in the parameter and/or coefficient scheduling space of its sequel, and<br>
+(2)	a sub-problem's solution is used to create the "seed" individuals for the initial<br>
+population used to optimize its sequel. To that end, let P = {P, | P1 C P2 C ••• c P} be<br>
+a set of these sub-problems with their associated parameter/coefficient<br>
+scheduling spaces and "seed" individuals for their respective initial populations.<br>
+[0036] An exemplary vehicle engine control system is shown in FIG. 1.<br>
+The vehicle engine control system may need to be calibrated. Then, the<br>
+proposed, embedding solution to the optimization problem is shown by a<br>
+flowchart in FIG. 2, which is described below.<br>
+[0037] Referring now to FIG. 1, a vehicle 20 is shown. Fuel is<br>
+delivered to an engine 22 from a fuel tank 26 through a fuel line 28 and through a<br>
+plurality of fuel injectors 32. A fuel sensor 30 senses a level of fuel in the tank 26<br>
+and communicates the fuel level to a control module 42. Air is delivered to the<br>
+engine 22 through an intake manifold 34.<br>
+[0038] An electronic throttle controller (ETC) 36 adjusts a throttle plate<br>
+38 that is located adjacent to an inlet of the intake manifold 34 based upon a<br>
+position of an accelerator pedal 40 and a throttle control algorithm that is<br>
+ <br>
+executed by the control module 42. In controlling operation of the vehicle 20, the<br>
+control module 42 may use a sensor signal 44 indicating pressure in the intake<br>
+manifold 34. The control module 42 also may use a sensor signal 46 indicating<br>
+mass air flow entering the intake manifold 34 past the throttle plate 38, a signal<br>
+48 indicating air temperature in the intake manifold 34, and a throttle position<br>
+sensor signal 50 indicating an amount of opening of the throttle plate 38. Still<br>
+other sensors may be used.<br>
+[0039] The engine 22 includes a plurality of cylinders 52 arranged in<br>
+one or more cylinder banks 56. The cylinders 52 receive fuel from the fuel<br>
+injectors 32 where it undergoes combustion in order to drive a crankshaft 58.<br>
+Vapor from the fuel tank 26 can be collected in a charcoal storage canister 60.<br>
+The canister 60 may be vented to air through a vent valve 62. The canister 60<br>
+may be purged through a purge valve 64. When vapor is purged from the<br>
+canister 60, it is delivered to the intake manifold 34 and burned in the engine<br>
+cylinders 52. The control module 42 controls operation of the vent valve 62,<br>
+purge valve 64, fuel injectors 32 and ignition system 54. The control module 42<br>
+also is connected with an accelerator pedal sensor 66 that senses a position of<br>
+the accelerator pedal 40 and sends a signal representative of the pedal position<br>
+to the control module 42.<br>
+[0040] A catalytic converter 68 receives exhaust from the engine 22<br>
+through an exhaust manifold 70. Each of a pair of exhaust sensors 72, e.g.,<br>
+oxygen sensors, is associated with a corresponding cylinder bank 56. The<br>
+oxygen sensors 72 sense exhaust in the manifold 70 and deliver signals to the<br>
+ <br>
+control module 42 indicative of whether the exhaust is lean or rich. The signal<br>
+output of the oxygen sensors 72 is used by the control module 42 as feedback in<br>
+a closed-loop manner to regulate fuel delivery to each cylinder bank 56, e.g., via<br>
+fuel injectors 32. It should be noted that configurations of the present disclosure<br>
+are also contemplated for use in relation to vehicles having a single bank of<br>
+cylinders and/or a single exhaust manifold oxygen sensor.<br>
+[0041] In some implementations, the sensors 72 are switch-type<br>
+oxygen sensors as known in the art. The control module 42 may use the sensor<br>
+72 feedback to drive an actual air-fuel ratio to a desired value, usually around a<br>
+stoichtometric value which may vary depending upon concentrations of ethanol<br>
+and gasoline. A plurality of predefined engine operating regions are referred to<br>
+by the control module 42 in controlling fuel delivery to the engine 22. Operating<br>
+regions may be defined, for example, based on speed and/or load of the engine<br>
+22. The control module 42 may perform control functions that vary dependent on<br>
+which operating region of the vehicle is currently active. Fuel, air and/or re-<br>
+circulated exhaust to the engine 22 may be adjusted, i.e., trimmed, to correct for<br>
+deviations from a desired air-fuel ratio. As can be appreciated, various other<br>
+vehicle engine control systems may be used.<br>
+[0042] Referring now to FIG. 2, the method begins with step 100 and<br>
+proceeds to step 104 where the smallest sub-problem P1 is selected. In step<br>
+108, an initial generation for sub-problem P1 is seeded with known/good<br>
+individuals. In step 112, free parameters in the current sub-problem are<br>
+optimized over the parameter/coefficient scheduling space using a genetic<br>
+ <br>
+algorithm. In step 116, penalty functions are used to ensure stable, non-<br>
+oscillatory solutions. In step 120, a determination is made as to whether the final<br>
+sub-problem is solved. In other words, are the parameter/coefficient scheduling<br>
+spaces covered? If step 120 is false, the method continues with step 124 and a<br>
+next smallest sub-problem containing the current sub-problem is selected. In<br>
+step 128, an new initial population is seeded with know/good individuals using<br>
+the best individuals from the current sub-problem. When step 120 is true, the<br>
+method stops.<br>
+Example Embodiment<br>
+Calibrating Fuel Dynamics Compensation<br>
+[0043] Oftentimes, the coefficients in the required models are<br>
+scheduled as functions of physical variables that characterize engine operating<br>
+condition. For example, the Fuel Dynamics Compensator (FDC), which uses the<br>
+linear part of the nonlinear compensator detailed by Dudek, et al., in U.S. Patent<br>
+No. 7,246,004, "Nonlinear Fuel Dynamics Control with Lost Fuel Compensation,"<br>
+(which is incorporated herein by reference in its entirety) uses the inverse of a<br>
+nominal fuel dynamics model whose coefficients are scheduled a function of<br>
+MAP, RPM, temperature, and ethanol concentration.<br>
+[0044] It is an example of the type of control algorithm that can be<br>
+calibrated using the methods of this disclosure. In FDC, the coefficient<br>
+scheduling functions are linear splines as described by Dudek in US Patent,<br>
+7,212,915, "Application of Linear Splines to Internal Combustion Engine Control"<br>
+ <br>
+(which is incorporated herein by reference in its entirety). The temperature used<br>
+in the coefficient schedules can be engine coolant temperature (ECT) and/or<br>
+intake valve temperature (IVT).<br>
+[0045] In order to calibrate FDC, the engineer calibrates the nominal<br>
+fuel dynamics model, which explains the behavior of measured, burned fuel<br>
+mass (as inferred from F/A measurements taken in the exhaust port of an<br>
+internal combustion engine) in response to commanded fuel mass. The<br>
+equations for the linear part of the nominal fuel dynamics model and<br>
+compensator are:<br>
+  i<br>
+Here, FM(k) is the measured, burned fuel mass that results from fuel injected on<br>
+engine cycle k, Fc(k) is the compensated fuel mass on engine cycle k, and FR(k)<br>
+is the requested (burned) fuel mass on engine cycle k. The model (and<br>
+compensator) coefficients, ai are linear spline functions of MAP, RPM, ECT, and<br>
+ETH:<br>
+ <br>
+ <br>
+ <br>
+Note that there will be a separate set of ai's, bij's, cij's, dij's, eij's, wij's, xij's, yij's,<br>
+and zij's for each of the ai's. Further note that FDC is required to be unit gain.<br>
+The easiest way to achieve this is to require that a7 = 1 - (a1 + a2 + a3 + a4 +<br>
+a5 + a6). The parameter, a7, therefore, is no longer independent.<br>
+[0046] The functions, UMAP(i), URPM(j), UECT(k), and UETH(I), are<br>
+called "basis functions," and the constants, MAPj, RPMj, ECTk, and ETHl, are<br>
+called "knots." Typical values for MAP, are: 15, 30, 45, 60, 75, and 90 (kPa).<br>
+Typical values of RPMj are 500, 1300, 2100, 2900, 3700, and 4500 (RPM).<br>
+Typical values for ECTk are 245, 265, 285, 305, 325, and 345 (deg k). Typical<br>
+values of ETH, are 0, 20, 40, and 60 (% ethanol). Note that with these knot<br>
+choices, there are 270 free parameters (1 constant + (2*6 +2*6 = 24) MAP/RPM<br>
+terms + (2*6 + 2*4 = 20) ECT / ETH terms)*6 coefficients (α7, is calculated from<br>
+the other ai's).<br>
+ <br>
+ <br>
+function are according to Equations (3) (or (5) if weighting is used), (7), (10), and<br>
+(15) above. Note that the error defined in (3) (or (5)) is the difference between<br>
+FM(k) and actual, measured burned fuel appropriately shifted to account for<br>
+transport delay.<br>
+[0048] By construction of the cost function (with the penalty terms), It is<br>
+clear that the optimization seeks a solution that: (1) matches the test data well;<br>
+(2) is stable; (3) has an inverse that is stable (note: the control is the inverse);<br>
+and (4) has an inverse that generates non-oscillatory and critically damped<br>
+control responses to typical inputs.<br>
+Solution<br>
+[0049] Let 91 is the set of reai numbers and q\p is the optimal solution<br>
+for a parameter, q,, when optimized over Sp. Define the family of nested sub-<br>
+problems (with their associated parameter / coefficient scheduling spaces) and<br>
+solve via the prescriptions of Figure 1:<br>
+[0050] Define P1:<br>
+ <br>
+ <br>
+Pi finds the best set of constants over the first temperature range, with ethanol<br>
+concentration set to zero, that still meet the stability and non-oscillatory<br>
+constraints. Seed the initial population with a few individuals where a1 - 0.8, au =<br>
+0.25, a5 = -0.05,32 - a3 = a6 ■ 0.<br>
+[0051] Define P2:<br>
+ <br>
+P2 finds the best set of constants and temperature coefficients over the same<br>
+region as P1. Seed the initial population with a few individuate with the constants<br>
+(the a/s) equal to the solution of P1 and the temperature coefficients equal to 0.<br>
+[0052] Define P3:<br>
+ <br>
+P3 finds the best constants, temperature coefficients, MAP coefficients, RPM<br>
+coefficients, and MAP*RPM coefficients over the same region as P1, seeding the<br>
+initial population with the optimal results from P2. Set the MAP coefficients, RPM<br>
+coefficients, and MAP'RPM coefficients to 0 for the seed individuals.<br>
+[0063] Define P4:<br>
+ <br>
+P4 finds the best constants and temperature coefficients over the first and second<br>
+temperature ranges, with ethanol concentration set to zero, holding the MAP,<br>
+RPM, and MAP*RPM coefficients at the optimal values from P3 and seeding the<br>
+initial population with the optimal constants and temperature coefficients from P3<br>
+ For the seed individuals, set the temperature coefficients corresponding to the<br>
+ <br>
+second temperature range equal to the negative of the temperature coefficients<br>
+from the first temperature range (so the sum of the temperature coefficients<br>
+equals 0).<br>
+[0054] Define P5:<br>
+ <br>
+P5 finds the best constants, temperature coefficients, MAP coefficients, RPM<br>
+coefficients, and MAP'RPM coefficients over the same region as P4, seeding the<br>
+initial population with the optimal results from P4.<br>
+[0055] Define P6:<br>
+ <br>
+P6 finds the best constants and temperature coefficients over the first, second<br>
+and third temperature ranges, with ethanol concentration set to zero, holding the<br>
+MAP, RPM, and MAP'RPM coefficients at the optimal values from P5 and<br>
+seeding the initial population with the optimal constants and temperature<br>
+coefficients from P5. For the seed individuals, set the temperature coefficients<br>
+corresponding to the third temperature range equal to the negative of the sum of<br>
+the temperature coefficients from the first and second temperature ranges (so the<br>
+sum of the temperature coefficients equals 0).<br>
+[0056] Define P7.<br>
+ <br>
+ <br>
+P7 finds the best constants, temperature coefficients, MAP coefficients, RPM<br>
+coefficients, and MAP*RPM coefficients over the same region as P6, seeding the<br>
+initial population with the optimal results from P6.<br>
+[0057] Define P8:<br>
+  i<br>
+Pa finds the best constants and temperature coefficients over the first, second,<br>
+third, and fourth temperature ranges, with ethanol concentration set to zero,<br>
+holding the MAP, RPM, and MAP'RPM coefficients at the optimal values from P7<br>
+and seeding the initial population with the optimal constants and temperature<br>
+coefficients from P7 . For the seed individuals, set the temperature coefficients<br>
+corresponding to the fourth temperature range equal to the negative of the sum<br>
+of the temperature coefficients from the first, second, and third temperature<br>
+ranges (so the sum of the temperature coefficients equals 0).<br>
+[0058] Define P9:<br>
+ <br>
+Pg finds the best constants, temperature coefficients, MAP coefficients, RPM<br>
+coefficients, and MAP*RPM coefficients over the same region as P8, seeding the<br>
+initial population with the optimal results from P8.<br>
+[0059] Define Pi0:<br>
+ <br>
+P10 finds the best constants and temperature coefficients over the first, second,<br>
+third, fourth, and fifth temperature ranges, with ethanol concentration set to zero,<br>
+ <br>
+holding the MAP, RPM, and MAP*RPM coefficients at the optimal values from P9<br>
+and seeding the initial population with the optimal constants and temperature<br>
+coefficients from Pg . For the seed individuals, set the temperature coefficients<br>
+corresponding to the fifth temperature range equal to the negative of the sum of<br>
+the temperature coefficients from the first, second, third, and fourth temperature<br>
+ranges (so the sum of the temperature coefficients equals 0).<br>
+[0060] Define Pn:<br>
+ <br>
+P11 finds the best constants, temperature coefficients, MAP coefficients, RPM<br>
+coefficients, and MAP*RPM coefficients over the same region as P10, seeding the<br>
+initial population with the optimal results from P10.<br>
+[0061] Define P12:<br>
+ <br>
+P12 finds the best constants and temperature coefficients over temperature<br>
+ranges, with ethanol concentration set to zero, holding the MAP, RPM, and<br>
+MAP*RPM coefficients at the optimal values from P11 and seeding the initial<br>
+population with the optimal constants and temperature coefficients from P11 . For<br>
+the seed individuals, set the temperature coefficients corresponding to the last<br>
+temperature range equal to the negative of the sum of the temperature<br>
+coefficients from the other temperature ranges (so the sum of the temperature<br>
+coefficients equals 0).<br>
+[0062] Define P13:<br>
+ <br>
+ <br>
+P13 finds the best constants, temperature coefficients, MAP coefficients, RPM<br>
+coefficients, and MAP*RPM coefficients over the same region as P12, seeding the<br>
+initial population with the optimal results from P12-<br>
+[0063] Define P14:<br>
+ <br>
+P14 finds the best constants, temperature coefficients, ethanol coefficients, and<br>
+ethanol*temperature over the entire operating range, holding the MAP, RPM, and<br>
+MAP*RPM coefficients at the optimal values from P13 and seeding the initial<br>
+population with the optimal constants and temperature coefficients from P13. For<br>
+the seed individuals, set the ethanol and ethanol*temperature coefficients to 0.<br>
+[0064] Define P15:<br>
+ <br>
+P15 finds the best constants, temperature coefficients, MAP coefficients, RPM<br>
+coefficients, MAP*RPM coefficients, ethanol coefficients, and<br>
+ethanol*emperature coefficients over the same region as PH. seeding the initial<br>
+population with the optimal results from P14.<br>
+[0065] Other subdivisions are possible. In particular, the sub-problems<br>
+P14 and P15 might be further subdivided. Alternatively, one could start with P1<br>
+and go directly to P4 or P6. using the constants from P1 and setting all<br>
+temperature coefficients to 0.<br>
+ <br>
+[0066] The benefits include more accurate control, decreased<br>
+calibration effort, and less reliance on calibrator skill. More accurate control can<br>
+lead to reduced system cost because it allows for reduced catalyst loadings while<br>
+still meeting emission standards. Decreased calibration effort reduces fixed<br>
+system cost, as does the reduced reliance on calibrator skill.<br>
+ <br>
+CLAIMS<br>
+What is claimed is:<br>
+1.	A method for calibrating an engine control system, comprising:<br>
+a)	identifying engine calibration sub-problems for an engine<br>
+calibration;<br>
+b)	seeding an initial generation for one of the engine calibration sub-<br>
+problems with known/good individuals;<br>
+c)	optimizing free parameters in the one of the engine calibration sub-<br>
+problem over a parameter/coefficient scheduling space using a genetic algorithm;<br>
+d)	using penalty functions;<br>
+e)	identifying a next one of the engine calibration sub-problems<br>
+containing a prior one of the engine calibration sub-problems;<br>
+f)	seeding an initial population of the next one of the engine<br>
+calibration sub-problems with know/good individuals;<br>
+g)	repeating steps c), d), e) and f) until the engine calibration<br>
+containing the engine calibration sub-problems is solved; and<br>
+f) operating an engine control system of a vehicle using the engine<br>
+calibration.<br>
+2.	The method of Claim 1 wherein the penalty functions are used to ensure a<br>
+stable, non-oscillatory solution to said engine calibration sub-problems.<br>
+ <br>
+3. The method of Claim 2 further comprising using weighting to control<br>
+performance.<br>
+ <br>
+A method for calibrating an engine control system comprises identifying engine calibration sub-problems for an engine calibration; seeding an initial generation for one of the engine calibration sub-problems with known/good<br>
+individuals; optimizing free parameters in the one of the engine calibration sub-problem over a parameter/coefficient scheduling space using a genetic algorithm; using penalty functions; identifying a next one of the engine calibration sub-problems containing a prior one of the engine calibration sub-problems; seeding an initial population of the next one of the engine calibration sub-problems with know/good individuals; repeating until the engine calibration containing the engine calibration sub-problems is solved; and operating an engine control system of a vehicle using the engine calibration.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=DbSvqq3Gc5eH1UvPWBZi2w==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=DbSvqq3Gc5eH1UvPWBZi2w==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="272224-rotational-flow-strategy-through-bottom-tuyeres-in-top-and-bottom-blown-converter-for-improved-mixing-efficiency.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="272226-doping-capsules-composite-systems-containing-said-capsules-and-use-thereof.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>272225</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1477/KOL/2008</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>14/2016</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>01-Apr-2016</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>22-Mar-2016</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>28-Aug-2008</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>GM GLOBAL TECHNOLOGY OPERATIONS, INC.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>300 RENAISSANCE CENTER, DETROIT, MICHIGAN</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>KENNETH P. DUDEK</td>
+											<td>3531 ROCKY CREST COURT, ROCHESTER HILLS, MICHIGAN 48306</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>F02D35/00; F02D41/24; F02D41/32;</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>60/971,074</td>
+									<td>2007-09-10</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/272225-calibration-systems-and-methods-for-scheduled-linear-control-algorithms-in-internal-combustion-engine-control-systems-using-genetic-algorithms-penalty-functions-weighting-and-embedding by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:47:59 GMT -->
+</html>

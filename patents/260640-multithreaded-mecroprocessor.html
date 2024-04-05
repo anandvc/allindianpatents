@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/260640-multithreaded-mecroprocessor by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 01:12:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 260640:MULTITHREADED MECROPROCESSOR</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">MULTITHREADED MECROPROCESSOR</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A fork instruction for execution on a multithreaded microprocessor and occupying a single instruction issue slot is disclosed. The fork instruction, executing in a parent thread, includes a first operand specifying the initial instruction address of a new thread and a second operand. The microprocessor executes the fork instruction by allocating context for the new thread, copying the first operand to a program counter of the new thread context, copying the second operand to a register of the new thread context, and scheduling the new thread for execution. If no new thread context is free for allocation, the microprocessor raises an exception to the fork instruction. The fork instruction is efficient because it does not copy the parent thread general purpose registers to the new thread. The second operand is typically used as a pointer to a data structure in memory containing initial general purpose register set values for the new thread.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>CROSS REFERENCE TO RELATED APPLICATION(S)<br>
+[0001] This application is a continuation-in-part (CIP) of the following co-pending Non-Provisional U.S. Patent Applications, which are hereby incorporated by reference in their entirety for all purposes:<br>
+(Table Removed)<br>
+[0002] The above co-pending Non-Provisional U.S. Patent Applications claim the benefit of the following U.S. Provisional Applications, each of which this application also claims the benefit of, and which are hereby incorporated by reference in their entirety for all purposes:<br>
+(Table Removed)<br><br><br>
+(Table Removed)<br>
+[0003] This application is related to and filed concurrently with the following Non-Provisional U.S. Patent Applications, each of which is incorporated by reference in its entirety for all purposes:<br>
+(Table Removed)<br>
+FIELD OF THE INVENTION<br>
+[0004] The present invention relates in general to multithreaded microprocessors,<br>
+and particularly to  instructions  for generating new threads  of execution in  a<br>
+multithreaded processor.<br>
+BACKGROUND OF THE INVENTION<br>
+[0005] Microprocessor designers employ many techniques to increase their performance. Most microprocessors operate using a clock signal running at a fixed frequency. Each clock cycle the circuits of the microprocessor perform their respective functions. According to Hennessy and Patterson, the true measure of a microprocessor's<br>
+performance is the time required to execute a program or collection of programs. From this perspective, the performance of a microprocessor is a function of its clock frequency, the average number of clock cycles required to execute an instruction (or alternately stated, the average number of instructions executed per clock cycle), and the number of instructions executed in the program or collection of programs. Semiconductor scientists and engineers are continually making it possible for microprocessors to run at faster clock frequencies, chiefly by reducing transistor size, resulting in faster switching times. The number of instructions executed is largely fixed by the task to be performed by the program, although it is also affected by the instruction set architecture of the microprocessor. Large performance increases have been realized by architectural and organizational notions that improve the instructions per clock cycle, in particular by notions of parallelism.<br>
+[0006] One notion of parallelism that has improved the instructions per clock cycle, as well as the clock frequency, of microprocessors is pipelining, which overlaps execution of multiple instructions within pipeline stages of the microprocessor. In an ideal situation, each clock cycle one instruction moves down the pipeline to a new stage, which performs a different function on the instructions, Thus, although each individual instruction takes multiple clock cycles to complete, because the multiple cycles of the individual instructions overlap, the average clocks per instruction is reduced. The performance improvements of pipelining may be realized to the extent that the instructions in the program permit it, namely to the extent that an instruction does not depend upon its predecessors in order to execute and can therefore execute in parallel with its predecessors, which is commonly referred to as instruction-level parallelism. Another way in which instruction-level parallelism is exploited by contemporary microprocessors is the issuing of multiple instructions for execution per clock cycle, commonly referred to as superscalar microprocessors.<br>
+[0007] What has been discussed above pertains to parallelism at the individual instruction-level. However, the performance improvement that may be achieved through exploitation of instruction-level parallelism is limited. Various constraints imposed by limited instruction-level parallelism and other performance-constraining<br><br>
+issues have recently renewed an interest in exploiting parallelism at the level of blocks, or sequences, or streams of instructions, commonly referred to as thread-level parallelism, A thread is simply a sequence, or stream, of program instructions. A multithreaded microprocessor concurrently executes multiple threads according to some scheduling policy that dictates the fetching and issuing of instructions of the various threads, such as interleaved, blocked, or simultaneous multithreading, A multithreaded microprocessor typically allows the multiple threads to share the functional units of the microprocessor (e.g., instruction fetch and decode units, caches, branch prediction units, and load/store, integer, floating-point, SIMD, etc. execution units) in a concurrent fashion. However, multithreaded microprocessors include multiple sets of resources, or contexts, for storing the unique state of each thread, such as multiple program counters and general purpose register sets, to facilitate the ability to quickly switch between threads to fetch and issue instructions.<br>
+[0008] One example of a performance-constraining issue addressed by multithreading microprocessors is the fact that accesses to memory outside the microprocessor that must be performed due to a cache miss typically have a relatively long latency. It is common for the memory access time of a contemporary microprocessor-based computer system to be between one and two orders of magnitude greater than the cache hit access time. Consequently, while the pipeline is stalled waiting for the data from memory, some or all of the pipeline stages of a single-threaded microprocessor may be idle performing no useful work for many clock cycles. Multithreaded microprocessors may solve this problem by issuing instructions from other threads during the memory fetch latency, thereby enabling the pipeline stages to make forward progress performing useful work, somewhat analogously to, but at a finer level of granularity than, an operating system performing a task switch on a page fault. Other examples are pipeline stalls and their accompanying idle cycles due to a branch misprediction and concomitant pipeline flush, or due to a data dependence, or due to a long latency instruction such as a divide instruction. Again, the ability of a multithreaded microprocessor to issue instructions from other threads to pipeline stages that would otherwise be idle may significantly reduce the time required to execute the program or collection of programs<br><br>
+comprising the threads. Another problem, particularly in embedded systems, is the wasted overhead associated with interrupt servicing. Typically, when an input/output device signals an interrupt event to the microprocessor, the microprocessor switches control to an interrupt service routine, which requires saving of the current program state, servicing the interrupt, and restoring the current program state after the interrupt has been serviced. A multithreaded microprocessor provides the ability for event service code to be its own thread having its own context. Consequently, in response to the input/output device signaling an event, the microprocessor can quickly - perhaps in a single clock cycle - switch to the event service thread, thereby avoiding incurring the conventional interrupt service routine overhead.<br>
+[0009] Just as the degree of instruction-level parallelism dictates the extent to which a microprocessor may take advantage of the benefits of pipelining and superscalar instruction issue, the degree of thread-level parallelism dictates the extent to which a microprocessor may take advantage of multithreaded execution. An important characteristic of a thread is its independence of the other threads being executed on the multithreaded microprocessor. A thread is independent of another thread to the extent its instructions do not depend on instructions in other threads. The independent characteristic of threads enables the microprocessor to execute the instructions of the various threads concurrently. That is, the microprocessor may issue instructions of one thread to execution units without regard for the instructions being issued of other threads. To the extent that the threads access common data, the threads themselves must be programmed to synchronize data accesses with one another to insure proper operation such that the microprocessor instruction issue stage does not need to be concerned with the dependences.<br>
+[0010] As may be observed from the foregoing, a processor concurrently executing multiple threads may reduce the time required to execute a program or collection of programs comprising the multiple threads. However, there is an overhead associated with the creation and dispatch of a new thread of execution. That is, the microprocessor must expend useful time performing the necessary functions to create a new thread -typically allocating context for the new thread and copying the parent thread's context to<br>
+the new thread's context- and scheduling the new thread for execution, i.e., determining when the microprocessor will begin to fetch and issue instructions from the new thread. The overhead time is analogous to the task-switching overhead of a multitasking operating system and does not contribute to performing the actual task to be accomplished by the program or collection of programs, such as multiplying matrices or processing a packet received from a network or rendering an image. Consequently, although in theory executing multiple threads in parallel may improve the microprocessor's performance, the extent of the performance improvement is limited by the overhead of creating a new thread. Stated alternatively, the larger the thread creation overhead, the greater the amount of useful work that must be performed by the new thread to amortize the cost of the thread creation, For threads that have a relatively large execution time, the thread creation overhead may be essentially irrelevant to performance. However, some applications may benefit from threads with relatively short execution times that are created relatively frequently, in which case the thread creation overhead must be small in order to realize substantial performance gains from multithreading. Therefore, what is needed is a multithreaded microprocessor having in its instruction set a lightweight thread creation instruction.<br>
+BRIEF SUMMARY OF INVENTION<br>
+[0011] The present invention provides a single instruction in a multithreaded microprocessor instruction set, which when executed, allocates a thread context for a new thread and schedules execution of the new thread. In one embodiment, the instruction occupies a single instruction issue slot in the microprocessor in RISC-like fashion. The instruction has very low overhead because it foregoes copying the entire parent thread context to the new thread, which would require either a long amount of time if the context were copied sequentially, or would require an enormous data path and multiplexing logic if copied in parallel. Instead, the instruction includes a first operand which is an initial instruction fetch address that gets stored into the program counter of the new thread context and a second operand that gets stored into one of the registers of the register set of the new thread context, such as one of the general purpose registers.<br>
+The second operand may be used by the new thread as a pointer to a data structure in memory that contains information needed by the new thread, such as initial general purpose register set values. The second operand enables the new thread to populate only the registers needed by the new thread by loading them from the data structure. This is advantageous since the present inventor has noted that many new threads require only between one to five registers to be populated. Many contemporary microprocessors include 32 general purpose registers, for example; hence, in the typical case the present microprocessor avoids the wasted effort of copying the entire parent thread register set to the new thread register set.<br>
+[0012] In one embodiment, the instruction includes a third operand that specifies which of the registers in the new thread context is to receive the second operand. In one embodiment, the instruction is executable by user-mode code advantageously avoiding the need for operating system involvement to create a thread in the typical case. Another advantage of having a single instruction that performs new thread context allocation and new thread scheduling is that it preserves precious opcode space in the instruction set over implementations that require multiple instructions to create and schedule a new thread. The present instruction is able to perform both functions in a single instruction by raising an exception to the instruction if no free thread context is available for allocation when the instruction is executed.<br>
+[0013] In one aspect, the present invention provides an instruction for execution on a microprocessor configured to execute concurrent program threads. The instruction includes an opcode for instructing the microprocessor to allocate resources for a new thread and to schedule execution of the new thread on the microprocessor. The resources comprise a program counter and a register set. The instruction also includes a first operand, for specifying an initial instruction fetch address to be stored into the program counter allocated for the new thread. The instruction also includes a second operand for storing in a register of the register set allocated for the new thread. [0014] In another aspect, the present invention provides a multithreaded microprocessor, The microprocessor includes a plurality of thread contexts, each configured to store state of a thread and to indicate whether the thread context is available for allocation. The<br>
+microprocessor also includes a scheduler, coupled to the plurality of thread contexts, for allocating one of the plurality of thread contexts to a new thread and scheduling the new thread for execution, in response to a single instruction in a currently executing thread. The microprocessor takes an exception to the single instruction if none of the plurality of thread contexts is available for allocation.<br>
+[0015] In another aspect, the present invention provides a multithreaded microprocessor. The microprocessor includes a first program counter, for storing a fetch address of an instruction in a first program thread. The microprocessor also includes a first register set, including first and second registers specified by the instruction for storing first and second operands, respectively. The first operand specifies a fetch address of a second program thread. The microprocessor also includes a second program counter, coupled to the first register set, for receiving the first operand from the first register in response to the instruction. The microprocessor also includes a second register set, coupled to the first register set, including a third register, for receiving the second operand from the second register in response to the instruction. The microprocessor also includes a scheduler, coupled to the first and second register set, for causing the microprocessor to fetch and execute instructions from the second program thread initial fetch address stored in the second program counter in response to the instruction. [0016] In another aspect, the present invention provides a method for creating a new thread of execution on a multithreaded microprocessor. The method includes decoding a single instruction executing in a first program thread and allocating for a second program thread a program counter and register set of the microprocessor, in response to decoding the instruction. The method also includes storing a first operand of the instruction into a register of the register set, in response to allocating the program counter and register set for the second program thread. The method also includes storing a second operand of the instruction into the program counter, in response to allocating the program counter and register set for the second program thread. The method also includes scheduling the second program thread for execution on the microprocessor, after storing the first and second operand.<br>
+[0017] In another aspect, the present invention provides a multithreaded processing system. The system includes a memory configured to store a fork instruction of a first thread and a data structure. The fork instruction specifies a register storing a memory address of the data structure and an initial instruction address of a second thread. The data structure includes initial general purpose register values of the second thread. The system also includes a microprocessor, coupled to the memory. The microprocessor allocates a free thread context for the second thread, stores the second thread initial instruction address into a program counter of the thread context, stores the data structure memory address into a register of the thread context, and schedules the second thread for execution, in response to the fork instruction.<br>
+[0018] In another aspect, the present invention provides a computer program product for use with a computing device. The computer program product includes a computer usable medium, having computer readable program code embodied in the medium, for causing a multithreaded microprocessor. The computer readable program code includes first program code for providing a first program counter, for storing a fetch address of an instruction in a first program thread. The computer readable program code also includes second program code for providing a first register set, including first and second registers specified by the instruction for storing first and second operands, respectively. The first operand specifies a fetch address of a second program thread. The computer readable program code also includes third program code for providing a second program counter, coupled to the first register set, for receiving the first operand from the first register in response to the instruction. The computer readable program code also includes fourth program code for providing a second register set, coupled to the first register set, including a third register, for receiving the second operand from the second register in response to the instruction. The computer readable program code also includes fifth program code for providing a scheduler, coupled to the first and second register set, for causing the microprocessor to fetch and execute instructions from the second program thread initial fetch address stored in the second program counter in response to the instruction,<br>
+[0019] In another aspect, the present invention provides a computer data signal embodied in a transmission medium, including computer-readable program code for providing a multithreaded microprocessor for executing a fork instruction. The program code includes first program code for providing an opcode, for instructing the microprocessor to allocate resources for a new thread and to schedule execution of the new thread on the microprocessor. The resources comprise a program counter and a register set. The program code also includes second program code for providing a first operand, for specifying an initial instruction fetch address to be stored into the program counter allocated for the new thread. The program code also includes third program code for providing a second operand, for storing in a register of the register set allocated for the new thread.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[0020] FIGURE 1 is a block diagram illustrating a computer system according to the<br>
+present invention.<br>
+[0021J FIGURE 2 is a block diagram illustrating the multithreaded microprocessor of<br>
+the computer system of Figure 1 according to the present invention.<br>
+[0022] FIGURE 3 is a block diagram illustrating a FORK instruction executed by the<br>
+microprocessor of Figure 2 according to the present invention.<br>
+[0023] FIGURE 4 is a block diagram illustrating one of the per-thread control registers<br>
+of Figure 2, a TCStatus Register, according to the present invention.<br>
+[0024] FIGURE 5 is a flowchart illustrating operation of the microprocessor of Figure 2<br>
+to execute the FORK instruction of Figure 3 according to the present invention.<br>
+DETAILED DESCRIPTION<br>
+[0025] Referring now to Figure 1, a block diagram illustrating a computer system 100 according to the present invention is shown. The computer system 100 includes a multithreaded microprocessor 102 coupled to a system interface controller 104. The system interface controller is coupled to a system memory 108 and a plurality of input/output (I/O) devices 106. Each of the I/O devices 106 provides an interrupt request line 112 to the microprocessor 102. The computer system 100 may be, but is not<br>
+limited to, a general purpose programmable computer system, server computer, workstation computer, personal computer, notebook computer, personal digital assistant (PDA), or embedded system such as, but not limited to, a network router or switch, printer, mass storage controller, camera, scanner, automobile controller, and the like. [0026] The system memory 108 includes memory, such as RAM and ROM memory, for storing program instructions for execution on the microprocessor 102 and for storing data to be processed by the microprocessor 102 according to the program instructions. The program instructions may comprise a plurality of program threads that the microprocessor 102 executes concurrently. A program thread, or thread, comprises a sequence, or stream, of executed program instructions and the associated sequence of state changes in the microprocessor 102 associated with the execution of the sequence of instructions. The sequence of instructions typically, but not necessarily, includes one or more program control instructions, such as a branch instruction. Consequently, the instructions may or may not have consecutive memory addresses. The sequence of instructions comprising a thread is from a single program. In particular, the microprocessor 102 is configured to execute a FORK instruction for creating a new program thread, i.e., for allocating the resources of the microprocessor 102 needed to execute a thread and for scheduling the thread for execution on the microprocessor 102, as described in detail below.<br>
+[0027] The system interface controller 104 interfaces with the microprocessor 102 via a processor bus coupling the microprocessor 102 to the system interface controller 104. In one embodiment, the system interface controller 104 includes a memory controller for controlling the system memory 108. In one embodiment, the system interface controller 104 includes a local bus interface controller for providing a local bus, such as for example a PCI bus, to which the I/O devices 106 are coupled.<br>
+(0028] The I/O devices 106 may include, but are not limited to, user input devices such as keyboards, mice, scanners and the like; display devices such as monitors, printers and the like; storage devices such as disk drives, tape drives, optical drives and the like; system peripheral devices such as direct memory access controllers (DMAC), clocks, timers, I/O ports and the like; network devices such as media access controllers (MAC)<br>
+for Ethernet, FibreChannel, Infmiband, or other high-speed network interfaces; data conversion devices such as analog-to-digital (A/D) converters and digital-to-analog converters; and so forth. The 1/0 devices 106 generate the interrupt signals 112 to the microprocessor 102 to request service. Advantageously, the microprocessor 102 is capable of concurrently executing multiple program threads for processing the events signified on the interrupt request lines 112 without requiring the conventional overhead associated with saving the state of the microprocessor 102, transferring control to an interrupt service routine, and restoring state upon completion of the interrupt service routine.<br>
+[0029] In one embodiment, the computer system 100 comprises a multiprocessing system comprising a plurality of the multithreaded microprocessors 102. In one embodiment, each microprocessor 102 provides two distinct, but not mutually-exclusive, multithreading capabilities. First, each microprocessor 102 includes a plurality of logical processor contexts, each of which appears to an operating system as an independent processing element, referred to herein as a virtual processing element (WE), through the sharing of resources in the microprocessor 102. To the operating system, an N VPE microprocessor 102 appears like an N-way symmetric multiprocessor (SMP), which allows existing SMP-capable operating systems to manage the plurality of VPEs. Second, each VPE may also contain a plurality of thread contexts for simultaneously executing a plurality of threads. Consequently, the microprocessor 102 also provides a multithreaded programming model wherein threads can be created and destroyed without operating system intervention in typical cases, and where system service threads can be scheduled in response to external conditions (e.g., inpul/output service event signals) with zero interrupt latency.<br>
+[0030] Referring now to Figure 2, a block diagram illustrating the multithreaded microprocessor 102 of the computer system 100 of Figure 1 according to the present invention is shown. The microprocessor 102 is a pipelined microprocessor comprising a plurality of pipeline stages. The microprocessor 102 includes a plurality of thread contexts 228 for storing state associated with a plurality of threads. A thread context 228 comprises a collection of registers and/or bits in registers of the microprocessor 102<br><br>
+that describe the state of execution of a thread. In one embodiment, a thread context 228 comprises a register set 224 (such as a set of general purpose registers (GPRs)), a program counter (PC) 222, and per-thread control registers 226. The contents of portions of the per-thread control registers 226 are described in more detail below. The embodiment of Figure 2 shows four thread contexts 228 each comprising a program counter 222, register set 224, and per-thread control registers 226. In one embodiment, a thread context 228 also includes a multiplier result register. In one embodiment, the register sets 224 each have two read ports and one write port for supporting a read from each of two registers and a write to one register in a register set 224 during a single clock cycle. As described below, the FORK instruction 300 includes two source operands and one destination operand. Consequently, the microprocessor 102 is capable of executing the FORK instruction 300 in a single clock cycle.<br>
+[0031] In contrast to a thread context 228, the microprocessor 102 also maintains a processor context, which is a larger collection of state of the microprocessor 102. In the embodiment of Figure 2, the processor context is stored in per-processor control registers 218. Each WE includes its own set of per-processor control registers 218. In one embodiment, one of the per-processor control registers 218 includes a status register with a field specifying the most recently dispatched thread exception raised by exception signal 234, In particular, if a VPE issues a FORK instruction 300 of a current thread but there are no free allocatable thread contexts 228 to allocate to a new thread, then the exception field will indicate a Thread Overflow condition. In one embodiment, the microprocessor 102 substantially conforms to a MIPS32 or MIPS64 Instruction Set Architecture (ISA), and the per-processor control registers 218 substantially conform to registers for storing processor context of a MIPS Privileged Resource Architecture (PRA), such as the mechanisms necessary for an operating system to manage the resources of the microprocessor 102, such as virtual memory, caches, exceptions and user contexts.<br>
+[0032] The microprocessor 102 includes a scheduler 216 for scheduling execution of the various threads being concurrently executed by the microprocessor 102. The scheduler 216 is coupled to the per-thread control registers 226 and to the per-processor control<br><br>
+registers 218. In particular, the scheduler 216 is responsible for scheduling fetching of instructions from the program counter 222 of the various threads and for scheduling issuing of the fetched instructions to execution units of the microprocessor 102, as described below. The scheduler 216 schedules execution of the threads based on a scheduling policy of the microprocessor 102. The scheduling policy may include, but is not limited to, any of the following scheduling policies. In one embodiment, the scheduler 216 employs a round-robin, or time-division-multiplexed, or interleaved, scheduling policy that allocates a predetermined number of clock cycles or instruction issue slots to each ready thread in a rotating order. The round-robin policy is useful in an application in which fairness is important and a minimum quality of service is required for certain threads, such as real-time application program threads. In one embodiment, the scheduler 216 employs a blocking scheduling policy wherein the scheduler 216 continues to schedule fetching and issuing of a currently running thread until an event occurs that blocks further progress of the thread, such as a cache miss, a branch misprediction, a data dependency, or a long latency instruction. In one embodiment, the microprocessor 102 comprises a superscalar pipelined microprocessor, and the scheduler 216 schedules the issue of multiple instructions per clock cycle, and in particular, the issue of instructions from multiple threads per clock cycle, commonly referred to as simultaneous multithreading.<br>
+[0033] The microprocessor 102 includes an instruction cache 202 for caching program instructions fetched from the system memory 108 of Figure 1, such as the FORK instruction 300 of Figure 3. In one embodiment, the microprocessor 102 provides virtual memory capability, and the fetch unit 204 includes a translation lookaside buffer for caching physical to virtual memory page translations. In one embodiment, each program, or task, executing on the microprocessor 102 is assigned a unique task ID, or address space ID (ASID), which is used to perform memory accesses and in particular memory address translations, and a thread context 228 also includes storage for an ASID associated with the thread. In one embodiment, when a parent thread executes a FORK instruction 300 to create a new thread, the new thread inherits the ASID and address space of the parent thread. In one embodiment, the various threads executing on the<br>
+microprocessor 102 share the instruction cache 202 and translation lookaside buffer. In another embodiment, each thread includes its own translation lookaside buffer. [0034] The microprocessor 102 also includes a fetch unit 204, coupled to the instruction cache 202, for fetching program instructions, such as a FORK instruction 300, from the instruction cache 202 and the system memory 108. The fetch unit 204 fetches instructions at an instruction fetch address provided by a multiplexer 244. The multiplexer 244 receives a plurality of instruction fetch addresses from a corresponding plurality of program counters 222. Each of the program counters 222 stores a current instruction fetch address for a different program thread. The embodiment of Figure 2 illustrates four different program counters 222 associated with four different threads. The multiplexer 244 selects one of the four program counters 222 based on a selection input provided by the scheduler 216. In one embodiment, the various threads executing on the microprocessor 102 share the fetch unit 204.<br>
+[003SJ The microprocessor 102 also includes a decode unit 206, coupled to the fetch unit 204, for decoding program instructions fetched by the. fetch unit 204, such as a FORK instruction 300. The decode unit 206 decodes the opcode, operand, and other fields of the instructions. In one embodiment, the various threads executing on the microprocessor 102 share the decode unit 206.<br>
+[0036] The microprocessor 102 also includes execution units 212 for executing instructions. The execution units 112 may include but are not limited to one or more integer units for performing integer arithmetic, Boolean operations, shift operations, rotate operations, and the like; floating point units for performing floating point operations; load/store units for performing memory accesses and in particular accesses to a data cache 242 coupled to the execution units 212; and a branch resolution unit for resolving the outcome and target address of branch instructions. In one embodiment, the data cache 242 includes a translation lookaside buffer for caching physical to virtual memory page translations. In addition to the operands received from the data cache 242, the execution units 212 also receive operands from registers of the register sets 224. In particular, an execution unit 212 receives operands from a register set 224 of the thread context 228 allocated to the thread to which the instruction belongs. A multiplexer 248<br>
+selects operands from the appropriate register set 224 for provision to the execution units 212 based on the thread context 228 of the instruction being executed by the execution unit 212. In one embodiment, the various execution units 212 may concurrently execute instructions from multiple concurrent threads.<br>
+[0037] One of the execution units 212 is responsible for executing a FORK instruction 300 and generates a true value on a newjhreadjrequest signal 232, which is provided to the scheduler 216, in response to being issued a FORK instruction 300. The new_thread_request signal 232 requests the scheduler 216 to allocate a new thread context 228 and to schedule for execution the new thread associated with the new thread context 228. As described in more detail below, if a new thread context 228 is requested for allocation, but no free allocatable threads are available, the scheduler 216 generates a true value on an exception signal 234 to raise an exception to the FORK instruction 300. In one embodiment, the scheduler 216 maintains a count of the number of free allocatable thread contexts 228, and if the number is less than zero when a new_thread_request 232 is made, the scheduler 216 raises an exception 234 to the FORK instruction 300, In another embodiment, the scheduler 216 examines status bits in the per-thread control registers 226 when a new_thread_request 232 is made to determine whether a free allocatable thread context 228 is available, [0038] The microprocessor 102 also includes an instruction issue unit 208, coupled to the scheduler 216 and coupled between the decode unit 206 and the execution units 212, for issuing instructions to the execution units 212 as instructed by the scheduler 216 and in response to information about the instructions decoded by the decode unit 206. In particular, the instruction issue unit 208 insures that instructions are not issued to the execution units 212 if they have data dependencies on other instructions previously issued to the execution units 212, In one embodiment, an instruction queue is imposed between the decode unit 206 and the instruction issue unit 208 for buffering instructions awaiting issue to the execution units 212 for reducing the likelihood of starvation of the execution units 212. In one embodiment, the various threads executing on the microprocessor 102 share the instruction issue unit 208,<br>
+[0039] The microprocessor 102 also includes a write-back unit 214, coupled to the execution units 212, for writing back results of completed instructions into the register sets 224. A demultiplexer 246 receives the instruction result from the write-back unit 214 and stores the instruction result into the appropriate register set 224 associated with the competed instruction's thread.<br>
+[0040] Referring now to Figure 3, a block diagram illustrating a FORK instruction 300 executed by the microprocessor 102 of Figure 2 according to the present invention is shown. The mnemonic for the FORK instruction 300 is fork rd, rs, rt as shown, wherein rd, rs, and rt are three operands of the FORK instruction 300. Figure 3 illustrates the various fields of the FORK instruction 300. Bits 26-31 are an opcode field 302 and bits 0-5 are a function field 314. In one embodiment, the opcode field 302 indicates the instruction is a SPECIALS type instruction within the MIPS ISA, and the function field 314 indicates the function is a FORK instruction. Hence, the decode unit 206 of Figure 2 examines the opcode field 302 and the function field 314 to determine the instruction is a FORK instruction 300. Bits 6-10 are reserved as zero.<br>
+[0041] Bits 21-25, 16-20, and 11-15 are an rs field 304, rt field 306, and rd field 308, respectively, which specify an rs register 324, rt register 326, and rd register 328, respectively, within one of the register sets 224 of Figure 2. In one embodiment, each of the rs register 324, rt register 326, and rd register 328 is one of 32 general purpose registers of the MIPS ISA. The rs register 324 and rt register 326 are each one of the registers in the register set 224 allocated to the thread in which :he FORK instruction 300 is included, referred to as the parent thread, or forking thread, or current thread. The rd register 328 is one of the registers in the register set 224 allocated to the thread which the FORK instruction 300 creates, referred to as the new thread, or child thread. [0042] As shown in Figure 3, the FORK instruction 300 instructs the microprocessor 102 to copy the value from the parent thread's rs register 324 to the new thread's program counter 222. The new thread's program counter 222 will be used as the initial instruction fetch address of the new thread.<br>
+[0043] Additionally, the FORK instruction 300 instructs the microprocessor 102 to copy the value from the parent thread's rt register 326 to the new thread's rd register 328. In<br><br>
+typical program operation, the program will use the rd register 328 value as a memory address of a data structure for the new thread. This enables the FORK instruction 300 to forego copying the entire register set 224 contents of the parent thread to the new thread register set 224, thereby advantageously making the FORK instruction 300 more lightweight and efficient, and executable within a single processor clock cycle. Instead, the new thread includes instructions to populate only the registers needed by the new thread by loading the register values from the data structure, which have a high probability of being present in the data cache 242. This is advantageous, since the present inventor has determined that many new threads typically only require between one and five registers to be populated, rather than the large number of registers typically found in many current microprocessors, such as the 32 general purpose registers of the MIPS ISA, Copying the entire register set 224 in a single clock cycle would require an unrealistically wide data path between each of the various thread contexts 228 in the microprocessor 102, and copying the entire register set 224 sequentially (e.g., one or two registers per clock cycle) would be much more time consuming and require more complexity in the microprocessor 102. However, the FORK instruction 300 advantageously executes in a RISC-fashion single clock cycle.<br>
+[0044] Advantageously, not only operating system software executing on the microprocessor 102 may employ the FORK instruction 300 to allocate resources for a new thread and to schedule execution of the new thread, but user level threads may also do so. This fact is particularly advantageous for programs that may create and terminate relatively short threads relatively frequently. For example, a program mat includes large numbers of loops with short loop bodies and no data dependence between iterations may benefit from the low thread creation overhead of the FORK instruction 300. Assume a code loop as follows:<br>
+for(i = 0; i<n i></n>
+resultp] = FUNCTION(x[i], y[i]);<br>
+}<br>
+The lower the overhead of thread creation and destruction, the smaller the FUNCTION instruction sequence can be, and still be usefully parallelized into multiple threads. If<br>
+the overhead associated with creating and destroying a new thread is on the order of 100 instructions, as might be the case with a conventional thread creation mechanism, then the FUNCTION must be many instructions long in order to obtain much benefit, if any, from parallelizing the loop into multiple threads. However, the fact that the FORK instruction 300 overhead is so small, in one embodiment only a single clock cycle, advantageously implies that even very short code regions can be profitably parallelized into multiple threads.<br>
+[0045] Although Figure 3 shows only the copying of the rt register 326 and rs register 324 values from the parent thread context 228 to the new thread context 228, other state, or context, may also be copied in response to a FORK instruction 300, such as described below with respect to Figure 4.<br>
+[0046] Referring now to Figure 4, a block diagram illustrating one of the per-thread control registers 226 of Figure 2, a TCStatus Register 400, according to the present invention is shown. That is, each thread context 228 includes a TCStatus Register 400. The various fields of the TCStatus Register 400 are described in the table in Figure 4; however, particular fields distinctly related to the FORK instruction 300 will now be described in more detail.<br>
+[0047] The TCStatus Register 400 includes a TCU field 402. In one embodiment, the microprocessor 102 comprises a distinct processor core and one or more coprocessors, according to the MIPS ISA and PRA. The TCU field 402 controls whether the thread has access to and is bound to a particular coprocessor. In the embodiment of Figure 4, the TCU field 402 allows for control of up to four coprocessors. In one embodiment, the FORK instruction 300 instructs the microprocessor 102 to copy the value of the TCU field 402 of the parent thread to the TCU field 402 of the new thread created by the FORK instruction 300.<br>
+[0048] The TCStatus Register 400 also includes a DT bit 406, which indicates whether or not the thread context 228 is dirty. The DT bit 406 may be employed by an operating system to insure security between different programs. For example, if thread contexts 228 are being dynamically allocated using FORK instructions 300 and deallocated using a YIELD instruction of the microprocessor 102 simultaneously in different security<br>
+domains, i.e., by multiple applications or by both the operating system and an application program, a risk of information leakage in the form of register values inherited by an application exists, which must be managed by a secure operating system. The DT bit 406 associated with each thread.context 228 can be cleared by software and is set by the microprocessor 102 whenever the thread context 228 is modified. The operating system may initialize all thread contexts 228 to a known clean state and clear all associated DT bits 406 prior to scheduling a task. When a task switch occurs, thread contexts 228 whose DT bit 406 is set must be scrubbed to a clean state before other tasks are allowed to allocate and use them. If a secure operating system wishes to make use of dynamic thread creation and allocation for privileged service threads, the associated thread contexts 228 must be scrubbed before they are freed for potential use by applications. The reader is referred to co-pending and concurrently filed U.S. Patent Application entitled INTEGRATED MECHANISM FOR SUSPENSION AND DEALLOCATION OF COMPUTATIONAL THREADS OF EXECUTION IN A PROCESSOR (attorney docket MIPS.0189-01US) filed concurrently herewith, referred to at the beginning of the present Application, which describes in detail the YIELD instruction.<br>
+(0049] The TCStatus Register 400 also includes a DA status bit 412 that indicates whether or not the thread context 228 is dynamically allocatable and schedulable by a FORK instruction 300 and dynamically deallocatable by a YIELD instruction. In one embodiment, a portion of the thread contexts 228 are dynamically allocatable by a FORK instruction 300, and a portion of the thread contexts 228 are not dynamically allocatable by a FORK instruction 300, but are instead thread contexts 228 statically assigned to permanent threads of a program. For example, one or more thread contexts 228 may be statically assigned to portions of the operating system, rather than dynamically allocated by a FORK instruction 300. In another example, in an embedded application, one or more thread contexts 228 may be statically assigned to privileged service threads that in a conventional processor would function similarly to interrupt service routines for servicing interrupt sources that are known to be a vital portion of the application. For example, in a network router, one or more thread contexts 228 may be<br>
+statically assigned to threads that handle events signaled by a set of I/O ports, which may generate an extremely large volume of events that may be handled efficiently by the single cycle thread switching of the microprocessor 102 described herein, but which might overwhelm another microprocessor that had to incur the overhead associated with taking an extremely large volume of interrupts and the associated state saving and transfer of control to an interrupt service routine.<br>
+[0050] In one embodiment, the DA bit 412 may be used by an operating system to handle sharing of thread contexts 228 among application programs. For example, a FORK instruction 300 may attempt to allocate a thread context 228 when there are no thread contexts 228 free for allocation, in which case the microprocessor 102 will raise a Thread Overflow exception 234 to the FORK instruction 300. In response, the operating system may save a copy of the current values, and then clear the DA bits 412 of all thread contexts 228. The next time a thread context 228 is deallocated by an application program, a Thread Underflow exception 234 will be raised, in response to which the operating system may restore the DA bits 412 saved in response to the Thread Overflow exception, and schedule a replay of the FORK instruction 300 that generated the original Thread Overflow exception.<br>
+[0051] The TCStatus Register 400 also includes an A bit 414, which indicates whether the thread associated with the thread context 228 is in an activated state. When a thread is in its activated state, the scheduler 216 will be scheduled to fetch and issue instructions from its program counter 222 according to the scheduler 216 scheduling policy. The scheduler 216 automatically sets the A bit 414 when a FORK instruction 300 dynamically allocates the thread context 228 and automatically clears the A bit 414 when a YIELD instruction dynamically deallocates a thread context 228. In one embodiment, when the microprocessor 102 is reset, one of the thread contexts 228 is designated as the reset thread context 228 for executing the initialization thread of the microprocessor 102. The A bit 414 of the reset thread context 228 is automatically set in response to a microprocessor 102 reset.<br>
+[0052] The TCStatus Register 400 also includes a TKSU field 416, which indicates the privilege state or level of the thread context 228. In one embodiment, the privilege may be one of three levels: kernel, supervisor, and user.   In one embodiment, the FORK<br>
+instruction 300 instructs the microprocessor 102 to copy the value of the TKSU field<br>
+416 of the parent thread to the TKSU field 416 of the new thread created by the FORK<br>
+instruction 300.<br>
+[0053] The TCStatus Register 400 also includes a TASID field 422, which specifies the<br>
+address space ID (ASID), or unique task ID, of the thread context 228.    In one<br>
+embodiment, the FORK instruction 300 instructs the microprocessor 102 to copy the<br>
+value of the TASID field 422 of the parent thread to the TASID field 422 of the new<br>
+thread created by the FORK instruction 300, such that the parent thread and new thread<br>
+share the same address space.<br>
+[0054] In one embodiment, the per-thread control registers 226 also include a register<br>
+for storing a halted bit for enabling software to halt a thread, i.e., to put the thread<br>
+context 228 in a halted state, by setting the halted bit.<br>
+[0055] Referring  now   to   Figure   5,   a   flowchart   illustrating   operation   of the<br>
+microprocessor 102 of Figure 2 to execute the FORK instruction 300 of Figure 3<br>
+according to the present invention is shown. Flow begins at block 502.<br>
+[0056] At block 502, fetch unit 204 fetches a FORK instruction 300 using the program<br>
+counter 222 of the current thread, the decode unit 206 decodes the FORK instruction<br>
+300, and the instruction issue unit 208 issues the FORK instruction 300 to an execution<br>
+unit 212 of Figure 2. Flow proceeds to block 504.<br>
+[0057] At block 504, the execution unit 212 indicates via the new_thread_request signal<br>
+232 that a FORK instruction 300 is requesting a new thread context 228 to be allocated<br>
+and scheduled. Flow proceeds to decision block 506.<br>
+[0058] At decision block 506, the scheduler 216 determines whether a thread context<br>
+228 is free for allocation.  In one embodiment, the scheduler 216 maintains a counter<br>
+indicating the number of free allocatable thread contexts 228 which is incremented each<br>
+time a YIELD instruction deallocates a thread context 228 and is decremented each time<br>
+a FORK instruction 300 allocates a thread context 228, and the scheduler 216<br>
+determines whether a thread context 228 is free for allocation by determining whether<br>
+the counter value is greater than zero.   In another embodiment, the scheduler 216<br>
+examines the state bits in the per-thread control registers 226, such as the DA bit 412<br>
+and A bit 414 in the TCStatus Register 400 of Figure 4 and the halted bit, to determine<br>
+whether a thread context 228 is free for allocation.   A thread context 228 is free for<br>
+allocation if it is neither in an activated nor halted state, and is not a statically assigned<br>
+thread context 228. If a thread context 228 is free for allocation, flow proceeds to block<br>
+508; otherwise, flow proceeds to block 522.<br>
+[0059] At block 508, the scheduler 216 allocates a free allocatable thread context 228<br>
+for the new thread in response to the FORK instruction 300.  Flow proceeds to block<br>
+512.<br>
+[0060] At block 512, the rs register 324 value of the parent thread context 228 is copied<br>
+to the program counter 222 of the new thread context 228, and the rt register 326 value<br>
+of the parent thread context 228 is copied to the rd register 328 of the new thread context<br>
+228, as shown in Figure 3, and other context related to the FORK instruction 300, such<br>
+as described with respect to Figure 4, is also copied from the parent thread context 228<br>
+to the new thread context 228. Flow proceeds to block 514.<br>
+[0061] At block 514, the scheduler 216 schedules the new thread context 228 for<br>
+execution.  That is, the scheduler 216 adds the thread context 228 to the list of thread<br>
+contexts 228 that are currently ready for execution such that the fetch unit 204 may<br>
+begin fetching and issuing instructions from the thread context's 228 program counter<br>
+222 subject to the constraints of the scheduling policy. Flow proceeds to block 516.<br>
+[0062] At block 516, the fetch unit 204 begins fetching instructions at the new thread<br>
+context's 228 program counter 222. Flow proceeds to block 518.<br>
+[0063] At block 518, instructions of the new thread populate the register set 224<br>
+registers of the new thread context 228 as needed.  As described above, typically the<br>
+new thread's program instructions will populate the register set 224 from a data structure<br>
+in memory specified by the rd register 328 value. Flow ends at block 518.<br>
+[0064] At block 522, the scheduler 216 raises a Thread Overflow exception 234 to the<br>
+FORK instruction 300 to indicate that no thread contexts 228 were free for allocation<br>
+when the FORK instruction 300 executed. Flow proceeds to block 524.<br>
+[0065] At block 524, an exception handler in the operating system creates a condition in which an allocatable thread context 228 may be freed for the FORK instruction 300, for example as described above with respect to the DA bit 412 of Figure 4. Flow proceeds to block 526.<br>
+(0066) At block 526, the operating system re-issues the FORK instruction 300 that caused the exception 234 at block 522, which now succeeds due to the availability of a free allocatable thread context 228, for example as described above with respect to the DA bit 412 of Figure 4. Flow ends at block 526.<br>
+[0067] Although the present invention and its objects, features, and advantages have been described in detail, other embodiments are encompassed by the invention. For example, although embodiments have been described in which the new thread context 228 is allocated on the same VPE as the parent thread context, in another embodiment, if the parent VPE detects that no free allocatable thread contexts are available on the VPE, the VPE attempts a remote FORK instruction on another VPE. In particular, the VPE determines whether another VPE has a free allocatable thread context and has the same address space as the parent thread context, and if so, sends a FORK instruction information packet to the other VPE to enable the other VPE to allocate and schedule the free thread context. In addition, the FORK instruction described herein is not limited to use on a microprocessor that executes multiple threads concurrently to solve a particular latency event, but may be executed on microprocessors that multithread on cache misses, mispredicted branches, long latency instructions, etc. Furthermore, the FORK instruction described herein may execute on scalar or superscalar microprocessors. Additionally, the FORK instruction described herein may execute on a microprocessor with any of various scheduling policies. Still further, although an embodiment of the FORK instruction has been described in which the rt value is copied to a register of the new thread context, other embodiments are contemplated in which the rt value is provided to the new thread context via other means, such as via memory. Finally although embodiments have been described in which the operands of the FORK instruction are stored in general purpose registers, in other embodiments the operands may be stored via other means, such as via a memory or via a non-general purpose<br>
+register. For example, although embodiments have been described in which the microprocessor is a register-based processor, other embodiments are contemplated in which the processor is a stack-based processor, such as a processor configured to efficiently execute Java virtual machine code. In such embodiments, the operands of the FORK instruction may be specified in an operand stack in memory rather than in a register, For example, each thread context may include a stack pointer register, and fields of the FORK instruction may specify offsets of the FORK operands into the stack memory relative to the stack pointer register value, rather than specifying registers in the microprocessor's register space.<br>
+[0068] In addition to implementations of the invention using hardware, the invention can be embodied in software (e.g., computer readable code, program code, instructions and/or data) disposed, for example, in a computer usable (e.g., readable) medium. Such software enables the function, fabrication, modeling, simulation, description and/or testing of the apparatus and method described herein. For example, this can be accomplished through the use of general programming languages (e.g., C, C++, JAVA, etc.), GDSII databases, hardware description languages (HDL) including Verilog HDL, VHDL, and so on, or other available programs, databases, and/or circuit (i.e., schematic) capture tools. Such software can be disposed in any known computer usable (e.g., readable) medium including semiconductor memory, magnetic disk, optical disc (e.g., CD-ROM, DVD-ROM, etc.) and as a computer data signal embodied in a computer usable (e.g., readable) transmission medium (e.g., carrier wave or any other medium including digital, optical, or analog-based medium). As such, the software can be transmitted over communication networks including the Internet and intranets. It is understood that the invention can be embodied in software (e.g., in HDL as part of a semiconductor intellectual property core, such as a microprocessor core, or as a system-level design, such as a System on Chip or SOC) and transformed to hardware as part of the production of integrated circuits. Also, the invention may be embodied as a combination of hardware and software.<br>
+[0069] Finally, those skilled in the art should appreciate that they can readily use the disclosed conception and specific embodiments as a basis for designing or modifying<br>
+other structures for carrying out the same purposes of the present invention without departing from the spirit and scope of the invention as defined by the appended claims.<br><br><br><br><br><br><br><br><br><br><br><br>
+WE CLAIM:<br>
+1.      A multithreaded microprocessor (102), comprising:<br>
+a.	a first counter (222), for storing a fetch address of an instruction in a first<br>
+program thread;<br>
+b.	a first register set (224), incorporating first and second registers (324,326)<br>
+specified by said instruction for storing first and second operands,<br>
+respectively, said first operand (304) specifying a fetch address of a second<br>
+program thread;<br>
+c.	a second counter (222), coupled to said first register set, for receiving said<br>
+first operand from said first register in response to said instruction;<br>
+d.	a second register set (224), coupled to said first register set, including a<br>
+third register (328), for receiving said second operand (306) from said<br>
+second register in response to said instruction;<br>
+e.	a scheduler (216), coupled to said first and second register set, for causing<br>
+the microprocessor to fetch and execute instructions from said second<br>
+program thread fetch address stored in said second program counter in<br>
+response to said instruction;<br>
+f.	wherein the microprocessor is configured to execute the single instruction<br>
+in a single clock cycle by performing a read of the first and second<br>
+operands from each of two registers in the first register set and one write of<br>
+the second operand to a register in the second register set.<br>
+2. A microprocessor as claimed in claim 1, comprising an exception indicator, coupled to said scheduler, for causing the microprocessor to take an exception to said instruction if said second program counter and register set are not available for receiving said first and second operands in response to said instruction.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUFic3RyYWN0LSgwMy0wMy0yMDExKS5wZGY=" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Abstract-(03-03-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUFic3RyYWN0LSgwOC0xMS0yMDEwKS5wZGY=" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Abstract-(08-11-2010).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUNsYWltcy0oMDgtMTEtMjAxMCkucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Claims-(08-11-2010).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUNsYWltcy0oMTEtMDItMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Claims-(11-02-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMDMtMDctMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Correspondence Others-(03-07-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMTAtMDgtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Correspondence Others-(10-08-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMzAtMDktMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Correspondence Others-(30-09-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMDMtMDMtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Correspondence-Others-(03-03-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUNvcnJlc3BvbmRlbmNlLW90aGVycy0oMDQtMDItMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Correspondence-others-(04-02-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMDYtMDYtMjAxMykucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Correspondence-Others-(06-06-2013).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMDgtMDItMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Correspondence-Others-(08-02-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMDgtMTEtMjAxMCkucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Correspondence-Others-(08-11-2010).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMDktMDgtMjAwNikucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Correspondence-Others-(09-08-2006).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMTEtMDItMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Correspondence-Others-(11-02-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMjEtMDEtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Correspondence-Others-(21-01-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LWNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LURlc2NyaXB0aW9uIChDb21wbGV0ZSktKDAzLTAzLTIwMTEpLnBkZg==" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Description (Complete)-(03-03-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUZvcm0tMS0oMDMtMDMtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Form-1-(03-03-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUZvcm0tMS0oMDgtMTEtMjAxMCkucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Form-1-(08-11-2010).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUZvcm0tMS0oMzAtMDktMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Form-1-(30-09-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LWZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LWZvcm0tMTgtKDA5LTA4LTIwMDYpLnBkZg==" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-form-18-(09-08-2006).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUZvcm0tMi0oMDMtMDMtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Form-2-(03-03-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUZvcm0tMi0oMDgtMTEtMjAxMCkucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Form-2-(08-11-2010).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUZvcm0tMi0oMzAtMDktMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Form-2-(30-09-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LWZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUZvcm0tMy0oMDMtMDctMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Form-3-(03-07-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUZvcm0tMy0oMDQtMDItMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Form-3-(04-02-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUZvcm0tMy0oMDYtMDYtMjAxMykucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Form-3-(06-06-2013).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LUZvcm0tMy0oMTAtMDgtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-Form-3-(10-08-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LWZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LWZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LUdQQS0oMjEtMDEtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-GPA-(21-01-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LXBjdC0yMTAucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-pct-210.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1kZWxucC0yMDA2LXBjdC0zMDQucGRm" target="_blank" style="word-wrap:break-word;">1339-delnp-2006-pct-304.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTMzOS1ERUxOUC0yMDA2LVBldGl0aW9uIDEzNy0oMDgtMDItMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">1339-DELNP-2006-Petition 137-(08-02-2011).pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="260639-a-solution-of-metal-polymer-chelate-s-and-applications-thereof.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="260641-a-system-and-a-method-to-control-regeneration-of-particulate-filter.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>260640</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1339/DELNP/2006</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>20/2014</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>16-May-2014</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>13-May-2014</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>10-Mar-2006</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>MIPS TECHNOLOGIES, INC.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>955 EAST ARQUES AVE., SUNNYVALE, CALIFORNIA 94085, U.S.A.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>KISSELL, KEVIN</td>
+											<td>39, CHEMIN DES MARTELLES, F-06620 LE BAR SUR LOUP, FRANCE.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 9/46</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2004/027827</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2004-08-27</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>60/502,359</td>
+									<td>2003-09-12</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>10/684,350</td>
+									<td>2003-10-10</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>10/684,348</td>
+									<td>2003-10-10</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>4</td>
+									<td>60/502,358</td>
+									<td>2003-09-12</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>5</td>
+									<td>60/499,180</td>
+									<td>2003-08-28</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/260640-multithreaded-mecroprocessor by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 01:12:18 GMT -->
+</html>

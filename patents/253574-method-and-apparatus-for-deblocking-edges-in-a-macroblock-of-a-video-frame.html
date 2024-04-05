@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/253574-method-and-apparatus-for-deblocking-edges-in-a-macroblock-of-a-video-frame by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 12:38:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 253574:METHOD AND APPARATUS FOR DEBLOCKING EDGES IN A MACROBLOCK OF A VIDEO FRAME</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD AND APPARATUS FOR DEBLOCKING EDGES IN A MACROBLOCK OF A VIDEO FRAME</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>This invention is applicable to the area of removing blocking artifacts in block- based video compression. The invention explains a method of reducing computations by using macroblock shape information, in an In-loop and adaptive deblocking filter comprise the steps of, finding the number of partitions in macroblock; evaluating strength of partition; and deblocking all edges in macroblock which have non-zero strength. The said method can be applied to in- loop adaptive deblocking filters used in video coding technologies with standards like H.264 and MPEG.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>FIELD OF TECHNOLOGY<br>
+This invention is applicable to the area of removing blocking artifacts in block-based video compression. Further, this invention relates to using shape of information of coded blocks to determine adaptive In-loop De-blocking filter strength. More particularly, this invention proposes a method of reducing computations by using macroblock shape information, in an in-loop and adaptive deblocking filter.<br>
+DESCRIPTION OF RELATED ART<br>
+Block'based video compression<br>
+Block-based video compression may break up each video frame into macroblocks (MBs) of size 16x16 pixels (but not restricted to). A macroblock might be further sub-divided into blocks of rectangular blocks of smaller sizes. Two main types of coding techniques can be applied to encode information about the macroblock<br>
+•	Intra coding (no prediction from neighboring frames)<br>
+•	Inter coding (prediction from neighboring frames)<br>
+Intra coding is typically used when the prediction from neighboring frame/s is very erroneous (like in the case of a new object entering the picture). Inter coding is useful when there is smooth motion in the video sequence.<br>
+In Inter coding case, motion for a macroblock is estimated from neighboring frames (in time) and is transmitted as motion vectors (MVs) to the decoder. If the prediction is not perfect, the prediction error is also transmitted as residual information for the macroblock. This residual information is coded using transform-based coding to reduce bit-rate. The presence of residual data for a given macroblock is typically signaled using a parameter known as cbp (coded block pattern) in the transmitted bitstream.<br><br>
+At the receiving end, the decoder uses the MVs and decoded neighboring frame information to reconstruct the motion-compensated macroblock. If cbp flag is set, then the decoder also decodes residual information and adds it to the motion-compensated macroblock to reconstruct the final decoded macroblock. In manner, the whole frame is decoded.<br>
+Deblocking process<br>
+Due to the block based nature of the process, blocking artifacts appear in the decoded image around the edges of the blocks. These artifacts can become quite pronounced when the quantization value used in the two blocks across an edge is different, thereby severely degrading output picture quality. As video compression standards have developed, increasing emphasis is being given on methods to reduce these blocking artifacts. Typically, the methods involve a "Deblocking filter" as a post-processing step on the output frame. This filter is applied across block edges to smoothen the transition of pixel values across the edge. The filter can be fixed or adaptive (based on the motion and/or residual information across the edge). Until recently, the deblocking filter was put forward as a post-processing step in the decoding process (H.263, Mpeg-1/2 and Mpeg-4 Part 2). Recently, the H.264 video coding standard (also known as Mpeg4 part 10) has introduced an in-loop, adaptive deblocking filter as a normative part of the coding/decoding process. An in-loop operation means that the deblocked frames are being used for prediction in future frames, while in a post-processing scenario the deblocked frames are simply presented at the output (without being used for prediction). The advantage of the filter being in-loop being that it guarantees output quality level, and also helps in compression (by increasing the quality of decoded reference images) [Reference].<br>
+Typically the adaptive nature of the filter is implemented by using a set of filters (of varying lengths) and deciding on a given filter after analysis of the state of pixels across the edge. For example, consider the H.264 standard, which defines an in-loop adaptive deblocking filter as a normative part of the standard [Figure 1]. Here, the smallest possible block size is 4x4 pixels. The deblocking filter therefore<br><br>
+operates across each 4x4 edge (there are 32 such edges in a 16x16 macroblock [Reference]). By convention, while deblocking a macroblock, only the left and top boundary edges are deblocked in the context of the current macroblock. The bottom and rightmost boundary edges are deblocked in the context of the right (or bottom) macroblock. The filter is adaptive in nature and has four possible modes of operation. The modes differ in the length of the filter being applied across the edge. Each mode is assigned a strength value ranging from 0-3. Thus, deblocking each 4x4 edge involves two steps - strength determination and filtering. The relation of filter strength to the type of filtering is described below<br><br>
+The strength determination process is shown in Figure 3. The three-step process evaluates the context across the 4x4 edge in terms of type of coding (intra or inter), reference frames used, presence of residual information and difference in motion vectors of the 4x4 blocks on each side of the edge [Reference].<br>
+The key weaknesses with the existing system are the following<br>
+1.	Evaluation of strength of each edge<br>
+2.	Strength evaluation is a costly process - it involves the loading and analysis of cbp, motion-vectors and reference frame information for each edge This means that for cases where the strength eventually comes out to be zero (skip MBs, no cbp and no motion cases, etc.), one still ends up performing all the steps of the flowchart in Figure 3. A study of the deblocking filter applied to various kinds of natural video sequences reveals that out of the four possible strength values, zero occurs most often (more<br><br>
+than 50% of the time) [Reference]. In such cases, the related art performs significant amount of unnecessary computations.<br>
+SUMMARY OF THE INVENTION<br>
+The primary object of this invention is to invent a method of reducing computations by using macroblock shape information, in an in-loop and adaptive deblocking filter.<br>
+This invention describes a method to use the shape of the block, in case of an in-loop and adaptive deblocking filter, to decide a subset among all the edges in a MB, which need to be evaluated for deblocking. This subset is composed of all edges which are internal to the shape of the block being analyzed.<br>
+Accordingly, the present invention comprises a method of reducing computations by using macroblock shape information, in an In-loop and adaptive deblocking filter comprising the steps of:<br>
+(a)	finding the number of partitions in macroblock;<br>
+(b)	evaluating strength of partition; and<br>
+(c)	deblocking all edges in macroblock which have non-zero strength.<br>
+Other advantages and features of the invention will become more clearly apparent from the following description of the embodiments of the invention given as non-restrictive examples only and represented in the accompanying drawings.<br>
+BRIEF DESCRIPTION OF THE ACCOMPANYING DRAWINGS<br>
+Figure 1 depicts an example of an in-loop deblocking filter (in H.264 video<br>
+encoder).<br>
+Figure 2 describes the partitioning of a 16x16 macroblock into 16 4x4 blocks.<br><br>
+Figure 3 depicts the steps involved in strength evaluation of each edge during the<br>
+in-loop, adaptive deblocking process, as described in the H.264 standard<br>
+Figure 4 describes the partitioning of a 16x16 macroblock into 4 8x8 blocks, as is<br>
+done in the MPEG-4.<br>
+Figure 5 depicts the various macroblock partitioning modes used in H.264 video<br>
+coding standard.<br>
+Figure 6 depicts the proposed generalized flow-chart for deblocking macroblock<br>
+edges.<br>
+Figure 7 depicts an example implementation of the generalized flow-chart for the<br>
+case of H.264 standard.<br>
+DETAILED DESCRIPTION OF THE INVENTION<br>
+The preferred embodiments of the present invention will now be explained with reference to the accompanying drawings. It should be understood however that the disclosed embodiments are merely exemplary of the invention, which may be embodied in various forms. The following description and drawings are not to be construed as limiting the invention and numerous specific details are described to provide a thorough understanding of the present invention, as the basis for the claims and as a basis for teaching one skilled in the art on how to make and/or use the invention. However in certain instances, well-known or conventional details are not described in order not to unnecessarily obscure the present invention in detail.<br>
+Before going into the description of the invention, it is necessary to understand the illustrations of the prior art and that of the present invention as given exemplified in the accompanying drawings.<br>
+Figure 1 depicts an example of an in-loop deblocking filter (in H.264 video encoder). The deblocking operation is applied on the reconstructed frame to remove blocking artifacts. This reconstructed frame is obtained by adding motion-<br><br>
+compensated and residual data for each partition. The deblocked frame is used as a reference frame for encoding other frames.<br>
+Figure 2 describes the partitioning of a 16x16 macroblock into 16 4x4 blocks. It enumerates the maximum number of edges (horizontal and vertical) across which deblocking can be done. The horizontal edges are labeled Hij and vertical edges are labeled Vy, where i and j denote row and column indices<br>
+Figure 3 depicts the steps involved in strength evaluation of each edge during the in-loop, adaptive deblocking process, as described in the H.264 standard, j and k are two neighboring blocks which share the edge. Rj and RR are the reference frame indices used for blocks j and k respectively. MVj,x and MVj.y are motion-vectors components in x- and y-directions for block j. MVR.X and MVk,y are motion-vectors components in x- and y-directions for block k.<br>
+Figure 4 describes the partitioning of a 16x16 macroblock into 4 8x8 blocks, as is done in the MPEG'-4 Part-2 Video coding standard. In this case, there are a maximum of four horizontal and four vertical edges that can be deblocked.<br>
+Figure 5 depicts the various macroblock partitioning modes used in H.264 video coding standard. These modes progressively divide the macroblock into smaller partitions. The key observation to be made here is that the macroblock partitioning mode dictates the number of internal edges that might need deblocking. Therefore, a larger partition can result in fewer edges that need deblocking<br>
+This invention proposes an adaptive de-blocking algorithm that utilizes a parameter that is readily available in all schemes of block-based video coding, which is shape of the predicted block. The shape of the predicted block can be used to reduce the number of edges over which the evaluation of the context change needs to be done. Typically, all block-based video coding algorithms place constraints on the context change permissible within a coded block of the video frame. We look at two examples below:<br><br>
+MPEG'4 Video<br>
+In MPEG-4 the possible block sizes for coding one macroblock (16x16 pixels) are as one 16x16 block or as four 8x8 blocks. Consequently, a macroblock in MPEG-4 can have a single motion vector or 4 motion vectors (one for each 8x8 block). Also, the transform used in MPEG-4 is an 8x8 transform, which means that the residual error signal in a predicted block can have up to four components, one from each 8x8 block.<br>
+In MPEG-4 video, the edges that need to be de-blocked in one macroblock are shown in Figure 3. The context is constrained to change only across these edges (if it changes).<br>
+H.264 Video<br>
+In H.264, a single 16x16 macroblock can be predicted in one of the following ways, resulting in partitioning of the 16x16 macroblock:<br>
+1.	As a single 16x16 block (1 partition)<br>
+2.	As two 16x8 or 8x16 blocks (2 partitions)<br>
+3.	As four 8x8 blocks (4 partitions) Further, each 8x8 block can be predicted as:<br><br>
+1.	A single 8x8 block<br>
+2.	Two 8x4 or 4x8 blocks<br>
+3.	Four 4x4 blocks<br>
+Additionally, the transform used in the H.264 video coding algorithm is a 4x4 transform, and hence the number of edges across which the context can change is greatly increased. All the edges that need de-blocking are shown in Figure 2. The context is constrained to change only across these edges (if it changes). Figure 7 depicts an example implementation of the generalized flow-chart for the case of H.264 standard.<br><br>
+Using shape of the coded block in edge selection<br>
+The shape of the coded block can give us information about whether a particular edge needs to be included in the set of candidate edges for de-blocking within a macroblock. This is because the shape of the block also sets constraints on the quantum of context change allowed within the block (as seen from the two examples above). We will see how we can apply the shape information to reduce the set of candidate edges that need to be evaluated for the in-loop de-blocking filter in H.264 video.<br><br><br><br>
+Based on the shape of the coded block, certain edges can be eliminated from the candidate set and the evaluation of filter strength need not be performed on these edges. This is illustrated in Table, which shows the candidate edges for the first four macroblock coding modes. As an example, we explain how the set of candidate edges is ascertained for a few cases in Table 1.<br>
+Candidate for 16x16 prediction with no residual - Rows 1 and 2 In this case, the coded macroblock satisfies the following conditions:<br>
+1.	Coding mode is 16x16<br>
+2.	There is no residual error between the predicted and original block.<br>
+3.	There is at most one motion vector for the macroblock.<br>
+In these modes the 16x16 area in the current frame is obtained by merely picking up the 16x16 area from the reference frame pointed to by the motion vector (or from the same position if MV = 0), and pasting it in the current location. Since the de-blocking filter is in-loop, we know for sure that the area that is being picked up from the reference frame has already been de-blocked. Also, since there is no residual error signal (cbp = 0), and we are predicting a complete 16x16 area, there will be no context change within the 16x16 area. Thus, referring to Figure 1, we need to evaluate filter strengths only for the edges mentioned in column 3 of rows 1 and 2 of Table 1, since we are sure that for all other edges, the strength<br><br>
+will always evaluate to 0 (i.e. no filtering).<br>
+By applying the knowledge of shape of the coded block, we have now reduced the candidate edges by 75 %. This means that the algorithm to evaluate the filter strength given in Figure 2 now need to be applied for 75 % less edges, thus reducing the total computation in the de-blocking of a macroblock of this type.<br>
+Figure 6 depicts the proposed generalized flow-chart for deblocking macroblock edges.<br>
+Here we present the exact steps involved in the optimized strength evaluation algorithm:<br>
+1   Find N = number of partitions in macroblock<br>
+2.	if N is equal to One, and cbp is Zero, then only evaluate strength for macroblock boundary edges. Set strength values for all internal edges to zero. Goto Step 10.<br>
+3.	If N is greater than One, let K be partition index, K e {0, N-1}<br>
+4.	SetK=1<br>
+5.	If residual information in partition K is equal to zero, skip all internal edges for that partition. Otherwise, evaluate strength for internal edges of partition.<br>
+6.	Evaluate strength for top and left boundary edges of partition.<br>
+7.	SetK=K+1.<br>
+8.	If K is less than N, then go to Step 5.<br>
+9.	If K is equal to N, evaluate strength for top and left boundary edges for macroblock.<br>
+10.	Deblock all edges in macroblock which have non-zero strength.<br>
+A graphical demonstration of the above algorithm is depicted in Figure 6. The proposed invention has the following advantages:<br><br>
+1.	The invention can be applied to all in-loop adaptive deblocking filters used in video coding technologies.<br>
+2.	Since shape information is available at the time of deblocking, no additional computation is needed for generating this information.<br>
+3.	The invention can be directly applied to existing standards like H.264 and MPEG.<br>
+4.	In-loop adaptive deblocking filters are known in the industry to be computationally complex to implement - this invention provides a method to significantly decrease computations.<br>
+5.	The computational savings imparted by this invention are dependant on the<br>
+video sequence. Our invention gives us best savings in case of low-to-medium<br>
+motion video sequences. At the same-time, for very high-motion or high-<br>
+texture video sequences, the increase in computation is minimal.<br>
+It will also be obvious to those skilled in the art that other control methods and apparatuses can be derived from the combinations of the various methods and apparatuses of the present invention as taught by the description and the accompanying drawings and these shall also be considered within the scope of the present invention. Further, description of such combinations and variations is therefore omitted above. It should also be noted that the host for storing the applications include but not limited to a computer, mobile communication device, mobile server or a multi function device.<br>
+Although the present invention has been fully described in connection with the preferred embodiments thereof with reference to the accompanying drawings, it is to be noted that various changes and modifications are possible and are apparent to those skilled in the art. Such changes and modifications are to be understood as included within the scope of the present invention as defined by the appended claims unless they depart there from.<br><br><br><br><br>
+WE CLAIM<br>
+1.	A method of reducing computations by using macroblock shape<br>
+information, in an In-loop and adaptive deblocking filter comprising the<br>
+steps of:<br>
+(a)	finding the number of partitions in macroblock;<br>
+(b)	evaluating strength of partition; and<br>
+(c)	deblocking all edges in macroblock which have non-zero strength.<br><br>
+2.	A method as claimed in claim 1 wherein the presence of residual data for a given macroblock is typically signaled using a cbp (coded block pattern) in the transmitted bitstream.<br>
+3.	A method as claimed in claim 1 wherein if number of partitions in macroblock is equal to One, and cbp is Zero, then only evaluate strength for macroblock boundary edges.<br>
+4.	A method as claimed in claim 1 wherein if number of partitions in macroblock is equal to One, and cbp is Zero, then strength values for all internal edges is set to zero and a deblocking is performed in all edges in macroblock which have non-zero strength.<br>
+5.	A method as claimed in claim 1 wherein if number of partitions in macroblock is greater than one then partition index is set to one.<br>
+6.	A method as claimed in claim 1 wherein if residual information in partition index is equal to zero, skip all internal edges for that partition.<br>
+7.	A method as claimed in claim 1 wherein if residual information in partition index is not equal to zero strength for internal edges of partition is evaluated.<br><br>
+A method as claimed in claim 1 wherein evaluating the strength of partition involve evaluating strength for top and left boundary edges of partition.<br>
+A method as claimed in claim 1 wherein after evaluation the partition index is incremented.<br>
+.A method as claimed in claim 1 wherein the strength evaluation is done until partition index is less than number of partitions in macroblock.<br>
+.A method as claimed in claim 1 wherein if partition index is equal to number of partitions in macroblock. strength for top and left boundary edges for macroblockis evaluated.<br>
+.A method as claimed in claim 1 wherein deblocking all edges in macroblock which have non-zero strength is performed.<br>
+I. A method as claimed in claim 1 wherein adaptive de-blocking utilizes a parameter which is shape of the predicted block.<br>
+.A method as claimed in claim 1 wherein shape of the predicted block can be used to reduce the number of edges over which the evaluation of the context change needs to be done.<br>
+.A method as claimed in claim 1 wherein the shape of the coded block gives information about whether a particular edge needs to be included in the set of candidate edges for de-blocking within a macroblock.<br>
+I. A method as claimed in claim 1 wherein the said method can be applied to in-loop adaptive deblocking filters used in video coding technologies with standards like H.264 and MPEG.<br>
+.A   method   of   reducing   computations   by   using   macroblock   shape<br><br>
+information, in an In-loop and adaptive deblocking filter such as substantially herein described particularly with reference to the accompanying drawings.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgIENPUlJFU1BPTkRFTkNFIE9USEVSUyAgMzAtMDUtMjAxMi5wZGY=" target="_blank" style="word-wrap:break-word;">1468-CHE-2004   CORRESPONDENCE OTHERS  30-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgQU1FTkRFRCBDTEFJTVMgIDI1LTA1LTIwMTIucGRm" target="_blank" style="word-wrap:break-word;">1468-CHE-2004  AMENDED CLAIMS  25-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgQU1FTkRFRCBDTEFJTVMgMjYtMDYtMjAxMi5wZGY=" target="_blank" style="word-wrap:break-word;">1468-CHE-2004  AMENDED CLAIMS 26-06-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgQU1FTkRFRCBQQUdFUyBPRiBTUEVDSUZJQ0FUSU9OICAyNS0wNS0yMDEyLnBkZg==" target="_blank" style="word-wrap:break-word;">1468-CHE-2004  AMENDED PAGES OF SPECIFICATION  25-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgQU1FTkRFRCBQQUdFUyBPRiBTUEVDSUZJQ0FUSU9OIDI2LTA2LTIwMTIucGRm" target="_blank" style="word-wrap:break-word;">1468-CHE-2004  AMENDED PAGES OF SPECIFICATION 26-06-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgQ09SUkVTUE9OREVOQ0UgT1RIRVJTICAyNS0wNS0yMDEyLnBkZg==" target="_blank" style="word-wrap:break-word;">1468-CHE-2004  CORRESPONDENCE OTHERS  25-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgRVhBTUlOQVRJT04gUkVQT1JUIFJFUExZIFJFQ0VJVkVEIDI2LTA2LTIwMTIucGRm" target="_blank" style="word-wrap:break-word;">1468-CHE-2004  EXAMINATION REPORT REPLY RECEIVED 26-06-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgRk9STS0xICAyNS0wNS0yMDEyLnBkZg==" target="_blank" style="word-wrap:break-word;">1468-CHE-2004  FORM-1  25-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgRk9STS0xMyAgMTktMDYtMjAwNi5wZGY=" target="_blank" style="word-wrap:break-word;">1468-CHE-2004  FORM-13  19-06-2006.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgRk9STS0xMyAyNi0wNi0yMDEyLnBkZg==" target="_blank" style="word-wrap:break-word;">1468-CHE-2004  FORM-13 26-06-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgT1RIRVIgUEFURU5UIERPQ1VNRU5UICAyNS0wNS0yMDEyLnBkZg==" target="_blank" style="word-wrap:break-word;">1468-CHE-2004  OTHER PATENT DOCUMENT  25-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1DSEUtMjAwNCAgUE9XRVIgT0YgQVRUT1JORVkgIDI1LTA1LTIwMTIucGRm" target="_blank" style="word-wrap:break-word;">1468-CHE-2004  POWER OF ATTORNEY  25-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1jaGUtMjAwNC1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">1468-che-2004-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1jaGUtMjAwNC1jbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">1468-che-2004-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1jaGUtMjAwNC1jb3JyZXNwb25kbmVjZS1vdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">1468-che-2004-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1jaGUtMjAwNC1kZXNjcmlwdGlvbihjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">1468-che-2004-description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1jaGUtMjAwNC1kZXNjcmlwdGlvbihwcm92aXNpb25hbCkucGRm" target="_blank" style="word-wrap:break-word;">1468-che-2004-description(provisional).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1jaGUtMjAwNC1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">1468-che-2004-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1jaGUtMjAwNC1mb3JtIDEucGRm" target="_blank" style="word-wrap:break-word;">1468-che-2004-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1jaGUtMjAwNC1mb3JtIDI2LnBkZg==" target="_blank" style="word-wrap:break-word;">1468-che-2004-form 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQ2OC1jaGUtMjAwNC1mb3JtIDUucGRm" target="_blank" style="word-wrap:break-word;">1468-che-2004-form 5.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="253573-a-process-for-preparation-of-fenofibrate.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="253575-tetrahydropyridoindole-derivatives.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>253574</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1468/CHE/2004</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>31/2012</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>03-Aug-2012</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>01-Aug-2012</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>31-Dec-2004</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>SAMSUNG INDIA SOFTWARE OPERATIONS PRIVATE LIMITED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>BAGMANE LAKEVIEW, BLOCK B, NO. 66/1, BAGMANE TECH PARK, C V RAMAN NAGAR, BYRASANDRA, BANGALORE</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>KALYAN KUMAR KAIPA</td>
+											<td>BAGMANE LAKEVIEW, BLOCK ‘B’, NO. 66/1, BAGMANE TECH PARK, C V RAMAN NAGAR, BYRASANDRA, BANGALORE – 560093,</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>SATYAJEET HOSKOTE,</td>
+											<td>BAGMANE LAKEVIEW, BLOCK ‘B’, NO. 66/1, BAGMANE TECH PARK, C V RAMAN NAGAR, BYRASANDRA, BANGALORE – 560093,</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>ANSHUL SHARMA,</td>
+											<td>BAGMANE LAKEVIEW, BLOCK ‘B’, NO. 66/1, BAGMANE TECH PARK, C V RAMAN NAGAR, BYRASANDRA, BANGALORE – 560093,</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04N5/14</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td></td>
+									<td></td>
+								    <td>NA</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/253574-method-and-apparatus-for-deblocking-edges-in-a-macroblock-of-a-video-frame by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 12:38:06 GMT -->
+</html>

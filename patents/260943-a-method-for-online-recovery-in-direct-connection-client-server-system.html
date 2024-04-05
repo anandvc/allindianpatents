@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/260943-a-method-for-online-recovery-in-direct-connection-client-server-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 02:29:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 260943:A METHOD FOR ONLINE RECOVERY IN DIRECT CONNECTION CLIENT SERVER SYSTEM</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD FOR ONLINE RECOVERY IN DIRECT CONNECTION CLIENT SERVER SYSTEM</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>Clients are permitted to directly attach to a client server system (10). A oplog management system tracks changes as clients make the changes to control structures of the direct connection client server system (10). The Oplogging system (20) can repair the control structures, either by undoing the changes made by the client(1), or else completing the changes in place of the client(1), depending on principles defined.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+FIELD OF INVENTION<br>
+The invention relates to the field of recovery in client server systems.<br>
+Specifically, the invention relates to those architectures where client processes<br>
+are directly connected to server process. More specifically, the invention<br>
+relates to the ability to maintain availability of a server sub-system to existing<br>
+and new clients in the presence of failure of one or more client processes that<br>
+are directly connected to the server sub-system.<br>
+BACKGROUND OF INVENTION<br>
+A common architecture for computer applications is the client-server<br>
+architecture. Client-server applications are computer systems where<br>
+functionality of the application is divided across the server and the clients. For<br>
+example, the client may provide a user interface and the server may provide<br>
+access to shared resources. Typically the clients and the server execute as<br>
+separate process. The clients request the server process to perform actions on<br>
+their behalf i.e. the clients access shared resources via the server. The server<br>
+manages the shared resources, and these resources may be termed managed<br>
+data. To facilitate the execution of actions (on behalf of clients) the server<br>
+needs to maintain control data to manage the execution of those actions.<br>
+Example of control data is information to control concurrency, permissions,<br>
+and access to the managed data etc. Typically, control data is transient and is<br>
+reinitialized at system start; however parts of control data can be persistent. In<br>
+summary, the data manipulated by a server in a client-server system may be<br>
+divided into two parts:<br>
+managed data, and control data.<br>
+A common example of a server used in client-server architectures is a<br>
+database management system (DBMS). A database is a collection of data<br>
+items stored in a computer -these data items constitute the managed data in a<br>
+database management system (DBMS) setting. Multiple users may<br>
+concurrently access these (managed) data items via clients. The actions that<br>
+are run on behalf of the clients are called transactions. Transactions may read<br>
+from the database, write (insert, delete, or update) to the database or both, thus<br>
+transactions may be made up of many read and write operations. Transactions<br>
+can not only cause the modification of data items, but also the modification of<br>
+control data that the DBMS maintains internally to control execution and<br>
+provide access to the underlying data items. We will frequently provide<br>
+examples from DBMS. However, it should be noted that the invention<br>
+presented here has wide applicability and DBMS is only one example<br>
+application.<br><br>
+Those skilled in the art will recognize that atomicity is a desired<br>
+behavior of any mission critical client-server system. Atomicity refers to the<br>
+property that any client request is either fully executed or not executed at all,<br>
+in other words, either all effects of an action that the client requested are<br>
+visible to other clients or none of the effects is visible. One example of a<br>
+client-server system where atomicity is highly desired is a DBMS. Either all<br>
+effects of a transaction should be visible to other transactions or none of the<br>
+effects should be visible (this is part of ACID (Atomicity, Concurrency,<br>
+Isolation, and Durability) properties of transactions). Client requests have<br>
+intentional direct effect on managed data. However, control data is changed<br>
+indirectly. It is changed by the server process running on behalf of the client.<br>
+Typically the property of atomicity is associated with managed data, and not<br>
+control data.<br>
+In the art, the techniques to implement atomicity for managed data via<br>
+logging and recovery are well understood. Write Ahead Logging (WAL) is a<br>
+well-known example of logging, hi this scheme, log records are created to<br>
+track the changes made to the managed data. The log records include the old<br>
+copy of managed data as well as the new copy. They also record the beginning<br>
+and end of client actions. WAL guarantees that log records are persisted to a<br>
+non-volatile storage medium, such as a disk, prior to persisting the actual<br>
+managed data. Thus, in case of any failure, the server uses the log records that<br>
+have been persisted to determine whether a given client action was partially<br>
+completed or fully completed. The effect of partially completed client action<br>
+is undone by using the old copy of managed data saved in log records to roll<br>
+back the state of the managed data to the state it had prior to starting the client<br>
+action. Similarly, the new copy of managed data saved in log records is used<br>
+to roll forward the state of the managed data to reflect the changes made by<br>
+fully completed client actions, hi this manner, the server guarantees atomicity<br>
+of client actions on managed data even in the presence of failures. Rollback<br>
+and roll-forward together help achieve atomicity in a system.<br>
+Just as atomicity is a correctness condition for managed data,<br>
+consistency is a correctness condition for control data. We define a consistent<br>
+state for the control data as any state in which the control data is not being<br>
+modified by a client action. Note that at the end of rollback, the control data<br>
+is, by definition, in a consistent state. When a client action is performed, it<br>
+may lead to changes in control data, including, but not limited to, access<br>
+control information, managed data metadata, concurrency control information,<br>
+etc. In the presence of client failures, the control data needs to be in a<br>
+consistent state before the server can successfully rollback the effects of the<br>
+client actions that were being performed on the managed data.<br><br>
+We define recovery as the process of bringing both the control and<br>
+managed data to a correct state. That is, recovery involves bringing the control<br>
+data to a consistent state and maintaining atomicity for the managed data.<br>
+Traditionally, in client-server systems such as a DBMS, client requests<br>
+are executed in a server process separate from the client process itself, and<br>
+client processes connect to the server via inter-process communication<br>
+mechanisms such as messages. These configurations are called indirect<br>
+connections. Such configurations are highly resilient to errors in the clients.<br>
+Specifically, if a client process dies or exits, the server detects the failure<br>
+through the lack of communication with the client, cleans up any control data<br>
+that may have been modified on behalf of the failed client process to reach a<br>
+consistent state for the control data, and rolls back all incomplete actions<br>
+being executed on behalf of the failed client process. The crucial benefit of<br>
+traditional indirect connections is that the failure of a client process cannot<br>
+interrupt changes that the server makes to its control data. Thus the failure of a<br>
+client process cannot result in partially modified control data. For example, a<br>
+typical change in control data can be an insertion into a linked list. With<br>
+indirect connections, the act of modifying the linked list will not halt in the<br>
+middle of the change; rather, it will halt before or after insertion, when the<br>
+control data is in a consistent state. That the act of modifying the linked list<br>
+will not halt midstream is because the server will check if the client is dead<br>
+only at these discrete points; if the client is dead, the server can take further<br>
+action. In essence, the server process is free to act upon the client failure when<br>
+it is convenient for it, i.e., when the control data is in a consistent state.<br>
+While inter-process communication between client processes and a<br>
+server process insulates the server process from client failures, it does add a<br>
+significant performance overhead to each client request. This overhead is<br>
+undesirable in high performance environments, and is particularly<br>
+unacceptable for an in-memory DBMS. An in-memory DBMS is a state-of-<br>
+the-art DBMS that has been designed to fully exploit 64-bit processors, and<br>
+inexpensive and plentiful main memory to deliver very high performance. In<br>
+such a system, all data items of a database are in main memory at run time,<br>
+instead of being on nonvolatile memory such as disk.<br>
+A common solution for overcoming the overhead of inter-process<br>
+communication is for some server functionality to be packaged as an<br>
+executable library that can be linked with the client application, and for the<br>
+client application and for that part of the server to execute in a single process.<br>
+We call this configuration a direct connection, and we call the combined client<br>
+application and server library a direct connection client server system. Since<br>
+there is typically a multitude of clients in a client-server application, it is<br><br>
+typical to maintain control data and some or all of managed data in a shared<br>
+memory segment.<br>
+In such an environment, the failure of a client process can interrupt the<br>
+execution of a client action. The consequences of such a client failure include<br>
+both the managed data and control data potentially in inconsistent states. For<br>
+example, consider again a client modifying a linked list in the control data. In<br>
+the direct connection model, the client may die or exit in the middle of making<br>
+the change to the linked list. Thus, the linked list may be left in a circular<br>
+state, may be truncated, or may be left in some other inconsistent state. If the<br>
+server tries to rollback from an inconsistent state it may get stuck in an infinite<br>
+loop, may leak memory, or may crash. Thus,the fact that the control data<br>
+might be in a consistent state creates a problem for the server attempting to<br>
+roll back changes made to the managed data by the failed client.<br>
+The problem of dealing with changes to control data by directly<br>
+connected clients is well recognized in the literature. One solution to this<br>
+problem is to declare all client connections to the server invalid whenever an<br>
+unexpected failure occurs in a directly connected client process while it is in<br>
+the middle of modifying control data. Sometimes critical sections are used to<br>
+declare such regions that modify control data. These regions may vary in<br>
+granularity; a simple application of this technique is to declare the whole<br>
+server executable library a critical section. The server is not capable of<br>
+bringing partially modified control data to a consistent state, and this scheme<br>
+forces all clients to reconnect when any client fails when inside the server<br>
+library. This also makes the system go through its recovery process (which is<br>
+used to guarantee atomicity in managed data, as explained earlier) and<br>
+reinitialize the control data. This solution, though effective, is not practical.<br>
+Consider a large SMP machine with 64 processors, and perhaps 50 client<br>
+connections to the database. Any single unexpected exit will cause all client<br>
+connections to be severed. This is a heavy hammer, especially in mission<br>
+critical applications, which require the same stability guarantees that indirect<br>
+connections provide, but desire the speed advantages of direct connection<br>
+client-server systems like in-memory DBMSs.<br>
+There have been other proposals to address these issues, which have<br>
+proven to be partial solutions. Molesky and Ramamritham have proposed<br>
+hardware-based cache coherency models that can ensure control-structure<br>
+coherency even in the presence of node failures. They define a node as a<br>
+process/memory pair executing a given transaction. But to implement their<br>
+scheme, special hardware instructions are required to lock cache lines, and a<br>
+special cache line structure is needed to tag it with the correct identifier. These<br>
+hardware properties are then used to implement a recovery scheme that does<br><br>
+not involve shutting down all connections to the database. Even with advances<br>
+in process architecture, the proposed requirements have not been generally<br>
+met in modern processors. Thus, this scheme is not practical to implement<br>
+today. Other schemes have been proposed that rely on message passing<br>
+between different processes. However, they have the same performance<br>
+shortcomings of indirect connections.<br>
+Another scheme that can be modified to handle the issue of<br>
+invalidation is the checkpoint protocol proposed by Neves et al. The chief<br>
+shortcoming of this protocol is the assumption of entry consistent shared<br>
+memory system. In such a model, all accesses of shared memory are assumed<br>
+to be protected and there are no dependencies between the various accesses.<br>
+This model is impractical for a complex system such as a DBMS, hi a DBMS,<br>
+multiple segments of the shared memory may be accessed and updated in a<br>
+dependent fashion as a single unit. Yet another set of schemes have been<br>
+proposed by Ganesh et al. to reduce the time taken to recover from a failed<br>
+client. But these schemes fail to achieve consistency in control data.<br>
+Thus, there is a need to improve techniques to achieve control data<br>
+consistency in directly connected client models. An example of such a system<br>
+is where directly connected client processes execute in the same process as a<br>
+DBMS and in particular when the DBMS is an in-memory DBMS. These<br>
+techniques should be widely portable to all hardware platforms - i.e., the<br>
+techniques should be hardware-neutral - and practical, should achieve control<br>
+data consistency without sacrificing performance or concurrency, and without<br>
+large storage requirements.<br>
+We have seen earlier that logging techniques are used to track changes<br>
+to managed data to guarantee the atomicity of client actions. Typically, these<br>
+techniques are not used to track changes to control data. For example, Freund<br>
+et al. (U.S. Patent No. 5,923,833) discloses a system that logs managed data<br>
+within a transaction and uses the log to recover the initial state of the managed<br>
+data in the event of a failure. Similarly, Wang et al. (U.S. Patent No.<br>
+6,631,478) logs client updates to a copy of managed data stored in an in-<br>
+memory data structure for the client and recovers an initial state of the<br>
+managed data in the event of failure. But neither Freund nor Want log and is<br>
+able to recover control data. Control data is mostly transient and exists to<br>
+assist the server in managing execution of actions performed on behalf of the<br>
+clients. Additionally, traditional indirect connections insulate the system from<br>
+having to deal with partially modified control data; and therefore achieving<br>
+consistency in control data is not an issue for these traditional systems.<br>
+However, for the directly connected clients, it is paramount to reach a<br>
+consistent state for the managed data otherwise all execution has to end.<br><br>
+One could propose to log all changes to the control data to persistent<br>
+storage, similar to the scheme that was described earlier for managed data.<br>
+This will require considerably more non- volatile storage given the volume of<br>
+log that would be generated. More importantly, such a system will be much<br>
+slower because of frequent access to slow nonvolatile storage, and the system<br>
+will be disk-bound. Thus this scheme is not practical.<br>
+SUMMARY OF THE INVENTION<br>
+We propose a new technique for ensuring consistency in control data<br>
+for direct connection client server systems. We propose a technique that uses<br>
+the principles of traditional data logging, but in the context of control data,<br>
+and define broad principles to be employed in the design of the failure<br>
+recovery subsystem. The proposed apparatus consists of critical sections,<br>
+oplogs, an op log generator, a connection monitor process, and oplog cleaner<br>
+processes. This apparatus together is known as the Oplogging System.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+FIG. 1 is a diagram of a direct connection client server system that<br>
+supports oplogging, according to an embodiment of the invention.<br>
+FIG. 2 is a schematic diagram showing details of oplogging in the<br>
+direct connection client server system of FIG. 1, according to an embodiment<br>
+of the invention.<br>
+FIG. 3 is a schematic diagram showing an instance of an oplog of FIG.<br>
+1 for a representative critical section "open a cursor on the table", according to<br>
+an embodiment of the invention.<br>
+FIG. 4 is a schematic diagram showing an instance of an oplog of FIG.<br>
+1 for a representative critical section "transfer element between linked lists",<br>
+according to an embodiment of the invention.<br>
+FIG. 5 is a schematic diagram showing an instance of an oplog of FIG.<br>
+1 for a representative critical section "move a hole from a list", according to<br>
+an embodiment of the invention.<br>
+FIGs. 6A-6B show a procedure for using an oplog of FIG. 1 to bring<br>
+the control data to a consistent state and to rollback any changes done to<br>
+managed data in the client-server of FIG. 1, according to an embodiment of<br>
+the invention.<br><br>
+FIGs. 7-9 show example critical sections and associated oplogs,<br>
+according to an embodiment of the invention.<br>
+DETAILED DESCRIPTION<br>
+We define these components below and describe each component in<br>
+detail in rest of this section. The Oplogging System consists of:<br>
+•	Critical Section: A critical section defines where enhanced<br>
+failure recovery may be required when a direct connection client<br>
+manipulates control data.<br>
+•	Oplog: To help failure recovery, a log of the control data,<br>
+known as oplog, is maintained.<br>
+•	Oplog Generator: This is a part of the server library (which is<br>
+a part of the direct connection client). Executing direct connection<br>
+client uses the oplog generator to maintain oplogs when executing<br>
+inside a critical section.<br><br>
+•	Connection Monitor Process: A process in the server<br>
+monitors the health of direct connection clients. On failure of a direct<br>
+connection client, the connection monitor process launches one or<br>
+more oplog cleaner process (defined below) for undoing the effects of<br>
+the failed clients.<br>
+•	Oplog Cleaner Process: This process reads the oplogs for the<br>
+failed client, and restores control data and then calls rollback on the<br>
+managed data.<br>
+The concept of critical section is central to the Oplogging System. A<br>
+critical section is a part of the server library where the death or unexpected<br>
+exit of a direct connection client will leave control data in an inconsistent<br>
+state. We defined earlier a consistent state for control data to be a state from<br>
+which rollback can be performed on the managed data. Therefore each critical<br>
+section needs protection to ensure that the server can examine the unfinished<br>
+action that was being executed by the direct connection client and take<br>
+corrective action to reach a consistent state for the control data; and thereafter<br>
+perform a rollback on the managed data so as to ensure atomicity. Note that a<br>
+critical section typically modifies shared data protected by synchronization<br>
+primitives. However, synchronization primitives are not always necessary. A<br>
+critical section may consist of changes to connection-specific information,<br>
+which may not be exposed to any concurrent access. But for discussion in this<br>
+document we will assume the general condition that critical sections are<br>
+protected by synchronization primitives. Note that critical sections in a<br>
+complex system may be large, as they may access multiple shared data<br>
+structures that are protected by synchronization primitives. Therefore,<br><br>
+sophisticated schemes are required to help the server understand exactly<br>
+where the application was and what corrective action can then be employed to<br>
+bring the control data to a consistent state.<br>
+For each critical section we define a oplog. The oplog is an adaptation<br>
+of the well-known logging schemes to control structures in managed data.<br>
+However, unlike traditional logs for the managed data, the design of the<br>
+oplogs for the embodiments of the invention is intimately tied to the structure<br>
+of the critical section that it protects. A simple critical section will have a data<br>
+field, which we identify as field "A", and might or might not have a<br>
+synchronization primitive protecting the control data. As mentioned earlier,<br>
+we will assume for the purpose of this discussion that a critical section will<br>
+always have a synchronization primitive protecting the control data. A oplog<br>
+for use with a critical section has at least the two structures - a Critical Section<br>
+ID field that is set to either inactive or identifies the critical section that the<br>
+oplog is associated with, and a Step Number field which identifies where<br>
+execution is in the critical section. There may be more fields specific to the<br>
+critical section. For example, the simple oplog under consideration can have<br>
+another field that stores the old value of field A. Li this simple case, the<br>
+critical section starts when we acquire the synchronization primitive and ends<br>
+when the synchronization primitive is released, hi this critical section a<br>
+synchronization primitive is acquired on field A, then the value in field A is<br>
+incremented, and lastly the synchronization primitive on field A is released.<br>
+FIG. 7 shows an example of this control structure and associated<br>
+oplog. The oplog needs to reflect the control data state whenever the client<br>
+connection is in a critical section. Here we detail the states that the oplog goes<br>
+through for a simple critical section, hi the initial state the oplog will be<br>
+inactive with Critical Section ID set to Inactive. At this time there is no<br>
+information in the oplog, and such a oplog will not be processed by a oplog<br>
+cleaner process. Before the synchronization primitive is acquired the oplog<br>
+Step Number will be set 0, and then the Critical Section ID will be set to the<br>
+current critical section identifier, which in the example is 65. After acquiring<br>
+the control primitive, but before the value in field A is changed (incremented<br>
+in the example), the oplog will first store the current value of A in Old Value<br>
+which is 55 in the example; and then set the Step Number to 1. After field A's<br>
+value is incremented, that event is indicated in the oplog by changing Step<br>
+Number to 2. Thereafter the critical section releases the synchronization<br>
+primitive and ends. The oplog is cleaned by setting its CriticalSectionlD to<br>
+Inactive.<br>
+For a more complex critical section, the oplog can be correspondingly<br>
+more complex. Distinct steps for oplogging are after acquisition of<br><br>
+synchronization primitives and before release of the synchronization<br>
+primitives. Values are recorded before the change to the fields, but after the<br>
+synchronization primitives have been acquired. An example of such a critical<br>
+section is when two values are changed which are under different<br>
+synchronization primitives, but are part of the same critical section and form<br>
+one logical operation. Consider a critical section that covers two control data<br>
+fields A and B. Field A is changed first and then field B, each under a<br>
+different synchronization primitive. In this example the critical section will<br>
+acquire synchronization primitive on field A, increment the value in field A,<br>
+and then release the synchronization primitive on field A. The critical section<br>
+will then acquire a synchronization primitive on field B, and increment the<br>
+value in field B by the value it found in A.<br>
+FIG. 8 shows an example of this more complex critical section. The<br>
+associated oplog for this operation consists of the required fields Step Number<br>
+and Critical Section ID. Two more fields are used to store the values of the<br>
+fields A and B: Old Value A and Old Value B. Note that if fields A and fields<br>
+B are not at well known locations then two more fields can be used to store<br>
+the locations of the fields A and B. Additionally, if the synchronization<br>
+primitives for fields A and B are not at well known locations then two more<br>
+fields can be used to store the location of those synchronization primitives. In<br>
+this example we assume that the fields A and B as well as their<br>
+synchronization primitives are at well-known locations.<br>
+Since the corresponding oplog reflects all transitions that the control<br>
+data goes through, the oplog will go through 7 states. Before the start of the<br>
+critical section, the oplog will be in an Inactive state i.e. its Critical Section ID<br>
+field will be set to Inactive. However, before the acquisition of the<br>
+synchronization primitive for A, the Step Number is set to 0 and the oplog's<br>
+Critical Section ID is set to 120, which uniquely identifies the critical section.<br>
+After the synchronization primitive for field A has been acquired, but before<br>
+the value in field A is changed, the oplog stores the current value of field A in<br>
+Old Value A: in this case, 3; then the Step Number is set to 1. Once the value<br>
+in field A is changed (incremented in this case from 3 to 4), the oplog's Step<br>
+Number changes to 2. After that the synchronization primitive for field A is<br>
+released and the synchronization primitive for field B is acquired. The oplog<br>
+reflects this change in synchronization primitive by storing the previous value<br>
+of field B, 89 in this example, and changes its Step Number to 3. After the<br>
+value in field B is changed, the Step Number is changed to 4. Thereafter the<br>
+synchronization primitive for field B is released. Since the critical section<br>
+ends after that, the Critical Section ID field of the oplog is cleared (i.e. set it to<br>
+Inactive).<br><br>
+An important consideration for the oplogs is whether client actions can<br>
+leave the oplogs in an inconsistent state. If the oplogs are left in an<br>
+inconsistent state, then the oplog cleaner process, mentioned earlier in this<br>
+section and discussed in greater detail later, can run into the same problems<br>
+that were described earlier about inconsistent control data. To avoid this, an<br>
+oplog has one or more enabler flags. For the oplog examples that were<br>
+detailed above the Step Number and Critical Section ID fields serve as the<br>
+flags. These two fields are used to ensure that the oplog cleaner process will<br>
+find the oplogs in a consistent state. At the start, the Critical Section ID is<br>
+Inactive indicating that the control data has not been modified. Then the Step<br>
+Number field is set to 0 and only then is the Critical Section ID set to the<br>
+corresponding identifier for the critical section. Note that such a oplog is<br>
+consistent since by the time Critical Section ID is set, the Step Number is<br>
+already set to 0. Should the oplog cleaner process have to act on this oplog at<br>
+this stage, it will only try to ensure that the corresponding synchronization<br>
+primitive is released if held. The oplog cleaner process will not change any<br>
+values in the control data. Thereafter, the oplog stores all needed values before<br>
+it advances Step Number. The oplog always has the needed data for a given<br>
+Step Number. This ensures that the oplog cleaner process examines the oplogs<br>
+in a consistent state and is consequently able to bring forward the control data<br>
+to a consistent state. Note that for a given client request there are no<br>
+overlapping critical sections. By definition, multiple "critical sections" that<br>
+overlap must all be executed for a given client request, and are one critical<br>
+section. However, we allow for nested critical sections.<br>
+An example of nested critical sections is shown in FIG. 9. Let there be<br>
+critical sections 1 and 2. In critical section 1, the first synchronization<br>
+primitive for field A is acquired. But before changing the value in field A, a<br>
+function call is made. Li the function call, another critical section 2 exists<br>
+which acquires a synchronization primitive on field B, changes the value in<br>
+field B, releases the synchronization primitive and then returns. After<br>
+returning, in critical section 1, a change is made to the value in field A, and<br>
+then the synchronization primitive on A is released. Theoretically, all nested<br>
+critical sections are one critical section. However, a combination of different<br>
+function calls may give rise to many different critical sections that are<br>
+combinations of constituent critical sections. Our scheme allows for nested<br>
+critical sections since that is more pragmatic for good software system design.<br>
+One implication of this approach is that there may be more than one op<br>
+log<br>
+(corresponding to each instance of a critical section) open at the same time.<br>
+The semantics of this system are that the oplog that is the newest one (deepest<br>
+in the nesting level) will have to be cleaned up by the oplog cleaner process<br><br>
+first before going up one level. Note that the nesting depth of oplogs is<br>
+dependent on the specific application, and there is no theoretical limit on what<br>
+it should be. However, there are simple heuristics to minimize the nesting<br>
+depth of oplogs. Long and complex client actions should be broken down into<br>
+smaller actions and their associated oplogs stored in a well known location,<br>
+which the rollback process can use to clean control data before rolling back<br>
+any effects on managed data. If the client action is smaller, the corresponding<br>
+critical section will tend to be less complex and smaller, and the overall<br>
+nesting depth is likely to be smaller. Another heuristic is to break a long<br>
+client-action into a series of smaller client actions; then the critical sections<br>
+will also be smaller.<br>
+We stated that one of the objectives in the design of the Oplogging<br>
+System is that memory requirements should be low. Note that the oplogs store<br>
+the state of the control data and the step in which a particular execution is. On<br>
+process exit, this information needs to be available to some cleanup process<br>
+(as mentioned earlier, with reference to the oplog cleaner process). The oplogs<br>
+can be logged to a persistent storage, where they can be picked up by the<br>
+oplog cleaner process to achieve control data consistency. However, excessive<br>
+disk writes and reads can have an unacceptable performance penalty. An<br>
+alternative would be to store all oplogs in main memory instead of the disk.<br>
+This design avoids performance problems. However, if the oplogs are stored<br>
+sequentially like the traditional logs under WAL scheme are stored and<br>
+purged only on a checkpoint, it will lead to excessive space requirements, and<br>
+is therefore impractical.<br>
+To avoid performance penalties and excessive space requirements, in<br>
+one embodiment of the invention, the oplogs are stored in a stack in the main<br>
+memory. A stack is a well-known storage structure in the art, where the<br>
+newest entity is on top and oldest one is at the bottom. In this design the space<br>
+requirements is equal to the level of nesting of the oplogs. Also, in this design<br>
+we assume that an inactive log is equivalent to a non-existent oplog. This<br>
+assumption does not lead to any new requirements, in fact, it follows from the<br>
+design of oplogs, that no action is taken on an inactive oplog and therefore it<br>
+might as well not exist. Thus, for each connection enough space is allocated to<br>
+hold the deepest oplog stack that the system can possibly generate. At the<br>
+start, the stack has no data. Each time a oplog is needed it is allocated from the<br>
+stack. At allocation the oplog is inactive. Once a critical section ends and a<br>
+oplog is no longer needed, it is marked inactive and is returned to the space<br>
+reserved for the oplog stack.<br>
+Another important piece -is the oplog cleaning apparatus. Even in the<br>
+given environment of directly connected clients, some processes run<br><br>
+separately from any client to perform maintenance tasks. One such separate<br>
+process, which monitors client connections, is the connection monitor<br>
+daemon. On unexpected client death or exit of the direct connection client<br>
+process, the connection monitor daemon detects the exit of the client process<br>
+and initiates recovery. Recovery for a directly connected client exit consists of<br>
+two parts: bringing the control data to a consistent state, and rollback of the<br>
+managed data to achieve atomicity. First we detail the method by which the<br>
+connection monitor daemon recovers the unexpected failure of a single client<br>
+with one connection to the server. Then we will explain the design needs to<br>
+handle the issue of multiple clients with multiple connections to the server.<br>
+In one embodiment, before operating on the managed data, a directly<br>
+connected client (in a direct connection client server system) requests the<br>
+connection monitor daemon to grant a connection. The connection monitor<br>
+daemon can then store information about this directly connected client. In one<br>
+embodiment, a socket, a well-known operating system construct, is used to<br>
+ensure that the connection monitor daemon can monitor the health of the<br>
+directhy connected clients. Upon successfully establishing a connection, a<br>
+socket: s opened between the client and the connection monitor daemon. Then<br>
+unexpe ;ted exit of the client process is detected by the connection process<br>
+daemoi when it finds that the socket has been closed unexpectedly. When the<br>
+connec ion monitor daemon determines that a client has exited unexpectedly,<br>
+it invol es the oplog cleaner process. On invocation the oplog cleaner process<br>
+examin JS all the oplogs that are active for the given connection (the oplogs<br>
+themse ves are stored in the shared memory and are in a consistent state, as<br>
+explain ;d earlier).<br>
+We now detail the actions the oplog cleaner takes, using the examples<br>
+for the oplogs described above in FIGs. 7-8. For the oplog of FIG. 7, the oplog<br>
+cleaner determines if the oplog is still active. As noted earlier, the oplog is<br>
+inactive both before and after the critical section. However, there are three<br>
+states for the oplog corresponding to Step Number 0, 1 and 2. In Step Number<br>
+0, no change has been performed on the control data. Therefore the oplog<br>
+cleaner only attempts to release the synchronization primitive if it is held. If<br>
+the Step Number is 1, the oplog cleaner reinstalls the previous value recorded<br>
+in the oplog (Old Value) into the field A. If the Step Number is 2, the oplog<br>
+cleaner, does no cleanup, since the control data will be considered consistent.<br>
+However, the client-action may not have released the synchronization<br>
+primitive. The cleaner will release the related synchronization primitive if it<br>
+has not been released. Thereafter a rollback will be called on this connection<br>
+to ensure the atomicity of managed data. Before rollback, the oplog cleaner<br>
+process ensures that all synchronization primitives that are related to the<br><br>
+oplogs that were found to be active are released. Also, any synchronization<br>
+primitives held by the given connection are released at the end of rollback.<br>
+The complex oplog of FIG. 8 has a correspondingly complex oplog<br>
+cleaner. Note that there are 7 states and 2 synchronization primitives in the<br>
+example. First, the oplog cleaner process notes the Step Number in which the<br>
+client-action exited. If the oplog is in Step Number 0 or 4, no action is<br>
+required on the control data. In the Step Number 1, the oplog cleaner process<br>
+reinstalls the old value for field A from Old Value A. For the Step Number 2,<br>
+the oplog cleaner process releases the synchronization primitive for field A if<br>
+held, and then executes the rest of the action: i.e. change the value in field B.<br>
+For Step Number 3, the oplog cleaner process reinstalls the old value in field<br>
+B from Old Value B, and executes the rest of the action of changing the value<br>
+in field B. At the end of each step, the oplog cleaner process releases the<br>
+synchronization primitives for both field A and field B, if either of them is<br>
+still held. Note that the corrective action for the second and third steps may be<br>
+even more complex than mentioned above. The corrective action will depend<br>
+on the structure of the rollback for the managed data that will be initiated at<br>
+the end of oplog cleaning. If the rollback needs the critical section for client-<br>
+action to be completed then the oplog cleaner process performs the steps<br>
+described above. Otherwise, the oplog cleaner process can choose to simply<br>
+rollback the change to values for field A and field B. For example if the<br>
+change in field A were an increment, the oplog cleaner process can a<br>
+decrement after value in Step Number field is 2 to restore A. Finally a<br>
+rollback will be called on this connection to ensure atomicity of managed<br>
+data.<br>
+In a multi-client system, many clients with several connections to the<br>
+server might fail unexpectedly at the same time. Since a given client executes<br>
+concurrently with other connected clients, any given client might die holding<br>
+synchronization primitives, which can either block the execution of new or<br>
+currently connected clients or block the recovery of other clients that have<br>
+failed unexpectedly. Therefore special handling is required to ensure that all<br>
+control data can be brought to a consistent state and that rollback on managed<br>
+data will finish successfully for all clients that failed unexpectedly, and at the<br>
+same time to ensure that all already connected as well as new clients can make<br>
+progress.<br>
+At this point a comment is required on common types of<br>
+synchronization primitives. There are two common kinds of synchronization<br>
+primitives - application locks (usually application implemented complex<br>
+synchronization primitives that provide ordering, waiting and other services<br>
+and guarantees) and systems latches (basic system locks like semaphores etc.).<br><br>
+A problem common to all synchronization primitives is deadlock. A deadlock<br>
+is a situation where two or more processes wait for synchronization primitives<br>
+acquired by each other. This prevents progress by any participant in the<br>
+deadlock cycle. Deadlocks in application locks are relatively easy to find; i.e.<br>
+the application can take some corrective action if it finds any such deadlocks<br>
+since the application has access to all information about these deadlocks. But<br>
+system latch deadlocks are hard to act upon. In such a situation, the processes<br>
+participating in the deadlock cycle make no progress; the application does not<br>
+have any information on the deadlock and no corrective action is possible.<br>
+The situation gets more complicated with unexpected client deaths - both<br>
+application locks and system latches need to be released by the connection<br>
+monitor daemon at the appropriate times to ensure correct execution of the<br>
+concurrently connected clients.<br>
+If the connection monitor daemon launches the oplog cleaner process<br>
+sequentially for each failed client, then it will run into deadlocks. Instead,<br>
+embodiments of the invention use a highly concurrent design for launching<br>
+oplog cleaner processes. This solution guarantees that there will be no<br>
+deadlocks. The connection monitor daemon launches a new oplog cleaner<br>
+process for each connection of each failed client concurrently. Those skilled in<br>
+the art will recognize that the oplog cleaner processes might as well be threads<br>
+of the same process, i.e. the connection monitor daemon has the choice of<br>
+spawning oplog cleaners as new threads or processes. For example, if 3 clients<br>
+die each with 2 connections to the server, then 6 oplog cleaner processes can<br>
+be launched at the same time, each cleaning one specific connection. The<br>
+order in which the processes are launched does not matter as long as they are<br>
+all launched. This design guarantees that oplog cleaning processes do not<br>
+deadlock because all synchronization primitives acquired by the failed<br>
+processes will be eventually released, preventing infinite waits on any such<br>
+synchronization primitives.<br>
+The apparatus of Oplogging System described above has wide<br>
+applicability. For example, it may be applied to well-known critical sections<br>
+in the field of databases, such as portion of table creation, index creation, etc.<br>
+Other critical sections include cursor open, next and close operations on<br>
+various kinds of cursors, such as table cursor, index cursor, hash cursor, etc.<br>
+Yet other examples of critical sections are the creation of temporary indexes<br>
+like tree indexes, hash indexes, etc. Furthermore, then Oplogging System can<br>
+be used in insert, delete, and update operations of underlying tables and<br>
+various indexes. These critical sections may entail the creation or deletion of a<br>
+slot in a table page, changing counts and directories, etc. The Oplogging<br>
+System can also be used to protect actions like creating a new log file,<br>
+opening a log file, and closing a log file. Yet another set of operations where<br><br>
+the Oplogging System can be used is in the lock manager, for operations such<br>
+as getting a lock, releasing a lock, etc. Embodiments of the invention can also<br>
+use these techniques in compilation of SQL commands in DBMSs. The above<br>
+examples from the field of databases are not meant to be an exhaustive list of<br>
+critical sections that may employ the Oplogging System. Instead, these are<br>
+intended to give a flavor of critical sections that can benefit from Oplogging;<br>
+the potential usage is much wider.<br>
+The Oplogging System may seem complex and unwieldy. However,<br>
+results from a practical implementation of the Oplogging System are very<br>
+encouraging. In one test, only 125 critical sections and corresponding oplogs<br>
+were needed. The oplogs were stored in a stack of depth 11, since the<br>
+maximum nesting depth for the oplogs is 11. Thus there is minimal memory<br>
+overhead for oplogging all changes in control data. Additionally, performance<br>
+results are good. The addition of the Oplogging System has reduced<br>
+throughput by less than 10% when 1 client is directly connected to the server;<br>
+there is no discernable slowdown when more than 1 client are connected to<br>
+the server. Test show that the Oplogging System is an effective technique for<br>
+ensuring continued availability of server component in presence of failure in<br>
+directly connected clients.<br>
+FIG. 1 shows a direct connection client server system that includes<br>
+data (both managed and some persistent control data) 6 and a processor 4<br>
+(Central Processing Unit (CPU)), a main memory module 8 that processor 4<br>
+communicates with. A computing device 2 containing processor 4 and<br>
+memory 8 in one example is a server. The computing device 2 stores and<br>
+executes software for the direct connection client server system 10. The<br>
+direction connection client server 10 contains a module called the Oplogging<br>
+System 20. The processor 4 may be a single CPU or multiple CPUs that<br>
+operate in the server 2, with a shared addressable memory 6. The data 8 is<br>
+typically stored on a plurality of direct access storage devices (DASDs)<br>
+although only one such device is illustrated in FIG. 1. A person skilled in the<br>
+art will recognize that the data 6 can be stored on only one DASD, if desired.<br>
+In addition, a person skilled in the art will recognize that any other machine-<br>
+readable medium can be used to store the data 6. The DASDs may be, for<br>
+example, disk packs, and it will be understood by those skilled in the art that<br>
+the database system includes the required DASD controllers and channels that<br>
+establish the communication between the data 6 and the processor 4. In<br>
+another example, the data 8 may be stored inside the main memory 8 itself.<br>
+Not shown in FIG. 1 are other components of server 2: for example, a<br>
+keyboard, mouse, or monitor. In addition, although server 2 is termed a<br>
+"server", a person skilled in the art will recognize that any machine can serve<br>
+without being specifically termed a "server". For example, a desktop<br><br>
+computer, a notebook computer, or any other computing device, properly<br>
+equipped, can serve as "server" 2<br>
+Terminals 1 are any input/output (VO) device that accept requests from<br>
+and return results to users. For example, the terminals may be personal<br>
+computers (PCs) or applications that use the advertised application<br>
+programmer interface (API). Requests are submitted by the client from the<br>
+terminals 1 and are processed concurrently by the direct connection client<br>
+server system 10 in conjunction with its Oplogging System 20.<br>
+Terminals 1 can be either directly connected to server 2, or can be<br>
+connected to server 2 via a network (not shown in FIG. 1). If terminals 1 are<br>
+connected to server 2 via a network, the network can be of any form. For<br>
+example, the network can be a direct cable connection (where there are no<br>
+intermediary links between terminals 1 and server 2), connected via a local<br>
+area network (LAN), a wide area network (WAN), or a global network such<br>
+as the Internet, hi addition, the connections between terminals 1 and server 2<br>
+can be either wire line connections or wireless connections. If the connections<br>
+are wireless, then any wireless type of connection can be used. For example,<br>
+any connection complying with the IEEE 802.1 la/b/g standards, or with the<br>
+Bluetooth standard, can be used.<br>
+FIG. 2 shows more details of a Oplogging System 20. The Oplogging<br>
+System helps maintain consistency of the control data. We first explain how<br>
+the Oplogging System provides the ability to execute new client actions and<br>
+execute uninterrupted client actions for those clients that have not failed, and<br>
+then explain in detail the schematics presented in FIG 2. Traditional logs 30<br>
+are maintained on a storage device like the one data 6 is stored on. These logs<br>
+are used to recover the system in case of failure and help maintain atomicity<br>
+of managed data. These logs are written for managed data changes only and<br>
+not for changes in control data in the direct connection client server system<br>
+10. In one embodiment, the image of the data 8 in the memory is divided into<br>
+3 segments. The first segment 81 is the control data. This data defines meta-<br>
+data about the structure of the database and information about currently open<br>
+client actions and their states, in essence, this is the control data. Oplogs 82 is<br>
+the area reserved for storing information about the control data on behalf of<br>
+executing client processes. Data 83 is the segment that stores the managed<br>
+data in the direct connection client server system. A prior image of the data 8<br>
+is stored as data image 6 on any DASD. For any change to the data, managed<br>
+data logs 30 are generated and sent to DASD. This ensures that in the event of<br>
+unexpected failure of client, like that of the failed client 101, which may have<br>
+died in the middle of a critical section, the Oplogging System 20 can take over<br>
+and find any oplogs 82 that correspond to the failed client process, undo any<br><br>
+effects to the control data and bring it to a consistent state, and then call<br>
+Rollback on the actions executing on behalf of the client. This will accomplish<br>
+the traditional rollback on the managed data using the managed data logs 30<br>
+and data image 6. Thus, the Oplogging System 20 ensures continuous<br>
+availability of the direct connection client server system to other clients even<br>
+in presence of unexpected failures of client processes 101.<br>
+Now we define in detail the schematics presented in FIG 2. Note that<br>
+we focus on the interaction of the direct connection client 101, the client part<br>
+of the direct connection client server system 10, and the constituents of the<br>
+Oplogging System 20, the oplog generator 201, oplogs 82, connection monitor<br>
+daemon 202, and the oplog cleaner process 203. The direct connection client<br>
+101 consists of an application that uses vendor supplied server library 1011.<br>
+The oplog generator 201 is a part of the server library 1011. The oplog<br>
+generator 201 generates oplogs when the direction connection client 101 is in<br>
+a critical section. When the client connection 101 enters a critical section,<br>
+oplog generator 201 creates a oplog in the oplog area 82 of the shared memory<br>
+8. A connection monitor daemon 202 has a socket opened with each direct<br>
+connection client 101. When a particular client exists unexpectedly, the socket<br>
+connection with the connection monitor daemon breaks. This is shown in the<br>
+second direct connection client in FIG. 2. The connection monitor daemon<br>
+202	uses this unexpected severing of the socket connection as an indication of<br>
+unexpected exit of a direct connection client, hi the event of unexpected<br>
+failure of any direct connection client server 101, the connection monitor<br>
+daemon 202 launches a oplog cleaner process 203 for each connection that<br>
+had been active in the failed process. Note that multiple oplog cleaner process<br>
+203	may be launched, as indicated in FIG. 2. The oplog cleaner process 203<br>
+takes over the connection, looks for any active oplog that exists in oplog area<br>
+82 for the failed client, and undoes any changes that were made to control data<br>
+made due to the failed client. This returns the control data to a consistent state<br>
+from which all active actions of the failed client on the managed data can<br>
+undergo Rollback using the managed data logs 30. The process of returning<br>
+the database to a consistent state both for the shared and the control data and<br>
+of rolling back the active actions of a failed client are conducted while the<br>
+server system remains continuously available to the other active clients that<br>
+have not failed.<br>
+There are many examples of how oplogs can be used to provide<br>
+continuous availability of direct connection client server systems even in<br>
+presence of process failure in the middle of a critical section that changes<br>
+control data. As mentioned earlier, it is not be possible to enumerate all<br>
+possibilities in this document; however, we aim to provide a flavor of the<br>
+possibilities by visiting three different applications of apparatus outlined in<br><br>
+this document. First, we will describe a relatively simple application of the op<br>
+logging technique in a simple critical section operation "open a cursor on a<br>
+given table". Such operations are frequently used to get access to data by<br>
+client connections. Other operations that form an integral part of data access<br>
+are "get next value given the cursor" and "close the cursor". We describe the<br>
+first one to illustrate how continuous availability is achieved. Next, we<br>
+describe an application of oplogs in modifying a doubly linked list where it is<br>
+necessary to maintain the integrity of the linked list in presence of client<br>
+process failures, otherwise subsequent client connections may loop<br>
+indefinitely or may access unallocated memory and then themselves fail.<br>
+Third, we describe the application of the oplogging techniques in loop<br>
+situations. Here an operation consists of repeatedly doing similar actions and<br>
+the loop execution has to either complete or roll back to ensure consistency.<br>
+These examples will provide a flavor of the wide applicability of oplogging<br>
+technique.<br>
+FIG. 3 shows details of a simple critical section operation and the<br>
+design of the oplog that ensure availability of the direct connection client<br>
+server system 8 in presence of client exits. We take a DBMS example.<br>
+Assume that control data 81 consists of three parts. Cursor structure 811 stores<br>
+information about cursors in the data 8. Transaction structure 812 stores<br>
+information about transactions in the system. Table structure 813 stores<br>
+information about the given table. When a client process uses the vendor-<br>
+supplied library 12 to access data in data 8, an "open cursor on given table"<br>
+operation may be performed.<br>
+We show the initial and final state of the control structures 811, 812<br>
+and 813 to illustrate how an "open cursor on given table" operation affects the<br>
+control structures. In the initial state, the transaction 8122 had not opened a<br>
+cursor. Therefore, its cursor field 8123 is NULL. Similarly the cursor 8111 is<br>
+not being used and therefore it table field 8112 is NULL. In turn, the table<br>
+header 8131 notes that no cursor is open on the table and therefore the cursor<br>
+count 8132 has a value of 0. When operation "open cursor on given table" for<br>
+transaction 8122 successfully finishes for table 8131 we reach the final stage.<br>
+In the final stage, transaction 8122 has a cursor pointer stored in its field 8123,<br>
+which points to cursor 8111. Cursor 8111 in turn has table pointer 8112<br>
+initialized so that it points to table 8131. Table header 8131 had a cursor open<br>
+on it and therefore its cursor count field 8132 is now 1.<br>
+If there were any failure in the client process at any time during the<br>
+execution of this critical section operation, control data 81 may be left in an<br>
+inconsistent state where the table header's (8131) cursor count field 8132 is<br>
+not.zero when no cursor points to it. Or, it maybe zero when the cursor 8111<br><br>
+has its table pointer field 8112 pointing to it. We need to make sure that<br>
+independent of when the failure occurs, we are, in fact, able to proceed to an<br>
+initial or final state that is consistent.<br>
+Oplog structure 821 provides the details of one state of a oplog used to<br>
+track changes being done on control structures. Other than Critical Section ID<br>
+and Step Number, it stores the transaction number (XACT), cursor identifier<br>
+(CURSOR), table identifier (TABLE), and previous cursor count of the table<br>
+(COUNT). Thus, if there is any failure in the client process before the<br>
+operation "open cursor on given table" successfully finishes, i.e. before the<br>
+system reaches final state and the oplog' s CriticalSectionID is set to Inactive,<br>
+the oplogging System can use oplog 821 to undo any effects of the execution<br>
+of the critical section operation "open cursor on given table". In particular, if<br>
+the oplog cleaner, process picks up the oplog 821 in the state mentioned in the<br>
+example, it may simply reinstall NULL in the cursor pointer field 8123 of<br>
+transaction 8122. It installs NULL in the table pointer field 8112 of cursor<br>
+8111, and resets the cursor count field 8132 of the table header 8131 to the<br>
+count stored in the operation oplog 821, which is 0 in the given case. Thus, the<br>
+oplogging System undoes the effects of any active oplog 821 it finds for the<br>
+client process. At this point, the oplogging System calls Rollback for the client<br>
+process, which undoes any managed data effects that the client process may<br>
+have had. Thus, the oplogging System ensures that both control data and<br>
+managed data in the client-server system are consistent and continuously<br>
+available.<br>
+FIG. 4 provides yet another example of application of the oplogging<br>
+principles that we have detailed above. A well-known and common operation<br>
+in databases is linked list maintenance. FIG. 4 shows such an example. The<br>
+control data segment of the data 8 consists of two linked lists LIST 1 and<br>
+LIST 2. Each list is made up of items 80. Item 80 consists of three fields, data<br>
+801, next 802, and previous 803. The operation transfers an element from the<br>
+head of LIST 2 to the head of LIST 1.<br>
+In the initial state of 814, LIST 1 has two members ITEM 1.1 and<br>
+ITEM 1.2. These are linked in a technique known as doubly linked list. Under<br>
+this scheme, the list points to the ITEM 80. The next field 802 of ITEM 80<br>
+points to the next ITEM 80 and previous field 803 points to the previous<br>
+ITEM 80 in the list. Similarly, LIST 2 consists of two members ITEM 2.1 and<br>
+ITEM 2.2. The operation identifies ITEM 2.1 to be transferred from LIST 2 to<br>
+the head of LIST 1. In the final state of the control structure segment 814, we<br>
+find that ITEM 2.1 has been transferred to the head of LIST 1. Note that this<br>
+requires changes in LIST I5 LIST 2, the next field 802 of ITEM 2.1, the<br>
+previous field 803 of ITEM 2.2, and the previous field of ITEM 2.1. To ensure<br><br>
+has the following sub-components other than the header information; a field<br>
+LENGTH 81511, which stores the number of entries in the node and space for<br>
+7 entries, ENTRY 81512 through 81518. Note that for this node, values are<br>
+stored in a compact manner, i.e. the values are always together and the values<br>
+in the ENTRY fields start from ENTRY 81512.. Let us assume we just deleted<br>
+the value in ENTRY 81513. After we do that, the only consistent state for the<br>
+index node is to be in the final state. To ensure that the values are stored<br>
+compactly when we delete the value in ENTRY 81513, we call the MOVE<br>
+HOLE program. Note that once the value in ENTRY 81513 is deleted we<br>
+consider that the value no longer exists and call that entry a HOLE. To<br>
+maintain consistency, all HOLES should be at the end of the list. We set<br>
+LENGTH 81511 to 4. MOVE HOLE will ensure that the hole moves to the<br>
+end of the list. The iteration is at line MH.2 to MH.7. The iteration lasts until<br>
+the HOLE variable is larger than 81511 + LENGTH (in 81511). Also, note<br>
+that we are also doing oplogging using the oplog 823. IQ the oplog we store<br>
+the node identifier, the length of the node, and position of the HOLE. Once<br>
+MOVE HOLE is complete, the index node 8151 is in the final state and the<br>
+oplog 823 is deactivated.<br>
+To ensure consistency of the control data and atomicity of transactions<br>
+on the managed data in the direct connection client server system 10,<br>
+Oplogging System 20 will take over whenever the client fails in the middle of<br>
+execution of the MOVE HOLE program. At that time, the Oplogging System<br>
+will execute the MOVE HOLE program again, however, it will set HOLE at<br>
+the state of the loop in line MH.l to oplog 823.HOLE. For example, if the<br>
+client process died when the code execution in MOVE HOLE was when<br>
+HOLE was 81515, the Oplogging System 20 will iterate once in MOVE<br>
+HOLE loop, resulting in the final state for the index node 8151. At that time,<br>
+the Oplogging System can call Rollback on the transaction that was executing<br>
+for the client process to ensure data consistency and atomicity.<br>
+FIGs. 6A-6B summarize a procedure for using a oplog of FIG. 1 to<br>
+repair the direct connection client server system of FIG. 1, according to an<br>
+embodiment of the invention. In FIG. 6A, at step 605, the direct connection<br>
+client server system permits clients to directly attach to the database. At step<br>
+610, the Oplogging System logs changes that are to be made to the data by<br>
+clients. At step 615, the system checks to see if a client has failed. If so, then<br>
+at step 620, the system identifies the changes that were being made by the<br>
+client.<br>
+At step 625 (FIG. 6B), the system determines if the changes can be<br>
+undone (assuming they were not completed). If so, then at step 630, the<br>
+system undoes the changes that were being made by the client. Examples of<br><br>
+such changes include leaving tables in an open state, or moving elements<br>
+between lists, as discussed above with reference to FIGs. 3 and 4. Otherwise,<br>
+at step 635, the system completes the changes. An example of such a change<br>
+is moving a hole to the end of a list, as discussed above with reference to FIG.<br>
+5. Note that under all cases enough information needs to be available to ensure<br>
+that changes being made by the client are undone or completed and the control<br>
+data is brought to a consistent state. It is worth noting that one of steps 630<br>
+and 635 is performed: the changes to the control data can be either rolled back<br>
+or completed, depending on the situation. The structure of the system is such<br>
+that the control data can be put in a consistent state one way or the other; the<br>
+control data are not left in an inconsistent state.<br>
+The following discussion is intended to provide a brief, general<br>
+description of a suitable machine in which certain aspects of the invention<br>
+may be implemented. Typically, the machine includes a system bus to which<br>
+are attached processors, memory, e.g., random access memory (RAM), read-<br>
+only memory (ROM), or other state preserving media, storage devices, a video<br>
+interface, and input/output interface ports. The machine may be controlled, at<br>
+least in part, by input from conventional input devices, such as keyboards,<br>
+mice, etc., as well as by directives received from another machine, interaction<br>
+with a virtual reality (VR) environment, biometric feedback, or other input<br>
+signal. As used herein, the term "machine" is intended to broadly encompass a<br>
+single machine, or a system of communicatively coupled machines or devices<br>
+operating together. Exemplary machines include computing devices such as<br>
+personal computers, workstations, servers, portable computers, handheld<br>
+devices, telephones, tablets, etc.<br>
+The machine may include embedded controllers, such as<br>
+programmable or nonprogrammable logic devices or arrays, Application<br>
+Specific Integrated Circuits, embedded compulers, smart cards, and the like.<br>
+The machine may utilize one or more connections to one or more remote<br>
+machines, such as through a network interface, modem, or other<br>
+communicative coupling. Machines may be interconnected by way of a<br>
+physical and/or logical network, such as an intranet, the Internet, local area<br>
+networks, wide area networks, etc. One skilled in the art will appreciate that<br>
+network communication may utilize various wired and/or wireless short range<br>
+or long range carriers and protocols, including radio frequency (RF), satellite,<br>
+microwave, Institute of Electrical and Electronics Engineers (IEEE) 802.11,<br>
+Bluetooth, optical, infrared, cable, laser, etc.<br>
+The invention may be described by reference to or in conjunction with<br>
+associated data including functions, procedures, data structures, application<br>
+programs, etc., which when accessed by a machine results in the machine<br><br>
+performing tasks or defining abstract data types or low-level hardware<br>
+contexts. Associated data may be stored in, for example, the volatile and/or<br>
+non-volatile memory, e.g., RAM, ROM, etc., or in other storage devices and<br>
+their associated storage media, including hard-drives, floppy-disks, optical<br>
+storage, tapes, flash memory, memory sticks, digital video disks, biological<br>
+storage, etc. Associated data may be delivered over transmission<br>
+environments, including the physical and/or logical network, in the form of<br>
+packets, serial data, parallel data, propagated signals, etc., and may be used in<br>
+a compressed or encrypted format. Associated data may be used in a<br>
+distributed environment, and stored locally and/or remotely for machine<br>
+access.<br>
+Having described and illustrated the principles of the invention with<br>
+reference to illustrated embodiments, it will be recognized that the illustrated<br>
+embodiments may be modified in arrangement and detail without departing<br>
+from such principles. And although the foregoing discussion has focused on<br>
+particular embodiments, other configurations are contemplated. In particular,<br>
+even though expressions such as "in one embodiment" or the like are used<br>
+herein, these phrases are meant to generally reference embodiment<br>
+possibilities, and are not intended to limit the invention to particular<br>
+embodiment configurations. As used herein, these terms may reference the<br>
+same or different embodiments that are combinable into other embodiments.<br>
+Consequently, in view of the wide variety of permutations to the<br>
+embodiments described herein, this detailed description and accompanying<br>
+material is intended to be illustrative only, and should not be taken as limiting<br>
+the scope of the invention. What is claimed as the invention, therefore, is all<br>
+such modifications as may come within the scope and spirit of the following<br>
+claims and equivalents thereto.<br><br>
+REPLACEMENT SHEET OF CLAIMS<br><br><br>
+WE CLAIM:<br>
+1. A method comprising<br>
+maintaining via an executed library, control data(81) to manage accessing managed<br>
+data by a client application of a chent(l),<br>
+wherein<br>
+the chent(l) is configured to directly attach to a server in a database<br>
+system such that the database system executes the client application of the<br>
+chent(l) and at least a portion of the database system in a single process, the<br>
+client application is linked to an executable server library that supports the<br>
+client application accessing managed data of the server via modifying control<br>
+data of the server,<br>
+the managed data is a collection of data items accessed by the client<br>
+application,<br>
+the control data controls concurrency, permission and access to the<br>
+managed data,<br>
+the executable server library includes critical sections where a failure or<br>
+unexpected exit of the client application leaves the control data in an<br>
+inconsistent partially modified state,<br>
+loggmg(610) changes to the control data (81) while the client application is operating<br>
+within the critical sections,<br>
+separately logging changes to the data items in the managed data;<br>
+monitoring (615) for a failure of the client application;<br>
+in response to detection of the failure of the client application, undoing the logged<br>
+changes made to the control data by the client application while operating within the critical<br>
+sections of the executable server library prior to the failure or unexpected exit of the client<br>
+application; and<br>
+after undoing the logged changes made to the control data, conducting a second<br>
+separate roll back operation to separately roll back the logged changes made to the data items<br><br>
+in the managed data by the client application prior to the failure or unexpected exit of the<br>
+client application from the executable server library,<br>
+wherein the actions of the maintaining, the logging, the monitoring, and the undoing<br>
+are performed by one or more processors<br>
+2 The method as claimed claim 1, wherein-<br>
+a second chent(l) is to directly attached to the system(2), and<br>
+a second client is to directly attached to the system (2); and<br>
+the undoing the logged changes made to the control data(81) includes, undoing the<br>
+logged changes made to the control data in response to detection of the failure of the client<br>
+application without disconnecting the second client(l) from the system(2)<br>
+3. The method as claimed in claim 1, wherein the logging (610) changes to the control<br>
+data (81) includes<br>
+maintaining a list of open transactions;<br>
+associating each one of one or more open transaction in the list of open transactions<br>
+with a respective cursor, and<br>
+associating each of the respective cursor with a respective table in the system, the<br>
+respective table to be modified as part of the one of the open transaction associated with the<br>
+respective cursor.<br>
+4	The method as claimed in claim 3, wherein, for a particular one of the open<br>
+transactions, the undoing the logged changes made to the control data(81) includes"<br>
+removing a first association between the respective cursor and the respective table,<br>
+upon determination that the first association exists; and<br>
+moving a second association between the particular open transaction and the<br>
+respective cursor, upon determination that the second association exists.<br>
+5	The method as claimed in claim 1, wherein the logging (610) changes to the control<br>
+data(81) includes:<br><br>
+identifying a list in the control data (81) being changed in response to the client(l)<br>
+application accessing the managed data;<br>
+identifying an operation to be performed by the executable server library on<br>
+an element in the list; and<br>
+storing information to enable undoing the operation to be performed by the<br>
+executable server library on the element.<br>
+6 . The method as claimed in claim 5, wherein the identifying an operation includes<br>
+identifying the element to be added to the list.<br>
+7.	The method as claimed in claim 5, wherein the identifying an operation includes<br>
+identifying the element to be removed from the list.<br>
+8.	The method as claimed in claim 7, wherein the undoing the logged changes made<br>
+to the control data (81) includes:<br>
+identifying the element to be removed as a hole in the list; and<br>
+iteratively moving the hole until the list is continuous.<br>
+9.	The method as claimed in claim 5, wherein identifying an operation includes<br>
+identifying the element to be moved within the list.<br>
+lO.The method as claimed in claim 5, wherein the undoing the logged changes made<br>
+to the control data(81) includes restoring the element to an original state.<br>
+11. The method as claimed in claim 1, wherein the logging(610) changes to the<br>
+control data (81) includes:<br>
+identifying a list in the control data(81) being changed in response to by the client<br>
+application accessing the managed data;<br>
+identifying an operation to be performed by the executable server library on elements<br>
+in the list; and<br><br>
+storing information about the operation.<br>
+12.	The method as claimed in claim 11, wherein the undoing the logged changes made<br>
+to the control data(81) includes:<br>
+identifying elements to which the executable server library has not performed the<br>
+operation; and<br>
+iteratively performing the operation on the identified elements.<br>
+13.	The method as claimed in claim 12, wherein:<br>
+the identifying an operation includes identifying a hole move operation to be<br>
+performed by the client on the elements in the list; and<br>
+the iteratively performing the operation on the identified elements includes iteratively<br>
+moving a hole past the identified elements until the list is continuous.<br>
+14.	The method as claimed in claim 1, wherein:<br>
+the configuring a client (1) to directly attach to the server includes configuring<br>
+the client to directly attach to a database system;<br>
+the logging(610) changes to the control data includes logging(610) changes to a<br>
+control structure of the database system in response to the client application accessing the<br>
+managed data; and<br>
+the undoing the logged changes made to the control data(81) includes<br>
+repairing(630,635) the control structure of the database system while maintaining an<br>
+availability of the database system.<br>
+15.	The method as claimed in claim 14, wherein:<br>
+the configuring the client(l) to directly attach to a database system includes<br>
+configuring the client(l) to directly attach to an in-memory database system;<br>
+the logging(610) changes to the control data includes logging changes to a control<br>
+structure of the in-memory database system in response to the client application accessing the<br>
+managed data; and<br><br>
+the undoing the logged changes made to includes repairing(630,635) the control<br>
+structure of the in-memory database system while maintaining an availability of the in-<br>
+memory database system.<br><br><br><br>
+ABSTRACT<br><br><br>
+A METHOD FOR ONLINE RECOVERY IN DIRECT CONNECTION<br>
+CLIENT SERVER SYSTEM<br><br>
+Clients are permitted to directly attach to a client server system (10).<br>
+A oplog management system tracks changes as clients make the changes to<br>
+control structures of the direct connection client server system (10). The<br>
+Oplogging system (20) can repair the control structures, either by undoing<br>
+the changes made by the client(1), or else completing the changes in place of<br>
+the client(1), depending on principles defined.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1jbGFpbXMxLjAucGRm" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-claims1.0.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1jbGFpbXMxLjEucGRm" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-claims1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1jb3JyZXNwb25kZW5jZSBvdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-correspondence others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1kZXNjcmlwdGlvbiBjb21wbGV0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-description complete.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1mb3JtIDEucGRm" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1mb3JtIDIucGRm" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1mb3JtIDMucGRm" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1pbnRlcm5hdGlvbmFsIHB1YmxpY2F0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-international publication.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1pbnRlcm5hdGlvbmFsIHNlYXJjaCByZXBvcnQucGRm" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-international search report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1wY3QgcmVxdWVzdC5wZGY=" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-pct request.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE0Mzkta29sbnAtMjAwNy1wcmlvcml0eSBkb2N1bWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">01439-kolnp-2007-priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgwNC0wNC0yMDEyKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(04-04-2012)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgwNC0wNC0yMDEyKS1GT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(04-04-2012)-FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgwNC0wNC0yMDEyKS1PVEhFUlMucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(04-04-2012)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNS0yMDEyKS1BQlNUUkFDVC5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-05-2012)-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNS0yMDEyKS1DTEFJTVMucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-05-2012)-CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNS0yMDEyKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-05-2012)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNS0yMDEyKS1ERVNDUklQVElPTiAoQ09NUExFVEUpLnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-05-2012)-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNS0yMDEyKS1EUkFXSU5HUy5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-05-2012)-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNS0yMDEyKS1GT1JNLTEucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-05-2012)-FORM-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNS0yMDEyKS1GT1JNLTIucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-05-2012)-FORM-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNS0yMDEyKS1GT1JNLTMucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-05-2012)-FORM-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNS0yMDEyKS1GT1JNLTUucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-05-2012)-FORM-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNS0yMDEyKS1PVEhFUlMucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-05-2012)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNS0yMDEyKS1QQS5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-05-2012)-PA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNi0yMDEzKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-06-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNi0yMDEzKS1ERVNDUklQVElPTiAoQ09NUExFVEUpLnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-06-2013)-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNi0yMDEzKS1GT1JNLTIucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-06-2013)-FORM-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgxNy0wNi0yMDEzKS1PVEhFUlMucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(17-06-2013)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgzMS0wMy0yMDA3KS1BQlNUUkFDVC5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(31-03-2007)-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgzMS0wMy0yMDA3KS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(31-03-2007)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgzMS0wMy0yMDA3KS1GT1JNLTEucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(31-03-2007)-FORM-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgzMS0wMy0yMDA3KS1GT1JNLTIucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(31-03-2007)-FORM-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LSgzMS0wMy0yMDA3KS1QQS5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-(31-03-2007)-PA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUFTU0lHTk1FTlQtMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-ASSIGNMENT-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUFTU0lHTk1FTlQucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-ASSIGNMENT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUNBTkNFTExFRCBQQUdFUy5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-CANCELLED PAGES.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIE9USEVSUyAxLjEucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-CORRESPONDENCE OTHERS 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIE9USEVSUy0xLjEucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-CORRESPONDENCE OTHERS-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFLTEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-CORRESPONDENCE-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFLnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LURFQ0lTSU9OLnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-DECISION.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUVYQU1JTkFUSU9OIFJFUE9SVC5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUZPUk0gMTMucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-FORM 13.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUZPUk0gMTgtMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-FORM 18-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1rb2xucC0yMDA3LWZvcm0gMTgucGRm" target="_blank" style="word-wrap:break-word;">1439-kolnp-2007-form 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUdQQS5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-GPA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUdSQU5URUQtQUJTVFJBQ1QucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-GRANTED-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUdSQU5URUQtQ0xBSU1TLnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-GRANTED-CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUdSQU5URUQtREVTQ1JJUFRJT04gKENPTVBMRVRFKS5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-GRANTED-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUdSQU5URUQtRFJBV0lOR1MucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-GRANTED-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-GRANTED-FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAyLnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-GRANTED-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAzLnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-GRANTED-FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSA1LnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-GRANTED-FORM 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUdSQU5URUQtU1BFQ0lGSUNBVElPTi1DT01QTEVURS5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-GRANTED-SPECIFICATION-COMPLETE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUlOVEVSTkFUSU9OQUwgUFVCTElDQVRJT04ucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-INTERNATIONAL PUBLICATION.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LUlOVEVSTkFUSU9OQUwgU0VBUkNIIFJFUE9SVCAmIE9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-INTERNATIONAL SEARCH REPORT &amp; OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LU9USEVSUy0xLjEucGRm" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-OTHERS-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LU9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LVBBLnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-PA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTQzOS1LT0xOUC0yMDA3LVBSSU9SSVRZIERPQ1VNRU5ULnBkZg==" target="_blank" style="word-wrap:break-word;">1439-KOLNP-2007-PRIORITY DOCUMENT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QtMDE0Mzkta29sbnAtMjAwNy5qcGc=" target="_blank" style="word-wrap:break-word;">abstract-01439-kolnp-2007.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="260942-methods-of-polymerizing-olefin-monomers-with-mixed-catalyst-systems.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="260944-channel-allocation-method-for-asychronous-mobile-communication-system.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>260943</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1439/KOLNP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>22/2014</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>30-May-2014</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>29-May-2014</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>23-Apr-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>ORACLE INTERNATIONAL CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>500 ORACLE PARKWAY, M/s 5OP7 REDWOOD SHORES,CALIFORNIA, USA 94065</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>VERMA, SANJAY</td>
+											<td>755 BOUNTY DRIVE, #203 Y FOSTER CITY, CALIFORNIA 94404</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>MCAULIFFE, MARK LAWRENCE</td>
+											<td>185 HEATHER LANE, PALO ALTO, CALIFORNIA 94030</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>EDSON, KIRK MEREDITH</td>
+											<td>1081 CANYON CREEK TERRACE, FREMONT, CALIFORNIA 94536</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>HOANG, CHI-KIM</td>
+											<td>3364 MIDDLEFIELD ROAD, PALO ALTO, CALIFORNIA 94306</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 11/14</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2005/035963</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-10-05</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/966, 285</td>
+									<td>2004-10-14</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/260943-a-method-for-online-recovery-in-direct-connection-client-server-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 02:29:15 GMT -->
+</html>

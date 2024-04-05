@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/253016-an-apparatus-and-method-for-determining-a-quantizer-step-size-for-quantizing-a-signal by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 13:04:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 253016:AN APPARATUS AND METHOD FOR DETERMINING A QUANTIZER STEP SIZE FOR QUANTIZING A SIGNAL</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">AN APPARATUS AND METHOD FOR DETERMINING A QUANTIZER STEP SIZE FOR QUANTIZING A SIGNAL</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>TITLE&quot;AN APPARATUS AND METHOD FOR DETERMINING A QUANTIZER STEP SIZE FOR QUANTIZING A SIGNAL&quot; The invention relates an apparatus for determining a quantizer step size for quantizing a signal comprising audio or video information, the apparatus comprising: means for (502) providing a first quantizer step size and an interference threshold; means for (504) determining a first interference introduced by the first quantizer step size; means for (506) comparing the interference introduced by the first quantizer step size with the interference threshold; means for (508) selecting a second quantizer step size which is larger than the first quantizer step size if the first interference introduced exceeds the interference threshold; means for (510) determining a second interference introduced by the second quantizer step size; means for (512) comparing the second interference introduced with the interference threshold or the first interference introduced; and means for (514) quantizing the signal with the second quantizer step size if the second interference introduced is smaller than one of the first interference introduced and the interference threshold.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>FIELD OF THE INVENTION<br>
+The present invention relates to audio coders, and, in particular, to audio coders<br>
+which are transformation-based, i.e. wherein a conversion of a temporal<br>
+representation into a spectral representation is performed at the beginning of the<br>
+coder pipeline.<br>
+BACKGROUND OF THE INVENTION<br>
+A transformation-based prior art audio coder is depicted in figure 3. The coder<br>
+shown in figure 3 is represented in the international standard ISO/IEC 14496-3:<br>
+2001 (E), subpart 4, page 4, and is also known as AAC coder in the art.<br>
+The prior art coder will be presented below. An audio signal to be coded is<br>
+supplied in at an input 1000. This audio signal is initially fed to a scaling stage<br>
+1002, wherein so-called AAC gain control is conducted to establish the level of<br>
+the audio signal. Side information from the scaling are supplied to a bit stream<br>
+formatter 1004, as is represented by the arrow located between block 1002 and<br>
+block 1004. The scaled audio signal is then supplied to an MDCT filter bank<br>
+1006. With the AAC coder, the filter bank implements a modified discrete cosine<br>
+transformation with 50oo overlapping windows, the window length being<br>
+determined by a block 1008.<br>
+Generally speaking, block 1008 is present for the purpose of windowing transient<br>
+signals with relatively short windows, and of windowing signals which tend to be<br>
+stationary with relatively long windows. This serves to reach a higher level of<br>
+time resolution (at the expense of frequency resolution) for transient signals due<br>
+to the relatively short windows, whereas for signals which tend to be stationary,<br>
+a higher frequency resolution (at the expense of time resolution) is achieved due<br>
+to longer<br><br>
+windows, there being a tendency of preferring longer<br>
+windows since they result in a higher coding gain. At the<br>
+output of filter bank 1006, blocks of spectral values - the<br>
+blocks being successive in time - are present which may be<br>
+MDCT coefficients, Fourier coefficients or subband signals,<br>
+depending on the implementation of the filter bank, each<br>
+subband signal having a specific limited bandwidth<br>
+specified by the respective subband channel in filter bank<br>
+1006, and each subband signal having a specific number of<br>
+subband samples.<br>
+What follows is a presentation, by way of example, of the<br>
+case wherein the filter bank outputs temporally successive<br>
+blocks of MDCT spectral coefficients which, generally<br>
+speaking, represent successive short-term spectra of the<br>
+audio signal to be coded at input 1000. A block of MDCT<br>
+spectral values is then fed into a TNS processing block<br>
+1010 (TNS = temporary noise shaping), wherein temporal<br>
+noise shaping is performed. The TNS technique is used to<br>
+shape the temporal form of the quantization noise within<br>
+each window of the transformation. This is achieved by<br>
+applying a filtering process to parts of the spectral data<br>
+of each channel. Coding is performed on a window basis. In<br>
+particular, the following steps are performed to apply the<br>
+TNS tool to a window of spectral data, i.e. to a block of<br>
+spectral values.<br>
+Initially, a frequency range for the TNS tool is selected.<br>
+A suitable selection comprises covering a frequency range<br>
+of 1.5 kHz with a filter, up to the highest possible scale<br>
+factor band. It shall be pointed out that this frequency<br>
+range depends on the sampling rate, as is specified in the<br>
+AAC standard (ISO/IEC 1449.6-3: 2001 (E)).<br>
+Subsequently, an LPC calculation (LPC = linear predictive<br>
+coding) is performed, to be precise using the spectral MDCT<br>
+coefficients present in the selected target frequency<br>
+range. For increased stability, coefficients which<br><br>
+correspond to frequencies below 2.5 kHz are excluded from<br>
+this process. Common LPC procedures as are known from<br>
+speech processing may be used for LPC calculation, for<br>
+example the known Levinson-Durbin algorithm. The<br>
+calculation is performed for the maximally admissible order<br>
+of the noise shaping filter.<br>
+As a result of the LPC calculation, the expected prediction<br>
+gain PG is obtained. In addition, the reflection<br>
+coefficients, or Parcor coefficients, are obtained.<br>
+If the prediction gain does not exceed a specific<br>
+threshold, the TNS tool is not applied. In this case, a<br>
+piece of control information is written into the bit stream<br>
+so that a decoder knows that no TNS processing has been<br>
+performed.<br>
+However, if the prediction gain exceeds a threshold, TNS<br>
+processing is applied.<br>
+In a next step, the reflection coefficients are quantized.<br>
+The order of the noise shaping filter used is determined by<br>
+removing all reflection coefficients having an absolute<br>
+value smaller than a threshold from the "tail" of the array<br>
+of reflection coefficients. The number of remaining<br>
+reflection coefficients is in the order of magnitude of the<br>
+noise shaping filter. A suitable threshold is 0.1.<br>
+The remaining reflection coefficients are typically<br>
+converted into linear prediction coefficients, this<br>
+technique also being known as "step-up" procedure.<br>
+The LPC coefficients calculated are then used as coder<br>
+noise shaping filter coefficients, i.e. as prediction<br>
+filter coefficients. This FIR filter is used for filtering<br>
+in the specified target frequency range. An autoregressive<br>
+filter is used in decoding, whereas a so-called moving<br>
+average filter is used in coding. Eventually, the side<br><br>
+information for the TNS tool are supplied to the bit stream<br>
+formatter, as is represented by the arrow shown between the<br>
+TNS processing block 1010 and the bit stream formatter 1004<br>
+in Fig. 3.<br>
+Then, several optional tools which are not shown in Fig. 3<br>
+are passed through, such as a long-term prediction tool, an<br>
+intensity/coupling tool, a prediction tool, a noise<br>
+substitution tool, until eventually a mid/side coder 1012<br>
+is arrived at. The mid/side coder 1012 is active when the<br>
+audio signal to be coded is a multi-channel signal, i.e. a<br>
+stereo signal having a left-hand channel and a right-hand<br>
+channel. Up to now, i.e. upstream from block 1012 in Fig.<br>
+3, the left-hand and right-hand stereo channels have been<br>
+processed, i.e. scaled, transformed by the filter bank,<br>
+subjected to TNS processing or not, etc., separately from<br>
+one another.<br>
+In the mid/side coder, verification is initially performed<br>
+as to whether a mid/side coding makes sense, i.e. will<br>
+yield a coding gain at all. Mid/side coding will yield a<br>
+coding gain if the left-hand and right-hand channels tend<br>
+to be similar, since in this case, the mid channel, i.e.<br>
+the sum of the left-hand and the right-hand channels, is<br>
+almost equal to the left-hand channel or the right-hand<br>
+channel, apart from scaling by a factor of 1/2, whereas the<br>
+side channel has only very small values since it is equal<br>
+to the difference between the left-hand and the right-hand<br>
+channels. As a consequence, one can see that when the left-<br>
+hand and right-hand channels are approximately the same,<br>
+the difference is approximately zero, or includes only very<br>
+small values which - this is the hope - will be quantized<br>
+to zero in a subsequent quantizer 1014, and thus may be<br>
+transmitted in a very efficient manner since an entropy<br>
+coder 1016 is connected downstream from quantizer 1014.<br>
+Quantizer 1014 is supplied an admissible interference per<br>
+scale factor band by a psycho-acoustic model 1020. The<br><br>
+quantizer operates in an iterative manner, i.e. an outer<br>
+iteration loop is initially called up, which will then call<br>
+up an inner iteration loop. Generally speaking, starting<br>
+from quantizer step-size starting values, a quantization of<br>
+a block of values is initially performed at the input of<br>
+quantizer 1014. In particular, the inner loop quantizes the<br>
+MDCT coefficients, a specific number of bits being consumed<br>
+in the process. The outer loop calculates the distortion<br>
+and modified energy of the coefficients using the scale<br>
+factor so as to again call up an inner loop. This process<br>
+is iterated for such time until a specific conditional<br>
+clause is met. For each iteration in the outer iteration<br>
+loop, the signal is reconstructed so as to calculate the<br>
+interference introduced by the quantization, and to compare<br>
+it with the permitted interference supplied by the psycho-<br>
+acoustic model 1020. In addition, the scale factors of<br>
+those frequency bands which after this comparison still are<br>
+considered to be interfered with are enlarged by one or<br>
+more stages from iteration to iteration, to be precise for<br>
+each iteration of the outer iteration loop.<br>
+Once a situation is reached wherein the quantization<br>
+interference introduced by the quantization is below the<br>
+permitted interference determined by the psycho-acoustic<br>
+model, and if at the same time bit requirements are met,<br>
+which state, to be precise, that a maximum bit rate be not<br>
+exceeded, the iteration, i.e. the analysis-by-synthesis<br>
+method, is terminated, and the scale factors obtained are<br>
+coded as is illustrated in block 1014, and are supplied, in<br>
+coded form, to bit stream formatter 1004 as is marked by<br>
+the arrow which is drawn between block 1014 and block 1004.<br>
+The quantized values are then supplied to entropy coder<br>
+1016, which typically performs entropy coding for various<br>
+scale factor bands using several Huffman-code tables, so as<br>
+to translate the quantized values into a binary format. As<br>
+is known, entropy coding in the form of Huffman coding<br>
+involves falling back on code tables which are created on<br>
+the basis of expected signal statistics, and wherein<br><br>
+Frequently occurring values are given shorter code words than less frequently<br>
+occurring values. The entropy-coded values are then supplied, as actual main<br>
+information, to bit stream formatter 1004, which then outputs the coded audio<br>
+signal at the output side in accordance with a specific bit stream syntax.<br>
+As has already been illustrated, a finer quantizer step size is used in this iterative<br>
+quantization in the event that the interference introduced by a quantizer step<br>
+size is larger than the threshold, this being done in the hope that this leads to a<br>
+reduction of the quantization noise because the quantization performed is finer.<br>
+This concept is disadvantageous in that due to the finer quantizer step size, the<br>
+amount of data to be transmitted naturally increases, and thus, the compression<br>
+gain decreases.<br>
+OBJECT OF THE INVENTION<br>
+It is the object of the present invention to provide a concept for determining a<br>
+quantizer step size which, on the one hand, introduces low quantization<br>
+interference, and provides, on the other hand, a high compression gain.<br>
+SUMMARY OF THE INVENTION<br>
+This object is achieved by an apparatus quantizer step size and a method of<br>
+determining a quantizer step size according to the features of the invention.<br>
+The present invention is based on the findings that an additional reduction in the<br>
+interference power, on the one hand, and at the same time an increase or at<br>
+least preservation of the coding gain may be achieved in that at least several<br>
+coarser quantizer step sizes are tried out even when the interference introduced<br>
+is larger than a threshold, rather than performing finer quantization, as has been<br>
+done in the prior art. It turned out that even<br><br>
+with coarser quantizer step sizes, reductions in the<br>
+interference introduced by the quantization may be<br>
+achieved, to be precise in those cases when the coarser<br>
+quantizer step size "hits" the value to be quantized better<br>
+than does the finer quantizer step size. This effect is<br>
+based on the fact that the quantization error depends not<br>
+only on the quantizer step size, but naturally also on the<br>
+values to be quantized. If the values to be quantized are<br>
+in close proximity to the step sizes of the coarser<br>
+quantizer step size, a reduction in the quantization noise<br>
+will be achieved while increasing the compression gain<br>
+(since quantization has been coarser).<br>
+The inventive concept is very profitable particularly when<br>
+very good estimated quantizer step sizes are present<br>
+already for the first quantizer step size, on the basis of<br>
+which the threshold comparison is performed. In a preferred<br>
+embodiment of the present invention, it is therefore<br>
+preferred to determine the first quantizer step size by<br>
+means of a direct calculation on the basis of the mean<br>
+noise energy rather than on the basis of a worst-case<br>
+scenario. Thus, the iteration loops in accordance with the<br>
+prior art may already be considerably reduced or may become<br>
+completely obsolete.<br>
+The inventive post-processing of the quantizer step size<br>
+will then try out, once again only, a still coarser<br>
+quantizer step size in the embodiment, so as to benefit<br>
+from the described effect of "improved hitting" of a value<br>
+to be quantized. If it turns out, subsequently, that the<br>
+interference obtained by the coarser quantizer step size is<br>
+smaller than the previous interference or even smaller than<br>
+the threshold, more iterations may be performed to try out<br>
+an even coarser quantizer step size. This procedure of<br>
+coarsening the quantizer step size is continued for such<br>
+time until the interference introduced increases again.<br>
+Then, a termination criterion is reached, so that<br>
+quantization is performed with that stored quantizer step<br><br>
+size which has provided the smallest interference<br>
+introduced, and so that the coding procedure is continued<br>
+as required.<br>
+In an alternative embodiment of the present invention, for<br>
+estimating the first quantizer step size, an analysis-by-<br>
+synthesis approach as in the prior art may be performed<br>
+which is continued for such time until a termination<br>
+criterion is reach there. Then, the inventive post-<br>
+processing may be employed to eventually verify whether or<br>
+not it might be possible to achieve equally good<br>
+interference results or even better interference results<br>
+with a coarser quantizer step size. If one finds that a<br>
+coarser quantizer step size is equally good or even better<br>
+with regard to the interference introduced, this step size<br>
+will be used for quantizing. If one finds, however, that<br>
+the coarser quantization yields no positive effect, one<br>
+will use, for eventual quantizing, that quantizer step size<br>
+which was originally determined, for example by means of an<br>
+analysis/synthesis method.<br>
+In accordance with the invention, any quantizer step sizes<br>
+may thus be employed to perform a first threshold<br>
+comparison. It is irrelevant whether this first quantizer<br>
+step size has already been determined by analysis/synthesis<br>
+schemes or even by means of direct calculation of the<br>
+quantizer step sizes.<br>
+In a preferred embodiment of the present invention, this<br>
+concept is employed for quantizing an audio signal present<br>
+in the frequency range. However, this concept may also be<br>
+employed for quantizing a time domain signal comprising<br>
+audio and/or video information.<br>
+In addition, it shall be pointed out that the threshold<br>
+used for comparing is a psycho-acoustic or psycho-optical<br>
+permitted interference, or another threshold which is<br>
+desired to be fallen below. For example, this threshold may<br><br>
+actually be a permitted interference provided by a psycho-<br>
+acoustic model. This threshold, however, may also be a<br>
+previously-determined introduced interference for the<br>
+original quantizer step size, or any other threshold.<br>
+It shall be noted that the quantized values need not<br>
+necessarily be Huffman-coded, but that they may<br>
+alternatively be coded using another entropy coding, such<br>
+as an arithmetic coding. Alternatively, the quantized<br>
+values may also be coded in a binary manner, since this<br>
+coding, too, has the effect that for transmitting smaller<br>
+values or values equaling zero, fewer bits are required<br>
+than are required for transmitting larger values or,<br>
+generally, values not equaling zero.<br>
+For determining the starting values, i.e. the 1 quantizer<br>
+step size, the iterative approach may preferably be fully<br>
+or at least largely dispensed with if the quantizer step<br>
+size is determined from a direct noise energy estimation.<br>
+Calculating the quantizer step size from an exact noise<br>
+energy estimate is considerably faster than calculating in<br>
+an analysis-by-synthesis loop, since the values for the<br>
+calculation are directly present. It is not necessary to<br>
+first perform and compare several quantization attempts<br>
+until a quantizer step size which is favorable for coding<br>
+is found.<br>
+Since, however, the quantizer characteristic curve used, is<br>
+a non-linear characteristic curve, the non-linear<br>
+characteristic curve must be taken into account in the<br>
+noise energy estimation. It is no longer possible to use<br>
+the simple noise energy estimation for a linear quantizer,<br>
+since it is not accurate enough. In accordance with the<br>
+invention, a quantizer is used which has the following<br>
+quantization characteristic curve:<br><br><br>
+In the above equation, Xi are the spectral values to be<br>
+quantized. The starting values are characterized by yi, yi<br>
+thus being the quantized spectral values. q is the<br>
+quantizer step size. Round is the rounding function, which<br>
+is preferably the nint function, "nint" standing for<br>
+"nearest integer". The exponent which makes the quantizer a<br>
+non-linear quantizer is referred to by α, α being different<br>
+from 1. Typically, the exponent α will be smaller than 1,<br>
+so that the quantizer has a compressing characteristic.<br>
+With layer 3, and with AAC, the exponent a equals 0.75. The<br>
+parameter s is an additive constant which may have any<br>
+value, but which may also be zero.<br>
+In accordance with the invention, the following connection<br>
+is used for calculating the quantizer step size.<br><br>
+With a equaling ¾, the following equation results:<br><br>
+In these equations, the left-hand term stands for the<br>
+interference THR which is permitted in a frequency band and<br>
+which is provided by a psycho-acoustic module for a scale<br>
+factor band with the frequency lines of i equaling i1 to i<br>
+equaling i2. The above equation enables an almost exact<br>
+estimation of the interference introduced by a quantizer<br>
+step size q for a non-linear quantizer having the above<br>
+quantizer characteristic curve with the exponent a<br>
+different from 1, wherein the function nint from the<br>
+quantizer equation performs the actual quantizer equation,<br>
+which is rounding to the next integer.<br>
+It shall be noted that instead of function nint, any<br>
+rounding function round desired may be used, specifically,<br>
+for example, also rounding to the next even or the next odd<br><br>
+integer, or rounding to the next number of 10, etc.<br>
+Generally speaking, the rounding function is responsible<br>
+for mapping a value from a set of values having a specific<br>
+number of permitted values to a set of values having a<br>
+smaller specific second number of values.<br>
+In a preferred embodiment of the present invention, the<br>
+quantized spectral values have previously been subjected to<br>
+TNS processing, and, if what is dealt with are, for<br>
+example, stereo signals, to mid/side coding, provided that<br>
+the channels were such that the mid/side coder was<br>
+activated.<br>
+Thus, the scale factor for each scale factor band may be<br>
+indicated directly and may be fed into a respective audio<br>
+coder with the connection between the quantizer step size<br>
+and the scale factor, which is given in accordance with the<br>
+following equation<br><br>
+The scale factor results from the following equation.<br><br>
+In a preferred embodiment of the present invention, use may<br>
+also be made of a post-processing iteration based on an<br>
+analysis-by-synthesis principle, so as to slightly vary the<br>
+quantizer step size, which has been calculated directly<br>
+without iteration, for each scale factor band so as to<br>
+achieve the actual optimum.<br>
+Compared to the prior art, however, the already very<br>
+precise calculation of the starting values enables a very<br>
+short iteration, although it has turned out that in the<br><br>
+vast majority of cases, the downstream iteration may be<br>
+fully dispensed with.<br>
+The preferred concept based on calculating the step size<br>
+using the mean noise energy thus provides a good and<br>
+realistic estimation since unlike the prior art, it does<br>
+not operate with a worst-case scenario, but uses an<br>
+expected value of the quantization error as a basis and<br>
+thus enables, with subjectively equivalent quality, more<br>
+efficient coding of the data with a considerably reduced<br>
+bit count. In addition, a considerably faster coder may be<br>
+achieved due to the fact that the iteration may be fully<br>
+dispensed with and/or that the number of iteration steps<br>
+may be clearly reduced. This is remarkable, in particular,<br>
+because the iteration loops in the prior art coder have<br>
+been essential for the overall time requirement of the<br>
+coder. Thus, even a reduction by one or fewer iteration<br>
+steps leads to a considerable overall time saving of the<br>
+coder.<br>
+Preferred embodiments of the present invention will be<br>
+explained below in detail with reference to the<br>
+accompanying figures, wherein:<br>
+Fig. 1 is a block diagram of an apparatus for<br>
+determining a quantized audio signal;<br>
+Fig. 2 is a flowchart for representing the post-<br>
+processing in accordance with a preferred<br>
+embodiment of the present invention;<br>
+Fig. 3 depicts a block diagram of a prior art coder in<br>
+accordance with the AAC standard;<br>
+Fig. 4 is a representation of the reduction of the<br>
+quantization interference by a coarser quantizer<br>
+step size; and<br><br>
+Fig. 5 depicts a block diagram of the inventive<br>
+apparatus for determining a quantizer step size<br>
+for quantizing a signal.<br>
+The inventive concept will be presented below with<br>
+reference to Fig. 5. Fig. 5 shows a schematic<br>
+representation of an apparatus for determining a quantizer<br>
+step size for quantizing a signal comprising audio or video<br>
+information and being provided via a signal input 500. The<br>
+signal is supplied to a means 502 for providing a first<br>
+quantizer step size (QSS) and for providing an interference<br>
+threshold which will also be referred to as introducible<br>
+interference below. It shall be noted that the interference<br>
+threshold may be any threshold. Preferably, however, it<br>
+will be a psycho-acoustic or psycho-optically introducible<br>
+interference, this threshold being selected such that a<br>
+signal into which the interference has been introduced will<br>
+still be perceived as not-interfered-with by human<br>
+listeners or viewers.<br>
+The threshold (THR) as well as the first quantizer step<br>
+size are supplied to a means 504 for determining the actual<br>
+first interference introduced by the first quantizer step<br>
+size. Determining the actually introduced interference is<br>
+preferably conducted by quantizing using the first<br>
+quantizer step size, by re-quantizing using the first<br>
+quantizer step size, and by calculating the distance<br>
+between the original signal and the re-quantized signal.<br>
+Preferably, when spectral values are being processed,<br>
+corresponding spectral values of the original signal and of<br>
+the re-quantized signal are squared so as to then determine<br>
+the difference of the squares. Alternative methods of<br>
+determining the distance may be employed.<br>
+Means 504 provides a value for a first interference<br>
+actually introduced by the first quantizer step size. This<br>
+first interference is supplied, along with threshold THR,<br>
+to a means 506 for comparing. Means 506 performs a<br><br>
+comparison between threshold THR and the first interference<br>
+actually introduced. If the first interference actually<br>
+introduced is larger than the threshold, means 506 will<br>
+activate a means 508 for selecting a second quantizer step<br>
+size, means 508 being configured to select the. second<br>
+quantizer step size to be coarser, i.e. larger, than the<br>
+first quantizer step size. The second quantizer step size<br>
+selected by means 508 is supplied to a means 510 for<br>
+determining the second interference actually introduced. To<br>
+this end, means 510 obtains the original signal as well as<br>
+the second quantizer step size and again performs a<br>
+quantization using the second quantizer step size, a re-<br>
+quantization using the second quantizer step size, and a<br>
+distance calculation between the re-quantized signal and<br>
+the original signal, so as to supply a means 512 for<br>
+comparing with a measure of the second interference<br>
+actually introduced. Means 512 for comparing compares the<br>
+second interference actually introduced with the first<br>
+interference actually introduced or with threshold THR. If<br>
+the second interference actually introduced is smaller than<br>
+the first interference actually introduced or even smaller<br>
+than the threshold THR, the second quantizer step size will<br>
+be used for quantizing the signal.<br>
+It shall be noted that the concept depicted in Fig. 5 is<br>
+only schematic. Naturally, it is not absolutely necessary<br>
+to provide separate comparison means for performing the<br>
+comparisons in blocks 506 and 512, but it is also possible<br>
+to provide one single comparison means which is controlled<br>
+accordingly. The same applies to means 504 and 510 for<br>
+determining the interferences actually introduced. They,<br>
+too, need not necessarily be configured as separate means.<br>
+In addition, it shall be noted that the means for<br>
+quantizing need not necessarily be configured as a means<br>
+which is separate from means 510. To be precise, the<br>
+signals with are quantized by the second quantizer step<br>
+size are typically generated as early as in means 510 when<br><br>
+means 510 performs a quantization and re-quantization to<br>
+determine the interference actually introduced. The<br>
+quantized values obtained there may also be stored and<br>
+output as a quantized signal when means 512 for comparing<br>
+provides a positive result, so that means 514 for<br>
+quantizing "merges", as it were, with means 510 for<br>
+determining the second interference actually introduced.<br>
+In a preferred embodiment of the present invention,<br>
+threshold THR is the maximally introducible interference<br>
+determined by way of psychoacoustics, the signal being an<br>
+audio signal in this case. Threshold THR here is provided<br>
+by a psycho-acoustic model which operates in a conventional<br>
+manner and provides, for each scale factor band, an<br>
+estimated maximum quantization interference introducible<br>
+into this scale factor band. The maximally introducible<br>
+interference is based on the masking threshold in that it<br>
+is identical with the masking threshold or is derived from<br>
+the masking threshold, in the sense that, for example,<br>
+coding with a safe spacing is performed such that the<br>
+introducible interference is smaller than the masking<br>
+threshold, or that a rather offensive coding in the sense<br>
+of a bit rate reduction is performed, specifically in the<br>
+sense that the permitted interference exceeds the masking<br>
+threshold.<br>
+A preferred manner of implementing means 502 for providing<br>
+the first quantizer step size will be presented below with<br>
+reference to Fig. 1. In this respect, the functionalities<br>
+of means 50 of Fig. 2 and of means 502 of Fig. 5 are the<br>
+same. Preferably, means 502 is configured to have the<br>
+functionalities of means 10 and of means 12 of Fig. 1. In<br>
+addition, quantizer 514 in Fig. 5 is configured to be<br>
+identical with quantizer 14 in Fig. 1 in this example.<br>
+Furthermore, a complete procedure which, if the<br>
+interference introduced exceeds the threshold, will also<br><br>
+attempt coarser quantizer step sizes will be presented<br>
+below with reference to Fig. 2.<br>
+In addition, the left-hand branch in Fig. 2, depicting the<br>
+inventive concept, is extended in that in the event that<br>
+the interference introduced exceeds the threshold and that<br>
+the coarsening of the quantizer step size does not yield<br>
+any effect, and if bit rate requirements are not<br>
+particularly strict and/or if there is still some space in<br>
+the "bit savings bank", an iteration is performed using a<br>
+smaller, i.e. finer quantizer step size.<br>
+Eventually, the effect on which the present invention is<br>
+based will be presented below with reference to Fig. 4,<br>
+specifically the effect that despite a coarsening of the<br>
+quantizer step size, a reduced quantization noise and,<br>
+associated therewith, an increase in the compression gain<br>
+may be obtained.<br>
+Fig. 1 shows an apparatus for determining a quantized audio<br>
+signal which is given as a spectral representation in the<br>
+form of spectral values. It shall be noted, in particular,<br>
+that in the event that - with reference to Fig. 3 - no TNS<br>
+-processing and no mid/side coding has been performed, the<br>
+spectral values are directly the starting values of the<br>
+filter bank. If, however, only TNS processing, but no<br>
+mid/side coding is performed, the spectral values fed into<br>
+quantizer 1015 are spectral residual values as are formed<br>
+from TNS prediction filtering.<br>
+If TNS processing including a mid/side coding is employed,<br>
+the spectral values fed into the inventive apparatus are<br>
+spectral values of a mid channel, or spectral values of a<br>
+sxde channel.<br>
+To start with, the present invention includes a means for<br>
+providing a permitted interference, indicated by 10 in Fig.<br>
+1. The psycho-acoustic model 1020 shown in Fig. 3 which<br><br>
+typically is configured to provide a permitted interference<br>
+or threshold, also referred to as THR, for each scale<br>
+factor band, i.e. for a group of several spectral values<br>
+which are spectrally adjacent to one another, may serve as<br>
+the means for providing a permitted interference. The<br>
+permitted interference is based on the psycho-acoustic<br>
+masking threshold and indicates the amount of energy that<br>
+may be introduced into an original audio signal without the<br>
+interference energy being perceived by the human ear. In<br>
+other words, the permitted interference is the signal<br>
+portion artificially introduced (by the quantization) which<br>
+is masked by the actual audio signal.<br>
+Means 10 is depicted to calculate the permitted<br>
+interference THR for a frequency band, preferably a scale<br>
+factor band, and to supply this to a downstream means 12.<br>
+Means 12 serves to calculate a piece of quantizer step size<br>
+information for the frequency band for which the permitted<br>
+interference THR has been indicated. Means 12 is configured<br>
+to supply the piece of quantizer step size information q to<br>
+a downstream means 14 for quantizing. Means 14 for<br>
+quantizing operates in accordance with the quantization<br>
+specification drawn in block 14, the quantizer step size<br>
+information being used, in the case shown in Fig. 1, to<br>
+initially divide a spectral value Xi by the value of q, and<br>
+to then exponentiate the result with the exponent a unequal<br>
+to 1, and to then add an additive factor s, as the case may<br>
+be.<br>
+Subsequently, this result is supplied to a rounding<br>
+function which, in the embodiment shown in Fig. 1, selects<br>
+the next integer. In accordance with the definition, the<br>
+integer may be generated again by cutting off digits behind<br>
+the decimal point, i.e. by "always rounding down".<br>
+Alternatively, the next integer may also be generated by<br>
+rounding down to 0.4 99 and by rounding up from 0.5. As<br>
+another alternative, the next integer may be determined by<br>
+"always rounding up", depending on the individual<br><br>
+implementation. However, instead of the nint function, any<br>
+other rounding function may be employed which, generally<br>
+speaking, maps a value, which is to be rounded, from a<br>
+first, larger set of values into a second, smaller set of<br>
+values.<br>
+The quantized spectral value will then be present in the<br>
+frequency band at the output of means 14. As may be seen<br>
+from the equation depicted in block 14, means 14 will<br>
+naturally also be supplied, beside the quantizer step size<br>
+q, with the spectral value to be quantized in the frequency<br>
+band contemplated.<br>
+It shall be noted that means 12 need not necessarily<br>
+directly calculate quantizer step size q, but that as<br>
+alternative quantizer step size information, the scale<br>
+factor as is used in prior-art transformation-based audio<br>
+coders may also be calculated. The scale factor is linked<br>
+to the actual quantizer step size via the relation depicted<br>
+to the right of block 12 in Fig. 1. If the means for<br>
+calculating is further configured to calculate, as<br>
+quantizer step size information, scale factor scf, this<br>
+scale factor will be supplied to means 14 for quantizing,<br>
+which means will then use, in block 14, the value of 21/4 scf<br>
+for the quantization calculation instead of value q.<br>
+A derivation of the form given in block 12 will be given<br>
+below.<br>
+As has been set forth, the exponential-law quantizer as is<br>
+depicted in block 14 obeys the following relation:<br><br>
+The inverse operation will be presented as follows:<br><br><br>
+This equation thus represents the operation required for<br>
+re-quantization, wherein yi is a quantized spectral value,<br>
+and wherein Xi is a re-quantized spectral value. Again, q<br>
+is the quantizer step size which is associated with the<br>
+scale factor via the relation shown in Fig. 1 to the right<br>
+of block 12.<br>
+As has been expected, in the event that a equals 1, the<br>
+result is consistent with this equation.<br>
+If the above equation is summed up over a vector of the<br>
+spectral values, the total noise power in a band determined<br>
+by index i is given as follows:<br><br>
+In summary, the expected value of the quantization noise of<br>
+a vector is determined by the quantizer step size q and a<br>
+so-called form factor describing the distribution of<br>
+amounts of the components of the vector.<br>
+The form factor, which is the far-right term in the above<br>
+equation, depends on the actual input values and need only<br>
+be calculated once, even if the above equation is<br>
+calculated for interference levels THR desired to differing<br>
+degrees.<br>
+As has already been set forth, this equation with α<br>
+equaling ¾ is simplified as follows:<br><br>
+The left-hand side of this equation is thus an estimate of<br>
+the quantization noise energy which, in a borderline case,<br>
+conforms with the permitted noise energy (threshold).<br><br>
+Thus, the following approach will be made:<br><br>
+The sum across the roots of the frequency lines in the<br>
+right-hand part of the equation corresponds to a measure of<br>
+the uniformity of the frequency lines and is known as the<br>
+form factor preferably as early as in the encoder:<br><br>
+Thus, the following results:<br><br>
+q here corresponds to the quantizer step size. With AAC, it<br>
+is specified as:<br><br>
+scf is the scale factor. If the scale factor is to be<br>
+determined, the equation may be calculated as follows on<br>
+the basis of the relation between the step size and the<br>
+scale factor:<br><br><br><br>
+The present invention thus provides a closed connection<br>
+between the scale factors scf for a scale factor band which<br>
+has a specific form factor and for which a specific<br>
+interference threshold THR, which typically originates from<br>
+the psycho-acoustic model, is given.<br>
+As has already been set forth, calculating the step size<br>
+using the mean noise energy provides a better estimate,<br>
+since the basis used is the expected value of the<br>
+quantization error rather than a worst-case scenario.<br>
+Thus, the inventive concept is suitable for determining the<br>
+quantizer step size and/or, in equivalence thereto, of the<br>
+scale factor for a scale factor band without any<br>
+iterations.<br>
+Nevertheless, post-processing as will be represented below<br>
+by means of Fig. 2 can also be performed if the calculating<br>
+time requirements are not very strict. In a first step in<br>
+Fig. 2, the first quantizer step size is estimated (step<br>
+50). Estimating the first quantizer step size (QSS) is<br>
+performed using the procedure depicted by means of Fig. 1.<br>
+Subsequently, a quantization using the first quantizer step<br>
+size is performed in a step 52, preferably in accordance<br>
+with the quantizer as is depicted using block 14 in Fig. 1.<br>
+Subsequently, the values obtained with the first quantizer<br>
+step size are re-quantized so as to then calculate the<br>
+interference introduced. Thereupon, verification is made in<br>
+a step 54 as to whether the interference introduced exceeds<br>
+the predefined threshold.<br>
+It shall be pointed out that the quantizer step size q (or<br>
+scf) which has been calculated by the connection<br><br>
+represented in block 12 is an approximation. If the<br>
+connection given in block 12 of Fig. 1 were actually exact,<br>
+it should be established, in block 54, that the<br>
+interference introduced exactly corresponds to the<br>
+threshold. Due to the approximation nature of the<br>
+connection in block 12 of Fig. 1, however, the interference<br>
+introduced may exceed of fall below threshold THR.<br>
+In addition, it shall be noted that the deviation from the<br>
+threshold will not be particularly large, even though it<br>
+will nevertheless be present. If one finds, in step 54,<br>
+that using the first quantizer step size, the interference<br>
+introduced falls below the threshold, i.e. if the question<br>
+in step 54 is answered in the negative, the right-hand<br>
+branch in Fig. 3 will be taken. If the interference<br>
+introduced falls below the threshold, this means that the<br>
+estimate in block 12. in Fig. 1 was too pessimistic, so that<br>
+in a step 56, a quantizer step size coarser than the second<br>
+quantizer step size is set.<br>
+The degree to which the second quantizer step size is<br>
+coarser, in comparison, than the first quantizer step size,<br>
+may be selected. However, it is preferred to take<br>
+relatively small increments, since the estimate in block 50<br>
+will already be relatively exact.<br>
+Using the second coarser (larger) quantizer step size, a<br>
+quantization of the spectral values, a subsequent re-<br>
+quantization and a calculation of the second interference<br>
+corresponding to the second quantizer step size are<br>
+performed in a step 58.<br>
+In a step (60), verification is then made as to whether the<br>
+second interference, which corresponds to the second<br>
+quantizer step size, still falls below the original<br>
+threshold. If this is so, the second quantizer step size is<br>
+stored (62), and a new iteration is started so as to set an<br>
+even coarser quantizer step size in a step (56). Then, step<br><br>
+60 and, as the case may be, step 62 is again performed<br>
+using the even coarser quantizer step size so as to again<br>
+start a new iteration. If one finds, during an iteration in<br>
+step 60, that the second interference does not fall below<br>
+the threshold, i.e. exceeds the threshold, a termination<br>
+criterion has been reached, and upon reaching the<br>
+termination criterion, quantization is performed (64) using<br>
+the quantizer step size that has been stored last.<br>
+Since the first estimated quantizer step size already was a<br>
+relatively good value, the number of iterations as compared<br>
+with poorly estimated starting values will be reduced,<br>
+which will lead to significant savings in calculation time<br>
+when coding, since the iterations for calculating the<br>
+quantizer step size take up the largest proportion of<br>
+calculating time of the coder.<br>
+An inventive procedure which is used when the interference<br>
+introduced actually exceeds the threshold will be<br>
+represented below with reference to the left-hand branch in<br>
+Fig. 2.<br>
+Despite the fact that the interference introduced already<br>
+exceeds the threshold, an even coarser second quantizer<br>
+step size is set in accordance with the invention (70), a<br>
+quantization, re-quantization and calculation of the second<br>
+noise interference which corresponds to the second<br>
+quantizer step size then being performed in a step 72.<br>
+Thereafter, verification is made in a step 74 as to whether<br>
+the second noise interference now falls below the<br>
+threshold. If this is so, the question in step 74 is<br>
+answered with "yes", and the second quantizer step size is<br>
+stored (76). If, however, one finds that the second noise<br>
+interference exceeds the threshold, either a quantization<br>
+is performed using the stored quantizer step size, or, if<br>
+no better second quantizer step size has been stored, an<br>
+iteration is passed through, wherein, like in the prior<br><br>
+art, a finer second quantizer step size is selected to<br>
+"push" the interference introduced below the threshold.<br>
+What will follow is a discussion of why an improvement may<br>
+still be achieved when an even coarser quantizer step size<br>
+is used, particularly when the interference introduced<br>
+exceeds the threshold. Up to now, one has always operated<br>
+on the assumption that a finer quantizer step size leads to<br>
+a smaller quantization energy introduced, and that a larger<br>
+quantizer step size leads to a higher quantization<br>
+interference introduced. On average, this may be true, but<br>
+it is not always true, and the opposite will be true, in<br>
+particular, for rather thinly populated scale factor bands<br>
+and, in particular, when the quantizer has a non-linear<br>
+characteristic curve. One has found, in accordance with the<br>
+invention, that in a number of cases which is not to be<br>
+underestimated, a coarser quantizer step size leads to a<br>
+smaller interference introduced. This can be traced back to<br>
+the fact that there may also be the case when a coarser<br>
+quantizer step size hits a spectral value to be quantized<br>
+better than a finer quantizer step size, as will be set<br>
+forth using the below example with reference to Fig. 4.<br>
+By way of example, Fig. 4 shows a quantization<br>
+characteristic curve (60) which provides four quantization<br>
+stages 0, 1, 2, 3, when input signals between 0 and 1 are<br>
+quantized. The quantized values correspond to 0.0, 0.25,<br>
+0.5, 0.75. In comparison, a different, coarser quantization<br>
+characteristic curve is drawn in dotted lines in Fig. 4<br>
+(62), which only has three quantization stages which<br>
+correspond to the absolute values of 0.0, 0.33, 0.66. Thus,<br>
+in the first case, i.e. with the quantizer characteristic<br>
+curve 60, the quantizer step size equals 0.25, whereas in<br>
+the second case, i.e. with the quantizer characteristic<br>
+curve 62, the quantizer step size equals 0.33. The second<br>
+quantizer characteristic curve (62) therefore has a coarser<br>
+quantizer step size than the first quantizer characteristic<br>
+curve (60) which is to represent a fine quantization<br><br>
+characteristic curve. If the value xi=0.33, which is to be<br>
+quantized, is contemplated, one can see from Fig. 4 that<br>
+the error in the quantization using the fine quantizer<br>
+having four stages equals the difference between 0.33 and<br>
+0.25, and thus is 0.08. By contrast, the error in the<br>
+quantization using three stages equals zero due to the fact<br>
+that a quantizer stage exactly "hits", as it were, the<br>
+value to be quantized.<br>
+It may therefore be seen from Fig. 4 that a coarser<br>
+quantization may lead to a smaller quantization error than<br>
+a fine quantization.<br>
+In addition, a coarser quantization is the deciding factor<br>
+for a smaller starting bit rate being required, since the<br>
+possible states are only three states, i.e. 0, 1, 2, unlike<br>
+the case of the finer quantizer, wherein four stages 0, 1,<br>
+2, 3 must be signaled. In addition, the coarser quantizer<br>
+step size has the advantage that more values tend to be<br>
+"quantized away" to 0 than with a finer quantizer step<br>
+size, wherein fewer values are quantized away to "0". Even<br>
+though, when several spectral values in one scale factor<br>
+band are contemplated, "quantizing to 0" leads to an<br>
+increase in the quantization error, this need not<br>
+necessarily become problematic, since the coarser quantizer<br>
+step size may hit other, more important spectral values in<br>
+a more exact manner, so that the quantization error is<br>
+cancelled out and even over-compensated for by the coarser<br>
+quantization of the other spectral values, a smaller bit<br>
+rate occurring at the same time.<br>
+In other words, the coder result achieved is "better", all<br>
+in all, since the inventive concept achieves a smaller<br>
+number of states to be signaled and, at the same time,<br>
+improved "hitting" of the quantization stages.<br>
+In accordance with the invention, as has been represented<br>
+in the left-hand branch of Fig. 2, a still coarser<br><br>
+quantizer step size is attempted, starting from estimated<br>
+values (step 50 in Fig. 2), when the interference<br>
+introduced exceeds the threshold, so as to benefit from the<br>
+effect represented using Fig. 4. In addition, it has turned<br>
+out that this effect is even more significant with non-<br>
+linear quantizers than in the case, drawn in Fig. 4, of two<br>
+linear quantizer characteristic curves.<br>
+The presented concept of quantizer step size post-<br>
+processing and/or scale factor post-processing thus serves<br>
+to improve the result of the scale factor estimator.<br>
+Starting from the quantizer step sizes determined in the<br>
+scale factor estimator (50 in Fig. 2), new quantizer step<br>
+sizes which are as large as possible, and for which the<br>
+error energy falls below the predefined threshold value,<br>
+are determined in the analysis-by-synthesis step.<br>
+Therefore, the spectrum is quantized with the quantizer<br>
+step sizes calculated, and the energy of the error signal,<br>
+i.e. preferably the square sum of the difference of<br>
+original and quantized spectral values, is determined.<br>
+Alternatively, for error determination, a corresponding<br>
+time signal may also be used, even though the use of<br>
+spectral values is preferred.<br>
+The quantizer step size and the error signal are stored as<br>
+the best result obtained so far. If the interference<br>
+calculated exceeds a threshold value, the following<br>
+approach is adopted:<br>
+The scale factor within a predefined range is varied around<br>
+the value originally calculated, use being also made, in<br>
+particular, of coarser quantizer step sizes (70).<br>
+For each new scale factor, the spectrum is again quantized,<br>
+and the energy of the error signal is calculated. If the<br>
+error signal is smaller than the smallest that has so far<br><br>
+been calculated, the current quantizer step size is<br>
+latched, along with the energy of the associated error<br>
+signal, as the best result obtained so far.<br>
+In accordance with the invention, not only relatively<br>
+small, but also relatively large scaling factors are taken<br>
+into account here, in order to benefit from the concept<br>
+described with reference to Fig. 4, particularly when the<br>
+quantizer is a non-linear quantizer.<br>
+If the interference calculated, however, falls below the<br>
+threshold value, i.e. if the estimation in step 50 was too<br>
+pessimistic, the scale factor will be varied within a<br>
+predefined range around the originally calculated value.<br>
+For each new scale factor, the spectrum is re-quantized,<br>
+and the energy of the error signal is calculated.<br>
+If the error signal is smaller than the smallest that has<br>
+been calculated so far, the current quantizer step size is<br>
+latched, along with the energy of the associated error<br>
+signal, as the best result obtained so far.<br>
+However, only relatively coarse scaling factors are taken<br>
+into account here so as to reduce the number of bits<br>
+required for coding the audio spectrum.<br>
+Depending on the circumstances, the inventive method may be<br>
+implemented in hardware or in software. The implementation<br>
+may be effected on a digital storage medium, in particular<br>
+a disk or CD with electronically readable control signals<br>
+which may cooperate with a programmable computer system<br>
+such that the method is performed.<br>
+Generally, the invention thus consists in a computer<br>
+program product having a program code, stored on a machine-<br>
+readable carrier, for performing the inventive method, when<br>
+the computer program product runs on a computer. In other<br><br>
+words, the invention may thus be realized as a computer<br>
+program having a program code for performing the method,<br>
+when the computer program runs on a computer.<br><br>
+WE CLAIM :<br>
+1. An apparatus for determining a quantizer step size for quantizing a<br>
+signal comprising audio or video information, the apparatus<br>
+comprising:<br>
+means for (502) providing a first quantizer step size and an<br>
+interference threshold;<br>
+means for (504) determining a first interference introduced by the first<br>
+quantizer step size;<br>
+means for (506) comparing the interference introduced by the first<br>
+quantizer step size with the interference threshold;<br>
+means for (508) selecting a second quantizer step size which is larger<br>
+than the first quantizer step size if the first interference introduced<br>
+exceeds the interference threshold;<br>
+means for (510) determining a second interference introduced by the<br>
+second quantizer step size;<br>
+means for (512) comparing the second interference introduced with<br>
+the interference threshold or the first interference introduced; and<br>
+means for (514) quantizing the signal with the second quantizer step<br>
+size if the second interference introduced is smaller than one of the<br>
+first interference introduced and the interference threshold.<br><br>
+2.	The apparatus as claimed in claim 1, wherein the signal is an audio<br>
+signal and comprises spectral values of a spectral representation of the<br>
+audio signal, and wherein the means for (502) providing is configured<br>
+as a psycho-acoustic model which calculates a permitted interference<br>
+for a frequency band on the basis of a psycho-acoustic masking<br>
+threshold.<br>
+3.	The apparatus as claimed in claims 1 or 2, wherein one of the means<br>
+for (504) determining the first interference introduced, and the means<br>
+for (510) calculating the second interference introduced is configured<br>
+to quantize using a quantizer step size, re-quantize using the quantizer<br>
+step size, and calculate a distance between the re-quantized signal and<br>
+the signal so as to obtain the interference introduced.<br>
+4.	The apparatus as claimed in any of the previous claims, wherein the<br>
+means for (502) providing the first quantizer step size is configured to<br>
+calculate the quantizer step size in accordance with the following<br>
+equation :<br><br>
+wherein the means for (514) quantizing is configured to quantize in<br>
+accordance with the following equation :<br><br><br>
+Wherein X1 is a spectral value to be quantized, wherein q represents the<br>
+quantizer step size information, wherein s is a figure differing from or<br>
+equaling zero, wherein a is an exponent different from "1", wherein round<br>
+is a rounding function which maps a value from a first, larger range of<br>
+values to a value within a second, smaller range of values, wherein<br>
+  is the permitted interference, and wherein is a run index<br>
+for spectral values in the frequency band.<br>
+5.	The apparatus as claimed in any of the previous claims, wherein the<br>
+means for (508) selecting is further configured to select a larger<br>
+quantizer step size when the interference introduced is smaller than<br>
+the permitted interference.<br>
+6.	The apparatus as claimed in any of the previous claims, wherein the<br>
+means for (502) providing is configured to provide the first quantizer<br>
+step size as a result of an analysis/synthesis determination.<br>
+7.	The apparatus as claimed in any of the previous claims, wherein the<br>
+means for (508) selecting is configured to alter a quantizer step size<br>
+for one frequency band independently of a quantizer step size for<br>
+another frequency band.<br>
+8.	The apparatus as claimed in any of the previous claims, wherein the<br>
+means for (502) providing is configured to determine the first<br>
+quantizer step size as a result of a preceding iteration step with a<br>
+coarsening of the quantizer step size, and wherein the interference<br><br>
+threshold is an interference introduced in the preceding iteration step<br>
+for determining the first quantizer step size.<br>
+9. A method for determining a quantizer step size for quantizing a signal<br>
+comprising audio or video information, the method comprising: the<br>
+steps of:<br>
+providing (502) a first quantizer step size and an interference<br>
+threshold;<br>
+determining (504) a first interference introduced by the first quantizer<br>
+step size;<br>
+comparing (506) the interference introduced by the first quantizer step<br>
+size with the interference threshold;<br>
+selecting (508) a second quantizer step size which is larger than the<br>
+first quantizer step size if the first interference introduced exceeds the<br>
+interference threshold;<br>
+determining (510) a second interference introduced by the second<br>
+quantizer step size;<br>
+comparing (512) the second interference introduced with the<br>
+interference threshold or the first interference introduced;<br><br>
+quantizing (514) the signal with the second quantizer step size if the<br>
+second interference introduced is smaller than the first interference<br>
+introduced or is smaller than the interference threshold.<br><br><br>
+TITLE"AN APPARATUS AND METHOD FOR DETERMINING<br>
+A QUANTIZER STEP SIZE FOR QUANTIZING A SIGNAL"<br>
+The invention relates an apparatus for determining a quantizer step size for<br>
+quantizing a signal comprising audio or video information, the apparatus<br>
+comprising: means for (502) providing a first quantizer step size and an<br>
+interference threshold; means for (504) determining a first interference<br>
+introduced by the first quantizer step size; means for (506) comparing the<br>
+interference introduced by the first quantizer step size with the interference<br>
+threshold; means for (508) selecting a second quantizer step size which is<br>
+larger than the first quantizer step size if the first interference introduced<br>
+exceeds the interference threshold; means for (510) determining a second<br>
+interference introduced by the second quantizer step size; means for (512)<br>
+comparing the second interference introduced with the interference threshold<br>
+or the first interference introduced; and means for (514) quantizing the signal<br>
+with the second quantizer step size if the second interference introduced is<br>
+smaller than one of the first interference introduced and the interference<br>
+threshold.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1jbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1jb3JyZXNwb25kZW5jZSBvdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-correspondence others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1jb3JyZXNwb25kZW5jZS0xLjEucGRm" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-correspondence-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1kZXNjcmlwdGlvbihjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1mb3JtLTEucGRm" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1mb3JtLTE4LnBkZg==" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1mb3JtLTIucGRm" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1mb3JtLTMucGRm" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1mb3JtLTUucGRm" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1pbnRlcm5hdGlvbmFsIHB1YmxpY2F0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-international publication.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1pbnRlcm5hdGlvbmFsIHNlYXJjaCBhdXRob3JpdHkgcmVwb3J0LnBkZg==" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-international search authority report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDIyMjAta29sbnAtMjAwNi1wY3QgZm9ybS5wZGY=" target="_blank" style="word-wrap:break-word;">02220-kolnp-2006-pct form.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LSgyNy0wMS0yMDEyKS1BQlNUUkFDVC5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-(27-01-2012)-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LSgyNy0wMS0yMDEyKS1DTEFJTVMucGRm" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-(27-01-2012)-CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LSgyNy0wMS0yMDEyKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-(27-01-2012)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LSgyNy0wMS0yMDEyKS1ERVNDUklQVElPTiAoQ09NUExFVEUpLnBkZg==" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-(27-01-2012)-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LSgyNy0wMS0yMDEyKS1EUkFXSU5HUy5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-(27-01-2012)-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LSgyNy0wMS0yMDEyKS1QRVRJVElPTiBVTkRFUiBSVUxFIDEzNy5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-(27-01-2012)-PETITION UNDER RULE 137.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUFCU1RSQUNULnBkZg==" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUFNQU5ERUQgQ0xBSU1TLnBkZg==" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-AMANDED CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUNPUlJFU1BPTkRFTkNFIDEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-CORRESPONDENCE 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUNPUlJFU1BPTkRFTkNFLnBkZg==" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LURFU0NSSVBUSU9OIChDT01QTEVURSkucGRm" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LURSQVdJTkdTLnBkZg==" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUVYQU1JTkFUSU9OIFJFUE9SVCBSRVBMWSBSRUNJRVZFRC5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-EXAMINATION REPORT REPLY RECIEVED.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUVYQU1JTkFUSU9OIFJFUE9SVC5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUZPUk0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUZPUk0gMTgucGRm" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-FORM 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUZPUk0gMi5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUZPUk0gMjYucGRm" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-FORM 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUZPUk0gMyAxLjEucGRm" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-FORM 3 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUZPUk0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUZPUk0gNSAxLjEucGRm" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-FORM 5 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUZPUk0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-FORM 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUdSQU5URUQtQUJTVFJBQ1QucGRm" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-GRANTED-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUdSQU5URUQtQ0xBSU1TLnBkZg==" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-GRANTED-CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUdSQU5URUQtREVTQ1JJUFRJT04gKENPTVBMRVRFKS5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-GRANTED-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUdSQU5URUQtRFJBV0lOR1MucGRm" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-GRANTED-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUdSQU5URUQtRk9STSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-GRANTED-FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUdSQU5URUQtRk9STSAyLnBkZg==" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-GRANTED-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LUdSQU5URUQtU1BFQ0lGSUNBVElPTi5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-GRANTED-SPECIFICATION.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LU1JU0NMTEVOSU9VUy5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-MISCLLENIOUS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LU9USEVSUyAxLjEucGRm" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-OTHERS 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LU9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LVBFVElUSU9OIFVOREVSIFJVTEUgMTM3LTEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-PETITION UNDER RULE 137-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LVBFVElUSU9OIFVOREVSIFJVTFIgMTM3LTEuMi5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-PETITION UNDER RULR 137-1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjIyMC1LT0xOUC0yMDA2LVJFUExZIFRPIEVYQU1JTkFUSU9OIFJFUE9SVC5wZGY=" target="_blank" style="word-wrap:break-word;">2220-KOLNP-2006-REPLY TO EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QtMDIyMjAta29sbnAtMjAwNi5qcGc=" target="_blank" style="word-wrap:break-word;">abstract-02220-kolnp-2006.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="253015-a-sintered-flue-gas-wet-desulfurizing-and-dedusting-process.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="253017-process-for-making-organofunctional-silanes-and-mixtures-thereof.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>253016</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2220/KOLNP/2006</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>25/2012</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>22-Jun-2012</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>14-Jun-2012</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>07-Aug-2006</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>FRAUNHOFER-GESELLSCHAFT ZUR FOERDERUNG DER ANGEWANDTEN FORSCHUNG E.V.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>HANSASTRASSE 27 C 80686 MUNICH</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>GRILL,BERNHARD</td>
+											<td>AM SCHWABENWEIHER 24 91207 LAUF</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>TEICHMANN,BODO</td>
+											<td>SONNENSTRAßE 58 90763 FUERTH</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>RETTELBACH,NIKOLAUS</td>
+											<td>HINDENBURGSTRAßE 24 91054 ERLANGEN</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>SCHUG,MICHAEL</td>
+											<td>TAUNUSSTRßE 63 91056 ERLANGEN</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G10L 19/02</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/EP2005/001652</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-02-17</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>102004009955.3</td>
+									<td>2004-03-01</td>
+								    <td>Germany</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/253016-an-apparatus-and-method-for-determining-a-quantizer-step-size-for-quantizing-a-signal by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 13:04:11 GMT -->
+</html>

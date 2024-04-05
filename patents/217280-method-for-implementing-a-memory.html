@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/217280-method-for-implementing-a-memory by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 11:34:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 217280:METHOD FOR IMPLEMENTING A MEMORY</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD FOR IMPLEMENTING A MEMORY</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>The invention relates to a method for implementing a memory. The memory is implemented as a directory struture comprising a tree-shaped hierarchy having nodes at several different levels, wherein an individual element may contain the address of a lower node in the tree-shaped hierarchy and wherein an individual element may also be empty, the number of elements in the array corresponding to a power of two, or (ii) a bucket containing at least one element so that the type of an individual element in the bucket is selected from a group including a data unit, a pointer to a stored data unit, a pointer to another directory structure and another directory structure. To optimize storage space occupancy and memory efficiency, trie nodes are maintained in the directory structure in such a way that (1) in a trie node, the number of empty elements is smaller than or equal to half the number of elements in said node or alternatively the number of elements pointing to other trie nodes is greater than a fourth of the number of elements in the node, and (2) the number of addresses in the trie node pointing to other trie nodes is smaller than or equal to half the number of elements in the node, wherein when condition (1) is false the node is halved and when condition (2)is false the node is duplicated.The invention also relates to a structure in which buckets are not employed.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>Field of the Invention<br>
+The present invention generally relates to implementation of an as¬sociative memory, particularly to implementation of an associative memory based on a digital trie structure. The solution in accordance with the invention is intended for use primarily in connection with central memory databases. Suitable applications particularly include databases in which a large number of retrievals are made but in which there are only a small number of insertions or deletions compared to retrievals. Such applications include home location registers (HLR) in mobile communications networks and geographical informa¬tion systems (GIS) used in map applications.<br>
+Background of the Invention<br>
+The prior art unidimensional directory structure termed digital trie (the word "trie" is derived from the English word "retrieval") is the underlying basis of the principle of the present invention. Digital tries can be implemented in two types: bucket tries, and tries having no buckets.<br>
+A digital bucket trie structure is a tree-shaped structure composed of two types of nodes: buckets and trie nodes. A bucket is a data structure con¬taining a number of data units or a number of pointers to data units or a num¬ber of search key/pointer pairs (the number may include only one data unit, one pointer or one key/pointer pair). A trie node, on the other hand, is an array guiding the retrieval, having a size of two by the power of k (2") elements. If an element in a trie node is in use, it refers either to a trie node at the next level in the directory tree or to a bucket. In other cases, the element is free (empty).<br>
+Search in the database proceeds by examining the search key (which in the case of a subscriber database in a mobile telephone network or a telephone exchange, for instance, is typically the binary numeral correspond¬ing to the telephone number of the subscriber) k bits at a time. The bits to be searched are selected in such a way that at the root level of the structure (in the first trie node), k leftmost bits are searched; at the second level of the structure, k bits next to the leftmost bits are searched, etc. The bits to be searched are interpreted as an unsigned binary integer that is employed di¬rectly to index the element array contained in the trie node, the index indicating a given element in the array. If the element indicated by the index is free, the<br><br>
+search will terminate as unsuccessful. If the element refers to a trie node at the next level, k next bits extracted from the search key are searched at that level in the manner described above. As a result of comparison, the routine branches off in the trie node either to a trie node at the next level or to a bucket. If the element refers to a bucket containing a key, the key stored therein is compared with the search key. The entire search key is thus com¬pared only after the search has encountered a bucket. Where the keys are equal, the search is successful, and the desired data unit is obtained at the storage address indicated by the pointer of the bucket. Where the keys differ, the search terminates as unsuccessful.<br>
+A bucketless trie structure has no buckets, but reference to a data unit is effected from a trie node at the lowest level of a tree-shaped hierarchy, called a leaf node. Unlike buckets, the leaf nodes in a bucketless structure cannot contain data units but only pointers to data units. Also a bucket struc¬ture has leaf nodes, and hence trie nodes containing at least one pointer to a bucket (bucket structure) or to a data unit (bucketless structure) are leaf nodes. The other nodes in the trie are internal nodes. Trie nodes may thus be either internal nodes or leaf nodes. By means of buckets, the need for reor¬ganizing the directory structure can be postponed, as a large number of point¬ers/data units can be accommodated in the buckets until a time when the need for reorganization arises.<br>
+The solution in accordance with the invention can be applied to a bucket structure as well as a bucketless structure. In the following, bucket structures will nevertheless be used as examples.<br>
+Figure 1 illustrates an example of a digital trie structure in which the key has a length of 4 bits and k=2, and thus each trie node has 2M elements, and two bits extracted from the key are searched at each level. Buckets are denoted with references A, B, C, D...H...M, N, O and P. Thus a bucket is a node that does not point to a lower level in the tree. Trie nodes are denoted with references IN1...IN5 and elements in the trie node with reference NE in Figure 1.<br>
+In the exemplary case of Figure 1, the search keys for the buckets<br>
+shown are as follows: A=0000, B=0001, C=0010	H=0111,... and P=1111.<br>
+In this case, a pointer is stored in each bucket to that storage location in the database SD at which the actual data, e.g. the telephone number of the perti¬nent subscriber and other information relating to that subscriber, is to be found.<br><br>
+The actual subscriber data may be stored in the database for instance as a sequential file of the type shown in the figure. The search is performed on the basis of the search key of record H, for example, by first extracting from the search key the two leftmost bits (01) and interpreting them, which delivers the second element of node IN1, containing a pointer to node INS at the next level. At this level, the two next bits (11) are extracted from the search key, thus yielding the fourth element of that node, pointing to record H.<br>
+Instead of a pointer, a bucket may contain (besides a search key) an actual data file (also called by the more generic term data unit). Thus for ex¬ample the data relating to subscriber A (Figure 1) may be located in bucket A, the data relating to subscriber B in bucket B, etc. Thus in the first embodiment of an associative memory, a key-pointer pair is stored in the bucket, and in the second embodiment a key and actual data are stored, even though the key is not indispensable.<br>
+The search key may also be multidimensional. In other words, it may comprise a number of attributes (for example the family name and one or more forenames of a subscriber). Such a multidimensional trie structure is disclosed in international application No. PCT/FI95/00319 (published under number WO 95/34155). In said structure, address computation is performed in such a way that a given predetermined number of bits at a time is selected from each dimension independently of the other dimensions. Hence, a fixed limit inde¬pendent of the other dimensions is set for each dimension in any individual node of the trie structure, by predetermining the number of search key bits to be searched in each dimension. With such a structure, the need for memory circuit requirement can be curbed when the distribution of the values of the search keys is known in advance, in which case the structure can be imple¬mented in a static form.<br>
+Often, however, the situation is such that the distribution of the search key values is not known in advance. In such a case, the structure dis¬closed in the above patent application will not give an opfimum result in view of storage space occupancy, as the number of bits to be searched in each di¬mension is a predetermined constant.<br>
+If the possibility of reorganizing the structure in accordance with the current key distribufion to be optimal in terms of efficiency and storage space occupancy is desired, the size of the nodes must vary dynamically as the key distribution changes. When the key distribufion is uniform, the node size may<br><br>
+be increased to make the structure flatter. On the other hand, with non-uniform key distributions in connection with which storage space occupancy will pres¬ent a problem in memory structures employing dynamic node size, the node size can be maintained small, which will enable locally a more uniform key distribution and thereby smaller storage space occupancy.<br>
+With dynamic changing of node size, however, a problem will be presented by the fact how the structure of the memory is to be maintained to optimize the memory efficiency (speed) and storage space requirement in accordance with the current key distribution.<br>
+Summary of the Invention<br>
+It is an objective of the present invention to provide a solution to the above problem and to provide a method wherewith the required memory space can be maintained as small as possible when the distribution of the search key values is not known in advance, and wherewith the memory opera¬tions and memory management can at the same time be maintained as effi¬cient as possible.<br>
+This objective is achieved with solutions defined in the independent claims. The first of these discloses a structure employing buckets and the second a structure not employing buckets.<br>
+The idea of the invention is first of all to use in address computation the above-stated principle, in accordance with which the number of bits searched in the nodes (node size) is changed dynamically, and thus the tree-shaped structure is changed in accordance with the current key distribution. Additionertly, the idea is to incorporate into such a structure maintenance of trie node size (or internal node size in a bucketless case) to be implemented on certain logical conditions, and this is mainly effected by maintaining the fill rates of the trie nodes (internal nodes) and the number of pointers pointing to other trie nodes (internal nodes) at an optimum level. On account of the main¬tenance, the memory structure of the invention is automatically adapted to the current key distribution so that the above objects are achieved.<br>
+The solution in accordance with the invention also ensures effective performance of set operations, as the structure is an order-preserving digital trie.<br><br>
+Brief Description of the Drawings<br>
+In the following the invention and its preferred ennbodiments will be described in closer detail with reference to examples in accordance with the ^companying drawings, in which<br>
+Figure 1 illustrates the use of a unidimensional digital trie structure in the maintenance of subscriber data in a telephone exchange,<br>
+Figure 2 shows a multidimensional trie structure,<br>
+Figure 3 shows a memory structure in accordance with the invention.<br>
+Figure 4 illustrates implementation of address computation in the memory of the invention.<br>
+Figure 5 illustrates the structure of a trie node of the memory.<br>
+Figures 6a and 6b illustrate halving of a trie node.<br>
+Figures 7a...7c illustrate duplication of a trie node performed as a result of insertion.<br>
+Figures 8a... 8c show another example of duplication of a trie node.<br>
+Figures 9a and 9b illustrate the placing of elements in the duplication of a node.<br>
+Figures 10a and 10b show the principle of forming a compressed node.<br>
+Figures 11a and lib show an example of the maintenance of the memory structure.<br>
+Figure 12 illustrates the structure of a compressed node employed in the memory.<br>
+Figure 13a illustrates the limitation posed by the word length em¬ployed on combining the nodes,<br>
+Figure 13b shows the structure of a collecting node to be formed from the node chain of Figure 13a, and<br>
+Figure 14 shows the memory arrangement in accordance with the invention on block diagram level.<br>
+Detailed Description of the Invention<br>
+As stated previously, in the present invention the trie structure has a multidimensional (generally n-dimensional) implementation. Such a multidi¬mensional structure is otherwise fully similar to the unidimensional structure described at the beginning, but the element array contained in the trie node is multidimensional. Figure 2 exemplifies a two-dimensional 2^*2^ structure, in<br><br>
+which one dimension in the element array comprises four elements and the other dimension two elements. Buckets pointed to from the elements in the trie node are indicated with circles in the figure.<br>
+Address computation in the multidimensional case is performed on the same principle as in the unidimensional case. The fundamental difference, however, resides in that instead of a single element array index, an index is calculated for each dimension in the element array (n indices). Each dimension thus has a search key space of its own {0, 1,..., 2"""-1}(V| is the length of the<br>
+search key in bits in each dimension and i € {1,...n}).<br>
+The size of the trie node in the direction of each dimension is 2^"^<br>
+elements, and the total number of elements S in the trie node is also a power of two:<br><br>
+All elements in a trie node having n dimensions can thus be pointed to by n integers (n&gt;2), each of which may have a value in the range {0,1...2""-<br>
+1}. Thus the predetermined fixed parameter is the total length of the search key in each dimension. If for example one dimension of the search key has 256 attributes (such as first names) at most, the total length of the search key is 8 bits.<br>
+Figure 3 shows an example of a node N10 used in the directory structure of the memory in accordance with the invention, employing a three-dimensional search key. In the direction of the first dimension (x), the trie node has 2^=4 elements, in the direction of the second dimension (y) 2^=2 elements, and in the direction of the third dimension (z) 2^=8 elements, which gives a total of 2^=64 elements in the trie node, numbered 0...63.<br>
+Since the memory space in practical hardware implementations (for example computer equipment) is unidimensional, the multidimensional array is linearized, i.e. converted to be unidirectional, in the address computation op¬eration (that is, in proceeding in the directory tree). The linearization is an arithmetic operation that can be performed on arrays of all sizes. Hence, it is ir¬relevant whether the trie nodes or their element arrays are considered to be unidimensional or multidimensional, as multidimensional arrays are linearized in any case to be unidimensional.<br>
+In linearization, the elements in the array are numbered starting from zero (as shown in Figure 3), the number of the last element being one less<br><br>
+than the product of the sizes of all dimensions. The number of an element is the sum of the products of each coordinate (for example in the three-dimensional case, the x, y and z coordinates) and the sizes of the dimensions preceding it. The number thus computed is employed directly to index the unidimensional array.<br>
+In the case of the trie node shown in Figure 3, the element number VAn is calculated in accordance with the above with the formula:<br><br>
+where xe{0,1,2,3}, y€{0,1} and ZG{0, 1,2,3,4,5,6,7}. Thus for example for ele¬ment 54 we obtain from the coordinates thereof (2,1,6): 2+1x4+6x4x2= 2+4+48=54.<br>
+When the (n-dimensioned) element array of a trie node of an n-dimensional trie structure is linearized, in accordance with the above the size of each dimension is 2^", where k| is the number of bits to be searched at a time<br>
+in the dimension concerned. If a coordinate in accordance with the dimension is denoted by reference a-^ (JG{0,1,2...n}), the linearization can be written out as<br><br>
+The linearization can be carried out by performing a multiplication in accordance with formula (3); yet it is expedient to perform the linearization by forming from the search key bits a bit string by known methods, the corre¬sponding numeral indicating the element whose content provides the basis for proceeding in the directory tree. Such a linearization method is termed bit interleaving. Bit interleaving is a more efficient (rapid) method than the multi¬plication in accordance with formula (3), since when bit interleaving is used multiplications will be converted to additions and bit shifts, which are faster to perform.<br>
+The most common way to implement bit interleaving is the "z order¬ing". Another possible bit interleaving method is the line ordering. In the pres¬ent invention, it is advantageous to use line ordering, as it affords the most efficient address computation in memory searches, but any known bit inter¬leaving method may be employed, as long as the same method is employed in all nodes of the structure.<br>
+Figure 4 illustrates an example of address computation performed in the trie structure in accordance with the invention. In the figure, it has still been<br><br>
+presumed that the space is three-dimensional (dimensions x, y and z). It has further been presumed that search key a1 in the direction of dimension x is a^ = 011011, search key a1 in the direction of dimension y is ay = 110100 and search key a2 in the direction of dimension z is a1 = 101010. The search keys are listed one below another in the figure.<br>
+In the nodes of the trie structure, the indexing bits of the uni-dimensional element array are shown in frames denoted by continuous lines. These frames illustrate how a global search key is divided into local search keys (element array indices), each being used in one node of the trie structure. All frames denoted by continuous lines relate to the first bit interleaving method, i.e. the z ordering. The nodes in the structure are denoted by refer¬ences N1...N7 in the order of progress, in the first node (N1) (at the upper¬most level) only a single bit is employed, which is the leftmost bit in the search key of dimension x (which is a logical zero). Thereafter the routine proceeds in the direction of the arrow to the next node (N2), in which the number of bits forming the local search key is two. These are the leftmost bit in search key a2 and the leftmost bit in search key a2. In z ordering, the order of the bits is al¬ways as presently shown, in other words, the first bit of the first dimension is first extracted, thereafter the first bit of the second dimension, thereafter the first bit of the third dimension, etc. After the first bit of the last dimension, the second bits are extracted from the different dimensions, starting from the first dimension. In this way, the following node-specific element array indices are obtained: 0 (node N1), 11 (node N2), 110 (node N3), 10 (node N4), 1010 (node N5), 10 (node N6) and 1100 (node N7).<br>
+Alternatively, some other known bit interleaving method, such as line ordering, may be employed in the memory. In Figure 4, the frames denoted by broken lines and the arrows pertaining to them illustrate the forming of an element array index in node N5, the memory employing bit interleaving with line ordering. In the example of the figure, it has further been presumed that progress has been made in nodes N1...N4 so far that the first bit searched in node N5 is the third from the left in the search key in dimension z. In line or¬dering, all bits of each dimension are extracted at a time.<br>
+When line ordering is employed, the minimum number of bits to be extracted from the search keys of the different dimensions is first calculated in the node. This is obtained by dividing the number of bits searched in the node by the number of the dimensions and by truncating the obtained result to the<br><br>
+closest integer. In this exemplary case, the number of bits to be searched in node N5 is four and the number of dimensions three, which gives a minimum number of one (that is, at least one bit must be extracted from the search key of each dimension). Thereafter it is still to be calculated how many additional bits must be extracted from the search keys of the different dimensions. The number of additional bits A is obtained from the formula A= k mod n, where k is the number of bits to be searched iri the node and n is the number of dimen¬sions. In this exemplary case, the result is A= 4 mod 3 = 1. The result 1 thus means that one additional bit is to be extracted. Extraction of additional bits is always started from the first searched dimension. In this exemplary case, one additional bit is thus extracted from the search key of dimension z. If the result had been two, one additional bit from the search key of dimension z and one additional bit from the search key of dimension x would have been extracted.<br>
+Hence, in this exemplary case one bit from the search key of each dimension and additionally one bit from the search key of dimension z is ex¬tracted. Since in employing line ordering all bits of a dimension are extracted at a time, all bits (10) to be taken from dimension z are extracted first, thereafter all bits (0) to be taken from the search key of dimension x, and lastly all bits (1) to be extracted from the search key of dimension y. Thus, when line ordering is employed, the bit string 1001 is obtained as the element array index of node N5; this bit string is depicted in the lower portion of Figure 4.<br>
+Since the address computation is performed by using bit interleaving known per se, the address computation will not be described in further detail.<br>
+Since the order of bits in the local search key (element array index) to be formed in each node is constant, only the number of bits to be used must be known in the bit string formation performed in each node. This data is stored in each node. In addition, only an element array must be present in each ordinary trie node. Figure 5 illustrates the structure of an ordinary trie node. In its minimum configuration, the node thus comprises only two parts: a field indicating the number of bits to be searched in the node (reference 51) and an element array (reference 52), the number of elements in the array corresponding to a power of two. For proceeding in the directory tree, in addi¬tion to the number of bits to be searched the type of each node must be known. This data can be stored in the directory structure for example in each node or in the pointer of the parent of the node. By means of the two "extra" bits of the pointer (a and b. Figure 5), information can be encoded in the<br><br>
+pointer on whether a zero pointer (an empty element) is concerned or whether the pointer points to an ordinary trie node, a bucket or a compressed trie node (which will be described hereinbelow). The encoding may be for example of the type shown in the figure.<br>
+In the case of a bucketless structure, information on whether the pointer points to an uncompressed node, a compressed node or a data unit is stored.<br>
+The number of search key bits to be employed in each node will remain constant if there are no changes in the search keys. Insertions and deletions to be made in the database may nevertheless change the key distri¬bution so that the number of bits to be searched in the node must be changed in order for the memory efficiency and storage space occupancy to remain as good as possible. With uniform key distributions, the number of bits to be searched in the node can be increased, and thus a smaller number of hash array indexings (the element array in the trie node serves as a hash array) than before is needed for an average retrieval. Hence, the effectiveness of memory searches is enhanced, since the depth of the tree-shaped structure is diminished as the node size increases. On the other hand, with non-uniform key distributions in connection with which storage space occupancy will pres¬ent a problem in memory structures employing dynamic node size, the number of bits to be searched in the node can be maintained small to provide locally more uniform key distributions and thereby smaller storage space occupancy.<br>
+As stated previously, the problem with such a dynamically changing data structure will be how the memory structure is to be maintained to provide optimum efficiency and storage space occupancy. For this reason, specific logical conditions are set on the nodes in the structure; it is attempted to con¬stantly maintain these conditions by changing the node sizes. These condi¬tions will be described more closely in the following by still using as an exam¬ple a structure employing buckets. The maintenance of the structure is similar if there are no buckets. In such a case, the equivalent of a bucket is a data unit (to which the leaf node in the bucketless structure points).<br>
+The first condition relates to the halving of the node. In accordance with this halving condition, the number of empty elements in the trie node must be smaller than or equal to half the number of elements in said node OR the number of elements pointing to trie nodes must be greater than a fourth of the number of elements in the node (the logical OR condition between the clauses<br><br>
+has been indicated in upper case). If the situation changes as a result of dele¬tions made in the database (underflow of node) so that the number of empty elements in the trie node is not smaller than or equal to half the number of elements in said node and neither is the number of elements pointing to trie nodes greater than a fourth of the number of elements in the node, the node size is reduced so that the condition is again satisfied. The reduction is carried out as halving of the node.<br>
+The above-described halving condition supports data storage in favour of deletions so that the storage space occupancy cannot increase as a result of deletions.<br>
+In order that the storing of data may be managed as efficiently as possible also in view of insertions, duplication of trie nodes is also carried out in the memory in accordance with a duplication condition. In accordance with the duplication condition, the number of pointers pointing from the trie node to other trie nodes must be smaller than or equal to half the number of elements in the node. If the situation changes as a result of an insertion made in the database so that this condition is no longer satisfied, the size of the node is duplicated.<br>
+Hence, in accordance with the invention halving and duplication of trie nodes is continually performed in the structure when the structure does not meet the above-stated conditions. For example for an array of 16 elements, these conditions mean that the number of empty elements may be eight at most. If this is not the case, the trie node must have more than four pointers to other trie nodes to avoid halving of the node. If, however, there are more than eight pointers to other trie nodes, the size of the node is duplicated. In the following, the maintenance of the structure will be described with reference to examples relating to bit Interleaving with line ordering.<br>
+As stated previously, halving of the trie node is used to ensure that the storage space required by the structure will not increase under any con¬ditions. Figure 6a illustrates a situation in which an array of size eight contains three pointers to trie nodes (denoted by continuous arrows) and one pointer to a bucket (denoted by a broken arrow). If the bucket pointer is removed and the node is halved as a result, the situation is as shown at the bottom of Figure 6a, in other words, the storage space required has increased by two elements. In accordance with the invention, however, halving is not performed in the situa¬tion of Figure 6a yet, since the number of trie node pointers is greater than a<br><br>
+fourth of the size of the node. Instead, halving is performed only in the situation shown at the top of Figure 6b, in which the number of trie node pointers is no longer greater than a fourth of the node size. When halving is carried out, the situation shown at the bottom of Figure 6b is reached, in which the required storage space is the same as prior to halving.<br>
+The uppermost node resulting from the halving always has the size of half the original node. Two-element nodes will always be created beneath this node, their number being a fourth of the size of the original node at most. The number of the nodes created at the lower level is dependent on how the pointers contained in the original node were distributed within the node. Halv¬ing will additionally produce one new level locally in the structure.<br>
+The maintenance of the duplicating condition of a trie node is illus¬trated in Figures 7a...7c. It is presumed in the example of the figure that each bucket contains only one record or pointer to a record. Figure 7a shows a (global or local) initial situation in which the structure comprises buckets L1...L3. When one key/data unit (bucket L4) is added to the structure, the result is the situation of Figure 7b. This situation is achieved because the di¬rectory structure must be added in depth (by known methods) until a trie node separating keys/data units into different buckets is produced. In such a situa¬tion, the number of trie node pointers in node N72 is equal to the number of elements in the node. In accordance with the above duplication rule, node N72 must therefore be duplicated. When duplication is carried out, a new node N75 of four elements is created, in which the pointers and buckets are placed in the manner shown in Figure 7c. As is apparent from the figures, the storage space required by the new structure has been reduced by two elements from the storage space required by the original structure.<br>
+Duplication cannot be performed until the trie nodes pointed to from the trie node to be duplicated all have a size of two elements. Hence, before a trie node is duplicated all its child nodes must be made to have a size of two elements. Such a process has been illustrated in Figure 8a...8c. Figure 8a shows an initial situation in which the uppermost node N80 of size two has two pointers to trie nodes, and thus the node is to be duplicated under the above rule. All child nodes of the node to be duplicated are first made two-element child nodes, and after the duplication the two-element child nodes are placed in the duplicated node in the correct manner. This will give first the intermedi¬ate state of Figure 8b, in which the child nodes of the uppermost node have a<br><br>
+size of two elements. After the duplication, the elements are placed in the duplicatednode, thus giving the situation of Figure 8c, in which the size of the uppermost node is duplicated.<br>
+Figures 9a and 9b illustrate the placing of elements in the duplication of a node, that is, the operation performed on the child of the node to be dupli¬cated to make it a two-element node. In the above, this operation was per¬formed on node N81 in Figure 8a. The figure shows bits corresponding to each element in the direction of both dimensions (x and y) and additionally the decimal number corresponding to the bits is shown within the node. When node N91 shown in Figure 9a is divided, the division is performed by halving the array with respect to the dimension that was last duplicated, which in this exemplary case is the x axis. Thus, the division is performed along the vertical line shown in Figure 9a. In the trie structure created from the node array of Figure 9a, the first bit to be searched is an x bit, and hence the new local root will be node N92 having the size of two elements (Figure 9b). Since the next bit to be searched is a y bit, two nodes of 16 elements are obtained under node N92, in which the element numbers of the original array have been used to illustrate how the elem^s of the original array are placed in the new struc¬ture. Each element is located in the place indicated by the corresponding bit combination.<br>
+By means of the above-described duplication of trie nodes, the num¬ber of directory levels can be minimized so that the total memory space re¬quired in the structure will not increase.<br>
+The duplication condition is known as such from the article Analyti &amp; Pramanik: Fast Search in Main Memory Databases, ACM SIGMOD Record, 21 (2):215-224, 1992. However, the method disclosed in the above article is not order-preserving, as the address computation method employed in the memory in accordance with the present invention.<br>
+To further minimize storage space occupancy, it is advantageous in certain cases to form compressed nodes from the nodes halved and dupli¬cated in the above manner. If an ordinary trie node has only one child, this means that only one path "downward" in the tree passes through said trie node. To^ptimize memory space occupancy, a trie node containing only a single pointer (path downward) should preferably be replaced with a com¬pressed node in which the number of bits searched in said path and the com¬puted array index value are disclosed. Since it is advantageous from the point<br><br>
+of view of storage space occupancy to form compressed nodes from single-child trie nodes throughout the entire memory structure, compression also means that at least two child nodes are always maintained for ordinary (uncompressed) trie nodes in the memory structure, that is, an individual (ordinary) trie node has pointers to at least two different lower-level nodes (child nodes). A compressed node replaces one or more successive internal nodes, each of which has one child, and hence the above-stated one child cannot be a bucket (or a leaf in a structure that has no buckets). Hence, a child node must be an ordinary trie node in order for compression to be possi¬ble. From the point of view of optimizing storage space, it is thus advantage¬ous to always maintain at least two child nodes for trie nodes preceding a bucket as well (i.e., if the bucket is preceded by a trie node having a size of two elements, said trie node always has two child nodes).<br>
+The memory in accordance with the invention thus comprises two types of trie nodes: ordinary trie nodes containing an element array in accor¬dance with Figure 5, and compressed nodes that will be described in the fol¬lowing.<br>
+Figures 10a and 10b illustrate the principle of forming a compressed node. Figure 10a shows a trie structure comprising six nodes, having only one path for the five uppermost nodes. This trie structure of five nodes can be replaced with one element array shown in Figure 10b. Since the structure has a single path for these nodes, only one element of the array is in use, which in this exemplary case is element 18 circled in the figure (18=01010 when the bits are taken in line order, i.e. the x bits first and thereafter the y bits). Thus, for the five uppermost nodes the trie structure can be replaced with a com¬pressed node in which the number of bits to be searched (5) and the value of the array index (18) are stored.<br>
+Figures 11a and 11b show a local maintenance example when data units and associated keys are deleted from a database. Figure 11a shows an initial situation in which the memory structure comprises trie nodes N111 ...N113 and buckets L2...L4. Thereafter bucket L2 and the pointer/record contained therein is deleted from the memory, as a result of which nodes N111 and N112 can be replaced with a compressed node CN, in which the index of the pointer contained in the node and the number of bits searched in the path replaced by the compressed node are disclosed. Hence, the compressed node is in principle similar to an ordinary trie node, but instead of the entire<br><br>
+large-size element array with only one pointer being stored, the index of the pointer concerned and the number of bits searched in the path are stored. This creates the compressed node CN in accordance with Figure 11b, in which the number of bits searched in said path (3) and the index corresponding to said pointer (101=5 when bit interleaving with line ordering is used) are disclosed. A compressed node thus has a virtual array replacing the information contained in the one or more node arrays existing in the path. If the compressed node replaces several ordinary trie nodes, the number of searched bits indicated in the compressed node is equal to the sum of the numbers of bits searched in the replaced nodes.<br>
+Figure 12 illustrates the structure of a compressed node. The mini¬mum configuration of the node comprises 3 parts: field 120 indicating the number of searched bits, field 121 storing the value of the array index, and field 122 storing a pointer to a child node. The compressed node is in need of this data in order for the search to proceed with the correct value at the com¬pressed node as well, and in order for the restructuring of the node to be pos¬sible in connection with changes in the memory structure. (Without information on the number of searched bits, the array index value cannot be calculated from the search key, and on the other hand without the array index value the calculated value could not be compared to the value stored in the node.)<br>
+If a collision occurs in the compressed node in connection with an insertion, i.e. the compressed node will have a new pointer, it is studied which bit in order distinguishes the index of the initial pointer and the index of the new pointer. Accordingly, a structure replacing the initial compressed node is created, in which the new compressed node comprises the number of index bits insofar as there are common bits. In addition, one or more trie nodes are created in the structure at points corresponding to those bits in which the indi¬ces differ from one another.<br>
+If the compressed node is preceded by one or more compressed nodes or a chain of trie nodes providing only a single path, it is advantageous in view of storage space requirement and memory efficiency to further com¬bine said nodes. Moreover, in view of memory efficiency it is advantageous to carry out the combination of nodes in such a way that only in the compressed node that is the last (lowest) in the chain the number of searched bits is smaller than the word length in the computer used. In other words, nodes are combined in such a way that the number of searched bits will be as large as<br><br>
+possible in each compressed node. For example, three successive com¬pressed nodes in which the numbers of searched bits are 5, 10 and 15 can be combined into one compressed node in which the number of searched bits is 30. Likewise, for example three successive compressed nodes (or three suc¬cessive ordinary trie nodes that provide only one path) in which the numbers of searched bits are 10, 10 and 15 can be combined into two compressed nodes in which the numbers of searched bits are 32 and 3, with the word length em¬ployed being 32. Hence, it is attempted to obtain in as many compressed nodes as possible a number of searched bits corresponding to the word length of the computer, and the possible "superfluous" bits are left for the com¬pressed node that is lowest in the hierarchy.<br>
+However, compressed nodes cannot be combined so as to make the number of bits searched in one node higher than the word length in the com¬puter employed. Particularly in multidimensional cases (n&gt;3), it is common that there are so many successive nodes containing one child that the path cannot be represented by a single compressed node. Therefore, the search path or part thereof is replaced with a chain made up by several successive com¬pressed nodes, in which the number of searched bits is the same as the word bit number, for example 32 in the Intel architecture, except for the last node where the number of bits is smaller than or equal to the word bit number.<br>
+Such a situation is depicted in Figure 13a, showing three successive compressed nodes CN1...CN3. The numbers of bits searched in the nodes are denoted by references b, b" and b" and the values of the array indices contained in the nodes with i, i" and i", respectively. In the two uppermost nodes, the number of searched bits has a maximum value (providing that a 32-bit computer architecture is used).<br>
+It is advantageous to form from a chain of several successive com¬pressed nodes resulting from limited word length a single node collecting such compressed nodes. This collecting node is formed in such a way that the pointer of the collecting node is set to point to the child of the compressed node that is last in said chain, the sum of the numbers of bits searched in the compressed nodes in the chain is set as the number of bits B searched in the collecting node, and the array indices (i.e. search words) produced by bit in¬terleaving are inserted in the list or table T of the node in the order in which they appear in the successive compressed nodes. Thus, the collecting node will be a node CN4 as shown in Figure 13b, comprising three parts: field 130<br><br>
+containing a pointer to said lower-level node, field 131 containing the number of searched bits B (the above sum), and list or table T containing in succession the array indices produced by bit interleaving. This third part thus has a varying size. In the example of the figure, the number of indices is three, since the example of Figure 13a comprises three successive nodes.<br>
+The number of elements (i.e., indices) NE in table T is obtained from the number of searched bits B as follows:<br><br>
+where L J is a floor function truncating decimals from the number, W is the word length used, e.g. 32, and MOD refers to modulo arithmetic. Thus, the number of indices need not be stored in the collecting node as separate data, but it can be found on the basis of the number of searched bits.<br>
+The number of bits B" needed to calculate the last index in the table (denoted by reference b" in the figure), which does not necessarily equal the word length, is obtained as follows:<br><br>
+By forming a collecting node from several successive compressed nodes, the number of memory references (pointers) can be reduced further. In present-day computer architecture, comprising caches of various levels, mem¬ory references require considerable computation time, and hence the compu¬tation time will be diminished. At the same time, the need for storage space for pointers is eliminated.<br>
+By means of compressed nodes, the storage requirement can be effectively minimized particularly in conjunction with non-uniform key distribu¬tions, since by means of compression the depth of the structure can be arbi¬trarily increased on a local basis without increased storage space requirement.<br>
+It should further be noted that each of the above examples illustrates only the relevant operations in each case. For example, Figures 7a and 7b depicting duplication do not go into node compression yet (even though on the basis of the above the uppermost node in Figure 7a would become a com¬pressed node).<br>
+As was already indirectly stated above, in the memory in accordance with the invention a bucket cannot be preceded by a compressed node, but<br><br>
+the parent node of a bucket is always either an ordinary trie node or an empty element. Hence, a compressed node cannot point to a bucket, but it always points either to another compressed node or to an ordinary trie node. An empty element means that if the total number of records is smaller that the number of pointers/records that the bucket can accommodate, a tree-shaped structure is not needed yet, but one bucket will suffice in the structure (in which case said node is conceptually preceded by an empty element). It is advanta¬geous to proceed in this way at the initial phase of starting up the memory. It is thus worth-while starting building up the tree-shaped structure only when this is necessary.<br>
+The conditions described above can be maintained either continually throughout the entire structure (globally) or only locally in accordance with at which point of the structure insertions or deletions are currently made.<br>
+Disregarding the fact that insertions may trigger duplication of nodes or deletions may trigger halving and compression, the retrievals, insertions and deletions are performed in a manner known per se. In this respect, reference is made e.g. to the international application mentioned at the beginning, provid¬ing a more detailed description of collision situations in association with inser¬tions, for example. Instead of conventional deletion updating, the memory may also employ functional updating implemented by known methods by copying the path from root to buckets.<br>
+Figure 14 shows a memory in accordance with the invention on block diagram level. Each dimension has a dedicated input register, and hence there is a total of n input registers. The search key of each dimension is stored in these input registers, denoted by references R1...Rn, each key in a register of its own. The input registers are connected to a register TR in which the above-described search word is formed in accordance with the bit interleaving method employed. The register tR is connected via adder S to the address input of memory MEM. The output of the memory in turn is connected to ad¬dress register AR the output of which in turn is connected to adder S. Initially the bits selected from each register are read into the common register TR in the correct order. The initial address of the first trie node is first stored in the address register AR, and the address obtained as an offset address from register TR is added to the initial address in adder S. The resulting address is supplied to the address input of the memory MEM, and the data output of the memory provides the initial address of the next trie node, the address being<br><br>
+written into the address register AR over the previous address stored therein. Thereafter the next selected bits are again loaded from the input registers into the common register TR in the correct order, and the array address thus ob¬tained is added to the initial address of the relevant array (i.e., trie node), ob¬tained from the address register AR. This address is again supplied to the address input of the memory MEM, the data output of the memory thereafter providing the initial address of the next node. The above-described procedure is repeated until the desired point has been accessed and recordal can be performed or the desired record read.<br>
+Control logic CL attends to maintenance of the memory structure and to the correct number of bits being extracted from the registers in each node.<br>
+The rapidity of the address computation can be influenced by the type of hardware configuration chosen. Since progress is by way of the above-stated bit manipulations, address computation can be accelerated by shifting from use of one processor to a multiprocessor environment in which parallel processing is carried out. An alternative implementation to the multiprocessor environment is an ASIC circuit.<br>
+Even though the invention has been described in the above with reference to examples in accordance with the accompanying drawings, it is obvious that the invention is not to be so restricted, but it can be modified within the scope of the inventive idea disclosed in the appended claims. The structure may also be implemented for keys of variable length. Also, the ad¬dress computation may continue in the bucket, providing that unsearched bits remain. The definition of a bucket given at the beginning is thus to be broad¬ened to read that a bucket is a data structure that may also contain another trie structure. Hence, several directory structures in accordance with the pres¬ent invention can be linked in succession in such a way that another directory structure (that is, another trie structure) is stored in a bucket, or a pointer con¬tained in a bucket or a leaf points to another directory structure. Reference from a bucket or a leaf is made directly to the root node of the next directory structure. Generally, it may be stated that a bucket contains at least one ele¬ment so that the type of an individual element is selected from a group com¬prising a data unit, a pointer to a stored data unit, a pointer to another directory structure and another directory structure. The detailed implementation of buckets is dependent on the application. In many cases, all elements in buck¬ets may be of the same type, being e.g. either a data unit or a pointer to a data<br><br>
+unit. On the other hand, for instance in an application in which character strings are stored in the memory the bucket may contain element pairs in such a way that all pairs in the bucket are either pointer to data unit/pointer to di¬rectory structure pairs or data unit/pointer to a directory structure pairs or data unit/directory structure pairs. In such a case, for example, the prefix of the character string may be stored in the data unit and the search may be contin¬ued from the directory structure that is the pair of the data unit.<br><br><br>
+WE CLAIM :<br>
+1. A method for implementing a memory, in which memory data is stored as data units for each of which a dedicated storage space is assigned in the memory, in accordance with which method<br>
+the memory is implemented as a directory structure comprising a tree-shaped hierarchy having nodes at several different levels, wherein an individual node is (i) a trie node comprising an array wherein an individual element may contain the address of a lower node in the tree-shaped hierarchy and wherein an individual element may also be empty, the number of elements in the array corresponding to a power of two, or (ii) a bucket containing at least one element in such a way that the type of an individual element in the bucket is selected from a group including a data unit, a pointer to a stored data unit, a pointer to another directory structure and another directory structure;<br>
+address computation performed in the directory structure comprises the steps of :<br>
+(a)	selecting in the node at the uppermost level of the tree-shaped hierarchy a node-specific number of bits from the bit string formed by the search keys employed, forming from the selected bits a search word with which the address of the next node is sought in the node, and proceeding to said node,<br>
+(b)	selecting from the unselected bits in the bit string formed by the search keys employed a node-specific number of bits and forming from the selected bits a search word with which the address of a further<br>
+new node at a lower level is sought from the array of the node that has been accessed,<br><br>
+repeating step (b) until an empty element is encountered or until the   address   of the  new  node   at  a lower level is the address of a bucket, characterized in that trie nodes are maintained in the directory structure in such a way that<br>
+(c)	in a trie node, the number of empty elements is smaller than or equal to half the number of elements in said node or alternatively the number of elements pointing to other trie nodes is greater than a fourth of the number of elements in the node, and<br>
+(d)	the number of addresses in the trie node pointing to other trie nodes is smaller than or equal to half the number of elements in the node, wherein when condition (c) is false the node is halved and when condition (d) is false the node is duplicated.<br><br>
+2.	The method as claimed in claim 1, wherein in at least part of the directory structure, sets of successive trie nodes are replaced with compressed nodes in such a way that an individual set made up by successive trie nodes, from each of which there is only one address to a trie node at a lower level, is replaced with a compressed node (CN) storing an address to the node that the lowest node in the set to be replaced points to, information on the value of the search word by means of which said address is found, and information on the total number of bits from which search words are formed in the set to be replaced.<br>
+3.	The method as claimed in claim 2, wherein replacement is carried out in the entire directory structure so that all said sets are replaced with compressed nodes.<br>
+4.	The method as claimed in claim 2, wherein replacement is also carried out on a set having only one trie node, the total number of bits to be<br><br>
+stored corresponding to the number of bits from which a search word is formed in said trie node.<br>
+The method as claimed in claim 2, wherein several successive compressed nodes are formed in the directory structure in such a way that at least in the compressed node at the uppermost level a number of search key bits to be searched corresponding to the word length employed is collected.<br>
+The method as claimed in claim 1, wherein several successive compressed nodes are combined into one new compressed node, the number of bits stored in the new node being the sum of the numbers obtained from the nodes to be combined.<br>
+The method as claimed in claim 5, wherein a chain made up by successive compressed nodes wherein the number of bits searched in at least two uppermost nodes corresponds to the word length employed is replaced with one collecting node (CN4) comprising<br>
+an address to the node to which the lowest node in the chain contains an address,<br>
+the sum of the numbers of searched bits obtained from the nodes in the chain, and<br>
+the search word values contained in the chain nodes in sequence.<br>
+The method as claimed in claim 3, wherein in all uncompressed trie nodes of the memory, at least two addresses to a lower-level node are maintained.<br><br>
+The method as claimed in claim 2, wherein the directory structure for each node information on the fact whether an uncompressed trie node, a compressed trie node or a bucket is concerned.<br>
+The method for implementing a memory, in which memory data is stored as data units for each of which a dedicated storage space is assigned in the memory, in accordance with which method<br>
+the memory is implemented as a directory structure comprising a tree-shaped hierarchy having nodes at several different levels, wherein an individual node is (i) an internal node comprising an array wherein an individual element may contain the address of a lower node in the tree-shaped hierarchy and wherein an individual element may also be empty, the number of elements in the array corresponding to a power of two, or (ii) a leaf containing at least one element the type of which is one from a group including a pointer to a stored data unit and a pointer to another directory structure,<br>
+address computation performed in the directory structure comprises the steps of<br>
+(a)	selecting in the node at the uppermost level of the tree-shaped hierarchy a node-specific number of bits from the bit string formed by the search keys employed, forming from the selected bits a search word with which the address of the next node is sought in the node, and proceeding to said node,<br>
+(b)	selecting from the unselected bits in the bit string formed by the search keys employed a node-specific number of bits and forming from the selected bits a search word with which the address of a further new node at a lower level is sought from the array of the node that has been accessed,<br><br>
+repeating step (b) until an empty element is encountered or until the address of the new node at a lower level is the address of a leaf, characterized in that internal nodes are maintained in the directory structure in such a way that<br>
+(c)	in an internal node, the number of empty elements is smaller than or equal to half the number of elements in said node or alternatively the number of elements pointing to other internal nodes is greater than a fourth of the number of elements in the node, and<br>
+(d)	the number of addresses in the internal node pointing to other internal nodes is smaller than or equal to half the number of elements in the node, wherein when condition (c) is false the node is halved and when condition (d) is false the node is duplicated.<br>
+The method as claimed in claim 10, wherein in at least part of the directory structure, sets of successive internal nodes are replaced with compressed nodes in such a way that an individual set made up by successive internal nodes, from each of which there is only one address to an internal node at a lower level, is replaced with a compressed node (CN) storing an address to the node that the lowest node in the set to be replaced points to, information on the value of the search word by means of which said address is found, and information on the total number of bits from which search words are formed in the set to be replaced.<br>
+The method as claimed in claim 11, wherein replacement is performed in the entire directory structure in such a way that all said sets are replaced with compressed nodes.<br>
+The method as claimed in claim 11, wherein replacement is also carried out on a set comprising only one internal node, the total number of bits to<br><br>
+be stored corresponding to the number of bits from which a search word is formed in said internal node.<br>
+\. The method as claimed in claim 11, wherein several successive compressed nodes are formed in the directory structure in such a way that at least in the compressed node at the uppermost level a number of search key bits to be searched corresponding to the word length employed is collected.<br>
+5. The method as claimed in claim 10, wherein several successive compressed nodes are combined into one new compressed node, the number of bits stored in the new node being the sum of the numbers obtained from the combined nodes.<br>
+). The method as claimed in claim 14, wherein a chain made up by successive compressed nodes wherein the number of bits searched in at least two uppermost nodes corresponds to the word length employed is replaced with one collecting node (CN4) comprising :<br>
+an address to the node to which the lowest node in the chain contains an address,<br>
+the sum of the numbers of searched bits obtained from the nodes in the chain, and<br>
+the search word values contained in the chain nodes in sequence.<br>
+7.     The method as claimed in claim 12, wherein in all uncompressed internal<br>
+nodes of the memory, at least two addresses to a lower-level node are<br>
+maintained. i.     The  method  as  claimed  in  claim   11,  wherein  the  memory  stores<br>
+information on the fact whether the address points to an uncompressed<br>
+node, a compressed node or a data unit.<br><br>
+19.	A memory arrangement, where<br>
+data is stored as data units for each of which a dedicated storage space is assigned in the memory arrangement,<br>
+the memory arrangement is implemented as a directory structure comprising a tree-shaped hierarchy having nodes at several different levels, wherein an individual node can be (i) a trie node comprising an array wherein an individual element may contain the address of a lower node in the tree-shaped hierarchy and wherein an individual element may also be empty, the number of elements in the array corresponding to a power of two, or (ii) a bucket containing at least one element in such a way that the type of an individual element in the bucket is selected from a group including a data unit, a pointer to a stored data unit, a pointer to another directory structure and another directory structure, and<br>
+address computation performed in the directory structure is configured to<br>
+(a)	select in the node at the uppermost level of the tree-shaped hierarchy a node-specific number of bits from the bit string formed by the search keys employed, form from the selected bits a search word with which the address of the next node is sought in the node, and proceed to said node,<br>
+(b)	select from the unselected bits in the bit string formed by the search keys employed a node-specific number of bits and form from the selected bits a search word with which the address of a further new node at a lower level is sought from the array of the node that has been accessed, and<br>
+repeat step (b) until an empty element is encountered or until the address of the new node at a lower level is the address of a bucket,<br>
+characterised in that trie nodes are maintained in the directory structure in such a way that<br>
+(c)	in a trie node, the number of empty elements is smaller than or equal to half the number of elements in said node or alternatively the number of elements pointing to other trie nodes is greater than a fourth of the number of elements in the node, and<br>
+(d)	the number of addresses in the trie node pointing to other trie nodes is smaller than or equal to half the number of elements in the node,<br>
+wherein when condition (c) is false the node is halved and when condition (d) is false the node is duplicated.<br>
+20.	A memory arrangement, where<br>
+data is stored as data units for each of which a dedicated storage space is assigned in the memory arrangement,<br>
+the memory arrangement is implemented as a directory structure comprising a tree-shaped hierarchy having nodes at several different levels, wherein an individual node can be (i) an internal node comprising an array wherein an individual element may contain the address of a lower node in the tree-shaped hierarchy and wherein an individual element may also be empty, the number of elements in the array corresponding to a power of two, or (ii) a leaf containing at least one element the type of which is one from a group including a pointer to a stored data unit and a pointer to another directory structure, and<br><br>
+address computation performed in the directory structure is configured to<br>
+(a)	select in the node at the uppermost level of the tree-shaped hierarchy a node-specific number of bits from the bit string formed by the search keys employed, form from the selected bits a search word with which the address of the next node is sought In the node, and proceed to said node,<br>
+(b)	select from the unselected bits in the bit string formed by the search keys employed a node-specific number of bits and form from the selected bits a search word with which the address of a further new node at a lower level is sought from the array of the node that has been accessed, and<br>
+repeat step (b) until an empty element is encountered or until the-address of the new node at a lower level is the address of a leaf,<br>
+characterized in that internal nodes are maintained in the directory structure in such a way that<br>
+(c)	in an internal node, the number of empty elements is smaller than or<br>
+equal to half the number of elements in said node or alternatively the number<br>
+of elements pointing to other internal nodes is greater than a fourth of the<br>
+number of elements in the node, and<br>
+(d)	the number of addresses in the internal node pointing to other internal<br>
+nodes is smaller than or equal to half the number of elements in the node,<br>
+wherein when condition (c) is false the node is halved and when condition (d) is false the node is duplicated.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGFic3RyYWN0LWR1cGxpY2F0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">523-mas-1998 abstract-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">523-mas-1998 abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGNsYWltcy1kdXBsaWNhdGUucGRm" target="_blank" style="word-wrap:break-word;">523-mas-1998 claims-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">523-mas-1998 claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">523-mas-1998 correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGNvcnJlc3BvbmRlbmNlLXBvLnBkZg==" target="_blank" style="word-wrap:break-word;">523-mas-1998 correspondence-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGRlc2NyaXB0aW9uIChjb21wbGV0ZSktZHVwbGljYXRlLnBkZg==" target="_blank" style="word-wrap:break-word;">523-mas-1998 description (complete)-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">523-mas-1998 description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGRyYXdpbmdzLWR1cGxpY2F0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">523-mas-1998 drawings-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">523-mas-1998 drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGZvcm0tMTkucGRm" target="_blank" style="word-wrap:break-word;">523-mas-1998 form-19.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">523-mas-1998 form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGZvcm0tMjYucGRm" target="_blank" style="word-wrap:break-word;">523-mas-1998 form-26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGZvcm0tNC5wZGY=" target="_blank" style="word-wrap:break-word;">523-mas-1998 form-4.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IGZvcm0tNi5wZGY=" target="_blank" style="word-wrap:break-word;">523-mas-1998 form-6.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTIzLW1hcy0xOTk4IG90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">523-mas-1998 others.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="217279-process-for-preparing-novel-crystalline-form-of-gatifloxacin.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="217281-apparatus-and-method-for-sensing-a-full-level-condition-for-a-large-basket-receptacle-or-the-like.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>217280</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>523/MAS/1998</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>21/2008</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>23-May-2008</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>26-Mar-2008</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>13-Mar-1998</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>NOKIA TELECOMMUNICATIONS OY</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>KEILALAHDENTIE 4, FIN - 02150 ESPOO,</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>TIKKANEN MATTI</td>
+											<td>VIHERLAAKSONRANTA 10 A 1, FIN - 02710 ESPOO,</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>IIVONEN JUKKA-PEKKA</td>
+											<td>WALLININKATU 6 C 72, FIN - 00530 HELSINKI,</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 017/30</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>971065(FI)</td>
+									<td>1997-03-14</td>
+								    <td>Finland</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/217280-method-for-implementing-a-memory by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 11:34:51 GMT -->
+</html>

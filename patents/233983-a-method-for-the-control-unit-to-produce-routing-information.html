@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/233983-a-method-for-the-control-unit-to-produce-routing-information by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 14:00:24 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 233983:&quot;A METHOD FOR THE CONTROL UNIT TO PRODUCE ROUTING INFORMATION&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;A METHOD FOR THE CONTROL UNIT TO PRODUCE ROUTING INFORMATION&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method for the control unit to produce routing information in a network communications environment comprising a plurality of network nodes, a plurality of communications links among network nodes, and a control unit, the plurality of network nodes comprising a plurality of host network nodes and a plurality of router network nodes, the method comprising receiving topology information about the network communications environment, receiving inter-node communications information, computing routing information for at least one router network node, the computing based, at least in part, on the received topology information and on the received intexnode communications information, wherein computing routing information comprises applying a maxfair algorithm to the received topology information and to the received inter-node communications information using a multi-commodity flow implementation, wherein applying the max-fair algorithm comprises first satisfying demand in a fair manner and then satisfying remaining demand by maximizing a sum of allocated flow rates, computing, at the control unit, bandwidth allocation information for at least one router network node, the computing based, at least in part, on the received topology information and on the received inter-node communications information, wherein computing bandwidth allocation information comprises applying the max-fair algorithm to the received topology information and to the received inter-node communications information using the multi-commodity flow implementation and sending the bandwidth allocation information to the at least one router network node. Fig, 1</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>The present invention relates to a method for the control unit to produce routing information.<br>
+METHOD AND SYSTEM FOR GLOBAL ROUTING AND BANDWIDTH SHARING<br>
+TECHNICAL FIELD<br>
+[0001] The present invention is related generally to computer network communications, and, more particularly, to providing routing and bandwidth allocation information.<br>
+BACKGROUND OF THE INVENTION<br>
+[0002] Upon receiving an incoming packet, a router decides on which of its outgoing links to send the packet. Routers in the Internet generally make this decision on the basis of the shortest path from the router to the packet's destination. The router independently and locally computes this shortest path to the packet's destination. Although the router can account for various routing metrics, such as the latency of its outgoing links, the capacity of those links, and the present load on the links, the router chooses the outgoing path independently of the actual communications patterns among the end hosts in the Internet.<br>
+[0003] This independent and localized decision-making process in the routing protocol has been critical to the scalability of the Internet: New routers and new links are easily added witliout having to recompute routing decisions for the entire Internet. However, this routing process can also produce inefficiencies, such as unnecessary shared bottlenecks when multiple routers choose to use the same, shortest, path and leave other paths underutilized.<br>
+[0004] Localized routing decisions are also often demonstrably unfair, that is, they enhance the communications characteristics of one data flow at an incommensurate cost to other data flows. A broadly accepted measure of fairness in data networks is called "max-min fairness." In a max-min fair allocation of resources, no consumer's allocation of resources can be increased without penalizing a consumer with a smaller allocation. Packet scheduling algorithms such as fair queuing and round-robin approximate max-min fairness for data flows across a single bottleneck link or router. However, such local, per-flow fairness is usually globally unfair because some communications nodes (hosts or routers) support several data flows.<br>
+[0005] Some networks allow multipath routing. Here, a router can send outgoing packets along paths other than the absolutely shortest one. Multipath routing allows significantly higher network throughput than single, shortest path routing. Multipath routing also yields a robustness to link failure that is unachievable with single, shortest path routing. Unfortunately, current per-<br><br>
+flow or local bandwidth allocation implementations of multipath routing are sometimes even less fair than the more traditional single-path routing protocols.<br>
+SUMMARY OF THE INVENTION<br>
+[0006] In view of the foregoing, the present invention provides a routing and bandwidth allocation system that maximizes network throughput while maintaining global fairness in the sharing of network resources. From gathered global network information (such as inter-node communications patterns and network topology), routing tables and bandwidth allocation policies are computed for network routers. In some embodiments, the computations involve applying multi-commodity flow methods to provide a "max-fair" allocation of network resources.<br>
+[0007] While in some embodiments each router collects global network information and then locally produces its own routing and bandwidth allocation tables, it can be simpler and cheaper in terms of both computation and security for a centralized, trusted control unit to perform the calculations and then to distribute the results to the routers.<br>
+[0008] Embodiments of the present invention properly account for data flows differentiated by their levels of priority. Also, the computed bandwidth policies need not allocate all network bandwidth, but can leave some bandwidth unallocated to handle unexpected surges in demand. The computed routing tables can include multiple paths leading to greater link utilization and to robustness to link failure.<br>
+[0009] In some situations, inter-node communication patterns are aggregated during the computation of the routing and bandwidth allocation tables. For example, more accurate results are obtained by aggregating communications flows between Internet Service Providers (ISPs) because these flows change at a much slower time scale than do individual flows between end hosts. In the case of an enterprise network connected to the Internet through a gateway, acceptable results are obtained by managing only the communications through the gateway.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[0010] While the appended claims set forth the features of the present invention with particularity, the invention, together with its objects and advantages, may be best understood<br>
+from the following detailed description taken in conjunction with the accompanying drawings of which:<br>
+[0011]      Figure 1 is a block diagram of a communications environment showing how shortest path routing can lead to an unnecessary routing bottleneck;<br>
+[0012]      Figure 2 is a block diagram of an exemplary architecture supporting an embodiment of the present invention;<br>
+[0013]      Figure 3 is a schematic diagram generally illustrating an exemplary computer system that supports the present invention;<br>
+[0014]      Figure 4 is a flowchart of an exemplary method usable by a host network node in the architecture of Figure 2;<br>
+[0015]      Figure 5 is a data structure diagram of the inter-node communications information provided by a host network node in the architecture of Figure 2;<br>
+[0016]      Figures 6a and 6b together form a flowchart of an exemplary method usable by a router network node in the architecture of Figure 2;<br>
+[0017]      Figure 7 is a data structure diagram of the network topology information provided by a router network node in the architecture of Figure 2;<br>
+[0018]       Figures 8 a and 8b together form a flowchart of an exemplary method usable by a control unit in the architecture of Figure 2;<br>
+[0019]      Figure 9 is a flow rate diagram of an exemplary communications environment with a first host network node sending data to three other host network nodes;<br>
+[0020]      Figure 10 is data structure diagram of an exemplary multipath routing table produced for one of the host network nodes in the environment of Figure 9;<br>
+[0021]       Figure 11 is a flow rate diagram showing aggregate data flows coming into a router network node;<br>
+[0022] Figure 12 is a data structure diagram of an exemplary bandwidth allocation table produced for the central router network node of Figure 11;<br>
+[0023] Figure 13a is a flow rate diagram of an exemplary communications system using a local per-flow fairness policy; Figure 13b is a flow rate diagram of the same communications system using a single-path routing policy; Figure 13c is a flow rate diagram of the same system using a node-demand-fairness policy;<br>
+[0024] Figure 14a is a flow rate diagram of an exemplary communications environment wherein the host network nodes report their true demands; Figure 14b is a flow rate diagram of the same environment where one host network node misrepresents its demand;<br>
+[0025] Figure 15 is a plot charting bandwidth starvation of node pairs caused by a bandwidth allocation policy that achieves the maximum possible throughput;<br>
+[0026] Figure 16 is a plot charting throughputs achieved by various bandwidth allocation policies;<br>
+[0027]      Figure 17 is a plot charting throughput as a function of the distribution of demand;<br>
+[0028] Figure 18 is plot charting utilization of available bandwidth as a function of the distribution of demand;<br>
+[0029] Figure 19a is plot charting bandwidth demand satisfaction under various conditions and policies; Figure 19b is a plot showing how, under Zipf demands, a max-fair bandwidth allocation policy can overprovision small demands;<br>
+[0030] Figure 20a is a plot charting throughput achieved by a max-fair bandwidth allocation policy with and without a constraint that no normalized node demand is oversupplied; Figure 20b is a plot charting bandwidth demand satisfaction with and without the same constraint;<br>
+[0031] Figure 21 is a bar chart of a distribution of an average multipath dispersion achievable by methods of the present invention for flows with uniform demands;<br>
+[0032] Figure 22a is a plot charting bandwidth demand satisfaction when satisfying the demand of some nodes is deemed to be twice as important as satisfying the demand of other nodes; and Figure 22b is a plot charting throughput under the same conditions.<br>
+DETAILED DESCRIPTION OF THE INVENTION<br>
+[0033] Turning to the drawings, wherein like reference numerals refer to like elements, the present invention is illustrated as being implemented in a suitable computing environment. The following description is based on embodiments of the invention and should not be taken as limiting the invention with regard to alternative embodiments that are not explicitly described herein. Section I of this description presents an exemplary routing and bandwidth allocation architecture. Section II defines node-demand fairness as one metric usable with the present invention, and Section III presents a multi-commodity flow implementation of node-demand fairness. Finally, Section TV presents results of simulations of embodiments of the present invention.<br>
+[0034] In the description that follows, the present invention is described with reference to acts and symbolic representations of operations that are performed by one or more computing devices, unless indicated otherwise. As such, it will be understood that such acts and operations, which are at times referred to as being computer-executed, include the manipulation by the processing unit of the computing device of electrical signals representing data in a structured form. This manipulation transforms the data or maintains them at locations in the memory system of the computing device, which reconfigures or otherwise alters the operation of the device in a manner well understood by those skilled in the art. The data structures where data are maintained are physical locations of the memory that have particular properties defined by the format of the data. However, while the invention is being described in the foregoing context, it is not meant to be limiting as those of skill in the art will appreciate that various of the acts and operations described hereinafter may also be implemented in hardware.<br>
+Section I: An Exemplary Routing and Bandwidth Allocation Architecture<br>
+[0035] The present invention provides a routing and bandwidth allocation system that maximizes network throughput while maintaining global fairness in the sharing of network<br>
+resources. From gathered global network information (such as inter-node communications patterns and network topology), routing tables and bandwidth allocation policies are computed for network routers.<br>
+[0036] The advantages of the present invention's use of global information over, for example, the localized decision-making commonly used by Internet routers is illustrated in Figure 1. In Figure 1, a network communications environment 100 includes sources and destinations of data flows. These sources and destinations are labeled "hosts" 102, 104, 106, and 108. Routers 110, 112, 114, 116, and 118 receive data flows from source hosts and send the flows on to their destination hosts. The labels "host" and "router" in Figure 1 are purely for convenience in the present discussion as some devices can act as both host and router.<br>
+[0037] When the host 102 wishes to communicate with the host 104, the shortest path for their data flows, that is, the path that would be chosen by current Internet routers, is the path labeled 120, passing through routers 110 and 112. When the host 106 wishes to communicate with the host 108, their shortest data path 122 also passes through these routers 110 and 112. Shortest path routing thus causes the link connecting the routers 110 and 112 to become an ' unnecessary bottleneck. The bottleneck is unnecessary because shortest path routing leaves unused the alternate path 124 between the hosts 106 and 108 as that path 124 is longer than the chosen path 122. The methods of the present invention use global network information to avoid creating such unnecessary bottlenecks and thus to improve network utilization.<br>
+[0038] Figure 2 presents an exemplary architecture for implementing the present invention. Network hosts 102, 104, 106, and 108 periodically send information about their expected communications demands to a centralized control unit 200 (as illustrated by the data flow 202). Network routers 110, 112, 114, 116, and 118 periodically send network topology information to the control unit 200 (data flow 204). The control unit 200 uses this network information to make globally efficient and fair routing decisions. It then sends routing and bandwidth allocation tables to the routers (also data flow 204). By using the received routing and bandwidth allocation tables, the routers put into practice the control unit 200's globally efficient and fair policies. The remainder of this Section I presents implementation considerations and details of the architecture of Figure 2.<br>
+[0039] It should be noted that while the architecture of Figure 2 is generally applicable to all networks, both the amount of data gathered by the control unit 200 and the amount of computation used to form routing and allocation policies from that information increase with the size of the network. Thus, the methods of the present invention are most easily implemented for smaller networks (e.g., networks of only a few hundred routers). However, this does not severely limit the applicability of the present invention for at least two reasons. First, optimizing routing and allocation within smaller networks is itself a worthwhile goal. Examples of smaller networks amenable to the methods of the present invention include enterprise virtual private networks with firewalls to the Internet, wired or wireless neighborhood networks where hosts communicate with one another and share Internet access through gateways, and peering among ISPs. The latter example also illustrates the second reason why the present invention is not severely limited: Many larger networks can be modeled as a hierarchy of smaller networks. The present invention can then be applied at an appropriate level in the hierarchy. For example, in the case of ISP peering, each ISP is modeled as a single node, and the actual details of the implementation of each ISP's network do not much affect the routing and allocation policies for the links connecting the ISPs.<br>
+[0040] The hosts 102, 104, 106, and 108, the routers 110, 112, 114, 116, and 118, and the control unit 200 of Figure 2 may be of any architecture. Figure 3 is a block diagram generally illustrating an exemplary computer system that supports the present invention. The computer system of Figure 3 is only one example of a suitable environment and is not intended to suggest any limitation as to the scope of use or functionality of the invention. Neither should the computing devices 102, 110, and 200 be interpreted as having any dependency or requirement relating to any one or combination of components illustrated in Figure 3. The invention is operational with numerous other general-purpose or special-purpose computing environments or configurations. Examples of well known computing systems, environments, and configurations suitable for use with the invention include, but are not limited to, personal computers, servers, hand-held or laptop devices, tablet devices, multiprocessor systems, microprocessor-based systems, set-top boxes, programmable consumer electronics, network PCs, minicomputers, mainframe computers, and distributed computing environments that include any of the above systems or devices. In its most basic configuration, the computing device 102 typically includes at least one processing unit 300 and memory 302. The memory 302 may be volatile (such as<br>
+RAM), non-volatile (such as ROM or flash memory), or some combination of the two. This most basic configuration is illustrated in Figure 3 by the dashed line 304. The computing device 102 may have additional features and functionality. For example, the computing device 102 may include additional storage (removable and non-removable) including, but not limited to, magnetic and optical disks and tape. Such additional storage is illustrated in Figure 3 by removable storage 306 and by non-removable storage 308. Computer-storage media include volatile and non-volatile, removable and non-removable, media implemented in any method or technology for storage of information such as computer-readable instructions, data structures, program modules, or other data. Memory 302, removable storage 306, and non-removable storage 308 are all examples of computer-storage media. Computer-storage media include, but are not limited to, RAM, ROM, EEPROM, flash memory, other memory technology, CD-ROM, digital versatile disks, other optical storage, magnetic cassettes, magnetic tape, magnetic disk storage, other magnetic storage devices, and any other media that can be used to store the desired information and that can be accessed by device 102. Any such computer-storage media may be part of device 102. Device 102 may also contain communications channels 310 that allow the device to communicate with other devices. Communications channels 310 are examples of communications media. Communications media typically embody computer-readable instructions, data structures, program modules, or other data in a modulated data signal such as a carrier wave or other transport mechanism and include any information delivery media. The term "modulated data signal" means a signal that has one or more of its characteristics set or changed in such a manner as to encode information in the signal. By way of example, and not limitation, communications media include wired media, such as wired networks and direct-wired connections, and wireless media such as acoustic, RF, infrared, and other wireless media. The term "computer-readable media" as used herein includes both storage media and communications media. The computing device 102 may also have input devices 312 such as a keyboard, mouse, pen, voice-input device, tablet, touch-input device, etc. Output devices 314 such as a display (which may be integrated with a touch-input device), speakers, and printer may also be included. All these devices are well known in the art and need not be discussed at length here.<br>
+[0041] Figure 4 presents an exemplary method usable by a host node, such as the host node 102, in the architecture of Figure 2. In step 400, the host node 102 gathers information about its<br>
+inter-node communications needs and, in step 402, sends the gathered information to the control unit 200.<br>
+[0042] The inter-node communications information takes different forms in different embodiments. Figure 5 provides an example. The information 500 identifies the host node 102 and identifies the expected amounts of data to be sent from the host node 102 to other host nodes. Many methods for estimating these data flows are known in the art. Suffice it to say that these estimates can be quite accurate when the host node 102 is actually a router and when the data flows represent historical averages of data flows to other routers.<br>
+[0043] Section HI presents a detailed analysis of the inter-node communications information 500. For the present, note that the amount of information 500 generated by each host node is small for small networks, the amount being proportional to the number of host nodes in the network.<br>
+[0044] Returning to Figure 4, in step 404 the host node 102 can tell the control unit 200 the priority of the host node 102's data flows. In the example of Figure 5, all of the data flows originating at the host node 102 have been assigned a priority of 2. In other embodiments, each data flow is given its own priority. A mechanism should exist for coordinating the assignment of these priorities, else every host node would upgrade the priority of its own flows until the priorities became meaningless. In one scenario, priorities are set by the control unit 200, possibly reflecting contractual agreements between the host nodes and the control unit 200. In this scenario, there is no need for the host node 102 to inform the control unit 200 of the priorities. In another scenario, an authority other than the control unit 200 sets the priorities and sends the priority information to the host nodes. An authentication certificate, well known in the art, accompanies the priority information 500 sent from the host node 102 to guarantee that the reported priorities have been legitimately assigned.<br>
+[0045] In step 406, the host node 102 repeats the above process. The repetition can be periodic or can be invoked whenever the inter-node communications information 500 changes.<br>
+[0046] An exemplary router in the architecture of Figure 2, such as the router 110, uses the method presented in Figures 6a and 6b. In step 600, the router 110 gathers information about the topology of that portion of the network environment 100 nearest to itself and, in step 602, sends the gathered network topology information to the control unit 200.<br>
+[0047] The gathered topology information can take the form of the well known Link Statement Announcement. Figure 7 provides an example of the topology information 700 gathered by the router 110. The information 700 identifies the router providing this topology information and then presents a table of the communications links connected to this router 110. For each communications link is given the capacity of the link, an identification of the router at the other end of the link, and the current state of the link.<br>
+[0048] Returning to Figure 6a, the router 110 receives from the control unit 200 routing and bandwidth allocation tables in steps 604 and 606, respectively. Examples of these tables are discussed below in relation to Figures 9 through 12.<br>
+[0049] When the router 110 receives an incoming data packet, it uses the received routing table in step 608 to choose an outgoing link for the data packet. In some embodiments, the control unit 200 does not allocate all of the bandwidth of all of the communications links in the network environment 100. The unallocated bandwidth is a reserve that is called upon for sending outgoing packets in step 610. The reserve bandwidth is useful for handling unexpected or infrequent surges in demand.<br>
+[0050] The router 110 can, in most situations, rely solely on the routing table received from the control unit 200 and ignore the received bandwidth allocation table. However, when one of the router 110's outgoing communications links becomes congested in step 612, the router 110 uses that table to allocate bandwidth on the congested outgoing link among the incoming data packets. By doing so, the router 110, along with the other routers in the network environment 100, implements the global fairness policies created by the control unit 200.<br>
+[0051] Just like the host node 102 above, the router 110, in step 614, repeats the steps of the above method. The router 110 sends updated topology information, either periodically or when the topology information 700 changes.<br>
+[0052] The control unit 200 codifies its global efficiency and fairness policies by creating the routing and bandwidth allocation tables. An exemplary method usable by the control unit 200 is<br>
+depicted in Figures 8a and 8b. In step 800, the control unit 200 receives the topology information 700 as sent by routers in step 602 of Figure 6a. Then in step 802, the control unit 200 uses the received information 700 to construct a map of the network environment 100. Note that this description of step 802 is meant for illustrative purposes only: Many techniques are well known for compiling sets of local topological descriptions 700 into a logical whole and not all of these techniques call for the creation of a network map in any sense.[0053] The control unit 200 receives in step 804 the inter-node communications information 500 as sent by the hosts in step 402 of Figure 4. In some embodiments, the control unit 200 then normalizes this information 500 in step 806. Normalization involves expressing the expected data flow rates as percentages of each host's total expected outbound traffic and is discussed below in Section III.<br>
+[0054] Step 808 is another optional step. To prevent demand misrepresentation, the control unit 200 compares the data flow demand reported by Node A toward Node B with the demand reported by Node B toward Node A. The control unit 200 then replaces the greater of the two demand figures with the lesser. As discussed below in Section III, this simple replacement removes the incentive for a selfish host node to over-report its demand in order to receive a larger allocation of bandwidth.<br>
+[0055] As discussed above in relation to step 404 of Figure 4, data flows can be assigned priorities. The control unit 200 receives this priority information in step 810. If no priority information is received, then the control unit 200 treats all data flows as being of equal priority.<br>
+[0056] The control unit 200 need not allocate all of the available bandwidth in the network environment 100, but can rather reserve some bandwidth for emergency use. Step 812 of Figure 8b has the control unit 200 receiving a factor showing the fraction of the available bandwidth to keep in reserve. Of course, more elaborate reservation procedures are possible, some varying with time of day, some with different communications links having different reservation factors.<br>
+[0057] In steps 814 and 816, the control unit 200 uses the received inter-node communications information 500 and the received topology information 700 to calculate routing and bandwidth allocation tables for the routers in the network environment 100. The control unit<br>
+200 performs these calculations in such a way as to achieve certain network policy goals such as global network efficiency and fair sharing of network resources. Because the methods of these calculations can be quite involved, and because they are central to an understanding of the methods of the present invention, an in-depth discussion of them is deferred to Sections II and III below.<br>
+[0058] In steps 818 and 820, the control unit 200 sends the resulting routing and bandwidth allocation tables to the routers. By following the dictates of these tables, the routers implement the global efficiency and fair sharing policies of the control unit 200.<br>
+[0059] Step 822 shows that the control unit 200 repeats the above process either periodically or as necessary when the incoming information SOO and 700 changes. For example, the control unit 200 can set a timer for all routers to refresh their link state infonnation 700. If a router 110 fails to report in a timely fashion, then the control unit 200 can remove that router 110 and its, associated links from the current topology. (The timer value should be some multiple of the refresh period.) Until the timeout,, the unaffected portions of the network environment 100 continue to function. Upon the timeout, the control unit 200 recalculates the routing and bandwidth allocation tables (steps 814 and 816) and distributes the new tables to the affected routers (steps 818 and 820). The time needed by the control unit 200 to respond to the failure of the router 110 is the same as for existing link state protocols.<br>
+[0060] The above discussion of Figures 2 through 8 is meant to be taken as describing the logical functions of host, router, and control unit. In some network environments 100, a single physical device can perform two of these functions or even all three. Each router can receive the inter-node communications information 500 and topology information 700 itself and can calculate its own routing and bandwidth allocation tables accordingly. It is often better, however, for a centralized control unit 200 to perform the calculations of steps 814 and 816 for the other routers in the network environment 100. A centralized control unit 200 is easier to maintain and, as a single point of trust, the control unit 200 is much easier to protect and to authenticate than is a distributed set of routers.<br>
+[0061] The possibility that a centralized control unit 200 can become a single point of failure or a routing bottleneck should not be worrisome because the control unit 200 is only a control<br>
+entity and cannot become a routing bottleneck. Also, using known techniques, a backup control unit can be deployed to take over if the control unit 200 fails. In some scenarios, each router is capable of acting as the central control unit for all of the routers, with the routers taking turns or taking over from fallen comrades.<br>
+[0062] As an example of the above techniques, consider the network environment 100 of Figure 9. Here, every node 102, 104, 106, and 108 is both a host and a router. The expected inter-node communications demands of the host/router node 102 are those illustrated in Figure 5: To each host/router node 104, 106, and 108, the host/router node 102 expects to send 250 Kbps of traffic. The network environment 100 includes communications links directly connecting the host/router node 102 to the host/router nodes 104 and 106, but no such direct link exists to the host/router node 108. Each communications link has a capacity of say, 1 Mbps, well in excess of the expected demand.<br>
+[0063] One possible routing table produced by the methods of the present invention and sent to the host/router node 102 is illustrated in Figure 10. As would be expected, traffic from the host/router node 102 to its neighboring nodes 104 and 106 is sent dkectly, with no intermediaries.<br>
+[0064] The routing of traffic to the non-neighboring node 108 is more interesting. Rather than choosing a single, shortest path, the routing table 1000 specifies that the traffic be split evenly between two paths, half going through node 104 and the other half through node 106. This "multipath" routing solution greatly enhances the utilization of network resources. However, multipath routing poses a challenge to transport layer protocols because of the possibility of out-of-order packet delivery. Several solutions have been proposed to this challenge, but no one of them has yet achieved dominance in the field.<br>
+[0065] As another example, consider Figure 11 which shows the aggregate data flow rates coming into a router 110. These rates are calculated by the control unit 200 (not shown in Figure 11) as it processes the inter-node communications information 500 and the local topology information 700. From these aggregate data rates, the control unit 200 produces the bandwidth allocation table 1200 of Figure 12. When an outgoing communications link ("routing direction" in table 1200) connected to the router 110 becomes congested, the router 110 consults the<br>
+bandwidth allocation table 1200 to determine how much of that outgoing link's bandwidth to allocate to traffic coming in on each incoming link.<br>
+[0066] Note that, unlike traditional packet scheduling algorithms, the present invention need not track individual data flows, rather it only tracks the aggregate traffic flow on each incoming communications link. This simplifies the calculations in steps 814 and 816 of Figure 8b by reducing the amount of state information kept by the control unit 200. Minimizing the amount of state information is a significant engineering concern in router design. While traditional packet scheduling algorithms require an amount of state information proportional to the number of data flows (which can be of the order of the square of the number of nodes in the system or more), methods of the present invention use an amount of state information proportional to the number of neighbors of a router, which amount is much smaller.<br>
+Section II: Node-Demand Fairness<br>
+[0067] This Section defines node-demand fairness as one metric usable by the control unit 200 in calculating the routing and bandwidth allocation tables. The motivation for node-demand fairness stems from the observation that local, per-flow-based packet scheduling algorithms proposed for the Internet are not designed to, and do not, provide global fairness. Figures 13a, 13b, and 13c illustrate this observation. In the Figures, each communications link in the network environment 100 has a capacity of 1000 Kbps. The host/router nodes 104, 106, and 108 each wish to communicate with the host node 102 at the highest possible rate. The host/router nodes 104, 106, and 108 have the ability to route their traffic onto multiple paths if such paths are available.<br>
+[0068] In Figure 13a, the two intermediate router nodes 110 and 112 each apply a local per-flow fairness policy. The result is that the middle host/router node 106 receives an unfairly large share of the network bandwidth at the expense of the other two host/router nodes 104 and 108.<br>
+[0069] It might appear that this inequity in resource allocation stems from the fact that only the central host/router node 106 has access to multiple data paths. That, however, is not the cause of the inequity. A single-path routing allocation results in the data flows of Figure 13b, an allocation which is equally unfair.<br>
+[0070] The inequity of Figure 13b can be cured by simply reducing the bandwidth allocation for the rightmost host/router node 108 to 500 Kbps. Every host/router node 104, 106, and 108 would then'experience the same throughput, but at the clear cost of an undesirable waste of network capacity. This "punishment" of the host/router node 108 does not benefit the other two host/router nodes 104 and 106.<br>
+[0071] Figure 13c shows the best routing and bandwidth allocation for this scenario. Although the network throughput is the same as in Figures 13a and in 13b '(13a: 500 Kbps + 1000 + 500 = 2000 Kbps; 13b: 500 Kbps + 500 + 1000 = 2000 Kbps; 13c: 667 Kbps + 667 + 667 = 2000 (with rounding)), in Figure 13c each host/router node 102, 104, and 106 receives the maximum possible fair bandwidth allocation. This desirable routing and bandwidth sharing is due to the use both of multipath routing and of global bandwidth allocation. These are key elements of a node-demand fair mechanism.<br>
+[0072] Intuitively, node-demand fairness can be thought of as global max-min fairness without any routing path constraints and where the nodes (rather than the data flows) are the sharing/competing entities. In other words, node-demand fair routing and bandwidth allocation can use multipath routing and can maximize the minimum throughput for each node. In contrast, the routing and bandwidth allocation of Figure 13b maximizes the minimum throughput of each node subject to constraint of single-path routing, but this constraint makes the higher minimum throughput (667 Kbps) of Figure 13c unachievable.<br>
+Section III: A Multi-Commodity Flow Implementation of Node-Demand Fairness<br>
+[0073] One way to calculate node-demand fair routing and bandwidth allocation solutions is to use the established methods of multi-commodity flow. In a multi-commodity flow problem, a number of distinct commodities are shipped across a shared transportation network. The network consists of nodes connected by links (called "edges"), each link having a specified capacity. Each commodity has a source, a destination, and a level of demand. A commodity travelling through the network can be split into multiple pieces and can be recombined at any node, but the same amount of the commodity must enter and leave each node, except at the source and destination nodes of that commodity.<br>
+[0074] The multi-commodity flow problem can admit various objectives. Two common objectives are the maximization of the sum of the flows, that is, the maximum throughput flow, and the maximization of the minimum flow, that is, the maximum concurrent flow. To ;map a node-demand fair problem to a multi-commodity flow, the communications network is represented as a graph, and the total communications flow between a pair of nodes is represented by a single commodity. The multi-commodity flow problem is then solved for the maximum concurrent flow.<br>
+[0075] Solving the multi-commodity flow problem is more practical for smaller networks than for larger networks. For any size network, however, the multi-commodity flow solution defines an optimum against which can be compared any practically achievable result.<br>
+[0076] The multi-commodity flow problem can be usefully modeled as a linear program. The constants and variables of the linear program are presented below in Tables 1 and 2, respectively.<br>
+Table 1: Multi-Commodity Flow Constants(Table Removed)<br><br>
+Table 2: Multi-Commodity Flow Variables(Table Removed)<br><br>
+[0077]       The liner programming constraint set (1) below specifies that the directed flow of any commodity on any edge must be positive. The constraint set (2) specifies that the sum of all the<br>
+commodity flows on any edge cannot exceed the capacity of that edge. Constraint set (3) enforces flow conservation: For any commodity, an equal amount enters and leaves any node other than at that commodity's source and destination nodes. The set (4) definest, the total flow for commodity k, as the net amount of commodity k leaving its source. Set (4) is not a constraint of the linear program.<br>
+(Equation Removed)<br>
+[0078]       Additional features can be incorporated by adding auxiliary constraints. For example, die following dispersion constraints guard against link and node failure.<br>
+The first set of dispersion constraints above ensures that at most a fraction ay of any flow is routed along a single link. This adds resilience to link failure. The second set guards against node failure by ensuring that at most a fraction a^of any flow is routed through a particular node.<br>
+(Equation Removed)<br>
+[0079] The following linear program objective function defines the maximum throughput flow.<br>
+(Equation Removed)<br>
+By specifying the maximum concurrent flow objective function, the linear program maximizes the fraction of each demand that is allocated. For brevity, this is called the fair formulation, hi this formulation, /I measures the minimum fraction of demand allocated over all flows.<br>
+(Equation Removed)<br>
+(Equation Removed)<br>
+[0080] There is an inherent tension between absolute fairness (that is, equal usage) in resource sharing and maximum utilization. Max-min fairness treats this tension with N iterations of linear programming, where N is the number of nodes in the network. At each iteration, the linear program tries to maximally utilize the remaining resources fairly. For computational efficiency, embodiments of the present invention can use only two iterations of linear programming. First, solve the maximum concurrent flow for A, and then solve a maximum throughput flow subject to the constraint that every commodity receive at least the throughput X,<br>
+(Equation Removed)<br>
+This is called the max-fair formulation. The simulations in Section IV below show that the max-fair formulation significantly improves network utilization.<br>
+[0081] When the network environment 100 includes wireless links, link interference can cause one pair of communicating nodes to prevent another pair from communicating. In this case, the liner programming model can be modified to account for possible interference. By formulating link interference as a set of linear constraints, the present model is extended to multi-hop wireless networks. The constraints look like the following, where S indexes maximal sets of non-interfering links.<br>
+ [0082] As discussed above in relation to step 806 of Figure 8a, a host node can specify its demands in absolute rates (as in the inter-node communications information 500 of Figure 5), but the control unit 200 can normalize these demands into percentages of the host node's total<br>
+demand. These normalized demands are the model's weights w&amp;. Normalization leads to weights that achieve node-demand fairness; every host node has the same total aggregate demand split across any number of communication flows. Of course, if a host node reports no demands, then the control unit 200 reserves no bandwidth for it.<br>
+[0083] By normalizing demand, the present model easily accommodates preferential treatment. If the importance of the data flows of host 102 is to be doubled, then the model simply normalize host 102's demand to 200% while the demands of the other nodes continue to be normalized to 100%. Section TV below shows that this tuning allows the present model to achieve relative differentiated services.<br>
+[0084] While the computation involved in the above linear programming model grows with the size of the network modeled, even a very large network can be reasonably modeled by treating that network as a hierarchy of smaller networks, hi the case of ISP peering mentioned above, a hierarchical simplification is appropriate because the aggregate inter-ISP traffic changes only on a long time scale even when the constituent flows come and go rapidly. In the scenario of a neighborhood network behind a gateway, the model can be simplified by only modeling the data flows that pass through the gateway.<br>
+[0085] The simplifications involved in treating a network hierarchically leave open the issue of how to handle traffic at levels of the hierarchy below the notice of the model. One way to address this is with a hybrid approach. In the simple, monolithic approach, the node-demand fair model optimizes bandwidth utilization only for the nodes' specified demands. When the network becomes fully loaded, any traffic surges not specified in the demand distribution are dropped. Of course, any traffic at levels of the hierarchy below the model's notice are included in this non-specified demand and thus are subject to being dropped. Simply recalculating the demand distribution is not an acceptable solution because that could introduce unacceptable latency, especially when the demand surges are short lived. To address these surges, the hybrid approach applies the node-demand fair model to only a portion of the total network capacity. The remaining portion is reserved for surges. The routers use traditional, best-effort routing when they need to call upon this bandwidth reserve during a demand surge.<br>
+[0086] The hybrid approach is more generally applicable than this particular scenario suggests. The hybrid approach is useful whenever the results of applying the above model to these "small" flows are not worth the computational costs of including the small flows in the routing and bandwidth allocation calculations. For example, many network environments 100 can afford to reserve enough bandwidth to adequately supply these small flows, and thus the guarantees provided by including the small flows in the above calculations would add little to the quality of communications in these environments. Results of simulating the hybrid approach are presented below in Section IV.<br>
+[0087] The routing and bandwidth allocation tables produced by the node-demand fair mechanism have the desirable property that it is in each individual node's best interest to send their packets along the path suggested by those tables. This simply follows from the fact that the max-fair mechanism saturates every link. Any fractional demand that the mechanism suggests sending from s to d along pathp will encounter more congestion along any other path.<br>
+[0088] Unfortunately, in certain topologies a node can increase its bandwidth allocation by misrepresenting its true demands. An example of this is illustrated in Figures 14a and 14b. Suppose that the hosts 102 and 104 desire to communicate with the host 106 and that the respective link capacities are 200 and 1000 Kbps. If hosts 102 and 104 both report their demands honestly, then the max-min fair routing (which in this case is also the max-fair routing) is as shown in Figure 14a. Unfortunately, if the host 104 were to report its demand only for the host 102, then the bandwidth allocation would be as shown in Figure 14b. Here, the host 104 is given an additional 100 Kbps of bandwidth to the host 106. This misrepresentation problem does not occur in the gateway scenario mentioned above because there each node has only one demand, but misrepresentation can be a source of concern in more general settings.<br>
+[0089] To address this problem of misrepresentation, the control unit 200 replaces the reported ws,d (the demand from 5 to d) by mm{wSid, Wd,s}. This change makes the effective demand specification symmetric, rationing bandwidth both to senders and to receivers. This refinement offers protection against some Denial of Service attacks, like the one just considered.<br>
+[0090] The linear programming model developed above can result in a large number of variables: n(n - l)m for an network with n nodes and m edges. A more compact formulation<br><br>
+improves the scalability of the node-demand fair mechanism. The compact formulation lumps all commodities with a common destination into a single commodity with multiple sources. Although the variables are different, the result is the same. The compact formulation reduces the maximum number of variables to nm. This compact formulation is used in the simulations reported below in Section IV.<br>
+[0091] The variables for the compact formulation are shown below in Table 3. The Table is followed by the compact version of the max-fair linear program. The compact formulation does not readily allow for dispersion constraints because flows along an edge sharing a common destination are now indistinguishable.<br>
+Table 3: Scalable Multi-Commodity Flow Variables<br><br>
+(Table Removed)<br>
+(Equation Removed)<br>
+Section IV: Results of Simulations<br>
+[0092] This Section presents the results of simulating two varieties of the node-demand fair mechanism. The first variety uses the fair objective function (maximum concurrent flow), while the second variety uses the max-fair objective function. The simulated network environment consists of a two dimensional grid of up to 196 nodes and with all link capacities set to 1. The goal of the simulations is to understand how the node-demand fair mechanism affects network<br>
+throughput, fairness in bandwidth sharing, and efficiency in multipath routing. The simulations also explore how node-demand fairness can provide differentiated services. Both varieties of the node-demand fair mechanism are compared to the traditional single, shortest path routing as currently used in the Internet.<br>
+[0093] In this Section, the aggregate traffic between a pair of nodes is called a "flow." Network throughput is defined to be the sum of all flow throughputs. This represents the objective function of maximum throughput flow.<br>
+[0094] Of course, the sum of all link capacities forms an upper bound on the possible throughput. A communication pattern that actually achieves this upper bound is undesirable because it starves a large percentage of the node pairs, as shown in Figure 15.<br>
+[0095] Wasting link capacity is an obvious, and clearly undesirable, cause of low throughput. Another cause of low throughput is the allocation of bandwidth to flows that traverse long paths. A flow with a long path requires capacity from more links for the same end-to-end throughput than does a flow with a short path. When a long-path flow shares links with a series of short-path flows, increasing the amount of bandwidth allocated to the long-path flow decreases the available bandwidth for all of the short-path flows. While this yields a lower overall throughput, this result is not necessarily undesirable as it involves a legitimate policy tradeoff between the long-path and short-path flows.[0096] For the special case of uniformly distributed inter-node demands, Figure 16 shows the maximum possible throughput, the max-fair throughput, the fair throughput, and the single, shortest path (SSP) throughput. Where mere are more than one shortest path, the simulation randomly chooses one. For SSP, each router applies an unbiased local, per-flow bandwidth sharing policy. It is not surprising that this fair allocation does not fully utilize the network capacity. From the above discussion of the tradeoff between long-path flows and short-path flows, it can be seen that the gap between the max and the max-fair throughputs is due to the aggressive provisioning of short-path flows by the max allocation.<br>
+[0097] Figure 17 shows the effects on throughput of varying the demand distribution. Both a uniform distribution and a slope -2 Zipf distribution of node-pair demands are simulated. (Forcomparison, the distribution of site visits from AOL users is a Zipf distribution with a slope of -2.07.) Also simulated is the hybrid mode with half of the available bandwidth allocated by the node-demand fair mechanism and the other half of the bandwidth held in reserve to be allocated using SSP with uniform demands.<br>
+[0098] Figure 17 shows that the Zipf results are very similar to the uniform results for both the fair and the max-fair mechanisms. The Zipf and uniform fair throughputs are both slightly better than the SSP throughput. The hybrid case yields the best throughput, but this is a consequence of its demand distribution (which is neither Zipf nor uniform). For the gateway scenario discussed above, the hybrid, max-fair case allocates less than half of the bandwidth to the gateway links. The gateway links are quickly saturated, and the remaining bandwidth is devoted to short flows that yield a high throughput.<br>
+[0099] Figure 18 plots the effect on network utilization of varying the demand distribution. It may be that the heavy-tailed property of the Zipf demand distribution yields a very uneven distribution in specified destinations, resulting in bottlenecks around the most popular destinations and thereby lowering the overall utilization.<br>
+[0100] When evaluating routing and bandwidth allocation policies, the throughput achieved is only one relevant criterion. Higher throughput is not necessarily good if it comes at the cost of lowered demand satisfaction. In the above model, A is precisely an indicator of demand satisfaction. Figures 19a and 19b compare the /I achieved under various settings. The average flow divided by the demand (the average X) are plotted for max-fair and for SSP. The hybrid results show a low level of demand satisfaction because the hybrid demand distribution focuses on a single gateway. The uniform fair mechanism improves demand satisfaction over SSP by 38% on average, and Zipf fair improves over SSP by 25% on average. It is not surprising that the max-fair mechanism improves the average A manyfold. Under a uniform demand distribution, average /I is exactly proportional to throughput. Under Zipf demands (as shown in Figure 19b), the max-fair allocated bandwidth overprovisions many small demands significantly, yielding a very large average L<br>
+[0101] The max-fair scheme does not perfectly implement max-min fairness. The extent to which unfairness occurs after solving the initial maximum concurrent flow was simulated both with and without the added constraints that no normalized node demand was oversupplied: . The results for throughput and for average A, are shown in Figures 20a and 20b,<br>
+respectively. The surprising result is that the max-fair throughput subject to these oversupply constraints decreases almost to the level of the fair throughput. Thus, the oversupply constraints alone are enough to eliminate much of the bias towards short paths that occurs when maximizing the throughput. The average /I plot of Figure 20b presents a different view of the same data because the average 2 times the number of nodes equals the throughput for uniformly distributed demands. In Figure 20b, the oversupply constraints yield a growth rate in the max-fair formulation that more closely tracks the growth in the fair formulation. This is further evidence that the oversupply constraints suffice to remove short-path bias.<br>
+[0102] Shortest single path routing minimizes the latency experienced by any packet according to the link metrics. The multi-commodity flow formulation does not include any upper bound on the length of a path. Intuitively, it is expected that the length of each multipath is close to the length of the corresponding shortest path, because if the multipath uses many unnecessary links, it would decrease the bandwidth available to other flows and would probably lead to a globally suboptimal bandwidth allocation. This is a short-path bias under a different objective function than that of maximizing throughput.<br>
+[0103] The average path length experienced by a packet during multipath routing is defined using the variables {*/,/&gt;,} for the flow from i toy with source s and destination d. Letfsj denote the total flow from source s to destination d. The average path length from s to d is then j-J] . xt. j s d. Dividing by the distance from s to d gives the stretch of the multipath, that is,<br>
+the factor by which it is longer than the shortest single path. In simulations on grids of up to 25 nodes using a uniform demand distribution assumption, the stretch is always 1: The multipath routing did not incur any additional latency, which confirms the intuition about short-path bias.<br>
+[0104] Section III above discusses the addition of dispersion constraints. The simulation results presented in this Section IV are not based on these dispersion constraints, but the multipaths are quite dispersed anyway. To measure the dispersion of a multipath, define the<br>
+average dispersion metric. Let Varsd =• -4-J]     •"V.M be tn.e variance of the flow between s and<br>
+d. Then, let the average dispersion from s to d be the distance between s and d divided by VarSij. To give some intuition for this definition, suppose that the multipath simply routed a fraction l/k of the traffic along each of A: disjoint shortest paths. Then the average dispersion would simply be k.<br>
+[0105] Figure 21 plots the distribution of the average dispersion metric for the flows on a 6 by 6 grid topology with uniform demands. More than half the flows experience an average dispersion greater than 2. This suggests that many of the flows would continue to experience significant throughput even if some link along that flow's multipath failed.<br>
+[0106] Service among end hosts can be differentiated through their demand specifications. For purposes of simulation, a node in the middle of a 25-node grid topology is chosen to be a superior node whose demand is deemed twice as important as that of other nodes. The demand for communications to and from this superior node is doubled accordingly. The simulation shows that the K for regular nodes decreases slightly from 0.40 to 0.36, while the /I for the superior node increases from 0.40 to 0.72, an increase of a factor of 1.8. This is exactly the desired result: The superior node receives twice as much bandwidth as the regular nodes, reflecting the demand specification exactly. Furthermore, the bandwidth of the regular nodes degrades only slightly to accommodate the superior node. Simulations with increasing numbers of superior nodes show how this degrades the regular nodes' bandwidth and the overall network throughput. Figures 22a and 22b show that as the number of superior nodes increases, the demand satisfaction level for both superior and regular nodes degrades only gradually, and the superior nodes always receive twice as much bandwidth as the regular nodes. Thus, the methods of the present invention can support differentiated services by simply varying the demand distributions.<br>
+[0107] hi view of the many possible embodiments to which the principles of the present invention may be applied, it should be recognized that the embodiments described herein with respect to the drawing figures are meant to be illustrative only and should not be taken as limiting the scope of the invention. For example, those of skill in the art will recognize that the illustrated embodiments can be extended to cover hierarchical and mixed architecture networks without departing from the spirit of the invention. Although the invention is described in terms of<br>
+software modules or components, those skilled in the art will recognize that such may be equivalently replaced by hardware components. Therefore, the invention as described herein contemplates all such embodiments as may come within the scope of the following claims and equivalents thereof.<br><br><br><br><br><br>
+WE CLAIM:<br>
+1.	A method for the control unit to produce routing information in a<br>
+network communications environment comprising a plurality of<br>
+network nodes, a plurality of communications links among network<br>
+nodes, and a control unit, the plurality of network nodes<br>
+comprising a plurality of host network nodes and a plurality of<br>
+router network nodes, the method comprising:<br>
+receiving topology information about the network communications environment;<br>
+receiving inter-node communications information;<br>
+computing routing information for at least one router network node, the computing based, at least in part, on the received topology information and on the received intexnode communications information, wherein computing routing information comprises applying a maxfair algorithm to the received topology information and to the received inter-node communications information using a multi-commodity flow implementation, wherein applying the max-fair algorithm comprises first satisfying demand in a fair manner and then satisfying remaining demand by maximizing a sum of allocated flow rates;<br>
+computing, .at the control unit, bandwidth allocation information for at least one router network node, the computing based, at least in part, on the received topology information and on the received inter-node communications information, wherein computing bandwidth allocation information comprises applying the max-fair algorithm to the received topology information and to the received inter-node communications information using the multi-commodity flow implementation; and<br>
+sending the bandwidth allocation information to the at least one router network node.<br>
+2.	The method of claim 1, wherein the network communications environment comprises a virtual private network and further comprises a communications link to the Internet.<br>
+3.	The method of claim 1, wherein the network communications environment comprises a neighborhood network and further comprises a communications link to the Internet.<br><br>
+4.	The method of claim 1, wherein the network communications environment is a hierarchical communications environment and wherein at least one of the plurality of communications links comprises a virtual communications link among network nodes, the virtual communications link comprising a plurality of physical communications links.<br>
+5.	The method of claim 4, wherein the network communications environment comprises an Internet Service Provider peering environment.<br>
+6.	The method of claim 1, wherein at least one of the plurality of communications links is selected from the group consisting of:<br>
+a point-to-point link, a broadcast link, a wired link, a wireless link, an electrical link, an optical fiber link, an infrared link, and a radio link.<br>
+7.	The method of claim 1, wherein at least one of the plurality of communications links is selected from the group consisting of, a virtual communications link comprising a plurality of physical communications links and a multi-hop communications link comprising a plurality of single-hop communications links.<br>
+8.	The method of claim 1, wherein the control unit is one of the plurality of network nodes.<br>
+9.	The method of claim 1, wherein at least one of the plurality of network nodes is both a host network node and a router network node.<br>
+10.	The method of claim 1, wherein receiving topology information comprises receiving topology information from at least one router network node.<br>
+11.	The method of claim 10, wherein receiving topology information comprises receiving information selected from the group consisting of a capacity of at least one communications link connected to the router network node and an identification of at least one other network node connected to a communications link connected to the router network node.<br>
+12.	The method of claim 1, wherein receiving inter-node communications information comprises receiving inter-node communications information from at least one host network node.<br><br>
+13.	The method of claim 1, wherein computing routing information comprises constructing a map of the network communications environment from the received topology information.<br>
+14.	The method of claim 1, wherein computing routing information comprises normalizing the received inter-node communications information.<br>
+15.	The method of claim 1, wherein receiving inter-node communications information comprises receiving a pair of data flow demands, a fist member of the pair being a data flow demand from a first network node to a second network node, and a second member of the pair being a data flow demand flom the second network node to the first network node, and wherein computing routing information comprises using only the smaller data flow demand of the pair.<br>
+16.	The method of claim 1, wherein the plurality of communications links comprises a plurality of wireless links, wherein flow on a first wireless communications link interferes with flow on a second wireless communications link, and wherein computing routing information comprises constraining an allocated flow on the second wireless communications link to account for the interference.<br>
+17.	The method of claim 1, wherein computing routing information comprises constraining a fraction of an allocated flow rate touted across one communications link.<br>
+18.	The method of claim 1, wherein computing routing information comprises constraining a fraction of an allocated flow rate routed through one router network node.<br>
+19.	The method of claim 1, wherein applying a max-fair algorithm comprises computing an expected flow rate for a pair of network nodes.<br>
+20.	The method of claim 19, wherein applying a max-fair algorithm comprises maximizing a sum of allocated flow rates within the network communications environment subject to a constraint of maximizing a minimum of ratios of allocated flow rates to expected flow rates.<br>
+21.	The method of claim 1, wherein computing routing information for at least one router network node comprises computing routing information for the control unit.<br>
+22.	The method of claim 1, wherein computing routing information for at least one router network node comprises computing routing<br><br>
+information for a router network node distinct from the control unit, the method further comprising:<br>
+sending the computed routing information to the router network node.<br>
+23.	The method of claim 1, further comprising:<br>
+receiving updated topology information about the network communications environment; receiving updated inter-node communications information;<br>
+and computing updated routing information for at least one router network node, the computing based, at least in part, on the received updated topology information and on the received updated inter-node communications information.<br>
+24.	The method of claim 27, wherein receiving updated topology information, receiving updated inter-node communications information, and computing updated routing information are performed periodically.<br>
+25.	The method of claim 27, wherein computing updated routing information comprises removing from consideration a network node that does not provide updated information.<br>
+26.	The method of claim 1, wherein computing bandwidth allocation information comprises constructing a map of the network communications environment from the received topology information.<br>
+27.	The method of claim 1, wherein computing bandwidth allocation information comprises normalizing the received inter -node communications information.<br>
+28.	The method of claim 1, wherein receiving inter-code communications information comprises receiving a pair of data flow demands, a first member of the pair being a data flow demand from a first network node to a second network node, and a second member of the pair being a data flow demand from the second network node to the first network node, and wherein computing bandwidth allocation information comprises using only the smaller data flow demand of the pair.<br>
+29.	The method of claim 1, wherein applying a max-fair algorithm comprises computing data flow demand for a pair of network nodes.<br><br>
+30.	The method of claim 29, wherein applying a max-fair algorithm comprises maximizing a sum of allocated flow rates within the network communications environment subject to a constraint of maximizing a minimum of ratios of allocated flow rates to data flow demands.<br>
+31.	The method of claim 1, wherein computing bandwidth allocation information for at least one router network node comprises computing bandwidth allocation information for the control unit.<br>
+32.	The method of claim 1, wherein computing bandwidth allocation information for at least one router network node comprises computing bandwidth allocation information for a router network node distinct from the control unit, the method further comprising: sending the computed bandwidth allocation information to the router network node.<br>
+33.	The method of claim 1, wherein computing bandwidth allocation information for at least one router network node comprises, for a communications link outgoing from the router network nock, computing allocations of bandwidth received over communications links incoming to the router network node.<br>
+34.	The method of claim 1, further comprising:<br>
+receiving updated topology information about the network communications environment; receiving updated inter-node communications information; and<br>
+computing updated bandwidth allocation information for at least one router network node, the computing based, at least in part, on the received updated topology information and on the received updated inter-node communications information.<br>
+35.	The method of claim 34, wherein receiving updated topology information, receiving updated inter-node communications information, and computing updated bandwidth allocation information are performed periodically.<br>
+36.	The method of claim 34, wherein computing updated bandwidth allocation information comprises removing from consideration a network node that does not provide updated information.<br>
+37.	The method of claim 1, further comprising:<br>
+receiving priority information about a data flow of a network node;<br>
+and wherein computing bandwidth allocation information comprises giving priority to bandwidth from that network node.<br><br>
+38.     The method of claim 1, further comprising:<br>
+receiving a bandwidth reservation factor;<br>
+and wherein computing bandwidth allocation information comprises allocating only a fraction of available bandwidth, the fraction determined, at least in part, by the bandwidth reservation factor.<br><br><br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LUFic3RyYWN0LSgxMC0wMi0yMDA5KS5wZGY=" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Abstract-(10-02-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LUNsYWltcy0oMTAtMDItMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Claims-(10-02-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMTAtMDItMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Correspondence-Others-(10-02-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMTUtMDQtMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Correspondence-Others-(15-04-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMjUtMDMtMjAxMCkucGRm" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Correspondence-Others-(25-03-2010).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LWNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LURlc2NyaXB0aW9uIChDb21wbGV0ZSktKDEwLTAyLTIwMDkpLnBkZg==" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Description (Complete)-(10-02-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LURyYXdpbmdzLSgxMC0wMi0yMDA5KS5wZGY=" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Drawings-(10-02-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LUZvcm0tMS0oMTAtMDItMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Form-1-(10-02-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LWZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LWZvcm0tMTgucGRm" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LUZvcm0tMi0oMTAtMDItMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Form-2-(10-02-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LWZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LUZvcm0tMy0oMTAtMDItMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Form-3-(10-02-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LWZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LWZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LUdQQS0oMTAtMDItMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-GPA-(10-02-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LUdQQS0oMjUtMDMtMjAxMCkucGRm" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-GPA-(25-03-2010).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LWdwYS5wZGY=" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LXBjdC0yMTAucGRm" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-pct-210.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LXBjdC0yMjAucGRm" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-pct-220.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LXBjdC0yMzcucGRm" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-pct-237.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LXBjdC0zMDgucGRm" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-pct-308.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LXBjdC00MDEucGRm" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-pct-401.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LVBldGl0aW9uLTEzNy0oMTAtMDItMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Petition-137-(10-02-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1ERUxOUC0yMDA1LVBldGl0aW9uLTEzOC0oMTAtMDItMjAwOSkucGRm" target="_blank" style="word-wrap:break-word;">5534-DELNP-2005-Petition-138-(10-02-2009).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUzNC1kZWxucC0yMDA1LXBldGl0aW9uLTEzOC5wZGY=" target="_blank" style="word-wrap:break-word;">5534-delnp-2005-petition-138.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="233982-a-catalytic-deoxyribonucleic-acid.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="233984-an-apparatus-for-heating-or-cooling-polymer-solids-after-polymerization-and-the-process-therefor.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>233983</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>5534/DELNP/2005</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>21/2005</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>22-May-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>27-Apr-2009</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>30-Nov-2005</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>MICROSOFT CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>ONE MICROSOFT WAY, REDMOND, WASHINGTON 98052, U.S.A.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>JOHN DAVID DUNAGAN</td>
+											<td>C/O MICROSOFT CORPORATION, ONE MICROSOFT WAY, REDMOND, WASHINGTON 98052, U.S.A.</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>JIAHE WANG</td>
+											<td>C/O MICROSOFT CORPORATION, ONE MICROSOFT WAY, REDMOND,WASHINGTON 98052, U.S.A.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04L 12/16</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2004/014818</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2004-05-12</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/455,877</td>
+									<td>2003-06-06</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/233983-a-method-for-the-control-unit-to-produce-routing-information by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 14:00:25 GMT -->
+</html>

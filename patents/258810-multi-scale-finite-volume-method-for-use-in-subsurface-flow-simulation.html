@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/258810-multi-scale-finite-volume-method-for-use-in-subsurface-flow-simulation by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:21:32 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 258810:&quot;MULTI-SCALE FINITE-VOLUME METHOD FOR USE IN SUBSURFACE FLOW SIMULATION&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;MULTI-SCALE FINITE-VOLUME METHOD FOR USE IN SUBSURFACE FLOW SIMULATION&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A multi-scale finite-volume (MSFV) method to solve elliptic problems with a plurality of spatial scales arising from single or multi-phase flows in porous media is provided. The method efficiently captures the effects of small scales on a coarse grid, is conservative, and treats tensor permeabilities correctly. The underlying idea is to construct transmissibilities that capture the local properties of a differential operator. This leads to a multi-point discretization scheme for a finite-volume solution algorithm. Transmissibilities for the MSFV method are preferably constructed only once as a preprocessing step and can be computed locally.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>MULTI-SCALE FINITE-VOLUME METHOD FOR USE IN SUBSURFACE FLOW SIMULATION<br>
+RELATED APPLICATIONS<br>
+This application is a continuation-in-part of co-pending U.S. Patent Application Serial No. 10/383,908, entitled "Multi-Scale Finite-Volume Method for Use in Subsurface Flow Simulation", filed on March 6, 2003 and is a continuation-in-part of co-pending application entitled "Multi-Scale Finite-Volume Method for Use in Subsurface Flow Simulation", filed on September 22, 2004, which is a continuation of co-pending U.S. Patent Application Serial No. 10/383,908, entitled "Multi-Scale Finite-Volume Method for Use in Subsurface Flow Simulation", filed on March 6, 2003.<br>
+TECHNICAL FIELD<br>
+The present invention relates generally to subsurface reservoir simulators, and more particularly, to those simulators which use multi-scale physics to simulate flow in an underground reservoir.<br>
+BACKGROUND OF THE INVENTION<br>
+The level of detail available in reservoir description often exceeds the computational capability of existing reservoir simulators. This resolution gap is usually tackled by upscaling the fine-scale description to sizes that can be treated by a full-featured simulator. In upscaling, the original model is coarsened using a computationally inexpensive process. In flow-based methods, the process is based on single-phase flow. A simulation study is then performed using the coarsened model. Upscaling methods such as these have proven to be quite successful. However, it is not possible to have a prior estimate of the errors that are present when complex flow processes are investigated using coarse models constructed via these simplified settings.<br>
+Various fundamentally different multi-scale approaches for flow in porous media have been proposed to accommodate the fine-scale description directly. As opposed to upscaling, the multi-scale approach targets the full problem with the original resolution. The upscaling methodology is typically based on resolving the length and time-scales of interest by maximizing local operations. Arbogast et al. (T. Arbogast, Numerical subgrid upscaling of two phase flow in porous media, Technical report, Texas Institute for Computational and Applied Mathematics, The University of Texas at Austin, 1999, and T. Arbogast and S.L. Bryant, Numerical subgrid upscaling for waterflood simulations, SPE 66375, 2001) presented a mixed finite-element method where fine-scale effects are localized by a boundary condition assumption at the coarse element boundaries. Then the small-scale influence is coupled with the coarse-scale effects by numerical Greens functions. Hou and Wu (T. Hou and X.H. Wu, A multiscale finite element method for elliptic problems in composite materials and porous media, J. Comp. Phys., 134:169-189,1997) employed a finite-element approach and constructed specific basis functions which capture the small scales. Again, localization is achieved by boundary condition assumptions for the coarse elements. To reduce the effects of these boundary conditions, an oversampling technique can be applied. Chen and Hou (Z. Chen and T.Y. Hou, A mixed finite element method for elliptic problems with rapidly oscillating coefficients, Math. Comput., June 2002) utilized these ideas in combination with a mixed finite-element approach. Another approach by Beckie et al. (R. Beckie, A.A. Aldama, and E.F. Wood, Modeling the large-scale dynamics of saturated groundwater flow using spatial filtering, Water Resources Research, 32:1269-1280,1996) is based on large eddy simulation (LES) techniques which are commonly used for turbulence modeling.<br>
+Lee et al. (S.H. Lee, L.J. Durlofsky, M.F. Lough, and W.H. Chen,<br>
+Finite difference simulation of geologically complex reservoirs with tensor<br>
+permeabilities, SPERE&amp;E, pages 567-574,1998) developed a flux-continuous<br>
+finite-difference (FCFD) scheme for 2D models. Lee et al. further developed a method to address 3D models (S.H. Lee, H. Tchelepi, P. Jenny and L. Dechant, Implementation of a flux continuous finite-difference method for stratigraphic, hexahedron grids, SPE Journal, September, pages 269-277, 2002). Jenny et al. (P. Jenny, C. Wolfsteiner, S.H. Lee and L.J. Durlofsky, Modeling flow in geometrically complex reservoirs using hexahedral multi-block grids, SPE Journal, June, pages 149-157, 2002) later implemented this scheme in a multi-block simulator.<br>
+In light of the above modeling efforts, there is a need for a simulation method which more efficiently captures the effects of small scales on a coarse grid. Ideally, the method would be conservative and also treat tensor permeabilities correctly. Further, preferably the reconstructed fine-scale solution would satisfy the proper mass balance on the fine-scale. The present invention provides such a simulation method.<br>
+SUMMARY OF THE INVENTION<br>
+A multi-scale finite-volume (MSFV) approach is taught for solving elliptic or parabolic problems such as those found in subsurface flow simulators. Advantages of the present MSFV method are that it fits nicely into a finite-volume framework, it allows for computing effective coarse-scale transmissibilities, treats tensor permeabilities properly, and is conservative at both the coarse and fine-scales. The present method is computationally efficient relative to reservoir simulation now in use and is well suited for massive parallel computation. The present invention can be applied to 3D unstructured grids and also to multi-phase flow. Further, the reconstructed fine-scale solution satisfies the proper mass balance on the fine-scale.<br>
+A multi-scale approach is described which results in effective transmissibilities for the coarse-scale problem. Once the transmissibilities are constructed, the MSFV method uses a finite-volume scheme employing multi-point stencils for<br>
+flux discretization. The approach is conservative and treats tensor permeabilities correctly. This method is easily applied using existing finite-volume codes, and once the transmissibilities are computed, the method is computationally very efficient. In computing the effective transmissibilities, closure assumptions are employed.<br>
+A significant characteristic of the present multi-scale method is that two sets of basis functions are employed. A first set of dual basis functions is computed to construct transmissibilities between coarse cells. A second set of locally computed fine-scale basis functions is utilized to reconstruct a fine-scale velocity field from a coarse scale solution. This second set of fine-scale basis functions is designed such that the reconstructed fine-scale velocity solution is fully consistent with the transmissibilities. Further, the solution satisfies the proper mass balance on the small scale.<br>
+The MSFV method may be used in modeling a subsurface reservoir. A fine grid is first created defining a plurality of fine cells. A permeability field and other fine-scale properties are associated with the fine cells. Next, a coarse grid is created which defines a plurality of coarse cells having interfaces between the coarse cells. The coarse cells are ideally aggregates of the fine cells. A dual coarse grid is constructed defining a plurality of dual coarse control volumes. The dual coarse control volumes are ideally also aggregates of the fine cells. Boundaries surround the dual coarse control volumes.<br>
+Dual basis functions are then calculated on the dual coarse control volumes by solving local elliptic or parabolic problems, preferably using boundary conditions obtained from solving reduced problems along the interfaces of the course cells. Fluxes, preferably integral fluxes, are then extracted across the interfaces of the coarse cells from the dual basis functions. These fluxes are assembled to obtain effective transmissibilities between coarse cells of the coarse cell grid. The transmissibilities can be used for coarse scale finite volume calculations.<br>
+A fine-scale velocity field may be established. A finite volume method is used to calculate pressures in the coarse cells utilizing the transmissibilities between cells. Fine-scale basis functions are computed by solving local elliptic or parabolic flow problems on the coarse cells and by utilizing fine-scale fluxes across the interfaces of the coarse cells which are extracted from the dual basis functions. Finally, the fine-scale basis functions and the corresponding coarse cell pressures are combined to extract the fine-scale velocity field.<br>
+A transport problem may be solved on the fine grid by using the fine-scale velocity field. Ideally, the transport problem is solved iteratively in two stages. In the first stage, a fine-scale velocity field is obtained from solving a pressure equation. In the second stage, the transport problem is solved on the fine cells using the fine-scale velocity field. A Schwartz overlap technique can be applied to solve the transport problem locally on each coarse cell with an implicit upwind scheme.<br>
+A solution may be computed on the coarse cells at an incremental time and properties, such as a mobility coefficient, may be generated for the fine cells at the incremental time. If a predetermined condition is not met for all fine cells inside a dual coarse control volume, then the dual and fine-scale basis functions in that dual coarse control volume are reconstructed.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+These and other objects, features and advantages of the present invention will become better understood with regard to the following description, pending claims and accompanying drawings where:<br>
+FIG. 1 illustrates a coarse 2D grid of coarse cells with an overlying dual coarse grid including a dual coarse control volume and an underlying fine grid of fine cells;<br>
+FIG. 2 illustrates a coarse grid including nine adjacent coarse cells (bold solid lines) with a corresponding overlying dual coarse grid (bold dashed lines) including dual coarse control volumes and an underlying fine grid (thin dotted lines) of fine cells;<br>
+FIG. 3 shows flux contribution q(2) Aand q(2)B due to the pressure in a particular coarse cell 2;<br>
+FIG. 4 is a flowchart describing the overall steps used in a preferred embodiment of a reservoir simulation which employs a multi-scale finite-volume (MSFV) method made in accordance with this invention;<br>
+FIG. 5 is a flowchart further detailing steps used to determine transmissibilities T between coarse cells;<br>
+FIG. 6 is a flow chart further describing steps used to construct a set of fine-scale basis functions and to extract a fine-scale velocity field;<br>
+FIG. 7 is a flowchart depicting coupling between pressure and the saturation equations which utilize an implicit solution scheme and wherein Hand £ are operators used to update total velocity and saturation, respectively, during a single time step;<br>
+FIG. 8 is an illustration of the use of an adaptive scheme to selectively update basis functions;<br>
+FIG. 9 is an illustration of a permeability field associated with a SPE 10 problem;<br>
+FIGS. 10A-B are illustrations of permeability fields of a top layer and a bottom layer of cells from the SPE 10 problem;<br>
+FIGS. 11A-B are illustrations of saturation fields of top layers of cells created using the MSFV method and FIG. 11C is an illustration of a saturation field computed by a conventional fine-scale reservoir simulator;<br>
+FIGS. 12A-B are illustrations of saturation fields of bottom layers of cells created using the MSFV method and FIG. 12C is an illustration of a saturation field computed by a conventional fine-scale reservoir computer;<br>
+FIGS. 13A-B are graphs of oil cut and oil recovery;<br>
+FIG. 14 is an illustration of a 3D test case having a grid of 10 x 22 x 17 grid cells and including injector and producer wells; and<br>
+FIG. 15 is a graph of oil cut and oil recovery.<br>
+BEST MODES FOR CARRYING OUT THE INVENTION<br>
+I.         FLOW PROBLEM<br>
+A.       One Phase Flow<br>
+Fluid flow in a porous media can be described by the elliptic problem (Equation Removed)	 <br>
+where p is the pressure, 4 is the mobility coefficient (permeability, K, divided by fluid viscosity, µ) and Ωis a volume or region of a subsurface which is to be simulated. A source term /represents wells, and in the compressible case, time derivatives. Permeability heterogeneity is a dominant factor in dictating the flow behavior in natural porous formations. The heterogeneity of permeability K is usually represented as a complex multi-scale function of space. Moreover, permeability K tends to be a highly discontinuous full tensor. Resolving the spatial correlation structures and capturing the variability of permeability requires a highly detailed reservoir description.<br>
+The velocity u of fluid flow is related to the pressure field through Darcy*s law:<br>
+(Equation Removed)	<br>
+On the boundary of a volume, 9Ω , the flux q = u • v is specified, where v is the boundary unit normal vector pointing outward. Equations (1) and (2) describe incompressible flow in a porous media. These equations apply for both single and multi-phase flows when appropriate interpretations of the mobility coefficient A and velocity u are made. This elliptic problem is a simple, yet representative, description of the type of systems that should be handled efficiently by a subsurface flow simulator. Moreover, the ability to handle this limiting case of incompressible flow ensures that compressible systems can be treated as a subset.<br>
+6.       Two Phase Flow<br>
+The flow of two incompressible phases in a heterogeneous domain may be<br>
+mathematically described by the following:<br>
+ (Equation Removed)<br>
+on a volume Q, where p is the pressure, So,w are the saturations (the subscripts o and w stand for oil and water, respectively) with 0 
+source terms which represent the wells. The system assumes that capillary pressure and gravity are negligible. Equivalently, system (3) can be written as:<br>
+(Equation Removed)and the total mobility<br>
+(Equation Removed)<br>
+where ki = krj I&gt;,. for j e [o, w}.<br>
+Equation (4) is known as the "pressure equation" and equation (5) as the "hyperbolic transport equation." Again, equations (4) and (5) are a representative description of the type of systems that should be handled efficiently by a subsurface flow simulator. Such flow simulators, and techniques employed to simulate flow, are well known to those skilled in the art and are described in publications such as Petroleum Reservoir Simulation. K. Aziz and A. Settari, Stanford Bookstore Custom Publishing, 1999.<br>
+II.        MULTI-SCALE FINITE-VOLUME (MSFV) METHOD<br>
+A.       MSFV Method for One Phase Flow<br>
+1.       Finite-Volume Method<br>
+A cell centered finite-volume method will now be briefly described. To solve<br>
+the problem of equation (1), the overall domain or volume Ω is partitioned into<br>
+smaller volumes (Ω) A finite-volume solution then satisfies<br>
+(Equation Removed)for each control volume Ω where v is the unit normal vector of the volume boundary dΩ, pointing outward. The challenge is to find a good approximation for u- v at 5Ω . In general, the flux is expressed as:<br>
+(Equation Removed)Equation (9) is a linear combination of the pressure values, p , in the volumes {Ω} of the domain dΩ.The total number of volumes is n and Tk denotes transmissibility between volumes {Ω}. By definition, the fluxes of equation (9)<br>
+are continuous across the interfaces of the volumes {Ω}and, as a result, the finite-volume method is conservative.<br>
+2.       Construction of the Effective Transmissibilities The MSFV method results in multi-point stencils for coarse-scale fluxes. For the following description, an orthogonal 2D grid 20 of grid cells 22 is used, as shown in FIG. 1. An underlying fine grid 24 of fine grid cells 26 contains the fine-scale permeability K information. To compute the transmissibilities T between coarse grid cells 22, a dual coarse grid 30 of dual coarse control<br>
+volumes 32 is used. A control volume 32 of the dual grid 30, Ω, is constructed by connecting the mid-points of four adjacent coarse grid cells 22. To relate the fluxes across the coarse grid cell interfaces 34 which lie inside a particular control volume 32, or Ω, to the finite-volume pressures pk(k = l,4) in the four<br>
+adjacent coarse grid cells 22, a local elliptical problem in the preferred embodiment is defined as<br>
+(Equation  Removed)<br>
+For one skilled in the art, the method can easily be adapted to use a local parabolic problem.<br>
+For an elliptic problem, Dirichlet or Neumann boundary conditions are to be specified on boundary dΩ Ideally, the imposed boundary conditions should approximate the true flow conditions experienced by the sub-domain in the full system. These boundary conditions can be time and flow dependent. Since the sub-domain is embedded in the whole system, Wallstrom et al. (T.C. Wallstrom, T.Y. Hou, M.A. Christie, L.J. Durlofsky, and D.H. Sharp, Application of a new two-phase upscaling technique to realistic reservoir cross sections, SPE 51939, presented at the SPE Symposium on Reservoir Simulation, Houston, 1999) found that a constant pressure condition at the sub-domain boundary tends to overestimate flow contributions from high permeability areas. If the correlation length of permeability is not much larger than the grid size, the flow contribution from high permeability areas is not<br>
+proportional to the nominal permeability ratio. The transmissibility between two cells is a harmonic mean that is closer to the lower permeability. As a result, uniform flux conditions along the boundary often yield much better numerical results for a sub-domain problem than linear or constant pressure conditions.<br>
+Hou and Wu (T. Hou and W.H. Wu, A multiscale finite element method for elliptic problems in composite materials and porous media, J. Comp. Phys, 134:169-189, 1997) also proposed solving a reduced, problem<br>
+to specify the boundary conditions for the local problem. The subscript t denotes the component parallel to the boundary of the dual coarse control volume 32 ora5 . For equation (1 1 ) and for the following part of this specification, Einstein summation convention will be used. The elliptic problem on a control volume D with boundary conditions of equation (11 ) on d&amp; can be solved by any appropriate numerical method. In order to obtain a pressure solution that depends linearly on the pressures pk(j = 1,4), this preferred embodiment solves four elliptic problems, one for each cell-center pressure. For instance, to get the solution for the pressure pl in the coarse grid cell having node 1 at its center, pk = Ω1k is set. The four solutions provide<br>
+the dual basis functions O (k = 1,4) in control volume n , and the pressure<br>
+solution of the local elliptic problem in a control volume Ω is the linear combination<br>
+(Equation Removed<br>
+Accordingly, the flux q across the grid cell interfaces can be written as a linear combination<br>
+(Equation Removed)<br>
+where qk(k -1,4) are the flux contributions from the corresponding dual basis<br>
+functions, given all Ω (k = 1,4) from all control volumes Ω. The effective transmissibilities Tare computed, which can be used for finite-volume simulations, by assembling the flux contributions, in the preferred embodiment integral flux contributions across the cell interfaces 34.<br>
+Note that the domain £2 can have any fine-scale distribution of mobility coefficients A. Of course the boundary condition given by equation (11) is an approximation that allows one to decouple the local problems. The MSFV and global fine-scale solutions are identical, only if equation (11) happens to capture the exact fine-scale pressure solution. However, numerical experiments have been performed which indicate that equation (11) is an excellent approximation of the boundary condition.<br>
+Although the MSFV approach is a finite-volume method, it resembles the multi-scale finite-element method of Wu and Hou, briefly mentioned above. The construction of the dual basis functions is similar, though in the present MSFV method they are represented on the dual coarse grid rather than on the boundary of a finite element. A significant difference is that the present MSFV method is a cell-centered finite-volume method and is conservative. On the other hand, the mass matrix in the multi-scale finite-element method is constructed based on a variational principle and does not ensure local conservation. In the next section, the importance is illustrated of a fine-scale velocity field that is conservative.<br>
+3.        Reconstruction of a Conservative Fine-Scale Velocity Field Fluxes across the coarse cell interfaces 34 can be accurately computed by multi-scale transmissibilities T. In some cases, it is interesting to accurately represent the small-scale velocities u (e.g., to predict the distribution of solute<br>
+transported by a fluid). A straightforward approach might appear to be to use the dual basis functions Ω of equation (12). However, then the reconstructed fine-scale velocity field is, in general, discontinuous at the cell interfaces of the dual grid 30. Therefore, large errors can occur in the divergence field, and local mass balance is violated. Note that mass conservation is always satisfied for the coarse solution using the present MSFV method.<br>
+The construction of a second set of local fine-scale basis functions Ω will now be described which is fully consistent with the fluxes q across the cell<br>
+interfaces given by the dual basis functions Ω. This second set of fine-scale basis functions Ω allows a conservative fine-scale velocity field to be reconstructed.<br>
+FIG. 2 shows a coarse grid 20 with nine adjacent grid cells 22 and a corresponding dual grid 30 of dual coarse control volumes 32 or Ω. For indexing purposes, these particular cells and corresponding dual volumes shall now be identified with numerals "1-9" and letters "A-D" at their respective centers. Also shown is the underlying fine grid 24 of fine grid cells 26. The coarse grid, having the nine adjacent coarse cells 1-9, is shown in bold solid lines. The corresponding dual grid 30 of dual coarse control volumes A-D are depicted with bold dashed lines. The underlying fine grid 24 of fine grid cells 26 is shown with thin dotted lines.<br>
+To explain the reconstruction of the fine-scale velocity, the mass balance of the center grid cell 5 is examined. The coarse scale pressure solution,<br>
+together with the dual basis functions Ω, provides the fine-scale fluxes q across the interfaces of coarse cell 5.<br>
+To obtain a proper representation of the fine-scale velocity field in coarse cell 5, (i) the fine-scale fluxes across an interface of coarse cell 5 must match, and (ii) the divergence of the fine-scale velocity field within the coarse volume satisfies<br>
+where QS is the coarse grid cell 5. The fine-scale flux q across the boundary<br>
+of grid cell 5 depends on the coarse pressure solutions in grid cells 1-9. Therefore, the fine-scale velocity field within coarse grid cell 5 can be<br>
+expressed as a superposition of fine-scale basis functions <e>* (/ = 1,9). With<br>
+the help of FIG. 3, which depicts the needed dual coarse control volumes, the needed dual coarse control volumes, the construction the needed dual coarse control volumes, the construction of the fine-scale the needed dual coarse control volumes, the construction of the fine-scale the needed dual coarse control volumes, the construction of the fine-scaletion in construction of the<br>
+fine-scale basis functions Φ' will be described. Each coarse cell pressure p(i -1,9) contributes to the fine-scale flux q . For example, let the contribution of the pressure in ceil 2 to the flux q   in grid cell 5 beg(2). Note that q(2) is<br>
+composed of contributions q(2)A and q(2)B coming from the dual basis functions associated with node 2 of volume A and volume B, respectively. To compute the fine-scale basis function Vz associated with the pressure in a coarse cell<br>
+i, pJ = 6ij is set, and the pressure field is constructed according to the following equation.<br>
+(Equation Removed)<br>
+The fine-scale fluxes q   are computed from the pressure field. These fluxes provide the proper boundary condition for computing the fine-scale basis function Φ. To solve the elliptic problem<br>
+(Equation Removed)<br>
+with the boundary conditions described above, solvability must be ensured. This is achieved by setting<br>
+which is an equally distributed source term within Φ5. Finally, the solution of the elliptic problem, (16) and (17), is the fine-scale basis function &amp; for<br>
+coarse cell 5 associated with the pressure in volume /.The small-scale velocity field is extracted from the superposition<br>
+(Equation Removed)<br>
+For incompressible flow, this velocity field is divergence free everywhere. Computing the fine-scale basis functions Φrequires solving nine small<br>
+elliptic problems, which are of the same size as those for the transmissibility calculations. Note that this step is a preprocessing step and has to be done only once. Furthermore, the construction of the fine-scale basis functions<br>
+Φis independent and therefore well suited for parallel computation. The<br>
+reconstruction of the fine-scale velocity field is a simple superposition and is ideally performed only in regions of interest.<br>
+Alternatively, a conservative fine-scale velocity field may also be constructed directly in place. This construction may be performed as follows: (i) compute the fine-scale fluxes across the coarse cell interfaces using the dual basis functions with the pressures for the coarse cells; (ii) solve a pressure equation on each of the coarse cells using the fine-scale fluxes computed in step (i) as boundary conditions to obtain fine-scale pressures; (iii) compute the fine-scale velocity field from Darc/s law using the fine-scale pressures obtained in step (ii) with the underlying fine-scale permeability. The pressure solution of step (ii) may be performed on a system with larger support (e.g., by over-sampling around the coarse cell).<br>
+III.       IMPLEMENTATION OF THE MSFV METHOD<br>
+FIG. 4 is a flow chart summarizing the steps employed in a preferred embodiment in simulating a reservoir using the MSFV algorithm of this invention. The MSFV algorithm consists of six major steps:<br>
+A.	compute transmissibilities T for coarse-scale fluxes (step 100);<br>
+B.	construct fine-scale basis functions (step 200);<br>
+C.	compute a coarse solution at a new time level; (step 300);<br>
+D.	reconstructs the fine-scale velocity field in regions of interest<br>
+(step 400);<br>
+E.	solve transport equations (step 500); and<br>
+F.	recomputes transmissibilities and also the fine-scale basis functions in<br>
+regions where the total mobility has changed more than a<br>
+predetermined amount (step 600).<br>
+Steps A-D describes a two-scale approach. The methodology can be applied recursively with successive levels of coarsening. In cases of extremely fine resolution, this multi-level approach should yield scalable solutions. Parts E and F account for transport and mobility changes due to evolving phases and will be described in more detail below.<br>
+A.       Computing Transmissibilities for Coarse-Scale Fluxes - Step 100 The transmissibility calculations can be done in a stand alone module (T-module) and are well suited for parallel computation. The transmissibilities Tcan be written to a file for use by any finite-volume simulator that can handle multi-point flux discretization.<br>
+Referring now to FIG. 5, a flowchart describes the individual steps which are undertaken to compute the transmissibilities T for a coarse scale model. First, a fine-scale grid having fine cells with an associated permeability field K are created (step 110). Next, a coarse grid, having coarse cells corresponding to the fine-scale grid, is created (step 120). The fine and coarse grids are then passed into a transmissibility or 7-module.<br>
+Dual coarse control volumes 5 are constructed (step 130), one for each node of the coarse grid. For each dual coarse control volume Q, dual or coarse<br>
+scale basis functions O^ are constructed (step 140) by solving local elliptic<br>
+problems (equation (10)) for each volume Q. This local elliptic problem, as described in section II.A.2 above, and the permeability field K associated with the fine grid are used and the boundary conditions corresponding to equation (11) are utilized (step 135) in solving the elliptic problem. In cases where the fine and coarse grids are nonconforming (e.g., if unstructured grids are used), oversampling may be applied. Finally, the integral coarse scale fluxes q across the interfaces of the coarse cells are extracted (step 150) from the<br>
+dual basis functions Φ These integral coarse scale fluxes q   are then<br>
+assembled (step 160) to obtain MSFV-transmissibilities T between grid cells of the coarse grid.<br>
+The computation of transmissibilities 7 can be viewed as an upscaling procedure. That is, the constructed coarse pressure solutions are designed to account for, in some manner, the fine-scale description of the permeability K in the original fine-scale grid model. Thus, part A- step 100 - computing transmissibilities, is preferably a separate preprocessing step used to coarsen the original fine-scale model to a size manageable by a conventional reservoir simulator.<br>
+These transmissibilities T may be written to a file for later use. A finite-volume simulator that can handle multi-point flux discretization can then use these transmissibilities T.<br>
+6.       Construction of Fine-Scale Basis Function and Fine-scale Velocity<br>
+Field- Step 200 FIG. 6 is a flowchart describing the steps taken to construct a set of fine-scale<br>
+basis functions Φ  which can be isolated in a separate fine-scale basis<br>
+function Φ   module. These fine-scale basis functions Φ   can then be used to<br>
+create a fine-scale velocity field. This module is only necessary if there is an interest in reconstructing the fine-scale velocity field from the coarse pressure solution. As described in Section II.A.3 above, if the original dual basis functions Φ are used in reconstructing the fine-scale velocity field, large mass balance errors can occur. Here, steps are described to compute the fine-scale basis functions Φ, which can be used to reconstruct a conservative fine-scale velocity field. The procedure (step 200) of FIG. 4 follows the description of Section II.A.3 and has to be performed only once at the beginning of a simulation and is well suited for parallel computation.<br>
+The fine-scale grid (step 210), with its corresponding permeability field K, the<br>
+coarse grid (step 220), and the dual basis functions Φ (step 230) are passed into a fine-scale basis function Φ . A pressure field is constructed from the coarse scale pressure solution and dual basis functions (step 250). The fine-scale fluxes for the coarse cells are then computed (step 260). For each control volume, elliptic problems are solved, using the fine-scale fluxes as boundary conditions, to determine fine-scale basis functions (step 270). The fine-scale velocity field can then be computed from the superposition of cell pressures and fine-scale basis functions. The results may then be output from the module. Alternatively, the fine-scale velocity field can be computed directly in place as has been described above in section II.A.3. In many cases, the fine-scale velocity field has to be reconstructed in certain regions only, as will be described in fuller detail below. Therefore, in order to save memory and computing time, one can think of an in situ computation of the fine-scale basis functions 3) , which, once computed, can be reused.<br><br>
+C.	Computation of the Coarse Solution at the New Time - Step 300<br>
+Step 300 can be performed by virtually any multi-point stencil finite-volume<br>
+code by using the MSFV-transmissibilities 7for the flux calculation. These<br>
+coarse fluxes effectively capture the large-scale behavior of the solution<br>
+without resolving the small scales.<br>
+D.	Reconstruction of the Fine-Scale Velocity Field - Step 400<br>
+Step 400 is straightforward. Reconstruction of the fine-scale velocity field in regions of interest is achieved by superposition of the fine-scale basis FIG. 6. Alternatively, the fine-scale velocity field can be computed directly in functions<br>
+Φas described in section II.A.3, step B above and as shown in place as<br>
+described above in section II.A.3. Of course, many variations of the MSFV method can be devised. It may be advantageous; however, that construction<br>
+of the transmissibilities T and fine-scale basis functions Φ can be done in modules separate from the simulator.<br>
+E.	Solving Pressure and Transport Equations<br>
+1.        Numerical solution algorithm - explicit solution Multi-phase flow problems may be solved in two stages. First, the total velocity field is obtained from solving the pressure equation (4), and then the hyperbolic transport equation (5) is solved. To solve the pressure equation, the MSFV method, which has been described above is used. The difference from single phase flow is that in this case the mobility term  reflects the total mobility of both phases, and then the obtained velocity field u is the total velocity in the domain. The reconstructed fine-scale velocity field u is then used to solve the transport equation on the fine grid. The values of k0iW are<br>
+taken from the upwind direction; time integration may be obtained using a backward Euler scheme. Note that, in general, the dual and fine-scale basis functions (6.O) must be recomputed each time step due to changes in the saturation (mobility) field.<br>
+2.       Numerical Solution Algorithm - Implicit Coupling In the preferred embodiment of this invention, the MSFV method utilizes an algorithm with implicit calculations. The multi-phase flow problem is solved iteratively in two stages. See FIG. 7 for a diagram of this method illustrating the coupling between the pressure and saturation equations.<br>
+First, in each Newton step, a saturation field S is established - either initial input or through iteration (step 51 0). Next, a pressure equation (see equation (19) below) is solved (step 520) using the MSFV techniques described above to obtain (step 530) the total velocity field. Then a transport equation (see equation (20) below) is solved (step 540) on the fine grid by using the reconstructed fine-scale velocity field u. In this solution, a Schwarz overlap technique is applied, i.e., the transport problem is solved locally on each coarse volume with an implicit upwind scheme, where the saturation values from the neighboring coarse volumes at the previous iteration level are used for the boundary conditions. Once the Schwarz overlap scheme has converged (steps 550, 560) — for hyperbolic systems this method is very efficient — the new saturation distribution determines the new total mobility field for the pressure problem of the next Newton iteration. Note that, in general, some of the basis functions have to be recomputed each iteration.<br>
+The superscripts n and v denote the old time and iteration levels, respectively. Saturation is represented byS , the total velocity field by u, the computation of the velocity by the operator!! , and the computation of the<br>
+saturation by . The new pressure field pv+1 is obtained by solving<br>
+(Equation Removed)<br>
+from which the new velocity field u v+1 is computed. The new saturation field is obtained by solving<br>
+(Equation Removed)<br>
+F.       Recomputing Transmissibilities and Fine-Scale Basis Functions -<br>
+Adaptive Scheme The most expensive part of the MSFV algorithm for multi-phase flow is the<br>
+reconstruction of the coarse scale and fine-scale basis functions (Φ ).<br>
+Therefore, to obtain higher efficiency, it is desirable to recompute the basis functions only where it is absolutely necessary. An adaptive scheme can be used to update these basis functions. In the preferred exemplary embodiment, if the condition<br>
+(Equation Removed)<br>
+is not fulfilled (the superscripts n and «-l denote the previous two time steps and s^ is a defined value) for all fine cells inside a coarse dual volume, then<br>
+the dual basis functions of that control volume have to be reconstructed. Note that condition (23) is true if Φ changes by a factor which is larger than<br>
+£%) and smaller than l +Φ. An illustration of this scheme is shown in<br>
+FIG. 8, where the fine and the coarse grid cells are drawn with thin and bold lines, respectively. The black squares represent the fine cells in which condition (23) is not fulfilled. The squares with bold dashed lines are the control volumes for which the dual basis functions have to be reconstructed. The shaded regions represent the coarse cells for which the fine-scale basis functions have to be updated. In the schematic 2D example of FIG. 8, only 20 of 196 total dual basis functions and 117 of 324 total fine-scale basis functions have to be reconstructed. Of course, these numbers depend heavily on the defined thresholΦ. In general, a smaller threshold triggers more fine<br>
+volumes, and as a consequence more basis functions are recomputed each time step. For a wide variety of test cases, it has been found that taking e% to be 
+IV.      NUMERICAL RESULTS<br>
+This MSFV method, combined the implicit coupling scheme shown in FIG. 7, has been tested for two phase flow (µ0//zwsio) in a stiff 3D model with<br>
+more than 140,000 fine cells. It has been demonstrated that the multi-scale results are in excellent agreement with the fine-scale solution. Moreover, the MSFV method has proven to be approximately 27 times more efficient than the established oil reservoir simulator Chears. However, in many cases the computational efficiency is compromised due to the time step size restrictions inherent for IMPES schemes. This problem may be resolved by applying the fully implicit MSFV method, which was described in the previous section. Here numerical studies show the following:<br>
+(1)	The results obtained with the implicit MSFV method are in excellent<br>
+agreement with the fine-scale results.<br>
+(2)	The results obtained with the implicit MSFV method are not very<br>
+sensitive to the choice of the coarse grid.<br>
+(3)	The implicit MSFV for two phase flow overcomes the time step size<br>
+restriction and therefore very large time steps can be applied.<br>
+(4)	The results obtained with the implicit MSFV method are, to a large<br>
+extent, insensitive to the time step size.<br>
+(5)	The implicit MSFV method is very efficient.<br>
+For the fine-scale comparison runs, the established reservoir simulator Chears was used. The efficiency of both the implicit MSFV method and the fine-scale reservoir simulator depends on the choice of various parameter settings which were not fully optimized.<br>
+A.       Test Case<br>
+To study the accuracy and efficiency of the fully implicit MSFV algorithm, 2D and 3D test cases with uniformly spaced orthogonal 60 x 220 and 60 x 220 x 85 grids were used. The 3D grid and permeability field are the same as for the SPE 10 test case, which is regarded as being extremely difficult for reservoir simulators. While this 3D test case is used for computational efficiency assessment, the 2D test cases, which consist of top and bottom layers, serves to study the accuracy of the MSFV method. FIG. 9 illustrates the 3D test case posed by the permeability field of the SPE 10 problem. The darker areas indicate lower permeability. An injector well is placed in the center of the field and four producers in the corners. These well locations are used for all of the following studies. The reservoir is initially filled<br>
+with oil and  ///<br>
+B.       2D Simulation of the Top and Bottom Layers The MSFV simulator used lacked a sophisticated well model. That is, wells are modeled by defining the total rates for each perforated coarse volume. Therefore, in order to make accuracy comparisons between MSFV and fine-scale (Chears reservoir simulator) results, each fine-scale volume inside each perforated coarse volume becomes a well in the Chears runs. For large 3D models, this poses a technical problem since Chears reservoir simulator is not designed to handle an arbitrary large number of individual wells. For this reason, it was determined to do an accuracy assessment in 2D, i.e., with the top and the bottom layers of the 3D model. These two layers, for which the permeability fields are shown in FIGS. 10A and 10B, are representative for the two characteristically different regions of the full model.<br>
+MSFV simulations were performed with uniformly spaced 10 x 22 and 20 x 44 coarse grids. The results were compared with the fine-scale solution on a 60 x 220 grid. As in the full 3D test case, there are four producers at the corners which are distributed over an area of 6 x 10 fine-scale volumes. The injector is located in the center of the domain and is distributed over an area<br>
+of 12 x 12 fine-scale volumes. The rates are the same for all fine-scale volumes (positive for the producer volumes and negative for the injector volumes). FIGS. 11A-C and 12A-C show the permeability fields of the respective top and the bottom layers. The black is indicative of low permeability. These two layers are representative for the two characteristically different regions of the full 3D model. FIGS. 11A-C and 12A-C show the computed saturation fields after 0.0933 PVI (pore volume injected) for the top and the. bottom layers, respectively. While FIGS. 11C and 12C show the fine-scale reference solutions, FIGS 11A and 11B and 12A and 12B show the MSFV results for 10 x 22 and 20 x 44 coarse grids, respectively. For both layers, it can be observed that the agreement is excellent and that the multi-scale method is hardly sensitive to the choice of the coarse grid. A more quantitative comparison is shown in FIGS. 13A and 13B where the fine-scale and multi-scale oil cut and oil recovery curves are plotted. Considering the difficulty of these test problems and the fact that two independently implemented simulators are used for the comparisons, this agreement is quite good. In the following studies, it will be demonstrated that for a model with 1,122,000 cells, the MSFV method is significantly more efficient than fine-scale simulations and the results remain accurate for very large time steps.<br>
+C.       3D Simulations<br>
+While 2D studies are appropriate to study the accuracy of the implicit MSFV method, large and stiff 3D computations are required for a meaningful efficiency assessment. A 3D test case was employed as described above. A coarse 10 x 22 x 17 grid, shown in FIG. 14, was used and 0.5 pore volumes were injected. Opposed to the MSFV runs, the wells for the CHEARS simulations were defined on the fine-scale. Table 1 below shows CPU time and required number of times steps for the CHEARS simulation and two MSFV runs.<br>
+TABLE 1<br>
+Efficiency Comparison Between Msfv And Fine-Scale Simulations<br>
+(Table Removed)<br>
+While Chears uses a control algorithm, the time step size in the multi-scale simulations was fixed. It is due to the size and stiffness of the problem that much smaller time steps have to be applied for a successful Chears simulation. The table shows that the implicit MSFV method can compute the solution approximately 27 times faster than CHEARS. FIG. 15 shows the oil cut and recovery curves obtained with multi-scale simulations using 50 and 200 time steps. The close agreement between the results confirms that the method is very robust in respect to time step size. Since the cost for MSFV simulation scales almost linearly with the problem size and since the dual and fine-scale basis function can be computed independently, the method is ideally suited for massive parallel computations and huge problems.<br>
+While in the foregoing specification this invention has been described in relation to certain preferred embodiments thereof, and many details have been set forth for purpose of illustration, it will be apparent to those skilled in the art that the invention is susceptible to alteration and that certain other details described herein can vary considerably without departing from the basic principles of the invention.<br><br><br>
+WE CLAIM:<br>
+1.       A multi-scale finite-volume method for use in modeling a subsurface reservoir comprising:<br>
+(a)	creating a fine grid defining a plurality of fine cells and having a<br>
+permeability field associated with the fine cells;<br>
+(b)	creating a coarse grid defining a plurality of coarse cells having<br>
+interfaces between the coarse cells, the coarse cells being<br>
+aggregates of the fine cells;<br>
+(c)	creating a dual coarse grid defining a plurality of dual coarse<br>
+control volumes, the dual coarse control volumes being<br>
+aggregates of the fine cells and having boundaries bounding the<br>
+dual coarse control volumes;<br>
+(d)	calculating dual basis functions on the dual coarse control<br>
+volumes by solving local elliptic or parabolic problems;<br>
+(e)	extracting fluxes across the interfaces of the coarse cells from<br>
+the dual basis functions;<br>
+(f)	assembling the fluxes to calculate effective transmissibilities<br>
+between coarse cells;<br>
+(g)	calculating pressure in the coarse cells using a finite volume<br>
+method and utilizing the effective transmissibilities between<br>
+coarse cells; and<br>
+(h)      computing a fine-scale velocity field.<br>
+2.	The method of claim 1 wherein:<br>
+the fine-scale velocity field is computed directly in place.<br>
+3.	The method of claim 2 wherein:<br>
+the step of computing a fine-scale velocity field directly in place includes:<br>
+(i) computing fine-scale fluxes across the coarse cell interfaces using the dual basis functions with the pressures the coarse cells;<br>
+(ii)      solving a pressure equation on each of the coarse cells using the fine-scale fluxes computed in step (i) as boundary conditions to obtain fine-scale pressures; and<br>
+(iii)      computing the fine-scale velocity field from Darcy's law using the fine-scale pressure obtained in step (ii).<br>
+4.	The method of claim 3 wherein:<br>
+the solving of the pressure equation of step (ii) to obtain fine-scale pressures is performed on a system with larger support.<br>
+5.	The method of claim 4 wherein:<br>
+the solving of the pressure equation of step (ii) may be performed by over-sampling around the coarse cells.<br>
+6.       The method of claim 3 wherein:<br>
+the solving of the pressure equation of step (ii) may be performed by over-sampling around the coarse cells.<br><br><br></e></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LUFic3RyYWN0LSgxMS0wMi0yMDEzKS5wZGY=" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Abstract-(11-02-2013).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LUFzc2lnbm1lbnQtKDE5LTAzLTIwMTIpLnBkZg==" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Assignment-(19-03-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LUNsYWltcyAtKDExLTAyLTIwMTMpLnBkZg==" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Claims -(11-02-2013).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMTEtMDItMjAxMykucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Correspondence Others-(11-02-2013).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMTMtMDgtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Correspondence Others-(13-08-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMTktMDMtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Correspondence Others-(19-03-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LWNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LURyYXdpbmdzLSgxMS0wMi0yMDEzKS5wZGY=" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Drawings-(11-02-2013).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LUZvcm0tMS0oMTktMDMtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Form-1-(19-03-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LWZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LWZvcm0tMTgucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LUZvcm0tMi0oMTktMDMtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Form-2-(19-03-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LWZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LUZvcm0tMy0oMTMtMDgtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Form-3-(13-08-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LWZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LUZvcm0tNS0oMTktMDMtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Form-5-(19-03-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LWZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LUdQQS0oMTktMDMtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-GPA-(19-03-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LXBjdC0xMDEucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-pct-101.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LXBjdC0zMDQucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-pct-304.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU4OC1kZWxucC0yMDA3LVBldGl0aW9uLTEzNy0oMTMtMDgtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">4588-delnp-2007-Petition-137-(13-08-2012).pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="258809-an-improved-process-for-manufacturing-disc-of-wheel-rims.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="258811-session-initiation-protocol-sip-based-user-initiated-handoff.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>258810</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>4588/DELNP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>07/2014</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>14-Feb-2014</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>08-Feb-2014</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>15-Jun-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>CHEVRON U.S.A. INC.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>6001 BOLLINGER CANYON ROAD, 3RD FLOOR, SAN RAMON, CA 94583, USA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>JENNY, PATRICK</td>
+											<td>RUETIHOFSTRASSE 42, CH-8049 ZURICH, SWITZERLAND</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>LEE, SEONG</td>
+											<td>6013 CHRISTIE AVENUE, EMERYVILLE, CA 94608, USA</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>TCHELEPI, HAMDI, A.</td>
+											<td>120 WEST 3RD AVENUE,APT. 710, SAN MATEO, CA 94402, USA</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>C06G 7/48</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2005/042632</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-11-21</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/997,539</td>
+									<td>2004-11-23</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/258810-multi-scale-finite-volume-method-for-use-in-subsurface-flow-simulation by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:21:33 GMT -->
+</html>

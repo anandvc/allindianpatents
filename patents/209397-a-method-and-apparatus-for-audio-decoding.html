@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/209397-a-method-and-apparatus-for-audio-decoding by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:46:54 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 209397:A METHOD AND APPARATUS FOR AUDIO DECODING</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD AND APPARATUS FOR AUDIO DECODING</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>An energy corrector (105) for correcting a target energy for high- frequency components and a corrective coefficient calculator (106) for calculating an energy corrective coefficient from low-frequency subband signals are newly provided. These processors perform a process for correcting a target energy that is required when a band expanding process is performed on a real number only. Thus, a real subband combining filter and a real band expander which require a smaller amount of calculations can be used instead of a complex subband combining filter and a complex band expander. while maintaining a high sound-quality level. and the required amount of calculations and the apparatus scale can be reduced.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+AUDIO DECODING APPARATUS AND DECODING METHOD<br>
+AND PROGRAM<br>
+TECHNICAL FIELD The present invention relates to an audio decoding apparatus and decoding method for decoding a coded audio signal.<br>
+BACKGROUND ART<br>
+MPEG-2 AAC (Advanced Audio Coding) which is an international standard process of ISO/IEC is widely known as an audio coding/decoding process for coding an audio signal with high sound quality at a low bit rate. According to conventional audio coding/decoding processes that are typified by the MPEG-2 AAC, a plurality of samples from a time-domain PCM signal are put together into a frame, which is converted into a frequency-domain signal by a mapping transform such as MDCT (Modified Discrete Cosine Transform). The frequency-domain signal is then quintiles and subjected to Huffman coding to produce a bit stream.  For quantizing the frequency-domain signal, in view of the hearing characteristics of the human being, the quantizing accuracy is increased for more perceptible frequency components of the frequency-domain signal and reduced for less perceptible frequency components of the frequency-domain signal, thus achieving a high sound-quality level with a limited amount of coding. For example, a bit rate of about 96 kbps according to the MPEG-2 AAC can provide the same sound-quality level (at a sampling frequency of 44.1 kHz for a stereophonic signal) as CDs.<br>
+If a stereophonic signal sampled at a sampling frequency of 44.1 kHz<br><br>
+is coded at a lower bit rate, e.g., a bit rate of about 48 kbps, then efforts are made to maximize the subjective sound quality at the limited bit rate by not coding high-frequency components that are of less auditory importance, i.e., by setting their quantized values to zero. However, since the high-frequency components are not coded, the sound-quality level is deteriorated, and the reproduced sound is generally of muffled nature.<br>
+Attention has been drawn to the band expansion technology for solving the problem of the sound quality deterioration at low bit rates. According to the band expansion technology, a high-frequency bit stream as auxiliary information in a slight amount of coding (generally several kbps) is added to a low-frequency bit stream representative of an audio signal that has been coded at a low bit rate by a coding process such as the MPEG-2 AAC process or the like, thus producing a combined bit stream The combined bit stream is decoded by an audio decoder as follows: The audio decoder decodes the low-frequency bit stream according to a decoding process such as the MPEG-2 AAC process or the like, producing a low-frequency audio signal that is free of high-frequency components. The audio decoder then processes the low-frequency audio signal based on the auxiliary information represented by the high-frequency bit stream according to the band expansion technology, thus generating high-frequency components. The high-frequency components thus generated and the low-frequency audio signal produced by decoding the low-frequency bit stream are combined into a decoded audio signal that contains the high-frequency components.<br>
+One example of a conventional audio decoder based on the band expansion technology is a combination of an MPEG-2 AAC decoder and a<br><br>
+band expansion technology called SBR as described in document 1, section 5.6 shown below. Fig. 1 of the accompanying drawings illustrates a conventional audio decoder based on the band expansion technology described in document 1.<br>
+Document 1: "Digital Radio Mondiale (DRM); System Specification" (ETSITS 101 980 VI. 1.1), published September, 2001, p. 42 - 57.<br>
+The conventional audio decoder shown in Fig. 1 comprises bit stream separator 100, low-frequency decoder 101, subband divider 402, complex band expander 403, and complex subband combiner 404.<br>
+Bit stream separator 100 separates an input bit stream and outputs separated bit streams to low-frequency decoder 101 and complex band expander 403. Specifically, the input bit stream comprises a multiplexed combination of a low-frequency bit stream representing a low-frequency signal that has been coded by a coding process such as the MPEG-2 AAC process and a high-frequency bit stream including information that is required for complex band expander 403 to generate a high-frequency signal. The low-frequency bit stream is output to low-frequency decoder 101, and the high-frequency bit stream is output to complex band expander 403.<br>
+Low-frequency decoder 101 decodes the input low-frequency bit stream into a low-frequency audio signal, and outputs the low-frequency audio signal to subband divider 402. Low-frequency decoder 101 decodes tine input low-frequency bit stream according to an existing audio decoding process such as the MPEG-2 AAC process or the like.<br>
+Subband divider 402 has a complex subband dividing filter that divides the input low-frequency bit stream into a plurality of low-frequency<br><br>
+subband signals in respective frequency bands, which are output to complex band expander 403 and complex subband combiner 404. The complex subband dividing filter may comprise a 32-band complex QMF (Quadrature Mirror Filter) bank which has heretofore been widely known in the art. The complex low-frequency subband signals divided in the respective 32 subbands are output to complex band expander 403 and complex subband combiner 404. The 32-band complex QMF bank processes the input low-frequency bit stream according to the following equation:<br><br>
+where x(n) represents the low-frequency audio signal, Ak(m) the kith-band low-frequency subband signal, and h(n) the analytic low-pass filter. In this example, K1 = 64.<br>
+Complex band expander 403 generates a high-frequency subband signal representing a high-frequency audio signal from the high-frequency bit stream and the low-frequency subband signals that have been input thereto, and outputs the generated high-frequency subband signal to complex subband combiner 404. As shown in Fig. 2 of the accompanying drawings, complex band expander 403 comprises complex high-frequency generator 500 and complex amplitude adjuster 501. Complex band expander 403 is supplied with the high-frequency bit stream from input terminal 502 and with the low-frequency subband signals from input terminal 504, and outputs the high-frequency subband signal from output terminal 503.<br><br>
+Complex high-frequency generator 500 is supplied with the low-frequency subband signals and the high-frequency bit stream, and copies the signal in the subband that is specified among the low-frequency subband signals by the high-frequency bit stream, to a high-frequency subband. When copying the signal, complex high-frequency generator 500 may perform a signal processing process specified by the high-frequency bit stream. For example, it is assumed that there are 64 subbands ranging from subband 0 to subband 63 in the ascending order of frequencies, and complex subband signals from subband 0 to subband 19, of those 64 subbands, are supplied as the low-frequency subband signals to input terminal 504.  It is also assumed that the high-frequency bit stream contains copying information indicative of which one of the low-frequency subbands (subband 0 to subband 19) a signal is to be copied from to generate a subband A (A &gt; 19), and signal processing information representing a signal processing process (selected from a plurality of processes including a filtering process) to be performed on the signal. In complex high-frequency generator 500, a complex-valued signal in a high-frequency subband (referred to as "copied/processed subband signal") is identical to a complex-valued signal in a low-frequency subband indicated by the copying information. If the signal processing information indicates any signal processing need for better sound quality, then complex high-frequency generator 500 performs the signal processing process indicated b the signal processing information on the copied/processed subband signal. The copied/processed subband signal thus generated is output to complex amplitude adjuster 501.<br>
+One example of signal processing performed by complex high-<br><br>
+frequency generator 500 is a linear predictive inverse filter that is generally well known for audio coding. Generally, it is known that the filter coefficients of a linear predictive inverse filter can be calculated by linearly predicting an input signal, and the linear predictive inverse filter using the filter coefficients operate to whiten the spectral characteristics of the input signal. The reason why the linear predictive inverse filter is used for signal processing is to make the spectral characteristics of the high-frequency subband signal flatter than the spectral characteristics of the low-frequency subband signal from which it is copied. A comparison between the spectral characteristics of low- and high-frequency subband signals of an audio signal, for example, indicates that the spectral characteristics of the high-frequency subband signal are often flatter than the spectral characteristics of the low-frequency subband signal. Therefore, a high-quality band expansion technology can be realized by using the above flattening technique.<br>
+Complex amplitude adjuster 501 performs a correction specified by the high-frequency bit stream on the amplitude of the input copied/processed subband signal, generating a high-frequency subband signal. Specifically, complex amplitude adjuster 501 performs an amplitude correction on the copied/processed subband signal in order to equalize the signal energy (referred to as "target energy") of high-frequency components of the input signal on the coding side and the high-frequency signal energy of the signal generated by complex band expander 403 with each other. The high-frequency bit stream contains information representative of the target energy. The generated high-frequency subband signal is output to output terminal 503. The target energy described by the high-frequency bit<br><br>
+stream may be considered as being calculated in the unit of a frame for each subband, for example. Alternatively, in view of the characteristics in the time and frequency directions of the input signal, the target energy may be calculated in the unit of a time divided from a frame with respect to the time direction and in the unit of a band made up of a plurality of subbands with respect to the frequency direction. If the target energy is calculated in the unit of a time divided from a frame with respect to the time direction, then time-dependent changes in the energy can be expressed in further detail. If the target energy is calculated in the unit of a band made up of a plurality of subbands with respect to the frequency direction, then the number of bits required to code the target energy can be reduced. The unit of divisions in the time and frequency directions used for calculating the target energy is represented by a time frequency grid, and its information is described by the high-frequency bit stream.<br>
+According to another arrangement of complex amplitude adjuster 501, an additional signal is added to the copied/processed subband signal, generating a high-frequency subband signal. The amplitude of the copied/processed subband signal and the amplitude of the additional signal are adjusted such that the energy of the high-frequency subband signal serves as a target energy. An example of the additional signal is a noise signal or a tone signal. Gains for adjusting the amplitudes of the copied/processed subband signal and the additional signal, on the assumption that either one of the copied/processed subband signal and the additional signal serves as a main component of the generated high-frequency subband signal, and the other as an auxiliary component thereof, are calculated as follows; If the copied/processed subband signal serves<br><br>
+as a main component of the generated high-frequency subband signal, then<br>
+Gmain = sqrt(R/E/(1 + Q))<br>
+Gsub = sqrt(R x Q/N/(l + Q)) where Gmain represents the gain for adjusting the amplitude of the main component, Gsub the gain for adjusting the amplitude of the auxiliary component, and E, N the respective energies of the copied/processed subband signal and the additional signal. If the energy of the additional signal is normalized to 1, then N = 1. In the above equations, R represents the target energy, Q the ratio of the energies of the main and auxiliary components, R, Q being described by the high-frequency bit stream, and sqrtQ the square root. If the additional signal serves as a main component of the generated high-frequency subband signal, then<br>
+Gmain = sqrt(R/N/(1 + Q))<br>
+Gsub = sqrt(R x Q/E/(1 + Q))<br>
+The high-frequency subband signal can be calculated by weighting the copied/processed subband signal and the additional signal using the amplitude adjusting gains thus calculated and adding the copied/processed subband signal and the additional signal which are thus weighted.<br>
+Operation of complex amplitude adjuster 501 for amplitude adjustment and advantages thereof will be described in detail with reference to Fig. 3. The signal phase (phase A in Fig. 3) of high-frequency components of the input signal on the coding side and the signal phase (phase B in Fig. 3) of the high-frequency subband signal derived from the low-frequency subband signal are entirely different from each other as shown in Fig. 3. However, since the amplitude of the high-frequency subband signal is adjusted such that its signal energy is equalized to the<br><br>
+target energy, the sound quality as it is heard is prevented from being degraded. This is because the human auditory sense is more sensitive to signal energy variations than to signal phase variations.<br>
+Complex subband combiner 404 has a complex subband combining filter that combines the bands of the low-frequency subband signal and the high-frequency subband signal that have been input thereto. An audio signal generated by combining the bands is output from the audio decoder. The complex subband combining filter that is used corresponds to the complex subband dividing filter used in subband divider f 02. That is, these filters are selected such that a certain signal is divided by a complex subband dividing filter into subband signals, which are combined by a complex subband combining filter to fully reconstruct the original signal (the signal input to the complex subband dividing filter). For example, if the 32-band complex QMF dividing filter bank (K1 = 64) represented by the equation 402.1 is used as the complex subband combining filter, then the following equation 404.1 can be employed:<br><br>
+where f(n) represents the combining low-pass filter.  In this example, K2 = 64.<br>
+If the sampling frequency for the audio signal output from complex subband combiner 404 is higher than the sampling frequency for the audio signal output from low-frequency decoder 101 according to the band expansion technology, then the filters are selected such that a low-frequency part (down-sampled result) of the audio signal output from complex subband combiner 404 is equal to the audio signal output from<br><br>
+low-frequency decoder 101. Complex subband combiner 404 may employ a 64-band complex QMF combining filter bank (K2 = 128 in the equation 404.1).  In this case, the lower-frequency 32 bands employ the output of a 32-band complex QMF combining filter bank as a signal value.<br>
+The conventional audio decoder has been problematic in that it has a subband divider and a complex subband combiner which require a large amount of calculations, and the required amount of calculations and the apparatus scale are large because the band expansion process is carried out using complex numbers.<br>
+DISCLOSURE OF THE INVENTION<br>
+It is an object of the present invention to provide a band expansion technique for maintaining high sound quality and reducing an amount of calculations required, and an audio decoding apparatus, an audio decoding method, and an audio decoding program which employ such a band expansion technique.<br>
+To achieve the above object, an audio decoding apparatus according to the present invention comprises:<br>
+a bit stream separator for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoder for decoding the low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband divider for dividing the low-frequency audio signal into a plurality of complex-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+a corrective coefficient extractor for calculating an energy corrective<br><br>
+coefficient based on the low-frequency subband signals;<br>
+an energy corrector for correcting a target energy described by the high-frequency bit stream with the energy corrective coefficient to calculate a corrected target energy;<br>
+a band expander for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing the low-frequency subband signals as instructed by the high-frequency bit stream, at the corrected target energy; and<br>
+a subband combiner for combining the bands of the low-frequency subband signals and a real part of the high-frequency subband signal with each other with a subband combining filter to produce a decoded audio signal.<br>
+in another audio decoding apparatus according to the present invention, the corrective coefficient extractor may calculate the signal phase of the low-frequency subband signals and may calculate the energy corrective coefficient based on the signal phase. Alternatively, the corrective coefficient extractor may calculate the ratio of the energy of a real part of the low-frequency subband signals and the signal energy of the low-frequency subband signals as the energy corrective coefficient. Further alternatively, the corrective coefficient extractor may average the phases of samples of the low-frequency subband signals to calculate the energy corrective coefficient. Still further alternatively, the corrective coefficient extractor may smooth energy corrective coefficients calculated respectively in the frequency bands.<br>
+Still another audio decoding apparatus according to the present invention comprises:<br><br>
+a bit stream separator for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoder for decoding the low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband divider for dividing the low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+a corrective coefficient generator for generating a predetermined energy corrective coefficient;<br>
+an energy corrector for correcting a target energy described by the high-frequency bit stream with the energy corrective coefficient to calculate a corrected target energy;<br>
+a band expander for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing the low-frequency subband signals as instructed by the high-frequency bit stream, at the corrected target energy; and<br>
+a subband combiner for combining the bands of the low-frequency -subband signals and a real part of the high-frequency subband signal with each other with a subband combining filter to produce a decoded audio signal.<br>
+In yet another audio decoding apparatus, the corrective coefficient generator may generate a random number and may use the random number as the energy corrective coefficient. Alternatively, the corrective coefficient generator may generate predetermined energy corrective coefficients respectively in the frequency bands.<br><br>
+The audio decoding apparatus according to the present invention resides in that it has an energy corrector for correcting a target energy for high-frequency components and a corrective coefficient calculator for calculating an energy corrective coefficient from low-frequency subband signals or a corrective coefficient generator for generating an energy corrective coefficient according to a predetermined process. These processors perform a process for correcting a target energy that is required when a band expanding process is performed on a real number only. Thus, a real subband combining filter and a real band expander which require a smaller amount of calculations can be used instead of a complex subband combining filter and a complex band expander, while maintaining a high sound-quality level, and the required amount of calculations and the apparatus scale can be reduced. If the corrective coefficient generator for generating an energy corrective coefficient without using low-frequency subband signals is employed, then a real subband dividing filter which requires a small amount of calculations can be used in addition to the subband combining filter and the band expander, further reducing the required amount of calculations and the apparatus scale.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS Fig. 1 is a block diagram showing an arrangement of a conventional<br>
+audio decoder;<br>
+Fig. 2 is a block diagram of complex band expander 403 of the<br>
+conventional audio decoder;<br>
+Fig. 3 is a diagram illustrative of an amplitude adjustment process<br>
+according to the conventional audio decoder;<br><br>
+Fig. 4 is a diagram illustrative of an amplitude adjustment process according to the present invention;<br>
+Fig. 5 is a diagram illustrative of an amplitude adjustment process without energy correction;<br>
+Fig. 6 is a block diagram of an audio decoding apparatus according to a first embodiment of the present invention;<br>
+Fig. 7 is a block diagram of an audio decoding apparatus according to a second embodiment of the present invention; and<br>
+Fig. 8 is a block diagram of band expander 103 according to the present invention.<br>
+BEST MODE FOR CARRYING OUT THE INVENTION Embodiments of the present invention will be described in detail below with reference to the drawings. (1st Embodiment)<br>
+Fig. 6 is a block diagram of an audio decoding apparatus according to a first embodiment of the present invention. The audio decoding apparatus according to the present embodiment comprises bit stream separator 100, low-frequency decoder 101, subband divider 102, band expander 103, subband combiner 104, energy corrector 105, and corrective coefficient extractor 106.<br>
+Bit stream separator 100 separates an input bit stream and outputs separated bit streams to low-frequency decoder 101. complex band expander 103, and energy corrector 105. Specifically, the input bit stream comprises a multiplexed combination of a low-frequency bit stream representing a low-frequency signal that has been coded and a high-<br><br>
+frequency bit stream including information that is required for band expander 103 to generate a high-frequency signal. The low-frequency bit stream is output to low-frequency decoder 101, and the high-frequency bit stream is output to complex band expander 403 and energy corrector 105.<br>
+Low-frequency decoder 101 decodes the input low-frequency bit stream into a low-frequency audio signal, and outputs the low-frequency audio signal to subband divider 102. Low-frequency decoder 101 decodes the input low-frequency bit stream according to an existing audio decoding process such as the MPEG-2 AAC process or the like.<br>
+Subband divider 402 has a complex subband dividing filter that divides the input low-frequency bit stream into a plurality of low-frequency subband signals in respective frequency bands, which are output to band expander 103, subband combiner 104, and corrective coefficient extractor 106.<br>
+Corrective coefficient extractor 106 calculates an energy corrective coefficient from the low-frequency subband signal according to a process to be described later on, and outputs the calculated energy corrective coefficient to energy corrector 105.<br>
+Energy corrector 105 corrects a target energy for high-frequency components which is described by the high-frequency bit stream that is input thereto, according to the energy corrective coefficient, thus calculating a corrected target energy, and outputs the corrected target energy to band expander 103.<br>
+Band expander 103 generates a high-frequency subband signal representing a high-frequency audio signal from the high-frequency bit stream, the low-frequency subband signal, and the corrected target energy<br><br>
+that have been input thereto, and outputs the generated high-frequency subband signal to subband combiner 104.<br>
+Subband combiner 104 has a subband combining filter that combines the bands of the low-frequency subband signal and the high-frequency subband signal that have been input thereto. An audio signal generated by combining the bands is output from the audio decoding apparatus.<br>
+The audio decoding apparatus according to the present invention which is arranged as described above is different from the conventional audio decoder shown in Fig. 1 in that the audio decoding apparatus according to the present invention has subband divider 102 shown in Fig. 6 instead of subband divider 402 shown in Fig. 1, subband combiner 104 shown in Fig. 6 instead of subband combiner 404 shown in Fig. 1, band expander 103 shown in Fig. 6 instead of complex band expander 403 shown in Fig. 1, and additionally has corrective coefficient extractor 106 and energy corrector 105 according to the present embodiment (Fig. 6). Other processing components will not be described in detail below because they are the same as those of the conventional audio decoder, well known by those skilled in the art, and have no direct bearing on the present invention. Subband divider 102, band expander 103. subband combiner 104, energy corrector 105, and corrective coefficient extractor 106 which are different from the conventional audio decoder will be described in detail below.<br>
+First, subband divider 102 and subband combiner 104 will be described below. Heretofore, a filter bank according to the equation 402.1 for generating a complex subband signal has been used as a subband dividing filter. For a corresponding inverse conversion, a filter bank<br><br>
+according to the equation 404.1 has been used as a subband combining filter. The output of the equation 404.1 or a signal produced by down-sampling the output of the equation 404.1 at the sampling frequency for the input signal of the equation 402.1 is fully reconstructible in full agreement with the input signal of the equation 402.1. In order to obtain a high-quality decoded audio signal, such full reconstructibility is required for the subband dividing and combining filters.<br>
+In the present embodiment, the complex subband combining filter used in conventional complex subband combiner 404 is replaced with a real subband combining filter. However, simply changing a complex subband combining filter to a real subband combining filter will lose full reconstructibility, resulting in a sound quality deterioration.<br>
+In has heretofore been well known in the art to effect rotational calculations on the output of the conventional complex subband dividing filter for achieving full reconstructibility between a complex subband combining filter and a real subband combining filter. Such rotational calculations serve to rotate the real and imaginary axes of a complex number by {:n -^ 4), and are the same as a well known process of deriving DCT from DFT, For example, if kO = 1/2, then the following rotational calculations (K = K1) may be performed on each subband k for calculating the 32-band complex QMF dividing filter bank according to the equation 402.1:<br>
+In the equation 102.1, 3/4K may be replaced with 1/4K. Conventional subband divider 402 with a processor for performing the rotational calculations according the equation 102.1 being added at a<br><br>
+subsequent stage may be employed as subband divider 102. However, subband divider 102 may calculate the following equation which can achieve, with a smaller amount of calculations, a process that is equivalent to the process comprising the subband dividing filtering and the rotational calculation processing:<br><br>
+The conversion represented by the equation 104.1, shown below, is effected on the equation 404.1, and the equation 104.2, shown below, representing only a real part thereof is used as a corresponding real subband combining filter in subband combiner 104.  In this manner, full reconstructibility is achieved.<br><br>
+where Re[.] represents the removal of only the real part of a complex subband signal.<br>
+Band expander 103 will be described below. Band expander 103 generates a high-frequency subband signal representing a high-frequency audio signal from the high-frequency bit stream, the low-frequency subband signals, and the corrected target energy that have been input thereto, and outputs the generated high-frequency subband signal to subband combiner 104. As shown in Fig. 8, band expander 103 comprises high-frequency generator 300, amplitude adjuster 301, and converter 305. Band expander 103 is supplied with the high-frequency bit stream from input terminal 302,<br><br>
+the low-frequency subband signals from input terminal 304, and the corrected target energy from input terminal 306, and outputs the high-frequency subband signal from output terminal 303.<br>
+Converter 305 removes only the real parts from the complex low-frequency subband signals input from input terminal 304, converts the removed real parts into real low-frequency subband signals (the low-frequency subband signals are hereafter shown in terms of a real number unless indicated otherwise), and outputs the real low-frequency subband signals to high-frequency generator 300.<br>
+High-frequency generator 300 is supplied with the low-frequency subband signals and the high-frequency bit stream, and copies the signal in the subband that is specified among the low-frequency subband signals by the high-frequency bit stream, to a high-frequency subband. When copying the signal, high-frequency generator 300 may perform a signal processing process specified by the high-frequency bit stream. For example, it is assumed that there are 64 subbands ranging from subband 0 to subband 63 in the descending order of frequencies, and real subband signals from subband 0 to subband 19, of those 64 subbands, are supplied as the low-frequency subband signals from converter 305. It is also assumed that the high-frequency bit stream contains copying information indicative of which one of the low-frequency subbands (subband 0 to subband 19) a signal is to be copied from to generate a subband A (A &gt; 19), and signal processing information representing a signal processing process (selected from a plurality of processes including a filtering process) to be performed on the signal. In high-frequency generator 300, a real-valued signal in a high-frequency subband (referred to as "copied/processed subband signal") is<br><br>
+identical to a real-valued signal in a low-frequency subband indicated by the copying information. If the signal processing information indicates any signal processing need for better sound quality, then high-frequency generator 300 performs the signal processing process indicated by the signal processing information on the copied/processed subband signal. The copied/processed subband signal thus generated is output to amplitude adjuster 301.<br>
+One example of signal processing performed by high-frequency generator 300 is a linear predictive inverse filter as with conventional complex high-frequency generator 500. The effect of such a filter will not be described below as it is the same as with complex high-frequency generator 500. If a linear predictive inverse filter is used for a high-frequency generating process, then high-frequency generator 300 that operates with real-valued signals is advantageous in that the amount of calculations required to calculate filter coefficients is smaller than it would be with complex high-frequency generator 500 that operates with complex-valued signals.<br>
+Amplitude adjuster 301 performs a correction specified by the high-frequency bit stream on the amplitude of the input copied/processed subband signal so as to make it equivalent to the corrected target energy, generating a high-frequency subband signal. The generated high-frequency subband signal is output to output terminal 303. The target energy described by the high-frequency bit stream may be considered as being calculated in the unit of a frame for each subband, for example. Alternatively, in view of the characteristics in the time and frequency directions of the input signal, the target energy may be calculated in the<br><br>
+unit of a time divided from a frame with respect to the time direction and in the unit of a band made up of a plurality of subbands with respect to the frequency direction. If the target energy is calculated in the unit of a time divided from a frame with respect to the time direction, then time-dependent changes in the energy can be expressed in further detail. If the target energy is calculated in the unit of a band made up of a plurality of subbands with respect to the frequency direction, then the number of bits required to code the target energy can be reduced. The unit of divisions in the time and frequency directions used for calculating the target energy is represented by a time frequency grid, and its information is described by the high-frequency bit stream.<br>
+According to another embodiment of amplitude adjuster 301, as with the conventional arrangement, an additional signal is added to the copied/processed subband signal, generating a high-frequency subband signal. The amplitude of the copied/processed subband signal and the amplitude of the additional signal are adjusted such that the energy of the high-frequency subband signal serves as a target energy. An example of the additional signal is a noise signal or a tone signal. Gains for adjusting the amplitudes of the copied/processed subband signal and the additional signal, on the assumption that either one of the copied/processed subband signal and the additional signal serves as a main component of the generated high-frequency subband signal, and the other as an auxiliary component thereof, are calculated as follows: If the copied/processed subband signal serves as a main component of the generated high-frequency subband signal, then<br>
+Gmain = sqrt{a x R/Er/(1 + Q))<br><br>
+Gsub = sqrt(a x R x Q/Nr/(1 + Q)) where Gmain represents the gain for adjusting the amplitude of the main component, Gsub the gain for adjusting the amplitude of the auxiliary component, and Er, Nr the respective energies of the copied/processed subband signal and the additional signal. The notations Er. Nr of the energies are different from the notations E, N in the description of the conventional arrangement in order to differentiate the real-valued signals used as the copied/processed subband signal and the additional signal according to the present invention from the complex-valued signals used as the copied/processed subband signal and the additional signal according to the conventional arrangement. If the energy of the additional signal is normalized to 1, then Nr = 1. In the above equations. R represents the target energy, "a" the energy corrective coefficient that is calculated by corrective efficient extractor 106 to be described later on, with a x R representing the corrected target energy, Q the ratio of the energies of the main and auxiliary components, R, Q being described by the high-frequency bit stream, and sqrt() the square root. If the additional signal serves as a main component of the generated high-frequency subband signal, then<br>
+Gmain = sqrt(a x R/Nr/(1 + Q))<br>
+Gsub = sqrt(a x R x Q/Er/(1 + Q))<br>
+If the additional signal serves as a main component of the generated high-frequency subband signal, then Gmain, Gsub may be indicated by the following equations, using an energy corrective coefficient "b" calculated based on the additional signal according to the same process as with the energy corrective coefficient "a", instead of the energy corrective coefficient<br><br>
+"a" calculated based on the complex low-frequency subband signals:<br>
+Gmain = sqrt(b x R/Nr/(1 + Q))<br>
+Gsub = sqrt(b x R x Q/Er/(1 + Q))<br>
+If a signal stored in advance in a memory area is used as the additional signal, then the energy corrective coefficient "b" may be calculated in advance and used as a constant, so that a process for calculating the energy corrective coefficient "b" may be dispensed with. The high-frequency subband signal can be calculated by weighting the copied/processed subband signal and the additional signal using the amplitude adjusting gains thus calculated and adding the copied/processed subband signal and the additional signal which are thus weighted.<br>
+Operation of amplitude adjuster 301 for amplitude adjustment and advantages thereof will be described in detail with reference to Fig. 4. The amplitude of the real high-frequency subband signal (the real part of the high-frequency components whose amplitudes have been adjusted in Fig. 4) is adjusted such that its signal energy is equalized to the corrected target energy which is obtained by correcting the target energy representative of the signal energy of high-frequency components of the input signal. If the corrected target energy is calculated in view of the signal phase (phase B in Fig. 4) of the complex low-frequency subband signal before the corrected target energy is converted by converter 305, as shown in Fig. 4, then the signal energy of a hypothetical complex high-frequency subband signal derived from the complex low-frequency subband signal is equivalent to the target energy. In an analytic combining system comprising subband divider 102 and subband combiner 104 used in the present embodiment, full reconstructibility is obtained using only the real part of the subband signal,<br><br>
+as when both the real part and the imaginary part are used. Therefore, when the amplitude of the real high-frequency subband signal is adjusted such that its signal energy is equalized to the corrected target energy, energy variations important for the human auditory sense are minimized, the sound quality as it is heard is prevented from being degraded. An example in which the amplitude is adjusted using the target energy, rather than the corrected target energy, is shown in Fig. 5. As shown in Fig. 5, if the amplitude of the real high-frequency subband signal is adjusted such that its signal energy is equalized to the corrected target energy, then the signal energy of the hypothetical complex high-frequency subband signal becomes greater than the target energy. As a result, the high-frequency components of the audio signal whose bands have been combined by subband combiner 104 are greater than the high-frequency components of the input signal on the coding side, resulting in a sound quality deterioration<br>
+Band expander 103 has been described above. In order to realize the processing of band expander 103 only with the real part in a low amount of calculations and to obtain a high-quality decoded signal, it is necessary to employ the corrected target energy for amplitude adjustment, as described above. In the present embodiment, corrective coefficient extractor 106 and energy corrector 105 calculate the corrected target energy.<br>
+Corrective coefficient extractor 106 calculates an energy corrective coefficient based on the complex low-frequency subband signal that has been input, and outputs the calculated energy corrective coefficient to energy corrector 105. An energy corrective coefficient can be calculated by calculating the signal phase of the complex low-frequency subband signal<br><br>
+and using the calculated signal phase as the energy corrective coefficient. For example, the energy of a low-frequency subband signal comprising complex-valued signal samples and the energy calculated from the real part thereof may be calculated, and the ratio of these energies may be used as an energy corrective coefficient. Alternatively, the phases of respective complex-valued signal sample values of a low-frequency subband signal may be calculated and averaged into an energy corrective coefficient. According to the process described above, an energy corrective coefficient is calculated for each of the divided frequency bands. The energy corrective coefficients of adjacent frequency bands and the energy corrective coefficient of a certain frequency band may be smoothed and used as the energy corrective coefficient of the certain frequency band. Alternatively, the energy corrective coefficient of a present frame may be smoothed in the time direction using a predetermined time constant and the energy corrective coefficient of a preceding frame. By thus smoothing the energy corrective coefficient, the energy corrective coefficient can be prevented from changing abruptly, with the result that the audio signal whose band has been expanded will be of increased quality.<br>
+The energy may be calculated or the phases of signal sample values may be averaged according to the above process, using signal samples contained in the time frequency grid of target energies which has been described above with respect to the conventional arrangement. In order to increase the quality of the audio signal whose band has been expanded, it is necessary to calculate an energy corrective coefficient which is accurately indicative of phase characteristics. To meet such a requirement, it is desirable to calculate an energy corrective coefficient using signal<br><br>
+samples whose phase characteristics have small changes. Generally, the time frequency grid is established such that signal changes in the grid are small. Consequently, by calculating an energy corrective coefficient in accordance with the time frequency grid, it is possible to calculate an energy corrective coefficient which is accurately indicative of phase characteristics, with the result that the audio signal whose band has been expanded will be of increased quality. The present process may be carried out, taking into account signal changes in either one of the time direction and the frequency direction, and using signal samples included in a range that is divided by only a grid boundary in either one of the time direction and the frequency direction.<br>
+Energy corrector 105 corrects the target energy representative of the signal energy of high-frequency components of the input signal which is described by the high-frequency bit stream, with the energy corrective coefficient calculated by corrective coefficient extractor 106, thus calculating a corrected target energy, and outputs the corrected target energy to band expander 103. (2nd Embodiment)<br>
+A second embodiment of the present invention will be described in detail below with reference to Fig. 7.<br>
+Fig. 7 shows an audio decoding apparatus according to the second embodiment of the present invention. The audio decoding apparatus according to the present embodiment comprises bit stream separator 100, low-frequency decoder 101, subband divider 202, band expander 103, subband combiner 104, corrective coefficient generator 206, and energy corrector 105.<br><br>
+The second embodiment of the present invention differs from the first embodiment of the present invention in that subband divider 102 is replaced with subband divider 202, and corrective coefficient extractor 106 is replaced with corrective coefficient generator 206, and is exactly identical to the first embodiment as to the other components. Subband divider 202 and corrective coefficient generator 206 will be described in detail below.<br>
+Subband divider 202 has a subband dividing filter that divides the input low-frequency bit stream into a plurality of real low-frequency subband signals in respective frequency bands, which are output to band expander 103 and subband combiner 104. The subband dividing filter used by subband divider 202 is provided by only a real number processor of the equation 102.2, and has its output signal serving as a real low-frequency subband signal. Therefore, since the low-frequency subband signal input to band expander 103 is represented by a real number, converter 305 outputs the real low-frequency subband signal that is input thereto, directly to high-frequency generator 300.<br>
+Corrective coefficient generator 206 calculates an energy corrective coefficient according to a predetermined process, and outputs the calculated energy corrective coefficient to energy corrector 105. Corrective coefficient generator 206 may calculate an energy corrective coefficient by generating a random number and using the random number as an energy corrective coefficient. The generated random number is normalized to a value ranging from 0 to 1. As described above with respect to the first embodiment, if the amplitude of the real high-frequency subband signal is adjusted such that its signal energy is equalized to the target energy, then the energy of high-frequency components of the decoded audio signal<br><br>
+becomes greater than the target energy. However, the corrected target energy can be smaller than the target energy by using an energy corrective coefficient that is derived from a random number normalized to a value ranging from 0 to 1. As a result, since the energy of high-frequency components of the decoded audio signal is not necessarily greater than the target energy, a sound quality improving capability is expected. Alternatively energy corrective coefficients may be determined in advance for respective frequency bands, and an energy corrective coefficient may be generated depending on both or one of the frequency range of a subband from which a signal is to be copied and the frequency range of a subband to which the signal is to be copied by band expander 103.  In this case, each of the predetermined energy corrective coefficients is also of a value ranging from 0 to 1. According to the present process, the human auditory characteristics can be better utilized for a greater sound quality improving capability than the process which calculates an energy corrective coefficient using a random number, the above two processes may be combined to determine a maximum value for a random number in each of the frequency bands and use a random number normalized in the range as an energy corrective coefficient. Alternatively, an average value may be determined in advance in each of the frequency bands, and a random number may be generated around the average value to calculate an energy corrective coefficient. Furthermore, an energy corrective coefficient is calculated for each of the divided frequency bands, and the energy corrective coefficients of adjacent frequency bands may be smoothed and used as the energy corrective coefficient of a certain frequency band. Alternatively, the energy corrective coefficient of a present frame may be<br><br>
+smoothed in the time direction using a predetermined time constant and the energy corrective coefficient of a preceding frame.<br>
+According to the second embodiment of the present invention, since the signal phase of the low-frequency subband signal is not taken into account, the quality of the decoded audio signal is lower than with the first embodiment of the present invention. However, the second embodiment of the present invention can further reduce the amount of calculations required because there is no need for using the complex low-frequency subband and a real subband dividing filter can be used.<br>
+The present invention is not limited to the above embodiments, but those embodiments may be modified within the scope of the technical concept of the present invention.<br>
+Although not shown, the audio decoding apparatus according to the embodiments have a recording medium that stores a program for carrying out the audio decoding method described above. The recording medium may comprise a magnetic disk, a semiconductor memory, or another recording medium. The program is read from the recording medium into the audio decoding apparatus, and controls operation of the audio decoding apparatus. Specifically, a CPU in the audio decoding apparatus is controlled by the program to instruct hardware resources of the audio decoding apparatus to perform particular processes for carrying out the above processing sequences.<br><br><br><br><br>
+CLAIMS<br>
+1.	An audio decoding apparatus comprising:<br>
+a bit stream separator for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoder for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband divider for dividing said low-frequency audio signal into a plurality of complex-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+a corrective coefficient extractor for calculating an energy corrective coefficient based on said low-frequency subband signals;<br>
+an energy corrector for correcting a target energy described by said high-frequency bit stream with said energy corrective coefficient to calculate a corrected target energy;<br>
+a band expander for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, at said corrected target energy; and<br>
+a subband combiner for combining real parts of said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+2.	An audio decoding apparatus according to claim 1, wherein said<br>
+corrective coefficient extractor calculates the signal phase of said low-<br>
+frequency subband signals and calculates the energy corrective coefficient<br><br>
+based on said signal phase.<br>
+3. An audio decoding apparatus according to claim 1, wherein said corrective coefficient extractor calculates the ratio of the energy of a real part of said low-frequency subband signals and the signal energy of said low-frequency subband signals as the energy corrective coefficient.<br>
+4. An audio decoding apparatus according to claim 1, wherein said corrective coefficient extractor averages the phases of samples of said low-frequency subband signals to calculate the energy corrective coefficient.<br>
+5. An audio decoding apparatus according to any one of claims 1 through 4, wherein said corrective coefficient extractor smoothes energy corrective coefficients calculated respectively in said frequency bands.<br>
+6. An audio decoding apparatus comprising:<br>
+a bit stream separator for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoder for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband divider for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+a corrective coefficient generator for generating a predetermined energy corrective coefficient;<br>
+an energy corrector for correcting a target energy described by said<br><br>
+high-frequency bit stream with said energy corrective coefficient to calculate a corrected target energy;<br>
+a band expander for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, at said corrected target energy; and<br>
+a subband combiner for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+7. An audio decoding apparatus according to claim 6, wherein said corrective coefficient generator generates a random number and uses the random number as said energy corrective coefficient.<br>
+8. An audio decoding apparatus according to claim 6, wherein said corrective coefficient generator generates predetermined energy corrective coefficients respectively in the frequency bands.<br>
+9. An audio decoding method comprising the steps of:<br>
+separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+dividing said low-frequency audio signal into a plurality of complex-valued signals in respective frequency bands to generate low-frequency subband signals;<br><br>
+calculating an energy corrective coefficient based on said low-frequency subband signals;<br>
+correcting a target energy described by said high-frequency bit stream with said energy corrective coefficient to calculate a corrected target energy;<br>
+generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, at said corrected target energy; and<br>
+combining real parts of said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+10. An audio decoding method according to claim 9, wherein for calculating said corrected target energy, the signal phase of said low-frequency subband signals is calculated, and the energy corrective coefficient is calculated based on said signal phase.<br>
+11. An audio decoding method according to claim 9, wherein for calculating said corrected target energy, the ratio of the energy of a real part of said low-frequency subband signals and the signal energy of said low-frequency subband signals is calculated as the energy corrective coefficient.<br>
+12. An audio decoding method according to claim 9, wherein for calculating said corrected target energy, the phases of samples of said low-frequency subband signals are averaged to calculate the energy corrective<br><br>
+coefficient.<br>
+13. An audio decoding method according to any one of claims 9 through 12, wherein for calculating said corrected target energy, energy corrective coefficients calculated respectively in said frequency bands are smoothed.<br>
+14. An audio decoding method comprising the steps of:<br>
+separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+generating a predetermined energy corrective coefficient;<br>
+correcting a target energy described by said high-frequency bit stream with said energy corrective coefficient to calculate a corrected target energy;<br>
+generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, at said corrected target energy; and<br>
+combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br><br>
+15. An audio decoding method according to claim 14, wherein for generating said energy corrective coefficient, a random number is generated and used as said energy corrective coefficient.<br>
+16. An audio decoding method according to claim 14, wherein for generating said energy corrective coefficient, predetermined energy corrective coefficients are generated respectively in the frequency bands<br>
+17. A program for enabling a computer to perform:<br>
+a bit stream separating process for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoding process for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a complex subband dividing process for dividing said low-frequency audio signal into a plurality of complex-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+a corrective coefficient extracting process for calculating an energy corrective coefficient based on said low-frequency subband signals;<br>
+an energy correcting process for correcting a target energy described by said high-frequency bit stream with said energy corrective coefficient to calculate a corrected target energy;<br>
+a band expanding process for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, at said corrected target energy; and<br><br>
+A submit quinine lour combining real parts of said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+18. A program according to claim 17, wherein in said corrective coefficient extracting process, the signal phase of said low-frequency subband signals is calculated and the energy corrective coefficient is calculated based on said signal phase.<br>
+19. A program according to claim 17, wherein in said corrective coefficient extracting process, the ratio of the energy of a real part of said low-frequency subband signals and the signal energy of said low-frequency 5ubband signals is calculated as the energy corrective coefficient.<br>
+20. A program according to claim 17, wherein in said corrective coefficient extracting process, the phases of samples of said low-frequency subband signals are averaged to calculate the energy corrective coefficient.<br>
+21. A program according to any one of claims 17 through 20, wherein in said corrective coefficient extracting process, energy corrective coefficients calculated respectively in said frequency bands are smoothed.<br>
+22. A program for enabling a computer to perform: a bit stream separating process for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoding process for decoding said low-frequency<br><br>
+bit stream to generate a low-frequency audio signal;<br>
+a complex subband dividing process for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+a corrective coefficient generating process for generating a predetermined energy corrective coefficient;<br>
+an energy correcting process for correcting a target energy described by said high-frequency bit stream with said energy corrective coefficient to calculate a corrected target energy;<br>
+a band expanding process for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, at said corrected target energy; and<br>
+a subband combining process for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+23. A program according to claim 22, wherein in said corrective coefficient generating process, a random number is generated and used as said energy corrective coefficient.<br>
+24. A program according to claim 22, wherein in said corrective coefficient generating process, predetermined energy corrective coefficients are generated respectively in the frequency bands.<br><br>
+25. An audio decoding apparatus comprising:<br>
+a bit stream separator for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoder for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband divider for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+an energy corrector for correcting a target energy described by said high-frequency bit stream with a predetermined energy corrective coefficient to calculate a corrected target energy;<br>
+a band expander for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, at said corrected target energy; and<br>
+a subband combiner for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+26. An audio decoding apparatus comprising:<br>
+a bit stream separator for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoder for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband divider for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate<br><br>
+low-frequency subband signals;<br>
+an energy corrector for outputting an energy corrective coefficient for a signal which is generated by copying and processing said low-frequency subband signals;<br>
+a band expander for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of the signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, using said energy corrective coefficient; and<br>
+a subband combiner for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+27. An audio decoding apparatus comprising:<br>
+a bit stream separator for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoder for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband divider for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+an energy corrector for calculating a corrected target energy using an instruction of said high-frequency bit stream and a predetermined energy corrective coefficient;<br>
+a band expander for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by<br><br>
+copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream; and<br>
+a subband combiner for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+28. An audio decoding apparatus comprising:<br>
+a bit stream separator for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoder for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband divider for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+a band expander for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals using an instruction included in said high-frequency bit stream and a predetermined energy corrective coefficient; and<br>
+a subband combiner for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+29. An audio decoding apparatus comprising: a bit stream separator for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br><br>
+a low-frequency decoder for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband divider for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+a band expander for generating a high-frequency subband signal by correcting the signal energy (Er) of a signal which is generated by copying and processing said low-frequency subband signals, rather than a target energy (R) described by said high-frequency bit stream, with the reciprocal (1/a) of a predetermined energy corrective coefficient (a) when a corrected target energy (aR) which is produced by correcting said target energy (R) with said predetermined energy corrective coefficient (a) and the signal energy (Er) are corrected in amplitude such that the corrected target energy (aR) and the signal energy (Er) are equal to each other; and<br>
+a subband combiner for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+30. An audio decoding method comprising the steps of:<br>
+separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br><br>
+correcting a target energy described by said high-frequency bit stream with a predetermined energy corrective coefficient to calculate a corrected target energy;<br>
+generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, at said corrected target energy; and<br>
+combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+31. An audio decoding method comprising the steps of:<br>
+separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+outputting an energy corrective coefficient for a signal which is generated by copying and processing said low-frequency subband signals;<br>
+generating a high-frequency subband signal by correcting, in amplitude, the signal energy of the signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, using said energy corrective coefficient; and<br>
+combiner for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br><br>
+32. An audio decoding method comprising the steps of:<br>
+separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals using an instruction included in said high-frequency bit stream and a predetermined energy corrective coefficient; and<br>
+combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+33. An audio decoding method comprising the steps of:<br>
+separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+generating a high-frequency subband signal by correcting, in<br><br>
+amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals using an instruction included in said high-frequency bit stream and a predetermined energy corrective coefficient; and<br>
+a subband combiner for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+34. An audio decoding method comprising the steps of:<br>
+separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+generating a high-frequency subband signal by correcting the signal energy (Er) of a signal which is generated by copying and processing said low-frequency subband signals, rather than a target energy (R) described by said high-frequency bit stream, with the reciprocal (1/a) of a predetermined energy corrective coefficient (a) when a corrected target energy (aR) which is produced by correcting said target energy (R) with said predetermined energy corrective coefficient (a) and the signal energy (Er) are corrected in amplitude such that the corrected target energy (aR) and the signal energy (Er) are equal to each other; and<br>
+combining said low-frequency subband signals and said high-<br><br>
+frequency subband signals to produce a decoded audio signal.<br>
+35. A program for enabling a computer to perform:<br>
+a bit stream separating process for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoding process for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband dividing process for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+an energy correcting process for correcting a target energy described by said high-frequency bit stream with a predetermined energy corrective coefficient to calculate a corrected target energy;<br>
+a band expanding process for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, at said corrected target energy; and<br>
+a subband combiner for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+36. A program for enabling a computer to perform: a bit stream separating process for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoding process for decoding said low-frequency<br><br>
+bit stream to generate a low-frequency audio signal;<br>
+a subband dividing process for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+an energy correcting process for outputting an energy corrective coefficient for a signal which is generated by copying and processing said low-frequency subband signals;<br>
+a band expanding process for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of the signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream, using said energy corrective coefficient; and<br>
+a subband combining process for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+37. A program for enabling a computer to perform:<br>
+a bit stream separating process for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoding process for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband dividing process for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+an energy correcting process for calculating a corrected target energy using an instruction of said high-frequency bit stream and a<br><br>
+predetermined energy corrective coefficient;<br>
+a band expanding process for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals as instructed by said high-frequency bit stream; and<br>
+a subband combining process for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br>
+38. A program for enabling a computer to perform:<br>
+a bit stream separating process for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoding process for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband dividing process for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+a band expanding process for generating a high-frequency subband signal by correcting, in amplitude, the signal energy of a signal which is generated by copying and processing said low-frequency subband signals using an instruction included in said high-frequency bit stream and a predetermined energy corrective coefficient; and<br>
+a subband combining process for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br><br>
+39. A program for enabling a computer to perform:<br>
+a bit stream separating process for separating a bit stream into a low-frequency bit stream and a high-frequency bit stream;<br>
+a low-frequency decoding process for decoding said low-frequency bit stream to generate a low-frequency audio signal;<br>
+a subband dividing process for dividing said low-frequency audio signal into a plurality of real-valued signals in respective frequency bands to generate low-frequency subband signals;<br>
+a band expanding process for generating a high-frequency subband signal by correcting the signal energy (Er) of a signal which is generated by copying and processing said low-frequency subband signals, rather than a target energy (R) described by said high-frequency bit stream, with the reciprocal (1/a) of a predetermined energy corrective coefficient (a) when a corrected target energy (aR) which is produced by correcting said target energy (R) with said predetermined energy corrective coefficient (a) and the signal energy (Er) are corrected in amplitude such that the corrected target energy (aR) and the signal energy (Er) are equal to each other; and<br>
+a subband combiner for combining said low-frequency subband signals and said high-frequency subband signals to produce a decoded audio signal.<br><br>
+40. An audio decoding apparatus substantially as herein described with reference to the accompanying drawings.<br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWNsYWltcyBmaWxlZC5wZGY=" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-claims filed.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWNsYWltcyBncmFudGVkLnBkZg==" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-claims granted.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWNvcnJlc3BvbmRuZWNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWNvcnJlc3BvbmRuZWNlLXBvLnBkZg==" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-correspondnece-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWRlc2NyaXB0aW9uKGNvbXBsZXRlKSBmaWxlZC5wZGY=" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-description(complete) filed.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWRlc2NyaXB0aW9uKGNvbXBsZXRlKSBncmFudGVkLnBkZg==" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-description(complete) granted.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWZvcm0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWZvcm0gMTkucGRm" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-form 19.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWZvcm0gMjYucGRm" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-form 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWZvcm0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LWZvcm0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzAzOS1jaGVucC0yMDA0LXBjdC5wZGY=" target="_blank" style="word-wrap:break-word;">3039-chenp-2004-pct.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="209396-digital-camera-and-control-method-thereof-and-printing-system.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="209398-a-method-for-operating-a-wireless-tdma-communications-system.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>209397</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>3039/CHENP/2004</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>38/2007</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>21-Sep-2007</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>28-Aug-2007</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>31-Dec-2004</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>M/S. NEC CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>7-1, Shiba 5-chome, Minato-ku, Tokyo 108-8001</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>NOMURA Toshiyuki (ETC)</td>
+											<td>c/o NEC Corporation, 7-1, Shiba 5-chome, Minato-ku, Tokyo 108-8001</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G10L 19/02</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/JP2003/007962</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2003-06-24</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>2002-210945</td>
+									<td>2002-07-19</td>
+								    <td>Japan</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>2002-273010</td>
+									<td>2002-09-19</td>
+								    <td>Japan</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/209397-a-method-and-apparatus-for-audio-decoding by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:46:55 GMT -->
+</html>

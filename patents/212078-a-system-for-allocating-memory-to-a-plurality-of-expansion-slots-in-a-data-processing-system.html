@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/212078-a-system-for-allocating-memory-to-a-plurality-of-expansion-slots-in-a-data-processing-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 00:28:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 212078:A SYSTEM FOR ALLOCATING MEMORY TO A PLURALITY OF EXPANSION SLOTS IN A DATA PROCESSING SYSTEM.</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A SYSTEM FOR ALLOCATING MEMORY TO A PLURALITY OF EXPANSION SLOTS IN A DATA PROCESSING SYSTEM.</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A system for allocating memory to a plurality of expansion slots in a data processing system is provided. In one embodiment, during initialization of the data processing system, firmware allocates memory among a plurality of expansion slots on a rigid basis. Responsive to a determination that an input/output adapter functionally connected to one of the plurality of expansion slots requires more memory allocation than allocated previously, the firmware reallocates the memory among the plurality of expansion slots such that the one of the expansion slots occupied by the input/output adapter is allocated sufficient memory. If during runtime, an input/output (I/O) adapter is hot plugged into the system and requires more memory than allocated to the slot in which the I/O has been inserted into, then the firmware reallocates memory, first from unoccupied expansion slots and then, if necessary, from selected ones of occupied expansion slots such that all of the I/O adapters within the system are allocated sufficient memory to function correctly and optimally.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>MEMORY MAP ADJUSTMENT TO SUPPORT THE NEED OF ADAPTERS WITH<br>
+LARGE MEMORY REQUIREMENTS<br>
+BACKGROUND OF THE INVENTION<br>
+1.	Technical Field:<br>
+The present invention relates to an improved data processing system and, more particular, to methods of memory mapping for I/O devices.<br>
+2.	Description of Related Art:<br>
+PCI I/O devices have on card memory and register space that needs to be mapped to system memory.  There are two approaches to assigning memory space.  The first approach is called dynamic allocation where the system "walks" all of the PCI buses, queries each device to determine how much space the device needs, and then assigns memory to each device based on needs. ' The second approach is a rigid approach where the data processing system has a set amount of memory space available on a per slot or per PCI Host Bridge basis.<br>
+The problem with dynamic allocation occurs when this is attempted in systems in which a large number of PCI Host bridges and PCI Host Bridges(PHB) exist that are located in different drawers such as, for example, the RS/6000 server line.  The RS/6000 server line is a line of products available from the International Business Machines Corporation of Armonk, New York.  In the RS/6000 server line, there can be upwards of 32 drawers where each drawer could have three (3) to six (6) PHBs.  A problem also occurs with this approach when a hotplugging operation is performed if an adapter is added or an<br>
+adapter is replaced with another adapter that needs additional space.<br>
+The problem with the fixed space is that it is too rigid.  It works for today's devices and the devices that are planned for.  However, the future is always unpredictable and it is quite likely that a future unpredictable device will be developed that will break the design.  Therefore, there is a need for a flexible approach to memory mapping that overcomes the obstacles associated with fixed space designs, as well as overcoming problems associated with systems having a large number of PCI host bridges.<br>
+SUMMARY OF THE INVENTION<br>
+The present invention provides a method, system, and apparatus for allocating memory to a plurality of expansion slots in a data processing system.  In one embodiment, during initialization of the data processing system, firmware allocates memory among a plurality of expansion slots on a rigid basis.  Responsive to a determination that an input/output adapter functionally connected to one of the plurality of expansion slots requires more memory allocation than allocated previously, the firmware reallocates the memory among the plurality of expansion slots such that the one of the expansion slots occupied by the input/output adapter is allocated sufficient memory.  If during runtime, an input/output (I/O) adapter is hotplugged into the system and requires more memory than allocated to the slot in which the I/O has been inserted into, then the firmware reallocates memory, first from unoccupied expansion slots and then, if necessary, from selected ones of occupied expansion slots such that all of the I/O adapters within the system are allocated sufficient memory to function correctly and optimally.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+The novel features believed characteristic of the invention are set forth in the appended claims.  The invention itself, however, as well as a preferred mode of use, further objectives and advantages thereof, will best be understood by reference to the following detailed description of an illustrative embodiment when read in conjunction with the accompanying drawings, wherein:<br>
+Figure 1 depicts a block diagram of a data processing system in which the present invention may be implemented;<br>
+Figure 2 depicts a block diagram illustrating a system for adjusting a memory map of slots beneath PHBs in accordance with the present invention;<br>
+Figure 3 depicts a flowchart illustrating an exemplary method of assigning memory to I/O expansion slots within a data processing system at boottime in accordance with the present invention; and<br>
+Figure 4 depicts a flowchart illustrating an exemplary method of reallocating memory to expansion slots after an adapter has been hotplugged into the data processing system during runtime in accordance with the present invention.<br>
+DETAILED DESCRIPTION OF THE PREFERRED EMBODIMENT<br>
+With reference now to the figures, and in particular with reference to Figure 1, a block diagram of a data processing system in which the present invention may be implemented is depicted.  Data processing system 100 may be a symmetric multiprocessor (SMP) system including a plurality of processors 101, 102, 103, and 104 connected to system bus 106.  For example, data processing system 100 may be an IBM RS/6000, a product of International Business Machines Corporation in Armonk, New York, implemented as a server within a network. Alternatively, a single processor system may be employed.  Also connected to system bus 106 is memory controller/cache 108, which provides an interface to a plurality of local memories 160-163.  I/O bus bridge 110 is connected to system bus 106 and provides an interface to I/O bus 112. Memory controller/cache 108 and I/O bus bridge 110 may be integrated as depicted. An operating system, such as, for example, the Advanced Interactive Executive (AIX) operating system, a product of the International Business Machines Corporation of Armonk, New York, may run on data processing system 100.<br>
+Peripheral component interconnect (PCI) Host bridge 114 connected to I/O bus 112 provides an interface to PCI local bus 115.  A number of Input/Output adapters 120-121 may be connected to PCI bus 115 through a respective one of PCI-to-PCI bridges 116-117 via a respective one of PCI buses 118-119.  Typical PCI.bus implementations will support between four and eight I/O adapters (i.e.<br>
+expansion slots for add-in connectors).  Each I/O Adapter 120-121 provides an interface between data processing system 100 and input/output devices such as, for example, other network computers, which are clients to data processing system 100.<br>
+An additional PCI host bridge 122 provide an interface for an additional PCI bus 123.  PCI bus 123 is connected to a plurality of PCI-to-PCI bridges 124-125 which are in turn each connected to a respective one of PCI I/O adapters 128-129 by a respective one of- PCI buses 126-127.  Thus, additional I/O devices, such as, for example, modems or network adapters may be supported through each of PCI I/O adapters 128-129.  In this manner, data processing system 100 allows connections to multiple network computers.  Each of PCI-to-PCI bridges 116-117, 124-125, 142-143, and 132 is connected to a single I/O adapter.<br>
+A memory mapped graphics adapter 148 may be connected to I/O bus 112 through PCI Host Bridge 140 and PCI-to-PCI Bridge 142 via PCI buses 141 and 144 as .depicted.  A hard disk 150 may also be connected to I/O bus 112 through PCI Host Bridge 140 and PCI-to-PCI Bridge 143 via PCI buses 141 and 145 as depicted.<br>
+A PCI host bridge 130 provides an interface for a PCI bus 131 to connect to I/O bus 112.  PCI bus 131 connects PCI host bridge 130 to the service processor mailbox interface and ISA bus access passthrough logic 194 and PCI-to-PCI Bridge 132. The ISA bus access passthrough logic 194 forwards PCI accesses destined to the PCI/ISA bridge 193. The NV-RAM storage is connected<br>
+to the ISA bus 196. The Service processor 135 is coupled to the service processor mailbox interface 194 through its local PCI bus 195.<br>
+Service processor 135 is also connected to processors 101-104 via a plurality of JTAG/I2C buses 134. JTAG/I2C buses 134 are a combination of JTAG/scan busses (see IEEE 1149.1) and Phillips I2C busses.  However, alternatively, JTAG/I2C buses 134 may be replaced by only Phillips I2C busses or only JTAG/scan busses.  All SP-ATTN signals of the host processors 101, 102, 103, and 104 are connected together to an interrupt input signal of the service processor.  The service processor 135 has its own local memory 191, and has access to the hardware op-panel 190.  Service processor 135 is responsible for saving and reporting error information related to all the monitored items in data processing system 100.  Service processor 135 also takes action based on the type of errors and defined thresholds.<br>
+Those of ordinary skill in the art will appreciate that the hardware depicted in Figure 1 may vary.  For example, other peripheral devices, such as optical disk drives and the like, also may be used in addition to or in place of the hardware depicted.  The depicted example is not meant to imply architectural limitations with respect to the present invention.<br>
+With reference now to Figure 2, a block diagram illustrating a system for adjusting a memory map of slots beneath PHBs is depicted in accordance with the present invention.  System 200 may be implemented within a data processing system, such as, data processing system 100 in<br>
+Figure 1.  System 200 includes firmware for adjusting memory allocation in an address table 201 for a plurality of slots 210-222 beneath a plurality of PHBs 206-209 connected via PCI-PCI bridges 231-242.<br>
+Firmware 202 may be implemented, for example, as a set of instructions stored in NVRAM 192 and executed in service processor 135 in Figure 1.  Address table may be stored in a non-volatile memory, such as, for example, in memory 191 in NVRAM 192 depicted in Figure 1.  PHBs 206-209 may be implemented as PCI Host Bridges 114, 122, 130, and 140 in Figure 1.  PCI-PCI bridges 230-242 may be implemented as, fore example, any one of PCI-to-PCI bridges 116-117, 124-125, 132 and 142-143 in Figure 1. Slots 210-222 are expansion slots in which I/O adapters, such as, for example, PCI I/O adapters 120-121, 128-129, and 136 as well as graphics adapter 148 and hard disk adapter 149 may be plugged into for connection to a data processing system.<br>
+System 100 utilizes a hybrid approach to allocate memory space to each slot 210-222 in a rigid manner in a first pass of configuration.  Thus, during bootup of the data processing system, firmware 202 allocates available memory to each drawer 203 and 204 in a rigid manner with a predetermined amount of memory allocated to each drawer 203 and 204.  The amounts of memory allocated to each drawer 203 and 204 may be equal or may not be equal depending on the needs of the developer for the particular implementation.  The memory allocated to each drawer 203 and 204 is then further allocated among the PHBs 206-209 in each drawer 203 and 204 by firmware 202.<br>
+Firmware 202 than further allocates the memory allocated to each of PHBs 206-209 to each of the slots 210-222 assigned and connected to each of PHBs 206-209.<br>
+After available memory has been allocated among the various slots 210-222, firmware 202 checks the I/O adapter connected to each slot 210-222 to determine whether the I/O adapter need more memory than has been allocated to the slot in which it is connected.  If a particular I/O adapter needs more memory, then firmware 202 reallocates the memory allocated to the particular PHB 206-209 in which the I/O adapter needing more memory is connected such that the slot in which the I/O adapter needing more memory is allocated sufficient memory to satisfy the I/O adapter.  The other slots beneath the particular PHB in which the I/O adapter that required more memory are adjusted so that each of these slots is assigned a different amount of memory such that all of the memory allocated to the PHB is assigned to each slot in a manner in which each I/O adapter has sufficient memory to allocated to it to perform properly.  In order to adjust the appropriate ones of slots 210-222, firmware 202 reprograms the PCI-PCI bridges 230-242 associated with each affected one of slots 210-222.<br>
+In reassigning the other slots and the adjusted slot, firmware 202 needs to take care to spread any available amount of unused memory evenly between the slots.  This is done to prevent the least amount of problems for hotplug.  For example if firmware 202 has 512MB to divide between 7 slots and one adapter needed 128MB and the other adapters need no more than 8MB, then firmware 202 needs to assign the first slot 128MB and the other 7 slots 64 MB each versus assigning some of the slots only SMB.  This is because in the future, a card may be hotplugged out and replaced with a card that may need 32 MB.  Thus, basically, firmware 202 needs to meet the needs and at the same time be provide the most flexibility.<br>
+Firmware 202 then resets the address table 201 to reflect the allocation of memory that firmware 202 has assigned to each drawer 203-204, each PHB 206-209, and each slot 210-222.  Thus, at the completion of bootup, firmware 202 has assigned all available memory between drawers 203 and 204.  The memory allocated to each drawer 203 and 204 has then been further allocated between the various PHBs 206-209 within each drawer 203 and 204 and the memory allocated to each PHB 206-209 has then been further allocated to each slot 210-222 beneath each PHB 206-209 such that each I/O adapter connected to the slots 210-222 has sufficient memory allocated to it in order to perform correctly.<br>
+If later during runtime, an I/O adapter in one of slots 210-222 is replaced in a hotplug operation with a new I/O adapter that requires more memory to be allocated to it than has been allocated to the one of slot 210-222 previously, then firmware 202, firmware uses an algorithm to take memory allocated to unoccupied slots and allocate it to the new I/O adapter's slot.  If this does not provide sufficient memory for the I/O adapter, firmware 202 queries a user to determine which of the adapters connected to the particular one of PHBs 206-209 that is affected by the hotplug operation to determine which I/O<br>
+adapters may be temporarily "brought down" to perform an address reassignment.  Firmware 202 will also give the user the option to reboot for reconfiguration as an alternative.  The user should not have to do both.  The user should either reboot and let firmware reset everything or the user should let the firmware take specified adapters down and readjust.  One reason to reboot rather than take down a few I/O adapters is that the readjustment may require too many applications to be stopped individually which may end up taking longer than rebooting due to the administrator trying to determine all the dependency applications that need to be stopped and then later restarted since only a few cards will be taken down for readjustment.  Firmware 202 then reprograms slots by adjusting the pci-pci bridge settings and the address table 201 uses for address assignments, such that the new I/O adapter, as well as the other I/O adapters that were reprogrammed, have sufficient memory allocated such that the I/O adapters may perform correctly and optimally.  The adapters that were temporarily taken "down" are then re-enabled.<br>
+Those of ordinary skill in the art will appreciate that the hardware depicted in Figure 2 may vary.  For example, more drawers and PHBs may be utilized than depicted in Figure 2.  In many implementations, the data processing system may contain 32 drawers or more with each drawer containing 3-6 PHBs.  Thus, the depicted example is not meant to imply architectural limitations with respect to the present invention.<br>
+As an aid in understanding the present invention, consider the following example.  Suppose that a data processing system contains 10 slots under one of the PHBs<br>
+within the system with 1GB (i.e. 1024 MB) available based on a rigid allocation of memory to the PHB.  The memory space is divided on a slot by slot basis since each slot is its own bus behind its own pci-pci bridge.  Thus, in this approach, the firmware assigns 128MB to 6 slots and 64MB to the other 4 slots.  If the firmware encounters an adapter that requires more than 128, then the firmware needs to follow an algorithm for adjusting the other nine slots beneath the PHB.  The firmware does this by reprogramming the pci-pci bridges and resetting the address table it uses to assign addresses.<br>
+If later, an adapter requiring 256MB is hotplugged into one of the slots that has been allocated with 128MB or 64 MB, then memory allocated to any unused slots is allocated to the slot containing the new adapter and, if this is not sufficient, other slots, as selected by a user, are reprogrammed and the address table reset such that the new adapter has sufficient memory available to perform correctly and optimally.<br>
+With reference now to Figure 3, a flowchart illustrating an exemplary method of assigning memory to I/O expansion slots within a data processing system at boottime is depicted in accordance with the present invention.  To begin, firmware assigns available memory among each drawer within the data processing system on rigid predetermined basis (step 302}.  The firmware then assigns each drawer's allocated memory among each PHB within the drawer on a rigid predetermined basis (step 304).  Next, the firmware assigns each PHB's allocated memory among each of the PHB's adapter slots on a rigid basis (step 306).<br>
+The firmware then determines the amount of memory<br>
+required by each adapter for each PHB for each drawer (step 308) and then determines whether one or more adapters need more memory than has been allocated for that adapter's slot (step 310).  If no adapters need more memory than has been allocated to the corresponding slot for the adapter, then the process ends.  If, however, one or more adapters need more memory than has been allocated, the firmware recalculates the memory allocation for all the adapter slots beneath the PHB to which the affected adapter is connected such that each adapter has sufficient memory allocated to it (step 312). Thus, after completion of the initialization process, each adapter slot has sufficient memory allocated to it to function properly and optimally.<br>
+With reference now to Figure 4, a flowchart illustrating an exemplary method of reallocating memory to expansion slots after an adapter has been hotplugged into the data processing system during runtime is depicted in accordance with the present invention.  After a new I/O adapter has been hotplugged into an expansion slot, either to replace an I/O adapter or as an additional I/O adapter into a previously unoccupied slot, the firmware determines the amount of memory needed by the new hotplugged adapter (step 402).  The firmware then determines whether the amount of memory needed by the new hotplugged adapter is more than had bee previously allocated to the slot in which the hotplugged adapter has been placed (step 404).  If the memory requirement is less than or equal to the amount of memory allocated to the slot, then the process ends.  If the memory requirement of the hotplugged adapter is more than<br>
+allocated to the slot, then the firmware takes memory space allocated to unoccupied slots, if any, and assigns this memory to the slot containing the new hotplugged adapter (step 406) and updates the address table to reflect the new allocation.<br>
+The firmware then determines whether the slot containing the new hotplugged adapter has been allocated sufficient memory to service the new adapter (step 408). If sufficient memory has been allocated to the new adapter, then the process ends.  If the adapter still needs more memory than has been allocated after taking memory from unoccupied slots, then the firmware queries the user as to whether the system should be rebooted or whether some adapters should be disabled (step 410).  If some adapters should be disabled, then the user is queried for the identity of adapters that can be temporarily disabled for address reassignment as well as inquires of the user whether the data processing system should be rebooted upon completion of the address reassignment.  The firmware then disables and reprograms PCI-PCI bridges for the slots indicated by the user, such that the indicated slots have sufficient memory allocated to them while still freeing up enough memory for the new adapter, and then reprograms the new adapter to reflect the newly allocated memory (step 412).  The address table is then reset by the firmware to reflect the new allocation of memory.<br>
+If there are two many adapters that need to be taken down or if too many executing applications will be disturbed by taking down some of the adapters, then the user may wish to simply reboot the entire system rather than determine which adapters to temporarily take down.<br>
+Thus, if the user chooses to reboot, the data processing system is then rebooted (step 414) and the reallocation of memory is performed during the boot process.<br>
+It is important to note that while the present invention has been described in the context of a fully functioning data processing system, those of ordinary skill in the art will appreciate that the processes of the present invention are capable of being distributed in the form of a computer readable medium of instructions and a variety of forms and that the present invention applies equally regardless of the particular type of signal beafing media actually used to carry out the distribution.  Examples of computer readable media include recordable-type media such a floppy disc, a hard disk drive, a RAM, and CD-ROMs and transmission-type media such as digital and analog communications links.<br>
+The description of the present invention has been presented for purposes of illustration and description, but is not intended to be exhaustive or limited to the invention in the form disclosed. Many modifications and variations will be apparent to those of ordinary skill in the art.  The embodiment was chosen and described in order to best explain the principles of the invention, the practical application, and to enable others of ordinary skill in the art to understand the invention for various embodiments with various modifications as are suited to the particular use contemplated.<br><br><br><br>
+CLAIMS :<br>
+What is claimed is:<br>
+1.	A method for allocating memory to a plurality of<br>
+expansion slots in a data processing system, the method<br>
+comprising:<br>
+during initialization of the data processing system:<br>
+allocating memory among the plurality of expansion slots on a rigid basis; and<br>
+responsive to a determination that an input/output adapter functionally connected to one of the plurality of expansion slots requires more memory allocation than allocated to the one of the plurality of expansion slots, reallocating the memory among the plurality of expansion slots such that the one of the expansion slots occupied by the input/output adapter is allocated sufficient memory.<br>
+2.	The method as recited in claim 1, further<br>
+comprising:<br>
+during runtime, responsive to a new input/output adapter being hotplugged into selected one of the plurality of expansion slots that requires more memory than has been allocated to the selected one of the plurality of expansion slots, reallocating memory from unoccupied ones of the plurality of expansion slots to the selected one of the plurality of expansion slots.<br>
+3.	The method as recited in claim 2, wherein the<br>
+reallocation of memory comprises updating an address<br>
+table.<br>
+4.	The method as recited in claim 2, further<br>
+comprising:<br>
+responsive to a determination that the new input/output adapter requires more memory allocation than may be reallocated from the unoccupied ones of the plurality of expansion slots, temporarily deconfiguring suitable ones of the plurality of old input/output adapters occupying others of the plurality of expansion slots; and<br>
+reallocating memory from the others of the plurality of expansion slots to the one of the plurality of expansion slots occupied by the new input/output adapter.<br>
+5.	The method as recited in claim 4, wherein the<br>
+suitable ones are determined by a user.<br>
+6.	The method as recited in claim 4, further<br>
+comprising:<br>
+rebooting the data processing system.<br>
+7.	A method for allocating memory to a plurality of<br>
+expansion slots in a data processing system during<br>
+runtime, the method comprising:<br>
+determining an amount of memory required by a hotplugged input/output adapter; and<br>
+responsive to a determination that more memory is required than has been allocated to a expansion slot occupied by the hotplugged input/output adapter, reallocating memory assigned to unoccupied expansion lots to the expansion slot occupied by the hotplugged input/output adapter.<br>
+8.	The method as recited in claim 1, further<br>
+comprising:<br>
+responsive to a determination that the hotplugged input/output adapter requires more memory allocation than may be reallocated from the unoccupied expansion slots, temporarily deconfiguring suitable ones of old input/output adapters in occupied expansion slots; and<br>
+reallocating memory from the occupied expansion slots corresponding to the suitable ones of old input/output adapters to the expansion slot occupied by the hotplugged input/output adapter.<br>
+9.	The method as recited in claim 8, further<br>
+comprising:<br>
+rebooting the data processing system.<br>
+10.	A computer program product in a computer readable<br>
+media for use in a data processing system for allocating<br>
+memory to a plurality of expansion slots in a data<br>
+processing system, the computer program product<br>
+comprising:<br>
+during initialization of the data processing system: first instructions for allocating memory among the plurality of expansion slots on a rigid basis/and<br>
+second instructions, responsive to a determination that an input/output adapter functionally connected to one of the plurality of expansion slots requires more memory allocation than allocated to the one of the plurality of expansion slots, for reallocating the memory among the plurality of expansion slots such that the one of the expansion slots occupied by the input/output adapter is allocated sufficient memory.<br>
+11.	The computer program product as recited in claim 10,<br>
+further comprising:<br>
+third instructions, during runtime, responsive to a new input/output adapter being hotplugged into selected one of the plurality of expansion slots that requires more memory than has been allocated to the selected one of the plurality of expansion slots, for reallocating memory from unoccupied ones of the plurality of expansion slots to the selected one of the plurality of expansion slots.<br>
+12.	The computer program product as recited in claim 11,<br>
+wherein the reallocation of memory comprises updating an<br>
+address table.<br>
+13.	The computer program product as recited in claim 11,<br>
+further comprising:<br>
+fourth instructions, responsive to a determination that the new input/output adapter requires more memory allocation than may be reallocated from the unoccupied ones of the plurality of expansion slots, for temporarily deconfiguring suitable ones of the plurality of old input/output adapters occupying others of the plurality of expansion slots; and<br>
+fifth instructions for reallocating memory from the others of the plurality of expansion slots to the one of the plurality of expansion slots occupied by the new input/output adapter.<br>
+14.	The computer program product as recited in claim 13,<br>
+wherein the suitable ones are determined by a user.<br>
+15.	The computer program product as recited in claim 13,<br>
+further comprising:<br>
+sixth instructions for rebooting the data processing system.<br>
+16.	A computer program product in a computer readable<br>
+media for use in a data processing system for allocating<br>
+memory to a plurality of expansion slots in the data<br>
+processing system during runtime, the computer program<br>
+product comprising:<br>
+first instructions for determining an amount of memory required by a hotplugged input/output adapter; and<br>
+second instructions, responsive to a determination that more memory is required than has been allocated to a expansion slot occupied by the hotplugged input/output adapter, for reallocating memory assigned to unoccupied expansion lots to the expansion slot occupied by the hotplugged input/output adapter.<br>
+17.	The computer program product as recited in claim 16,<br>
+further comprising:<br>
+third instructions, responsive to a determination that the hotplugged input/output adapter requires more memory allocation than may be reallocated from the unoccupied expansion slots, for temporarily deconfiguring suitable ones of old input/output adapters in occupied expansion slots; and<br>
+fourth instructions for reallocating memory from the occupied expansion slots corresponding to the suitable ones of old input/output adapters to the expansion slot occupied by the hotplugged input/output adapter.<br>
+18.	The computer program product as recited in claim 17,<br>
+further comprising:<br>
+fifth instructions for rebooting the data processing system.<br>
+19.	A system for allocating memory to a plurality of<br>
+expansion slots in a data processing system, the system<br>
+comprising:<br>
+during initialization of the data processing system:<br>
+first means for allocating memory among the plurality of expansion slots on a rigid basis; and<br>
+second means, responsive to a determination that an input/output adapter functionally connected to one of the plurality of expansion slots requires more memory allocation than allocated to the one of the plurality of expansion slots, for reallocating the memory among the plurality of expansion slots such that the one of the expansion slots occupied by the input/output adapter is allocated sufficient memory.<br>
+20.	The system as recited in claim 19, further<br>
+comprising:<br>
+third means, during runtime, responsive to a new input/output adapter being hotplugged into selected one of the plurality of expansion slots that requires more memory than has been allocated to the selected one of the plurality of expansion slots, for reallocating memory from unoccupied ones of the plurality of expansion slots to the selected one of the plurality of expansion slots.<br>
+21.	The system as recited in claim 20, wherein the<br>
+reallocation of memory comprises updating an address<br>
+table.<br>
+22.	The system as recited in claim 20, further<br>
+comprising:<br>
+fourth means, responsive to a determination that the new input/output adapter requires more memory allocation than may be reallocated from the unoccupied ones of the plurality of expansion slots, for temporarily deconfiguring suitable ones of the plurality of old input/output adapters occupying others of the plurality of expansion slots; and<br>
+fifth means for reallocating memory from the others of the plurality of expansion slots to the one of the plurality of expansion slots occupied by the new input/output adapter.<br>
+23.	The system as recited in claim 22, wherein the<br>
+suitable ones are determined by a user.<br>
+24.	The system as recited in claim 22, further<br>
+comprising:<br>
+sixth means for rebooting the data processing system.<br>
+25.	A system for allocating memory to a plurality of<br>
+expansion slots in a data processing system during<br>
+runtime, the system comprising:<br>
+first means for determining an amount of memory required by a hotplugged input/output adapter; and<br>
+second means, responsive to a determination that more memory is required than has been allocated to a<br>
+expansion slot occupied by the hotplugged input/output adapter, for reallocating memory assigned to unoccupied expansion lots to the expansion slot occupied by the hotplugged input/output adapter.<br>
+26.	The system as recited in claim 25, further<br>
+comprising:<br>
+third means, responsive to a determination that the hotplugged input/output adapter requires more memory allocation than may be reallocated from the unoccupied expansion slots, for temporarily deconfiguring suitable ones of old input/output adapters in occupied expansion slots; and<br>
+fourth means for reallocating memory from the occupied expansion slots corresponding to the suitable ones of old input/output adapters to the expansion slot occupied by the hotplugged input/output adapter.<br>
+27.	The system as recited in claim 26, further<br>
+comprising:<br>
+fifth means for rebooting the data processing system.<br>
+28.	A method for allocating memory to expansion slots in<br>
+a data processing system, the method comprising:<br>
+during initialization of the data processing system: allocating memory assigned to a host bridge<br>
+among a plurality of a expansion slots on a<br>
+predetermined basis; and<br>
+responsive to a determination that an<br>
+input/output adapter connected to one of the<br>
+plurality of expansion slots requires more memory<br>
+than allocated to the one of the plurality of expansion slots, reallocating the memory among the plurality of expansion slots, such that the memory requirements of the input/output adapter are satisfied.<br>
+29.	The method as recited in claim 28, further<br>
+comprising:<br>
+during runtime, responsive to a determination that a new input/output adapter has been hotplugged into one of the plurality of expansion slots:<br>
+determining the memory requirements of the new input/output adapter; and<br>
+responsive to a determination that the memory requirements exceed the memory allocated to the one of the plurality of expansion slots occupied by the new input/output adapter, reallocating some of the memory allocated to unoccupied ones of the plurality of expansion slots to the one of the plurality of expansion slots occupied by the new input/output adapter.<br>
+30.	The method as recited in claim 29, further<br>
+comprising:<br>
+responsive to a determination that more memory is required by the new input/output adapter after reallocation of memory from unoccupied ones of the plurality of expansion slots, determining which of a plurality of old adapters connected to others of the plurality of expansion slots may be disabled;<br>
+disabling determined ones of the plurality of old adapters; and<br>
+reallocating some memory from the ones of the plurality of expansion slots occupied by the determined ones of the plurality of old adapters to the one of the plurality of expansion slots occupied by the new input/output adapter such that sufficient memory is allocated to the one of the plurality of expansion slots occupied by the new input/output adapter and sufficient memory is allocated to the ones of the plurality of expansion slots occupied by the determined ones of the plurality of old input/output adapters.<br><br>
+31.	A method for allocating memory to a plurality of expansion<br>
+slots in a data processing system substantially as herein<br>
+described with reference to the accompanying drawings.<br>
+32.	A method for allocating memory to a plurality of expansion<br>
+slots in a data processing system during runtime substantially<br>
+as herein described with reference  to  the  accompanying<br>
+drawings.<br>
+33.	A computer program product in a computer readable media for<br>
+use in a data processing system for allocating memory to a<br>
+plurality of expansion slots in a data processing system<br>
+substantially  as  herein   described   with  reference   to   the<br>
+accompanying drawings.<br>
+34.	A computer program product in a computer readable media for<br>
+use in a data processing system for allocating memory to a<br>
+plurality of expansion slots in a data processing system during<br>
+runtime substantially as herein described with reference to the<br>
+accompanying drawings.<br>
+35.	A system for allocating memory to plurality of expansion slots<br>
+in a data processing system substantially as herein described<br>
+with reference to the accompanying drawings.<br>
+36.	A system for allocating memory to a plurality of expansion<br>
+slots in a data processing system during runtime substantially<br>
+as herein described with reference to  the accompanying<br>
+drawings.<br>
+37.	A method for allocating memory to expansion slots in a data<br>
+processing  system  substantially  as  herein described  with<br>
+reference to the accompanying drawings.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">819-del-2001-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">819-del-2001-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">819-del-2001-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWNvcnJlc3BvbmRlbmNlLXBvLnBkZg==" target="_blank" style="word-wrap:break-word;">819-del-2001-correspondence-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">819-del-2001-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">819-del-2001-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">819-del-2001-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWZvcm0tMTkucGRm" target="_blank" style="word-wrap:break-word;">819-del-2001-form-19.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">819-del-2001-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">819-del-2001-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">819-del-2001-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLWdwYS5wZGY=" target="_blank" style="word-wrap:break-word;">819-del-2001-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=ODE5LWRlbC0yMDAxLXBldGl0aW9uLTEzOC5wZGY=" target="_blank" style="word-wrap:break-word;">819-del-2001-petition-138.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="212077-a-novel-exhaust-emission-control-device-for-diesel-particulate.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="212079-a-process-for-manufacturing-high-voltage-terminal-insulator-for-a-c-motors.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>212078</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>819/DEL/2001</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>48/2007</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>30-Nov-2007</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>14-Nov-2007</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>31-Jul-2001</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>INTERNATIONAL BUSINESS MACHINE CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>ARMONK, NEW YORK 10504, U.S.A.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>PEREZ MICHAEL ANTHONY</td>
+											<td>305 NORTH RAINBOW BRIDGE, CEDAR PARK, TX 78613, U.S.A.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 3/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>09/645,175</td>
+									<td>2000-08-24</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/212078-a-system-for-allocating-memory-to-a-plurality-of-expansion-slots-in-a-data-processing-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 00:28:32 GMT -->
+</html>

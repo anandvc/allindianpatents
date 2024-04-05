@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/252612-maintaining-consistency-for-remote-copy-using-virtualization by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 13:17:09 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 252612:MAINTAINING CONSISTENCY FOR REMOTE COPY USING VIRTUALIZATION</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">MAINTAINING CONSISTENCY FOR REMOTE COPY USING VIRTUALIZATION</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>Provided are a method, system, and article of manufacture for copying storage, wherein a first unit receives data updates from a second unit. The data updates are stored in a plurality of physical storage locations associated with the first unit. Links are generated to at least one of the plurality of physical storage locations to achieve consistent data between the first unit and the second unit.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>Description<br>
+MAINTAINING CONSISTENCY FOR REMOTE COPY USING VISUALIZATION Technical field<br>
+[0001] This application is related to the following co-pending and commonly-assigned patent application filed on the same date herewith, and which is incorporated herein by reference in its entirety: "Ordering Updates in Remote Copying of Data," having attorney docket no. SJO920030037US1.<br>
+Background art<br>
+[0002] The present disclosure relates to a method, system, and an article of<br>
+manufacture for maintaining consistency for asynchronous remote copy using virtualization<br>
+Disclosure of the invention<br>
+[0003] Information technology systems, including storage systems, may need protection from site disasters or outages. Furthermore, information technology systems may require features for data migration, data backup, or data duplication. Implementations for disaster or outage recovery, data migration, data backup, and data duplication may include mirroring or copying of data in storage systems. In certain information technology system, data is copied from a primary storage control to a secondary storage control. In response to the primary storage control being unavailable, the secondary storage control may be used to substitute the unavailable primary storage control.<br>
+[0004] Data copying in information technology systems may be synchronous or asynchronous. Synchronous copying involves sending data from the primary storage control to the secondary storage control and confirming the reception of such data before completing write operations to the primary storage control. Synchronous copy, therefore, slows the write operation response time while waiting for the confirmation from the secondary storage control. Synchronous copy, however, provides sequentially consistent data at the secondary storage control.<br>
+[0005] Asynchronous copy may provides better performance than synchronous copy because the write operation to the primary storage control may be completed before the reception of sent data is confirmed from the<br><br>
+secondary storage control. However, data sequence consistency may have to be ensured since data received at the secondary storage control may not be in order of the updates, i.e., write operations, to the primary storage control. In asynchronous copy, cross-device consistency between the primary and the secondary storage control may be achieved by storing updates temporarily in a hardened location, such as a journal dataset, until a set of consistent updates is available to apply to the secondary storage associated with the secondary storage control.<br>
+[0006] Provided are a method, system, and article of manufacture for copying<br>
+storage, wherein a first unit receives data updates from a second unit. The data updates are stored in a plurality of physical storage locations associated with the first unit. Links are generated to at least one of the plurality of physical storage locations to achieve consistent data between the first unit and the second unit.<br>
+[0007] In additional embodiments, the first unit is a secondary storage control<br>
+coupled to a secondary storage and the second unit is a primary storage control coupled to a primary storage, wherein the plurality of physical storage locations are associated with the secondary storage, and wherein the data updates are received asynchronously at the first unit.<br>
+[0008] In further embodiments, the received data is stored only once in the<br>
+plurality of physical storage locations associated with the first unit, and unlinked physical storage locations are released to be used for storing subsequent data updates.<br>
+[0009]   In yet additional embodiments, an application sends input/output requests to the second unit, wherein the data updates correspond to output requests from the application, and wherein the data updates are stored only once at the first unit, wherein the first unit can substitute the second unit in responding to the input/output requests from the application at any point in time, and wherein data in the first and second units are consistent at all points in time.<br>
+[0010] In yet further embodiments, a determination is made as to whether the stored data updates form a consistency group, prior to generating the<br><br>
+links. A waiting is performed to receive a next data update in response to the stored data updates not forming a consistency group.<br>
+[0011] In yet additional embodiments, a determination is made as to whether the stored data updates form a consistency group, prior to generating the links. A determination is made of the at least one physical storage location that commits the consistency group, wherein virtual storage associated with the first unit links to the determined at least one physical storage location.<br>
+[0012] In further embodiments, a data structure that maps virtual storage<br>
+locations to the at least one of the plurality of physical storage locations is maintained, wherein the generated links are associated with the data structure, and wherein a plurality of applications are capable of performing input/output operations with the virtual storage locations.<br>
+[0013] In additional embodiments, data structures representing consistency groups corresponding to the data updates are maintained, wherein the maintained data structures are capable of pointing to the plurality of physical storage locations. A deletion is performed on a first data structure that represents a first consistency group in response to first data updates associated with the first consistency group being committed.<br>
+[0014] In further embodiments, an error is received, at the first unit, in response to waiting for a data update. The generated links are modified to reflect consistent data between the first unit and the second unit.<br>
+[0015] Certain embodiments achieve consistency for asynchronous remote copy using a virtual storage system. A replication management application writes data that has been received but that is not yet consistent with data associated with other storage controls into unused physical storage. In response to data necessary to provide consistency being received, virtualization tables may be updated at the true secondary locations to point to locations in the physical storage where the data has been written. In certain embodiments, the received data at a secondary storage control may be written only once to the physical storage associated with the secondary storage control.<br>
+Brief description of the drawings<br><br>
+[0016] Referring now to the drawings in which like reference numbers represent<br>
+corresponding parts throughout: [0017] FIG. 1 illustrates a block diagram of a computing environment, in<br>
+accordance with certain described aspects of the invention; [0018]  FIG. 2 illustrates a block diagram of data structures and devices related to<br>
+the computing environment, in accordance with certain described<br>
+implementations of the invention; [0019] FIG. 3 illustrates a block diagram of consistency groups, in accordance<br>
+with certain described implementations of the invention; [0020]  FIG. 4 illustrates logic for maintaining consistency using visualization, in<br>
+accordance with certain described implementations of the invention; [0021] FIG. 5 illustrates a block diagram of a first state of data structures in an<br>
+exemplary [0022] embodiment, in accordance with certain described implementations of the<br>
+invention; 0023]  FIG. 6 illustrates a block diagram of a second state of data structures in an<br>
+exemplary embodiment, in accordance with certain described<br>
+implementations of the invention; [0024]  FIG. 7 illustrates a block diagram of a third state of data structures in an<br>
+exemplary embodiment, in accordance with certain described<br>
+implementations of the invention; [0025]  FIG. 8 illustrates logic for logic for maintaining consistency and disaster<br>
+recovery, in accordance with certain described implementations of the<br>
+invention; and [0026] FIG. 9 illustrates a block diagram of a computer architecture in which<br>
+certain described aspects of the invention are implemented. Best mode for carrying out the invention [0027]   In the following description, reference is made to the accompanying<br>
+drawings which form a part hereof and which illustrate several<br>
+implementations. It is understood that other implementations may be<br>
+utilized and structural and operational changes may be made without<br>
+departing from the scope of the present implementations.<br><br>
+[0028] FIG. 1 illustrates a block diagram of a computing environment, in<br>
+accordance with certain aspects of the invention. A primary storage control 100 is coupled to a secondary storage control 102. An application system 104 that includes one or more applications may perform I/O operations, including write operations, to the primary storage control 100. In certain embodiments the application system 104 may reside in a host computational device that is coupled to the primary storage control 100 via a host bus adapter.<br>
+[0029] The primary storage control 100 and the secondary storage control 102 may store and retrieve data from a primary storage 106 and a secondary storage 108 respectively, where the primary storage 106 is coupled to the primary storage control 100 and the secondary storage 108 is coupled to the secondary storage control 102. Additionally, the primary storage control 100 and the secondary storage control 102 may control the operations of the primary storage 106 and the secondary storage 108 respectively. The primary storage 106 and the secondary storage 108 may include non-volatile storage, such as, hard disk drives, RAIDs, direct access storage devices, or other types of physical storage.<br>
+[0030] In certain embodiments, the primary storage control 100 may not be<br>
+operational and data associated with the secondary storage control 102 may be used by a recovery system 110 for processing. In embodiments of the invention, data associated with the secondary storage control 102 is maintained consistent with data associated with the primary storage control 100. The consistency is maintained by a replication management application 112.<br>
+[0031] The replication management application 112 is coupled to the primary storage control 100 and the secondary storage control 102 and in certain embodiments may mirror data from the primary storage control 100 to the secondary storage control 102. In some embodiments, the mirroring may be performed by copying data asynchronously from the primary storage control 100 to the secondary storage control 102.<br>
+[0032] In certain embodiments, the replication management application 112 may be spread across the primary storage control 100 and the secondary<br><br>
+storage control 102. In other embodiments, the replication management application 112 may reside on a separate system that is different from the primary storage control 100 and the secondary storage control 102. In yet additional embodiments, the replication management application 112 may reside in only one of the primary storage control 100 and the secondary storage control 102.<br>
+[0033]  In certain embodiments, the replication management application 112<br>
+maintains consistency of data updates received from the application system 104, where the data updates are asynchronously copied to the secondary storage control 102 from the primary storage control 100. The replication management application 112 may perform a virtualization of the secondary storage 108 that is coupled to the secondary storage control 102 to maintain the consistency of data across the primary storage control 100 and the secondary storage control 102. In certain embodiments, virtualization includes the mapping of the physical secondary storage 108 to virtual volumes.<br>
+[0034] Therefore, FIG. 1 illustrates an embodiment where the replication<br>
+management application 112 virtualizes the secondary storage control 102 and maintains consistency of data across the primary storage control 100 and the secondary storage control 102, where data is copied asynchronously from the primary storage control 100 to the secondary storage control 102.<br>
+[0035] FIG. 2 illustrates a block diagram of data structures and devices related to the replication management application 112 and the secondary storage control 102, in accordance with certain described implementations of the invention.<br>
+[0036] The secondary storage control 102 may receive data updates 200<br>
+generated as a result of write operations from one or more applications 204a...204m to the primary storage control 100, where the one or more applications 204a..,204m may comprise the application system 104. In certain embodiments, the data updates 200 from the application system 104 arrive asynchronously at the secondary storage control 102 via the<br><br>
+primary storage control 100 and the data updates 200 may be referred to as a data update stream.<br>
+[0037] The replication management application 112 creates one or more virtual<br>
+devices, such as, virtual volumes 206a...206n associated with the secondary storage control 102. The primary storage control 100 may also have virtual volumes that correspond to the virtual volumes 206a...206n. In certain embodiments, the data corresponding to the virtual volumes 206a...206n are stored in locations in the physical secondary storage 108. The mapping of the virtual volumes 206a..206n to locations in the physical secondary storage 108 may be stored in virtualization tables 208 associated with the secondary storage control 102. In certain embodiments, the virtualization tables 208 may be coupled to the virtual volumes 206a.. 206n.<br>
+[0038] The application system 104 performs I/O operations with respect to virtual<br>
+volumes associated with the primary storage control 100 and corresponding virtual volumes 206a...206n are also associated with the secondary storage control 102.<br>
+[0039] In certain embodiments, the replication management application 112 may include a consistency group determination application 210, and associated data structures corresponding to consistency groups 212.<br>
+[0040] Therefore, FIG. 2 describes an embodiment where the replication<br>
+management application 112 virtualizes the secondary storage control 100 and maintains data consistency across the primary storage control 100 and the secondary storage control 102.<br>
+[0041] FIG. 3 illustrates a block diagram of exemplary consistency groups created by the replication management application 112, in accordance with certain described implementations of the invention.<br>
+[0042] A consistency group is a set of updates in which the updates may span a plurality of storage volumes, and where the updates must be written together in order to maintain mutual data consistency between the data contained in each storage volume of the plurality of storage volumes. To provide a non-limiting example, a first command copies volume A1 associated with the primary storage control 100 to volume B1 associated<br><br>
+with the secondary storage control 102 and a second command copies volume A2 associated with the primary storage control to volume B2 associated with the secondary storage control. It is required that volumes B1 and B2 should represent a consistent state of the dataset in volumes A1 and A2 at a certain point in time. In a certain sequence of operations on the volumes the following set of dependent write operations by the application system 104 may occur (where the second operation occurs after the first operation):<br>
+[0043]   1. Write to dataset on volume A1 (data updated)<br>
+[0044] 2. Write to dataset on volume A2 (data updated)<br>
+[0045] When volumes A1 and A2 are asynchronously copied to volumes B1 and B2 respectively via the data updates 200, then the following non-limiting example of a sequence of operations may create an inconsistent state in volumes B1, B2 with respect to volumes A1, A2.1.<br>
+[0046]  Copy volume A1 to volume B1<br>
+[0047] 2. Write to dataset on volume A1 (data updated)<br>
+[0048]  3. Write to dataset on volume A2 (data updated)<br>
+[0049] 4. Copy volume A2 to volume B2<br>
+[0050] At the conclusion of all the copy operations, i.e., the conclusion of the fourth operation, volume B2 contains the data update of volume A2 whereas volume B1 does not contain the data update of volume A1. The set of volumes B1, B2 are in an inconsistent state with respect to the set of volumes A1, A2. An application 204a...204m that uses the volumes B1, B2 associated with the secondary storage control 102 could not recover from a back-up copy stored in the volumes B1, B2.<br>
+[0051] Therefore, not all sequence data updates can form a consistent set of data updates. In FIG. 3, the rows of table 300 represent different devices and the columns represent different times. The times are relative times and not absolute times. For example, t3 (reference numeral 306) is a time after t2 (reference numeral 304), and t2 (reference numeral 304) is a time after t1 (reference numeral 302). A letter-number combination in the body of the table 300 identifies an update to a device at a time, with the letter identifying an application and the number a sequence of updates for the<br><br>
+application. For example, B1 (reference numeral 308), is the first data update from an application named B, where the update is for the device D3 (reference numeral 310) that arrives at relative time t1 (reference numeral 302). The different shadings in the entries of the table 300 identify a data-consistent set of updates, and may not necessarily be just vertical slices of entries in the table. For example, the table 300 has three consistency groups 312, 314, 316. The update data in a consistency group may need to be applied together to the secondary control 102 for data associated with the secondary control 102 to remain consistent with data associated with the primary control 100. The determination of consistency groups 312, 314, 316 in the table 300 may be performed in any manner known in the art.<br>
+[0052] Therefore, FIG. 3 illustrates an embodiment of exemplary consistency groups 312, 314, 316 that may be generated by the replication management application 112 by processing the data update stream 200 that arrives asynchronously at the secondary storage control 102 from the primary storage control 100. For preserving data consistency with the primary storage control 102, first a consistency group is determined and committed, and then the data updates of the consistency group are reflected via pointers or links in the virtual volumes 206a...206n of the secondary storage control 108.<br>
+[0053] FIG. 4 illustrates logic for maintaining consistency using virtualization as implemented in the secondary storage control 102 in accordance with certain described implementations of the invention.<br>
+[0054] Control starts at block 400, where the replication management application 112 creates virtualization tables 208 corresponding to the virtual volumes 206a...206n associated with the secondary storage control 102, where the virtualization tables 208 point to locations in the physical storage 108 and may define the consistent data contents of the virtual volumes 206a...206n. The consistency of the data contents of the virtual volumes 206a...206n is with respect to the data contents associated with the primary storage control 100.<br><br>
+[0055] The replication management application 112 receives (at block 402) a data update 200 for a virtual volume 206a...206n associated with the secondary storage control 102. For example, in certain embodiments the data update 200 may be the data update B1 (reference numeral 308).<br>
+[0056] The replication management application 112 writes (at block 404) the data update 200 into unused physical storage. For example, the replication management application 112 may write the data update 200 into unused locations of the secondary storage 108.<br>
+[0057] The replication management application 112 determines (at block 406) if all data updates for a consistency group 212, such as, consistency groups 312, 314, 316 have been received. If so, the replication management application 112 updates (at block 408) the visualization tables 208 to point to the locations in the physical storage 108 that define a commitment of the data updates included in the consistency group 212. The updated visualization tables 208 define the new data associated with the virtual volumes 206a...206n. The data associated with the virtual volumes 206a...206n of the secondary storage control 102 is therefore consistent with data associated with the primary storage control 100.<br>
+[0058] The replication management application 112 frees (at block 410) space in the physical storage 108 as a result of the updates to the visualization tables 208. For example, certain data updates 200 written into the unused physical storage performed in block 404 may not be needed and may be freed. The replication management application 112 receives (at block 402) the next data update 200.<br>
+[0059] If the replication management application 112 determines (at block 406) that all data updates for a consistency group 212, such as, consistency groups 312, 314, 316, have not been received then the replication management application 112 receives (at block 402) the next data update 200.<br>
+[0060] Therefore, FIG. 4 describes certain embodiments in which the replication management application 112 writes all data updates 200 into locations in unused physical storage 108 and after determining a consistency group 212 may harden only a certain number of the written data updates by<br><br>
+updating virtualization tables 208 to point to the certain number of the<br>
+written data updates. No copying of the written data updates is necessary.<br>
+[0061]  FIG. 5 illustrates a block diagram of a first state of data structures in an exemplary embodiment, in accordance with certain described implementations of the invention, where original data is associated with the secondary storage control 102 and data updates corresponding to first and second consistency groups have arrived at the secondary storage control 102 but have not been committed.<br>
+[0062]  In FIG. 5 a linear representation of an exemplary disk 500, such as the physical storage 108 is shown. The exemplary disk 500 has ten physical blocks with the first physical block containing a first virtual block (VB) named VB1 that is part of the original data in the disk 500. As data updates 200 arrive and are associated with different consistency groups (CG) the data updates are written into the disk 500. For example, a data update 200 for the fourth virtual block (VB4) which is part of the second consistency group (CG2) is written in physical block five. The virtual blocks correspond to the virtual volumes 206a...206n.<br>
+[0063]  FIG. 5 also illustrates current data pointers 502 that point to the physical blocks of the original data in the disk 500, a first consistency group pointers 504 that point to the physical blocks corresponding the data updates comprising the first consistency group, and a second consistency group pointers 506 that point to the physical blocks corresponding to the data updates comprising the second consistency group.<br>
+[0064] Tables representing the virtual block to physical block mapping of the pointers 502, 504, 506 are also maintained. For example, current data pointer table 508 illustrates the current mapping of the virtual blocks to the physical blocks in the disk 500. The mapping in the current data pointer table 508 illustrates hardened or committed data, i.e., data that is consistent across the primary storage control 100 and the secondary storage control 102. The applications 204a...204n that access data associated with the secondary storage control 102 work with the data pointed to by the current data pointers 502.<br><br>
+[C065] The first consistency group pointer table 510 illustrates the mapping of the<br>
+virtual blocks to the physical blocks in the disk 500 for data updates that form part of the first consistency group. The data represented in the first consistency group pointer table 510 is not hardened as the first consistency group has not been committed as yet.<br>
+[0066] Similarly, a second consistency group pointer table 512 illustrates the<br>
+mapping of the virtual blocks to the physical blocks in the disk 500 for data updates that form part of the second consistency group. The data represented in the second consistency group pointer table 512 is not hardened as the second consistency group has not been committed as yet.<br>
+[0067] Therefore, FIG. 5 illustrates a first state of data structures in an<br>
+embodiment where data updates 200 for the first and second consistency groups have arrived at the secondary storage control 102 but have not been committed.<br>
+[0068] FIG. 6 illustrates a block diagram of a second state of data structures in an exemplary embodiment, in accordance with certain described implementations of the invention, where the data updates 200 corresponding to the first consistency group pointer table 510 have been hardened, i.e., the first consistency group has been committed, and uncommitted data updates 200 corresponding to a third consistency group have arrived at the secondary storage control 102.<br>
+[0069] FIG. 6 illustrates the updated current data pointers 502 that point to the<br>
+physical blocks of the original data in the disk 500, the second consistency group pointers 506 that point to the physical blocks corresponding the data updates comprising the uncommitted second consistency group, and a new third consistency group pointers 600 that point to the physical blocks corresponding to the uncommitted data updates comprising the third consistency group.<br>
+[0070] Tables representing the virtual block to physical block mapping of the pointers 502, 506, 510 are also maintained. For example, current data pointer table 508 illustrates the current mapping of the virtual blocks to the physical blocks in the disk 500. The mapping in the current data pointer<br><br>
+table 508 illustrates hardened or committed data after the date updates 200 of the first consistency group have been committed.<br>
+[0071] The third consistency group pointer table 602 illustrates the mapping of the<br>
+virtual blocks to the physical blocks in the disk 500 for data updates that form part of the third consistency group. The data represented in the second consistency group pointer table 512 or the third consistency group pointer table 602 is not hardened as the second and third consistency groups have not been committed as yet. In FIG. 6 the first consistency group pointer table 510 has been deleted as the data updates for the first consistency group have been committed.<br>
+[0072] Therefore, FIG. 6 illustrates an embodiment where data updates 200 for the first, second and third consistency groups have arrived at the secondary storage control 102 and only the data updates of the first consistency group have been committed.<br>
+[0073] FIG. 7 illustrates a block diagram of a third state of data structures in an exemplary embodiment, in accordance with certain described implementations of the invention. In FIG. 7 the data updates 200 corresponding to the second and third consistency groups have been committed.<br>
+[0074]   Since the data updates of the first, second and third consistency groups have been committed the first consistency group pointer table 510, the second consistency group pointer table 512, and the third consistency group pointer table 602 are all shown to be deleted. The current data pointers point to physical block 5, 6, 8, 9 of the disk 500 and correspond to virtual block VB4, VB2, VB1, and VB3 respectively.<br>
+[0075] Therefore, FIG. 7 illustrates an embodiment where data updates 200 for the first, second and third consistency groups have arrived at the secondary storage control 102 and all the data updates have been committed.<br>
+[0076]   FIG. 8 illustrates logic for logic for maintaining consistency and disaster recovery implemented in the replication management application 112, in accordance with certain described implementations of the invention.<br><br>
+[0077] Control starts at block 800, where a current consistency group is initialized to one. The replication management application 112 determines (at block 802) whether all storage controls, i.e., the primary storage control 100 and the secondary storage control 102, have received the data updates of the current consistency group. If so, the replication management application 112 commits the data updates of the current consistency group and for all storage controls sets (at block 804) the current pointers to the current consistency group data updates. In certain embodiments, the current pointers may be implemented via data structures associated with the visualization tables 208 and/or the pointer tables 508, 510, 512, 602.<br>
+[0078] The replication management application 112 determines (at block 806) whether all pointers have been updated. If so, the replication management application deletes (at block 808) the current consistency group pointers.<br>
+[0079] The replication management application 112 increments (at block 810) the current consistency group. For example, if in a first iteration of blocks 802 to 808 the data updates of the first consistency group are processed, then in the second iteration of blocks 802 to 808 the data updates of the second consistency group would be processed. The replication management application 112 waits (at block 812) for data updates of the current consistency group to arrive. If there is no error while waiting then control proceeds to block 802 where the replication management application 112 determines if all storage controls have received the data updates for the current consistency group.<br>
+[0080] If the replication management application 112 determines (at block 802) that all storage controls have not received the data updates of the current consistency group then the replication management application 112 waits (at block 812) for all the data updates of the current consistency group to arrive. If an error or disaster strikes while waiting (at block 812) the replication management application 112 determines (at block 814) the current consistency group on all storage controls and then determines (at block 816) the last available consistency group in each storage control. The replication management application 112 determines (at block 818) the maximum consistency group available on all storage controls and then<br><br>
+updates (at block 820) pointers on all storage controls to correspond to the last available consistency group on all storage controls.<br>
+[0081] If the replication management application 112 determines (at block 806) that all pointers have not been updated then the replication management application 112 waits (at block 822) for all pointers to be updated. If there is no error while waiting, then control returns to block 806 where the replication management application 112 determines if all pointers have been updated.<br>
+[0082] If there is an error while waiting (at block 822) then the replication<br>
+management application 112 begins performing (at block 824) a FOR loop for all the storage controls. The control for the FOR loop is executed (at block 824) for one storage control in every iteration. If the FOR loop is incomplete, i.e., not all storage controls have been processed, the replication management application 112 determines (at block 826) if the pointers correspond to the current consistency group for the storage control being processed. If so, then the replication management application 112 reverts (at block 828) the pointers to correspond to the previous consistency group and control proceeds (at block 824) to the next iteration of the FOR loop with the next storage control.<br>
+[0083] If the pointers do not correspond (at block 826) to the current consistency group then control proceeds (at block 824) to the next iteration of the FOR loop with the next storage control. At the conclusion of the FOR loop (at block 830) the data in the storage controls is consistent with respect to the previous consistency group.<br>
+[0084] Therefore, the logic of FIG. 8 maintains the data on all storage controls consistent with each other and furthermore in the event of an error or disaster impacting a storage control while updating pointers or receiving data updates may revert the pointers in the storage controls to reflect the data updates associated with an earlier processed consistency group, such that data in the storage controls are consistent with each other.<br>
+[0085] These embodiments achieve consistency for asynchronous remote copy by virtualizing storage systems. A replication management application writes data that has been received but that is not yet consistent with data<br><br>
+in other storage subsystems into unused physical storage. In response to data necessary to provide consistency being received, pointers and tables may be updated at the true target locations to point to locations in the physical storage where the data has been written.<br>
+[0086] Therefore, the embodiments do not require a two phase commit at the secondary storage control to ensure data consistency. In a two phase commit the data updates may be written into a journal dataset associated with the secondary storage control in a first phase and the appropriate data updates may copied in a second phase when the consistency group is committed. The embodiments are implemented without using a journal dataset. In response to a consistency group being committed, pointers are adjusted to point to appropriate locations in physical storage, such that the adjusted pointers represent a consistent data set across all storage controls.<br>
+[0087] Additionally, in the event of an error or disaster while updating pointers or waiting for data updates, the embodiments may adjust the pointers in the storage controls to reflect the data updates associated with an earlier processed consistency group, such that the data in the storage controls are consistent with each other.<br>
+[0088]  Furthermore, since the data updates may be kept in disk there is a lesser constraint on space utilization or volatility than if the data updates are kept in a cache. Additionally, only enough extra disk space is needed to contain updates for the number of consistency groups which are in progress at one time.<br>
+[0089] Moreover, since no data updates are physically overwritten, in certain embodiments it may be possible to maintain or revert back to multiple previous versions of consistent data sets in the storage controls.<br>
+[0090] The described techniques may be implemented as a method, apparatus or article of manufacture using standard programming and/or engineering techniques to produce software, firmware, hardware, or any combination thereof. The term "article of manufacture" as used herein refers to code or logic implemented in hardware logic (e.g., an integrated circuit chip, Programmable Gate Array (PGA), Application Specific<br><br>
+[0091] Integrated Circuit (ASIC), etc.) or a computer readable medium (e.g.,<br>
+magnetic storage medium, such as hard disk drives, floppy disks, tape), optical storage (e.g., CD-ROMs, optical disks, etc.), volatile and nonvolatile memory devices (e.g., EEPROMs, ROMs, PROMs, RAMs, DRAMs, SRAMs, firmware, programmable logic, etc.). Code in the computer readable medium is accessed and executed by a processor. The code in which implementations are made may further be accessible through a transmission media or from a file server over a network. In such cases, the article of manufacture in which the code is implemented may comprise a transmission media, such as a network transmission line, wireless transmission media, signals propagating through space, radio waves, infrared signals, etc. Of course, those skilled in the art will recognize that many modifications may be made to this configuration without departing from the scope of the implementations, and that the article of manufacture may comprise any information bearing medium known in the art.<br>
+[0092] FIG. 9 illustrates a block diagram of a computer architecture in which<br>
+certain aspects of the invention are implemented. FIG. 9 illustrates one implementation of the storage controls 100,102, a host that includes the application system 104, and any computational device that includes the replication management application 112. The storage controls 100,102, the host that includes the application system 104, and any computational device that includes the replication management application 112 may implement a computer architecture 900 having a processor 902, a memory 904 (e.g., a volatile memory device), and storage 906 (e.g., a non-volatile storage, magnetic disk drives, optical disk drives, tape drives, etc.). The storage 906 may comprise an internal storage device, an attached storage device or a network accessible storage device. Programs in the storage 906 may be loaded into the memory 904 and executed by the processor 902 in a manner known in the art. The architecture may further include a network card 908 to enable communication with a network. The architecture may also include at least one input device 910, such as a keyboard, a touchscreen, a pen, voiceactivated input, etc., and at least<br><br>
+one output device 912, such as, a display device, a speaker, a printer, etc.<br>
+30<br>
+[0093]  FIGs. 4-8 describe specific operations occurring in a particular order. Further, the operations may be performed in parallel as well as sequentially. In alternative implementations, certain of the logic operations may be performed in a different order, modified or removed and still implement implementations of the present invention. Moreover, steps may be added to the above described logic and still conform to the implementations. Yet further steps may be performed by a single process or distributed processes.<br>
+[0094] Although the embodiments as written with respect to an asynchronous peer to peer remote copy, additional embodiments may be used where a two-phase commit is required for copying. For example, if a database log and table space are both contained with the same virtualization engine, transactions can be written to the log and then the commit can be accomplished using the virtualization described in the embodiments. There may be a performance improvement for the processing of the data base because there is no need to transfer the data to storage for the commit.<br>
+[0095]  Many of the software and hardware components have been described in separate modules for purposes of illustration. Such components may be integrated into a fewer number of components or divided into a larger number of components. Additionally, certain operations described as performed by a specific component may be performed by other components.<br>
+[0096] Therefore, the foregoing description of the implementations has been<br>
+presented for the purposes of illustration and description, it is not intended to be exhaustive or to limit the invention to the precise form disclosed. Many modifications and variations are possible in light of the above teaching. It is intended that the scope of the invention be limited not by this detailed description, but rather by the claims appended hereto. The above specification, examples and data provide a complete description of the manufacture and use of the composition of the invention. Since many implementations of the invention can be made without departing from the<br><br>
+spirit and scope of the invention, the invention resides in the claims hereinafter appended.<br><br><br><br><br><br><br><br>
+Claims<br>
+1.	A method for copying storage, comprising: receiving, at a first unit, data<br>
+2.	updates from a second unit; storing the data updates in a plurality of physical<br>
+3.	storage locations associated with the first unit; and generating links to at least<br>
+4.	one of the plurality of physical storage locations to achieve consistent data<br>
+5.	between the first unit and the second unit.<br>
+6.	The method of claim 1, wherein the first unit is a secondary storage control<br>
+7.	coupled to a secondary storage and the second unit is a primary storage<br>
+8.	control coupled to a primary storage, wherein the plurality of physical storage<br>
+9.	locations are associated with the secondary storage, and wherein the data<br>
+10.	updates are received asynchronously at the first unit.<br>
+11.	The method of claim 1, wherein the received data is stored only once in the<br>
+12.	plurality of physical storage locations associated with the first unit, the method<br>
+13.	further comprising: releasing unlinked physical storage locations to be used for<br>
+14.	storing subsequent data updates.<br>
+15.	The method of claim 1, wherein an application sends input/output requests to<br>
+16.	the second unit, wherein the data updates correspond to output requests from<br>
+the application, and wherein the data updates are stored only once at the first unit, wherein the first unit can substitute the second unit in responding to the input/output requests from the application at any point in time, and wharein data in the first and second units are consistent at all points in time.<br>
+5.	The method of claim 1, further comprising: determining if the stored data<br>
+updates form a consistency group, prior to generating the links; and waiting to<br>
+receive a next data update in response to the stored data updates not forming<br>
+a consistency group.<br>
+6.	The method of claim 1, further comprising; determining if the stored data<br>
+7.	updates form a consistency group, prior to generating the links; and<br>
+8.	determining the at least one physical storage location that commits the<br>
+9.	consistency group, wherein virtual storage associated with the first unit links to<br>
+10.	the determined at least one physical storage location.<br>
+11.	The method of claim 1, further comprising: maintaining a data structure that<br>
+12.	maps virtual storage locations to the at least one of the plurality of physical<br>
+13.	storage locations, wherein the generated links are associated with the data<br><br>
+structure, and wherein a plurality of applications are capable of performing input/output operations with the virtual storage locations, where in plurality of consistency group pointers, consistency group pointer tables and relative times for data updates are maintained.<br>
+8.	The method of claim 1, further comprising: maintaining data structures<br>
+representing consistency groups corresponding to the data updates, wherein<br>
+the maintained data structures are capable of pointing to the plurality of<br>
+physical storage locations, wherein plurality of consistency group pointers,<br>
+consistency group pointer tables and relative times for data updates are maintained.<br>
+deleting a first data structure that represents a first consistency group in response to first data updates associated with the first consistency group being committed.<br>
+9.	The method of claim 1, further comprising: receiving an error, at the first unit,<br>
+10.	in response to waiting for a data update; and modifying the generated links to<br>
+11.	reflect consistent data between the first unit and the second unit, wherein the<br>
+12.	generated links are reverted to reflect data updates associated with an earlier<br>
+13.	processed consistency group, wherein a current consistency group is being<br>
+14.	processed.<br>
+15.	The method of claim 1, further comprising: receiving an error, at the first unit,<br>
+16.	in response to generating the links; and modifying the links to reflect consistent<br>
+17.	data between the first unit and the second Unit, wherein the generated links are<br>
+18.	reverted to reflect data updates associated with an earlier processed consistency<br>
+19.	group, wherein a current consistency group is being processed.<br>
+20.	A system for copying storage, comprising:  a processing unit; a plurality of<br>
+21.	physical storage locations associated with the processing unit; program logic<br>
+22.	including code capable of causing the processing unit to perform: (i) receiving,<br>
+at the processing unit, data updates; (ii) storing the data updates in the plurality of physical storage locations; and   (iii) generating links to at least one of the plurality of physical storage locations to achieve consistent data.<br><br>
+12.	The system of claim 11, wherein the processing unit comprises a first<br>
+processing unit, and further comprising: a second processing unit coupled to<br>
+the first processing unit, wherein the data updates at the first processing unit<br>
+are received from the second processing unit, and wherein the consistent data<br>
+is achieved between the first processing unit and the second processing unit.<br>
+13.	A computer readable medium including code for copying to a first unit from a second<br>
+unit, wherein the code when executed by a machine is capable of causing operations, the<br>
+operations comprising:<br>
+receiving, at the first unit, data updates from the second unit;<br>
+storing the data updates in a plurality of physical storage locations associated with the first unit; and<br>
+generating links to at least one of the plurality of physical storage locations to achieve consistent data between the first unit and the second unit.<br>
+14.	A system for copying storage, comprising;<br>
+means for receiving data updates;<br>
+means for storing the data updates in a plurality of physical storage locations; and means for generating links to atleast one of the plurality of physical storage locations to achieve consistent data.<br>
+15.	The system of claim 14, wherein the consistent data is achieved between a<br>
+first processing unit and a second processing unit, wherein generated links are reverted to reflect data updates associated with an earlier processed consistency group, wherein a current consistency group is being processed.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1DSEVOUC0yMDA2ICAgQ09SUkVTUE9OREVOQ0UgT1RIRVJTICAwNi0wNy0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">2898-CHENP-2006   CORRESPONDENCE OTHERS  06-07-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1DSEVOUC0yMDA2ICBBTUVOREVEIENMQUlNUyAxNS0wNS0yMDEyLnBkZg==" target="_blank" style="word-wrap:break-word;">2898-CHENP-2006  AMENDED CLAIMS 15-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1DSEVOUC0yMDA2ICBFWEFNSU5BVElPTiBSRVBPUlQgUkVQTFkgUkVDRUlWRUQgMTUtMDUtMjAxMi5wZGY=" target="_blank" style="word-wrap:break-word;">2898-CHENP-2006  EXAMINATION REPORT REPLY RECEIVED 15-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1DSEVOUC0yMDA2ICBGT1JNLTEzIDE1LTA1LTIwMTIucGRm" target="_blank" style="word-wrap:break-word;">2898-CHENP-2006  FORM-13 15-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1DSEVOUC0yMDA2ICBGT1JNLTMgMTUtMDUtMjAxMi5wZGY=" target="_blank" style="word-wrap:break-word;">2898-CHENP-2006  FORM-3 15-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1DSEVOUC0yMDA2ICBPVEhFUiBQQVRFTlQgRE9DVU1FTlQgMSAxNS0wNS0yMDEyLnBkZg==" target="_blank" style="word-wrap:break-word;">2898-CHENP-2006  OTHER PATENT DOCUMENT 1 15-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1DSEVOUC0yMDA2ICBPVEhFUiBQQVRFTlQgRE9DVU1FTlQgMTUtMDUtMjAxMi5wZGY=" target="_blank" style="word-wrap:break-word;">2898-CHENP-2006  OTHER PATENT DOCUMENT 15-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1jaGVucC0yMDA2LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">2898-chenp-2006-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1jaGVucC0yMDA2LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">2898-chenp-2006-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1jaGVucC0yMDA2LWNvcnJlc3BvbmRuZWNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">2898-chenp-2006-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1jaGVucC0yMDA2LWRlc2NyaXB0aW9uKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">2898-chenp-2006-description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1jaGVucC0yMDA2LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">2898-chenp-2006-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1jaGVucC0yMDA2LWZvcm0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">2898-chenp-2006-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1jaGVucC0yMDA2LWZvcm0gMjYucGRm" target="_blank" style="word-wrap:break-word;">2898-chenp-2006-form 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1jaGVucC0yMDA2LWZvcm0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">2898-chenp-2006-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1jaGVucC0yMDA2LWZvcm0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">2898-chenp-2006-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjg5OC1jaGVucC0yMDA2LXBjdC5wZGY=" target="_blank" style="word-wrap:break-word;">2898-chenp-2006-pct.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="252611-system-and-method-for-time-synchronization-in-wireless-personal-area-networks.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="252614-pesticidal-5-substituted-oxyalkylamino-1-arylpyrazole-derivatives.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>252612</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2898/CHENP/2006</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>22/2012</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>01-Jun-2012</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>24-May-2012</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>07-Aug-2006</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>INTERNATIONAL BUSINESS MACHINES CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>Armonk, New York 10504</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>SHACKELFORD, David, Michael</td>
+											<td>10102 N. Mill Crossing Way, Tucson, Arizona 85743</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>MCBRIDE, Gregory, Edward</td>
+											<td>356 North Samoff Drive, Tucson, Arizona 85710</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F11/20</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/EP2005/050065</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-01-07</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/754,231</td>
+									<td>2004-01-09</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/252612-maintaining-consistency-for-remote-copy-using-virtualization by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 13:17:10 GMT -->
+</html>

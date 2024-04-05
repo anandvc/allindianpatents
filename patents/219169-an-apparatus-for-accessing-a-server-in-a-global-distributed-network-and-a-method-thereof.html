@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/219169-an-apparatus-for-accessing-a-server-in-a-global-distributed-network-and-a-method-thereof by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 12:08:44 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 219169:AN APPARATUS FOR ACCESSING A SERVER IN A GLOBAL DISTRIBUTED NETWORK AND A METHOD THEREOF</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">AN APPARATUS FOR ACCESSING A SERVER IN A GLOBAL DISTRIBUTED NETWORK AND A METHOD THEREOF</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method and apparatus for accessing a destination web site in a global communication network through a cluster of web server proxies is presented. Login information and user activity information are shared among the nodes of the cluster on a weighted basis such that an active user is not prematurely logged off while advantageously traffic load is reduced.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+METHOD AND APPARATUS FOR SHARING AUTHENTICATION SESSION STATE IN A GLOBAL DISTRIBUTED NETWORK<br>
+FIELD<br>
+[0001]	The present invention relates to sharing authentication session state in a global<br>
+distributed network, such as the Internet. More specifically, the present invention relates to methods and apparatus for efficiently updating the nodes of a cluster of web server proxies whenever a user accesses a node of the cluster, such that an active user is not prematurely logged off while advantageously traffic load is reduced.<br>
+BACKGROUND<br>
+[0002]	When a user attempts to access a destination web site or server in a global<br>
+distributed network, such as the Internet, a web server proxy (WSP) authenticates the user by presenting a login form and soliciting user credentials the first time the user attempts to access the destination web site. The WSP is a service that transparently proxies the destination web server and intercepts the requests from the user to the destination web site and forwards the requests to the destination web site, subject to authentication and access filters.<br>
+[0003]	If the user provides the proper credentials, WSP authorizes an active session for<br>
+that user, forwards the user's request(s) to the destination web site, and conveys any response received from the destination web site back to the user. The session may expire after some configurable time period of user inactivity, such that a subsequent request from the same user that is received after such time period requires authentication. WSP may also maintain a history of the user's failed authentication attempts, which may be due to providing invalid credentials, and lock out the user after some configurable number of failed login attempts.<br>
+[0004]	In many situations it is desirable to cluster a number of WSPs so as to support<br>
+more users than can be accommodated by a single WSP. To cluster WSPs, an instance of the service may run on two or more computers, which may be supported by a load balancer. Because a series of requests from one user most probably is handled by more than one node of the WSP cluster, the clustered WSPs should share session state information, which may consist of user authentication status or failed login attempts.<br><br>
+[0005]	Currently, a centralized database or a session server is used for keeping track of<br>
+the users session state information. When a cluster node receives a request from a user, the cluster node refers to the data base or the server to determine whether an active session has been established for the user or, otherwise, a failed login-attempt count is recorded for the user, as the case may be.<br>
+[0006]	The problem with using a centralized database or session server for sharing users<br>
+session state information is that if the database or the session server fails, the cluster cannot properly authenticate the user. That is, a user may be prematurely terminated, get to attempt more than the predetermined login-attempt limit, or have to provide unnecessary login credentials.<br>
+[0007]	There is a need, therefore, for mechanisms to provide a cluster of WSP nodes<br>
+and efficiently share user session state information among the WSP nodes.<br>
+SUMMARY<br>
+[0008]	The disclosed embodiments provide novel and improved methods and apparatus<br>
+for accessing a destination web site in a global communication network. In one aspect, a method for logging a user on a global distributed network comprises receiving a request from the user at a node of a server proxy cluster, prompting the user for login information, and receiving login information from the user. If the received login information is valid, the method further includes setting up an active session for the user and updating at least one node of the server proxy cluster with information that the active session is still in use.<br>
+[0009]	In another aspect, a method for accessing a server in a global distributed network<br>
+comprises receiving a request from the user at a node of a server proxy cluster and determining whether an active session is established for the user. If an active session is established for the user, the method further includes updating at least one node of the server proxy cluster with information that the active session is still in use.<br>
+[0010]	In another aspect, an apparatus for accessing a server in a global distributed<br>
+network comprises a memory unit, a receiver, a transmitter, and a processor communicatively coupled with the memory unit, the receiver, and the transmitter. The processor is capable of executing instructions to carry out the above-mentioned methods.<br><br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[0011]	The features and advantages of the present invention will become more apparent<br>
+from the detailed description of disclosed embodiments set forth below when taken in conjunction with the drawings, and wherein:<br>
+[0012]	FIG. 1 illustrates a cluster of web server proxies for accessing a destination web<br>
+site;<br>
+[0013]	FIG. 2 illustrates a timing diagram for accessing a destination web site; and<br>
+[0014]	FIG. 3 illustrates an embodiment for a web server and a remote access device.<br>
+DETAILED DESCRIPTION<br>
+[0015]	Before several embodiments are explained in detail, it is to be understood that<br>
+the scope of the invention should not be limited to the details of the construction and the arrangement of the components set forth in the following description or illustrated in the drawings. Also, it is to be understood that the phraseology and terminology used herein is for the purpose of description and should not be regarded as limiting.<br>
+[0016]	FIG.  1 illustrates a cluster of web server proxies (WSPs) for accessing a<br>
+destination web site, according to one embodiment. Devices 102 include wireless phones, personal data assistants (PDAs), laptop computers, and the like. A user uses a device 102 to make a request to access a destination server, such as a web site. The request includes a hypertext transfer protocol (HTTP) format request. The WSP associates a request with its respective user using a header field containing a value unique to the user, the user's device, or the source internet protocol (IP) address of the request. The requests arrive at a load balancer/scheduler 104, which distributes the incoming requests among the nodes of the WSP cluster 106. Load balancer/scheduler 104 distributes the requests based on a number of load distribution schemes, such as a round-robin scheme.<br>
+[0017]	WSP cluster 106 is a service that proxies a web server and intercepts the<br>
+requests received from the user, caches the requests, and forwards them to the destination web site, subject to authentication and access filters. In one embodiment, a number of WSPs are clustered so as to support more users than can be accommodated by a single WSP.   To cluster WSPs, an instance of the service runs on two or more<br><br>
+computers. Because a series of requests from one user most probably is handled by more than one node of the WSP cluster, the clustered WSPs share session state information. The session state information includes user's login status and/or failed login-attempt, as the case may be.<br>
+[0018]	The WSP cluster shares the session state information to prevent premature<br>
+session termination for a user before a configurable time period of inactivity assigned to the user has actually expired. That is, after the user's first request arrives at a first node of the WSP cluster, and an active session is established for the user, a configurable inactivity time period is assigned to the user so that if no subsequent request is received from the user during the inactivity time period, the assigned session is terminated.<br>
+[0019]	The WSP cluster shares the session state information among the nodes of the<br>
+WSP cluster to prevent the user from unsuccessfully attempting to login beyond the allowed number of unsuccessful login attempts. That is, after the user's first request arrives at a first node of the WSP cluster, but it is not properly authenticated, the user is allowed a certain number of unsuccessful attempts before the user is locked out, regardless of which cluster node receives the user's login request. Otherwise, if the user unsuccessfully keeps attempting to login but the user's login credentials arrive at different nodes of the WSP cluster, and the allowed limit of unsuccessful login attempts has not reached at any one of such nodes, the user would be mistakenly allowed to attempt to login beyond the allowed limit.<br>
+[0020]	In one embodiment, when a user attempts to access a destination web site or<br>
+server in a global distributed network, such as the Internet, and the user's first request arrives at a first node of the WSP cluster, the first node of the WSP cluster starts the process of authenticating the user. The first node presents the user with a login form and solicits user's credentials the first time the user attempts to access the destination web site. If the user provides the valid credentials, the first node of the WSP authorizes the user and establishes an active session for the user.<br>
+[0021]	The first node of the cluster then updates other nodes of the WSP cluster with<br>
+the information that the active session rs established for the user, such that subsequent requests from the same user, as long as the user has not been inactive longer than the allowed inactivity time period, do not require authentication. Sharing the session information with other nodes of the cluster includes broadcasting or multicasting the<br><br>
+session state information to other nodes. The first node may store the session information at its local list and may start a timer, indicating the start of the active session for the user. The rest of the cluster nodes may also, after receiving session information from the first node, store the session information for the user in their respective local lists, and start their respective timers, indicating the start of the active session for the user. Advantageously, if any node of the WSP cluster becomes inoperative, the remaining nodes stay intact and operate properly. The first node of the WSP cluster then forwards the user's original request to the destination web site, receives a response from the destination web site, and conveys the response received from the destination web site back to the user.<br>
+[0022]	If a second request from the same user arrives at a second node of the cluster, the<br>
+second node refers to its local list and/or its timer to retrieve session state information for the user. If the session information and/or the timer indicate that the session that has been established for the user is still active, the second node advantageously does not need to authenticate the user again. The second node updates some or all of the other nodes of the WSP cluster with information that the user is still active, so that the user's active session would not be prematurely terminated by the other nodes of the cluster. The second node may update the other nodes on a weighted basis.<br>
+[0023]	The weighted basis scheme includes updating some or all of the other nodes of<br>
+the cluster relative to the elapsed time since the user's last request, e.g., the longer the elapsed time the more probability of updating the nodes. The weighted basis scheme includes updating some or all of the other nodes of the cluster relative to the number of nodes of the cluster, e.g., the more nodes in the cluster, the more probability of updating the nodes. The weighted basis scheme includes updating some or all of the other nodes of the cluster relative to the elapsed time since the user's last request as well as the number of nodes in the cluster.<br>
+[0024]	The weighted updating scheme includes updating some or all of the nodes of the<br>
+cluster based on a probability function that increases with some factors, such as the elapsed time since the user's last request, the number of nodes of the cluster, the type of the request, the identity or type of the requester, and the like. For example, some or all nodes of the cluster may be updated with high probability if the elapsed time since last request at a node is relatively large and/or the number of nodes of the cluster are<br><br>
+relatively large. The weighted-basis updating scheme probabilistically ensures that the active user, whose requests arrive at different nodes of the cluster, is not prematurely logged off, while advantageously reducing traffic load compared to updating all of the cluster nodes whenever a request is received from the user.<br>
+[0025]	FIG. 2 illustrates a timing diagram for accessing a destination web site through a<br>
+WSP cluster, according to one embodiment. The WSP cluster includes three WSP nodes, A, B, and C. When the user attempts to access a destination web site or server in a global distributed network, such as the Internet, and the user's first request arrives, for example, at node B of the WSP cluster, at time 202, node B starts the process of authenticating the user, at time 204. Node B prompts the user for login credentials, such as user identification and/or password. After the user provides login credentials, the user's login credentials, however, may arrive at a different node of the WSP cluster. For example, the user's login credentials arrives at node C, at time 206. If the user provides valid login credentials, node C authorizes the user, establishes an active session for the user, caches the user's request, and starts a timer, at time 208.<br>
+[0026]	At     time     210,     node     C     broadcasts     an     update     message,     e.g.,<br>
+"Add_SessionJLJser_ID," to nodes A and B of the WSP cluster, informing nodes A and B that an active session is established for the user having the designated identification information. Nodes A and B update their respective local lists and/or start their respective timers, indicating that an active session is established for the user. Node C sends the user's original request to the destination server, at time 212; receives a response from the destination server, at time 214; and forwards the response to the user, at time 216.<br>
+[0027]	At time 218, the timer at node C expires due to the user being inactive for longer<br>
+than the allowed inactivity time period. Accordingly, node C may remove the user's session from its local list. However, the timer(s) at nodes A and B have not reached such limit yet; thus, these nodes have not removed the active session from their local lists. When a new request from the same user arrives at node B, at time 220, node B resets its own timer, and broadcasts an update signal, e.g., "Keep_Session_Alive_JJser_ID," at time 222, to nodes A and C, or only to node C, whose timer has expired. Nodes A and C, or only C, as the case may be, update their local lists and start their respective timers.<br><br>
+[0028]	In this example, since the number of the nodes in the cluster is relatively small,<br>
+updating other nodes, for example nodes A and C, may be based on the relative timer value at node B. For example, if the timer value at node B is relatively small, nodes A and C may not be updated, or updated with a relatively low probability; thus saving traffic and processing time. Otherwise, if the timer value at node B is relatively large, nodes A and C are updated with a relatively high probability, increasing the likelihood that the active session for the user is not unexpectedly terminated.<br>
+[0029]	FIG. 3 is a simplified block diagram of an embodiment of web server 304 and<br>
+remote access device 306, which are capable of implementing various disclosed embodiments. For a particular communication, voice data, packet data, and/or messages may be exchanged between web server 304 and remote access device 306, via an air interface 308. Various types of messages may be transmitted, such as messages used to establish a communication session between the web server and remote access device, registration and paging messages, and messages used to control a data transmission (e.g., power control, data rate information, acknowledgment, and so on). Some of these message types are described in further detail below.<br>
+[0030]	For the reverse link, at remote access device 306, voice and/or packet data (e.g.,<br>
+from a data source 310) and messages (e.g., from a controller 330) are provided to a transmit (TX) data processor 312, which formats and encodes the data and messages with one or more coding schemes to generate coded data. Each coding scheme may include any combination of cyclic redundancy check (CRC), convolutional, turbo, block, and other coding, or no coding at all. The voice data, packet data, and messages may be coded using different schemes, and different types of messages may be coded differently.<br>
+[0031]	The coded data is then provided to a modulator (MOD) 314 and further<br>
+processed (e.g., covered, spread with short PN sequences, and scrambled with a long PN sequence assigned to the user terminal). The modulated data is then provided to a transmitter unit (TMTR) 316 and conditioned (e.g., converted to one or more analog signals, amplified, filtered, and quadrature modulated) to generate a reverse link signal. The reverse link signal is routed through a duplexer (D) 318 and transmitted via an antenna 320 to web server 304.<br><br>
+[0032]	At web server 304, the reverse link signal is received by an antenna 350, routed<br>
+through a duplexer 352, and provided to a receiver unit (RCVR) 354. Web server 304 may receive registration information and status information, e.g., mobile station mobility rate, from remote access device 306. Receiver unit 354 conditions (e.g., filters, amplifies, down converts, and digitizes) the received signal and provides samples. A demodulator (DEMOD) 356 receives and processes (e.g., despreads, decovers, and pilot demodulates) the samples to provide recovered symbols. Demodulator 356 may implement a rake receiver that processes multiple instances of the received signal and generates combined symbols. A receive (RX) data processor 358 then decodes the symbols to recover the data and messages transmitted on the reverse link. The recovered voice/packet data is provided to a data sink 360 and the recovered messages may be provided to a controller 370. Controller 370 may include instructions for paging a group of mobile stations, which may be based on the mobility of the mobile stations. The processing by demodulator 356 and RX data processor 358 are complementary to that performed at remote access device 306. Demodulator 356 and RX data processor 358 may further be operated to process.multiple transmissions received via multiple channels, e.g., a reverse fundamental channel (R-FCH) and a reverse supplemental channel (R-SCH). Also, transmissions may be simultaneously from multiple mobile stations, each of which may be transmitting on a reverse fundamental channel, a reverse supplemental channel, or both.<br>
+[0033]	On the forward link, at web server 304, voice and/or packet data (e.g., from a<br>
+data source 362) and messages (e.g., from controller 370) are processed (e.g., formatted and encoded) by a transmit (TX) data processor 364, further processed (e.g., covered and spread) by a modulator (MOD) 366, and conditioned (e.g., converted to analog signals, amplified, filtered, and quadrature modulated) by a transmitter unit (TMTR) 368 to generate a forward link signal. The forward link signal is routed through duplexer 352 and transmitted via antenna 350 to remote access device 306. Forward link signals include paging signals.<br>
+[0034]	At remote access device 306, the forward link signal is received by antenna 220,<br>
+routed through duplexer 318, and provided to a receiver unit 322. Receiver unit 322 conditions (e.g., down converts, filters, amplifies, quadrature modulates, and digitizes) the received signal and provides samples. The samples are processed (e.g., despreaded,<br><br>
+decovered, and pilot demodulated) by a demodulator 324 to provide symbols, and the symbols are further processed (e.g,, decoded and checked) by a receive data processor 326 to recover the data and messages transmitted on the forward link. The recovered data is provided to a data sink 328, and the recovered messages may be provided to controller 330. Controller 330 may include instructions for registering remote access device 306, which may be based on the mobility of the mobile station.<br>
+[0035]	Therefore, the disclosed embodiments provide for a significant improvement in<br>
+system reliability by distributing authentication and session information among the nodes of a cluster of web server proxies. The disclosed methods and apparatus also provide for reducing traffic load in accessing a destination server in a global communication network.<br>
+[0036]	Those of skill in the art would understand that information and signals may be<br>
+represented using any of a variety of different technologies and protocols. For example, data, instructions, commands, information, signals, bits, symbols, and chips that may be referenced throughout the above description may be represented by voltages, currents, electromagnetic waves, magnetic fields or particles, optical fields or particles, or any combination thereof.<br>
+[0037]	Those of skill would further appreciate that the various illustrative logical<br>
+blocks, modules, circuits, and algorithm steps described in connection with the embodiments disclosed herein may be implemented as electronic hardware, computer software, or combinations of both. To clearly illustrate this interchangeability of hardware and software, various illustrative components, blocks, modules, circuits, and steps have been described above generally in terms of their functionality. Whether such functionality is implemented as hardware or software depends upon the particular application and design constraints imposed on the overall system. Skilled artisans may implement the described functionality in varying ways for each particular application, but such implementation decisions should not be interpreted as causing a departure from the scope of the present invention.<br>
+[0038]	The various illustrative logical blocks, modules, and circuits described in<br>
+connection with the embodiments disclosed herein may be implemented or performed with a general purpose processor, a digital signal processor (DSP), an application specific integrated circuit (ASIC), a field programmable gate array (FPGA) or other<br><br>
+programmable logic device, discrete gate or transistor logic, discrete hardware components, or any combination thereof designed to perform the functions described herein. A general-purpose processor may be a microprocessor, but, in the alternative, the processor may be any conventional processor, controller, microcontroller, or state machine. A processor may also be implemented as a combination of computing devices, e.g., a combination of a DSP and a microprocessor, a plurality of microprocessors, one or more microprocessors in conjunction with a DSP core, or any other such configuration.<br>
+[0039]	The  steps  of a  method  or  algorithm  described  in  connection  with  the<br>
+embodiments disclosed herein may be embodied directly in hardware, in a software module executed by a processor, or in a combination of the two. A software module may reside in RAM memory, flash memory, ROM memory, EPROM memory, EEPROM memory, registers, a hard disk, a removable disk, a CD-ROM, or any other form of storage medium known in the art. An exemplary storage medium is coupled to the processor, such that the processor can read information from, and write information to, the storage medium. In the alternative, the storage medium may be integral to the processor. The processor and the storage medium may reside in an ASIC. The ASIC may reside in a user terminal. In the alternative, the processor and the storage medium may reside as discrete components in a user terminal.<br>
+[0040]	The description of the disclosed embodiments is provided to enable any person<br>
+skilled in the art to make or use the present invention. Various modifications to these embodiments may be readily apparent to those skilled in the art, and the generic principles defined herein may be applied to other embodiments, e.g., in an instant messaging service or any general wireless data communication applications, without departing from the spirit or scope of the invention. Thus, the present invention is not intended to be limited to the embodiments shown herein but is to be accorded the widest scope consistent with the principles and novel features disclosed herein. The word "exemplary" is used exclusively herein to mean "serving as an example, instance, or illustration."<br><br>
+1.	A method for authenticating a user on a global distributed network, the<br>
+method comprising:<br>
+(a)	receiving a request from the user at a node of a server proxy cluster;<br>
+(b)	prompting the user for login information;<br>
+(c)	receiving login information from the user;<br>
+(d)	setting up an active session for the user if the received login information<br>
+is valid; and<br>
+(e)	updating at least one node of the server proxy cluster with information<br>
+that the active session is set up for the user.<br><br>
+2.	The method of claim 1, further including sharing a number of user's<br>
+unsuccessful login attempts with at least one node of the server proxy cluster, if the<br>
+received login information is not valid.<br>
+3.	The method of claim 1, further including starting a timer at each of the<br>
+updated nodes.<br>
+4.	A method for accessing a server in a global distributed network, the<br>
+method comprising:<br><br>
+(a)	receiving a request from a user at a node of a server proxy cluster;<br>
+(b)	determining whether an active session is established for the user;<br>
+(c)	sending the request to the server if an active session is established for the<br>
+user; and<br>
+(d)	updating at least one node of the server proxy cluster with information<br>
+that the active session is established for the user.<br>
+5.	The method of claim 4, further including re-starting a timer at each of the<br>
+updated nodes.<br><br>
+6.	The method of claim 4, wherein said updating includes updating at least<br>
+one of the nodes of the server proxy cluster based on a probability function that<br>
+increases with a timer value at a node of the server proxy cluster.<br>
+7.	The method of claim 4, wherein said updating includes updating at least<br>
+one of the nodes of the server proxy cluster based on a probability function that<br>
+increases with a number of nodes of the server proxy cluster.<br>
+8.	An apparatus for authenticating a user on a global distributed network,<br>
+comprising:<br>
+(a)	means for receiving a request from the user at a node of a server proxy<br>
+cluster;<br>
+(b)	means for prompting the user for login information;<br>
+(c)	means for receiving login information from the user;<br>
+(d)	means for setting up an active session for the user if the received login<br>
+information is valid; and<br>
+(e)	means for updating at least one node of the server proxy cluster with<br>
+information that the active session is set up for the user.<br>
+9.	The apparatus of claim 8, further including sharing a number of user's<br>
+unsuccessful login attempts with at least one node of the server proxy cluster, if the<br>
+received login information is not valid.<br>
+10.	The apparatus of claim 8, further including means for starting a timer at<br>
+each of the updated nodes.<br>
+11.	An apparatus for accessing a server in a global distributed network,<br>
+comprising:<br>
+(a)	means for receiving a request from a user at a node of a server proxy<br>
+cluster;<br>
+(b)	means for determining whether an active session is established for the<br>
+user;<br><br>
+(c)	means for sending the request to the server if an active session is<br>
+established for the user; and<br>
+(d)	means for updating at least one node of the server proxy cluster with<br>
+information that the active session is established for the user.<br><br>
+12.	The apparatus of claim 11, further including means for re-starting a timer<br>
+at each of the updated nodes.<br>
+13.	The apparatus of claim 11, wherein said means for updating includes<br>
+means for updating at least one of the nodes of the server proxy cluster based on a<br>
+probability function that increases with a timer value at a node of the server proxy<br>
+cluster.<br>
+14.	The apparatus of claim 11, wherein said means for updating includes<br>
+means for updating at least one of the nodes of the server proxy cluster based on a<br>
+probability function that increases with a number of nodes of the server proxy cluster.<br>
+15.	A computer-readable medium embodying a method for authenticating a<br>
+user on a global distributed network, the method comprising:<br><br>
+(a)	receiving a request from the user at a node of a server proxy cluster;<br>
+(b)	prompting the user for login information;<br>
+(c)	receiving login information from the user;<br>
+(d)	setting up an active session for the user if the received login information<br>
+is valid; and<br>
+(e)	updating at least one node of the server proxy cluster with information<br>
+that the active	session is set up for the user,<br>
+16.	The  computer-readable  medium  of claim   15,  the  method  further<br>
+including sharing a number of user's unsuccessful login attempts with at least one node<br>
+of the server proxy cluster, if the received login information is not valid.<br><br>
+17.	The  computer-readable  medium  of claim   15,  the  method  further<br>
+including starting a timer at each of the updated nodes.<br>
+18.	A computer-readable medium embodying a method for accessing a<br>
+server in a global distributed network, the method comprising:<br><br>
+(a)	receiving a request from a user at a node of a server proxy cluster;<br>
+(b)	determining whether an active session is established for the user;<br>
+(c)	sending the request to the server if an active session is established for the<br>
+user; and<br>
+(d)	updating at least one node of the server proxy cluster with information<br>
+that the active session is established for the user.<br><br>
+19.	The  computer-readable   medium   of  claim   18,   the   method   further<br>
+including re-starting a timer at each of the updated nodes.<br>
+20.	The computer-readable medium of claim 18, wherein said updating<br>
+includes updating at least one of the nodes of the server proxy cluster based on a<br>
+probability function that increases with a timer value at a node of the server proxy<br>
+cluster.<br>
+21.	The computer-readable medium of claim 18, wherein said updating<br>
+includes updating at least one of the nodes of the server proxy cluster based on a<br>
+probability function that increases with a number of nodes of the server proxy cluster.<br>
+22.	A server proxy cluster for authenticating a user on a global distributed<br>
+network, comprising:<br>
+a receiver capable of receiving information from a remote access device;<br>
+a transmitter capable of transmitting information to the remote access device; and    "   ■<br>
+a processor capable of carrying out a method for authenticating the user, the method comprising:<br>
+(a)       receiving a request from the user at a node of a server proxy cluster;<br><br>
+(b)	prompting the user for login information;<br>
+(c)	receiving login information from the user;<br>
+(d)	setting up an active session for the user if the received login information<br>
+is valid; and<br>
+(e)	updating at least one node of the server proxy cluster with information<br>
+that the active session is set up for the user.<br><br>
+23.	The server proxy cluster of claim 22, the method further including<br>
+sharing a number of user's unsuccessful login .attempts with at least one node of the<br>
+server proxy cluster, if the received login information is not valid.<br>
+24.	The. server proxy cluster of claim 22, wherein said updating includes<br>
+starting a timer at each of fiie updated ii(5des.<br>
+25.	A server proxy cluster for accessing a server in a global distributed<br>
+network, comprising:<br>
+a receiver capable of receiving information from a remote access device;<br>
+a transmitter capable of transmitting information to the remote access device; and<br>
+a processor capable of carrying out a method for authenticating the user, the method comprising:<br>
+(a)	receiving a request from a user at a node of a server proxy cluster;<br>
+(b)	determining whether an active session is established for the user;<br>
+(c)	sending the request to the server if an active session is established for the<br>
+user; and<br>
+(d)	updating at least one node of the server proxy cluster with information<br>
+that the active session is established for the user.<br>
+26.	The server proxy cluster of claim 25, wherein said updating includes re<br>
+starting a timer at each of the updated nodes.<br><br>
+27.	The server proxy cluster of claim 25, wherein said updating includes<br>
+updating at least one of the nodes of the server proxy cluster based on a probability<br>
+function that increases with a timer value at a node of the server proxy cluster.<br>
+28.	The server proxy cluster of claim 25, wherein said updating includes<br>
+updating at least one of the nodes of the server proxy cluster based on a probability<br>
+function that increases with a number of nodes of the server proxy cluster.<br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLUNIRU5QLTIwMDUgIENMQUlNUy5wZGY=" target="_blank" style="word-wrap:break-word;">551-CHENP-2005  CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtYWJzdHJhY3QucGRm" target="_blank" style="word-wrap:break-word;">551-chenp-2005-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtYXNzaWduZW1lbnQucGRm" target="_blank" style="word-wrap:break-word;">551-chenp-2005-assignement.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtY2xhaW1zLnBkZg==" target="_blank" style="word-wrap:break-word;">551-chenp-2005-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtY29ycmVzcG9uZG5lY2Utb3RoZXJzLnBkZg==" target="_blank" style="word-wrap:break-word;">551-chenp-2005-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtY29ycmVzcG9uZG5lY2UtcG8ucGRm" target="_blank" style="word-wrap:break-word;">551-chenp-2005-correspondnece-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtZGVzY3JpcHRpb24oY29tcGxldGUpLnBkZg==" target="_blank" style="word-wrap:break-word;">551-chenp-2005-description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtZHJhd2luZ3MucGRm" target="_blank" style="word-wrap:break-word;">551-chenp-2005-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtZm9ybSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">551-chenp-2005-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtZm9ybSAxMy5wZGY=" target="_blank" style="word-wrap:break-word;">551-chenp-2005-form 13.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtZm9ybSAyNi5wZGY=" target="_blank" style="word-wrap:break-word;">551-chenp-2005-form 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtZm9ybSAzLnBkZg==" target="_blank" style="word-wrap:break-word;">551-chenp-2005-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtZm9ybSA1LnBkZg==" target="_blank" style="word-wrap:break-word;">551-chenp-2005-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NTUxLWNoZW5wLTIwMDUtcGN0LnBkZg==" target="_blank" style="word-wrap:break-word;">551-chenp-2005-pct.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="219168-distributor-for-a-rotary-filter.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="219170-novel-propargylether-derivatives-of-formula-i-and-a-process-for-their-preparation.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>219169</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>551/CHENP/2005</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>27/2008</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>04-Jul-2008</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>25-Apr-2008</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>05-Apr-2005</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>QUALCOMM INCORPORATED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>CORBEIL RYN C</td>
+											<td></td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 1/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US03/31710</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2003-10-07</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/267,997</td>
+									<td>2002-10-07</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/219169-an-apparatus-for-accessing-a-server-in-a-global-distributed-network-and-a-method-thereof by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 12:08:45 GMT -->
+</html>

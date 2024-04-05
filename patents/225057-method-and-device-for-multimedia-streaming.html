@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/225057-method-and-device-for-multimedia-streaming by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 23:24:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 225057:METHOD AND DEVICE FOR MULTIMEDIA STREAMING</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD AND DEVICE FOR MULTIMEDIA STREAMING</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method to provide to a sender (20) of RTP packets the actual receiver (50) buffer (54) fullness level in a receiver of the RTP packets at a certain time instant represented as remaining playout duration in time. The receiver sends in an RTCP report (26) the sequence number of a selected RTP packet in the receiver buffer and the time difference between the scheduled playout time of this packet and the current time. Based on this timing information, the sender calculates the amount of time it would take for the receiver buffer to empty if the receiver continues to playout at normal speed and no further RTP packets arrive to the receiver buffer. This receiver buffer fullness level information can be used at the sender to adjust the transmission rate and/or nominal playout rate of the RTP packets in order to maintain a targeted receiver buffer fullness level.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+METHOD AND DEVICE FOR MULTIMEDIA STREAMING<br>
+Field of the Invention<br>
+The present invention relates generally to multimedia streaming and, more particularly, to receiver buffer fullness management of the multimedia streaming client.<br>
+Background of the Invention<br>
+In a multimedia streaming service, there are three participants involved in the streaming service, a streaming server, a streaming client and a transmission medium. The transmission medium is a path that consists of a chain of point-to-point line components, where the overall behavior is usually constrained by a bottleneck link in the path. In a mobile network, the bottleneck link is usually on the air interface, which is the last hop to the terminal in a downlink streaming scenario. The streaming server adjusts the transmission bitrate to the varying available bandwidth on the bottleneck link. While doing so, the streaming server also controls the streaming client's receiver buffer fullness level so as to avoid buffer underflow (i.e. playout interruption) or overflow (i.e. packet drops) at the client. In 3GPP TS 26.234 V5.0.0 (2002-03) "Transparent end-to-end packet switched streaming service (PSS); Protocols and codecs"(Release 5), the streaming client at the beginning of the streaming session buffers a negotiated pre-determined amount of data before the actual playout starts (initial receiver buffering delay). Knowing the initial receiver buffering delay the server thereafter estimates the receiver buffer fullness level by assuming that the client follows exactly the sampling timestamps of the media for playout. The server does not know whether the client behaves as assumed. For example, it is possible that the client's clock may drift relative to the server's clock. Also, the client's playout rate may be slowed down or the client may perform extra buffering.<br>
+System clock drift - the accepted standard of accuracy in modern electronic systems is ±1 minute per month at 25°C and ±40 minutes per year at 60°C. Uncompensated timing crystals can cause system clocks to gain or lose as much as 100 minutes per year in operation over the industrial temperature range. If we assume the accuracy of the server's clock and the client's clock is ±40 minutes per year and the server and the client's clocks are drifting in opposite directions, the relative drift is 0.5479 seconds per hour. If the accuracy is ±100 minutes per year and the server and the client's clocks are drifting in opposite directions, the relative drift is 1.3699 seconds per hour.<br><br>
+Client system slow down - if many applications are running at the same time, the client operation system could be slowed down, causing slower playout.<br>
+Extra buffering - it is possible that the client initially buffers a larger amount than the negotiated value without the acknowledgment of the server. This results in extra buffering. Also, the client may perform rebuffering (i.e. further delaying the playout) if the receiver buffer underflows due to exceptionally long packet delays (e.g. at a time of a mobile handover).<br>
+In the above-mentioned situations, the server's assumptions about the receiver buffer fullness level will be incorrect because the client does not play out at exactly the rate as the server assumes. Thus, when the server executes the rate adaptation operations relying on the assumed receiver buffer fullness level, underflow or overflow in the receiver buffer may occur.<br>
+In prior art PSS streaming system, there are no mechanisms to prevent the incorrect assumptions from happening and to eliminate the difference between the actual fullness level and the server assumed fullness level in the receiver buffer. Whenever a receiver buffer underflow or overflow happens due to incorrect assumptions, the streaming client has to handle such receiver buffer violation on its own (i.e. performing rebuffering or dropping packets). Alternatively, in a receiver buffer violation situations the client can request the streaming server to re-initialize the streaming session by sending a new RTSP (Real-time Streaming Protocol) PLAY request, re-initializing the streaming session and thereby re-establishing the server's correct assumptions about the receiver buffer fullness level.<br>
+Similar problem arises in prior-art remote live camera feed applications, where live video signals (e.g. special news and sport events) are streamed from multiple cameras (video sources) to a central television studio over an IP (Internet Protocol) connection. The live feed is forwarded from the central studio to one or more broadcast station for broadcast. When two or more video sources are combined for streaming, the streaming system must ensure that time synchronization is maintained among all the sources and the central studio. To that end, the central studio maintains a master sync generator or master clock ("house sync"), running for example at the U.S. standard frequency of 29.97 frames per second, to which the entire studio plant is synchronized. If the cameras are operating in a "free running" mode, their time base will drift relative to the studio's house sync and video frames will have to be dropped or duplicated during the broadcast in the effort to<br><br>
+maintain real-timcncss of the playout. According to 11; II draft-harrision-avt-inter-lock-Ol.txt, "Timebase Interlock in Real-time Transport Protocol (RTF) Conferences". ('. Harrison, proposed draft, March 2001, it is possible to send via Real-time Control Protocol (RTCP) extension a "Timebase Management (IBM) buffer status message" from the central studio to the remote cameras to report the "amount of data remaining in buffer in kbytes" in the studio receiver buffer. As such, based on this buffer status message each of the cameras detects whether its clock drifts and adjusts its clock in order to synchronize the clock to the house syne. Alternatively, the central studio can send '"IBM speed control messages" to ask specifically each of the cameras to adjust its clock, based on the clock drift estimated by the studio.<br>
+U.S. Patent No. 6,292,834 to Ravi et al. relates to an efficient transmission protocol for transmitting multimedia streams from a server to a client computer over a diverse computer network including local area networks and wide area networks such as the internet. The client computer includes a playout buffer, and the transmission rate is dynamically matched to Un¬available bandwidth capacity of the network connection between the server and the client computer. If a playtime of the playout buffer, which is one measure of the number of data packets currently in the playout buffer, drops below a dynamically computed decrcaschandwidth threshold, then the transmission rate is decreased by sending a decrease bandwidth message to the server. Conversely, if the number of packets remaining in the playout buffer rises above a dynamically computed upper increase bandwidth threshold and docs not drop below a lower increase bandwidth threshold for al least an increase bandwidth wait period, then the transmission rate is incremented. The transmission rate can be selected from among a predetermined set of discrete bandwidth values or from within a continuous range of bandwidth values. In one variation, in addition to responding to changes in network connection capacity, the client computer also determines an average client computational capacity. Accordingly, if the average client computational capacity is less than the network capacity, the lower of the two capacities is the determining one. thereby avoiding a playout buffer overrun.<br>
+U.S. Patent Application Publication No. 2003/0033425 to Deshpande relates to a method of selecting a data transmission rate for a heterogeneous network clusters the results of reports of local reception bandwidth and determines an appropriate data transmission rate that either<br><br>
+minimizes data loss or minimizes a cost function relating distortion and local bandwidth utilization for each cluster.<br>
+SUMMARY Off I If: INVI-N1ION<br>
+It is a primary objective of the present invention to provide to a sender of RIP packets the actual receiver buffer fullness level in a receiver of the RTF packets at a certain time instant represented as the remaining playout duration in time. This objective can be achieved by providing the sender the sequence number of any RTF packet in the receiver buffer and the time difference between the scheduled playout time of this packet and the current time. Or alternatively, the same objective can be achieved, though with less precision, by providing the sender the sequence number of the last received R'fP packet and the sequence number of the next to be played out RTF packet at the receiver.<br>
+The receiver buffer information observed by the sender is in time domain, and rellects the actual remaining playout duration in the receiver buffer (i.e. the amount of time it would take for the receiver buffer to deplete if no new RIP packets are added to the buffer). When compared with prior-art where the sender only estimates the receiver buffer fullness level or the sender only knows the receiver buffer fullness level represented as number of bytes in the receiver buffer, the invention provides means for the sender to accurately detect playout rate deviations (e.g. clock drift).<br>
+It is a further objective of the present invention to provide to a sender of RTF packets in addition to the actual receiver buffer fullness level in a receiver of the RIP packets also a targeted minimum receiver buffer fullness level that the receiver desires.<br>
+Accordingly, the first aspect of the present invention is a method for adaptively controlling fullness level of a receiver buffer in a streaming client in a multimedia streaming system, the streaming system comprising a streaming server capable ot<br><br>
+providing streaming data in packets at a transmission rate to the streaming client for allowing the client to playout at least a portion of the packets at a playout rate, wherein each packet has a sequence number, and wherein the receiver buffer is used to store at least a portion of the streaming data in order to compensate for a difference between the transmission rate and the playout rate so as to allow the client to have a sufficient amount of the streaming data to playout in a non-disruptive manner, and the stored portion of the streaming data in the receiver buffer includes a sequence of packets to be played out, said sequence including a first packet to be played out and a last packet to be played out. The method comprises the steps of:<br>
+providing to the server a message including information indicative of remaining playout duration in time in the receiver at a time instant; and<br>
+adjusting in the server the transmission rate and/or nominal playout rate at which the streaming data is provided to the client.<br>
+The remaining playout duration in time is provided in form of an identity of a selected one of the sequence of packets to be played out and a time difference between a scheduled playout time of said selected packet and a current time.<br>
+The selected packet to be played out can be the first packet to be played out is the first packet in the sequence of packets to be played out, the last packet to be played out is the last packet in the sequence of packets to be played out, or any packet in between.<br>
+The identity of the selected packet is the sequence number of the selected packet or a timestamp associated therewith.<br>
+The method further comprises the step of computing in the server the fullness level in the receiver buffer based on the provided information and the sequence number or the timestamp of the last packet to be played out.<br>
+Preferably, the client also sends a receiver report (RTCP RR) along with said providing step, and wherein the receiver report includes information indicative of the last packet to be played out so as to allow the server to compute the fullness level in the receiver buffer based on the sequence number of the selected packet, the time difference between the scheduled playout time of the selected packet and the current time, and the sequence number of the last packet to be played out.<br>
+Advantageously, the message further includes information indicative of a targeted minimum buffer level so as to allow the server to adjust the transmission rate and/or nominal playout rate based on the targeted minimum buffer level.<br><br>
+The second aspect of the present invention is an adaptive control system for use in a multimedia streaming system, the streaming system comprising at least a streaming client and a streaming server capable of providing streaming data in packets at a transmission rate to the client for allowing the client to playout at least a portion of the packets at a playout rate, wherein each packet has a sequence number, and wherein the client including a receiver buffer for storing at least a portion of the streaming data in order to compensate for a difference between the transmission rate and the playout rate so as to allow the client to have a sufficient amount of the streaming data to playout in a non-disruptive manner, and the stored portion of the streaming data in the receiver buffer includes a sequence of packets to be played out, said sequence including a first packet to be played out and a last packet to be played out. The control system comprises:<br>
+in the client:<br>
+means for providing to the server a message including information<br>
+indicative of remaining playout duration in time in the receiver at a time instant;<br>
+and<br>
+in the server:<br>
+means, responsive to the message, for computing a fullness level in the<br>
+receiver buffer based on the provided information, for adjusting the transmission<br>
+rate and/or nominal playout rate.<br>
+The third aspect of the present invention is a communication device in a multimedia streaming system, the streaming system comprising a streaming server capable of providing streaming data in packets to the communication device at a transmission rate for allowing the communication device to playout at least a portion of the packets at a playout rate, wherein each packet has a sequence number, and wherein the communication device has a receiver buffer to store at least a portion of the streaming data in order to compensate for a difference between the transmission rate and the playout rate so as to allow the communication device to have a sufficient amount of the streaming data to playout in a non-disruptive manner, and the stored portion of the streaming data in the receiver buffer includes a sequence of packets to be played out, said sequence including a first packet to be played out and a last packet to be played out. The communication device comprises:<br>
+means for computing remaining playout duration in time at a time instant based on the stored portion of the streaming data in the receiver buffer; and<br><br>
+means for providing to the server a message including information indicative of the remaining playout duration in time at the time instant so as to allow the server to compute a fullness level in the receiver buffer based on the provided information.<br>
+The present invention will become apparent upon reading the description taken in conjunction with Figures 2 and 3 and the related methods.<br>
+Brief Description of the Drawings<br>
+Figure 1 shows the structure of a prior art RTCP RR packet.<br>
+Figure 2 shows a sample structure of proposed RTCP report packet, according to the present invention.<br>
+Figure 3 is a block diagram illustrating the various components in the server and client for adaptively controlling the receiver buffer fullness level.<br>
+Best Mode for Carrying Out the Invention<br>
+The adaptive control of receiver buffer fullness level, according to the present invention, makes use of a new RTCP packet, which can be sent together with a prior art RTCP RR report packet as a compound packet. The prior art RTCP RR report is shown in Figure 1 and the new RTCP packet is shown in Figure 2. The packet type for the new RTCP packet can be referred to as RBI (Receiver Buffer Information) and would require a new packet type number, which is yet to be determined. The signaling between a receiver and a sender, according to the present invention, can be in a different structure format or be part of a profile-specific extension and other form of RTCP extension.<br>
+The adaptive control of receiver buffer fullness level, according to the present invention, is based on the difference between the packet transmission frequency at the sender of RTP packets and the RTP packet playout frequency at the receiver. At any time, it is assumed that the receiver buffer contains a plurality of RTP packets received from the sender. These RTP packets include a next RTP packet to be played out from the receiver buffer (first packet) and a last RTP packet to be played out from the receiver buffer (last packet). Each RTP packet has a sequence number and playout timestamp known to the sender, thus it is possible for the sender to know the playout time of any sequence number RTP packet relative to another sequence number RTP packet. Thus, if the sender has timing information indicative of the scheduled playout time of any RTP<br><br>
+packet stored in the receiver buffer, the sender can calculate the scheduled playout time of any other RTP packet. The difference between the scheduled playout time of the last packet and the current time (i.e. the transmission time of the RTCP RR packet) of the receiver gives the current actual receiver buffer fullness level, represented as remaining playout duration in time. Let us denote:<br>
+SNX     the sequence number of packet x in the receiver buffer;<br>
+TSX     the RTP timestamp of packet x in the receiver buffer;<br>
+where x is in the range first 
+FTS      the RTP timestamp resolution (i.e. ticks/s);<br>
+Tx       the time difference between the current time and the scheduled playout time of packet*.<br>
+FT       the resolution of Tx (i.e. ticks/s).<br>
+Tiast is equivalent to the current actual receiver buffer fullness level. The receiver can provide the necessary information to the sender to calculate Tiast in multiple forms. One such form of signaling is shown in Figure 2, where a new RTCP packet type (PTHRBI) was defined to include SNfjrst and Tfirst. Such RTCP packet can be included in a compound packet with a regular RTCP Receiver Report (RR) packet (as in Figure 1). SNiast is signaled in the "extended highest sequence number received" field in the RTCP RR packet.<br>
+The receiver of RTP packets can retrieve SNfirstand TSfirst (a part of the corresponding RTP packet) from its buffer and then estimates Tfirst from TSfirst and the current position of the playout timer. With the RTP timestamp record, the sender can map SNfIISt into TSfirst and SN,ast into TSiast and calculate the receiver buffer fullness level (T)ast) using the equation<br><br>
+Here FTs is known by the sender of the RTP packets. In practice, FT can be set equal to FTS and is also known by the sender. However, if FT is different from FTS, the receiver of the RTP packets can provide FT to the sender.<br>
+Similar calculation is enabled if instead of SNfirst and Tfirst the receiver signals SNX and Tx (i.e. for any packet in the sequence of packets in the receiver buffer). In particular,<br><br>
+it is also possible to signal SN,ast (already included in the regular RTCP RR report) and Tiast directly, avoiding the use of the above equation altogether. It is harder, however, for the receiver to estimate playout time of packets that are to be played out later in the future (e.g. the likelihood is higher that an unforeseen event disrupts playout before the estimated playout time), therefore in general the reliability of T!ast estimate is lower than thatofTftst.<br>
+It should be noted that, although the preferred embodiment of the invention is to signal SNX and map it at the sender to TSX, other embodiments could choose to signal TSX instead of SNX to the sender. The difference between these embodiments is that a media sample (e.g. a video image) can be mapped to multiple RTP packets (i.e. multiple RTP packets with different SN have the same RTP timestamp) and thus a TS does not have an one-to-one correspond to an SN.<br>
+In practice, the signaling delay (i.e. the time it takes the signaling message to arrive at the RTP packet sender from the time it was sent at the RTP receiver) is never equal to zero, the information received at the sender is always somewhat late (i.e. the playout timer of the receiver has progressed) and thus T]ast as calculated at the sender as the receiver buffer fullness level estimate always includes some error. This error has to be taken into account when T]ast is used in the sender.<br>
+In addition to the receiver buffer fullness level information, the client can also signal the sender a targeted minimum receiver buffer fullness level in time (e.g. Tmjn as indicated in Figure 2 of the example RTCP RBI packet) requesting the server to adapt the transmission rate and the nominal playout rate of the packets in a manner such that all received packets spend at least Tmin time before their playout in the receiver buffer.<br>
+Using the RTCP RBI packet that is sent together with a prior art RTCP RR report packet as a compound packet, the client is able to provide the server a message including information indicative of the remaining playout duration in time in the receiver buffer at a time instant so as to allow the server to adjust the transmission characteristic based on the provided information. For example, the server can change the transmission characteristic by bitstream switching, transmission rate decoupling where the transmission rate is different from the designated rate in order to increase or decrease the receiver buffer level. The server can also modify the playout rate of the bitstream so as to influence the receiver buffer fullness level. The sequence number of last packet (SNiasO in the receiver buffer can be found in the "extended highest sequence number received" field in the<br><br>
+RTCP RR report. The remaining playout duration in time in the receiver buffer can be computed from a sequence number of a selected packet (SNX) and timing information indicative of time until the selected packet passed to the decoder (Tx). SNX and Tx can be included in two fields in the RTCP RBI packet. Here x can be first, last in the sequence of packets in the receiver buffer or any number in between. An RTCP RBI packet can be implemented to include a targeted minimum buffer level field where the receiver can use to request a desired minimum receiver buffer level from the sender. Furthermore, it is also possible to implement an RTCP RBI packet without the "timing information" field (Tx) and signal instead the first packet sequence number (SN^t) only. In that case, the server can estimate the receiver buffer fullness level based only SNiast and SNfirst. This approach is less accurate than when Tfirst is also provided to the server. However, this information is helpful for the server in estimating the receiver buffer fullness level.<br>
+Figure 3 is a block diagram showing various components in the server and in the client that are necessary to estimate accurately the receiver buffer fullness level. As shown in Figure 3, a multimedia streaming system 10 comprises at least one sender 20 and one receiver 50 of the RTP packets. In the receiver 50 a decoder/player 52 will process the packets from the receiver buffer 54 and render them to the playback device(s) (not shown), while the RTP/RTCP 56 module is responsible for receiving RTP/RTCP packets and sending RTCP report packets 26 to the sender. The sender 20 receivers the RTCP report packets 26 from the receives 50. A session QoS manager 22 in the sender 20 is responsible to manage overall session quality perceived the client, while a media QoS manager 24 is responsible for a single media type. Separate sets of RTCP reports 26 belong to each media type and are thus handled by separate media QoS managers 24. The statistic array 28 stores the statistic information (i.e. past RTCP reports) for each media type, which provides the information required for rate adaptation in the media QoS manager 24. The Decision-making block 30 takes processed information from the QoS manager 24 and then decides what type of adjustment in the transmission characteristic is required to fulfill the adaptation, for example. The sender 20 (streaming server, remote camera) uses the information provided from the receiver 50 (streaming client, studio) to adjust the transmission rate and/or nominal playout rate of the different media to maintain the receiver buffer fullness level and/or perform "clock drift correction". The different media QoS managers 22 can provide different rate adaptations for the different media<br><br>
+types. The proposed signaling is not restricted to audio or video media type, but it can be used for any other media.<br>
+Exemplary Applications<br>
+Tlast can be used to solve the problems in the following application scenarios:<br>
+A.	Multimedia Streaming<br>
+The streaming server can correct its assumptions about the receiver buffer fullness level using Tlast Using the actual receiver buffer fullness level information, instead of the assumed one, avoids receiver buffer violation that would occur due to incorrect receiver buffer fullness level assumptions.<br>
+In addition to the above defined RTCP packet type (PT=RBI), in multimedia streaming applications, the necessary information to compute Tlast can also be conveyed in an RTCP application specific feedback packet or any other non RTCP means such as RTSP (Real-time Streaming Protocol) or other external means.<br>
+The targeted minimum receiver buffer fullness level Tlast is useful in multimedia streaming applications. For example in case the receiver wants to maintain a minimum receiver buffer fullness level to be able to withstand temporary packet transfer rate drops that are out of the control of the sender (e.g. a network link interruption due to mobile station handover) without depleting completely the receiver buffer (i.e. buffer underflow that would cause playout interruption).<br>
+B.	Remote Live Camera Feed<br>
+Using regular Tiast updates (i.e. at every RTCP report) after a sufficiently long period of time (because the clock drift, in general, is slow, it is most likely to take 5 to 10 minutes to see the clock drift effect), the remote camera can estimate its clock drift and synchronize its clock to the studio's system clock.<br>
+The sender keeps a record of the estimated buffer fullness level, which is denoted as STiast, while transmitting packets. The deviation of the buffer fullness level between the estimated buffer fullness level and the computed Tlast as a function of time can be expressed as<br><br><br>
+However D(t) is generally influenced by the signaling delay, which in itself is a variable, and the deviation, in general, has a positive offset at first due to the fact that there are packets still in transit. If the receiver's clock is slower compared with the sender then D(t) becomes negative as the receiver buffer fullness level is higher than expected. To estimate the clock drift, the first step would be to process the deviation D(t) by means such as line-fitting, median filtering and other estimation schemes such as Least Median<br><br>
+correction factor. In practice, the estimation should be made for a longer period of time say at least a few minutes depends on the amount of drift.<br>
+Although the invention has been described with respect to a preferred embodiment thereof, it will be understood by those skilled in the art that the foregoing and various other changes, omissions and deviations in the form and detail thereof may be made without departing from the scope of this invention.<br><br><br>
+WE CLAIM  :<br>
+1.	A method for adaptively controlling fullness level of a receiver buffer in a streaming<br>
+client in a multimedia streaming system, the streaming system comprising a communication link linking the streaming client to a streaming server, the streaming server capable of providing streaming data in packets through the communication link at a transmission rate to the streaming client for allowing the client to playout at least a portion of the packets at a playout rate, wherein each packet has a sequence number, and wherein the receiver buffer is used to store at least a portion of the streaming data in order to compensate for a difference between the transmission rate and the playout rate so as to allow the client to have a sufficient amount of the streaming data to playout in a non-disruptive manner, and the stored portion of the streaming data in the receiver buffer includes a sequence of packets to be played out, said sequence including a first packet to be played out and a last packet to be played out. said method characterized by<br>
+conveying through the communication link from the client to the server a message including information indicative of remaining playout duration in time at the client at a time instant;<br>
+determining in the server the fullness level of the receiver buffer at least partly based on the conveyed information; and<br>
+adjusting at the server the transmission characteristic at which the streaming data is provided to the client at least partly based on the conveyed information.<br>
+2.	The method as claimed in claim I. wherein the remaining playout duration in time is provided in form of an identity of a selected one of the sequence of packets to be played out and a time difference between a scheduled playout time of said selected packet and a current time.<br>
+3.	The method as claimed in claim 2, wherein said selected packet to be pla\ed out is the first packet in the sequence of packets to be played out.<br>
+•I.	I he method as claimed in claim 2, wherein said selected packet to be played out is the<br>
+last packet in the sequence of packets to be played out.<br><br>
+5.	The method as claimed in claim 2, wherein the identity of the selected packet is the sequence number thereof.<br>
+6.	The method as claimed in claim 2, wherein the sequence number of each packet has a timestamp associated therewith and that the identity of the selected packet is the timestamp associated with the selected packet.<br>
+7.	The method as claimed in claim I, comprising<br>
+computing in the server the fullness level in the receiver buffer based on the sequence number of the last packet to be played out and the provided information.<br>
+8.	The method as claimed in claim 1, comprising<br>
+computing in the server the fullness level in the receiver buffer based on a timestamp associated with the last packet to be played out and the provided information.<br>
+9.	The method as claimed in claim 7, wherein the remaining playout duration in time is<br>
+provided in form of the sequence number of the first packet to be played out. said method<br>
+comprising<br>
+computing in the server the fullness level in the receiver buffer based on the sequence number of the last packet to be played out and the sequence number of the first packet to be played out.<br>
+10.	The method as claimed in claim 9, wherein the client also sends a receiver report<br>
+(RTCT RR) along with said providing step, and that the receiver report includes information<br>
+indicative of the last packet to be played out.<br>
+I I.       The method as claimed in claim 5, comprising<br>
+computing in the server the fullness level in the receiver buffer based on the sequence number of the selected packet, the time difference between the scheduled playout time of the selected packet and the current time, and the sequence number of the last packet to be played out.<br><br>
+12.	The method as claimed in claim 1 1, wherein the client also sends a receiver report (RTCP RR) along with said providing step, and that the receiver report includes information indicative of the last packet to be played out.<br>
+13.	The method as claimed in claim I, wherein said message further includes information indicative of a targeted minimum buffer level so as to allow the server to adjust the transmission rate and/or nominal playout rate based on the targeted minimum buffer level.<br>
+14.	The method as claimed in claim 13, wherein the server adjusts the transmission rate and/or nominal playout rate based on the targeted minimum buffer level and the sequence number of the last packet to be played out.<br>
+15.	The method as claimed in claim 14, wherein the client also sends a receiver report (RICP RR) along with said providing step, and that the receiver report includes information indicative of the last packet to be played out.<br>
+16.	An adaptive control system for use in a multimedia streaming system, the streaming system comprising at least a streaming client and a streaming server capable of providing streaming data in packets at a transmission rate to the client for allowing the client to playout at least a portion of the packets at a playout rate, wherein each packet has a sequence number, and wherein the client including a receiver buffer for storing at least a portion of the streaming data in order to compensate for a difference between the transmission rate and the playout rate so as to allow the client to have a sufficient amount of the streaming data to playout in a non-disruptive manner, and the stored portion of the streaming data in the receiver buffer includes a sequence of packets to be played out. said sequence including a first packet to be played out and a last packet to be played out. said control system characterized by:<br>
+in the client:<br>
+means  (56)  for  providing to the  server a  message  including  information indicative of remaining playout duration in time in the receiver at a time instant: and in the server:<br><br>
+means (30). responsive to the message, for computing a fullness level in the receiver buffer based on the provided information, for adjusting the transmission characteristic at which the streaming data is provided to the client.<br>
+17.	The system as claimed in claim 16, wherein said computing means (30) in the server computes the fullness level in the receiver buffer based on the sequence number of the last packet to be played out and the provided information.<br>
+18.	The system as claimed in claim 16, wherein said computing means (30) in the server computes the fullness level in the receiver buffer based on a timestamp associated with the last packet to be played out and the provided information.<br>
+19.	I he system as claimed in claim 16, wherein the remaining playout duration in time is provided in form of the sequence number of the first packet to be played out, and that said computing means (30) in the server computes the fullness level in the receiver buffer based on the sequence number of the last packet to be played out and the sequence number of the first packet to be played out.<br>
+20.	The system as claimed in claim 16. wherein said providing means (56) in the client also sends a receiver report (R'l'C'P RR) along with the information indicative of remaining playout duration in time, and that the receiver report includes information indicative of the last packet to be played out.<br>
+21.	A communication device in a multimedia streaming system, the streaming system comprising a streaming server capable of providing streaming data in packets to the communication device at a transmission rate for allowing the communication device to playout at least a portion of the packets at a playout rate, wherein each packet has a sequence number, and wherein the communication device has a receiver buffer to store at least a portion of the streaming data in order to compensate for a difference between the transmission rate and the playout rate so as to allow the communication device to have a sufficient amount of the streaming data to playout in a non-disruptive manner, and the stored portion of the streaming data in the receiver buffer includes a sequence of packets to be played out. said sequence including a first packet to be played out and a last packet to be played out. said communication device characterized by:<br><br>
+a mechanism (52) for computing remaining playout duration in time at a time instant based on the stored portion ofthe streaming data in the receiver buffer; and<br>
+a mechanism (56) for providing to the server a message including information indicative of the remaining playout duration in time at the time instant so as to allow the server to compute a fullness level in the receiver buffer based on the provided information.<br>
+22.	The device as claimed in claim 21, wherein the remaining playout duration in time is<br>
+provided in form of an identity ol'a selected one of the sequence of packets to be played out<br>
+and a time difference between a scheduled playout time of said selected packet and a current<br>
+time.<br>
+23.	The device as claimed in claim 22, wherein said selected packet to be played out is<br>
+the last packet in the sequence of packets to be played out.<br>
+24.	The device as claimed in claim 23. wherein the remaining playout duration in time is<br>
+provided in form ofthe sequence number ofthe first packet to be played out so as to allow<br>
+the server to compute the fullness level in the receiver buffer based on the sequence number<br>
+ofthe last packet to be played out and the sequence number ofthe first packet to be played<br>
+out.<br>
+25.	The device as claimed in claim 23. wherein the server computes the fullness level in<br>
+the receiver buffer based on the sequence number ofthe selected packet, the time difference<br>
+between the scheduled playout lime of the selected packet and the current time, and the<br>
+sequence number ofthe last packet to be played out.<br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IGFic3RyYWN0LWR1cGxpY2F0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 abstract-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IGFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IGNsYWltcy1kdXBsaWNhdGUucGRm" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 claims-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IGRlc2NyaXB0aW9uIChjb21wbGV0ZSktZHVwbGljYXRlLnBkZg==" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 description (complete)-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IGRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IGRyYXdpbmdzLWR1cGxpY2F0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 drawings-duplicate.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IGRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IGZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IGZvcm0tMjYucGRm" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 form-26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IGZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IGZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IG90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1IHBjdCBzZWFyY2ggcmVwb3J0LnBkZg==" target="_blank" style="word-wrap:break-word;">2339-chenp-2005 pct search report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1LWFzc2lnbmVtZW50LnBkZg==" target="_blank" style="word-wrap:break-word;">2339-chenp-2005-assignement.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1LWNvcnJlc3BvbmRuZWNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">2339-chenp-2005-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1LWNvcnJlc3BvbmRuZWNlLXBvLnBkZg==" target="_blank" style="word-wrap:break-word;">2339-chenp-2005-correspondnece-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1LWZvcm0gMTgucGRm" target="_blank" style="word-wrap:break-word;">2339-chenp-2005-form 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjMzOS1jaGVucC0yMDA1LXBjdC5wZGY=" target="_blank" style="word-wrap:break-word;">2339-chenp-2005-pct.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="225056-system-and-a-method-to-support-communication-between-a-cdma-network-and-a-gsm-network.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="225058-radiation-shield-for-a-safety-syringe-having-a-needle-sheath.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>225057</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2339/CHENP/2005</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>49/2008</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>05-Dec-2008</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>30-Oct-2008</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>21-Sep-2005</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>NOKIA CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>Keilalahdentie 4, FIN-02150 Espoo,</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>WANG, Ru-Shang</td>
+											<td>272 Enclaves Ct., Coppell, TX 75019,</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>VARSA, Viktor</td>
+											<td>6215 Love Drive, #2437, Irving, TX 75039,</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>LEON, David</td>
+											<td>900 Meadow Creek Drive, #3061, Irving, TX 75038,</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>AKSU, Emre Baris</td>
+											<td>Atomikatu 5 A 12, FIN-33721 Tampere,</td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td>CURCIO, Igor, Danilo, Diego</td>
+											<td>Hatanpään Valtatie 12 C 57, FIN-33100 Tampere,</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04L29/06</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/IB2004/000479</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2004-02-25</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/395,015</td>
+									<td>2003-03-21</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/225057-method-and-device-for-multimedia-streaming by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 23:24:50 GMT -->
+</html>

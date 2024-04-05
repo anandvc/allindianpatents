@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/280056-method-and-apparatus-for-handling-out-of-sequence-packets-in-header-decompression by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:34:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 280056:METHOD AND APPARATUS FOR HANDLING OUT-OF-SEQUENCE PACKETS IN HEADER DECOMPRESSION</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD AND APPARATUS FOR HANDLING OUT-OF-SEQUENCE PACKETS IN HEADER DECOMPRESSION</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>Header compression repair techniques are accomplished, in various aspects, modes, embodiments, and implementations, by a remote terminal (40), by a header decompressor (46) for use at a remote terminal (40), and by methods of operating the remote terminal and/or decompressor, and (optionally) in some aspects, modes, embodiments, and implementations by taking into consideration aspects of structure and operation of a header compressor (25) as well. The remote unit (40) comprises a transceiver (42) or the like which receives, over a link (36) such as an air interface (38), packets including packets having headers which have been compressed and packets which are potentially out-of-order. The header decompressor (46), upon detection of non-receipt of packets anticipated in a flow (34) of packets over the link, stores, with respect to each non-receipt, a snapshot of header decompression context information existing at the non-receipt. Then, when the header decompressor detects header decompression failure for a subsequently received packet, the header decompressor determines (e.g., by executing a repair process) whether header decompression of the subsequently received packet can be achieved using one of plural stored snapshots.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>BACKGROUND<br>
+FIELD OF THE INVENTION<br>
+The present invention pertains generally to telecommunications, and particularly to the<br>
+compression of headers of packets such as media packets.<br>
+RELATED ART AND OTHER CONSIDERATIONS<br>
+Due to the tremendous success of the Internet, it has become a challenging task to make<br>
+use of the Internet Protocol (IP) over all kinds of links. However, because of the fact that<br>
+the headers of the IP protocols are rather large, it is not always a simple task to make this<br>
+come true for narrowband links, such as cellular links, for example. As an example,<br>
+consider ordinary speech data transported by the protocols (IP, UDP, RTP) used for<br>
+Voice-over-IP (VoIP), where the header may represent about 70% of the packet resulting<br>
+in a very inefficient usage of the link.<br>
+The term "header compression" (HC) encompasses the art of minimizing the necessary<br>
+bandwidth for information carried in headers on a per-hop basis over point-to-point links.<br>
+Header compression techniques in general have a more than ten-year-old history within<br>
+the Internet community. Several commonly used header compression protocols exist, such<br>
+as the following: (1) Van Jacobson. Compressing TCP/IP Headers for Low-Speed Serial<br>
+Links. IETF RFC 1144, IETF Network Working Group, February 1990; (2) Mikael<br>
+Degermark, Bjorn Nordgren, Stephen Pink. IP Header Compression, IETF RFC 2507,<br>
+IETF Network Working Group, February 1999; and (3) Steven Casner, Van Jacobson.<br>
+Compressing IP/UDP/RTP Headers for Low-Speed Serial Links, IETF RFC 2508, IETF<br>
+Network Working Group, February 1999, all of which are incorporated by reference<br>
+herein in their entirety.<br>
+Header compression takes advantage of the fact that some fields in the headers are not<br>
+changing within a flow, or change with small and/or predictable values. Header<br>
+compression schemes make use of these characteristics and send static information only<br>
+initially, while changing fields are sent with their absolute values or as differences from<br>
+packet to packet. Completely random information has to be sent without any compression<br>
+at all.<br>
+2<br>
+ <br>
+Header compression is thus an important component to make IP services over wireless,<br>
+such as voice and video services, economically feasible. Header compression solutions<br>
+have been developed by the Robust Header Compression (ROHC) Working Group of the<br>
+Internet Engineering Task Force (IETF) to improve the efficiency of such services.<br>
+Robust Header Compression (ROHC), as defined in RFC 3095 (Bormann, C, "RObust<br>
+Header Compression (ROHC): Framework and four profiles: RTP, UDP, ESP, and<br>
+uncompressed", RFC 3095. Internet Engineering Task Force, July 2001), is an extensible<br>
+framework for which profiles for compression of various protocols may be defined. For<br>
+real-time multimedia services (e.g. voice, video), the application data is transported end-<br>
+to-end within an IP/UDP/RTP stream. Header compression of IP/UDP/RTP is defined by<br>
+the ROHC profile 0x0001 (ROHC RTP) and is applicable for Voice-over-IP (VoIP)<br>
+services among others. The ROHC RTP header compression scheme has been designed to<br>
+efficiently compress the IP/UDP/RTP headers over an arbitrary link layer.<br>
+A number of other ROHC profiles have also been defined for compression. Among these<br>
+are (1) IP/UDP/RTP headers (described in: Jonsson, L. and G. Pelletier, RObust Header<br>
+Compression (ROHC)- A Link-Layer Assisted ROHC Profile for IP/UDP/RTP, IETF RFC<br>
+3242, April 2002; and Liu, Z and K. Le. Zero-byte Support for Bidirectional Reliable<br>
+Mode (R-mode) in Extended Link-Layer Assisted RObust Header Compression (ROHC)<br>
+Profile, IETF RFC 3408. December 2002); (2) IP only headers (described in: Jonsson, L.<br>
+and G. Pelletier, RObust Header Compression (ROHC). A compression profile for IP,<br>
+IETF RFC 3843, June 2004); (3) IP/TCP headers (described in: Pelletier, G., Jonsson, L.,<br>
+West, M. and R. Price RObust Header Compression (ROHC): TCP/IP Profile (ROHC-<br>
+TCP), Internet Draft (work in progress), <draft-ietf-rohc-tcp-08.txt>, October 2004); and<br>
+(4) IP/UDP-Lite/RTP headers (described in: Pelletier, G., RObust Header Compression<br>
+(ROHC): Profiles for UDP-Lite, Internet Draft (work in progress), <draft-ietf-rohc-udp-></draft-ietf-rohc-udp->
+lite-04.txt&gt;, June 2004). All RFCs cited herein are incorporated by reference herein in<br>
+their entireties.<br>
+Except for negotiation (see also Bormann. C, Robust Header Compression (ROHC) over<br>
+PPP, IETF RFC 3241, April 2002), ROHC profiles only requires framing and error<br>
+3<br>
+ <br>
+detection to be provided by the link layer, while all other functionality is handled by the<br>
+ROHC scheme itself.<br>
+The ROHC profiles defined in RFC 3095, RFC 3242, RFC 3408, "IP-ONLY" (Jonsson, L.<br>
+and G. Pelletier, RObust Header Compression (ROHC): A compression profile for IP,<br>
+IETF RFC 3843. June 2004) and "ROHC-UDPLite" (Pelletier, G., RObust Header<br>
+Compression (ROHC) Profiles for UDP-Lite, Internet Draft (work in progress), <draft-></draft->
+ietf-rohc-udp-lite-04.txt&gt;, June 2004) all support three different modes of operation. In<br>
+short, for a specific context, the mode of operation controls the actions and the logic to<br>
+perform as well as the packet types to use during different states of the header<br>
+compression operation. Packet types and formats that are allowed may vary from one<br>
+mode to the other. The Unidirectional mode (U-mode) is used at the beginning of any<br>
+ROHC compression before any transition to other modes may occur. The Bidirectional<br>
+Optimistic mode (O-mode) seeks to maximize the compression efficiency and sparse<br>
+usage of the feedback channel. The Bidirectional Reliable mode (R-mode) seeks to<br>
+maximize robustness against loss propagation and context damage propagation.<br>
+When in U-mode, packets are sent from compressor to decompressor only. The U-mode<br>
+is thus usable over links where a return path from decompressor to compressor is either<br>
+not desired or not available. Periodical refreshes are used in U-mode. The U-mode is<br>
+particularly applicable to broadcast or multicast channels.<br>
+The O-mode is similar to the U-mode with the difference that a feedback channel is used<br>
+to send error recovery requests and (optionally) acknowledgements of significant context<br>
+updates from the decompressor to compressor. For most ROHC profiles, the U-mode and<br>
+the O-mode are often indistinctly referred to using the term U/O-mode, due their rather<br>
+similar characteristics - such as an identical set of packets formats for both modes.<br>
+The R-mode differs significantly from the two other modes, mainly by making a more<br>
+extensive usage of the feedback channel and a stricter logic for performing context<br>
+updates. The R-mode also uses a few different packet types only understood and useful in<br>
+this mode.<br>
+Each mode of operation has different properties in terms of compression efficiency,<br>
+robustness and processing complexity. Mode transitions may only be initiated by the<br>
+4<br>
+ <br>
+decompressor. ROHC does not specify how and when each mode should be used (other<br>
+than that ROHC compression must always start in U-mode). Therefore, the logic for<br>
+mode transitions is an implementation decision and may be based on measurements of the<br>
+link characteristics, link conditions, implementation optimizations for a specific mode or<br>
+may be based on other algorithms. In particular, for Broadcast/Multicast type of services,<br>
+header compression operates in the unidirectional mode (U-Mode) only, as normally for<br>
+such services a feedback channel from decompressor to compressor is not available or<br>
+desired.<br>
+A header compression scheme (such as a ROHC Profile) can be conceptualized and/or<br>
+realized as a state machine. A challenging task is to keep the compressor and<br>
+decompressor states, called contexts, consistent with each other, while keeping the header<br>
+overhead as low as possible. There is one state machine for the compressor, and one state<br>
+machine for the decompressor. The compressor state machine directly impacts the level of<br>
+compression efficiency, as it is an important part of the logic controlling the choice of<br>
+compressed packet type to be sent. The purpose of the decompressor state machine is<br>
+mainly to provide the logic for feedback (if applicable) and to identify the packet types for<br>
+which decompression may be attempted.<br>
+A compression context contains and maintains relevant information about past packets,<br>
+and this information is used to compress and decompress subsequent packets. As<br>
+explained in the ROHC documentation, the context of the compressor is the state it uses to<br>
+compress a header. The context of the decompressor is the state it uses to decompress a<br>
+header. Either of these or the two in combination are usually referred to as "context",<br>
+when it is clear which is intended. The context contains relevant information from<br>
+previous headers in the packet stream, such as static fields and possible reference values<br>
+for compression and decompression. Moreover, additional information describing the<br>
+packet stream is also part of the context, for example information about how the IP<br>
+Identifier field changes and the typical inter-packet increase in sequence numbers or<br>
+timestamps.<br>
+For the ROHC profiles defined in RFC 3095, RFC 3242, RFC 3408, "IP-ONLY"<br>
+(Jonsson, L. and G. Pelletier. RObust Header Compression (ROHC): A compression<br>
+5<br>
+ <br>
+profile for IP. IETF RFC 3843. June 2004) and "ROHC-UDPLite" (Pelletier. G., RObust<br>
+Header Compression (ROHC): Profiles for UDP-Lite, Internet Draft (work in progress),<br>
+<draft-ietf-rohc-udp-lite-04.txt>. June 2004), Fig. 1 shows the compressor state machine.<br>
+For ROHC compression, the three compressor states are the Initialization and Refresh<br>
+(IR), First Order (FO), and Second Order (SO) states.   The compressor starts in the lowest<br>
+compression state (IR) and transits gradually to higher compression states. The<br>
+compressor will always operate in the highest possible compression state, under the<br>
+constraint that the compressor is sufficiently confident that the decompressor has the<br>
+information necessary to decompress a header compressed according to that state. See,<br>
+e.g., RFC 3095. section 4.3.1 (Carsten Bormann, et al. RObust Header Compression<br>
+(ROHC): Framework and four profiles: RTP, UDP, ESP and uncompressed; IETF RFC<br>
+3095, April 2001). In particular while operating in U-Mode, decisions about transitions<br>
+between the various compression states are normally taken by the compressor on the basis<br>
+of variations in packet headers and periodic timeouts.<br>
+According to RFC 3095 defines the Initialization and Refresh (IR) State, in section 4.3.1,<br>
+the purpose of the IR state is to initialize the static parts of the context at the decompressor<br>
+or to recover after failure. In this state, the compressor sends complete header<br>
+information. This includes all static and nonstatic fields in uncompressed form plus some<br>
+additional information. The compressor stays in the IR state until it is fairly confident that<br>
+the decompressor has received the static information correctly.<br>
+The IR state is thus the state were the compression level is the lowest. Fig. 2, taken from<br>
+RFC 3095, section 5.3.1, describes the U-Mode state machine. In the U-mode state<br>
+machine of Fig. 2, Timeout_l typically corresponds to a periodic sending of the static (and<br>
+possibly also dynamic) parameters of the decompressor context, while Timeout_2<br>
+typically corresponds to a periodic sending of only the dynamic parameters of the<br>
+decompressor context.<br>
+In addition, the context replication (CR) mechanism for ROHC profiles introduce an<br>
+additional state, the CR state. See, Pelletier, G., Robust Header Compression (ROHC):<br>
+Context replication for ROHC profiles, Internet Draft (work in progress), <draft-ietf-rohc-></draft-ietf-rohc->
+context-replication-01.txt&gt;. October 2003. To date, only the [ROHC-TCP] profile<br>
+6<br>
+ <br>
+specifies support for context replication, but other profiles may also support it provided<br>
+their corresponding standard is updated. The CR state may also be used by a profile<br>
+operating in U-Mode. Fig. 3 shows the logic added to the previous state machine for the<br>
+CR state. In U-Mode, downward transitions are performed according to the same logic as<br>
+described above.<br>
+Fig. 4. taken from RFC 3095, section 5.3.2, illustrates an example U-Mode decompressor<br>
+state machine. The state of the decompressor dictates what type of compressed packet<br>
+may be decompressed. In the No Context (NC) state, only packets initializing the static<br>
+part may be decompressed (e.g. ROHC IR packets). In the Static Context (SC) state, only<br>
+packets containing sufficient information on the dynamic parameters (e.g. ROHC IR-DYN<br>
+or UOR-2 packets) may be decompressed. In the Full Context (FC) state, any packet may<br>
+be decompressed. Thus, depending on the condition of the channel and on the success rate<br>
+of the decompression, the decompressor state machine will transit between the different<br>
+states and will have to wait for the reception of a suitable packet for attempting<br>
+decompression.<br>
+In unidirectional operation, there is no feedback sent back to the compressor. Therefore,<br>
+in unidirection operation, the decompressor may (in the worst cases) have up to<br>
+Timeoutl of waiting time without possibility to start decompression of the received<br>
+packets, and up to Timeout_2 before it can re-start compression after severe context<br>
+damage to the dynamic information.<br>
+To date, header compression algorithms have been designed under the assumption that<br>
+packets (whose headers are compressed) are delivered essentially in order, and thus that<br>
+the packets do not require substantial re-ordering upon receipt. In accordance with such<br>
+assumption, most conventional header compression algorithms operate on the premise that<br>
+reordering of a header-compressed packet between a compressor and a decompressor is<br>
+not possible. See, e.g., Van Jacobson, Compressing TCP/IP Headers for Low-Speed<br>
+Serial Links, IETF RFC 1144.1 RTF Network Working Group, February 1990; Mikael<br>
+Degermark, Bjorn Nordgren, Stephen Pink, IP Header Compression, IETF RFC 2507,<br>
+IETF Network Working Group, February 1999; Steven Casner, Van Jacobson,<br>
+Compressing IP/UDP/RTP Headers for Low-Speed Serial Links, IETF RFC 2508, IETF<br>
+7<br>
+ <br>
+Network Working Group, February 1999; and Carsten Bormann, et al. RObust Header<br>
+Compression (ROHC): Framework and four profiles: RTP, UDP, ESP and uncompressed,<br>
+IETF RFC 3095, April 2001, all of which are incorporated herein by reference.<br>
+A few header compression algorithms allow or accommodate only slight out-of-sequence<br>
+delivery of packets, and thus only slight reordering of packets upon reception (with a<br>
+depth of very few packets). See, e.g., Koren. T., Casner, S., Geevarghese, J., Thompson<br>
+B. and P. Ruddy, Enhanced Compressed RTP (CRTP) for Links with High Delay, Packet<br>
+Loss and Reordering, IETF RFC 3545, IETF Network Working Group, July 2003; and<br>
+Pelletier. G., Jonsson, L. and Sandlund, K., Robust Header Compression (ROHC) over<br>
+Channels that can reorder packets, Internet Draft (work in progress), 
+rohc-over-reordering-00.txt&gt;, June 2004, incorporated herein by reference.<br>
+The design of compression algorithms has primarily focused on improving the tolerance<br>
+against packet losses, driven by the properties of wireless cellular links. Encoding of<br>
+sequential information has been improved from cumulative delta encoding to more robust<br>
+Window Least Significant Bit (W-LSB) encoding. Cumulative delta coding is described,<br>
+e.g., in Van Jacobson, Compressing TCP/IP Headers for Low-Speed Serial Links, IETF<br>
+RFC 1144, IETF Network Working Group. February 1990; Mikael Degermark, Bjorn<br>
+Nordgren, Stephen Pink. IP Header Compression, IETF RFC 2507, IETF Network<br>
+Working Group, February 1999; and, Steven Casner, Van Jacobson. Compressing<br>
+IP/UDP/RTP Headers for Low-Speed Serial Links, IETF RFC 2508, IETF Network<br>
+Working Group, February 1999. Window Least Significant Bit (W-LSB) encoding is<br>
+described in Carsten Bormann, et al. RObust Header Compression (ROHC): Framework<br>
+and jour profiles: RTP, UDP, ESP and uncompressed, IETF RFC 3095, April 2001.<br>
+Other approaches have also been used, such as reducing the compression ratio for<br>
+sequential information (Koren, T., Casner, S., Geevarghese, J., Thompson B. and P.<br>
+Ruddy, Enhanced Compressed RTP (CRTP) for Links with High Delay, Packet Loss and<br>
+Reordering, IETF RFC 3545. IETF Network Working Group, July 2003) or tweaking<br>
+some parameters of existing encoding methods (Pelletier, G., Jonsson, L. and Sandlund,<br>
+K.. Robust Header Compression (ROHC) over Channels that can reorder packets, Internet<br>
+Draft (work in progress), , June 2004).<br>
+8<br>
+ <br>
+Consistently with the foregoing observations, the IETF ROHC working group (WG) has<br>
+designed header compression algorithms (profiles) with the assumption that the channel<br>
+between the compressor and the decompressor will not reorder the header-compressed<br>
+packets. As such, the channel is required to maintain packet ordering for each compressed<br>
+flow. Encoding methods have been defined with this assumption in order to aggressively<br>
+compress headers and achieve a high compression ratio. For some profiles, modifications<br>
+can be made to the logic and/or to some encoding methods (e.g. LSB) in order to handle a<br>
+very small (less than 5 packets) amount of reordering (Pelletier, G., Jonsson, L. and<br>
+Sandlund. K., Robust Header Compression (ROHC) over Channels that can reorder<br>
+packets, Internet Draft (work in progress), .<br>
+June 2004)). However, changes to fields that are not encoded using sequential information<br>
+(e.g. semi-static fields) limit the possibility to decompress a reordered packet and/or to<br>
+prevent severe context damage in the presence of moderate (tens of packets) or high<br>
+(hundreds of packets) reordering.<br>
+With the upcoming development of wireless links with higher bit rates and lower latencies<br>
+(still relatively high latency with respect to the bit rate), the in-order delivery assumption<br>
+will likely no longer be operative. There will be a need for header<br>
+compression/decompression algorithms which not only are robust not against packet<br>
+losses, but also against out-of-order delivery and thus reordering of packets.<br>
+What is needed, therefore, and an object of the present invention, are method and<br>
+apparatus capable of header decompression even for out-of-sequence packets.<br>
+SUMMARY<br>
+Header compression repair techniques are accomplished, in various aspects, modes,<br>
+embodiments, and implementations, by a remote terminal, by a header decompressor for<br>
+use at a remote terminal, and by methods of operating the remote terminal and/or<br>
+decompressor, and (optionally) in some aspects, modes, embodiments, and<br>
+implementations by taking into consideration aspects of structure and operation of a<br>
+header compressor as well.<br>
+9<br>
+ <br>
+The header decompressor is adapted for use with a remote unit such as a mobile station or<br>
+user equipment unit. Typically the remote unit additionally comprises a transceiver or the<br>
+like which receives, over a link such as an air interface, packets including packets having<br>
+headers which have been compressed and packets which are potentially out-of-order. In<br>
+accordance with one independent and distinct aspect of its configuration and operation, the<br>
+header decompressor, upon detection of non-receipt of packets anticipated in a flow of<br>
+packets over the link, stores, with respect to each non-receipt, a snapshot of header<br>
+decompression context information existing at the non-receipt. Then, when the header<br>
+decompressor detects header decompression failure for a subsequently received packet, the<br>
+header decompressor determines (e.g., by executing a repair process) whether header<br>
+decompression of the subsequently received packet can be achieved using one of plural<br>
+stored snapshots. In endeavoring for such achievement, preferably the decompressor (e.g.,<br>
+using the repair process) reattempts decompression of the subsequently received packet,<br>
+and in such reattempt uses each of the plural stored snapshots. The header decompressor<br>
+(e.g., using the repair process) more definitively determines that reattempt of the header<br>
+decompression for the subsequently received packet succeeds if the header decompression<br>
+of the subsequently received packet was achieved using one and only one of the plural<br>
+stored snapshots. If more than one of the plural snapshots achieve successful header<br>
+decompression for the packet, a choice of which of the plural snapshots to actually use for<br>
+the packet can be based on other techniques, such as (for example) transport protocol<br>
+checks or the like, such as transport protocol checksum or CRC, for example.<br>
+As one example implementation of the first aspect of configuration and operation, for each<br>
+packet or group of consecutive packets missing in a sequence of the flow, the header<br>
+decompressor stores a corresponding snapshot in a set of snapshots in a sliding window<br>
+memory. In differing modes, the header decompressor may use either all snapshots in the<br>
+set, or a subset of the snapshots in the set, for reattempting decompression of the<br>
+subsequently received packet. In a mode in which a subset of snapshots are utilized,<br>
+constitution of the subset may be based on most likely snapshots to facilitate successful<br>
+decompression, e.g., snapshots determined by packet sequence number (e.g., least<br>
+significant bits of the sequence number) which are carried in the packet header.<br>
+10<br>
+ <br>
+In accordance with a second independent and distinct aspect of its configuration and<br>
+operation, the header decompressor also ascertains whether header decompression fails for<br>
+a predetermined number of packets received after the non-receipt of the packets<br>
+anticipated in the flow. Such header decompression failure could possibly result from the<br>
+fact that one or more of the non-received packets may have carried significant context<br>
+update information, without which the header decompressor incurs "context damage". If<br>
+so, the header decompressor (e.g., using an auxiliary repair process) stores the packets<br>
+received after the non-receipt and which failed the header decompression (e.g., the<br>
+"buffered packets") in hopes that, should it be able somehow to recover the lost context<br>
+update information, it can use such lost context update information to perform subsequent<br>
+repair of the buffered packets. Thus, in accordance with the second aspect, if (e.g., by<br>
+execution of the repair process) the header decompressor achieves decompression of the<br>
+subsequently received packet using one of the plural stored snapshots, the snapshot of the<br>
+header decompression context information which achieved header decompression is<br>
+updated and used (e.g., by the auxiliary repair process) for reattempting header<br>
+decompression of the stored (buffered) packets.<br>
+In the second aspect, achieving recovery of the decompression of the subsequently<br>
+received packet using one of the plural stored snapshots is possible in two example<br>
+situations. In a first such situation, the context update information necessary for<br>
+decompressing the buffered packets was an out-of-order packet (treated as the<br>
+subsequently received packet) which was delayed and received by the header<br>
+decompressor only after the context damage was detected. In a second such situation, the<br>
+context update information necessary for decompressing the buffered packets is obtained<br>
+by a retransmission in another packet (treated as the subsequently received packet), as<br>
+discussed below in conjunction with a third aspect.<br>
+In accordance with the third independent and distinct aspect of its configuration and<br>
+operation, upon its failure (e.g., using the repair process) to decompress a packet header,<br>
+the header decompressor generates a notification of the non-receipt of packets anticipated<br>
+in the flow. Preferably, the notification of the non-receipt includes packet resend<br>
+information to enable resending (e.g., from a header compressor across the link) of a<br>
+packet with appropriate updating header decompression context information to rejuvenate<br>
+11<br>
+ <br>
+the header decompressor's efforts (e.g., using the repair process) to perform successful<br>
+header decompression. For example, the notification of the non-receipt includes a<br>
+sequence number of a last successfully decompressed packet as the packet resend<br>
+information.<br>
+As an example implementation, the header decompressor stores snapshots in a sliding<br>
+window memory. The size of the sliding window memory is preferably determined by a<br>
+product of bandwidth and delay of the link. The header decompressor updates contents of<br>
+the sliding window memory by ensuring that an oldest snapshot in the sliding window<br>
+memory corresponds to a maximum reordering depth that the sliding window memory can<br>
+handle.<br>
+In accordance with a fourth independent and distinct aspect of its configuration and<br>
+operation, the header decompressor (e.g., by executing a window allocation process)<br>
+temporarily allocates reusable memory for plural stored snapshots in accordance with a<br>
+one or more window parameters received on the link. The parameter(s) can indicate one<br>
+or more (and preferably all) of the following: a size of the reusable memory in which the<br>
+plural stored snapshots are stored; when to allocate the reusable memory for storing the<br>
+plural stored snapshots; when to de-allocate the reusable memory for storing the plural<br>
+stored snapshots.<br>
+In accordance with this fourth aspect, the header decompressor imposes additional<br>
+memory and processing requirements for the sliding window memory only selectively,<br>
+e.g., at times indicated by the window parameters. Advantageously, using this fourth<br>
+aspect, the memory locations allocated for the sliding window memory can be temporarily<br>
+allocated and elsewise utilized when the repair process is not invoked or anticipated.<br>
+Likely times for invoking or anticipating the repair process for the header decompressor,<br>
+and thus allocation of the sliding window memory, include handoffs and handovers of<br>
+various types, or any other time or period when packets may be prone to be out of order or<br>
+prone to loss. Such times can be determined by measurement or predicted by historical<br>
+(likelihood) information.<br>
+12<br>
+ <br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+The foregoing and other objects, features, and advantages of the invention will be apparent<br>
+from the following more particular description of preferred embodiments as illustrated in<br>
+the accompanying drawings in which reference characters refer to the same parts<br>
+throughout the various views. The drawings are not necessarily to scale, emphasis instead<br>
+being placed upon illustrating the principles of the invention.<br>
+Fig. 1 is a diagrammatic view of an example compressor state machine.<br>
+Fig. 2 is a diagrammatic view of an example U-Mode state machine.<br>
+Fig. 3 is a diagrammatic view showing logic added to a state machine for the CR state.<br>
+Fig. 4 is a diagrammatic view showing an example U-Mode decompressor state machine.<br>
+Fig. 5 is a diagrammatic view showing a generic telecommunications system which serves<br>
+as an example context for illustrating techniques of header decompression repair.<br>
+Fig. 6A is a schematic view showing basic, example functional entities of a header<br>
+decompressor according to a first example aspect.<br>
+Fig. 6B is a diagrammatic view showing basic, example functional processes executed by<br>
+the header decompressor of Fig. 6A.<br>
+Fig. 6C is a diagrammatic view showing basic, example operations performed by the<br>
+header decompressor of Fig. 6A.<br>
+Fig. 6D is a diagrammatic view showing basic, example operations and events performed<br>
+by a repair process of the header decompressor of Fig. 6A.<br>
+Fig. 7 is a diagrammatic view showing an example sliding window maintained by a<br>
+window manager.<br>
+13<br>
+ <br>
+Fig. 8A is a schematic view showing basic, example functional entities of a header<br>
+decompressor according to a second example aspect.<br>
+Fig. 8B is a diagrammatic view showing basic, example functional processes executed by<br>
+the header decompressor of Fig. 8A.<br>
+Fig. 6C is a diagrammatic view showing basic, example operations performed by the<br>
+header decompressor of Fig. 8 A.<br>
+Fig. 8D is a diagrammatic view showing basic, example operations and events performed<br>
+by a repair process of the header decompressor of Fig. 8 A.<br>
+Fig. 8E is a diagrammatic view showing basic, example operations and events performed<br>
+by an auxiliary repair process of the header decompressor of Fig. 8A.<br>
+Fig. 9 is a diagrammatic view showing an example sliding window maintained in a<br>
+scenario using an auxiliary repair process.<br>
+Fig. 11 is a diagrammatic view showing a generic telecommunications system illustrating<br>
+a third aspect wherein notification is provided to a compressor of the fact of non-receipt of<br>
+packets anticipated by a decompressor.<br>
+Fig. 11A is a diagrammatic view showing a generic telecommunications system<br>
+illustrating the third aspect wherein notification is provided via an in-band feedback signal<br>
+from the decompressor<br>
+Fig. 11B is a diagrammatic view showing a generic telecommunications system<br>
+illustrating a third aspect wherein notification is provided via link layer messaging.<br>
+Fig. 12A is a schematic view showing basic, example functional entities of a header<br>
+decompressor according to the third example aspect wherein the header decompressor<br>
+comprises a retransmission requestor.<br>
+14<br>
+ <br>
+Fig. 12B is a schematic view showing basic, example functional entities of a header<br>
+decompressor according to a third example aspect wherein the header decompressor<br>
+comprises a link layer loss notifier.<br>
+Fig. 12C is a diagrammatic view showing selected, basic, example operations performed<br>
+by the header decompressor of either Fig. 12A or Fig. 12B.<br>
+Fig. 12D is a diagrammatic view showing selected, basic, example operations performed<br>
+by the header compressor of Fig. 11 upon receipt of a feedback notification.<br>
+Fig. 13 is a diagrammatic view showing a generic telecommunications system illustrating<br>
+a four aspect wherein a header decompressor temporarily allocates reusable memory for<br>
+plural stored snapshots in accordance with a one or more window parameters.<br>
+Fig. 14 is a schematic view showing basic, example functional entities of a header<br>
+decompressor according to the fourth example aspect of Fig. 13.<br>
+Fig. 15A is a schematic view of a particular telecommunications system which serves as<br>
+an example context in which the present invention may be employed, and wherein a<br>
+header compressor is included in a General Packet Radio Service (GPRS) Service (SGSN)<br>
+node.<br>
+Fig. 15B is a schematic view of a particular telecommunications system which serves as<br>
+an example context in which the present invention may be employed, and wherein a<br>
+header compressor is included in a Gateway General Packet Radio Service (GPRS)<br>
+support node (GGSN).<br>
+Fig. IOC is a schematic view of a particular telecommunications system which serves as<br>
+an example context in which the present invention may be employed, wherein a<br>
+compressor is included in radio network controller (RNC).<br>
+15<br>
+ <br>
+DETAILED DESCRIPTION OF THE DRAWINGS<br>
+In the following description, for purposes of explanation and not limitation, specific<br>
+details are set forth such as particular architectures, interfaces, techniques, etc. in order to<br>
+provide a thorough understanding of the present invention. However, it will be apparent<br>
+to those skilled in the art that the present invention may be practiced in other embodiments<br>
+that depart from these specific details. In other instances, detailed descriptions of well-<br>
+known devices, circuits, and methods are omitted so as not to obscure the description of<br>
+the present invention with unnecessary detail.<br>
+Fig. 5 shows an example telecommunications network 20 wherein a stream of packets are<br>
+supplied by a packet source 21. Fig. 5 shows, for example, a media packet 22 having a<br>
+media payload (MPAY) and header (MH) being applied to a protocol stack 23. The<br>
+particular protocols comprising the protocol stack can vary, and typically comprise an<br>
+application protocol, under a transport protocol, under an Internet Protocol. In the<br>
+particularly illustrated example, the protocol stacks 23 serve to affix protocol headers 24<br>
+(e.g., IP, UDP, and RTP) to the media packet 22. The media packet 22 with its appended<br>
+protocol headers 24 is applied to a packet header compressor 25. The packet compressor<br>
+25 compresses the protocol headers 24, resulted in a compressed header 26 for the packet.<br>
+The header compressor 25 performs header compression according to any of many<br>
+suitable header compression algorithms, either conventional (such as ROHC or SigComp,<br>
+for example) or otherwise. After the header of the packet is compressed by header<br>
+compressor 25, a packet formatter 26 incorporates the compressed header into a packet<br>
+which is applied to a transceiver 29. The transceiver 29 serves to transmit the packet, such<br>
+as packet 30 with its compressed header 26, in a flow 34 of packets over link 36 across an<br>
+interface 38 to a remote unit 40. The flow 34 of packets, likely most with compressed<br>
+headers, need not be continuous, but can instead be sporadic, depending on the type of<br>
+packet service involved and the nature of the material included in the packet service (e.g.,<br>
+media type).<br>
+The packet stream issuing from packet source 21 of Fig. 5 can be realized in various ways.<br>
+For examples, the packet stream can either (1) be pre-recorded and sent by a server (in this<br>
+case the media in the media packet 22 is already encoded); (2) come from a transcoder<br>
+16<br>
+ <br>
+(which adapts the original media from a source to another media encoding potentially<br>
+more suitable and/or supported by terminals); or (3) come from a source that performs<br>
+real-time encoding of live media. Thus, the header compressor can receive an input media<br>
+packet from any of several types of media sources somewhere within the IP network. The<br>
+packet source 21 can be any suitable source, such as a media server, for example, and may<br>
+be located in a node or network common or remote from header compressor 25.<br>
+The aforementioned telecommunications elements, illustrated to the left of interface 38 in<br>
+Fig. 5, are illustrated only as certain representative elements germane to the present<br>
+discussion, and understandably do not constitute the whole of the telecommunications<br>
+network 20, as many other unillustrated elements are also present. Moreover, the set of<br>
+illustrated elements may be distributed throughout one or more nodes or networks (e.g.,<br>
+core networks or radio access networks), and in some instances an individual element<br>
+itself may be distributed to plural platforms and/or plural nodes. Thus, for sake of<br>
+simplification the illustrated elements are shown as being connected directly and<br>
+successively together in the manner of Fig. 5.<br>
+While remote unit 40 has numerous elements, certain basic, representative elements<br>
+suitable for an understanding of the header decompression performed by remote unit 40<br>
+are shown in Fig. 5. Among these elements are transceiver 42, which applies packets<br>
+received on link 36 to a packet deformatter 44. The packet deformatter 44 serves<br>
+essentially to extract a compressed header from the received packet. After the compressed<br>
+header is extracted, it is sent to header decompressor 46 for decompression. After the<br>
+header of a packet has been decompressed by header decompressor 46, the packet<br>
+including its decompressed header is stored by buffer manager 48 in decompressed packet<br>
+buffer 49. The buffer manager 48 also retrieves decompressed packets from<br>
+decompressed packet buffer 49 as needed for the packet utilization application 50, e.g., the<br>
+particular application which is involved in receiving a media stream or the like. In<br>
+addition, remote unit 40 includes a packet formatter 52 for preparing packets to be sent<br>
+back across link 36 (as well as various unillustrated elements upstream from packet<br>
+formatter 52).<br>
+17<br>
+ <br>
+The header compressor 25 serves to compress headers of packets (such as media packets)<br>
+which have been supplied by packet source 21 and possibly additionally encoded. In<br>
+conjunction with its header compression, header compressor 25 sends context information<br>
+to a decompressor for use by the decompressor in decompressing compressed headers of<br>
+the media packets. As used herein, "'context information" encompasses one or both of<br>
+context initialization information and context refresh information. The context<br>
+information can be included in the flow of packets to remote unit 40 based on a periodic<br>
+interval, as it is normally the case (as in, e.g., RFC 3095 (Bormann, C, "RObust Header<br>
+Compression (ROHC): Framework and four profiles: RTP, UDP, ESP, and<br>
+uncompressed", RFC 3095, Internet Engineering Task Force, July 2001), or alternatively<br>
+can be included in accordance with a media characteristic of the media packets as<br>
+disclosed in United States Patent Application Serial Number	(attorney docket:<br>
+2380-839), entitled "METHOD AND APPARATUS FOR HEADER COMPRESSION<br>
+WITH TRANSMISSION OF CONTEXT INFORMATION DEPENDENT UPON<br>
+MEDIA CHARACTERISTIC", simultaneously filed herewith and incorporated herein by<br>
+reference.<br>
+The header decompressor 46 is thus adapted for use with a remote unit 40 (which may<br>
+take the form of, or also be known as, any of numerous devices/appellations such as<br>
+mobile station, mobile terminal, wireless terminal, or user equipment unit). In the<br>
+illustrated embodiment of Fig. 5, the header decompressor 46 happens to be situated in a<br>
+wireless remote unit 40. As such, the remote unit 40 receives radio frequency<br>
+transmissions over an air or radio interface, depicted by dashed-dotted line 38 in Fig. 5.<br>
+Use of a wireless remote unit 40 is consistent with, for example, the RFCs cited herein and<br>
+incorporated by reference. Yet it will be appreciated that the header decompression<br>
+techniques described herein are not limited to use with any particular type of remote<br>
+terminal or terminal interface, and that the techniques can instead or additionally be<br>
+utilized for transmissions that are not wireless, or are by types of radiation or waves other<br>
+than radio waves. Our-of sequence packet reception may occur in a wire link network or<br>
+system, for example, when there are different physical paths, and thus different delays, for<br>
+a same virtual link.<br>
+18<br>
+ <br>
+The remote unit 40 receives, over a link 36 such as an air interface, packets including<br>
+packets having headers which have been compressed. The packets are generally<br>
+transmitted over the link in a sequential order. However, the remote unit 40 is capable, by<br>
+virtue of handler 54 included in header decompressor 46, of handling out-of-sequence<br>
+packets including those which have undergone moderate reordering or even high<br>
+reordering. As used herein, a packet having undergone "moderate reordering" means that<br>
+the packet is out of sequence by a number comparable to tens of packets, while a packet<br>
+having undergone "high reordering" means that the packet is out of sequence by a number<br>
+comparable to hundreds of packets. Such out-of-sequence handling is illustrated below in<br>
+several representative, non-limiting and potentially independent aspects.<br>
+REATTEMPTED DECOMPRESSION USING STORED TRANSITORY CONTEXT<br>
+STATES<br>
+Fig. 6A shows example structural and/or functional units of header decompressor 46(1)<br>
+according to a first aspect. The header decompressor 46(1) includes a decompression state<br>
+machine 60 which receives, from packet deformatter 44, packets with headers which need<br>
+to be decompressed. The decompression state machine 60 (in the manner described above<br>
+and as understood by the person skilled in the art) provides, e.g., the logic for feedback (if<br>
+applicable) and identifies the packet types for which decompression may be attempted.<br>
+The decompression state machine 60 includes a packet header decompressor 62 which<br>
+actually performs, or at least attempts to perform, the decompression of each packet<br>
+requiring decompression.<br>
+The out-of-sequence packet handler 54 of header decompressor 46(1) further includes<br>
+various other elements or functionalities depicted in Fig. 6A. Such elements or<br>
+functionalities include last context snapshot memory 63; sequence analyzer 64; window<br>
+manager 66; and repair unit 68. A decompression failure unit/routine 70 is included in<br>
+header decompressor 46(1), either separately or as a part of the out-of-sequence packet<br>
+handler 54. As with other aspects of header decompressor hereinafter described, these<br>
+elements or functionalities may be implemented, either separately or collectively, using<br>
+individual hardware circuits, using software functioning in conjunction with one or more<br>
+suitably programmed digital microprocessors or general purpose computers, using an<br>
+19<br>
+ <br>
+application specific integrated circuit (ASIC), and/or using one or more digital signal<br>
+processors (DSPs).<br>
+In terms of basic events or steps of operation (as illustrated in Fig. 6C), header<br>
+decompressor 46(1) first detects non-receipt of packets anticipated in the flow 34 of<br>
+packets over the link 36 (event 6C-1). In the example implementation of Fig. 6A, the<br>
+sequence analyzer 64 performs the detection of the non-receipt of packets. Upon detection<br>
+of non-receipt of packets anticipated in the flow 34, header decompressor 46(1), as event<br>
+6C-2 stores, with respect to each non-receipt, a snapshot of header decompression context<br>
+information existing at the non-receipt. As used herein, a "snapshot" or context item is the<br>
+state information that is necessary and kept for the decompression of a specific packet, i.e.,<br>
+a packet for sequence number SN=x. The identity and nature of such information is<br>
+understood with reference to various sections of RFC 3095 (Bormann, C, "RObust<br>
+Header Compression (ROHC): Framework and four profiles: RTP, UDP, ESP, and<br>
+uncompressed", RFC 3095, Internet Engineering Task Force, July 2001), including section<br>
+6.5, section 6.5.1, and section 6.5.2, for example.<br>
+Depending on the packet, the snapshot can include either all the context information then<br>
+existing, or (in a more economical case) only the dynamic and/or semi-static context<br>
+information required for decompression of the packet header. With each context entry<br>
+(snapshot) kept in window memory 72, the value of the sequence number (SN) associated<br>
+with the packet is kept as an index to the entry. In one mode of operation, the context<br>
+information which is stored in a snapshot in window memory 72 can be the entire context<br>
+information that was current or existed at the time a packet is missing. In another and<br>
+more economical mode of operation, the context information which is stored in a snapshot<br>
+in window memory 72 can be only the dynamic and/or semi-static context information<br>
+currently existing at the time of the packet loss. Keeping only the semi-static and dynamic<br>
+information as the snapshot is possible because, e.g., the static information is already<br>
+present in the context, and the static information does not change for a single flow.<br>
+The header decompression context information necessary for decompression at the time of<br>
+non-receipt is obtained by decompression state machine 60 from context-updating packets<br>
+received by remote unit 40, and is stored in last context snapshot memory 63. In an<br>
+illustrated implementation, such snapshots of header decompression context information<br>
+20<br>
+ <br>
+are obtained from last context snapshot memory 63 and are stored by window manager 66<br>
+in a window memory 72 of context snapshots. Then, when header decompressor 46(1)<br>
+detects header decompression failure for a subsequently received packet, as event 6C-3 the<br>
+header decompressor 46(1) determines (e.g., by executing a repair process performed by<br>
+repair unit 68) whether header decompression of the subsequently received packet can be<br>
+achieved using one of plural stored snapshots.<br>
+Fig. 7 shows an example sliding window 74 maintained by window manager 66 in<br>
+window memory 72. Circled indicator A in Fig. 7 shows that sequence analyzer 64 has<br>
+detected five gaps or holes in packet reception by the time the most recent sequence<br>
+number (SN) received has the value SNcurrent- Consequently, a "snapshot" of the context<br>
+information existing at each of the times of hole detection is inserted at five positions in<br>
+window memory 72. A first window item xo in window memory 72 corresponds to the<br>
+oldest hole; a second window item xi in window memory 72 corresponds to the next<br>
+oldest hole; and so forth, with the window items x, being referred to as having a window<br>
+sequence or window item number i. As shown in Fig. 7, the window items have indices<br>
+which are based on the oldest item (xo) plus an index, with the index indicating how many<br>
+packets were received between the oldest items xo and the occurrence of the hole. For<br>
+example, item X3 of Fig. 7 indicates that a hole occurred forty two packets after the hole of<br>
+item xo (item xo being xref). Each item x, in window memory 72 results from a detected<br>
+hole, and for each item the appropriate context updating information (current context<br>
+information at the time of the packet loss occurrence) is stored in the respective item.<br>
+The CnWnd Interval Size can be based in the Bandwidth-Delay product of the link where<br>
+header compression is applied. This can be used to derive the reordering depth. When the<br>
+oldest snapshot slides out of the window memory 72, the next oldest snapshot becomes the<br>
+reference. For example, if in Fig. 7 the window memory 72 becomes full over time and<br>
+the oldest snapshot slides out, then what formerly was snapshot x\ will become snapshot<br>
+xo with other snapshots being indexed relative thereto. The window depth tells how far<br>
+back in the history of packets we need to keep context snapshots in window memory 72.<br>
+This window starts at a point were a hole in the sequence occurred, and the upper bound is<br>
+the last decompressed packet (the current context state for decompression). The<br>
+reordering depth can be the maximum possible reordering that a packet can suffer over the<br>
+21<br>
+ <br>
+link between compressor and decompressor, or it can be simply the maximum amount of<br>
+reordering that one wants to be able to handle (can be dictated by memory constraints).<br>
+Circle indicator B, circle indicator C, circle indicator D, and circle indicator E of Fig. 7<br>
+reflect basic sub-events of event 6C-3 and various fundamental operations of the repair<br>
+unit 68. Circle indicator B shows a subsequently-received packet failing decompression,<br>
+with the sequence number of the failed packet not being known (and thus the failed packet<br>
+is assumed to be out of order). Circle indicator C of Fig. 7 shows repair unit 68<br>
+reattempting decompression of the subsequently received packet. In the reattempted<br>
+decompression, the header decompressor 46(1) uses each of the plural stored snapshots,<br>
+e.g., each of the five snapshots shown in Fig. 7. Circle indicator C of Fig. 7 reflects the<br>
+fact that if the subsequently received packet is not rendered decompressible using any of<br>
+the snapshots, or alternatively is rendered decompressible using more than one of the<br>
+snapshots, then the subsequently received packet might not be decompressible or may<br>
+need further logic to resolve which of the plural candidate snapshots to use with the<br>
+subsequently received packet. On the other hand, as shown by circle indicator E in Fig. 7,<br>
+if the subsequently received packet is decompressed using one and only one of the<br>
+snapshots in example sliding window 74, then the repair process was likely successful and<br>
+has an enhanced measure of assurance regarding the resolution. In the particular scenario<br>
+shown in Fig. 7, the header of the subsequently received packet which failed<br>
+decompression at circle indicator B was rendered decompressible using only of the context<br>
+snapshots in 74, i.e., snapshot context Delta_C_ref2. Therefore, the header of the<br>
+subsequently received packet has been decompressed and the packet can be applied to<br>
+buffer manager 48 for storing in decompressed packet buffer 49.<br>
+Fig. 6B shows, in more detail, functional aspects of the out-of-sequence packet handler 54<br>
+of header decompressor 46(1) and various communications or signals transmitted<br>
+therebetween. In Fig. 6B, each entity is expressed in functional terms, e.g., as a process or<br>
+routine. As such, for example, the repair process 68 corresponds to repair unit 68 of Fig.<br>
+6A.<br>
+In terms of operation, Fig. 6B shows by signal S-l that the packet header decompressor 62<br>
+apprises sequence analyzer 64 upon successful decompression of the header of a packet.<br>
+The sequence analyzer 64 receives the decompressed packet and examines its sequence<br>
+22<br>
+ <br>
+number. If the sequence number of the decompressed packet has a value which is in the<br>
+expected order, e.g., in sequence with the sequence numbers of other decompressed<br>
+packets, then the decompressed packet can be passed (via signal S-2) to buffer manager 48<br>
+for storage in decompressed packet buffer 49 (see Fig. 5). Alternatively, if the sequence<br>
+number of the packet whose header was decompressed by last context snapshot memory<br>
+63 is determined by sequence analyzer process 64 not to be in sequence, then signal S-3 is<br>
+sent to window manager process 66. The window manager process 66 obtains (via signal<br>
+S-4) the then-existing context information from last context snapshot memory 63, and<br>
+stores the context snapshot in window memory 72 at a position corresponding to a hole<br>
+occasioned by the missing packet. If packet header decompressor 62 is unable to<br>
+decompress a packet, a failure notification signal S-5 is sent to repair unit 68.<br>
+Those skilled in the art will understand that not necessarily the entire packet whose header<br>
+was decompressed need be sent to sequence analyzer process 64, so long as at least the<br>
+decompressed packet or its sequence number is sent. This assumes also that the sequence<br>
+analyzer process 64 has the ability, depending on the outcome of its sequence analysis, to<br>
+forward a successfully decompressed, in-sequence packet to buffer manager 48.<br>
+Fig. 6D shows basic functional aspects of repair unit 68 and the repair process performed<br>
+thereby upon receipt of a failure notification signal S-5 (see Fig. 6B). The functional<br>
+aspects of repair unit 68 basically correspond to the main event 6C-3 illustrated in Fig. 6C.<br>
+Thus, the particularized repair events (RE) shown in Fig. 6D are essentially subsumed in<br>
+one, non-limiting, example implementation of repair unit 68.<br>
+Repair event R-l of Fig. 6D shows repair unit 68 receiving a notification. In the case of<br>
+the decompression failure notification of signal S-5, such notification triggers event R-2.<br>
+As event R-2, the repair unit 68 determines a set of the most suitable snapshots in the<br>
+window memory 72 to use for reattempting decompression of the packet header which<br>
+failed decompression. As mentioned previously, for each packet or group of consecutive<br>
+packets missing in a sequence of the flow, header decompressor 46(1) stores a<br>
+corresponding snapshot in a set of snapshots in sliding window memory 72. In differing<br>
+modes, the header decompressor may use either all snapshots in the set, or a subset of the<br>
+snapshots in the set, for reattempting decompression of the subsequently received packet<br>
+that failed decompression. Repair event R-2 thus involves repair unit 68 either deciding to<br>
+23<br>
+ <br>
+involve all snapshots in window memory 72. or a subset of the snapshots. In the case that<br>
+a subset of snapshots are utilized, the repair unit 68 determines the constitution of the<br>
+subset based on which snapshots are most likely snapshots to facilitate successful<br>
+decompression, e.g., snapshots determined by packet sequence number (e.g., least<br>
+significant bits of the sequence number). Thus, as event R-2, the repair unit 68 first<br>
+requests or fetches a set (or subset) of items (snapshots) by sending signal S-6 to window<br>
+manager 66. Window manager 66 obtains the set (or subset) of items (snapshots) from<br>
+window memory 72. as sends the set (or subset) of items (snapshots) to repair unit 68 as<br>
+shown by signal S-7. The set (of subset) of items (snapshots) obtained from window<br>
+memory 72 hereinafter are called itemi through itemiast of the set (or subset).<br>
+As event R-3, the repair unit 68 reattempts decompression of the header of the failed<br>
+packet. The reattempted decompression involves a series of decompression reattempts,<br>
+each reattempt involving a different one of itemi through itemiast.   Signal S-6 of Fig. 6D<br>
+and Fig. 6B shows a representative one of the items, e.g., item,, being sent back to packet<br>
+header decompressor 62 for the reattempted decompression. Whether a reattempted<br>
+decompression using item, has meaningful results is reported via signal S-9 sent from<br>
+packet header decompressor 62 and processed by repair unit 68 as event R-4.<br>
+If, after completion of all the decompression reattempts of the failed packet, it is<br>
+determined that only one item (e.g., only one context snapshot) resulted in a proper<br>
+decompression of the previously failed packet, then as event R-5 the repair unit 68 sends<br>
+the repaired packet to buffer manager 48 (as signal S-10) for storing in decompressed<br>
+packet buffer 49 (see Fig. 5). Also, as part of event R-5, the repair unit 68 sends the<br>
+sequence number of the repaired packet to sequence analyzer 64. The fact that one and<br>
+only one context snapshot rendered the packet header decompressible adds a measure of<br>
+confidence to the decompression.<br>
+If, after completion of all the decompression reattempts of the failed packet, it is<br>
+determined that more than one item (e.g., plural context snapshots) resulted in a proper<br>
+decompression of the previously failed packet, then as event R-6 the repair unit 68<br>
+employs additional verification mechanisms in hopes of choosing one of the plural context<br>
+snapshot candidates to use definitively for the subsequently received packet. Using<br>
+additional verification mechanisms can involve, for example, transport protocol (e.g., UPD<br>
+24<br>
+ <br>
+or TCP) checks. Such checks can involve checksum or cyclical redundancy checks<br>
+(CRS), for example. If use of the additional verification mechanisms results in a decision<br>
+that only one of the candidate snapshots resolves the packet, then as event R-5 the repair<br>
+unit 68 sends the repaired packet to buffer manager 48 (as signal S-10) for storing in<br>
+decompressed packet buffer 49 (see Fig. 5), and the sequence number of the repaired<br>
+packet is sent to sequence analyzer 64.<br>
+On the other hand, if use of none of the snapshot items results in decompression of the<br>
+packet header, then a failure notification is sent as signal S-12 to decompression failure<br>
+unit/routine 70. Similarly, if at event R-6 the repair unit 68(2) is not able to resolve which<br>
+of the plural snapshot candidates is optimum for decompression, then the failure<br>
+notification is sent as signal S-12.<br>
+For sake of convenience, the events performed by repair unit 68 as described in Fig. 6D<br>
+are collectively referred to as a routine for reattempting packet header decompression<br>
+using a window of context snapshots, e.g., routine 76. Such nomenclature delineates<br>
+routine 76 from another potential routine executable by repair unit 68, e.g., routine 78<br>
+which reattempts decompression of headers of buffered packets as subsequently described.<br>
+Thus, the header decompressor 46(1) performs events such as the foregoing as a first<br>
+aspect of the handling of out-of-sequence packets in conjunction with packet header<br>
+decompression. As such, header decompressor 46(1) maintains a sliding window of<br>
+context snapshots, with each item in the window containing exactly one transitory context<br>
+snapshot. The stored snapshot reflects the state of the context, as it should have been at<br>
+the time where a packet (hole in the sequence) is missing (should have been received, and<br>
+can be presumed reordered as well). One item is inserted in the sliding window for each<br>
+(or group of consecutive) packet(s) missing in the sequence of packets in the flow. The<br>
+robustness characteristics of the header compression algorithm will treat this missing<br>
+packet as a packet loss, until it is eventually received. When such a sliding window is not<br>
+maintained, a packet that is reordered with a depth of more than about one in the case of<br>
+ROHC will not be decompressed.<br>
+The size of the sliding window preferably equals a reordering depth that the decompressor<br>
+can handle. In one example implementation, the size of the window can be based on the<br>
+25<br>
+ <br>
+bandwidth-delay product of the link. The oldest item in the sliding window is the<br>
+maximum reordering depth that can be handled. Subsequent items can be stored in the<br>
+sliding window as delta-encodings based on the oldest reference.<br>
+The repair unit 68 operates, in an example mode, by assuming that a packet which fails<br>
+decompression was reordered (e.g., was out of sequence). The repair unit 68 finds in the<br>
+sliding window the most likely suitable window items (context snapshots) which may be<br>
+used to reattempt decompression of the failed packet. Locating the most likely suitable<br>
+window items may depend or be based on packet sequence numbers, or may instead<br>
+include all the context snapshots in the sliding window 74. The repair unit 68 reattempts<br>
+decompression for the failed packet using, one by one, a set of the context snapshots from<br>
+the sliding window 74.   If decompression succeeded for exactly one item of the context<br>
+window, then repair unit 68 considers the decompression a success. Otherwise the<br>
+attempted repair is a failure. In the course of performing the repair process, the sliding<br>
+window is updated to maintain its size corresponding to the reordering depth.<br>
+ESTIMATION OF DECOMPRESSION SUCCESS RATE FOR OUT-OF-SEQUENCE<br>
+PACKET USING SLIDING WINDOW<br>
+As one mode of operation, it is possible to estimate the decompression success rate using<br>
+the header decompressor 46(1) for an out-of-sequence packet. What now follows is a<br>
+derivation of such estimation, wherein Table 1 shows notation utilized in the derivation.<br>
+TABLE 1: NOTATION FOR SUCCESS RATE ESTIMATION DERIVATION<br>
+<br>
+NOTATION	DEFINITION<br>
+Pr(item)	probability that the CRC verification succeeds for a decompression<br>
+	attempt using window item item (includes headers with residual<br>
+	errors)<br>
+PrKpan(item)	probability that decompression of a reordered packet corresponding<br>
+	to window item item will succeed (excludes headers with residual<br>
+	errors)<br>
+bits{field)	number of bits for the field field in the compressed header<br>
+26<br>
+ <br>
+X	window item corresponding to a packet received out-of-order<br>
+x1	sequence number of a window item<br>
+cref	oldest context reference in the window (x, = xo)<br>
+delta(c re/),	difference between the oldest context reference saved for thewindow item corresponding to x.<br>
+wnddepth	reordering depth that the window can handle<br>
+cntwnd	window where each item contains a transitory context statecorresponding to the sequence number of a packet that was notreceived<br>
+In conjunction with the derivation, the following considerations apply:<br>
+Pr(x,) = l/2Ay, where y is the number of bits for the CRC (CRC-y), i != o<br>
+Pr(x,) is given for when there is no dependency between each item (completely random<br>
+data) - this is not the case, however, so in fact Pr(x,) will be even smaller.<br>
+Where xi is an item in the window of size x+1 item(s), i E [0, x].<br>
+Inquiry is now made for the probability Prepair(xo) that there will be more than one value<br>
+in the window, knowing that the window size is at least as large as the reordering depth of<br>
+the link. Each item xi in the window has P(xi) probability of being erroneously interpreted<br>
+as the correct value, where there is always only one value (xo) known to be the correct one<br>
+(i.e. P(xo) = 1). Thus, let Prepair(xo) be the probability that the reordered packet xo is<br>
+correctly decompressed from a number of j value items saved in the window (where<br>
+wndsize is link loss/reordering rate per reordering depth):<br>
+ <br>
+ <br>
+1	3	1	(1)<br>
+5	3	0.48	(0.79)<br>
+10	3	0	(0.58)<br>
+1	7	1<br>
+5	7	0.96	<br>
+.0	7	0.78	<br>
+For each case, the values above assume that 100% of the traffic uses either one of CRC-3<br>
+or CRC-7, but not a combination. Suppose in a certain situation 90% of packets are be<br>
+PT-0 or PT-1 (CRC-3), and 10% PT-2 (CRC-7), then Prepair(xo) is given by Equation 2.<br>
+ <br>
+<br>
+Table 3<br>
+loss/reorderingrate (%)	weight(3)(%)	weight(7)(%)	Pr repmr{x)	f<br>
+1	90	10	1	(1)<br>
+5	90	10	0.53	(0.81)<br>
+10	90	10	0.08	(0.60)<br>
+In the derivation there is also the effect of the number of SN bits, i.e. this is valid when the<br>
+number of SN bits yields such a small p that the actual value is outside the LSB<br>
+interpretation interval.<br>
+DETERMINATION OF MEMORY REQUIREMENTS FOR SLIDING WINDOW OF<br>
+CONTEXT SNAPSHOTS<br>
+Consideration is now given to the total decompressor memory requirements for the<br>
+context window. In order to maintain the sliding window of contexts, the cost is one extra<br>
+context size for each context identifier (CID) for which the decompressor wants to handle<br>
+reordering, plus a small amount for each delta from this context for each packet missing<br>
+from the sequence, as shown by Equation 4.<br>
+28<br>
+ <br>
+ <br>
+Context identifiers (CIDs) identify a compressor flow and associates it to a context. This<br>
+is needed because many different flows can be compressed between the same compressor<br>
+and decompressor pair. CIDs cannot relate to the x, positions shown in Fig. 7. It is the<br>
+sequencing information, normally the SN field, that relates to the x, positions shown in<br>
+Fig. 7. In Equation 4, acid is active cids and wnddepth is insertion rate (average number<br>
+of items per window size). For ROHC. the parameter MaxCIDs is the upper limit for<br>
+acid. The worst case is when sizeof(delta(context)) is the size of dynamic fields.<br>
+Header decompression uses the LSB-encoded SN bits (use rohc notation) of the assumed<br>
+reordered packet (once it has failed decompression the first time) to find (guess) the proper<br>
+context reference in the window. As explained previously, in some modes it is not always<br>
+needed to try all references. LSB encoding maintains a window of possible values for the<br>
+LSB bits to fall in. Only one value is possible in the window. However, with reordering<br>
+of packets (e.g., packets being out of sequence), the LSB bits might correspond to values<br>
+that were deemed old and discarded by the compressor (i.e. the window has moved<br>
+forward). So, first the decompression is attempted with the values in the LSB window. If<br>
+it fails and the decompressor knows that reordering might have occured, than an "older"<br>
+value can be tried for decompression.<br>
+REATTEMPED DECOMPRESSION FOR REPAIR OF BUFFERED PACKETS<br>
+In accordance with a second independent and distinct aspect of its configuration and<br>
+operation, the header decompressor can also execute an auxiliary repair process for out-of-<br>
+sequence packets. Fig. 9 illustrates a scenario in which the second aspect and the auxiliary<br>
+repair process can be beneficially employed.<br>
+In Fig. 9, circle indicator A depicts the fact that, as a possible result of loss of consecutive<br>
+packets x1 - X6, a significant context update was not received. In view of lack of receipt of<br>
+the significant context update, the packets which are received after lost packets x1 - X6<br>
+undergo decompression failures, as depicted by circle indicator B in Fig. 9.<br>
+29<br>
+ <br>
+For such a scenario, and according to the second aspect herein described, as illustrated in<br>
+Fig. 8A and Fig. 8B, the out-of-sequence packet handler 54(2) of header decompressor<br>
+46(2) includes an auxiliary repair process 80 and the repair unit 68(2) includes, in addition<br>
+to routine 76, a routine 78 for reattempting decompression of headers of buffered packets.<br>
+Fig. 8C shows basic steps performed by the out-of-sequence packet handler 54(2)<br>
+according to the second aspect which are in addition to the steps performed by the first<br>
+aspect (which were described with reference to Fig. 6C). As event 8C-1, header<br>
+decompressor 46(2) ascertains whether header decompression fails for a predetermined<br>
+number of packets received after the non-receipt of the packets anticipated in the flow<br>
+(e.g., whether the event depicted by circle indicator B in Fig. 9 indeed occurs). Such<br>
+header decompression failure could possibly result from the fact that one or more of the<br>
+non-received packets may have carried significant context update information, without<br>
+which the header decompressor incurs "context damage". If so, as event 8C-2 header<br>
+decompressor 46(2), using auxiliary repair process 80, stores the packets received after the<br>
+non-receipt and which failed the header decompression (e.g., the "buffered packets").<br>
+This storing or buffering of failed packets is performed in hopes that, should it be able to<br>
+recover the lost context update information, repair unit 68(2) can use such lost context<br>
+update information to perform subsequent repair of the buffered packets. Such storing or<br>
+buffering of decompression-failed packets is depicted by circle indicator C in Fig. 9.<br>
+Then, as indicated by event 8C-3 and circle indicators D, E, and F in Fig. 9, if header<br>
+decompressor 46(2) attempts to achieve decompression of a subsequently received packet<br>
+using one of the plural stored snapshots (using routine 76 for reattempting packet header<br>
+decompression using a window of context snapshots as previously described in<br>
+conjunction with the first aspect). If a reattempted decompression of the subsequently<br>
+received packet is successful using one of the context snapshots, as event 8C-4 and as<br>
+shown by circle indicator G in Fig. 9, the snapshot of the header decompression context<br>
+information which achieved header decompression is updated and used (e.g., by the<br>
+auxiliary repair process) for reattempting header decompression of the stored (buffered)<br>
+packets.<br>
+In the second aspect, achieving recovery of the decompression of the subsequently<br>
+received packet using one of the plural stored snapshots is possible in two example<br>
+30<br>
+ <br>
+situations. In a first such situation, the context update information necessary for<br>
+decompressing the buffered packets was an out-of-order packet (treated as the<br>
+subsequently received packet) which was delayed and received by the header<br>
+decompressor only after the context damage was detected. In a second such situation, the<br>
+context update information necessary for decompressing the buffered packets is obtained<br>
+by a retransmission in another packet (treated as the subsequently received packet), as<br>
+discussed below in conjunction with a third aspect.<br>
+Fig. 8A shows example structural and/or functional units of header decompressor 46(2)<br>
+according to the second aspect. The header decompressor 46(2) and its associated out-of-<br>
+sequence packet handler 54(2) includes the same entities previously described with respect<br>
+to header decompressor 46(1) of Fig. 6A, and in addition such other entities as auxiliary<br>
+repair process 80 and a buffer manager 82 which manages storing, retrieval, and removal<br>
+of initially non-decompressible packets relative to packet buffer 84. In view of the fact<br>
+that the packets stored in packet buffer 84 initially appear to be non-decompressible,<br>
+packet buffer 84 is also referred to as the "problematic" packet buffer. As mentioned<br>
+above, the repair unit 68(2) of header decompressor 46(2) includes not only routine 76 for<br>
+reattempting packet header decompression using a window of context snapshots, but also<br>
+routine 78 for reattempting decompression of headers of buffered packets.<br>
+Fig. 8B shows, in more detail, functional aspects of the out-of-sequence packet handler<br>
+54(2) of header decompressor 46(2) and various communications or signals transmitted<br>
+therebetween, beyond those already shown and earlier described with reference to Fig. 6B.<br>
+The aspects, events, and signals of Fig. 8B which are common to those of Fig. 6B are<br>
+understood from the discussion of Fig. 6B and thus not repeated. Again, in Fig. 8B as<br>
+with Fig. 6B, each entity is expressed in functional terms, e.g.. as a process or routine.<br>
+Primary among the newly included functionalities shown in Fig. 8B are those of auxiliary<br>
+repair process 80 and buffer manager 82.<br>
+Basic actions and events performed by auxiliary repair process 80 are depicted in Fig. 8E.<br>
+Fig. 8E shows, for example, that as event 8E-1 the auxiliary repair process 80 monitors the<br>
+history of the sequencing of packets being decompressed. In order to do so. auxiliary<br>
+repair process 80 periodically communicates (via signal S-13) with sequence analyzer 64<br>
+31<br>
+ <br>
+in order to ascertain what sequence numbers have been received and what expected<br>
+sequence numbers are missing.<br>
+As event 8E-2, auxiliary repair process 80 also monitors the notification of header<br>
+decompression failures sent by packet header decompressor 62 as signal S-5. When a<br>
+number of such header decompression failures are noted, e.g., repeated header<br>
+decompression failures such as depicted by circle indicator B in Fig. 9, as event 8E-3 the<br>
+auxiliary repair process 80 determines whether it is probable that the context has been<br>
+damaged. If the probability of context damage exists, then as event 8E-4 the auxiliary<br>
+repair process 80 requests buffer manager 82 to buffer the packet whose header has just<br>
+failed decompression. Signal S-14 shows auxiliary repair process 80 sending buffer<br>
+manager 82 an order to buffer the failed packet. Then, as event 8E-5 auxiliary repair<br>
+process 80 sends a set context damage indicator to repair unit 68(2). In being "set", the<br>
+context damage indicator informs repair unit 68(2) that context damage is suspected and<br>
+that auxiliary repair process 80 is buffering packets which failed header decompression.<br>
+The sending of the set context damage indicator is depicted by signal S-15. Then, as event<br>
+8E-6, auxiliary repair process 80 passes the failure event notification of signal S-5 to<br>
+repair unit 68(2).<br>
+If it were determined as event 8E-3 that context damage was not probable, as event 8E-7<br>
+auxiliary repair process 80 would clear or "unset" the context damage indicator and would<br>
+send the same as signal S-16. In addition, in conjunction with event 8E-6 the auxiliary<br>
+repair process 80 passes the decompression failure event notification of signal S-5 to<br>
+repair unit 68(2). Similarly, if it were determined as event 8E-2 that there are no repeated<br>
+failures, a cleared or "unset" the context damage indicator and the decompression failure<br>
+event notification of signal S-5 would be sent to repair unit 68(2).<br>
+The repair unit 68(2) of header decompressor 46(2) performs the routine 76 (for<br>
+reattempting packet header decompression using a window of context snapshots) in<br>
+essentially the same manner as previously described, and also in conjunction with the<br>
+second aspect of header decompression performs the routine 78 for reattempting<br>
+decompression of headers of buffered packets. Fig. 8D shows, in addition to the<br>
+32<br>
+ <br>
+previously-described events of routine 76, the additional events for routine 78 as below<br>
+discussed.<br>
+Discussion of routine 78 for reattempting decompression of headers of buffered packets<br>
+resumes with event R-5 of Fig. 8D, e.g.. after routine 76 has successful decompressed a<br>
+packet header using one of the context snapshots stored in window memory 72. After<br>
+doing so, as event R-6 routine 78 checks the context damage indicator to see whether it is<br>
+"set" (and thereby indicating that auxiliary repair process 80 has buffered one or more<br>
+failed packets) or "unset".   The context damage indicator of routine 78 is maintained as<br>
+event R-7, and is updated in accordance with the receipt and handling at event R-l of<br>
+either the "set" context damage indicator sent as signal S-15 from auxiliary repair process<br>
+80 or the "unset" context damage indicator sent as signal S-16 from auxiliary repair<br>
+process 80. If the context damage indicator is unset, then as event R-8 the repair unit<br>
+68(2) completes this particular instance of its execution.<br>
+If, on the other hand, it is determined at event R-6 that auxiliary repair process 80 has<br>
+determined and communicated that context damage has occurred, as event R-9 routine 78<br>
+directs window manager 66 (via signal S-18) to update the successfully-used context<br>
+snapshot in window memory 72.   Then routine 78 is in a position, as event R-10, to fetch<br>
+the buffered packets from packet buffer 84. Accordingly, routine 78 sends a buffer fetch<br>
+signal S-19 to buffer manager 82. The buffer manager 82 responds by obtaining all the<br>
+packets in packet buffer 84 (all of which previously failed header decompression), and<br>
+returning those packets as signal S-20 to routine 78 of repair unit 68(2).<br>
+After obtaining the decompression-failed packets from packet buffer 84, as event R-l 1<br>
+routine 78 reattemps header decompression of all of the buffered packets, e.g., packet)<br>
+through packetest using the context snapshot that was most recently successful in<br>
+decompressing a packet. Fig. 8D shows routine 78 sending each such packet one at a<br>
+time, e.g., as packet,, to packet header decompressor 62 in a signal S-21. For each packet<br>
+sent to packet header decompressor 62 for reattempted header decompression, the packet<br>
+header decompressor 62 returns a result signal S-22. As event R-l2, routine 78 analyses<br>
+the result signal S-22 for each packet, to ascertain whether the reattempted header<br>
+decompression was successful. If the header of the packet was successfully decompressed<br>
+33<br>
+ <br>
+by routine 78, then as event R-13 the routine 78 of repair unit 68(2) sends the successfully<br>
+header-decompressed packet to buffer manager 48 (via signal S-23) for storing in<br>
+decompressed packet buffer 49 (see Fig. 5).   Also, as part of event R-5, as signal S-24 the<br>
+repair unit 68 sends the sequence number of the repaired packet to sequence analyzer 64.<br>
+In addition, repair unit 68(2) sends a signal S-25 to buffer manager 82 to remove the<br>
+successfully header-decompressed packet from packet buffer 84.<br>
+If the header of the packet was unsuccessfully decompressed by routine 78, then as event<br>
+R-14 the repair unit 68(2) must make a decision either to discard (remove) the<br>
+troublesome packet from packet buffer 84, or to retain the packet in packet buffer 84 until<br>
+a more definitive determination can be made that the packet is really lost. Fig. 8D shows<br>
+via signal S-26 the repair unit 68(2) directing the buffer manager 82 to discard or remove<br>
+the still troublesome packet from packet buffer 84.<br>
+As event R-15 the routine 78 determines whether header decompression has been<br>
+reattempted for all packets in packet buffer 84 using the successful context snapshot. If<br>
+header decompression has been reattempted for all packets in packet buffer 84, then<br>
+routine 78 finishes its instance of execution as indicated by event R-16. Otherwise, the<br>
+reattempted header decompression of the remaining buffered packets continues.<br>
+Thus, in the second aspect of handling out-of-sequence packets in conjunction with header<br>
+decompression, header decompressor 46(2) maintains the sliding window of references,<br>
+e.g., context snapshots, as in the first aspect. The header decompressor 46(2) buffers (e.g.,<br>
+in packet buffer 84) packets that fail decompression. The buffering is done under the<br>
+assumption that when decompression fails repeatedly for a number of packets after one or<br>
+more consecutive packets have gone missing, context damage can have occurred if a<br>
+significant update was not received. A significant update is an update that is not covered<br>
+by the robustness properties of the encoding of the SN bits and functions established in<br>
+relation to that field, e.g. semi-static fields, or fields that do not vary often. It can also be<br>
+an update representing a substantial jump in the SN field and/or fields for which functions<br>
+based on the SN are established (i.e. Timestamp (TS), IP indentifier (IP-ID)). In such<br>
+case, header decompressor 46(2) assumes that the missing packets have been delayed due<br>
+to reordering, and that this caused the repeated failures. It is further assumed that a packet<br>
+34<br>
+ <br>
+that has failed decompression can also have failed because it was itself reordered, in which<br>
+case the Window-based Repair described above with reference to routine 76 is invoked. If<br>
+the Window-based repair succeeds for a packet, header decompressor 46(2) updates (in the<br>
+sliding window) the context item that was used to decompress the packet, and then<br>
+reattempts decompression of buffered items for which the updated window item might be<br>
+suitable. If the repair of one or more buffered item succeeds, the reordered packet<br>
+decompressed using Window-based Repair was very likely properly decompressed. On<br>
+the other hand, if the repair fails, buffered items may be discarded.<br>
+Concerning Fig. 9, the packet that is successfully decompressed in circle indicators D, E,<br>
+and F, is a packet that arrives out-of-order with respect to the packets that repeatedly fail<br>
+decompression, i.e. that was received after the context was damaged. This packet<br>
+contained the necessary information to update the context to a state satisfactory for the<br>
+packets that previously failed decompression to be properly decompressed. Note that if<br>
+decompression of buffered packets succeeds, this provides even more guarantees that the<br>
+reordered packet was correctly decompressed as well, using the right reference.<br>
+Fig. 10 shows basic, example operations performed by window manager 66 in conjunction<br>
+with the header decompressor 46(2). Many of these example operations also apply to<br>
+operation of the window manager 66 in conjunction with the header decompressor 46(1).<br>
+As event 10-1 the window manager 66 handles any notifications or interfacing<br>
+communications. For example, if window manager 66 obtains an indication from<br>
+sequence analyzer 64 that a sequence number of the decompressed header of the most<br>
+recently received packet was out of sequence, as event 10-2 the window manager 66<br>
+obtains the last context snapshot from last context snapshot memory 63, and then as event<br>
+10-3 stores the last context snapshot at the proper location in window memory 72. On the<br>
+other hand, when window manager 66 receives a set fetch request (e.g. signal S-6) from<br>
+routine 76 of repair unit 68, as event 10-4 the window manager 66 fetches and returns the<br>
+appropriate set of snapshots from window memory 72 (the set fetch response being, e.g.,<br>
+signal S-7).<br>
+As event 10-5 the window manager 66 updates the window memory 72 by, e.g., clearing a<br>
+particular snapshot when appropriate. As mentioned above, the sliding context window 74<br>
+35<br>
+ <br>
+has a specified size (e.g.. a product of bandwidth and delay), so that oldest entries therein<br>
+shift out a discharge end of the sliding context window 74 as newer entries come in an<br>
+input end of sliding context window 74. Event 10-5 thus manages the clearing of the<br>
+oldest snapshot from the sliding context window 74, with the result that any snapshot that<br>
+cycles out the discharge end of the sliding context window 74 is presumed to be associated<br>
+with a hole that is an irrevocable packet loss. Similarly, if a snapshot in sliding context<br>
+window 74 is used successfully to decompress a packet, and thereafter it is determined that<br>
+the successfully-used snapshot is not sequentially-contiguous (in terms of, e.g., sequence<br>
+number) with another hole in packet reception (e.g., is not adjacent another snapshot in<br>
+sliding context window 74), then the successfully-used snapshot can also be cleared from<br>
+window memory 72 The clearance of the successfully-used snapshot can occur since there<br>
+is no adjacent snapshot which might have context information dependent upon the context<br>
+information of the cleared snapshot. In addition, as needed the window manager 66<br>
+performs event 10-6 for controlling the dimensioned size of the sliding window 74, as well<br>
+as event 10-7 for controlling the slide or shifting of contents through the sliding window.<br>
+SELECTIVE REPAIR OF CONTEXT DAMAGE USING DECOMPRESSOR-<br>
+TRIGGERED COMPRESSOR RETRANSMISSION<br>
+Fig. 11 generically illustrates the third independent and distinct aspect of its configuration<br>
+and operation, wherein when out-of-sequence packet handler 54(3) fails to decompress<br>
+one or more packet headers, the remote unit 40(3) generates and sends to header<br>
+compressor 24(3) receives a notification 85 indicative of the fact that the header<br>
+decompressor 46(3) is or likely is experiencing decompression difficulties (e.g.,<br>
+decompression failure).<br>
+As a first example implementation of the third aspect, Fig. 11A and Fig. 12A illustrate an<br>
+example embodiment wherein upon failure of header decompressor 46(3A) to decompress<br>
+a packet header, the header decompressor 46(3) generates a notification 85A to the header<br>
+compressor 25(3A) of the fact of non-receipt of packets anticipated in the flow. In this<br>
+regard, Fig. 11A shows that header decompressor 46(3) is provided with a decompression<br>
+failure unit/routine 70(3) which generates the notification 85A. Thus, the notification<br>
+illustrated in Fig. 11A takes the example form of an in-band feedback notification 85A.<br>
+36<br>
+ <br>
+As a first example implementation of the third aspect, Fig. 1 IB and Fig. 12B illustrate an<br>
+example embodiment wherein link layer processing 86 discerns an event such as packet<br>
+reception failure, for example, and sends a link layer notification 85B to the counterpart<br>
+link layer processing 28. The counterpart link layer processing 28 then notifies the header<br>
+compressor 25(3 B) of actual, anticipated, or expected, packet decompression difficulties,<br>
+as indicated by arrow 87.<br>
+Fig. 12A and Fig. 12B respectively illustrate the two example implementations of header<br>
+decompressor 46(3A) and header decompressor 46(3B) illustrated in Fig. 11A and Fig.<br>
+1 IB. In the header decompressor 46(3) of Fig. 12A, the decompression failure<br>
+unit/routine 70(3A) includes retransmission requestor 87. Alternatively, in the header<br>
+decompressor 46(3B) of Fig. 12B, the decompression failure unit/routine 70(3B) can<br>
+optionally include a retransmission requestor 87 (as shown in broken lines), although the<br>
+Fig. 12B embodiment features the link layer notification of Fig. 1 IB.<br>
+Both the feedback notification 85 A of the Fig. 11A and Fig. 12A embodiment, and the<br>
+link layer notification 85B of the Fig. ] IB and Fig. 12B embodiment, serve to trigger<br>
+selective retransmission of packets from the header compressor 25(3). Thus, as reflected<br>
+by these two alternate implementations, the compressor selective retransmission can be the<br>
+result of either a notification from the link layer to the compressor 25(3), e.g., that several<br>
+losses occurred (using link layer loss notification 85B), or a decompressor retransmission<br>
+request, e.g., feedback (using retransmission requestor 87).<br>
+The repair process utilized by header decompressor 46(3 A) of the Fig. 11A embodiment<br>
+or the repair process utilized by header decompressor 46(3B) of the Fig. 1 IB embodiment<br>
+can be either the repair process of Fig. 6D which utilizes only routine 76) or the repair<br>
+process of Fig. 8D which, in addition to using routine 76, also utilizes routine 78 (for<br>
+reattempting decompression of headers of buffered packets). Such is the case whether the<br>
+header decompressor 46(3) takes the form of Fig. 12A with its retransmission requestor<br>
+87. or the form of Fig. 12B with its link layer loss notification 85B, or any other form.<br>
+Basic example events or actions performed by decompression failure unit/routine 70(3A)<br>
+are illustrated in Fig. 12C. Action of decompression failure unit/routine 70(3 A) is initiated<br>
+as event 12C-1, which is receipt and handling of a failure to repair notification (e.g., signal<br>
+37<br>
+ <br>
+S-21) from the repair unit 68 which reattempted the decompression. Upon receiving such<br>
+a failure to repair notification, as event 12C-2 the decompression failure unit/routine<br>
+70(3 A) fetches (from sequence analyzer 64) the sequence number of the last packet whose<br>
+header was successfully decompressed. The fetching of the sequence number of the last<br>
+packet whose header was successfully decompressed is depicted by signal S-27 in Fig.<br>
+12C, while the return from sequence analyzer 64 or other advisory regarding the sequence<br>
+number is shown as signal S-28. Event 12C-3 shows decompression failure unit/routine<br>
+70(3 A) including the sequence number of the last packet whose header was successfully<br>
+decompressed in the failure notification that is provided via feedback notification 85A (see<br>
+Fig. 11 A) to header compressor 25(3 A).<br>
+According to this third aspect, in either the Fig. 11A or the Fig. 1 IB mode of<br>
+implementation, the header decompressor 46(3) triggers the compressor selectively to re-<br>
+send context updating packets. The re-sending of context updating packets is either<br>
+triggered by a failure notification from the link layer (e.g., using link layer notification<br>
+85B), or in response to a negative acknowledgement 85A from the decompressor (e.g.,<br>
+using retransmission requestor 87). As explained with reference to Fig. 12C, such<br>
+feedback usually contains the sequence number of the last successfully decompressed<br>
+packet.<br>
+In order to retransmit the proper compressed packet, the compressor 25(3) maintains a<br>
+compressor sliding context window 90 which is substantially equivalent to the<br>
+decompressor sliding window 74. The similarity and correlative nature of sliding context<br>
+window 74 and compressor sliding context window 90 is depicted by dotted arrow 92 in<br>
+Fig. 11.<br>
+Fig. 11, as well as Fig. 11A and Fig. 1 IB, show that header compressor 25(3) maintains a<br>
+compressor sliding context window 90. Each item in compressor sliding context window<br>
+90 includes or consists of one compressed header that has been sent to remote unit 40.<br>
+Not all compressed headers generated by header compressor 25(3) need be included in<br>
+compressor sliding context window 90. Compressed headers which certainly are included<br>
+in compressor sliding context window 90 are those which are meant to update one or more<br>
+fields of the context (other than the fields pertaining to the functions established with<br>
+38<br>
+ <br>
+respect to the sequence number (SN)). Specifically, the compressed headers inserted into<br>
+compressor sliding context window 90 are those which update fields other than the SN, IP-<br>
+ID or RTP timestamp (TS) fields. A compressed header that is meant to update the<br>
+functions established with respect to the sequence number (SN) can also be inserted into<br>
+the compressor sliding context window 90.<br>
+As with sliding context window 74 maintained by header decompressor 46(3), the window<br>
+size compressor sliding context window 90 equals the reordering depth that the<br>
+compressor 25(3) can handle. Similarly, the oldest item residing in compressor sliding<br>
+context window 90 is the maximum reordering depth that can be handled. The size of the<br>
+compressor sliding context window 90 can, like the size of sliding context window 74, be<br>
+based on the link bandwidth-delay product.<br>
+Fig. 12D illustrates basic actions or events performed by header compressor 25(3) upon<br>
+receiving a feedback notification 85 from header decompressor 46(3), e.g., either from<br>
+retransmission requestor 87 or link layer 86, or any other such repair failure notifier.<br>
+When header compressor 25(3) determines as event 12D-1 that feedback notification 85 as<br>
+been received, as event 12D-2 the header compressor 25(3) obtains the sequence number<br>
+included in the feedback notification 85. The sequence number included in the feedback<br>
+notification 85 should be the sequence number of the last packet whose header was<br>
+successfully decompressed by header decompressor 46(3).   Then, as event 12D-3, header<br>
+compressor 25(3) obtains from its compressor sliding context window 90 the information<br>
+which would allow header decompressor 46(3) to repair the context. Typically, this<br>
+information involves one or more items compressed headers from compressor sliding<br>
+context window 90 having sequence number higher in sequence than the sequence number<br>
+received in the feedback notification 85. As event 12D-4 the header compressor 25(3)<br>
+transmits the context repair information (e.g.. one or two snapshots in the compressor<br>
+sliding context window 90 having a higher sequence number) in packets to remote unit 40.<br>
+The retransmission by header compressor 25(6) of packets of higher sequence number can<br>
+be useful for the decompressor in the event of high losses and/or reordering rate (e.g., out-<br>
+of-sequence rate). In the case of losses, fewer packets will be lost. In the case of<br>
+reordering, packets that cannot be decompressed until the delayed packet is received can<br>
+be decompressed quicker, assuming that the retransmission beats the delayed packet over<br>
+39<br>
+ <br>
+the link (which, while possible, has a low probability of occurring). In addition, the<br>
+header compressor 25(3) upon receiving the feedback from the decompressor should<br>
+perform the same repair actions (lower the compression for some packets), i.e., this logic<br>
+is an addition, not a replacement.<br>
+NOTIFICATIONS TO DECOMPRESSOR CONCERNING REORDERING<br>
+In accordance with a fourth independent and distinct aspect of its configuration and<br>
+operation, Fig. 13 and Fig. 14 show a header decompressor 46(4) which temporarily<br>
+allocates reusable memory for plural stored snapshots in accordance with a one or more<br>
+window parameters transmitted to the remote unit 40(4). In the example illustrated in Fig.<br>
+13 and Fig. 14, the remote unit 40 receives notification via the link layer regarding likely<br>
+times that the sliding context window 74 will be needed or useful, and advises a window<br>
+allocation process 92 of window manager 66 to allocate the necessary locations in memory<br>
+for window memory 72. Fig. 13 specifically shows (by link layer message 94) the link<br>
+layer 28 on the network side advising link layer processing 86 in the remote unit 40 of the<br>
+need for allocating window memory 72, and the link layer processing 86 relaying the<br>
+window allocation direction and information (via signal 96) to window allocation process<br>
+92.<br>
+To reflect the fact that window memory 72 may be temporarily allocated in accordance<br>
+with this forth aspect, sliding context window 74 is shown in broken lines in Fig. 13 and<br>
+Fig. 14.<br>
+The parameter(s) transmitted in the sliding window allocation message (such as, for<br>
+example, the link layer message 94) can indicate one or more (and preferably all) of the<br>
+following: a size of the reusable memory in which the plural stored snapshots are stored;<br>
+when to allocate the reusable memory for storing the plural stored snapshots; when to de-<br>
+allocate the reusable memory for storing the plural stored snapshots.<br>
+In accordance with this fourth aspect, the header decompressor imposes additional<br>
+memory and processing requirements for the sliding window memory only selectively,<br>
+e.g., at times indicated by the window parameters. Advantageously, using this fourth<br>
+40<br>
+ <br>
+aspect, the memory locations allocated for the sliding window memory can be temporarily<br>
+allocated and elsewise utilized when the repair process is not invoked or anticipated.<br>
+Likely times for invoking or anticipating the repair process for the header decompressor,<br>
+and thus allocation of the sliding window memory, include handoffs and handovers of<br>
+various types, or any other time or period when packets may be prone to be out of order or<br>
+prone to loss. Such times can be determined by measurement or predicted by historical<br>
+(likelihood) information.<br>
+Thus, the link layer or other network function can notify the decompressor when a period<br>
+with reordering (or a possible increase in loss rate) is occurring or is likely to occur. The<br>
+notifications should include: Information about beginning of the period (start event);<br>
+Information about the end of the period (start stop); The extent of the reordering depth<br>
+(depth). When receiving a start event notification, the decompressor can then begin<br>
+filling a window of size depth with a complete reference, and fill it gradually with new<br>
+items when packets are missing in the sequence in order to perform window-based repairs<br>
+when a packet fail decompression. The decompressor can also buffer packets that still fail<br>
+decompression after having performed the window-based repair in order to later attempt<br>
+Buffer-based repairs when a reordered packet is successfully decompressed.<br>
+This fourth aspect renders the additional memory and processing requirements only<br>
+required during the time when reordering (or increased losses) can occur. This signal can<br>
+be relevant e.g. when handoffs occur or when the link quality decreases - leading to higher<br>
+FER and/or more link layer retransmissions. This can provide memory savings, as the<br>
+decompressor may not want to keep a history of context constantly - only when useful.<br>
+It will be appreciated that while window memory 72 and packet buffer 84 have been<br>
+illustrated in the example implementations as being in separate memories, such need not<br>
+be the case. In fact, both window memory 72 and packet buffer 84, when utilized, can<br>
+have respective locations in the same memory device. Such memory device can take any<br>
+of several forms, including random access memory (RAM) or semiconductor memory, for<br>
+just two non-exhaustive examples.<br>
+In the example implementations, the remote terminal is a user equipment unit which<br>
+receives packets (with compressed headers) over the air interface. As mentioned above,<br>
+41<br>
+ <br>
+other forms or remote units are possible. When the remote terminal takes the form of a<br>
+user equipement unit, the headers are preferably compressed using Robust Header<br>
+Compression (ROHC) in U/O-mode. but can instead compressed using other techniques<br>
+such as SigComp. for example. SigComp is described in, e.g.. the following documents<br>
+(all of which arc incorporated herein by reference in their entireties): Price, R. et al.,<br>
+"Signaling Compression (SigComp)". RFC3320. Internet Engineering Task Force,<br>
+December 2002; Hannu, H. et al.. "Signaling Compression (SigComp) - Extended<br>
+Operations". RFC3321, Internet Engineering Task Force, December 2002; US Patent<br>
+Publication US 2004/0047301. The header decompressor typically determines a header<br>
+decompression failure (e.g.. for the subsequently received packet) by inability to verify the<br>
+header decompression using cyclic redundancy check (CRC) or transport layer checksum<br>
+for the subsequently received packet.<br>
+The more detailed illustrative embodiments provided above which show specific units,<br>
+functionalities, and signals are not constraining, mandatory, or restrictive, but serve merely<br>
+as example implementations.<br>
+A non-limiting example environment of implementation of the foregoing network is a<br>
+telecommunications network 100 such as that shown in Fig. 15A. The example<br>
+telecommunications network 100 includes both a radio access network 110 and a core<br>
+network 112. The core network 112 is shown as comprising a circuit switch domain 113<br>
+and a packet switch domain 114. In the particularly illustrated example, the circuit switch<br>
+domain 113 (e.g.. a PSTN/ISDN connection-oriented network) is shown as comprising a<br>
+Mobile Switching Center (MSC)ZVisiting Location Register node 115 and a Gateway<br>
+MSC node 116. The packet switch domain 114 is illustrated in example fashion as<br>
+including a General Packet Radio Service (GPRS) Service (SGSN) node 117 which is<br>
+connected to a Gateway General Packet Radio Service (GPRS) support node (GGSN) 118.<br>
+Gateway GRPS support node (GGSN) 118 provides the interface towards the packet-<br>
+switched networks (e.g., the Internet, X.25 external networks) and as such serves to<br>
+translate data formats, signaling protocols and address information in order to permit<br>
+communication between the different networks. Serving GPRS Support Node (SGSN)<br>
+117 provides packet routing to and from a SGSN service area, and serves GPRS<br>
+subscribers which are physically located within the SGSN service area. Serving GPRS<br>
+42<br>
+ <br>
+Support Node (SGSN) 117 pro\ ides functions such as authentication, ciphering, mobility<br>
+management, charging data, and logical link management toward the user equipment unit.<br>
+A GPRS subscriber ma\ be sened b\ am SGSN in the network depending on location.<br>
+The functionality of Serving GPRS Support Node (SGSN) 117 and Gateway GRPS<br>
+support node (GGSN) 118 may be combined in the same node, or may exist in separate<br>
+nodes as shown in Fig. 15A.<br>
+In the Fig. 15A embodiment, the General Packet Radio Service (GPRS) Service (SGSN)<br>
+node 117 of core network node 112 is also shown as hosting the header compressor 25-<br>
+15A. The structure and operation of header compressor 25-15A is essentially similar to<br>
+that of the generic, representative header compressor 25 described previously.<br>
+The core network 112 connects to radio access network 110 over a radio access network<br>
+interface depicted by dot-dashed line 122. The radio access network 110 includes one or<br>
+more control nodes 126 and one or more radio base stations (BS) 128.   In an example,<br>
+non-limiting implementation in which radio access network 110 is a UMTS Terrestrial<br>
+Radio Access Network (UTRAN), the radio access network interface depicted by dot-<br>
+dashed line 122 is known as the Iu interface, and the control nodes 126 take the form of<br>
+radio network controllers (RNCs). The person skilled in the art understands the function<br>
+and constituency of radio network control node 126, such as a diversity handover unit,<br>
+controller(s), and various interfaces, for example. In other implementations of radio access<br>
+network 110, the control nodes 126 can have other names, such as base station controller<br>
+(BSC), radio network control node. etc. In any event, it should be understood that, for<br>
+sake of simplicity, the radio access network 110 of Fig. 15A is shown with only one<br>
+control node 126. with the control node 126 being connected to two base stations<br>
+(BS) 128. As understood by those skilled in the art. the radio access network 110 typically<br>
+has numerous control nodes 126. which can be connected over an unillustrated interface<br>
+(such as an lur interface).<br>
+Again for sake of simplicity, only two base station nodes 128 are shown connected to the<br>
+representative control node 126. It will be appreciated that a different number of base<br>
+stations 128 can be served by each control node 126, and that control nodes 126 need not<br>
+serve the same number of base stations. Further, those skilled in the art will also<br>
+appreciate that a base station is sometimes also referred to in the art as a radio base station,<br>
+43<br>
+ <br>
+a node B, or B-node.<br>
+For brevity it is assumed in the ensuing discussion that each base station 128 serves one<br>
+cell. It will be appreciated by those skilled in the art. however, that a base station may<br>
+serve for communicating across the air interface for more than one cell. For example, two<br>
+cells may utilize resources situated at the same base station site. Moreover, each cell may<br>
+be divided into one or more sectors, with each sector having one or more cell/carriers.<br>
+A remote unit 140 communicates with one or more cells or one or more base stations (BS)<br>
+128 over a radio or air interface 138. In differing implementations, the remote unit 140<br>
+can be known by different names, such as remote terminal, wireless terminal or wireless<br>
+unit, mobile station or MS. mobile terminal or MT. or user equipment unit (UE), for<br>
+example. Of course, whereas for ease of illustration only one remote unit 140 shown in<br>
+Fig. 15A, each base station t\picall&gt; serves many remote units.<br>
+In the example UM'I S implementation mentioned above, radio access is preferably based<br>
+upon Wideband. Code Division Multiple Access (WCDMA) with individual radio<br>
+channels allocated using CDMA spreading codes. Of course, other access methods may<br>
+be employed.<br>
+The remote unit 140 has a header decompressor 25-15A which features the out-of-<br>
+sequence packet handler 54. The structure and operation of remote unit 140 and of header<br>
+decompressor are can be. for example, am of the header decompressors with their<br>
+associated out-of-sequence packet handlers 54 as aforedescribed in conjunction with any<br>
+of the aspects hereof. Other unillustralcd components of remote unit 140, including the<br>
+structure and operation of a constituent transceiver, protocol stacks, decoders, buffers, and<br>
+the alike are understood b&gt; the person skilled in the art.<br>
+In the Fig. 15B embodiment, the Gateway General Packet Radio Service (GPRS) support<br>
+node (GGSN) 118 is shown as hosting the header compressor 25-15B, instead of the<br>
+hosting being at the SGSN 117. The structure and operation of header compressor 25-15B<br>
+is essentially similar to that described previously.<br>
+44<br>
+ <br>
+In the Fig. 15C embodiment, radio network controller node 126 is shown as hosting the<br>
+header compressor 25-15C. instead of one of the core network nodes. The structure and<br>
+operation of header compressor 25-15C is essentially similar to that of the generic,<br>
+representative header compressor 25 described previously<br>
+While nodes such as those illustrated in Fig. 15A, Fig. 15B, and Fig. 14C have myriad<br>
+other elements and functionalities, as understood by the person skilled in the art, illustrated<br>
+herein are only those elements and functionalities necessary or helpful for illustrating the<br>
+context information transmission techniques described herein.<br>
+It should be noted that even if the generic terms "header compression", "header<br>
+compressor" and "'(header) decompressor"' are used to show that the applicability of this<br>
+idea is not limited to any specific header compression scheme. This is particularly<br>
+applicable to most ROHC profiles, including - but not limited to - the ROHC-TCP<br>
+(0x0006), ROHC RTP (0x0001). UDP (0x0002), IP (0x0004), ESP (0x0003), UDP-Lite<br>
+(0x0008), RTP/UDP-I.ite (0x0007) header compression profiles. Some of the proposed<br>
+solutions also have the advantage of not requiring any change to any of the ROHC<br>
+standards<br>
+It should also be understood that the header decompression techniques and other activities<br>
+described herein need not be performed at nodes or terminals identically structured as<br>
+those herein illustrated and/or described. Rather, various functions can be distributed or<br>
+separated to other nodes or devices, or even networks (e.g., core network and radio access<br>
+network). Moreover. e\ en the header compression functions can be distributed over plural<br>
+nodes and/or devices, if desired.<br>
+In view, e.g.. of the foregoing, the term "network node" as employed herein refers to any<br>
+node or unit, or portion of node or unit, which performs, either in whole or in part, the<br>
+context information transmission control described herein.<br>
+Further, the node or de\ ice which hosts the header compressor 25 may or may not be<br>
+located more than one node or network interface away from a receiving entity. For<br>
+example, mention herein that context information is sent over an air or radio interface to a<br>
+45<br>
+ <br>
+receiving entity (e.g., remote unit 40) does not require that the header compressor 25 be<br>
+situated in a node or location which borders the radio interface.<br>
+While the invention has been described in connection with what is presently considered to<br>
+be the most practical and preferred embodiment, it is to be understood that the invention is<br>
+not to be limited to the disclosed embodiment, but on the contrary, is intended to cover<br>
+various modifications and equivalent arrangements.<br>
+WE CLAIM :<br>
+1.	A remote terminal (40) comprising:<br>
+a transceiver (42) which recehes, over an air interface (38), packets including<br>
+packets (30) having headers (26) which have been compressed and packets (30) which are<br>
+potentially out-of-order.<br>
+a header decompressor (46):<br>
+characterized in that the decompressor (46), upon detection of non-receipt of packets (30)<br>
+anticipated in a flow of packets (30) over the air interface (38), stores, with respect to each<br>
+non-receipt, a snapshot of header decompression context information existing at the non-<br>
+receipt, and wherein when the header decompressor (46) detects header decompression<br>
+failure for a subsequently received packet, the header decompressor (46) executes a repair<br>
+process which determines if header decompression of the subsequently received packet<br>
+can be achieved using one of plural stored snapshots.<br>
+2.	The apparatus of claim 1, wherein using the repair process the header decompressor<br>
+(46) reattempts decompression of the subsequently received packet using each of the<br>
+plural stored snapshots, and wherein the repair process determines that the header<br>
+decompression for the subsequently received packet succeeds if the header decompression<br>
+of the subsequently received packet was achieved using one and only one of the plural<br>
+stored snapshots.<br>
+3.	The apparatus of claim 1. wherein using the repair process the header decompressor<br>
+(46) reattempts decompression of the subsequent!) received packet using each of the<br>
+plural stored snapshots. wherein the repair process achieves decompression of the<br>
+subsequently received packet using more than one of the plural stored snapshots, but<br>
+46<br>
+ <br>
+wherein the repair process chooses between the more than one of the plural stored<br>
+snapshots using an additional verification process.<br>
+4.	The apparatus of claim 1, wherein, for each packet or group of consecutive packets (30)<br>
+missing in a sequence of the flow, the header decompressor (46) stores a corresponding<br>
+snapshot in a set of snapshots in a sliding window memory (74).<br>
+5.	The apparatus of claim 1. wherein when the header decompressor (46) also determines<br>
+that header decompression fails for a predetermined number of packets (30) received after<br>
+the non-receipt of the packets (30) anticipated in the How, the header decompressor (46)<br>
+executes an auxiliary repair process which stores the packets (30) received after the non-<br>
+receipt and which failed the header decompression.<br>
+6.	The apparatus of claim 1. wherein if execution of the repair process achieves<br>
+decompression of the subsequently received packet using one of the plural stored<br>
+snapshots, the snapshot of the header decompression context information which achieved<br>
+header decompression is updated and used by the auxiliary repair process for reattempting<br>
+header decompression of the stored packets (30).<br>
+7.	The apparatus of claim 1. wherein upon failure of the repair process the header<br>
+decompressor (46) generates a notification of the non-receipt of packets (30) anticipated in<br>
+the flow, the notification of the non-receipt including packet resend information to enable<br>
+resending of a packet with appropriate updating header decompression context<br>
+information.<br>
+8.	The apparatus of claim 1. wherein the header decompressor (46) executes a window<br>
+allocation process which temporarih allocates reusable memory for plural stored<br>
+snapshots in accordance with a parameter received on the link.<br>
+9.	A remote terminal (40) comprising:<br>
+a transceiver (42) which receives. o\er an air interface (38), packets (30) including<br>
+packets having headers (26) which have been compressed and packets which are<br>
+potentially out-of-order;<br>
+47<br>
+ <br>
+a header decompressor (46):<br>
+characterized in that the header decompressor (46) is arranged, upon detecting possible<br>
+context damage attributable to missing or out-of-order packets (30), to store packets which<br>
+initially fail decompression, and. upon successfully using certain context information to<br>
+reattempt header decompression of a packet received after detection of the context<br>
+damage, to reattempt header decompression of the stored packets using the certain context<br>
+information<br>
+10.   A method of operating a remote terminal (40) which receives, over a link,<br>
+packets (30) including packets (30) having headers (26) which have been compressed and<br>
+packets (30) which arc potentially out-of-oider, the method characterized by the steps of:<br>
+(1)	detecting non-receipt of packets (30) anticipated in a flow of packets over the<br>
+link;<br>
+(2)	storing, with respect to each non-receipt, a snapshot of header decompression<br>
+context information existing at the non-receipt; and then,<br>
+(3)	upon header decompression failure for a subsequently received packet,<br>
+determining if header decompression of the subsequently received packet can be achieved<br>
+using one of plural stored snapshots.<br>
+11.	The method of claim 10, further comprising:<br>
+reattempting header decompression wf the subsequently received packet using each<br>
+of the plural stored snapshots:<br>
+determining that the header decompression for the subsequently received packet<br>
+succeeded if the header decompression of the subsequently received packet was achieved<br>
+using one and only one of the plural stored .snapshots.<br>
+12.	The apparatus of claim 10, further comprising reattempting decompression of the<br>
+subsequently received packet using each of me plural stored snapshots;<br>
+upon achieving decompression of the subsequently received packet using more than one of<br>
+the plural stored snapshots, choosing belween the more than one of the plural stored<br>
+snapshots using an additional verification process.<br>
+■ S<br>
+ <br>
+13.	The method of claim 10, further comprising:<br>
+determining if header decompression fails for a predetermined number of packets<br>
+(30) received after the non-receipt of step (1) and, if so:<br>
+before performing step (3), storing the packets (30) received after the non-receipt<br>
+which failed the header decompression;<br>
+updating the snapshot of header decompression context information which in step<br>
+(3) achieved header decompression of the subsequently received packet; and<br>
+reattempting header decompression of the stored packets (30) using the updated shapshot<br>
+of header decompression context information.<br>
+14.	The method of claim 10, further comprising:<br>
+determining if header decompression fails for a predetermined number of packets<br>
+received after the non-receipt of step (1) and, if so:<br>
+before performing step (3):<br>
+storing the packets (30) received after the non-receipt which failed the<br>
+header decompression; and<br>
+providing a notification that enables a compressor to send, as the<br>
+subsequently received packet of step (3), a packet with appropriate updating header<br>
+decompression context information; and<br>
+reattempting header decompression of the stored packets (30) using the updated shapshot<br>
+of header decompression context information.<br>
+15.	The method of claim 10, further comprising before performing step (1), temporarily<br>
+allocating reusable memory for plural stored snapshots in accordance with a parameter<br>
+received on the link.<br>
+16.	The method of claim 10, wherein the headers (26) have been compressed using one of<br>
+Robust Header Compression (ROHC) in U/O-mode and SigComp.<br>
+17.	A header decompressor (46) for use in a remote terminal (40) which receives, over a<br>
+link, packets (30) including packets having headers (26) which have been compressed and<br>
+packets which are potentially out-of-order, wherein the header decompressor (46)<br>
+performs the steps of claim 12.<br>
+49<br>
+ <br>
+18.	The apparatus of claim 17, wherein the header decompressor (46) further performs the<br>
+steps of:<br>
+reattempting header decompression of the subsequently received packet using each<br>
+of the plural stored snapshots;<br>
+determining that the header decompression for the subsequently received packet<br>
+succeeded if the header decompression of the subsequently received packet was achieved<br>
+using one and only one of the plural stored snapshots.<br>
+19.	The apparatus of claim 17, wherein using the repair process the header decompressor<br>
+(46) reattempts decompression of the subsequently received packet using each of the<br>
+plural stored snapshots, wherein the repair process achieves decompression of the<br>
+subsequently received packet using more than one of the plural stored snapshots, but<br>
+wherein the repair process chooses between the more than one of the plural stored<br>
+snapshots using an additional verification process.<br>
+20.	The apparatus of claim 17, wherein the header decompressor (46) further performs the<br>
+steps of:<br>
+determining if header decompression fails for a predetermined number of packets<br>
+(30) received after the non-receipt of step (1) and, if so:<br>
+before performing step (3), storing the packets (30) received after the non-receipt<br>
+which failed the header decompression;<br>
+reattempting header decompression of the stored packets (30) using the updated shapshot<br>
+of header decompression context information.<br>
+21.	The apparatus of claim 17, wherein the header decompressor (46) further performs the<br>
+step of generating a notification of the non-receipt of packets (30) anticipated in the flow,<br>
+the notification of the non-receipt including packet resend information to enable resending<br>
+of a packet with appropriate updating header decompression context information.<br>
+22.	The apparatus of claim 17, wherein the header decompressor (46) further performs the<br>
+steps of:<br>
+50<br>
+ <br>
+determining if header decompression fails for a predetermined number of packets<br>
+(30) received after the non-receipt of step (1) and, if so:<br>
+before performing step (3):<br>
+storing the packets (30) received after the non-receipt which failed the<br>
+header decompression; and<br>
+providing a notification that enables a compressor to send, as the<br>
+subsequently received packet of step (3), a packet with appropriate updating header<br>
+decompression context information; and<br>
+reattempting header decompression of the stored packets (30) using the updated shapshot<br>
+of header decompression context information.<br>
+23.	A method of operating a remote terminal (40) which receives, over a link, packets<br>
+(30) including packets having headers (26) which have been compressed and packets<br>
+which are potentially out-of-order, the method comprising:<br>
+(1)	detecting possible context damage attributable to missing or out-of-order<br>
+packets in a flow of packets over the link; and thereafter:<br>
+(2)	storing packets which initially fail decompression; and then,<br>
+(3)	successfully using certain context information to reattempt header<br>
+decompression of a packet received after detection of the context damage; and<br>
+(4) reattempting header decompression of the stored packets using the certain context<br>
+information.<br>
+24.	A header decompressor (46) for use in a remote terminal (40) which receives, over a<br>
+link, packets (30) including packets having headers (26) which have been compressed and<br>
+packets which are potentially out-of-order, wherein the header decompressor (46)<br>
+performs the steps of claim 23.<br>
+25.	A method of operating a telecommunications network comprising:<br>
+sending from the network to a remote terminal (40), over an interface, packets (30)<br>
+including packets having headers (26) which have been compressed and packets which are<br>
+potentially out-of-order;<br>
+detecting a situation in which packets (30) sent from the network to the remote<br>
+terminal (40) have a likelihood of being out-of-order; and in response thereto:<br>
+51<br>
+ <br>
+allocating in, reusable memory, memory locations for storing a set of context<br>
+information existing at times at which packet loss at least appears to occur by packets<br>
+possibly being out-of-order;<br>
+using the set of context information to reattempt header decompression of subsequently<br>
+received packets that previously failed header decompression possibly by being out-of-<br>
+order.<br>
+Dated this 11th day of June 2007.<br>
+52<br>
+<br>
+Header compression repair techniques are accomplished, in various aspects, modes, embodiments, and implementations, by a remote terminal (40), by a header decompressor (46) for use at a remote terminal (40), and by methods of operating the remote terminal and/or decompressor, and (optionally) in some aspects, modes, embodiments, and implementations by taking into consideration aspects of structure and operation of a header compressor (25) as well. The remote unit (40) comprises a transceiver (42) or the like which receives, over a link (36) such as an air interface (38), packets including packets having headers which have been compressed and packets which are potentially out-of-order. The header decompressor (46), upon detection of non-receipt of packets anticipated in a flow (34) of packets over the link, stores, with respect to each non-receipt, a snapshot of header decompression context information existing at the non-receipt. Then, when the header decompressor detects header decompression failure for a subsequently received packet, the header decompressor determines (e.g., by executing a repair process) whether header decompression of the subsequently received packet can be achieved using one of plural stored snapshots.</draft-ietf-rohc-udp-lite-04.txt></draft-ietf-rohc-tcp-08.txt></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=sc0YrCc8b3sskNkds3DNng==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=sc0YrCc8b3sskNkds3DNng==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="280055-a-method-of-preparing-biguanide-derivative.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="280057-preparing-composition-for-composite-laminates.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>280056</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2102/KOLNP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>06/2017</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>10-Feb-2017</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>08-Feb-2017</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>11-Jun-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>UNWIRED PLANET,LLC</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>P.O. BOX 250649,PLANO,TEXAS,UNITED STATES OF AMERICA,PIN-75025</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>SVANBRO, KRISTER</td>
+											<td>SKOGSBRYNET 11, S-975 75 LULEÅ</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>PELLETIER, GHYSLAIN</td>
+											<td>BODFORSVÄGEN 3, S-961 44 BODEN</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04L 29/06,H03M 7/30</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/SE2005/001650</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-11-03</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/987,218</td>
+									<td>2004-11-15</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/280056-method-and-apparatus-for-handling-out-of-sequence-packets-in-header-decompression by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:34:20 GMT -->
+</html>

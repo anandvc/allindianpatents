@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/205323-a-method-and-apparatus-for-use-in-a-network-with-rate-based-feedback-congestion-control-and-a-system-therefor by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 07:44:39 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 205323:&quot; A METHOD AND APPARATUS FOR USE IN A NETWORK WITH RATE-BASED FEEDBACK CONGESTION CONTROL, AND A SYSTEM THEREFOR&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot; A METHOD AND APPARATUS FOR USE IN A NETWORK WITH RATE-BASED FEEDBACK CONGESTION CONTROL, AND A SYSTEM THEREFOR&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>Fairness is provided among network sessions contending for available bit rate (ABR) service in an asynchronous transfer mode network by determining congestion information on a per port basis. ABR cells are monitored to determine which rate information per outgoing port based on ABR cells leaving a switch. Using the ABR per port rate, the available capacity, and the input rate to output queues, a link congestion parameter (LCP) is determined. Resource Management (RM) cells travelling through the switch are monitored to determine whether the new CP is lower than the explicit rate (ER) field in RM cell. If the new LCP is lower, the new LCP is stuffed into the RM cell. When the sender receives the LCP value, the sender output rate is adjusted based on the LCP. Because LCP is determined based on per port traffic flow, fairness is provided among session competing for available ABR capacity.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>1.        BACKGROUND OF THE INVENTION <br>
+A.       Field of the Invention<br>
+The present invention relates generally to a method and apparatus for use in a network with rate-based feedback congestion control, and a system therefor and in particular to apparatus and methods for optimizing max-min fair rate control in available bit rate (ABR) service in an asynchronous transfer mode (ATM) network.<br>
+B.        Description of the Prior Art<br>
+Fig. 1 is a block diagram showing a prior art network architecture. Data is transferred between user 116 and user 118 according to a particular network protocol. The ATM protocol is commonly used for transferring data over a network. Fig. 1 shows a representative path over which data may travel when transferred from user 116 to user 118: over ATM network 110, switch 114, ATM network 120, switch 122, and ATM network 112.<br>
+In the ATM protocol, data is divided and placed into ATM cells. Fig. 2 is a block diagram showing the format of an ATM cell. The cell is comprised of the following fields: general flow control (GFC), virtual path identifier (VPI), virtual channel identifier (VCI), payload type identifier (PTI), cell loss priority (CLP), head error control (HEC),<br>
+-1A-<br><br>
+and the cell payload. The fields are well understood in the art, and will not be discussed in detail here.<br>
+Each cell carries a portion of the data being transferred. Even though the data is split into units, to each user the data appears to be transferred as a single unit. This is called a virtual circuit. A session is the period during which there is active communication between endpoints, such as user 116 and user 118, on the network.<br>
+At any time, one or more sessions may be transferring cells across the network. Each session has unique characteristics. For example, real time applications, such as video and voice, require data to be transferred between sender and destination in a timely manner. Other data is not as time sensitive, and can therefore be transferred with less concern for timeliness. ATM Service Categories<br>
+The ATM protocol recognizes that each session has certain requirements, and not all sessions have the same requirements. Therefore, different service categories are supported, including constant bit rate (CBR), variable bit rate (VBR), available bit rate (ABR), and unspecified bit rate (UBR). Each service category is designed to address the requirements of different types of sessions.<br>
+CBR and VBR services guarantee certain performance levels when transferring data. In contrast, ABR service does not provide the same level of guarantees as CBR and VBR, but attempts to provide best effort data services by using the bandwidth left over by CBR and VBR. The bandwidth for ABR, therefore, depends on the network bandwidth<br>
+2<br><br>
+used by ongoing CBR and VBR sessions. Rates of ABR sessions are adjusted in<br>
+response to the varying available bandwidth. ABR service is best suited for carrying<br>
+network traffic that is not sensitive to delay and can tolerate varying rates during a<br>
+session.<br>
+ABR Rate-based Feedback<br>
+To adjust ABR sessions in response to changing CBR and VBR demands, a rate-based feedback system is used. Each switch and the destination monitors network flow and provides network rate feedback information to the sender using resource management (RM) cells.<br>
+Fig. 3 is a block diagram showing an ATM cell carrying an RM cell in the payload. The RM cell is located in octets 1-48 of the payload, and is comprised of the following fields: protocol ID (ID), data flow direction (DIR), backward explicit rate congestion notification (BN), congestion indication (CI), no increase (NI), explicit rate (ER), current cell rate (CCR), minimum cell rate (MCR), and cyclic redundancy check for the RM cell (CRC-10).<br>
+The ER field comprises congestion information. Each switch reviews the ER field of the RM cell, and alters it if certain criteria are met. The RM cell returns to the sender, which adjusts its output rate based on the RM cell. In this way, the sender output rate is adjusted to account for congestion in the network as reflected in the ER field of the RM cell.<br>
+3<br><br>
+ABR Session<br>
+Generally, an ABR session begins by the sender making an ABR call setup request. Call setup establishes parameters for the ABR session, some of which control the rate at which the sender transmits data. The rate at which an ABR sender is allowed to send cells for transmission is the allowed cell rate (ACR). ACR is initially set by the sender to an initial cell rate (ICR). ACR is always maintained between the minimum cell rate (MCR) (Fig. 3, octets 12 and 13) and the peak cell rate (PCR). The sender places ACR in the current cell rate (CCR) field (Fig. 3, octets 10 and 11) of the RM cell, and the rate at which it wishes to transmit cells, usually the PCR, in the explicit rate (ER) field (Fig. 3, octets 8 and 9).<br>
+After call setup, the sender begins transmitting data, and also sends out an initial RM cell. The RM cell is transmitted to the destination (or a virtual destination), and is returned to the sender. During its travel, the RM cell may be modified by switches in the network or by the destination. If any switch encountered along the way or the destination cannot support the rate indicated by the ER field, the value of the ER field is lowered to the level the switch or destination can support. When an RM cell reaches the destination, the destination turns the cell around for transfer back to the sender. The sender then adjusts its output transmission rate based on the ER field of the returned RM cell.<br>
+The general rule is that a switch should not increase the specified ER since information from switches previously encountered by the RM cell would then be lost. Forward RM cells can be modified by any switch on the forward path. Backward RM<br>
+4<br><br>
+cells are generated on backward path and modified by switches on the backward path. ER is only modified for connections that are a bottleneck if the explicit rate of the switch is less than that carried in the ER field. Also, modification of the ER field only occurs on either their forward or backward journeys, but not on both.<br>
+In addition to RM cells generated by the sender, the destination and switches in the return transmission path may optionally generate a controlled number of RM cells. Each RM cell continues to travel through the network, ultimately returning to the sender. The sender, therefore, is constantly updating its output rate based on the incoming RM cells.<br>
+In summary, a sender receives an RM cell and adjusts its ACR depending on the ER field of the RM cell. Thus, the network dynamically adjusts flow rates of the ongoing sessions in the network.<br>
+Some sessions, however, receive more available bandwidth than others. "Fairness" is the measure of how the available bandwidth is distributed. There are many different definitions of fairness, but in most of the cases fairness is defined as proportional or additive to the MCR.<br>
+Prior art fairness algorithms distribute ACR among contending ABR connections under the assumption that MCR is zero. These techniques, however, fail to address the nonzero MCR case. That is, even though the sender is allowed to advertise a nonzero MCR, the prior art has not been proven to actually converge to a proper result under realistic assumptions (e.g., changing network loads).<br>
+5<br><br>
+It is desirable, therefore, to provide a method and system for providing fairness among contending ABR sessions.<br>
+II.       SUMMARY OF THE INVENTION<br>
+The present invention satisfies this and other desires by providing fairness among contending ABR sessions. More particularly, the present invention determines congestion feedback information based on per port congestion analysis to provide convergence and simplicity of implementation.<br>
+An apparatus consistent with the present invention, for use in a network with rate-based feedback congestion control, comprises a device for counting cells that pass through a particular port to determine a count; a device for receiving available capacity information associated with the cells; and a device for developing a congestion control parameter based on the count and available capacity information.<br>
+A method consistent with the present invention, for use in a network with rate-based feedback congestion control, comprises counting cells that pass through a particular port to determine a count; receiving available capacity information associated with the cells; and developing a congestion control parameter based on the count and available capacity information.<br>
+A network consistent with the present invention, for implementing rate-based feedback congestion control, comprises a device for counting cells that pass through a particular port to determine a count; a device for receiving available capacity information<br>
+6<br><br>
+associated with the cells ; a device for developing a congestion control parameter based on the count and available capacity information; a device for inserting the congestion control parameter into a cell; a device for transmitting the cell; a device for receiving the cell at a sender; and a device for adjusting the     <br><br>
+output rate of the sender based on the congestion control parameter.	<br><br>
+Additional objects and advantages of the invention will be set forth in part in the description which follows, and in part will be obvious from the description, or may be learned by practice of the invention. The objects and advantages of the invention will be realized and attained by means of the elements and combinations particularly pointed out in the appended claims.<br>
+It is to be understood that both the foregoing general description and the following detailed description are exemplary and explanatory only and are not restrictive of the invention, as claimed. The accompanying drawings, which are incorporated in and constitute a part of this specification, illustrate an embodiment of the invention, which, together with the description, serve to explain the principles of the invention.<br>
+Accordingly, the present invention provides a method, for use in a network with rate-based feedback congestion control, comprising : counting data that pass through a particular port to determine a count ; determining an available capacity at the port ; scaling a difference between the count and the available capacity using a stochastic approximation gain ; and determining a congestion control parameter for the port based on the scaled difference.<br>
+-7-<br><br>
+The present invention also provides an apparatus, for use in a network with rate-based feedback congestion control, comprising : means for counting cells that pass through a particular port to determine a count ; means for determining an available capacity at the port ; and means for developing a congestion control parameter for the port based on a scaled difference between the count and the available capacity at the port, wherein the scaled difference is determined using a stochastic approximation gain.<br>
+The present invention further provides a system, for a network with rate-based feedback congestion control, comprising : means for counting data that pass through a particular port to determine a count ; means for determining an available capacity at the port ; means for scaling a difference between the count and the available capacity using a stochastic approximation gain ; means for determining a congestion control parameter for the port based on the scaled difference ; means for inserting the congestion control parameter into a cell ; means for transmitting the cell ; means for receiving the cell at a sender; and means for adjusting the output rate of the sender based on the congestion control parameter.<br>
+The  present invention  further provides a  media  having  embodied thereon computer-readable program code executable by a processor-based system adapted to perform a method, for use in a network with rate-based feedback congestion control, said method comprising steps of: counting cells that pass through a particular port to determine a count; receiving available capacity information associated with the cells ; and developing a congestion  control  parameter  based  on  the  count and  available  capacity information ; wherein developing the congestion control parameter includes utilizing a stochastic rate gain.<br>
+-7A-<br><br>
+III.       BRIEF DESCRIPTION OF THE ACCOMPANYING DRAWINGS<br>
+Fig. 1 is a block diagram showing a prior art network architecture ; Fig. 2 is a block diagram showing the format of an ATM cell;<br>
+Fig. 3 is a block diagram showing an ATM cell carrying an RM cell in the payload ;<br>
+-7B-<br><br>
+Fig. 4 is a block diagram showing a centralized system for determining a link control parameter consistent with the present invention;<br>
+Fig. 5 is a flowchart illustrating a method of determining a new LCP value consistent with the principles of the present invention;<br>
+Fig. 6 is a block diagram showing an apparatus for counting per port ABR session information consistent with the present invention;<br>
+Fig. 7 is a block diagram showing an apparatus for implementing distributed per port ABR flow measurement consistent with the present invention;<br>
+Fig. 8 is a block diagram of cell classifier 712 of Fig. 7;<br>
+Fig. 9 is a flowchart showing the processing performed by LCP processor 446;<br>
+Fig. 10 is a block diagram showing a preferred embodiment of the elements which perform Eqn. 4; and<br>
+Fig. 11 shows a computer system which may be used to implement switch 114.<br>
+IV.      DETAILED DESCRIPTION OF THE PREFERRED EMBODIMENTS<br>
+Reference will now be made in detail to a preferred embodiment consistent with the principles of the invention, an example of which is illustrated in the accompanying drawings.   The same reference numbers may be used throughout the drawings to refer to the same or like parts.<br>
+Generally, apparatus and methods consistent with the present invention determine rate-based feedback information to provide fairness among contending ABR sessions.<br>
+8<br><br>
+More particularly, the apparatus and methods consistent with the present invention provides fairness among ABR sessions by determining an optimum link control parameter (LCP) for insertion into the ER field of RM cells. As used herein, "link" and "port" are used interchangeably.<br>
+In a preferred embodiment, the LCP is based on per port ABR session activity. A sender receives RM cells having the LCP, and adjusts its output transmission rates based on the LCP value. Determining LCP in a way that reflects per port ABR activity provides an accurate measure of network congestion, and therefore serves to provide fairness among sessions contending for ABR service.<br>
+LCP is determined in accordance with the apparatus and method disclosed herein using per port ABR rate information and other network data flow information. The LCP is stuffed into the ER field of outgoing RM cells of a particular port. Determining rate flow on a per port basis results in a significant reduction in computation complexity as compared to tracking per-session rate information. Switch Architecture and Operation<br>
+Fig. 4 is a block diagram of a centralized embodiment for determining new LCP values. Switch 448 is similar to switch 114 of Fig. 1, but is altered to provide an optimized LCP based on per port ABR rate information consistent with the present invention. The area shown in broken line delineate the elements not found in prior art switches. The elements shown in the broken line area are the primary elements for determining new LCP values.<br>
+9<br><br>
+ATM paths 430 connect switch 448 to ATM networks, such as ATM networks 110 and 120 of Fig. 1. Switch controller 414 controls and coordinates the operations of control memory 426, shared memory 428, plural memory buffers (MBUFs) 416, plural peripheral interfaces (PIFs) 418, and plural ATM physical interfaces (ATM PHYs) 424.<br>
+Switch processor 412 communicates with switch controller 414 to assist in coordinating and monitoring the operations of the switch. Switch controller 414 also has an extra features interface 410 over which information available in the switch may be transferred. For example, switch controller 414 may provide a variety of switch flow information over extra features interface 410.<br>
+Cells flowing into the switch over ATM paths 430 are processed by ATM PHYs 424, PIFs 418, and MBUFs 416 as is well-understood in the art. PIFs 418 parse the header from each incoming cell, and transmit it to switch controller 414 over path 434. PIFs 418 then forward the cell payload to MBUFs 416. Switch controller 414 analyzes the headers to determine destination information for each payload, and then causes each payload to be transferred from MBUFs 416 to the appropriate output queue in shared memory 428. Each output queue is associated with a particular switch output port.<br>
+The payloads are transferred from the output queues of shared memory 428 to MBUFs 416, and then to PIFs 418. The PIFs receive header information from switch controller 414 over path 434, and add the headers to the outgoing payloads. Finally, the cells are transmitted by PIFs 418, to ATM PHYs 424, for transmission over ATM paths 430.<br>
+10<br><br>
+LCP Determination<br>
+The methods and apparatus consistent with the present invention monitor ATM ABR rates on a per port basis. The per port ABR rate is used to determine an LCP parameter that may be stuffed into the ER field of RM cells leaving the switch.<br>
+Fig. 5 is a flowchart illustrating a method for determining an LCP value consistent with the present invention. A new LCP value is periodically determined for each output port. First, information regarding network flow in the switch is collected, including the input rate to an output queue of shared memory 428 (step 510), available ABR capacity (step 512), the number of sessions flowing through the port corresponding to the output queue (step 514), and a stochastic approximation gain (step 516). Based on these values, an LCP value for the port is determined (step 518). The new value is compared to the old value to determine if the new LCP value should be used (step 520). If the new LCP value should be used, then it is stuffed into the ER field of RM cells output from the port (step 522). If the new LCP value should not be used, the procedure is exited. This process is repeated for each outgoing switch port.<br>
+The information for estimating the ABR input rate of the output queues in shared memory 428 (step 510), may be determined by several methods. Two embodiments, a centralized embodiment and distributed embodiment, are discussed herein. Centralized Determination of ABR Per Port Rates<br>
+Returning to the centralized embodiment of Fig. 4, switch controller 414 receives cell headers from PIFs 418 to 438, and determines from the header whether the cell is an<br>
+11<br><br>
+AJBR cell. If the cell is an ABR cell, switch controller 414 reads the VPI and VCI fields from the header, and determines which switch output port the VPI/VCI pair is associated with. The port number is forwarded over path 444 to per port counters 422. Per port counters 422 count the number of incoming ABR cells that will be transferred out of the switch on a particular port.<br>
+Switch controller also determines queue fill information for the output queues in shared memory 428, and the number of sessions per output port during a specified time period. Monitoring of these values is well-understood in the art. LCP processor 446 accesses this information over extra features interface 410. Using, for example, the per port ABR counts from per port counters 422, the queue fill information, and the number of session per output port, LCP processor 446 determines a new LCP for each port. Based on current value of LCP in the ER field, LCP processor 446 determines whether the new LCP should be used, or whether the old LCP value should continue to be used in outgoing RM cells of a particular port. Every forward RM cell is passed from the shared memory 428 to the LCP processor 446 by the switch controller 414. If the new LCP is to be used, LCP processor 446 computes and stuffs the LCP in the ER field and passes it back to the shared memory 428 via switch controller 414. Per Port Counters 422<br>
+Fig. 6 is a block diagram showing a per port counter 612, consistent with the present invention, such as a per port counter 422 of Fig. 4. Count control circuitry 614 receives the port numbers from switch controller 414 (as described above), and sends a<br>
+12<br><br>
+pulse signal to the counter (616-618) corresponding to the identified output port. Therefore, each counter has an accurate count of ABR cells exiting the switch on a particular output port. In a preferred embodiment, there is one counter for each output port.<br>
+Periodically, LCP processor 446 requests port count information from read and clear circuitry 620. In response, read and clear circuitry 620 reads the ABR cell count for a particular output port, and forwards the count to LCP processor 446. The count may then cleared by read and clear circuitry 620. Distributed Determination of ABR Per Port Rates<br>
+Fig. 7 shows a block diagram of a distributed embodiment of an apparatus for collecting per port ABR rate information consistent with the present invention. Several elements are the same as shown and described with respect to Fig. 4. In Fig. 7, block 728, indicated by broken line, includes several cell classifiers 712 interposed between ATM PHYs 424, and PIFs 418. These elements monitor incoming cells to determine which output ports the cell will use to exit switch 448. From this information, rate information of the switch output ports can be ascertained.<br>
+In the distributed system of Fig. 7, each cell classifier has an associated partial port counter. Cell classifiers 712 are interposed between each of ATM PHYs 424 and PIFs 418, respectively. Each cell classifier analyzes headers of cells coming into the switch over ATM PHYs 424 to determine whether the cell is an ABR cell. If the cell is an ABR cell, the cell classifier determines the output port over which the cell will be<br>
+13<br><br>
+transmitted. This port information is transferred to the partial port counter 714 connected to the cell classifier.<br>
+Partial port counters 714 operate in a manner similar to per port counters 422 of Fig. 4 (see Fig. 6). In the distributed embodiment, however, each of partial port counters 714 only maintain partial counts of cells coming in over a single port that will leave the switch on a particular port. For example, partial port counters 714 has a counter corresponding to each outgoing port, but only counts cells that came in on the particular port associated with partial port counter 714. Therefore, to obtain a complete count of all cells destined for an output port, the counter associated with a particular output port in each of partial port counters 714 must be added together.<br>
+Per port summer 716 adds together the partial cell counts from each of port counter of partial port counters 714 corresponding to a particular output port. This provides accurate counts for all ABR cells that arrive at the switch destined for a particular port. Per port summer 716 forwards the count corresponding to each output port in response to LCP processor 746. LCP processor 746 uses the per port counts for determining a new LCP for each output port.<br>
+LCP processor 746 also receives switch flow information, such as queue fill information and sessions per output port information, from switch controller 414, as discussed with respect to Fig. 4. Consistent with the present invention, LCP processor 746 uses the queue fill information, the number of sessions per output port, and the per port cell count information to determine a new LCP for each port.<br>
+14<br><br>
+Stuffing can be done as in the centralized embodiment. Alternatively, cells can be stuffed at the egress determining a new LCP ensures that each sender receives its fair share of bandwidth automatically. Because all the switches implement the determination of LCP, a network wide fair allocation is achieved automatically. Cell Classifier<br>
+Fig. 8 is a block diagram of one of the cell classifiers, such as cell classifier 712 of Fig. 7. Cell classifier 712 is comprised of header parser 814 and lookup table (LUT) 812. Header parser 814 receives cells from ATM PHY 424, and determines if the cell is an ABR cell. If the cell is an ABR cell, header parser 814 reads the VPI and VCI fields and forwards them to LUT 812. The VPI/VCI pair act as an address to a port number stored in LUT 812. The port number is read out of LUT 812, and forwarded to partial port counters 714. Partial port counters 714 increment the counter corresponding to the port number. The cell is forwarded by header parser 814 to PIF 418. Determining LCP: Overview<br>
+Rate adjustments are carried out by the sender in response to the LCP values stored in the ER field of RM cells. The max-min fair rate allocation algorithm is automatically implemented at the sender. In accordance with the principles of the present invention, to ensure an "almost sure" convergence, the determination of the new LCP value uses a decreasing update gain parameter called the stochastic update gain (  ). This parameter is determined from the information provided on per-port utilization by connection admission control (CAC), which is a set of actions taken by the network to<br>
+15<br><br>
+determine whether a connection request should be accepted or rejected. Queue threshold up-crossing and down-crossing levels may also be used to determine the decreasing update gain parameter.<br>
+a, in a preferred embodiment is a stored list of numbers. Whenever any event occurs (e.g. CAC or queue level crossing over) alpha is reset to the top most element in the list.<br>
+The value of a starts with   °<l. then at each iteration it is reduced by some amount. therefore x constantly being updated iteration. an update table in the lcp processor has n different values of from x1 . x1n value holds until reset.></l.>
+Fig. 9 is a flowchart showing the processing performed by LCP processor 446 consistent with the present invention. LCP processor 446 first retrieves the input ABR cell count accumulated for output port n (step 910). By dividing the count by the elapsed time since the count started, the input rate is determined (step 912). The estimate of available capacity is then obtained from switch controller 414 (step 914), as well as the number of sessions through the link (step 916). The available capacity is the capacity on a link left over after CBR and VBR sessions. A stochastic approximation gain is then determined (step 918). The new LCP is then determined from the collected information (step 920). If the new LCP is to be used, the value is forwarded to stuffing circuitry 414 for insertion into the ER field of outgoing RM cells on the port associated with the new<br>
+16 16<br><br>
+LCP value. If the new LCP value is not to be used, the procedure is exited. This process is continued repeatedly for each outgoing port. Determining LCP; Detailed Discussion<br>
+As discussed above, LCP is periodically updated (e.g., every 10 ms) for each outgoing link. Determination of LCP will now be described in detail. The following variables are used:<br>
+ 	=       link control parameter (LCP)<br>
+            =        initial estimate of the stochastic approximation gain<br>
+f1	-      estimate of the input rate of the ABR flow<br>
+C1        =      estimate of the available capacity (i.e., capacity left over after CBR and<br>
+VBR sources have been served)<br>
+ 1        =      stochastic approximation gain used for the update C1max    =      maximum permissible value for   n1         =      number of sessions through the link<br>
+The input rate /, is first determined according to the following equation:<br>
+17<br><br>
+f1=   number of ABR cells that arriving the previous inter-undate interval<br>
+	Eqn.    (1)<br>
+length or inter-update interval<br>
+The available capacity C1 is then determined. In a preferred embodiment, C1 is determined as follows:<br>
+C1   =_   number of ABR cells that arriving the previous inter-update interval<br>
+  -	Eqn.    (2)<br>
+length of busy period of ABR output queue<br>
+18<br>
+As iterations proceed, the stochastic approximation gain    becomes smaller so that there is convergence. Periodically, however, the stochastic approximation gain is reset to its initial large value as shown in Eqn. 3 if the mean of the available ABR capacity has changed, if the queue length is greater than the preset queue threshold, or if low link utilization has been detected. These conditions are monitored by switch controller 414, and transmitted to LCP processor 446.<br><br><br>
+where   [x]ba = max (a, min (x,b)).<br>
+As the value of  1 gets smaller, the response gradually diminishes even with large changes in the available capacity C1. Since large changes in the available capacity are generally due to the entry or exit of CBR and VBR sessions, however, these large changes will be available to the switch based on information from CAC. In a preferred embodiment, this change in information is used to reset the gain    to its initial large value. Systems and methods consistent with the present invention thus adapt quickly to link capacity.<br>
+Fig. 10 is a block diagram showing a preferred embodiment of the elements which perform Eqn. 4. The estimate of the input rate of the ABR flow into ABR output port queue 1020 is subtracted from the estimate of available capacity after CBR and VBR are serviced 1018 (adder 1024). This number is divided by the number of sessions through the particular link 1022 (divider 1026). The result of the division is then multiplied by the initial estimate of the stochastic approximation gain 1016 (multiplier 1014). The current link control parameter is then added to this result (adder 1012). This value becomes the value x (1028), which is then applied to the min 1030 and max 1034 functions with respect to the maximum possible value for the link control parameter (C1max) (1032) and 0 (1036). The result of the function becomes the new link control parameter. Determination of Link Capacity C1<br>
+19<br><br>
+Because the max-min fair session rate is based on available capacity across multiple ports, it is a global solution for a given network topology, session configuration and link capacities. Therefore, a change in link capacity in one of the links affects the rates of other sessions, even though these other sessions do not use the link in which the capacity has changed. This change is evidenced by switch queue fill levels either increasing or decreasing. In a preferred embodiment, a queue threshold is used as an indicator of input-output rate mismatch at a switch occurring due to such a case. The gain is reset to its initial value when the queue length crosses the preset queue threshold.<br>
+At each update, the present link utilization is determined as follows:<br><br>
+  is a transformed link utilization parameter based on actual link utilization. If p is greater than a predetermined utilization threshold, then   is set equal to p. Otherwise, p is set to h  + (1- h)p. The variable h is a number between 0 and 1 that is chosen depending on the sensitivity to low link utilization that is desired. If a higher sensitivity is desired, a lower value of h is chosen. For example, if h =1 then  new =  old (from previous update interval) so the measure of (3 is not changed from the last time. If h=0, then  new = pnew so the gain a is reset because pnew 
+20<br><br><br>
+In various preferred embodiments, available link capacity is estimated using three different methods. In the first method, described above with respect to Eqn. 5, a short term estimate of available link capacity is made. This is the simplest method of estimating the available link capacity. In each update interval, the number of ABR cells that have been served on a link are counted. The total time the ABR output queue for the link had at least one cell is also measured. An estimate of the available rate is then obtained by dividing the number of cells by the busy time of the queue. The rate so obtained is multiplied by a factor of 0.95 and used as C1. The estimate of the available rate is obtained by dividing the number of ABR cells that arrived in the previous inter-update interval by the busy time of the queue.<br>
+In the second method, a long run estimate of available link capacity is made. In each update interval, the number of ABR cells that have been served on a link are counted. The total time the ABR output queue for the link had at least one cell is also measured. At each update, an average of estimates obtained over several previous update intervals is determined. The average is taken over all update intervals from the most recent mean capacity change epoch to the present update epoch. The average is then multiplied by a factor of 0.95 and used as C1.<br>
+The third method estimates equivalent available link capacity. For each update interval, the number of ABR cells that have been served at a link is counted. The total<br>
+21<br><br>
+time the ABR output queue for the link had at least one cell is also measured. The estimate of the available rate in the update interval is determined by dividing the number of cells by the busy time of the queue. If the present update is assumed to be the Nth one from the most recent mean capacity change, and Xi, for i=l,..., N denotes the measurements in these N intervals, then the equivalent capacity is computed as follows:<br><br>
+22<br>
+A recursive formula which minimizes computational overhead can be derived for the above computation. The value of 6 is then determined as a function of the desired buffer size and loss probability. To keep the probability of the buffer size from exceeding some fixed number B, less than some e, then a parameter 6 is determined as follows:<br><br><br>
+where there are m slots in an update interval and we again look at N previous update intervals and D lm = number of ABR cells that can be served in the mth slot of they jth update interval.<br>
+A simple recursive estimation procedure can now be deduced from this formulation. Non-overlapping blocks of the service rate process are considered.  C(N) is the estimated equivalent capacity until the Nth block. D(N+J)is the average rate in the N+lth block. Let C(N+1) can be written as<br><br>
+C(N + \)=C(N}--log    1-!-   ~-IogJ l+-exp{-&amp;M(D(N + l)-C(N))}\	Eqn.    (10)<br>
+&amp;M      \      N + \j    bM       \      N	j<br>
+The terms containing log and exp can be replaced by suitable approximates for a large range of values. Hardware Embodiment<br>
+Fig. 11 shows a computer system which may be used to implement the switch 448 of Fig. 4 and Fig. 7 consistent with the principles of the present invention. Switch 448 is driven by a processor 1110, which is connected to several storage and interfacing devices via a bus 1112. Storage devices include a mass store 1120, a RAM 1124, and memory in processor 1110 (not shown). These storage devices store some or all of the programs and data necessary for carrying out the functions of the preferred embodiments of the invention.<br>
+The terms containing log and exp can be replaced by suitable approximates for a large range of values. Hardware Embodiment<br>
+Fig. 11 shows a computer system which may be used to implement the switch 448 of Fig. 4 and Fig. 7 consistent with the principles of the present invention. Switch 448 is driven by a processor 1110, which is connected to several storage and interfacing devices via a bus 1112. Storage devices include a mass store 1120, a RAM 1124, and memory in processor 1110 (not shown). These storage devices store some or all of the programs and data necessary for carrying out the functions of the preferred embodiments of the invention.<br><br>
+23<br><br>
+Switch 448 also includes at least one ATM interface, such as ATM switch interface 1114. ATM switch interface 1114 corresponds to the ATM physical interfaces of Fig. 4 and Fig. 7. ATM switch interface 1114 includes hardware and software necessary to carry out interfacing between switch 448 and the networks.<br>
+Input/output 1118 represents and may comprise one or more well-known communications adaptors (e.g., RS-232 or Ethernet) or user peripheral interfaces, and may connect to a display device 1126. Store 1120 in a preferred embodiment comprises flash memory, but may also be implemented using a RAID system, tape drive, disk drive or other storage device.<br>
+Methods and apparatus consistent with the invention described herein may be embodied in software executing on processor 1110. The executing software interacts with ATM network physical interface 1114 to collect per port ABR rate information to determine new LCPs as described above. The software may be embodied on any media usable by processor 1110, such as store 1120. The media may be a disk readable and usable by processor 1110. The media may also be a transmission medium, such as the Internet.<br>
+Apparatus and methods consistent with the present invention therefore provide fairness across ABR sessions by determining per port ABR rate information, and using that rate information to determine optimized LCP values. Consequently, the methods and apparatus consistent with the present invention provide fairness among contending ABR sessions.<br><br>
+24<br><br>
+V.    CONCLUSION<br>
+Other embodiments of the invention will be apparent to those skilled in the art from consideration of the specification and practice of the disclosed embodiments. The specification and examples are exemplary only, and the true scope and spirit of the invention is defined by the following claims and their equivalents.<br>
+It will be apparent to those skilled in the art that various modifications and variations can be made in the apparatus and methods of the present invention and in its construction of this without departing from the scope or spirit of the invention.<br>
+Switch 448 as shown in Fig. 4 is for purposes of illustration only. Other configurations are possible without departing from the spirit and scope of the invention. The invention may be practiced in any manner that allows determining per port ABR session activity. Moreover, the principles of the methods and apparatus in accordance with the present invention can be used in a variety of ways. The principles can be extended to other types of networks, and other protocols. The principles of the methods and apparatus disclosed herein are not limited to ATM networks, but can be expanded to be used on any system having sender-controlled transmission rates.<br>
+25<br><br>
+WE CLAIM :<br>
+1.	A method, for use in a network with rate-based feedback congestion<br>
+control, comprising :<br>
+counting data that pass through a particular port to determine a count;<br>
+determining an available capacity at the port;<br>
+scaling a difference between the count and the available capacity using a stochastic approximation gain ; and<br>
+determining a congestion control parameter for the port based on the scaled difference.<br>
+2.	A method, for use in a network with rate-based feedback congestion<br>
+control, comprising :<br>
+counting cells that pass through a particular port to determine a count;<br>
+receiving available capacity information associated with the cells ; and<br>
+developing a congestion control parameter based on the count and available capacity information,<br>
+wherein the step of developing a congestion control parameter comprises utilizing a stochastic rate gain.<br>
+3.	A method, for use in a network with rate-based feedback congestion<br>
+control, comprising :<br>
+parsing headers ;<br>
+forwarding the headers to a central location ;<br>
+analyzing the headers at the central location to determine a port identification associated with each header;<br>
+developing port rate information for each port based on the port identification ;<br>
+-26-<br><br>
+scaling a difference between an available capacity at each port and a count of packets passing through each port; and<br>
+determining a congestion control parameter for each port based on the port rate information and the scaled difference.<br>
+4.	The method as claimed in claim 3, wherein the step of developing port<br>
+rate information comprises the substep of:<br>
+counting available bit rate service cells associated with each port.<br>
+5.	The method as claimed in claim 3, wherein the step of determining a<br>
+congestion control parameter comprises the substep of:<br>
+utilizing a stochastic rate gain.<br>
+6.	The method as claimed in claim 3, comprising the step of:<br>
+inserting the congestion control parameter into a resource management cell.<br>
+7.	A method for use in network congestion control, comprising :<br>
+parsing a first header to determine a respective port associated with the first header;<br>
+developing first partial port rate information based on the port associated with the first header;<br>
+parsing a second header to determine a respective port associated with the second header;<br>
+developing second partial port rate information based on the port associated with the second header;<br>
+combining the first partial port rate information and second partial port rate information to form a total port rate information ;<br>
+-27-<br><br>
+scaling a difference between an available capacity at the port associated with the first and second headers and a count of packets passing through the port associated with the first and second headers ; and<br>
+developing a congestion control parameter based on the total port rate information and the scaled difference.<br>
+8.	A method for use in network congestion control, comprising :<br>
+parsing a first header to determine a respective port associated with the first header;<br>
+developing first partial port rate information based on the port associated with the first header;<br>
+parsing a second header to determine a respective port associated with the second header;<br>
+developing second partial port rate information based on the port associated with the second header;<br>
+combining the first partial port rate information and second partial port rate information to form a total port rate information ; and<br>
+developing a congestion control parameter based on the total port rate information by utilizing a stochastic rate gain.<br>
+9.	The method as claimed in claim 7, comprising the step of:<br>
+inserting the congestion control parameter into a resource management cell.<br>
+10.	A method, for use in a network with rate-based feedback congestion<br>
+control, comprising :<br>
+counting data that pass through a particular port to determine a count;<br>
+-28-<br><br>
+determining an available capacity at the port ;<br>
+scaling a difference between the count and the available capacity using a stochastic approximation gain ;<br>
+determining a congestion control parameter for the port based on the scaled difference ;<br>
+inserting the congestion control parameter into a cell;<br>
+transmitting the cell;<br>
+receiving the cell at a sender; and<br>
+adjusting the output rate of the sender based on the congestion control parameter.<br>
+11.	The method as claimed in claim 10, wherein counting the data comprises<br>
+counting available bit rate service cells.<br>
+12.	A method, for use in a network with rate-based feedback congestion<br>
+control, comprising :<br>
+counting cells that pass through a particular port to determine a count;<br>
+receiving available capacity information associated with the cells ;<br>
+developing a congestion control parameter based on the count and available capacity information ;<br>
+inserting the congestion control parameter into a cell;<br>
+transmitting the cell;<br>
+receiving the cell at a sender; and<br>
+adjusting the output rate of the sender based on the congestion control parameter;<br>
+wherein developing the congestion control parameter comprises utilizing a stochastic rate gain.<br>
+-29-<br><br>
+13.	Apparatus, for use in a network with rate-based feedback congestion<br>
+control, comprising :<br>
+means for counting cells that pass through a particular port to determine a count;<br>
+means for determining an available capacity at the port; and means for developing a congestion control parameter for the port based on a scaled difference between the count and the available capacity at the port, wherein the scaled difference is determined using a stochastic approximation<br>
+gain.<br>
+14.	Apparatus, for use in a network with rate-based feedback congestion<br>
+control, comprising :<br>
+means for counting cells that pass through a particular port to determine a count;<br>
+means for receiving available capacity information associated with the cells ;<br>
+means for developing a congestion control parameter based on the count and available capacity information, wherein the means for developing a congestion control parameter comprises means for utilizing a stochastic rate gain.<br>
+15.	Apparatus for use in a network congestion control, comprising :<br>
+means for parsing a first header to determine a respective port associated with the first header;<br>
+means for developing first partial port rate information based on the port associated with the first header;<br>
+-30-<br><br>
+means for parsing a second header to determine a respective port associated with the second header;<br>
+means for developing second partial port rate information based on the port associated with the second header;<br>
+means for combining the first partial port rate information and second partial port rate information to form a total port rate information ;<br>
+means for scaling a difference between an available capacity at the port associated with the first and second headers and a count of packets passing through the port associated with the first and second headers ; and<br>
+means for developing a congestion control parameter based on the total port rate information and the scaled difference.<br>
+16.	The apparatus as claimed in claim 15, wherein the means for developing<br>
+partial port rate information comprises :<br>
+means for counting available bit rate service cells.<br>
+17.	Apparatus for use in network congestion control, comprising :<br>
+means for parsing a first header to determine a respective port associated with the first header;<br>
+means for developing first partial port rate information based on the port associated with the first header;<br>
+means for parsing a second header to determine a respective port associated with the second header;<br>
+means for developing second partial port rate information based on the port associated with the second header;<br>
+means for combining the first partial port rate information and second partial port rate information to form a total port rate information ; and<br>
+-31-<br><br>
+means for developing a congestion control parameter based on the total port rate information, wherein the means for developing the congestion control parameter comprises means for utilizing a stochastic rate gain.<br>
+18.	The apparatus as claimed in claim 17, comprising :<br>
+means for inserting the congestion control parameter into a resource management cell.<br>
+19.	A system, for a network with rate-based feedback congestion control,<br>
+comprising :<br>
+means for counting data that pass through a particular port to determine a count;<br>
+means for determining an available capacity at the port ;<br>
+means for scaling a difference between the count and the available capacity using a stochastic approximation gain ;<br>
+means for determining a congestion control parameter for the port based on the scaled difference ;<br>
+means for inserting the congestion control parameter into a cells<br>
+means for transmitting the cell;<br>
+means for receiving the cell at a sender; and<br>
+means for adjusting the output rate of the sender based on the congestion control parameter.<br>
+20      The system as claimed in claim 19, wherein the means for counting data comprises :<br>
+means for counting available bit rate service cells.<br>
+-32-<br><br>
+21. Media having embodied thereon computer-readable program code executable by a processor-based system adapted to perform a method, for use in a network with rate-based feedback congestion control, said method comprising steps of:<br>
+counting data that pass through a particular port to determine a count;<br>
+determining an available capacity at the port ;<br>
+scaling a difference between the count and the available capacity using a stochastic approximation ; and<br>
+determining a congestion control parameter for the port based on the scaled difference.<br>
+22.     The  media,  as  claimed  in  21,  wherein  the step of counting  data<br>
+comprises:<br>
+counting available bit rate service cells.<br>
+23. Media having embodied thereon computer-readable program code executable by a processor-based system adapted to perform a method, for use in a network with rate-based feedback congestion control, said method<br>
+comprising steps of:<br>
+counting cells that pass through a particular port to determine a count;<br>
+receiving available capacity information associated with the cells ; and developing a congestion control parameter based on the count and<br>
+available capacity information;<br>
+wherein developing the congestion control parameter includes utilizing a<br>
+stochastic rate gain.<br>
+24. Media having embodied thereon computer-readable program code executable by a processor-based system adapted to perform a method, for use in a network with rate-based feedback congestion control, said method comprising steps of:<br>
+-33-<br><br>
+parsing headers ;<br>
+forwarding the headers to a central location ;<br>
+analyzing the headers at the central location to determine a port identification associated with each header;<br>
+developing port rate information for each port based on the port identification ;<br>
+scaling a difference between an available capacity at each port and a count of packets passing through each port; and<br>
+determining a congestion control parameter for each port based on the port rate information and the scaled difference.<br>
+25.	The media, as claimed in claim 24, wherein the step of developing port<br>
+rate information comprises the substep of:<br>
+counting available bit rate service cells associated with each port.<br>
+26.	The media, as claimed in claim 24, wherein the step of determining a<br>
+congestion control parameter comprises the substep of:<br>
+utilizing a stochastic rate gain.<br>
+27.	The media, as claimed in claim 24, comprising the step of:<br>
+inserting the congestion control parameter into a resource management cell.<br>
+28. Media having embodied thereon computer-readable program code executable by a processor based system adapted to perform a method, for use in a network with rate-based feedback congestion control, said method comprising steps of:<br>
+-34-<br><br>
+parsing a first header to determine a respective port associated with the first header;<br>
+developing first partial port rate information based on the port associated with the first header;<br>
+parsing a second header to determine a respective port associated with the second header;<br>
+developing second partial port rate information based on the port associated with the second header;<br>
+combining the first partial port rate information and second partial port rate information to form a total port rate information ;<br>
+scaling a difference between an available capacity at the port associated with the first and second headers and a count of packets passing through the port ; and<br>
+developing a congestion control parameter based on the total port rate information and the scaled difference.<br>
+29.     The media, as claimed in claim 28, wherein the steps of developing partial port rate information each comprise the substep of: counting available bit rate service cells.<br>
+30. Media having embodied thereon computer-readable program code executable by a processor-based system adapted to perform a method, for use in a network with rate-based feedback congestion control, said method<br>
+comprising steps of:<br>
+parsing a first header to determine a respective port associated with the<br>
+first header;<br>
+developing first partial port rate information based on the port associated with the first header;<br>
+-35-<br><br>
+parsing a second header to determine a respective port associated with the second header;<br>
+developing second partial port rate information based on the port associated with the second header;<br>
+combining the first partial port rate information and second partial port rate information to form a total port rate information ; and<br>
+developing a congestion control parameter based on the total port rate information by utilizing a stochastic rate gain.<br>
+31.	The media, as claimed in claim 28,comprising the step of:<br>
+inserting the congestion control parameter into a resource management cell.<br>
+32.	Apparatus for use in network congestion control, comprising :<br>
+a first parser for parsing a first header to determine a respective port associated with the first header;<br>
+a device for developing first partial port rate information based on the port associated with the first header;<br>
+a second parser for parsing a second header to determine a respective port associated with the second header;<br>
+a device for developing a second partial port rate information based on the port associated with the second header;<br>
+a device for combining the first partial port rate of information and second partial port rate information to form a total port rate information ;<br>
+a device for scaling a difference between an available capacity at the port associated with the first and second headers and a count of packets passing through the port associated with the first and second headers ; and<br>
+-36-<br><br>
+a device for determining a congestion control parameter based on the total port rate information and the scaled difference.<br>
+33.	A system, for a network with rate-based feedback congestion control,<br>
+comprising :<br>
+a counter for counting cells that pass through a particular port to determine a count;<br>
+a receiver for receiving available capacity information associated with the port;<br>
+a parameter device for determining a congestion control parameter based on a scaled difference between the count and the available capacity information, wherein the scaled difference is determined using a stochastic approximation gain ;<br>
+a stuffing device for stuffing the congestion control parameter into a cell;<br>
+a transmitter for transmitting the cell;<br>
+a receiver for receiving the cell at a sender; and<br>
+an adjuster for adjusting an output rate of the sender based on the congestion control parameter.<br>
+34.	The   method   as   claimed   in   claim   1,   comprising   modifying   a   rate<br>
+management cell arriving at the port based on the congestion control parameter.<br>
+35.	The   method   as  claimed   in   claim   1,   comprising   modifying   a   rate<br>
+management cell associated with a session established through the port based<br>
+on  the congestion  control  parameter and   independent of particular traffic<br>
+associated with the session.<br>
+-37-<br><br>
+36.	The method, as claimed in claim 1, wherein determining the available<br>
+capacity comprises determining an effective service capacity for the port such<br>
+that a desired steady state probability that a buffer in the port exceeds a<br>
+predetermined level is achieved.<br>
+37.	The method,  as claimed  in claim  1, wherein  scaling the difference<br>
+comprises resetting the stochastic approximation gain to an initial value when a<br>
+change in the available capacity at the port is detected.<br>
+38.	A method, comprising:<br>
+determining a count of data passing through a port in a network ;<br>
+determining an available capacity at the port ; and<br>
+determining a congestion control parameter for the port based on the count and the available capacity such that congestion through the port is controlled independent of particular traffic associated with each session established through the port.<br>
+39.	The method as claimed in claim 38, wherein determining the congestion<br>
+control parameter comprises scaling a difference between the count and the<br>
+available capacity using a stochastic approximation gain.<br>
+40.	The   method   as   claimed   in   claim   38,   comprising   modifying   rate<br>
+management cells for all sessions established through the port based on the<br>
+same congestion control parameter for the port.<br>
+41.	A system, for a network with rate-based feedback congestion control,<br>
+comprising :<br>
+-38-<br><br>
+means for counting cells that pass through a particular port to determine a count;<br>
+means for receiving available capacity information associated with the cells;<br>
+means for developing a congestion control parameter based on the count and available capacity information ;<br>
+means for inserting the congestion control parameter into a cell;<br>
+means for transmitting the cell;<br>
+means for receiving the cell at a sender; and<br>
+means for adjusting the output rate of the sender based on the congestion control parameter;<br>
+wherein the means for developing the congestion control parameter comprises means for utilizing a stochastic rate gain.<br>
+42.	A method, for use in a network with rate-based feedback congestion<br>
+control, substantially as herein described, particularly with reference to and as<br>
+illustrated in the accompanying drawings.<br>
+43.	Apparatus, for use in a network with rate-based feedback congestion<br>
+control, substantially as herein described, particularly with reference to and as<br>
+illustrated in the accompanying drawings. <br>
+-39-<br>
+Fairness is provided among network sessions contending for available bit rate (ABR) service in an asynchronous transfer mode network by determining congestion information on a per port basis. ABR cells are monitored to determine which rate information per outgoing port based on ABR cells leaving a switch. Using the ABR per port rate, the available capacity, and the input rate to output queues, a link congestion parameter (LCP) is determined. Resource Management (RM) cells travelling through the switch are monitored to determine whether the new CP is lower than the explicit rate (ER) field in RM cell. If the new LCP is lower, the new LCP is stuffed into the RM cell. When the sender receives the LCP value, the sender output rate is adjusted based on the LCP. Because LCP is determined based on per port traffic flow, fairness is provided among session competing for available ABR capacity.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtYWJzdHJhY3QucGRm" target="_blank" style="word-wrap:break-word;">00494-cal-1998-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtYXNzaWdubWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">00494-cal-1998-assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtY2xhaW1zLnBkZg==" target="_blank" style="word-wrap:break-word;">00494-cal-1998-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtY29ycmVzcG9uZGVuY2UucGRm" target="_blank" style="word-wrap:break-word;">00494-cal-1998-correspondence.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtZGVzY3JpcHRpb24oY29tcGxldGUpLnBkZg==" target="_blank" style="word-wrap:break-word;">00494-cal-1998-description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtZHJhd2luZ3MucGRm" target="_blank" style="word-wrap:break-word;">00494-cal-1998-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtZm9ybS0xLnBkZg==" target="_blank" style="word-wrap:break-word;">00494-cal-1998-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtZm9ybS0yLnBkZg==" target="_blank" style="word-wrap:break-word;">00494-cal-1998-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtZm9ybS0zLnBkZg==" target="_blank" style="word-wrap:break-word;">00494-cal-1998-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtZy5wLmEucGRm" target="_blank" style="word-wrap:break-word;">00494-cal-1998-g.p.a.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtbGV0dGVycyBwYXRlbnQucGRm" target="_blank" style="word-wrap:break-word;">00494-cal-1998-letters patent.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDA0OTQtY2FsLTE5OTgtcmVwbHkgZi5lLnIucGRm" target="_blank" style="word-wrap:break-word;">00494-cal-1998-reply f.e.r.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="205322-an-induction-heating-device-for-heating-fluid-in-a-non-metalic-vessel-or-pipeline.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="205324-thermo-chemical-tar-converter.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>205323</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>494/CAL/1998</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>13/2007</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>30-Mar-2007</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>30-Mar-2007</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>24-Mar-1998</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>NORTHERN TELECOM, LTD</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>380, ST. ANTOINE STREET WEST, 8TH FL., MONTREAL QUEBEC H2Y3Y4</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>SANTOSH P ABRAHAM</td>
+											<td>INDIAN INSTITUTE OF SCIENCE, BANGALORE - 560 012</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>GERG M BERNSTEIN</td>
+											<td>4417, CASTANOS ST., FREMONT, CA 94536</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>JEFFREY T GULLICKSEN</td>
+											<td>3775, FLORA VISTA AVE., # 403, SANTA CKARA, CA 95051</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>GURPREET S CHHABRA,</td>
+											<td>1035, ASTER AVE., APT. 2124. SUNNYVALE, CA 94086</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04L 12/56</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td></td>
+									<td></td>
+								    <td>NA</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/205323-a-method-and-apparatus-for-use-in-a-network-with-rate-based-feedback-congestion-control-and-a-system-therefor by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 07:44:40 GMT -->
+</html>

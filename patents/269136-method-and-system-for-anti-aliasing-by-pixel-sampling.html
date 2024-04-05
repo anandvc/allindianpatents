@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/269136-method-and-system-for-anti-aliasing-by-pixel-sampling by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 08:14:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 269136:METHOD AND SYSTEM FOR ANTI-ALIASING BY PIXEL SAMPLING</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD AND SYSTEM FOR ANTI-ALIASING BY PIXEL SAMPLING</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method, system, and article of manufacture for reducing aliasing. A method in accordance with one embodiment sampling a pixel of an image at a plurality of pixel sample points to produce a corresponding plurality of pixel sample values, wherein at least one of the plurality of pixel sample points is located at a predetermined displacement from a position along an edge of the pixel. The method further includes combining the plurality of pixel sample values to produce a displayed pixel value.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>BACKGROUND OF THE INVENTION<br>
+TECHNICAL FIELD<br>
+	The present invention relates generally to graphic processing and more<br>
+particularly, but not by way of limitation, to a method and system for producing high-<br>
+quality anti-aliased graphic pictures at high frame rates with low computational cost.<br>
+HISTORY OF RELATED ART<br>
+	Real-time rendering of three-dimensional graphics has a number of appealing<br>
+applications on mobile terminals, including games, man-machine interfaces, messaging,<br>
+and e-commerce. Since three-dimensional rendering is typically a computationally<br>
+expensive task, dedicated hardware must often be built to achieve acceptable performance.<br>
+Innovative ways of lowering the computations complexity and bandwidth usage of this<br>
+hardware architecture are thus of great importance. As described in Akenine-Moller,<br>
+Tomas and Jacob Stro'm, "Graphics for the Masses: A Hardware Architecture for Mobile<br>
+Phones," ACM Transactions on Graphics, vol. 22, no. 3, Proceedings of ACM SIGGRAPH<br>
+2003, pp. 801-808, July 2003, it has been shown that the average eye-to-pixel angle is<br>
+about 2-4 greater for a mobile phone than for a personal computer (PC). Thus, the image<br>
+quality on mobile devices should ideally be greater than for PCs. However, mobile<br>
+devices typically have fewer and less-powerful computational resources.<br>
+	Since the early days of computer graphics, aliasing has been a problem when<br>
+presenting still or moving pictures on a display. An example of aliasing is the stair-step<br>
+effect that is visible on display terminals when a line is drawn at an angle. These stair-step<br>
+artifacts are commonly referred to as "jaggies". During three-dimensional rendering,<br>
+edges of polygons often produce noticeable aliasing artifacts. It is desirable to reduce<br>
+these artifacts using anti-aliasing techniques.<br>
+	One approach to reducing the artifacts in pictures due to aliasing is to use what<br>
+is known as supersampling. In a supersampling approach, a scene is sampled in more than<br>
+one point per pixel to be displayed and the final image is computed from the samples. As<br>
+2<br><br><br>
+a special case of supersampling, multisampling techniques also sample the scene in more<br>
+than one point per pixel, but the results of fragment shader computations (e.g. texture and<br>
+color) are shared between the samples in a pixel. A multisampling algorithm, in general,<br>
+is one that takes more than one sample per pixel in a single pass, and shares computations<br>
+among the samples for a grid cell.<br>
+	In the supersampling approach to anti-aliasing, a picture is rendered at a higher<br>
+resolution than the final resolution that is displayed on the screen, resulting in more than<br>
+one sample per pixel. The samples for each pixel are then averaged, for example, to form<br>
+the color of the pixel. This is done by rendering multiple sub-pixel samples for each pixel<br>
+to be displayed, and computing the value of each pixel as a weighted sum of the sub-pixel<br>
+sample values. For example, each displayed pixel may be comprised of a filtered,<br>
+weighted sum of a group of four sub-pixel samples inside the pixel.<br>
+	As a consequence of the supersampling approach, the graphics hardware must<br>
+process four times as many samples for each displayed pixel. This method of anti-aliasing<br>
+is often referred to as brute-force supersampling. Brute-force supersampling increases the<br>
+quality of the image greatly, but comes at a high penalty in terms of memory and<br>
+rendering time. For example, assume that the width and height of a target image is w x h.<br>
+If a resolution of 2w x 2 h is used for brute-force supersampling, then four samples per<br>
+pixel are used, and four times as much memory, as well as four times the rasterization<br>
+time, is required. Although supersampling provides good picture quality, it may result in a<br>
+low frame rate due to a heavy computational burden.<br>
+	In order to lower the computational burden for producing anti-aliased pixels, a<br>
+modified supersampling scheme may be used in which sub-pixel sample locations are<br>
+placed in positions so that the value of one or more of the sample locations may be used<br>
+for calculating the final value for more than one pixel. A supersampling scheme of this<br>
+kind is often referred to as a sample-sharing scheme. By sharing samples, it is possible to<br>
+obtain less than four samples per pixel. Multisampling can sometimes be used to further<br>
+reduce bandwidth requirements, since part of the computations may be shared by all<br>
+samples inside a pixel.<br>
+3<br><br><br>
+	The GeForce3™ graphics processing unit from NVIDIA Corporation, Santa<br>
+Clara, USA provides hardware that supports supersampling and sharing of subsamples<br>
+between pixels. A supersampling scheme is referred to as "Quincunx" presents a sub-pixel<br>
+sample pattern in the form of a "5" on a die (i.e., five sub-pixel samples are used for<br>
+calculating the value of the final pixel). Due to the placing of the sample locations in the<br>
+Quincunx scheme, only two samples per pixel need to be calculated. The rest of the<br>
+sample values are obtained from neighboring pixels. A center sub-pixel sample is given a<br>
+weight of 0.5, while peripheral sub-pixel samples are given a weight of 0.125 each.<br>
+Information regarding the Quincunx scheme may be found in "Technical Brief, HRAA:<br>
+High-Resolution Antialiasing through Multisampling" from NVIDIA Corporation.<br>
+	A number of gray levels between black and white in a monochrome scheme<br>
+depends on how many pixel sample points are used. In an example in which four pixel<br>
+sample locations are used, there will at best be three gray shades between black and white.<br>
+Consequently, the Quincunx scheme described above at best provides four shades of gray.<br>
+However, the effective number of gray shades for the Quincunx scheme may be as low as<br>
+two. In the Quincunx scheme, the sample points form lines in vertical, horizontal, and 45°<br>
+directions, which causes the Quincunx scheme to perform worse than some other schemes<br>
+for some line orientations.<br>
+SUMMARY OF THE INVENTION<br>
+	The present invention seeks to provide a method and apparatus for producing<br>
+high-quality anti-aliased pictures at a low computational cost. One embodiment of the<br>
+present invention is directed to a method for reducing aliasing. The method includes the<br>
+step of sampling a pixel of an image at a plurality of pixel sample points to produce a<br>
+corresponding plurality of pixel sample values, wherein at least one of the plurality of<br>
+pixel sample points is located at a predetermined displacement from a position along an<br>
+edge of the pixel. The method further includes combining the plurality of pixel sample<br>
+values to produce a displayed pixel value. In an embodiment of the invention the<br>
+predetermined displacement is determined using a lookup table. In still another<br>
+4<br><br><br>
+embodiment of the invention the predetermined displacement is determined pseudo-<br>
+randomly.<br>
+	Another embodiment of the present invention is directed to a system for<br>
+reducing aliasing including a sample buffer adapted to store an image, and a processor<br>
+adapted to perform pixel sampling at a plurality of pixel sample points to produce a<br>
+corresponding plurality of pixel sample values, wherein at least one of the plurality of<br>
+pixel sample points is located at a predetermined displacement from a position along an<br>
+edge of a pixel. The processor is further adapted to combine the plurality of pixel sample<br>
+values to produce at least one displayed pixel value.<br>
+	Another embodiment of the present invention is directed to an article of<br>
+manufacture including at least one computer readable medium and processor instructions<br>
+contained on the at least one computer readable medium, the processor instructions<br>
+configured to be readable from the at least one computer readable medium by at least one<br>
+processor and thereby cause the at least one processor to operate so as to sample a pixel of<br>
+an image at a plurality of pixel sample points to produce a corresponding plurality of pixel<br>
+sample values, wherein at least one of the plurality of pixel sample points is located within<br>
+a predetermined displacement from a position along an edge of the pixel. The processor<br>
+instructions further cause the at least one processor to operate so as to combine the<br>
+plurality of pixel sample values to produce a displayed pixel value.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+	A more complete understanding of the present invention may be obtained by<br>
+reference to the following Detailed Description of Exemplary Embodiments of the<br>
+Invention, when taken in conjunction with the accompanying Drawings, wherein:<br>
+		FIGURE 1A illustrates an example of a pixel sampling pattern for anti-aliasing;<br>
+		FIGURE IB illustrates a pixel sampling pattern for anti-aliasing;<br>
+		FIGURE 2 A illustrates another example of a pixel sampling pattern for anti-<br>
+aliasing;<br>
+5<br><br><br>
+	FIGURE 2B illustrates a pixel sampling pattern for anti-aliasing;<br>
+	FIGURES 3 A and 3B illustrate the calculation of pixel sample locations in a<br>
+pixel sample pattern;<br>
+	FIGURE 4 illustrates a mirroring step of a pixel sample pattern;<br>
+	FIGURE 5 illustrates another mirroring step of another pixel sample pattern;<br>
+	FIGURES 6A and 6B illustrate a pixel sample pattern;<br>
+	FIGURE 7 illustrates a pixel sample pattern;<br>
+	FIGURE 8 illustrates a pixel sample pattern;<br>
+	FIGURES 9A and 9B illustrate a method for producing anti-aliased pictures;<br>
+	FIGURES 10A-10D illustrate a variant of a multisampling scheme including<br>
+three pixel samples for each pixel;<br>
+	FIGURE 11 illustrates another multisampling scheme;<br>
+	FIGURE 12 illustrates the anti-aliasing scheme in a 3x3 pixel configuration<br>
+including nine pixels;<br>
+	FIGURES 13A-13D illustrate a multisampling scheme;<br>
+	FIGURE 14 illustrates a multisampling scheme;<br>
+	FIGURE 15 illustrates an anti-aliasing scheme in a 3x3 pixel configuration; and<br>
+	FIGURE 16 is a schematic block diagram illustrating a graphics system for<br>
+creating anti-aliased pictures.<br>
+DETAILED DESCRIPTION OF EXEMPLARY EMBODIMENTS OF THE<br>
+INVENTION<br>
+	Embodiment(s) of the invention will now be described more fully with<br>
+reference to the accompanying Drawings. The invention may, however, be embodied in<br>
+many different forms and should not be construed as limited to the embodiment(s) set<br>
+forth herein. The invention should only be considered limited by the claims as they now<br>
+exist and the equivalents thereof.<br>
+	Various embodiments of the present invention serve to reduce anti-aliasing<br>
+artifacts by providing a non-periodic pixel sampling pattern. The non-periodic pixel<br>
+sampling pattern can cause no particular angle of edges to be more prone to having '<br>
+aliasing artifacts. Various embodiments of the present invention serve to eliminate the<br>
+6<br><br><br>
+need to implement a reflection rule for neighboring pixels and require only that a sample<br>
+placed on a pixel edge be shared by a neighboring pixel sharing the pixel edge.<br>
+Accordingly, no other pixel needs to be dependent upon that sample.<br>
+	Referring now to FIGURE 1 A, a pixel sampling pattern for eight pixels 101a-<br>
+10lh is illustrated. The pixel sampling pattern of FIGURE 1A shows nine pixel sample<br>
+points 104-112 located on the edges of the pixels l0la-l0lh. For purposes of clarity, any<br>
+pixel samples that may lie on horizontal pixel edges are not illustrated. The pixel<br>
+sampling pattern of FIGURE 1A possesses a periodicity of two as the pixel sampling<br>
+pattern is repeated for every two pixels.<br>
+	Referring now to FIGURE IB, a pixel sampling pattern in accordance with an<br>
+embodiment of the present invention is illustrated. The pixel sampling pattern of FIGURE<br>
+IB shows nine pixel sample points 104'-112' located on the edges of the pixels 101a'-<br>
+101h'. For purposes of clarity, any pixel samples that may lie on horizontal pixel edges<br>
+are not illustrated. In FIGURE IB, the pixel sample point 105' is displaced by a<br>
+predetermined offset along the shared edge of pixels 101a' and 101b' so that it is not at a<br>
+same vertical distance along a pixel edge as any of the other pixel sample points 104' and<br>
+106'-112'. The distance that the pixel sample point 105' is displaced can be determined by<br>
+any of a number of methods or algorithms. In one option, a distance that the pixel sample<br>
+point 105' is displaced can be determined by a lookup from a table for one or more pixels<br>
+for which the anti-aliasing scheme is to be performed. In still another option, the amount<br>
+of offset can be determined pseudo-randomly. The displacement of the pixel sample point<br>
+105' produces a non-periodic pixel sampling pattern. In still another option, one or more<br>
+of any of the pixel sample points 104'-112' may be displaced by a predetermined distance<br>
+along a pixel edge with the requirement that sample points placed on pixel edges are<br>
+shared by a neighboring pixel sharing that pixel edge.<br>
+	Referring now to FIGURE 2A, a pixel sampling pattern for eight pixels 201a-<br>
+20 lh is illustrated. The pixel sampling pattern of FIGURE 2A shows nine pixel sample<br>
+points 204-212 located on the edges of the pixels 201a-201h. For purposes of clarity, any<br>
+pixel samples that may lie on horizontal pixel edges are not illustrated. The pixel<br>
+7<br><br><br>
+sampling pattern of FIGURE 2 A possesses a periodicity of three as the pixel sampling<br>
+pattern is repeated for every three pixels. Referring now to FIGURE 2B, an embodiment<br>
+of the present invention is illustrated in which every sample in a pixel sampling pattern is<br>
+positioned at a predetermined offset along an edge of a pixel, or within a predetermined<br>
+interval along an edge of a pixel. FIGURE 2B illustrates a pixel sampling pattern for eight<br>
+pixels 201a'-201h'. The pixel sampling pattern of FIGURE 2B shows nine pixel sample<br>
+points 204'-212' located on edges of the pixels 201a'-201d' and 202a'-202d'. Each of the<br>
+pixel sample points 204'-212' is positioned at a predetermined point inside a predetermined<br>
+interval of a pixel edge. In one option, the pixel sample points 204'-212' are pseudo-<br>
+randomly positioned inside a predetermined interval of a pixel edge. In another option,<br>
+the pixel sample points 204'-212' are positioned at a predetermined offset read from a<br>
+lookup table such that the pixel sampling pattern does not repeat over at least two pixels.<br>
+	FIGURE 2B illustrates a predetermined interval associated with each of the<br>
+pixel sample points 204'-212', with each predetermined interval being represented by a<br>
+bracket. Through use of displacement of pixel sample points, a virtually infinite<br>
+periodicity, within the limitations of a lookup table or a pseudo-random generator used to<br>
+produce the displacements, of the pixel sampling pattern is produced, which results in an<br>
+improved breakup of symmetry along line edges and provides better visual quality in an<br>
+anti-aliased image. Although the predetermined intervals of pixel sample points 204'-212'<br>
+are illustrated as extending along only a portion of a pixel edge, it should be understood<br>
+that the predetermined intervals can extend along the entire length of the pixel edge so that<br>
+a particular pixel sample point can be located anywhere along the pixel edge. It should<br>
+also be understood that pixel sample points need not be located precisely on a pixel edge,<br>
+but may instead be located near a pixel edge, for example at a distance of one-third of a<br>
+pixel width from a pixel edge. It should be understood that additional pixel sample points<br>
+may be located within each pixel.<br>
+	FIGURES 3A and 3B illustrate a super-sampling scheme in which pixel sample<br>
+points 303-306 are placed at the edges of a pixel 301, and pixel sample points 307-310 are<br>
+placed at the edges of a pixel 302. This allows for pixel sample sharing between the pixel<br>
+301 and the pixel 302 in display memory if the pixel 301 and pixel 302 are positioned<br>
+8<br><br><br>
+adjacent to one another. In the super-sampling scheme of FIGURES 3 A and 3B, the<br>
+samples are not placed in the comers of the pixel 301,302 as with the Quincunx scheme.<br>
+Instead, one pixel sample point is defined for each edge of the pixel 301, 302 in a rotated<br>
+square-shaped configuration and is given a weight of 0.25 each. It should be understood<br>
+that other weights can be used for weighting each sample point as well.<br>
+	Equations for determining the precise pixel sample locations are shown below<br>
+FIGURES 3 A and 3B, respectively. In the equations of FIGURES 3 A and 3B, the terms<br>
+xO and yO represent an origin point of an x-axis ("x") and a y-axis ("y"), respectively as<br>
+illustrated in FIGURES 3A and 3B.<br>
+	Placement of the pixel sample points 303-310 as shown provides for a sampling<br>
+pattern in which a relatively small number of pixel sample points are necessary. In<br>
+addition, the sampling pattern provides the feature of that each sample point is located on<br>
+a unique row and column of a pixel, i.e., no two pixel samples share the same column or<br>
+row for a particular pixel. This is illustrated in FIGURES 3A &amp; 3B by dashed lines<br>
+wherein no two points lie on the same dashed line. The sampling pattern also serves to<br>
+break the symmetry of the pixel sampling pattern configuration, which provides for an<br>
+increase in the anti-aliasing effect of non-axial lines of a display, non-axial lines being<br>
+lines which do not lie parallel to the horizontal axis or the vertical axes of the display. The<br>
+anti-aliasing effect is even greater for lines which are near to being vertical or near to<br>
+being horizontal with respect to the display. For example, assume a near to horizontal<br>
+oriented edge of a polygon that is drawn on a display across one or more pixels of 301,<br>
+302. If, for example, the Quincunx scheme is used for producing an anti-aliased line<br>
+representation, four sample points, one in each corner of the pixel, will be used. For some<br>
+pixels, the polygon edge will cover only the top portion of a pixel, but will still cover the<br>
+two uppermost pixel sample locations. Consequently, by examining the values from the<br>
+pixel sample locations in the pixel, the determined anti-aliased value of the pixel will be<br>
+0.25 even if half the pixel is covered by the edge. The pixel will hence be poorly<br>
+presented.<br>
+9<br><br><br>
+	If the same situation occurs with the use of the scheme of FIGURES 3 A &amp; 3B<br>
+with an edge of a polygon positioned in a near-to-horizontal line orientation that covers a<br>
+small part of the top of the pixels 301, 302, the polygon edge will not cover both pixel<br>
+sample locations, but only the sample location on the uppermost horizontal edge of the<br>
+pixels 301, 302 due to the placement of the sample locations.<br>
+	FIGURE 4 illustrates a pixel sampling pattern in which pixel sample points 403-<br>
+406 of a pixel 401 are not placed in the corners of the pixel as is the case with the<br>
+Quincunx scheme. A pixel sample configuration as illustrated by pixel sample points 403-<br>
+406 is referred to as "quad A." Correspondingly, a pixel 402 representing a pixel sample<br>
+configuration as illustrated by pixel sample points 406-409 is referred to as "quad B."<br>
+	By examining the configurations of quad A and quad B side-by-side it is<br>
+evident that the pixel sample points 406-409 of quad B mirror image are the corresponding<br>
+pixel sample points 403-406 in quad A when reflected at a right vertical edge 410 of quad<br>
+A (and consequently a left vertical edge of quad B). By mirroring the locations of the<br>
+pixel sample points 403-406 and 406-409, it is possible to share the pixel sample point 406<br>
+between the two pixels and still break up the symmetry of the pixel sampling<br>
+configurations to achieve a better anti-aliasing result. There is only one sample per row<br>
+and one sample per column. In, for example, the Quincunx scheme, there are two samples<br>
+for the top row.<br>
+	FIGURE 5 illustrates an anti-aliasing scheme in which an upper left pixel 501<br>
+contains four pixel sample points 510-513 in a quad A configuration. A pixel 502 to the<br>
+right of the pixel 501 also contains four pixel sample points 513-516 in a quad B<br>
+configuration, which are reflected at the right edge of the leftmost pixel 501. Moreover, a<br>
+third pixel 503 also contains four pixel sample points 516-519 in a quad A configuration.<br>
+As can be seen from FIGURE 5, pixels 501-503 share one pixel sample point 513, 516<br>
+between each pair of pixels 501-502, 502-503. A lower row of pixels including pixels<br>
+504-506 starts with the pixel 504 presenting a quad B configuration of pixel sample points<br>
+511, 520-522. The pixel sample point 511 is shared between the pixel 504 and the pixel<br>
+501 on the row of pixels above. By examining the configurations of quad A (i.e., the<br>
+10<br><br><br>
+topmost pixel 501) and quad B (i.e., the lower pixel 504) side-by-side, it is evident that the<br>
+pixel sample points 511, 520-522 of quad B form a mirror image of the corresponding<br>
+points 510-513 in quad A reflected at a bottom horizontal edge 530 of the pixel 501 (and<br>
+consequently a top horizontal edge of pixel 504).<br>
+	The pixel 505 contains four pixel sample points 515, 522-524 in a quad A<br>
+configuration. The pixel 505 shares one pixel sample point 515 with the pixel 502 and one<br>
+pixel sample point 522 with the pixel 504. The same applies to the rightmost pixel 506,<br>
+which also shares two pixel sample points 517, 524 with the neighboring pixels 503, 505.<br>
+	By using a mirroring scheme, all pixels, except for the uppermost and leftmost<br>
+pixels 501-504 on a display, require a calculation of only two new pixel sample location<br>
+values when determining the final value of the pixels 501-506. In an example in which<br>
+pixel calculations are performed in a left-to-right and top-to-bottom order, for pixel 501,<br>
+values for pixel samples points 510-513 are calculated. For pixel 502, values pixel sample<br>
+points 514-516 are calculated, while the value of pixel sample point 513 does not have to<br>
+be calculated because it has already been calculated for pixel 501. For pixel 503, the<br>
+values of pixel sample points 517-519 are calculated, while the value of pixel sample point<br>
+516 does not have to be calculated because it has already been calculated for pixel 502.<br>
+For pixel 504, values of pixel sample points 520-522 are calculated, while the value of<br>
+pixel sample point 511 does not have to be calculated because it has already been<br>
+calculated for pixel 501. For pixel 505, only the values of pixel sample points 523-524 are<br>
+calculated, while the values of pixel sample points 515 and 522 do not have to be<br>
+calculated because they have already been calculated for pixels 502 and 504, respectively.<br>
+Similarly, for pixel 506, only the values of pixel sample points 525-526 are calculated,<br>
+while the values of pixel sample points 517 and 524 do not have to be calculated because<br>
+they have already been calculated for pixels 503 and 505, respectively. In another option<br>
+in which the pixels may be traversed by scanning from right to left and bottom to top, all<br>
+pixels except the rightmost column and the bottommost row require only two samples. In<br>
+another option, the scanning direction may be altered every other line in order to render<br>
+memory usage more effective. It should be understood that any number of ways<br>
+understood to those of ordinary skill in the art to traverse the pixels of a geometric<br>
+11<br><br><br>
+primitive are possible as long as all pixels inside the geometric primitive are visited by the<br>
+traversal scheme.<br>
+	FIGURES 6A and 6B illustrate a super-sampling scheme in which pixel sample<br>
+points 303'-306' are placed at the edges of a pixel 301', and pixel sample points 307'-310'<br>
+are placed at the edges of a pixel 302'. This allows for pixel sample sharing between the<br>
+pixel 301' and the pixel 302' in display memory if the pixel 301' and the pixel 302' are<br>
+positioned adjacent to one another. In the super-sampling scheme of FIGURES 6A and<br>
+6B, one or more of the pixel sample points 303'-306' may be located at a predetermined<br>
+position within an interval along the edge of the pixels 301' and 302'. FIGURES 6A and<br>
+6B illustrate a predetermined interval associated with each of the pixel sample points 303'-<br>
+310', with each predetermined interval being represented by a bracket. Although each<br>
+bracket is illustrated as extending along a portion of a pixel edge, it should be understood<br>
+that the pixel sample points may be positioned along any portion of the pixel edge. In the<br>
+embodiment of FIGURES 6 A and 6B, one pixel sample location is defined for each edge<br>
+of the pixel 301, 302 and is given a weight of 0.25. Example equations for determining<br>
+the precise pixel sample locations for FIGURE 6A as follows:<br>
+	303'=(x0+2/3+offset(x0, y0, 0), y0+l)<br>
+	304'=(x0, y0+2/3+offset(x0, y0, 1))<br>
+	305?=(x0+l/3+offset(x0, y0, 2), y0)<br>
+	306'=(x0+l, y0+l/3+offset(x0, y0, 3))<br>
+	and for FIGURE 6B as follows:<br>
+	307'=(x0+l/3+offset(x0 y0, 0), y0+l)<br>
+	308'=(x0, y0.+l/3+offset(x0, y0, 1))<br>
+	309'=(x.+2/3+offset(x0, y0, 2), y0)<br>
+	310'=(x0+l, y0+2/3+offset(x0, y0, 3))<br>
+	where the offset() function represents a function for generating a displacement<br>
+value within a predetermined range, and the terms xO and yO represent an origin point of<br>
+an x-axis ("x") and a y-axis ("y"), respectively as illustrated in FIGURES 6A and 6B. In<br>
+another embodiment, it is not necessary to include the added constant in the equations for<br>
+12<br><br><br>
+determining pixel sample locations, as this information can already be encoded within the<br>
+look-up table or in the pseudo-random function. For example, the equation for pixel<br>
+sample location 303' may be of the form:<br>
+	303'=(x0+offset(x0, y0, 0), y0+1)<br>
+	The displaced (or offset) placement of one or more of the pixel sample points 303'-<br>
+310' serves to break the periodicity of the sampling pattern in order to increase the anti-<br>
+aliasing effect on straight edges, especially those near 27 degrees. For sampling patterns<br>
+in with displacement of pixel sample points is not performed, edges at 27 degrees may<br>
+otherwise produce undesirable results due to the fact that the pixel sample points represent<br>
+a square that is rotated by 27 degrees. Introducing displacements in accordance with<br>
+various embodiments of the present invention will break this symmetry, producing a better<br>
+result.<br>
+	In one option, each of the pixel sample points 303'-310' may be positioned at a<br>
+predetermined offset as read from a look-up table such that the pixel sampling pattern is<br>
+not repeated for at least every pixel. In another option, each of the pixel sample points<br>
+303'-310' may be positioned using a pseudo-random number generator. In still another<br>
+option, the sampling pattern may include one or more pixel sample points located inside<br>
+the pixel in addition to those located at or near the edges of the pixel.<br>
+	FIGURE 7 illustrates a pixel sampling pattern in which pixel sample points<br>
+403'-406' of a leftmost pixel 401' are placed at predetermined positions along the edges of<br>
+the pixel 401'. Pixel sample points 407'-409' are placed at the edges of a pixel 402'. The<br>
+position of at least one of pixel sample points 403'-409' may be located at a predetermined<br>
+position within a predetermined interval along the respective edges of the pixels 401' and<br>
+402'. FIGURE 7 illustrates a predetermined interval associated with each of the pixel<br>
+sample points 403'-409', with each predetermined interval being represented by a bracket.<br>
+Although the bracket is illustrated as extending along a portion of a pixel edge, it should<br>
+be understood that the pixel sample points may be positioned along any portion of the<br>
+pixel edge.<br>
+13<br><br><br>
+	FIGURE 8 illustrates an anti-aliasing scheme in which an upper left pixel 501'<br>
+contains four pixel sample points 510'-513' A pixel 502' to the right of the pixel 501' also<br>
+contains four pixel sample points 513'-516'. Moreover, a third pixel 503' also contains<br>
+four pixel sample points 516'-519' As can be seen from FIGURE 8, pixels 501'-503' share<br>
+one pixel sample points 513', 516' between each pair of pixels 501'-502', 502'-503'. A<br>
+lower row of pixels starts with a pixel 504' presenting a configuration of pixel sample<br>
+points 511', 520'-522'. The pixel sample point 511' is shared between the pixel 504' and<br>
+the pixel 501' on the row of pixels above.<br>
+	The pixel 505' contains four pixel sample points 515', 522'-524'. The pixel 505'<br>
+shares one pixel sample point 515' with the pixel 502' on the row above and one pixel<br>
+sample point 522' with the pixel 504'. The same applies to the rightmost pixel 506', which<br>
+also shares two pixel sample points 517', 524' with the neighboring pixels 503', 505'. The<br>
+position of at least one of pixel sample point 510'-525' may be located at a predetermined<br>
+position within a predetermined interval along the respective edges of at least one of the<br>
+pixels 501'-506'. In one option, the pixel sample points are positioned at a predetermined<br>
+offset read from a lookup table. In another option, the pixel sample points are pseudo-<br>
+randomly positioned inside a predetermined interval of a pixel edge.<br>
+	All pixels, except for the uppermost and leftmost pixels 501'-504', require a<br>
+calculation of only two new pixel sample point values when determining the final value of<br>
+the pixels 501'-506'. In another option, all pixels except the rightmost column and the<br>
+bottommost row in an image require only two samples. The sample locations in the pixels<br>
+of an image may be traversed by scanning the lines from left to right. In another option,<br>
+the scanning direction may be altered every other line in order to render memory usage<br>
+more effective. Additionally, it should be understood that any traversal scheme can be<br>
+implemented in conjunction with the supersampling scheme.<br>
+	FIGURE 9A is a flow chart illustrating a method for producing high-quality<br>
+anti-aliased images in which one or more geometric primitives are sampled to produce an<br>
+image. In an application stage (step 610), a processor (e.g, a Central Processing Unit<br>
+14<br><br><br>
+(CPU)) runs an application program (e.g., a computer game) and generates geometric<br>
+primitives (for example, polygons in the form of triangles) that are to be converted into a<br>
+2D presentation on a display.<br>
+	Next, in a geometry stage (step 620), the processor or a Graphical Processing<br>
+Unit (GPU) calculates the different visual effects that affect the appearance of the object<br>
+on the display, such as lighting, clipping, transformations, or projections. As geometric<br>
+primitives are typically used when creating 3-D objects in computer graphics, the pixel<br>
+coordinates of the vertices of the geometric primitive are typically calculated.<br>
+	In a rasterizer stage (step 630), triangles are drawn to a sample buffer.<br>
+Perspective-correct interpolation of texture coordinates over the one or more geometric<br>
+primitives is used in order to ensure that a correct projection is obtained. The rasterizer<br>
+stage may be performed by the processor and/or a GPU. In addition to this, the processor<br>
+or GPU may also, for example, interpolate one or more colors, another set of texture<br>
+coordinates, or fog, etc. The processor or GPU may also perform Z-buffer tests, and<br>
+ensure that a final pixel obtains the correct color. In a filtering stage (step 640), the<br>
+sample buffer is filtered to produce pixel colors that are stored in a color buffer. The<br>
+contents of the color buffer can then be displayed on the screen.<br>
+	FIGURE 9B is a more detailed flow chart illustrating step 630 of FIGURE 9A.<br>
+In step 631, geometric primitive setup for a first geometric primitive is performed in which<br>
+a first sample point of a pixel sample pattern in accordance with various embodiments of<br>
+the present invention is found in the geometric primitive and the process proceeds to step<br>
+632. In step 632 it is determined if the sample point has been found within the boundaries<br>
+of the geometric primitive. If no sample point has been found within the geometric<br>
+primitive, the process continues to step 633 in which it is determined whether there exists<br>
+more geometric primitives to be drawn. If more geometric primitives exist to be drawn,<br>
+the process proceeds to step 634. In step 634, the next geometric primitive is retrieved and<br>
+the process returns to step 631 in which geometric primitive setup is performed. If in step<br>
+633 it is determined that no more geometric primitives exits to be drawn, step 630 ends<br>
+15<br><br><br>
+and the process proceeds to step 640 in which filtering of samples is performed to produce<br>
+filters.<br>
+	If in step 632 it is determined that the sample point is found within the<br>
+geometric primitive, the process proceeds to step 635 in which a visibility check is<br>
+performed regarding whether the sample will be visible in the geometric primitive. In step<br>
+636 a determination is made regarding whether the sample is visible. If the sample is not<br>
+visible, the process proceeds to step 637 in which the geometric primitive is traversed to<br>
+find the next sample point within the geometric primitive, and the process continues to<br>
+step 632.<br>
+	If in step 636 a determination is made that the sample point is visible,<br>
+computation of a color of the sample is performed in step 638, and in step 639 the color<br>
+and depth of the sample is stored in one or more buffers, such as a sample buffer. The<br>
+process then returns to step 637 in which the geometric primitive is traversed to find the<br>
+next sample point within the geometric primitive.<br>
+	FIGURES 10A-10D illustrate a variant of a multisampling scheme comprising<br>
+three pixel sample points for each of pixels 801, 802, 811,812. Pixel sample points 803-<br>
+808, 813-818 are placed at borders of the pixel 801, 802, 811, 812. The borders of the<br>
+pixels function as mirror planes for sample sharing, which allows for sharing of samples<br>
+between the different pixels 801, 802, 811, 812 in a display memory.<br>
+	At least one of the pixel sample points 803-808, 813-818 is placed at a corner of<br>
+each pixel 801, 802, 811,812. The term "at a corner" means that the sample is provided<br>
+approximately at the corner of two intersection borders of the pixel, for example, at a<br>
+distance from the corner of no greater than one-third of the length of a shortest pixel edge<br>
+terminating at the corner. However, the corner sample may be slightly displaced with<br>
+regard to the actual corner, as long as the corner sample may be used for the calculation of<br>
+up to four pixel values.<br>
+16<br><br><br>
+	In the multisampling scheme of FIGURES 10A-10D, a first pixel sample point<br>
+is defined for a corner of two borders of the pixels 801, 802, 811,812. Second and third<br>
+pixel sample points are defined for separate borders of the pixels 801, 802, 811,812,<br>
+which do not intersect the pixel corner where the first pixel sample resides. In FIGURES<br>
+10A-10D, the second and third pixel sample of each pixel 801, 802, 811, and 812 is<br>
+positioned at the center of the border between two corners. For pixel 801, pixel sample<br>
+points 804, 805 are each positioned in the center of the center of a border between two<br>
+corners. For pixel 802, pixel sample points 806, 807 are each positioned in the center of<br>
+the center of a border between two corners. For pixel 811, pixel sample points 813,815<br>
+are each positioned in the center of the center of a border between two corners. For pixel<br>
+812, pixel sample points 816, 817 are each positioned in the center of the center of a<br>
+border between two corners. Pixel sample points 803, 808, 814, and 818 are each<br>
+positioned at a corner of pixels 801, 802, 811, and 812, respectively. However, the second<br>
+and third pixel sample point may be positioned at any point on the border as long as the<br>
+sample may be used for the calculation of the values of two neighboring pixels. Also, in<br>
+FIGURES 10A-10D, the second and third pixel sample points 804, 805, 806, 807, 813,<br>
+815, 816, 817 are positioned on the borders of their respective pixels 801, 802, 811, 812 at<br>
+the same distance from a corner. In another option, the distance from a corner may be<br>
+different for each of pixel sample points 804, 805, 806, 807, 813, 815, 816, 817. Each of<br>
+the pixel sample points is given a weight of 1/3 (i.e., so that the sum of the weights equals<br>
+1). Another weight distribution that may be used is 0.2 for the first pixel sample and 0.4<br>
+for each of the second and third pixel sample. Any other weight distribution for the pixel<br>
+samples may be used as long as their sum totals a value of one.<br>
+	In FIGURES 10A-10D, a grid is superimposed over each of the pixels 801, 802,<br>
+811,812 and defines a possible pixel sample point at a corner and wherever the grid<br>
+intersects a border not intersecting the corner of pixels 801, 802, 811,812 where the<br>
+corner pixel sample point resides. Exemplary equations for determining the precise<br>
+sample point pattern of each pixel 801, 802, 811, 812 are shown in FIGURES 10A-10D,<br>
+respectively. In the equations of FIGURES 10A-10D, the terms xO and yO represent an<br>
+origin point of an x-axis ("x") and a y-axis ("y"), respectively as illustrated in FIGURES<br>
+10A-10D.<br>
+17<br><br><br>
+	FIGURE 11 illustrates a multisampling scheme in which a leftmost pixel 901<br>
+includes one pixel sample point 903 at a comer and two pixel sample points 904-905 on<br>
+separate borders of the pixel 901. In the following text, this pixel sample configuration<br>
+will be referred to as Pattern A. Correspondingly, a second pixel 902 presenting a pixel<br>
+sample configuration having pixel sample points 905-907 is referred to as Pattern B. By<br>
+examining the configurations of Pattern A and Pattern B side-by-side, it is evident that the<br>
+pixel sample points 905-907 of Pattern B are a mirror image of the corresponding points<br>
+903-905 in Pattern A. Pattern A is reflected at the right vertical border 908 of the pixel<br>
+901	to form Pattern B of the pixel 902. Thus, the Pattern B is a mirror image of the<br>
+Pattern A.<br>
+	The pixel sample points of the Pattern A and the Pattern B may also be mirrored<br>
+in their respective bottom horizontal border 909. A third pixel 911 presenting a pixel<br>
+sample configuration that is a mirror image of Pattern A when mirrored in the bottom<br>
+horizontal border of pixel 901 will be referred to as Pattern C. The Pattern C has pixel<br>
+sample points 904, 923-924, wherein one of the pixel sample points (i.e., the pixel sample<br>
+point 904 is shared with Pattern A. A fourth pixel 912 presenting a pixel sample<br>
+configuration that is a mirror image of Pattern B when mirrored in the bottom horizontal<br>
+border 909 will be referred to as Pattern D. The Pattern D has pixel sample points 906,<br>
+924-925, wherein one of the pixel sample points (i.e., pixel sample point 906) is shared<br>
+with Pattern B, and one pixel sample point (i.e., pixel sample point 924) is shared with<br>
+Pattern C.<br>
+	By mirroring the locations of the pixel sample points 903-905 across the vertical<br>
+border 908 it is possible to share the pixel sample point 905 between the two pixels 901,<br>
+902	and still break up the symmetry of the configuration and achieve an improved anti-<br>
+aliasing result. In the multisampling scheme of FIGURE 11 there is only one sample per<br>
+pixel row and pixel column. In contrast, with the Quincunx scheme, there are two samples<br>
+for a top row.<br>
+18<br><br><br>
+	FIGURE 12 illustrates an anti-aliasing scheme in a 3x3 pixel configuration<br>
+including nine pixels 1001-1009. The upper leftmost pixel 1001 contains three pixel<br>
+sample points 1010-1012 in a Pattern A configuration. The second pixel 1002 includes<br>
+three pixel sample points 1012-1014 in a Pattern B configuration, which are mirrored at<br>
+the right border of the upper leftmost pixel 1001. Moreover, the pixel 1003 includes three<br>
+pixel sample points 1014-1016 in a Pattern A configuration. As can be seen from<br>
+FIGURE 12, the upper row of pixels 1001-1003 share one pixel sample point 1012,1014<br>
+between each pair of pixels 1001-1002,1002-1003.<br>
+		A second pixel row starts with the pixel 1004 presenting a Pattern C<br>
+configuration of pixel sample points 1011, 1017-1018. The pixel sample point 1011 is<br>
+shared between the pixel 1004 and the pixel 1001. The pixel 1005, on the second row,<br>
+includes three pixel sample points 1013, 1018-1019 in a Pattern D configuration. The<br>
+pixel 1005 shares one pixel sample point 1013 with the pixel 1002 and one pixel sample<br>
+point 1018 with the pixel 1004. The same applies to the pixel 1006, on the second row,<br>
+having three pixel sample points 1015,1019-1020, which also shares two pixel sample<br>
+points 1015,1019 with the neighboring pixels 1003,1005.<br>
+	A third pixel row starts with the pixel 1007 presenting a Pattern A configuration<br>
+of pixel sample points 1017,1021-1022. The pixel sample point 1017 is shared between<br>
+the pixel 1007 and the fourth 1004. The pixel 1008 includes three pixel sample points<br>
+1019, 1022-1023 in a Pattern B configuration. The pixel 1008 shares one pixel sample<br>
+point 1019 with the pixel 1005 and one pixel sample point 1022 with the pixel 1007 to the<br>
+left. The same applies to the pixel 1009, on the third row, and having three pixel sample<br>
+points 1019,1024-1025, which shares one pixel sample point 1019 with the neighboring<br>
+pixel 1006.<br>
+	By examining FIGURE 12, it is evident that all pixel sample points provided at<br>
+a pixel corner, except in the topmost row and the leftmost column, are shared between four<br>
+pixels. Thus, the majority (for a relatively large grid of pixels) of the corner pixel samples<br>
+only need to be calculated once for four pixels, wherein the calculation cost is 0.25 per<br>
+pixel. The pixel sample points 1011,1012,1013,1015,1018,1021,1022,1023,1024<br>
+19<br><br><br>
+provided on the border not intersecting the borders of the corner pixel, which are shared<br>
+between two pixels, will only have to be calculated once for two neighboring pixels.<br>
+Thus, the calculation cost for these border pixels is 0.5 per pixel.<br>
+	Consequently, by using a mirroring scheme, all pixels, except for the uppermost<br>
+and leftmost pixels 1001-1004,1007, require on average a calculation of only 1.25<br>
+(0.25+0.5+0.5=1.25) new pixel sample point values for determining a final value of the<br>
+pixels 1001-1009. In another option, all pixels except those in the rightmost column and<br>
+those in the bottommost row require only 1.25 samples. In most known multisampling<br>
+configurations, at least two pixel samples must be calculated in order to determine the<br>
+final value of a pixel.<br>
+	The sample locations in the pixels may be traversed by scanning the lines from<br>
+left to right. In another option, the scanning direction may be altered every other line in<br>
+order to render memory usage more effective. It is understood that any traversal scheme<br>
+can be implemented in conjunction with the multisampling scheme.<br>
+	FIGURES 13A-13D illustrate a multisampling scheme. The multisampling<br>
+scheme of FIGURES 13A-13D is illustrated as including three pixel samples for each<br>
+pixel 801', 802', 811', 812'. The pixel sample points 803'-808', 813'-818' are placed at the<br>
+borders of the pixels 801', 802', 811', 812'. The pixel sample points 801', 808', 814' and<br>
+818' are each placed at a corner of pixels 801', 802', 811', 812', respectively. In accordance<br>
+with the multisampling scheme of FIGURES 13A-13D, one or more of the pixel sample<br>
+points 804', 805' 806', 807', 813', 815', 816' and 817' is located at a predetermined position<br>
+within an interval along an edge of pixels 801', 802', 811', 812'. FIGURES 13A-13D<br>
+illustrate a predetermined interval associated with each of the pixel sample points 804',<br>
+805', 806', 807', 813', 815', 816', 817', with each predetermined interval being represented<br>
+by a bracket. The term "at a corner" means that the sample is provided approximately at<br>
+the corner of two intersection borders of a pixel. However, the corner sample may be<br>
+displaced with regard to the actual corner, as long as the corner sample may be used for<br>
+the calculation of up to four pixel values. For example, the sample point may be also be<br>
+located near a corner such the sample point is located at a distance of less than or equal to<br>
+20<br><br><br>
+one-third of a pixel width. In still another option, a sampling pattern may include one or<br>
+more pixel sample points located inside the pixel in addition to those located at or near the<br>
+edges or corner of the pixel.<br>
+	In the multisampling scheme of FIGURES 13A-13D, first pixel sample points<br>
+803', 808', 814', 818' are defined for a corner of two borders of the pixels 801', 802', 811',<br>
+812', respectively. Second and third pixel sample points 804', 805', 806', 807', 813', 815'<br>
+816', 817' are defined for separate borders of the pixels 801', 802", 811', 812', that do not<br>
+intersect the corner pixel sample. In FIGURES 13A-13D, the second and third pixel<br>
+sample points 804', 805', 806', 807', 813', 815' 816', 817' of each pixel 801', 802", 811',<br>
+812' are positioned at the center of the border between two corners. However, as<br>
+previously described, the second and third pixel samples 804', 805', 806', 807', 813', 815'<br>
+816', 817' may be located at any position on the border as long as the sample may be used<br>
+for the calculation of the values of two neighboring pixels. Each of the pixel samples may<br>
+be given a weight of 1/3 (i.e., the sum of the weights equals 1). Thus, another exemplary<br>
+weight distribution is 0.2 for the first pixel sample and 0.4 for each of the second and third<br>
+pixel samples.<br>
+	Example equations for determining a precise pixel sample point pattern of each<br>
+pixel of FIGURE 13A are as follows:<br>
+	803'=(x0, y0+l)<br>
+	804'=(x0+0.5+offset(x0, y0, 0), y0)<br>
+	805'=(x0+l, y0+0.5+offset(x0, y0, 1))<br>
+	for FIGURE 13B as follows:<br>
+	806'=(x0, y0+0.5+offset(x0, y0, 0))<br>
+	807'=(x0+0.5+offset(x0, y0, 1), y0)<br>
+	808'=(x0+l,y0+l)<br>
+	for FIGURE 13C as follows:<br>
+	813'=(x0+0.5+offset(x0, y0, 0), y0+l)<br>
+	814'-(x0,y0)<br>
+	815'=(x0+l, y0+0.5+offset(x0, y0, 1))<br>
+21<br><br><br>
+	and for FIGURE 13D as follows:<br>
+	816'=(x0, y0+0.5+offset(x0, y0, 0)<br>
+	817'=(x0+0.5+offset(x0, y0, 1), y0 1)<br>
+	818'=(x0+l,y0)<br>
+where the offset() function represents a function for generating a displacement value<br>
+within a predetermined range, and the x0 and y0 terms represent an origin point of an x-<br>
+axis ("x") and a y-axis ("y"), respectively as illustrated in FIGURES 13A-13D. In another<br>
+embodiment, it is not necessary to include the added 0.5 constant in the equations for<br>
+determining pixel sample locations, as this information can already be encoded within the<br>
+look-up table or in the pseudo-random function. For example, the equation for pixel<br>
+sample location 804' may be of the form:<br>
+	804'=(x0+offset(x0, y0, 0), y0)<br>
+	The displaced (offset) placement of the pixel sample points 803'-808', 813'-818'<br>
+serves to break the symmetry of the configuration and increases the anti-aliasing effect. In<br>
+one option, each of the pixel sample points 804'-807, 813', and 815'-817' may be<br>
+positioned at a predetermined offset as read from a look-up table such that the pixel<br>
+sampling pattern is not repeated for at least every pixel. In another option, each of the<br>
+pixel sample points 804'-807', 813', and 815'-817' may be positioned using a pseudo-<br>
+random number generator.<br>
+	FIGURE 14 illustrates a multisampling scheme in which a leftmost pixel 901'<br>
+includes one pixel sample point 903' at a corner and two pixel sample points 904'-905' at<br>
+predetermined positions located within intervals along the borders of the pixel 901'. A<br>
+second pixel 902' has a pixel sample point 907' at a corner and two pixel sample points<br>
+905' and 906' located at predetermined positions within intervals along borders of the pixel<br>
+902'. A third pixel 911' has a pixel sample point 923' at a corner and two pixel sample<br>
+points 904' and 924' located at predetermined positions within intervals along borders of<br>
+the pixel 911'. A fourth pixel 912' has a pixel sample point '925 at a corner and two pixel<br>
+sample points 906' and 924' located at predetermined positions within intervals along the<br>
+22<br><br><br>
+borders of the pixel 912'. FIGURE 14 illustrates a predetermined interval associated with<br>
+each of the pixel sample points 904', 905', 906', 924', with each predetermined interval<br>
+being represented by a bracket. Although each bracket is illustrated as extending along a<br>
+portion of a pixel edge, it should be understood that the pixel sample points may be<br>
+positioned along any portion of the pixel edge. As illustrated in FIGURE 14, pixel sample<br>
+points 904', 923'-924' form a pixel sample pattern wherein pixel sample point 904' is<br>
+shared between pixel 901' and pixel 911'. Pixel sample points 906', 924'-925' form a pixel<br>
+sample pattern wherein pixel sample point 906' is shared between pixel 902' and pixel<br>
+912', and pixel sample point 924' is shared between pixel 911' and pixel 912'. The<br>
+predetermined position of each pixel sample point may be determined, for example, by<br>
+reference to a look-up table or pseudo-randomly.<br>
+	The displaced or offset positioning of select pixel sample locations serves to<br>
+break up the symmetry of the pixel sampling configuration and achieve a better anti-<br>
+aliasing result. Further, there is only one sample per pixel row and one sample per pixel<br>
+column. In, for example, Quincunx, there are two pixel samples for the top row of a pixel.<br>
+	FIGURE 15 illustrates an anti-aliasing scheme in a 3x3 pixel configuration<br>
+including nine pixels 1001'-1009'. The pixel 1001' contains three pixel sample points<br>
+1010'-1012'. The pixel 1002', located to the right of the pixel 1001' includes three pixel<br>
+sample points 1012'-1014'. Moreover, a pixel 1003' includes three pixel sample points<br>
+1014'-1016'. As can be seen from FIGURE 15, the upper row of pixels 1001'-1003' shares<br>
+one pixel sample point 1012', 1014' between each pair of pixels 1001'-1002', 1002'-1003'.<br>
+	A second pixel row starts with a pixel 1004' presenting a configuration of pixel<br>
+sample points 1011', 1017-1018'. The pixel sample point 1011' is shared between the<br>
+pixel 1004' and the pixel 1001'. The pixel 1005', on the second row, includes three pixel<br>
+sample points 1013', 1018'-1019'. The pixel 1005' shares one pixel sample point 1013'<br>
+with the pixel 1002' and one pixel sample point 1018' with the pixel 1004'. The same<br>
+applies to the pixel 1006', located on the second row and having three pixel sample points<br>
+1015', 1019'-1020', which also shares two pixel sample points 1015', 1019' with the<br>
+neighboring pixels 1003', 1005'.<br>
+23<br><br><br>
+	The third pixel row starts with the pixel 1007' presenting a configuration of<br>
+pixel sample points 1017', 1021'-1022'. The pixel sample point 1017' is shared between<br>
+the pixel 1007' and the pixel 1004'. The pixel 1008' includes three pixel sample points<br>
+1019', 1022'-1023'. The pixel 1008' shares one pixel sample point 1019' with the pixel<br>
+1005' and one pixel sample point 1022' with the pixel 1007'. The same applies to the pixel<br>
+1009', having three pixel sample points 1019', 1024'-1025', which shares one pixel sample<br>
+point 1019' with the neighboring pixel 1006'. One or more of pixel samples 1011', 1012',<br>
+1013', 1015', 1016', 1018', 1020', 1021', 1022', 1023', 1024', and 1025' may be located at<br>
+predetermined positions within intervals along the borders of the pixels 1001'-1009'.<br>
+FIGURE 15 illustrates a predetermined interval associated with each of the pixel sample<br>
+points 1011', 1012', 1013', 1015', 1016', 1018', 1020', 1021', 1022', 1023', 1024', and 1025',<br>
+with each predetermined interval being represented by a bracket. Although each bracket is<br>
+illustrated as extending along a portion of a pixel edge, it should be understood that the<br>
+pixel sample points may be positioned along any portion of the pixel edge. The<br>
+predetermined position of each pixel sample point may be determined, for example,<br>
+pseudo-randomly or by reference to a look-up table.<br>
+	By examining FIGURE 15, it is evident that all pixel sample points provided at<br>
+a pixel corner, except in the topmost row and the leftmost column, are shared between four<br>
+pixels. Thus, the majority (for a relatively large grid of pixels) of the corner pixel samples<br>
+only need to be calculated once for four pixels, wherein the calculation cost is 0.25 per<br>
+pixel. The pixel sample points 1011', 1012', 1013', 1015', 1016', 1018', 1020', 1021',<br>
+1022', 1023', 1024', and 1025' provided on the border not intersecting the borders of the<br>
+corner pixel, which are shared between two pixels, will only have to be calculated once for<br>
+two neighboring pixels. Thus, the calculation cost for these border pixels is 0.5 per pixel.<br>
+	Consequently, all pixels, except for the uppermost and leftmost pixels 1001'-<br>
+1004', 1007', require on average a calculation of only 1.25 (0.25+0.5+0.5=1.25) new pixel<br>
+sample point values for determining the final value of the pixels 1001'-1009'. In another<br>
+option, all pixels except the rightmost column and the bottommost row of pixels of an<br>
+24<br><br><br>
+image require only 1.25 samples. In most known multi-sampling configurations, at least<br>
+two pixel samples must be calculated in order to determine the final value of a pixel.<br>
+	The pixel sample points in the pixels may be traversed by scanning the lines<br>
+from left to right. In another option, the scanning direction may be altered every other line<br>
+in order to render the memory usage more effective. It is to be understood that any<br>
+traversal scheme can be implemented without departing from the principles of the<br>
+invention.<br>
+	By using the multisampling scheme of FIGURE 15, it is only necessary to<br>
+access a display memory a maximum three times to calculate the final value of a pixel.<br>
+However, by providing an additional small and fast memory, such as an on-chip cache<br>
+memory, for temporarily storing samples needed in one or several subsequent<br>
+computations of pixel values, it is possible to decrease the necessary access to the display<br>
+memory to a minimum of 1.25. By using this approach with the Quincunx scheme, it is<br>
+necessary to access a memory a minimum of two times for the calculation of the final<br>
+value of a pixel. Moreover, an even smaller additional memory may be utilized to store<br>
+only one sample( i.e., the sample that is used for calculating the value of a first pixel and<br>
+the calculation of a value of a subsequent pixel).<br>
+	Referring again to FIGURE 14, the final value of the pixel 901' may be<br>
+calculated by retrieving pixel samples 903'-905' from the display memory. The pixel<br>
+sample 905' may then be temporarily stored in the additional memory. For the<br>
+computation of the final value of the pixel 902', it is only necessary to retrieve the pixel<br>
+samples 906'-907' from the display memory, whereas the pixel sample 905' may be<br>
+retrieved from the additional memory. Consequently, it is only necessary to access the<br>
+display memory twice for the calculation of the majority of pixels of a large grid of pixels,<br>
+such as, for example, a 176x174 pixel grid of a mobile terminal. Using the Quincunx<br>
+scheme, it is necessary to access a display memory three times and an additional memory<br>
+twice for the calculation of the final value of a pixel.<br>
+25<br><br><br>
+	FIGURE 16 is a block diagram of a system for drawing one or more geometric<br>
+primitives, such as a polygon, in accordance with a supersampling scheme having a pixel<br>
+sample pattern. A Central Processing Unit (CPU) 701 is connected to a memory 702 via a<br>
+data bus 703. The memory 702 includes an application program that may be run on the<br>
+system( e.g., a computer game or a Computer Aided Design (CAD) program). The CPU<br>
+701 fetches instructions in the memory 702 and executes the instructions in order to<br>
+perform specific tasks. In this context, a task for the CPU 701 is to provide a Graphics<br>
+Processing Unit (GPU) 704 with information regarding objects to draw on a display 705.<br>
+	The GPU 704 may be in form of a processor, such as, for example, a Digital<br>
+Signal Processor (DSP), or in the form of an Application Specific Integrated Circuit<br>
+(ASIC), a Field-Programmable Gate Array (FPGA), hard-wired logic, or the like. In<br>
+another option, it may be executed on the CPU 701. The GPU 704 is also connected to the<br>
+bus 703 but may as well be connected to the CPU 701 via a separate high-speed bus 706 in<br>
+case a large amount of information is to be transferred between the CPU 701 and the GPU<br>
+704.	The data transfers on the separate high-speed bus 706 will then not interfere with the<br>
+data traffic on the ordinary bus 703.<br>
+	A display memory 707 is also connected to the bus 703 and stores information<br>
+sent from the GPU 704 regarding pictures (i.e., frames) that are to be drawn on the display<br>
+705.	More specifically, the display memory contains a sample buffer 707a and a color<br>
+buffer 707b. The sample buffer 707a contains approximately twice as many samples as<br>
+there are pixels in the final color buffer 707b. The color buffer 707b holds the colors of<br>
+the pixels to be displayed on screen after the rendering of an image is complete. As with<br>
+the interconnection between the CPU 701 and the GPU 704, the display memory 707 may<br>
+be connected directly to the GPU 704 via a separate, high-speed bus. Since the GPU 704<br>
+and the display memory 707 are typically used for producing moving images, the link<br>
+between these two units is typically desired to be as fast as possible and not block the<br>
+normal traffic on the bus 703.<br>
+	The display memory 707 is connected to a Video Digital to Analog Converter<br>
+(VDAC) 708, either via the shared bus 703 or by a separate high-speed bus 709, which<br>
+26<br><br><br>
+reads the information from the color buffer 707b and converts it to an analog signal (e.g. a<br>
+Red, Green, Blue (RGB) composite signal) that is provided to the display 705 in order to<br>
+draw individual pixels on the display 705. The GPU 704 performs a supersampling or<br>
+multisampling procedure using a pixel sampling pattern as described herein to produce the<br>
+pixels held in the color buffer 707b.<br>
+	Although the previous Detailed Description describes example embodiments in<br>
+which the positioning of pixel sample points may be determined using a table look-up or<br>
+pseudo-random method, it should be understood that other methods of positioning pixel<br>
+sample points may be used in accordance with the principles of the invention.<br>
+	The previous Detailed Description is of embodiment(s) of the invention. The<br>
+scope of the invention should not necessarily be limited by this Description. For example,<br>
+it should be understood that the present invention can be used with any sample scheme<br>
+that places samples on the edges of pixels. It should also be understood that the<br>
+supersampling scheme of the various described embodiments of the present invention may<br>
+be included in a number of devices including a computer and a mobile terminal. The<br>
+scope of the invention is instead defined by the following claims and the equivalents<br>
+thereof.<br>
+27<br><br><br>
+WE CLAIM:<br>
+	1.	A method for reducing aliasing, the method comprising:<br>
+	sampling a pixel of an image at a plurality of pixel sample points along one or<br>
+more edges of the pixel to produce a corresponding plurality of pixel sample values;<br>
+	wherein at least one of the plurality of pixel sample points is located on a first edge<br>
+of the pixel at a predetermined displacement from a position on the first edge of the pixel,<br>
+wherein the predetermined displacement is determined pseudo-randomly; and<br>
+	combining the plurality of pixel sample values to produce a displayed pixel value.<br>
+	2.	The method of claim 1, wherein the pseudo-randomly predetermined<br>
+displacement is determined using a pseudo-random number generator.<br>
+	3.	The method of claim 1, wherein at least one of the plurality of pixel sample<br>
+points is shared with at least one pixel sample point of an adjacent pixel.<br>
+	4.	The method of claim 1, wherein the step of combining the plurality of pixel<br>
+sample values comprises determining an average of the plurality of pixel sample values.<br>
+	5.	The method of claim 1, wherein the plurality of pixel sample values<br>
+comprises a plurality of color values.<br>
+	6.	The method of claim 1, wherein the displayed pixel value comprises a color<br>
+value.<br>
+	7.	The method of claim 1, wherein the predetermined displacement comprises<br>
+a pseudo-random position within a predetermined interval along the first edge of the pixel.<br>
+	8.	The method of claim 1, wherein the predetermined displacement is equal to<br>
+a value of zero.<br>
+28<br><br>
+	9.	The method of claim 1, wherein sample points of a plurality of pixels<br>
+comprises a substantially non-periodic sample pattern.<br>
+	10.	The method of claim 1, wherein the plurality of pixel sample points<br>
+consists of four pixel sample points.<br>
+	11.	The method of claim 1, wherein the plurality of pixel sample points<br>
+consists of three pixel sample points.<br>
+	12.	The method of claim 1, wherein the plurality of pixel sample points<br>
+comprises:<br>
+	a first pixel sample point located at a corner of the pixel;<br>
+	a second pixel sample point located along the first edge of the pixel; and<br>
+	a third pixel sample point located along a second edge of the pixel.<br>
+	13.	The method of claim 12, wherein the third pixel sample point is located at a<br>
+pseudo-randomly predetermined displacement from a position along the second edge of<br>
+the pixel.<br>
+	14.	A system for reducing aliasing, the system comprising:<br>
+	a sample buffer adapted to store an image;<br>
+	a processor adapted to perform pixel sampling at a plurality of pixel sample points<br>
+along one or more edges of a pixel to produce a corresponding plurality of pixel sample<br>
+values;<br>
+	wherein at least one of the plurality of pixel sample points is located on a first edge<br>
+of the pixel at a pseudo-randomly predetermined displacement from a position along an<br>
+the first edge of the pixel; and<br>
+	wherein the processor is further adapted to combine the plurality of pixel sample<br>
+values to produce at least one displayed pixel value.<br>
+	15.	The system of claim 14 further comprising a color memory adapted to store<br>
+the at least one displayed pixel value.<br>
+29<br><br><br>
+	16.	The system of claim 19, wherein the processor is selected from a group<br>
+consisting of a central processing unit (CPU) and a graphics processing unit (GPU).<br>
+	17.	The system of claim 14, wherein the processor combines the plurality of<br>
+pixel sample values by determining an average of the plurality of pixel sample values.<br>
+	18.	The system of claim 14, wherein the plurality of pixel sample values<br>
+comprise color values.<br>
+	19.	The system of claim 14, wherein the at least one displayed pixel value<br>
+comprises a color value.<br>
+	20.	The system of claim 14 further comprising a pseudo-random number<br>
+generator adapted to determine the pseudo-randomly predetermined displacement.<br>
+	21.	The system of claim 14, wherein the pseudo-randomly predetermined<br>
+displacement comprises a position within a predetermined interval along the first edge of<br>
+the pixel.<br>
+	22.	The system of claim 14, wherein the pseudo-randomly predetermined<br>
+displacement is equal to a value of zero.<br>
+	23.	The system of claim 14, wherein at least one of the plurality of pixel<br>
+sample points corresponds to at least one pixel sample point of an adjacent pixel of the<br>
+image.<br>
+	24.	The system of claim 14, wherein sample points of a plurality of pixels<br>
+comprise a substantially non-periodic sample pattern.<br>
+	25.	The system of claim 14, wherein the plurality of pixel sample points<br>
+consists of four pixel sample points.<br>
+30<br><br><br>
+	26.	The system of claim 14, wherein the plurality of pixel sample points<br>
+consists of three pixel sample points.<br>
+	27.	The system of claim 14, wherein the plurality of pixel sample points<br>
+comprises:<br>
+	a first pixel sample point located at a corner of the pixel;<br>
+	a second pixel sample point located along the first edge of the pixel; and<br>
+	a third pixel sample point located along a second edge of the pixel.<br>
+	28.	The system of claim 27, wherein the third pixel sample point is located at a<br>
+pseudo-randomly predetermined displacement from a position along the second edge of<br>
+the pixel.<br>
+	29.	An article of manufacture for reducing aliasing, the article of manufacture<br>
+comprising:<br>
+	at least one computer readable medium;<br>
+	processor instructions contained on the at least one computer readable medium, the<br>
+processor instructions configured to be readable from the at least one computer readable<br>
+medium by at least one processor and thereby cause the at least one processor to operate<br>
+so as to:<br>
+		sample a pixel of an image at a plurality of pixel sample points along one or<br>
+more edges of the pixel to produce a corresponding plurality of pixel sample values;<br>
+		wherein at least one of the plurality of pixel sample points is located on a<br>
+first edge of the pixel at a pseudo-randomly predetermined displacement from a position<br>
+along the first edge of the pixel; and<br>
+		combine the plurality of pixel sample values to produce a displayed pixel<br>
+value.<br>
+	30.	The article of manufacture of claim 29, wherein the pseudo-randomly<br>
+predetermined displacement is determined using a pseudo-random number generator.<br>
+31<br><br><br>
+	31.	The article of manufacture of 29, wherein at least one of the plurality of<br>
+pixel sample points is shared with at least one pixel sample point of an adjacent pixel.<br>
+	32.	The article of manufacture of claim 29, wherein the processor combines the<br>
+plurality of pixel sample values by determining an average of the plurality of pixel sample<br>
+values.<br>
+	33.	The article of manufacture of claim 29, wherein the plurality of pixel<br>
+sample values comprises a plurality of color values.<br>
+	34.	The article of manufacture of claim 29, wherein the displayed pixel value<br>
+comprises a color value.<br>
+	35.	The article of manufacture of claim 29, wherein the pseudo-randomly<br>
+predetermined displacement comprises a position within a predetermined interval along<br>
+the first edge of the pixel.<br>
+	36.	The article of manufacture of claim 29, wherein the predetermined<br>
+displacement is equal to a value of zero.<br>
+	37.	The article of manufacture of claim 29, wherein sample points of a plurality<br>
+of pixels comprises a substantially non-periodic sample pattern.<br>
+	38.	The article of manufacture of claim 29, wherein the plurality of pixel<br>
+sample points consists of four pixel sample points.<br>
+	39.	The article of manufacture of claim 29, wherein the plurality of pixel<br>
+sample points consists of three pixel sample points.<br>
+	40.	The article of manufacture of claim 29, wherein the plurality of pixel<br>
+sample points comprises:<br>
+	a first pixel sample point located at a corner of the pixel;<br>
+32<br><br><br>
+	a second pixel sample point located along the first edge of the pixel; and<br>
+	a third pixel sample point located along a second edge of the pixel.<br>
+	41.	 The article of manufacture of claim 40, wherein the third pixel sample point<br>
+is located at a pseudo-randomly predetermined displacement from a position along the<br>
+second edge of the pixel.<br>
+Dated this 17th day of April 2007.<br><br>
+A method, system, and article of manufacture for reducing aliasing. A method<br>
+in accordance with one embodiment sampling a pixel of an image at a plurality of pixel<br>
+sample points to produce a corresponding plurality of pixel sample values, wherein at least one of the plurality of pixel sample points is located at a predetermined displacement from a position along an edge of the pixel. The method further includes combining the plurality of pixel sample values to produce a displayed pixel value.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+		<br>
+		<div class="pull-left">
+			<a href="269135-preparation-of-fluoromethyl-substituted-heterocycles.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="269137-combustion-mode-control-system-for-diesel-engine-having-switching-control-based-on-intake-carbon-dioxide-co2-concentration.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>269136</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1333/KOLNP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>41/2015</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>09-Oct-2015</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>01-Oct-2015</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>17-Apr-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>TELEFONAKTIEBOLAGET LM ERICSSON (PUBL)</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>S-164 83 STROCKHOLM</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>STRÖM, JACOB</td>
+											<td>HELENEBORGSGATAN 6C, 2 TR, S-117 32 STOCKHOLM</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>AKENINE-MÖLLER, TOMAS</td>
+											<td>ROSENVÄGEN 13, S-227 38 LUND</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06T 15/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/EP2005/010085</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-09-19</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>11/087,269</td>
+									<td>2005-03-23</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>60/611,522</td>
+									<td>2004-09-20</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/269136-method-and-system-for-anti-aliasing-by-pixel-sampling by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 08:14:39 GMT -->
+</html>

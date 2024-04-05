@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/227287-dynamic-and-automatic-memory-management by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 06:43:34 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 227287:DYNAMIC AND AUTOMATIC MEMORY MANAGEMENT</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">DYNAMIC AND AUTOMATIC MEMORY MANAGEMENT</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method of managing allocation of memory to a plurality of processes for executing queries on a database application in a computer, the queries implemented by operators and the method comprising: based on statistics (160) of memory usage, computing (13) a global internal value (14) of total memory to be used by the operators, from an externally-set global value (11) defining the total amount of memory to be used by the database application, the global internal value (14) representing a portion of the externally-set global value (11) of memory available for use by the operators; computing (15) an operator-level value (17) which defines a common value of memory to be allocated for each of a plurality of the operators, based on the global internal value (14); and the processes using said operator-level value (17) to manage allocation of memory for use by said each operator.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>BACKGROUND<br>
+In typical database systems, users store, update and retrieve information by submitting commands to a database application, such as Oracle. When executing transactions, the database application stores information in memory and on disk. For best performance, as much information as possible must be stored in memory rather than on disk. However, as memory resources are limited, the database application must tune memory allocation, which involves distributing available memory to structures used by the database application.<br>
+As described in a book entitled "OracleS/ Concepts" available from Oracle Corporation, and on the Internet at http://oradoc.photo.net/ora81/DOC/server.815 /a67781/toc.htm (which book is incorporated by reference herein in its entirety), two of the structures used by the database application Oracle are memory areas called System Global Area (SGA) and Program Global Area (PGA). The SGA contains general, information about the state of the database and the instance, which the Oracle processes need to access. No user data is stored in the SGA. The size of the SGA is determined at start up of Oracle. For optimal performance in most systems, the entire SGA should fit in real memory. A database administrator (DBA) can see how much memory is allocated to the SGA and each of its internal structures by issuing the SQL statement "SHOW SGA."<br>
+A PGA is created for holding data and control information of each process, when the process is started. The PGA is private to each process in Oracle, although such PGA can be in shared memory. A PGA's initial size is fixed at startup of the corresponding process, and is operating-system specific. Currently, in Oracle8i, the DBA can control the PGA memory utilization, using various parameters like SORT_AREA_SIZE, HASH_AREA_SIZE, BITMAP_MERGE_AREA_SIZE and CREATE_BITMAP_AREA_SIZE. For more information on such parameters, see the book entitled "OracleS/ Tuning" available at http://oradoc.photo.net/ora81/DOC/ server.815/a67775/toc.htni (which book is incorporated by reference herein in its entirety).<br>
+See also United States Patent 5,799,210 granted to Cohen, et al. entitled "Method for allocating either private or shared buffer memory for storing data from<br><br>
+sort operations in accordance with an assigned value or threshold value", United States Patent 5,987,580 Jasuja, et al. entitled "Serially reusable execution memory", United States Patent 5,860,144 Frank, et al entitled "Addressing method and system for providing access of a very large size physical memory buffer to a number of processes", and United States Patent 5,784,699 McMahon, et al. "Dynamic memory allocation in a computer using a bit map index" all of which are related to the use of memory by database processes.<br>
+For additional information, see the paper by Luc Bouganim. Olga Kapitskaia, and Patrick Valduriez, entitled "Dynamic Memory Allocation for Large Query Execution" published in Networking and Information Systems 1(6): 629-652 (1998). See also the paper entitled, "Memory-Adaptive Scheduling for Large Query Execution" by these same three authors, pages 105-115 of Proceedings of Conference on Information and Knowledge Management, 1998 published by Association for Computing Machinery, Inc. Yet another paper in this field is by Diane L. Davison and Goetz Graefe, entitled "Dynamic Resource Brokering for Multi-User Query Execution", published in SIGMOD Conference 1995: 281-292.<br>
+SUMMARY<br>
+A computer programmed in accordance with the invention is responsive to a value that defines the total amount of memory to be used by an application, such as a database. In one example, a database administrator (DBA) provides such a value (also called "extemally-set global value"). In another example, the externally-set global value is automatically determined, e.g. based on the amount of memory that is currently available in the system. Thereafter, the computer allocates memory (e.g. to be used by a database query) in an amount derived (wholly or at least in part) from the extemally-set global value.<br>
+One embodiment of the programmed computer derives, from the externally-set global value an internal value (called "memory bound") that is used in allocating memory for the application (e.g. memory required by an operator that implements a database query). The memory bound can be derived in any manner apparent to the skilled artisan, for example depending on processes and structures that implement the database.<br>
+In one embodiment, the programmed computer dynamically revises the memory bound, based on memory allocations being done, thereby to form a feedback<br><br>
+loop. Optionally, in determining the memory bound, the programmed computer may be responsive to information outside the application (such as the amount of memory allocated by non-database processes), so that the limited memory in the computer is used effectively.<br>
+BRIEF DESCRIPTION OF ACOMPANYING DRA WINGS<br>
+FIG. 1A illustrates, in a dataflow diagram, data and logic in a computer programmed in accordance with the invention.<br>
+FIG. IB illustrates acts performed by an application in a computer of the type illustrated in FIG. 1A.<br>
+FIG. 2 illustrates, in a high level block diagram, use of shared memory by multiple server processes of the type illustrated in FIG. IB.<br>
+FIG. 3 illustrates, in a flow chart, acts performed in one embodiment of the comparison act performed by the server processes of FIG. IB.<br>
+FIG. 4 illustrates, in a verm diagram, various components that together form the memory allocated to one or more server processes of FIG. IB.<br>
+FIG. 5 illustrates, in a flow chart, acts performed by the memory broker of FIG. 1B, in one embodiment of the act of determining an internal target.<br>
+DETAILED DESCRIPTION<br>
+When programmed with software in accordance with the invention, a computer is responsive to a value 11 (FIG. 1 A) that defines the total amount of memory to be used by an application, such as a database. Note that although in the following description reference is made to a database application, depending on the embodiment, other applications may also be programmed in the manner described herein. Value 11 (also called "externally-set global value") may be provided, for example, by a database administrator (DBA) or may be automatically determined for example based on the memory currently available in the computer. Depending on the embodiment, externally-set global value 11 may be used by the application as a limit (that cannot be exceeded), or as a target (that may be reached from time to time, or may not be reached, e.g. underreached or overreached most of the time).<br>
+In one embodiment, database system 10 (FIG. 1 A) computes (see logic 13) a value 14 (hereinafter "global internal value") that is internal to the database software, taking into account the amount 12 (FIG. 1A) of memory that is not available to the<br><br>
+processes of the application, e.g. for executing queries. Specifically, logic 13 (FIG. 1 A) takes into account memory (called "free memory") that is allocated but not used, and memory (called "other memory") that is unrelated to operators (such as sort, hash-join and bitmap merge) that implement a query.<br>
+Depending on the embodiment, database system 10 (FIG. I A) uses global internal value 14 to compute (see logic 15) another internal value 17 (also called "memory bound") which is used in allocation of memory for each operator. Memory bound 17 is an operator-level value that defines the amount of memory that may be allocated by each process 18, for each operator's work area. Each process 18 compares memory bound 17 with an amount 20 of memory needed by an operator, to determine the amount 21 of memory to be allocated, and thereafter allocates an appropriate amount of memory. However, depending on the type of database (e.g. hierarchical) and/or the structures and processes that implement the database, a memory bound may be derived directly from the externally-set global value, i.e. without computing a global internal value 14 as described above. Moreover, in an alternative embodiment, an operator-level value 17 is not used and instead each process determines the amount of memory to be allocated to an operator based on global internal value 14, or even on externally-set global value 11 (depending on the implementation) while taking into account statistics on memory usage to implement a feedback loop.<br>
+In one such embodiment, database system 10 (FIG. 1A) implements a feedback loop as follows: if the externally-set global value is being exceeded by the total memory that is currently allocated by database system 10, the database system 10 reduces the memory bound (and vice versa), so that the total memory allocated by database system 10 approaches the extemally-set global value 11, either as a target or as a limit, as discussed above. If memory bound is not used, such an embodiment may change global internal value 14 even if value 11 remains unchanged.<br>
+The above-described operations can be implemented in any manner that is apparent to the skilled artisan in view of the disclosure. For example, the feedback loop may be based on revising memory bound 17 (and/or global internal value 14) either periodically or asynchronously, or both. In one embodiment, database system 10 periodically (e.g. once every 3 seconds) revises memory bound 17 based on statistics related to memory usage. Database system 10 may also revise memory bound 17 asynchronously, when allocating memory, e.g. if the total memory allocated<br><br>
+by the database system 10 exceeds the extenally-set global value 11 by a predetermined amount (which may be, e.g. zero, or 10% of the value 11). Also, the amount 21 of memory that is allocated may be the required amount 20, or may be the memory bound 17 or some amount derived from one or both of these, e.g. a multiple of the memory bound, or a multiple of the estimated amount, if the operator is deemed to be at a higher priority than other operators. In the just-described example, instead of priority, each operator may be allocated a certain amount of "currency," and the memory bound 17 may be a price that is paid using the currency to "purchase" the memory. In such a case, the amount of "currency" allocated to each operator determines the amount of memory that the operator receives.<br>
+In one embodiment, database system 10 includes a sequence of instructions (hereinafter "memory broker") 22 that compute the above-described memory bound 17. Memory broker 22 may be implemented as a process that is separate and distinct from processes that implement database queries. In this case, a database query process 18 compares memory bound 17 to one or more estimates, and allocates the appropriate amount of memory. Transfer of information between memory broker 22 and database query process 18 can be implemented through messages, or through shared memory.<br>
+In an alternative embodiment, the memory broker sequence of instructions are not set up as a separate process, and instead each of the database query processes invokes these instructions with a function call. Therefore, a common function may be used to allocate memory for all operators (instead of a different function for "sort" and "hash" operators, as described below). When using such a common function, each process directly uses the extemally-set global value (also described above) to derive the amount of to-be-allocated memory.<br>
+Features of certain embodiments are combined in another embodiment wherein a memory broker merely computes the global internal value 14 (described above), and each query process uses the global internal value 14 to derive the amount of memory to be allocated for an operator. Also, depending on the embodiment, a memory bound 17 may be used differently when allocating memory for each operator, e.g. a higher priority query may allocate memory up to twice or three times the memory bound whereas a normal priority query allocates memory up to memory bound. Therefore, the limit on an operator depends on the priority of the specific query that is about to execute the operator, in this example. In another example,<br><br>
+memory bound acrs as a "price" instead of a "limit". Also, instead of having a common memory bound 17 for all operators (e.g. for normal priority queries), several memory bounds may be used, one for each type of operator.<br>
+In one embodiment, work area memory required by an operator is estimated by each process when allocating memory, and several estimates are made in one implementation depending on the mode in which the operator will operate, e.g. (1) an optimal mode wherein there is no disk access, (2) one pass mode wherein there is disk access but only one pass is required through the data on disk, and (3) minimal mode wherein multiple passes over the data on disk are required. The time required by an operator to execute a query depends on the mode of execution, e.g. the least time is required in the optimal mode, the most time is required in the minimal mode, and the time required for one pass is between the maximum and minimum, as illustrated in FIG. 6. Note that for the same operator, such estimates may be different for different queries, depending on the size of the input data. Thereafter, in this implementation, each process allocates an amount of memory for the operator depending on these estimates and on the memory bound.<br>
+For example, a process that invokes the "sort" operator determines the amount of work area memory (also called "sort area") to be allocated as follows: optimal memory estimate if the optimal memory estimate is smaller than memory bound, one pass memory estimate if memory bound is between the optimal memory estimate and the one pass memory estimate, and minimal memory estimate if memory bound is smaller than the one pass memory estimate.<br>
+In this particular example, a process that invokes the "hash join" operator determines the amount of work area memory (also called "hash area") to be allocated as follows: optimal memory estimate if the optimal memory estimate is smaller than memory bound, memory bound if the memory bound is between the optimal memory estimate and minimal memory estimate, and minimal memory estimate if the memory bound is smaller than minimal memory estimate. This is because the hash join operator benefits from the extra memory, between one pass estimate and optimal estimate whereas sort operator does not benefit. In this example, if memory bound is less than minimal memory estimate, then all operators receive their respective minimal memory estimates in one embodiment, whereas in another embodiment such operators are queued (until memory bound increases beyond the minimal memory estimate).<br><br>
+Therefore, database system 10 allows DBAs to tune memory parameters that are difficult to manually tune when using prior art databases. Specifically, regulation of the amount of memory that is allocated should depend on the relative frequency of use of an operator, the memory requirements for each operator, and the set of operators which are simultaneously active in the system. These conditions could vary a lot during a day, especially for ad-hoc environments. The prior art parameters that are known to the applicants are not automatically adjusted, and so they do not compensate for low or high memory usage in the system. Also, the prior art parameters that are known to the applicants don't control the maximum amount of memory a query will use, which tends to exacerbate over-allocation of memory and often causes thrashing due to memory depletion. Finally, such prior art parameters often waste PGA memory because more memory is allocated than is needed to get acceptable performance. Such memory that is not used in the prior art is better put to use by other queries or even by other applications when using an externally-set global value 11 as described above.<br>
+A computer 100 (FIG. 1B) of one embodiment that implements the above-described operations executes a number of software programs, such as an operating system 101, business logic 102, networking application 103, and a database application 110. Computer 100 can be any computer, such as an IBM Personal Computer (PC), or a Sun workstation, such as Ultra Sparc II Computer 100 includes one or more central processing units (CPUs) to execute instructions, nonvolatile memory (such as disks) to hold data and instructions, and volatile memory (such as DRAM) to temporarily hold data and instructions during execution. Computer 100 also includes a bus that interconnects the CPU(s) and the memories. Computer 100 may include a display device (such as a cathode ray tube) for displaying information to a user, and one or more input devices (such as a keyboard and/or mouse) to receive commands from the user.<br>
+Use of such a computer 100 is inherently required in the following description, even if such use is not explicitly identified. Database application 110 executes queries of various types to store information into and to retrieve information from a database (which may be, for example, a relational database). Each query may be executed via one or more operators, such as sort, hash-join and bitmap merge, in the normal manner. During execution of each query, computer 100 allocates memory as described below. The allocation is based either directly or indirectly on externally-set<br><br>
+global value 11 (represented by the value of a database parameter PGA_AGGREGATE _TARGET). In this particular embodiment, value 11 is used as a target for the total memory to be allocated for internal use by processes (sometimes called "server processes") that execute the database queries. In one embodiment, a user interface 111 (FIG. IB) receives (see act 112) global value 11 from a database administrator and stores (see act 113) the value in shared memory. Each process allocates memory for its internal use based (at least in part) on the value 11 read from the shared memory.<br>
+One embodiment of database 110 includes a sequence of instructions (hereinafter "memory broker") 115 that derive (see act 116 in FIG. IB) an internal value from global value 11 and optionally from statistics on current memory usage, and store (see act 117) the internal value for use by the server processes when allocating memory. Depending on the implementation, the internal value can be either global internal value 14 that applies to memory allocated by all processes 120A-120Z, or an operator-level memory bound 17 that only applies to the memory being allocated for an operator. Based on the memory usage statistics, memory broker ] 15 dynamically revises the internal value in response to memory allocations by the server processes 120A-120Z (wherein A 
+Depending on the embodiment, a server process 120A uses (see act 121) either the externally-set global value 11 or one of internal values 14 and 17 to determine the memory to be allocated, and thereafter allocates the memory. Next, process 120A updates (see act 122) statistics on usage of memory (e.g. to indicate the amount of memory that was allocated), and proceeds to execute the query in the normal manner. On completion of query processing, process 120A deallocates (see act 123) the previously allocated memory and also updates (see act 124) the memory usage statistics.<br>
+As noted above, memory broker 115 uses memory usage statistics in act 116 to revise either or both of internal values 14 and 17, depending on the embodiment. For example, memory broker 115 may find that there are too many processes and that the total allocated memory may significantly exceed the externally-set global value 11, in which case memory broker 1 15 reduces either or both of internal values 14 and 17, so that lesser amount of memory (than the current amount) is allocated in the future by the processes. On the other hand if memory broker 115 finds that there are<br><br>
+too few processes and the total allocated memory significantly falls short of the extenally-set global value 11, memory broker 115 may increase either or both of internal values 14 and 17 so that greater amount of memory is allocated in future by the processes. In this embodiment, the externally-set global value 11 and the internal values 14 and 17 are treated as targets by the database application 110 which tries to meet the target(s), to within a certain range.<br>
+Memory broker 115 of this embodiment operates periodically (e.g. once every 3 seconds) to revise the internal target being used by processes 120A-120Z to allocate memory. However, a server process 1201 may also invoke memory broker 115, e.g. if the total allocated memory exceeds the externally-set global value 11 by a predetermined amount. Specifically, in one embodiment, process 120A computes (see act 125 in FIG. 1 A) a difference (hereinafter "drift") between the total memory allocated by all of processes 120A-120Z and the extemally-set global value 11. In one specific implementation, the "drift" is a signed number indicating incremental allocation or deallocation of memory from the last computation of memory bound 17. This specific implementation sets drift to zero whenever memory bound 17 is recomputed. Thereafter, each process 1201 that allocates memory for an operator increments drift by the amount of allocated memory (in a similar manner, when memory is released, drift is decremented by the amount of released memory).<br>
+After allocation, process 120A checks if the drift exceeds e.g. 10% of the extemally-set global value 11 and if so invokes memory broker 115. When invoked, memory broker 115 revises either or both of internal values 14 and 17 in the above-discussed manner. Process 120A may also compute the drift (see act 126 in FIG. IB) and alert memory broker 115 when deallocating memory.<br>
+Depending on the embodiment, memory broker 115 may use an internal value 14 that is global to compute another internal limit 17 that is applied at the operator level. Specifically, such an operator-level limit (called "memory bound") 141 (FIG. 2) is held in a shared memory 140, and identifies a limit on (or a target for) the memory to be allocated by a server process 12A, for each operator in each query. Therefore, server processes 120A-120Z compare memory bound 141 with an estimate 1421 of needed memory (e.g. for the operator to operate in a one pass mode), to determine the memory to be allocated, and thereafter allocate an appropriate amount of memory (or get queued, depending on the implementation). Note that in this implementation, the same memory bound 141 is used to allocate memory to all<br><br>
+operators, although in another implementation a different memory bound may be used for each type of operator (e.g. hash-join may have a bound that is different from a corresponding bound for sort).<br>
+Each of the estimates 142A-142P is held in a profile 143 J of an operator for which memory is to be allocated. In one implementation, each of a number of profiles 143A-143V is held in shared memory 140. In this implementation, processes 120A-120Z register each operator (see act 127 in FIG. IB), by creating in the shared memory 140, a corresponding profile 143 J that contains three estimates of memory needed by the operator, to operate in each of: optimal mode, one pass mode, and minimal mode. The "optimal" mode is also referred to herein as "cache" mode because no disk access is required by an operator during execution.<br>
+Thereafter, a process 1201 determines the amount of memory to be allocated for a sort operator in a database application as follows: the optimal memory estimate 142P if the optimal memory estimate 142P is smaller than memory bound 141 (see acts 151-152 in FIG. 3), the one pass memory estimate 142T (FIG. 2) if the memory bound 141 is between the optimal memory estimate 142P and the one pass memory estimate 1421 (see acts 153-154 in FIG. 3), and minimal memory estimate 142A (FIG. 2) if the memory bound 141 is smaller than the minimum memory estimate 1421 (see act 155 in FIG. 3). The just-described allocation is used because the sort operator does not benefit as much from an increase in memory from one pass estimate to cache estimate (as compared to the increase in memory from minimal to one pass).<br>
+As noted elsewhere, the specific method to determine the amount of to-be-allocated memory may depend on several factors: the process's attributes (e.g. priority) or the operator. Act 127 of FIG. IB is optional, and it is not necessary to register into shared memory 140 the operator profiles, and instead such profiles are individually maintained by each process 120A in its own internal memory in other implementations.<br>
+Note that minimal memory estimate 142A may be greater than the memory<br>
+bound 141 for some operators and in one embodiment, such processes are not queued<br>
+but are allowed to allocate the minimal memory estimate 142A, so that the query is	'<br>
+executed. In such a case, if other processes underallocate, i.e. allocate memory less than memory bound 141, then the total memory allocated by the application can remain below the externally-set global value 11. However, the processes 120A-I20Z that allocate memory greater than memory bound 141 may outpace the processes that<br><br>
+underallocate so that the total allocated memory may exceed the externally-set global value 11 and cause the global internal value 14 to be decreased (by memory broker 115) which in turn causes memory bound 141 to be decreased (also by memory broker 115). Thereafter, processes 120A-120Z are forced to allocate less memory than they would otherwise allocate if value 11 had remained unchanged. In this manner, there is some give and take among processes 120A-120Z, so that the externally-set global value 11 is reached. If the total number of processes 120A-120Z is excessive, e.g. if the sum of minimum memory estimates 142A-142Z for all processes exceeds the value 11 then additional memory is not allocated for any process, and instead memory requests are queued.<br>
+In one embodiment, processes 120A-120Z also update statistics 160 (FIG. 2) on memory usage whenever memory is allocated or deallocated as noted above in reference to FIG. 1 A. Specifically, statistics 160 include the amount of memory (called "free memory") 161 (FIGs. 2 and 4) that is allocated but not used. For example, a process 1201 may need to allocate 1 MB, but if operating system 101 provides memory only in 4 MB increments (e.g. due to this being the page size) then 3 MB is free memory, 4 MB is allocated memory, and 1 MB is used memory. Free memory 161 (FIG. 4) is not normally available to any other process 120J.<br>
+Processes 120A-120Z also update, in statistics 160, the amount of memory (called "other memory") 162 (FIGs. 2 and 4) that is unrelated to operators (such as sort, hash-join and bitmap merge) that implement a query. For example, process 1201 may include PL/SQL or JAVA instruction sequences which are unrelated to the query-implementation operators, and for which memory 162 is used. Normally, other memory 162 cannot be changed by changing the way in which the operators function (e.g. one pass v/s multi pass).<br>
+Processes 120A-120Z also maintain, in statistics 160, the amount of memory (called "work area memory") 163 that is actually used by the operators. Maintenance of statistics 160 by processes 120A-120Z is implemented in one embodiment in wrapper functions that in turn call "malloc" and "free." Also, statistics 160 can be maintained separately for each of the individual processes 120A-120Z, or alternatively the sum totals of each statistic (across all processes 120A-I20Z) may be maintained.<br>
+In one embodiment, memory broker 115 uses the above-described statistics 160 to compute global internal value 14 (denoted in FIG. 5 as Ti which is used as a<br><br>
+target for the amount of work area memory 163 in the following manner. Specifically, memory broker 115 first computes other memory 162 (denoted as Om in FIG. 5) as the difference between used memory 164 (denoted as Um in FIG. 5) and work area memory 163 (denoted as Win in FIG. 5). Next memory broker 115 checks (see act 172 in FIG. 5) if the extenally-set global value 11 (also called "PGA AGGREGATE TARGET" and denoted as Tpga in FIG. 5) is less than other memory 162, and if so sets Ti to be 6% of Tpga.<br>
+Therefore, in the worst possible case, when other memory 162 memory is too high, a certain minimum (e.g. 6%) of Tpga is used as the global internal value 14. This is because the size of other memory 162 is beyond the control of memory broker 115. If other memory 162 is less than Tpga, then in act 174, memory broker 115 sets the global internal value 14 to 90% of the difference between Tpga and Om, and goes to act 175. This is done as a "safety" measure to account for a change in allocated memory during the time period between two successive operations of memory broker 115 (so in one example, allocated memory is not expected to grow faster than 10% in 3 seconds).<br>
+Next, in act 175, memory broker 115 checks if the allocated memory (denoted as Am in FIG. 5) is greater than Tpga, and if so goes to act 176 (to deal with overallocation) and alternatively goes to act 177 (to deal with underallocation). In act 176, memory broker 115 computes a factor Fwa (also called "work area allocation factor") as the ratio Wm/(Om+Wm), and further computes another factor Foa (also called "over allocation factor") as the ratio (Am-Tpga)/Am, and determines the new limit Ti to be the current limit Ti multiplied by (l-Fwa*Foa).<br>
+In act 177, memory broker 115 checks if 90% of Am is less than Tpga and also if sum of all optimal memory allocations is greater than Tpga, and if so there is no change in Ti. Alternatively, memory broker 115 goes to act 179 to compute the above-described work area allocation factor Fwa. Next, in act 180 memory broker 115 computes an under allocation factor Fua (also called "boosting factor"), as the ratio (Tpga-Am)/Tpga. Thereafter, memory broker 115 computes the new limit Ti to be the current limit Ti multiplied by (l+Fwa*Fua). Next, memory broker 115 sets (in act 182) either the newly computed limit Ti or 6% of Tpga whichever is greater, as the global internal value 14, which is used as described herein.<br>
+Specifically, in future, the newly computed global internal value 14 is used to allocate memory required by various operators. As described elsewhere herein, such<br><br>
+a global internal value 14 may be used directly by the processes (that are allocating memory for each individual operator), or may be used to compute a memory bound 17 that in rum is used by such processes. In one specific embodiment, memory bound 17 is computed from global internal value 14 as described below in pseudo-code in the attached Appendix.<br>
+Automatic and dynamic allocation of memory as described herein can be used in combination with a manual mechanism of the prior art, e.g. by use of a database parameter that may be called "WORKAREA_SIZE_POLICY" that may be set to one of two values AUTO and MANUAL. Setting this parameter to AUTO invokes automatic and dynamic allocation. Also, another database parameter PGAAGGREGATETARGET (described above) may be implemented, and when set by the database administrator, the default value of parameter WORKAREA_SlZE_POLICY is automatically set to AUTO.<br>
+Alternatively, the value of parameter WORKAREA_SIZE_POLICY is automatically set to MANUAL when PGA_AGGREGATE_TARGET is not set. If the parameter WORKAJREA_SIZE_POLICY is set to MANUAL, then PGA_AGGREGATE_TARGET is not used in this embodiment, and instead the database uses a prior art mechanism (e.g. by use of individual targets set by the database administrator on memory for each operator).<br>
+Automatic and manual mechanisms may be combined, for example, to maintain backward compatibility: some operators may use the manual mechanism while others may use the automatic mechanism. In such a combined operation, global internal value 14 is automatically reduced, to accomodate the memory used by the manual mechanism.<br>
+Depending on memory usage, memory broker 115 may reduce memory bound 17 soon after an operator allocates memory, e.g. if there is a sudden increase in the number of running queries. Conversely, the memory broker 115 may increase the memory bound 17 if the demand for memory drops. After a new internal value for memory bound 17 has been computed, the value 17 is applied in one particular embodiment only to new operators that are about to allocate memory, after the computation. In an alternative embodiment, such a new value of memory bound 17 is also used by operators that have previously allocated memory and that are currenlly executing, thereby to reduce (or increase) their previously allocated memory during execution.<br><br>
+Responsiveness of the operators to a change in memory bound 17 can affect the number of times memory broker 115 recomputes memory bound 17 within a given interval, and/or the amount of change in memory bound 17. For example, if the operators that are currently executing are non-responsive or respond slowly (as compared to responsiveness of memory broker 115) then memory broker 115 repeatedly reduces the global internal value 14 and memory bound 17, so as to ensure that the total allocated memory approaches the target of externally-set global value 11.<br>
+To be responsive to changes in memory bound 17 after allocation of memory, operators (such as sort and hash join) may check for a change in memory bound 17 (or global internal value 14) at convenient points during their execution. The points at which a change in memory bound 17 (or global internal value 14) is checked can be set up either synchronously (e.g. once every second) or asynchronously (e.g. after one or more acts are performed during execution of an operator). In both embodiments, operators change their modes, e.g. from optimal to one pass, or from one pass to minimal and therefore their allocated memory, depending on decisions made by memory broker 1 ] 5. Moreover, operators of such embodiments may revise their estimates of memory requirements dynamically, during their operation. Modifications to a hash-join operator and to a sort operator to implement a change of mode and change of allocated memory during execution are discussed briefly below.<br>
+In one embodiment, a hash-join operator of the AUTO version (described above) registers information about its work area (e.g. stores an estimate of memory required in each of the three modes: optimal mode, one pass mode and minimal mode). In this embodiment, a variable called "mode" (that resides in SGA) for each operator indicates the current mode of operation of an operator, and therefore its memory usage. In this embodiment, the "mode" variable for each operator is changed only by the operator in this embodiment (although in an alternative embodiment memory broker 115 may make such a change).<br>
+As long as the memory bound 17 is sufficiently high the hash-join operator operates in optimal and the hash-join operator allocates an initial amount of memory and dynamically increases its memory (up to the optimal mode estimate) to store input rows. However, even when operating in the optimal mode, the hash-join operator partitions the input data based on one-pass requirement, to allow switching to the one-pass mode if the memory bound 17 is reduced. In this embodiment, when<br><br>
+building in memory, if the memory bound 17 is sufficiently reduced to cause a change of mode from optimal to one-pass, the hash-join operator resizes its work area to one-pass requirement by flushing an appropriate amount of data to disk.<br>
+During the one pass mode (in the build phase), the hash-join operator works in the normal manner. However, the work area is sized to contain one build partition plus one or more 10 slots per additional partition (to support asynchronous input and output). During this phase, the work area is not resized even if the input is much larger than expected. The hash-join operator uses only the amount of memory estimated for the one-pass mode at the time the build was started.<br>
+Once the first one-pass build (which is the first build) is finished, the size of each partition of the build is known. If the actual size of the largest partition is two times (or more) bigger than a predicted common size for each partition (e.g. the one-pass size), the hash-join operator rebuilds, using rows from the first build. The rebuild act uses the exact size to determine the ideal number of build partitions, and therefore a more accurate estimate of the work area memory.<br>
+Building a second time is faster than the first build (in most cases) because the input data size during the rebuild is smaller than the original data size, the build time is generally very small compared to the probe time. Also, the extra rebuild time is negligible when compared to the overall execution time of the hash-join operator because the probe time is significantly larger. However, the memory saving from such a rebuild could be huge (if the error made to estimate the input size is important).<br>
+As long as the memory bound 17 is high to allow execution in "cache" (also called "optimal") mode, the hash-join will probe in memory. If the bound 17 is sufficiently reduced to cause a change of mode to "one-pass", the hash-join will switch to a one-pass probe by resizing its hash area. At that time, a subset of partitions are flushed to disk, and the probe proceeds in one pass mode with the partitions that are left in memory. Later on, in case memory bound 17 is revised lower than the one pass estimate, all build partitions that are currently remaining in memory are flushed to disk. Then the probe is partitioned based on the minimum requirement (e.g. 2 slots per partition).<br>
+For each pair of build/probe partition, the hash-join operator allocates enough memory to cache the smallest of the two partitions in memory. Because of the potential extra rebuild phase, the memory consumed should be close to the ideal one-pass memory requirement even if the input size estimate was incorrect.<br><br><br>
+The modifications made to the sort operator when it is running in "AUTO" version (described above) are similar to the ones made to the hash-join operator. The sort operator is able to switch from optimal mode to one-pass mode at any point in time. The sort operator also progressively increases the size of each sort run to account for bad estimates in the input size. That way, the sort operator always performs a one-pass merge with small increase of memory.<br>
+In one embodiment, when the work area estimated by the sort operator exceeds a predetermined value (such as 128KB), the sort operator registers its work area profile (including the estimate). Estimates that are equal to and less than the predetermined value are not registered, so as to limit the impact of use of the memory broker 115 in online transaction processing (OLTP) environment, wherein inputs to the sort operator are most of the time very small as compared to other environments. Therefore, involvement of the memory broker 115 for tiny work areas may be avoided.<br>
+The optimal mode of the sort operator is similar to sort operator of the MANUAL (described above) version. Rows fetched from the underlying row source are added to the sort operator's work area. The size of the work area is increased in a lazy fashion. If at some point the memory requirement is higher than the optimal memory estimate (e.g. the input is bigger than predicted), one or more of the three estimates are updated. As long as the memory bound 17 is sufficiently high to allow allocation of optimal memory estimate for current execution the sort operator continues to extend its work area even if the requirement is bigger than an initial optimal memory estimate that was made when the sort was started.<br>
+If at some point memory bound 17 is sufficiently reduced to cause a change of mode from optimal to one-pass, the sort operator flushes the current and first sort run to disk. Then the sort operator shrinks the work area to the current one-pass memory estimate. At that point, the sort operator switches to one-pass mode.<br>
+In one-pass mode, the sort operator dynamically expands the work area to account for a bad estimate in the input size. For example, let's assume that the real input size is 800MB instead of an expected size of 100MB (8 times off). When the sort operator starts to produce its first set of sort runs, it sizes the work area based on the estimated 100MB input size. This gives an initial work area size of 2.5MB assuming 64KB IO size. Once 100MB of the input has been consumed, which corresponds to 40 runs, the sort operator notices that more rows need to be sorted. At<br><br>
+that point, the sort operator postulates that the estimate input size is two times off and will assume a new estimate of 200MB instead of 100MB. Based on this new estimate, the work area is resized by multiplying its actual size by a factor of sqrt(2) because the memory required for one pass varies as the square root of the input size. The same technique is repeated again and again until all rows from the input are consumed.<br>
+In the example, there may be 40 runs of 2.5MB each for the first 100MB, then 29 runs of 3.5MB each for the next 100MB, then 40 runs of 5MB each for the next 200MB and finally 56 runs of 7MB each for the last 400MB. At the end of the first phase of the sort operator, there are a total of 165 runs, instead of an "ideal" number of 114 runs that would have been obtained if it was known from the beginning that the input size was 800MB. These runs are merged in one-pass operation using a merge area of 10.3MB (165x64KB). This is slightly more memory than the 8MB (128x64KB) required for a one-pass merge of the ideal number of runs which is 128.<br>
+Generally, assuming that the estimated size Sestim of the input to the sort operator is off by at most a factor of 2" compared to the real input size S (i.e. 2""' S 
+ <br>
+where N is the ideal number of runs for the real size S (i.e. N = sqrt(S/C)). In the above example, we were 8 times off so n is 3. Using the above formula, a skilled artisan can compute that the sort operator will produce 1.45 times the number of runs of an ideal one pass. It means that the one-pass merge phase will consume 1.45 times the ideal one-pass memory. When n is 1 (2 times off), this factor is 1.2 and when n is infinite, this factor converges to l/(2-sqrt(2)) which is 1.7. So in the worst case the extra memory consumption is limited during the merge phase to 1.7 times the ideal requirement (assuming known input size). Also, if the memory consumption during the entire sort operator is considered, it is slightly less because runs are produced using less memory than the ideal memory.<br>
+Without this technique, doing a one-pass merge would require 2n more memory than the memory for one pass merge. In terms of memory consumption it is even worse than this because the duration of the merge pass is proportional to the<br><br>
+number of runs. Without adapting the size of the work area dynamically, the sort operator will produce many runs (which are small) thus increasing the duration of the merge phase.<br>
+Numerous modifications and adaptations of the embodiments and implementations described herein will be apparent to the skilled artisan in view of the disclosure. For example, after completion of execution of a query, statistics specific to the query may be saved for use in making an estimate when that very same query needs to be executed again (e.g. by another process).<br>
+Also, if all active operators could run with their minimum memory and assuming that more memory is available, memory broker may allocate that memory First to operators which would benefit the most from a memory increase. For example, memory broker may be programmed to give more memory to a hash-join operator so that its response time is reduced from 5 minutes to 1 minute (5 times speed-up) versus giving the same amount of memory to another hash join operator so that its response time is reduced from 1 hour to 30 minutes (only two times speed-up). Therefore, one embodiment considers the response time speed-up and not really the absolute improved time. Moreover, a memory bound can also be used as described herein, in databases that allocate all of the memory required by operators in shared memory (instead of private memory).<br>
+Therefore, numerous such modifications and adaptations of the embodiments and implementations described herein are encompassed by the attached claims.<br><br>
+APPENDIX Initilization<br>
+workarea_left := work areas of all operations active in the system number_of_woikarea_left := number of work areas active in the system memory_target := the global internet target or limit to distribute among the active work areas<br>
+Memory Bound Computation<br>
+/* This while loop terminates once all work areas are removed from ** the set of active work areas or all the memory has been consumed. */<br>
+WHILE (memorytarget &gt; 0 and number_of_workarea_left &gt; 0)<br>
+{<br>
+/* compute an initial value of the memory bound assuming that each work ** area will comsume bound. Some of them might consume less than this so ** the final memory_bound might be higher than this initial value. */ memory_bound = memorytarget / number_of_workarea_left;<br>
+/* Loop over all operations left in workarea_left, i.e., that have not<br>
+** been assigned a memory size to use during their execution.<br>
+*/<br>
+removed = FALSE;	/* no one has been removed so far */<br>
+FOR EACH (workarea(WA) in workarea_left) DO<br>
+/* Compute the size of the memory it can use based on the memory_bound.<br>
+** Also compute the memory increment it will take in case we are willing<br>
+** to give it more memory.<br>
+** This memory incerment is operation-dependent.<br>
+** Hash-Join, the next memory increment can be anything, wliile for Sort,<br>
+** it will be the memory requirement of a higher mode. That's if current<br>
+** memory usage corresponds to one pass the next memory increment is the<br>
+** memory necessary to move to optimal mode requirement.<br>
+** The reason is that the Hash-Join operation performance will improve<br>
+** linearly from additional memory while the Sort doesn't.<br>
+*/<br>
+get_memory_profile(IN:WA, IN:memory_bound,<br>
+OUT:memory_used, OUT:next_increment);<br>
+/* Memory used is equal to the memory requirement to run in optimal mode<br>
+** which means that the memorybound is greater than that requirement.<br>
+** This operation has the maximum memory size it can hope for, so we'll<br>
+** take it off the list of left work areas.<br>
+*/<br>
+IF (memory_used = optimal memory)<br><br><br>
+memory_target -= memory_used;	/* this much is consumed */<br>
+workarea_lefit -= {WA};	/* remove it from the set */<br>
+number_of_workarea_left--;	/* one less */<br>
+removed = TRUE;<br>
+} ELSE<br>
+/* We keep this work area for now, and check whether it's the largest<br>
+** one in the set, in which case we keep a tag on it.<br>
+** Such a work area is the best candidate to eliminate relative to the<br>
+** ones left<br>
+** Once this loop is over we will eliminate it from the set.<br>
+*/<br>
+/* In case we didn't remove any work area during the previous loop */<br>
+IF ((NOT removed) AND max_next_memory 
+{<br>
+maxnextmemory = memoryused + nextincrement;<br>
+largestwa = WA;<br>
+memory_of_largest_wa = memory_used; }<br>
+}<br>
+\	1* end of FOR EACH LOOP */<br>
+* All work areas have got their best hope for memory size, then we are<br>
+* done.<br>
+F (the memory used by each WA is equal to the bound)<br>
+( number_of_workarea_left = 0;<br>
+\ ELSE<br>
+/* We couldn't remove one work are */<br>
+IF (removed =- FALSE)<br>
+{<br>
+/* remove the largest a work area, take off the largest one */ workarealeft-= {largestwa};<br>
+memorytarget -= memoryof largest wa;<br>
+number of workarea left—;<br>
+}<br><br><br>
+WE CLAIM:<br>
+1.	A method of managing allocation of memory to a plurality of processes for<br>
+executing queries on a database application in a computer, the queries<br>
+implemented by operators and the method comprising:<br>
+based on statistics (160) of memory usage, computing (13) a global<br>
+internal value (14) of total memory to be used by the operators, from an<br>
+externally-set global value (11) defining the total amount of memory to be<br>
+used by the database application, the global internal value (14)<br>
+representing a portion of the externally-set global value (11) of memory<br>
+available for use by the operators;<br>
+computing (15) an operator-level value (17) which defines a common<br>
+value of memory to be allocated for each of a plurality of the operators,<br>
+based on the global internal value (14); and<br>
+the processes using said operator-level value (17) to manage allocation of<br>
+memory for use by said each operator.<br>
+2.	The method as claimed in claim 1 comprising:<br>
+revising the global internal value (14) based on the operator-level value (17); and<br>
+repeating the act of computing (15) the operator-level value (17) after changing the global internal value (14).<br><br>
+3.	The method as claimed in claim 1 comprising:<br>
+repeating the act of computing (15) the operator-level value (17) without changing the global internal value (14).<br>
+4.	The method as claimed in claim 3 wherein the repeated act of computing (15) is based on statistics related to memory usage.<br>
+5.	The method as claimed in claim 1 wherein:<br>
+all of the processes have access to a shared memory in the computer; and the method includes storing the operator-level value (17) in the shared memory.<br>
+6.	The method as claimed in claim 5 comprising:<br>
+storing in the shared memory an estimate of memory to be used by the one operator.<br>
+7.	The method as claimed in claim 6 wherein:<br>
+the estimate is of memory required by the one operator.<br>
+8.	The method as claimed in claim 5 comprising:<br>
+each process storing in the shared memory, for each operator:<br>
+a first estimate of memory needed for optimal mode, wherein there is no<br>
+access to a disk memory;<br>
+a second estimate of memory needed for one pass mode, wherein there is<br>
+access to the disk memory but there is only one pass through data stored<br><br>
+on the disk memory; and<br>
+a third estimate of memory needed for minimal mode, wherein there is<br>
+access to the disk memory and there are multiple passes through the<br>
+data.<br>
+9.	The method as claimed in claim 8 comprising:<br>
+comparing the operator-level value (17) with at least one of the estimates; and<br>
+determining an amount of memory to be allocated to the operator based on outcome of the comparing.<br>
+10.	The method as claimed in claim 5 comprising:<br>
+each process allocating memory based on the operator-level value (17);<br>
+and<br>
+each process storing in the shared memory the amount of memory<br>
+allocated to the process.<br>
+11.	The method as claimed in claim 10, comprising:<br>
+each process storing in the shared memory, the amount used by each operator in the process, the amount of memory used by other portions of the process, and the amount of memory allocated but not used by the process.<br><br>
+12.	The method as claimed in claim 1 wherein:<br>
+the computer is additionally responsive to the memory allocated by non-database processes.<br>
+13.	The method as claimed in claim 1 wherein:<br>
+the operator-level value (17) is common to all of the operators in all of the processes.<br>
+14.	The method as claimed in claim 1 comprising:<br>
+periodically repeating the act of computing (15) the operator-level value (17).<br>
+15.	The method as claimed in claim 1 comprising:<br>
+repeating the act of computing (15), in response to the global internal value (14) being exceeded by a predetermined amount of memory allocated to the plurality of processes.<br>
+16.	The method as claimed in claim 8, comprising:<br>
+deriving an amount of memory to be allocated to each operator based on the outcome of comparison between the operator-level value (17) and at least one of the first, second and third estimate.<br>
+17.	The method as claimed in claim 16 wherein:<br>
+the amount is determined to be the first estimate if the first estimate is smaller than the operator-level value (17).<br><br>
+18.	The method as claimed in claim 16 wherein:<br>
+the amount is derived from at least the second estimate if the operator-level value (17) is between the first estimate and the second estimate.<br>
+19.	The method as claimed in claim 18 wherein:<br>
+the amount is also derived from a priority of the process relative to other processes.<br>
+20.	The method as claimed in claim 16 wherein:<br>
+the amount is derived from at least the operator-level (17) if the operator-level value (17) is between the first estimate and the third estimate.<br>
+21.	The method as claimed in claim 16 wherein:<br>
+the amount is derived from the third estimate if the operator-level value (17) is smaller than the third estimate.<br>
+22.	The method as claimed in claim 18 wherein:<br>
+the operator is sort.<br>
+23.	The method as claimed in claim 21 wherein: the operator is hash-join.<br>
+24.	The method as claimed in claim 8 comprising:<br>
+comparing the operator-level value (17) with at least one of the<br>
+estimates; and<br>
+queuing a process if the or each estimate exceeds the operator-level value<br>
+(17).<br><br>
+The method as claimed in claim 8 comprising:<br>
+comparing the operator-level value (17) with at least one of the<br>
+estimates; and<br>
+allocating an amount of memory even when the estimates exceed the<br>
+operator-level value (17).<br>
+The method as claimed in claim 2 or claim 3 wherein said repeated<br>
+computing (15) provides a revised operator-level value, and the method<br>
+comprising:<br>
+using the revised operator-level value to allocate memory for a second<br>
+process.<br>
+The method as claimed in claim 2 or claim 3 wherein:<br>
+said repeating is performed periodically.<br>
+The method as claimed in claim 2 or claim 3 comprising:<br>
+each process updating a statistic on memory usage on allocation and<br>
+deallocation of memory; and<br>
+comparing the statistic with at least one of the global internal value (14)<br>
+and the operator-level value (17);<br>
+wherein the repeated computing (15) is based on an outcome of the<br>
+comparing.<br>
+The method as claimed in claim28 wherein:<br>
+each process performs the comparing and triggers the repeated<br><br>
+computing (15) in response to the outcome.<br>
+A computer executing a plurality of processes which execute queries on a database, the queries implemented by operators, the computer comprising:<br>
+a processor adapted to compute (13) a global internal value (14) of total memory to be used by the operators from an externally-set global value (11) defining the total amount of memory to be used by the database application, based on statistics (160) of memory usage, the global internal value (14) representing a portion of the externally-set global value (11) of memory available for use by the operators; and further adapted to compute (15) an operator-level value (17) which defines a common value of memory to be allocated for each of a plurality of the operators; wherein the allocations of memory for use by each operator is managed based on said operator-level value.<br>
+The computer as claimed in claim 30 wherein the processor is adapted to revise the global internal value (14) based on the operator-level value. The computer as claimed in claim 30 wherein the processor is adapted to compare the operator-level value with at least one of three estimates: a first estimate of memory needed for optimal execution of the database operator wherein there is no access to a disk memory, a second estimate<br><br>
+of memory needed for one pass execution of the database operator<br>
+wherein there is access to the disk memory but there is only one pass<br>
+through data stored on the disk memory, and a third estimate of memory<br>
+needed for minimal execution of the database operator wherein there is<br>
+access to the disk memory and there are multiple passes through the<br>
+data; and to<br>
+derive an amount of memory to be allocated to the database operator<br>
+from an outcome of the comparison.<br>
+The computer as claimed in claim 32 further comprising<br>
+a store adapted to store the three estimates; and<br>
+wherein the processor is further adapted to select the first estimate if the<br>
+first estimate is smaller than the operator-level value (17).<br>
+The computer as claimed in claim 30 comprising:<br>
+means for updating a statistic on memory usage on allocation and<br>
+deallocation of memory; and<br>
+means for comparing the statistic with at least one of the global internal<br>
+value (14) and the operator-level value (17).<br><br>
+A method of managing allocation of memory to a plurality of processes for executing queries on a database application in a computer, the queries implemented by operators and the method comprising: based on statistics (160) of memory usage, computing (13) a global internal value (14) of total memory to be used by the operators, from an externally-set global value (11) defining the total amount of memory to be used by the database application, the global internal value (14) representing a portion of the externally-set global value (11) of memory available for use by the operators; computing (15) an operator-level value (17) which defines a common value of memory to be allocated for each of a plurality of the operators, based on the global internal value (14); and the processes using said operator-level value (17) to manage allocation of memory for use by said each operator.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLUtPTE5QLTIwMDQtQ09SUkVTUE9OREVOQ0UgMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">412-KOLNP-2004-CORRESPONDENCE 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLUtPTE5QLTIwMDQtQ09SUkVTUE9OREVOQ0UucGRm" target="_blank" style="word-wrap:break-word;">412-KOLNP-2004-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLUtPTE5QLTIwMDQtRk9SIEFMVEVSQVRJT04gT0YgRU5UUlkucGRm" target="_blank" style="word-wrap:break-word;">412-KOLNP-2004-FOR ALTERATION OF ENTRY.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLUtPTE5QLTIwMDQtRk9STSAyNy5wZGY=" target="_blank" style="word-wrap:break-word;">412-KOLNP-2004-FORM 27.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLUtPTE5QLTIwMDQtRk9STS0yNy0xLnBkZg==" target="_blank" style="word-wrap:break-word;">412-KOLNP-2004-FORM-27-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLUtPTE5QLTIwMDQtRk9STS0yNy5wZGY=" target="_blank" style="word-wrap:break-word;">412-KOLNP-2004-FORM-27.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1jbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1jb3JyZXNwb25kZW5jZS5wZGY=" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-correspondence.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1kZXNjcmlwdGlvbiAoY29tcGxldGUpLnBkZg==" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1leGFtaW5hdGlvbiByZXBvcnQucGRm" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-examination report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1mb3JtIDEucGRm" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1mb3JtIDE4LnBkZg==" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-form 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1mb3JtIDIucGRm" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1mb3JtIDI2LnBkZg==" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-form 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1mb3JtIDMucGRm" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1mb3JtIDUucGRm" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1wcmlvcml0eSBkb2N1bWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1yZXBseSB0byBleGFtaW5hdGlvbiByZXBvcnQucGRm" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-reply to examination report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC1zcGVjaWZpY2F0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-specification.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLWtvbG5wLTIwMDQtZ3JhbnRlZC10cmFuc2xhdGVkIGNvcHkgb2YgcHJpb3JpdHkgZG9jdW1lbnQucGRm" target="_blank" style="word-wrap:break-word;">412-kolnp-2004-granted-translated copy of priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLUtPTE5QLTIwMDQtT1RIRVJTIDEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">412-KOLNP-2004-OTHERS 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDEyLUtPTE5QLTIwMDQtUEEucGRm" target="_blank" style="word-wrap:break-word;">412-KOLNP-2004-PA.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="227286-disposable-wig.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="227288-probiotic-storage-adn-delivery.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>227287</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>412/KOLNP/2004</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>02/2009</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>09-Jan-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>05-Jan-2009</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>29-Mar-2004</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>ORACLE INTERNATIONAL CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>500 ORACLE PARKWAY, REDWOOD SHORES, CA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>DAGEVILLE, BENOIT</td>
+											<td>625 CANOE COURT, REDWOOD SHORES, CA 94065</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>ZAIT, MOHAMED</td>
+											<td>94087</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>C206F 12/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2002/31223</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2002-09-30</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>09/969,290</td>
+									<td>2001-10-01</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/227287-dynamic-and-automatic-memory-management by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 06:43:35 GMT -->
+</html>

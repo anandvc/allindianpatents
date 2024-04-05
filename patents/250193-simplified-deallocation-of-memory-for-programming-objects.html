@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/250193-simplified-deallocation-of-memory-for-programming-objects by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 14:34:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 250193:SIMPLIFIED DEALLOCATION OF MEMORY FOR PROGRAMMING OBJECTS</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">SIMPLIFIED DEALLOCATION OF MEMORY FOR PROGRAMMING OBJECTS</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method of releasing the memory associated with a set of objects that have a hierarchical tree relationship, the method comprising the computer-implemented steps of: creating the set of objects that have the hierarchical tree relationship; allocating memory for each object; maintaining data that defines a relationship between the memory for each object; wherein the data reflects the organization of the hierarchical tree relationship; receiving a request to release memory associated with an object; and in response to receiving the request, accessing the data to determine what memory is associated with one or more objects that are descendants of the object, releasing the memory associated with the object and the memory associated with the descendants of the object; and wherein the data comprises child and sibling pointer pairs and the step of maintaining the data that defines the relationship further comprises: maintaining the child and sibling pointer pairs that define the relationship between the memory for each object; wherein releasing the memory associated with the object and the memory associated with the descendants of the object comprises using the child and sibling pointer pairs to determine the descendants of the object.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>CROSS-REFERENCE TO RELATED APPLICATIONS<br>
+[0001] This application is related to and claims priority from U.S. Provisional Application<br>
+Serial Number 60/378,871, filed on May 7,2002; entitled "Simplified Deallocation of Memory<br>
+for Programming Objects", by Mohammad Shoaib Lari, Ravikanth Kasamsetty, and Srinath<br>
+Krishnaswamy the entire disclosure of which is hereby incorporated by reference for all<br>
+purposes as if fully set forth herein. This application is related to and claims priority from U.S.<br>
+Provisional Application Serial Number 60/384,646, filed on May 31, 2002, entitled "Simplified<br>
+Deallocation of Memory for Programming Objects", by Mohammad Shoaib Lari, Ravikanth<br>
+Kasamsetty, and Srinath Krishnaswamy, the entire disclosure of which is hereby incorporated<br>
+by reference for all purposes as if fully set forth herein.<br>
+FIELD OF THE INVENTION<br>
+[0002] The present invention relates to memory management for objects and more<br>
+specifically to a method of releasing the memory associated with a set of objects that have a<br>
+hierarchical tree relationship.<br>
+BACKGROUND OF THE INVENTION<br>
+[0003] Memory management refers to operations and processes that are performed to<br>
+manage the allocation and deallocation of memory for storing objects or other data<br>
+structures; Typically, most applications use the memory management code that is supplied<br>
+by the computer language that the applications are written in. however, the memory<br>
+management code supplied by the computer language may not have certain desirable<br>
+features such as optimization for performance, optimization for memory allocation, or<br>
+releasing memory for a set of objects that have a relationship to each other.<br>
+[0004] In the object-oriented wor4ld, supplying unique memory management code to<br>
+an application entails overriding the new and delete operators in every class that is used to<br>
+create objects in that application. The problem with this is that each class used to create<br>
+objects in the application require a separate copy of the memory management code to<br>
+override the new and delete operators in those classes. Having many copies of the<br><br>
+memory management code complicates not only routine maintenance but also<br>
+complicates providing enhancements. For example, whenever a bug is found in the<br>
+memory management code, the memory management code in each class has to be<br>
+modified.<br>
+[0005] When there is a relationship between a set of objects, an application program<br>
+has to track the relationship between these objects in order to release memory associated<br>
+with.the objects in the proper order. For example, for any given database connection, one<br>
+or more queries are executed involving statements, and resultsets are returned in response<br>
+to the queries. Therefore, a hierarchical relationship exists between a database<br>
+connection, and the related statements, resultsets, and streams. The connection, and<br>
+related statements, resultsets, and streams can each be represented by their own object<br>
+and these objects can be organized in a hierarchical tree that reflects the relationship<br>
+between these objects. For example, the connection object is the top object in a<br>
+hierarchical tree, the statement objects are directly under the connection object, the<br>
+resultset objects are directly under the statement objects and so on. Memory is needed for<br>
+executing methods associated with the objects or for perfonriing computations on behalf<br>
+of the objects, among other things. Therefore, memory is associated with each object in<br>
+the hierarchical tree (heremafter referred to as a "memory management tree").<br>
+[0006] A particular object and the objects below that object form a subtree of the<br>
+hierarchical tree. For example, a particular statement object and all the objects below that<br>
+particular statement object, such as resultset objects and stream objects, form a subtree of<br>
+a hierarchical tree. A subtree and the memory associated with the objects in the subtree<br>
+form a memory management subtree. When a particular object is no longer needed, the<br>
+memory management subtree, which includes the particular object, the objects below this<br>
+particular object (hereinafter referred to as "descendents" of the particular object), and the<br>
+memory associated with all of these objects, is released. For example, once an<br>
+application program is finished with a statement object, the statement object and all of the<br>
+statement object's descendants (e.g., resultset objects and stream objects) can be released.<br>
+The memory associated with these objects is also released. To do this, an application<br>
+program has to track the relationship between the objects and the associated memory.<br>
+The release of a memory management subtree needs to be done in such a way that other<br>
+objects in the hierarchical tree and their associated memory is not released. For example,<br>
+if a subtree that starts with a particular statement is released, the connection that this<br>
+particular statement is associated with and the other statements associated with that<br>
+connection should not be impacted.<br>
+[0007] Therefore it can be seen that there is a need not only for providing unique memory<br>
+management code for an application but to provide this memory management code in a way<br>
+that it is shared by all the objects that are instances of the classes used in the application.<br>
+Furthermore, it can be seen that there is a need for tracking the relationship between a set of<br>
+objects in a hierarchical tree and the memory associated with these objects in a way that is<br>
+transparent to an application program. In so doing, the application program can issue a<br>
+release for one particular object in the hierarchical tree that results in releasing the memory<br>
+management subtree that starts with that particular object.<br>
+[0007.1] US patent No. 6,327,606 issued to CHIDAMBARAN is incorporated herein by way<br>
+of reference.<br>
+SUMMARY OF THE INVENTION<br>
+[0010] Techniques are described for providing memory management for objects.<br>
+Specifically, techniques are described for providing common memory management code to<br>
+objects that are instances of different classed and for releasing a memory management<br>
+subtree that starts with a particular object in the memory management tree.<br>
+[0011] With regards to providing common memory management for objects, a template<br>
+(hereinafter referred to as a memory management template) is used to provide common pre-<br>
+processor memory management code. An abstract class, that defines memory management<br>
+interfaces, is passed into this memory management template to create a "specialized<br>
+template" during compilation. The specialized template is used to subclass a second class<br>
+(referred to hereinafter as a "specialized template subclasss"). The specialized semplate<br>
+subclasses contain memory management executables that are generated from the common<br>
+pre-processor memory management code during compile time. According to one<br>
+embodiment, the specialized template subclass provides implementations for the interfaces in<br>
+the abstract class. When a memory management operator, such as new or delete, of an<br>
+object that is an instance of the specialized template subclass, is invoked, the memory<br>
+management executable in the specialized template is executed.<br>
+[0012] For example, an abstract class A_Abs provides interfaces. A template MM<t><br>
+provides the common pre-processor memory management code that provides interfaces and<br>
+implementations for a common memory manager by overloading the new and delete<br><br>
+operators. When A_Abs is passed into the generic parameter "T" of template MM<t>, a<br>
+specialized template, MM<a_abs>, is created. During the pre-processor phase of<br>
+compilation, the generic parameter T is replaced with the specified parameter A_Abs to<br>
+produce executable code in the specialized template MM<a_abs>. MM<a_abs> is used to<br>
+subclass A_STS, which is a specialized template subclass. When the new or delete operator of<br>
+an object that is an instance of class A_STS is invoked, the new or delete operator in<br>
+MM<a_abs> is executed instead of the new or delete operator supplied by the computer<br>
+language.<br>
+[0013] With regards to releasing a memory management subtree, memory is<br>
+associated with each object in a hierarchical tree. Data for the memory is maintained that<br>
+reflects the hierarchical tree relationship between the objects in the hierarchical tree. In so<br>
+doing, a subtree and the associated memory can be released with a single instruction, such<br>
+as a destructor, without an application program tracking the relationship between the objects<br>
+and the memory associated with the objects.<br>
+[00013.1] One prior approach for releasing memory used by a complex object is described in<br>
+U.S.Patent No.6,327,606 issued to Chidambaram. Chidambaram describes a mechanism for<br>
+allocating pools of dynamic memory on a "per-call" basis for complex objects returned from<br>
+procedure calls. Specifically, Chidambaram describes that the complex objects are created as<br>
+a result of remote procedure calls. Pools of dynamic memory are allocated, corresponding to<br>
+one or more of the remote procedure calls. Memory for said complex objects is allotted so<br>
+that each complex object is allocated memory within a pool that corresponds to the remote<br>
+procedure call that resulted in the creation of the complex object. Memory for the complex<br>
+objects is released by de-allocating the entire pools within which the complex objects are<br>
+allocated. In contrast, the techniques described herein provide for releasing a memory<br>
+management tree by using data that defines a relationship between the memory for each<br>
+object in the memory management three, where the data comprises child and sibling pointer<br>
+pairs. To release a memory management subtree that starts with a particular object, the<br>
+child and sibling pointer pairs are used to determine the descendants of the particular object,<br>
+and then the memory associated with the particular object and the memory associated with<br>
+the determined descendants of the particular object is released.<br><br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[0014] The present invention is illustrated by way of example, and not by way of<br>
+limitation, in the figures of the accompanying drawings and in which like reference numerals<br>
+refer to similar elements and in which:<br>
+[0015] FIG. 1 is a block diagram of three class hierarchies that use a memory<br>
+management template to provide common memory management code to objects that are<br>
+instances of different classes according to an embodiment of the present invention;<br>
+[0016] FIG. 2 is a block diagram depicting a memory management template that<br>
+provides common pre-processor memory management code according to an embodiment of<br>
+the present invention;<br>
+[0017] FIG. 3 is a block diagram depicting abstract classes that are passed into the<br>
+memory management template as specific types to provide specialized templates according<br>
+to an embodiment of the present inventions;<br>
+[0018] FIG. 4 is a block diagram depicting definitions of specialized template subclasses<br>
+according to an embodiment of the present invention;<br>
+[0019] FIG. 5A and 5B are block diagrams depicting methods that implement the<br>
+definitions for these specialized template subclasses according to an embodiment of the<br>
+present invention;<br>
+[0020] FIG. 6 is a block diagram depicting an application program that creates objects,<br>
+which use common memory management according to an embodiment of the present<br>
+invention;<br>
+[0021] FIG. 7 is a block diagram depicting a set of objects that have a hierarchical tree<br>
+relationship to each other according to an embodiment of the present invention'<br><br>
+[0022] FIG. 8 is a block diagram depicting pieces of memory associated with each<br>
+object of a set of objects according to an embodiment of the present invention;<br>
+[0023] FIG. 9, 10A, and 10B are block diagrams depicting classes for creating objects<br>
+that have a hierarchical relationship and the memory associated with these objects<br>
+according to an embodiment of the present invention;<br>
+[0024] FIG. 11 is a block diagram depicting programs that create objects with classes<br>
+depicted in FIGS. 9, 10A, said 10B according to an embodiment of the present invention;<br>
+and<br>
+[0025] FIG. 12 is a computer system on which an embodiment of the invention may<br>
+be implemented.<br>
+DETAILED DESCRIPTION OF THE INVENTION<br>
+[0026] A method for providing common memory management code to objects. In the<br>
+following description, for the purposes of explanation, numerous specific details are set<br>
+forth in order to provide a thorough understanding of the present invention. It will be<br>
+apparent, however, that the present invention may be practiced without these specific<br>
+details. In other instances, well-known structures and devices are shown in. block<br>
+diagram form in order to avoid unnecessarily obscuring the present invention.<br>
+AN OVERVIEW OF A CLASS HIERARCHY USED IN COMMON MEMORY<br>
+MANAGEMENT<br>
+[0027] FIG. 1 is a block diagram depicting three class hierarchies that use a memory<br>
+management template to provide common memory management code to objects that are<br>
+instances of different classes according to an embodiment of the present invention. All of<br>
+the classes in the three class hierarchies, class hierarchy 1, class hierarchy 2, and class<br>
+hierarchy 3, provide code in one form or another. Providing code refers to processes or<br>
+acts that create code for subsequent compilation and execution. For example, a<br>
+programmer provides code by entering source, in the form of classes, into a file where it<br>
+may be accessed by a compiler for compilation. Providing code also refers to storing<br>
+code in libraries for later compilation of other applications that refer to the libraries.<br>
+[0028] The three class hierarchies are used to create objects that are instances of three<br>
+specialized template subclasses, A_STS:MM<a_abs> 130, B_STS:MM<b_abs> 160<br>
+and C_STS:MM<c_abs> 190 (the notation of these specialized template subclasses is in<br>
+the following order: 1) the name of the class, 2) a colon, and 3) the name of the<br>
+specialized template that is used to subclass the class). In the case of<br><br>
+A_STS:MM<a_abs> 130, A_STS is the name of the class that is used to create an object<br>
+and MM<a_abs> is the name of a specialized template subclass as will be described in<br>
+more detail hereinafter. These objects contain memory management executables that are<br>
+all generated from common pre-processor memory management code from a memory<br>
+management template as is described in more detail below.<br>
+[0029] At the top of each class hierarchy is an abstract class, A_Abs 110,<br>
+B_Abs_140, and C_Abs 170, that provides interfaces (113, 114,143,144, 173) for<br>
+methods (131, 132,161, 162, 191) that are implemented in the specialized template<br>
+subclasses (130, 160, 190). By definition, an abstract class defines interfaces for methods<br>
+and/or operators but does not provide implementations for the methods and/or operators.<br>
+[0030] The common pre-processor memory management code for the new and delete<br>
+operators is provided in a memory management template. The memory management<br>
+template shall be referred to as MM<t> where T is a generic type parameter for passing a<br>
+specific type into the memory management template. During the pre-processor phase of<br>
+compilation, (1) the generic type parameter T is replaced with the specific type (e.g.,<br>
+AAbs, B_Abs, C_Abs) that is passed into the memory management template, (2) the<br>
+memory management template is replicated, and (3) the memory management template<br>
+replications are specialized using the specific type passed into the generic parameter T to<br>
+produce the specialized templates (120,150,180). For example, in the specialized<br>
+template MM<a_abs> 120, the abstract class A_Abs 110 is the specific type passed into<br>
+the generic parameter T.<br>
+[0031] Therefore, each specialized template (120, 150, and 180) has its own memory<br>
+management executable (121, 122, 151, 152,181, 182), which originated from the one<br>
+copy of memory management pre-processor code in the memory management template.<br>
+For example, new 121 and delete 122 are MM<a_abs> 120's own memory management<br>
+executable. In like manner, the specialized templates (120, 150,180) have their own<br>
+copies of data members, such as hndlp_ (123,153, and 183), used for storing data.<br>
+[0032] Although MM<a_abs> 120, MM<b_abs> 150, and MM<c_abs> 180 each<br>
+result in separate specialized templates that can be used to subclass another class (130,<br>
+160, 190), only one copy of the memory management pre-processor code exists.<br>
+Therefore, there is only one copy of memory management pre-processor code to maintain<br>
+or enhance. That one copy of memory management pre-processor code is in the memory<br>
+management template, as will be discussed in more detail.<br>
+[0033] According to one embodiment, only one specialized template and one abstract<br>
+class is provided. For example, assume that a generic memory management abstract<br><br>
+class, MM_Abs is used only to provide a generic interface, such as an interface for<br>
+creating an object of any type, and is used as the abstract class in the class hierarchies 1,<br>
+2, and 3. Then the specialized templates 120,150,180 would all be MM<mm_abs> and<br>
+the specialized template subclasses would be A_STS:MM<mm_abs> 130,<br>
+B_STS:MM<mm_abs> 160, and C_STS:MM<mm_abs> 190.<br>
+[0034] The specialized templates (120, 150, 180) are used to create specialized<br>
+template subclasses (130, 160, 190). According to one embodiment, the specialized<br>
+template subclasses (130, 160, 190) implement the non-memory management interfaces<br>
+(113, 114, 143, 144, 173) of the abstract classes (110, 140, 170) in methods (131, 132,<br>
+161, 162, 191). For example, MM<a_abs> 120 is used to subclass<br>
+A_STS:MM<a_abs> 130. The non-memory management interfaces 113 and 114 are<br>
+implemented in methods 131 and 132 as will be discussed in more detail. According to<br>
+one embodiment, one specialized template subclass (130, 160, or 190) provides a factory<br>
+method (131 or 161) to create objects that are instances of another specialized template<br>
+subclass. For example, create_B_STS 131, which is in A_STS:MM<a_abs> 130, is a<br>
+factory method that creates objects that are instances of class B_STS:MM<b_abs> 160.<br>
+As will be seen, factory methods provide a mechanism for minimizing the number of<br>
+times a pointer to memory, such as a common heap, is passed as a parameter when<br>
+invoking methods.<br>
+[0035] Throughout this application, various operations and actions are described as<br>
+being performed by or taking place at code and instructions. However, tins is just a<br>
+convenient way of stating that the code of instructions, or code compiled therefrom, when<br>
+executed, cause the operations and actions to be performed.<br>
+THE MEMORY MANAGEMENT TEMPLATE<br>
+[0036] FIG. 2 is a block diagram depicting a memory management template that<br>
+provides common pre-processor memory management code according to an embodiment<br>
+of the present invention. The memory management template, as depicted in FIG. 2,<br>
+provides the common pre-processor memory management code, which provides<br>
+interfaces (204, 205) and implementations (230, 240) for a common memory manager by<br>
+overloading the new and delete operators. Classes and templates typically have two<br>
+portions: (1) a definition portion that defines interfaces for methods and/or operators, and<br>
+(2) an implementation portion that defines the code for the method and/or operator. MM<br>
+Template 200 depicts the memory management template's definition. In the public<br>
+section of MM Template 200, three interfaces (202, 204, 205) are provided. One<br><br>
+interface 202 corresponds to the MM Template's Constructor 210. The other two<br>
+interfaces (new 204 and delete 205) correspond to common memory management<br>
+implementations (230 and 240). In the protected section, a data member, hndlp_ 206, is<br>
+provided. Data member hndlp_ 206 is used for storing a pointer to a heap or subheap<br>
+used by the common pre-processor memory management code (230, 240). "T" (201, 211,<br>
+231, 241) is the generic type parameter of the memory management template that is used<br>
+to create specialized templates MM<connectionabs>, MM<statementabs>, and<br>
+MM<resultsetabs>, as shall be described in more detail hereinafter.<br>
+[0037] According to one embodiment, the common pre-processor memory<br>
+management code is provided in MM Template's new operator 230 and MM Template's<br>
+delete operator 240. MM Template's new operator 230 provides the implementation code<br>
+for the operator new interface 204. If no heap exists, the new operator 230 uses the<br>
+default memory manager of the language the code is implemented in to allocate memory<br>
+at instruction 232. If a heap does exist, specialized processing takes place at instruction<br>
+233. This specialized processing may entail subdividing the heap, executing specialized<br>
+perfonnance instructions, returning the pointer to an existing heap, or some other kind of<br>
+specialized processing. MM Template's delete operator 240 is the implementation code<br>
+for the operator delete interface 205. If a heap does exist, specialized processing takes<br>
+place at instruction 242. This specialized processing may entail releasing the heap,<br>
+releasing a subdivision of the heap, or some other kind of specialized processing.<br>
+ABSTRACT CLASSES<br>
+[0038] FIG. 3 is a block diagram depicting abstract classes that are passed into the<br>
+memory management template as specific types to provide specialized templates<br>
+according to an embodiment of the present invention. ConnectionAbs Class 300,<br>
+StatementAbs Class 310, and ResultsetAbs Class 320 are examples of abstract classes<br>
+that (1) provide interfaces that are implemented in the specialized template subclasses,<br>
+and (2) are passed into the MM Template 200 as specific types. According to one<br>
+embodiment, interfaces (301, 311) are provided in the abstract classes (300, 310, 320).<br>
+For example, the implementations for these interfaces (301, 311) are provided in the<br>
+specialized template subclass methods (510, 530). According to one embodiment, the<br>
+interfaces (301, 311) in the abstract classes and the corresponding implementations (510,<br>
+530) in the specialized template subclasses are for factory methods.<br><br>
+[0039] FIG. 4 is a block diagram depicting definitions of specialized template<br>
+subclasses according to an embodiment of the present invention. FIGS. 5 A and 5B are<br>
+block diagrams depicting methods that implement the definitions for these specialized<br>
+template subclasses according to an embodiment of the present invention. In this<br>
+example, three specialized template subclass definitions (400, 410,420) are depicted.<br>
+The specialized template subclasses are used to instantiate objects that access the<br>
+common memory management code (Note that at code fragments 401,411, and 421,<br>
+classes 400, 410, and 420 are subclasses of specialized templates). For example, if object<br>
+A is an instance of ConnectionSTS Class 400, object B is an instance of StatementsTS<br>
+Class 410, and object C is an instance of ResultsetSTS Class 420, then objects A, B, and<br>
+C have memory management executables that were all generated from the same common<br>
+pre-processor memory management code in the memory management template (200, 210,<br>
+230, 240) during compile time.<br>
+[0040] Each of the specialized template subclass definitions have a constructor<br>
+interface (402, 412, 422). The respective implementations of the constructor interfaces<br>
+are ConnectionSTS's Constructor 500, StatementSTS's Constructor 520, and<br>
+ResultsetSTS's Constructor 540. Constructors are used to create objects that are<br>
+instances of the classes the constructors belong to. One of the functions that constructors<br>
+may provide is the initialization of an object's data members. For example, constructors<br>
+500, 520, and 540 initialize data member hndlp_ 206 at instructions 501, 521, and 541 as<br>
+will be described in more detail. In an alternative embodiment, data member hndlp_ 206<br>
+is initialized at code fragment 212 when the MM Template's Constructor 210 is invoked<br>
+during the instantiation process for an object as will be described in more detail.<br>
+Constructors 500 and 520 initialize data members 405 and 415 at instructions 502 and<br>
+522 respectively.<br>
+[0041 ] According to object oriented programming, if an object is an instance of a<br>
+subclass, the constructors are called in the order of their inheritance hierarchy during the<br>
+instantiation process of the object. For example, if ConnectionSTS Class 400, which is a<br>
+subclass of MM<connectionabs>, is used to create an object A, then ConnectionSTS :s<br>
+Constructor 500 is invoked after the superclass's constructor,<br>
+MM<connectionabs>::MM, which is a specialized version of MM Template's<br>
+Constructor 210.<br>
+[0042] According to one embodiment, the specialized template subclasses provide<br>
+implementations of non-memory management interfaces that are in the abstract classes<br>
+while the MM template 200 provides interfaces and implementations (230,240) of the<br>
+memory management interfaces. For example, the specialized template subclass<br>
+A_STS:MM<a_abs> 130 provides implementations for non-memory management<br>
+interfaces, create_B_STS 113 and function_A 114, while MM<t> provides<br>
+implementations of the memory management interfaces, new 111 and delete 112.<br>
+[0043] According to another embodiment, one abstract class is used to provide only<br>
+generic interfaces. For example, a generic abstract class, MM_Abs, could provide<br>
+generic interfaces, such as an interface for creating an object of any type or for<br>
+performing a type of process, and the generic parameter T in the memory management<br>
+template, MM<t>, is replaced with MM_Abs to produce one specialized template<br>
+MM<mm_abs>. In this case, the MMAbs would be passed into the specialized<br>
+template subclasses at code fragments 401,411, and 421.<br>
+[0044] According to one embodiment, the specialized template subclasses provide<br>
+factory methods (403, 413) for creating objects that are instances of other specialized<br>
+template subclasses. For example, the factory method createStatement 403 is used to<br>
+create an object that is an instance of StatementSTS Class 410 as will be described in<br>
+more detail. In creating objects that are instances of other specialized template<br>
+subclasses, the factory method implementations (510, 530) invoke the new operator 230,<br>
+at code fragments 511a and 532a respectively, to allocate memory for the objects and<br>
+subsequently invoke the constructors for the other specialized template subclasses, at<br>
+code fragments 511b and 532b respectively. For example, if factory method<br>
+createStatement 510, which is a method in ConnectioaSTS Class 400, is used to create an<br>
+object A, then code fragment 51 la invokes MM Template's new operator 230 to allocate<br>
+memory for object A and StatementSTS's Constructor 520 is invoked at code fragment<br>
+51 lb to "construct" object A. Then since StatementSTS Class 410 is a subclass of<br>
+K4M<statementabs>, a specialized form of MM Template's Constructor 210,<br>
+MM<statementabs>::MM, is invoked. According to one embodiment, when<br>
+MM<statementabs>::MM is invoked, hndlp_ 206 is initialized at code fragment 212.<br>
+AN OPERATIONAL EXAMPLE OF COMMON MEMORY MANAGEMENT<br>
+[0045] FIG. 6 is a block diagram depicting an application program that creates<br>
+objects, which use common memory management according to an embodiment of the<br>
+present invention. Application program 600 creates three such objects, a ConnectionSTS<br>
+object, a StatementSTS object, and a ResultsetSTS object, in a series of instructions (602,<br>
+S03, and 604). To summarize, a ConnectionSTS object, conn, is created at instruction<br><br>
+602. A factory method in conn is invoked, at instruction 603, to create a StatementSTS<br>
+object, stmt. Another factory method in stmt is invoked, at instruction 604, to create a<br>
+ResultsetSTS object, rs. All three objects contain memory management executables that<br>
+were generated from the common pre-processor memory management code and pointers<br>
+to a common heap as will be discussed in more detail.<br>
+[0046] The memory management executables were derived from the common pre-<br>
+processor code. For example, object conn contains memory management executables for<br>
+MM<connectionabs>::operators new and delete, object stmt contains memory<br>
+management executables for MM<statementabs>::operators new and delete, and object<br>
+rs contains memory management executables for MM<resultsetabs>: operators new and<br>
+delete. All of these memory management executables were derived from the common<br>
+pre-processor memory management code as defined by the MM Template depicted in<br>
+FIG. 2.<br>
+[0047] According to one embodiment, a common heap is shared among the objects,<br>
+as will be discussed in more detail. According to one embodiment, the common heap is<br>
+shared by passing a pointer into the first instruction of the series of instructions (602, 603,<br>
+604) that create objects. For example, pointer pHl is initialized to a common heap at<br>
+instruction 601. According to one embodiment, the common heap is shared among<br>
+objects without passing a pointer into each instruction of the series of instructions as will<br>
+be discussed in more detail. According to another embodiment, the common heap is<br>
+shared among objects by passing a pointer into each instruction of the series of<br>
+instructions. This would be the case if pHl were present in the invocations of instructions<br>
+602, 603, and 604.<br>
+[0048] At instruction 601, the application program 600 initializes a pointer to a<br>
+common heap. At instruction 602, the application program 600 invokes a global<br>
+program, createConnection 610, that: (1) creates a ConnectionSTS object, conn, (2)<br>
+returns a pointer to the conn object, and (3) saves a pointer to this common heap in the<br>
+newly created conn object.<br>
+[0049] For example, the global program, createConnection 610, creates the conn<br>
+object at instruction 611. Instruction 611 has two parts: an invocation of<br>
+MM<cormectionsts>::new at code fragment 61 la and an invocation of<br>
+ConnectionSTS's constructor 500 at code fragment 611b. MM<connectionsts>::new is<br>
+a specialized version of MM Template's new operator 230, which allocates memory for<br>
+the conn object at instruction 232 and returns a pointer to conn. ConnectionSTS's<br>
+constructor 500 "constructs" conn by initializing MM<connectionabs>::hndlp_ 206 at<br><br>
+instruction 501 and by optionally initializing other data members at instruction 502.<br>
+Since ConnectionSTS Class 400 is a subclass of MM<connectionabs> 401, a specialized<br>
+version of the MM Template's Constructor 210 is invoked.<br>
+[0050] At instructions 603 and 604, factory methods in objects are used to, among<br>
+other things: (1) create other objects, and (2) communicate a pointer to the common heap<br>
+to each of these other objects. To create objects, stmt and rs, factory methods,<br>
+createStatement method 510 and execQuery method 540, are invoked at instructions 603<br>
+and 604 respectively. To communicate a pointer to the common heap, factory methods,<br>
+createStatement and execQuery, propagate the pointer from one object to the next created<br>
+object. For example, object conn is created at instruction 602 and used to communicate a<br>
+common heap pointer to object stmt at instruction 603. This is accomplished by passing<br>
+the pointer to the common heap member, pH1, to createConnection 610 at instruction<br>
+602. Code fragment 611a results in calling MM<connectionabs>::new. Code fragment<br>
+61 lb results in calling the ConnectionsSTS's Constructor 500 where the pointer to the<br>
+common heap is also saved in the object conn. ConnectionSTS's Constructor 500 saves<br>
+the common heap pointer in MM<connectionabs>::hndlp_ at instruction 501. Then the<br>
+saved pointer to the common heap is propagated from object conn to object stmt at<br>
+• instruction 603 when the factory method createStatement in conn is used to create object<br>
+stmt. For example, at code fragment 51 la, MM<connectionabs>::hdnlp_, which is a<br>
+specialized version of hndlp_ 206, is passed into the new operator, which allocates<br>
+memory for the stmt object. Similar processing occurs with regards to object rs at<br>
+instruction 604.<br>
+A HIERARCHICAL TREE OF OBJECTS<br>
+[0051] FIG. 7 is a block diagram depicting a set of objects that have a hierarchical<br>
+tree relationship to each other (hereinafter referred to as a "hierarchical tree") according<br>
+to an embodiment of the present invention. For example, for any given database<br>
+connection, one or more queries are executed involving statements. Resultsets are<br>
+returned in response to the queries. Streams are obtained from resultsets in order to<br>
+coordinate reading large data objects, such as Binary Large Objects, that cannot be read in<br>
+one function call. Therefore, a hierarchical relationship exists between a database<br>
+connection, and the related statements, resultsets, and streams. The connection, and<br>
+related statements, resultsets, and streams can each be represented by an object and the<br>
+objects can be organized in a hierarchical tree that reflects the relationship between the<br>
+objects.<br><br>
+[0052] For example, Conn_1 is a connection object. Stmt_1, Stmt_2, and Stmt_3 are<br>
+statement objects that represent statements used in queries for this connection. RS_1 and<br>
+RS_2 are resultset objects that represent resultsets returned in response to a query using<br>
+Stmt_l. RS_3 and R8_4 are resultset objects that represent resultsets returned in<br>
+response to a query using Stmt_3. Streams, Stream_l and Stream_2, are obtained from<br>
+resultsets, RS_1 and RS_4 respectively. Memory (H0, H1, H2, H3, H11, H12, H31, H32,<br>
+H111, H321), used for executing methods and for performing computations among other<br>
+things, is associated with each object in a hierarchical tree. For example, memory HO is<br>
+associated with object Conn_l, memory HI is associated with object Stmt_l, and so on.<br>
+MEMORY ASSOCIATED WITH A HIERARCHICAL TREE OF OBJECTS<br>
+[0053] FIG. 8 is a block diagram depicting pieces of memory associated with each<br>
+object of a set of objects according to an embodiment of the present invention. The<br>
+pieces of memory (hereinafter referred to as a hierarchical memory tree) are organized to<br>
+reflect the hierarchical tree relationship of the set of objects. According to one<br>
+embodiment, FIG. 8 depicts the hierarchical memory tree associated with the set of<br>
+objects that are depicted in FIG. 7. For example, HO is one piece of memory associated<br>
+with object Conn_l; HI, H2, and H3 are pieces of memory associated with the statement<br>
+objects Stmt_l, Stmt_2, and Stmt_3 respectively; HI 1, H12, H31, and H32 are pieces of<br>
+memory associated with the resultset objects RS_1, RS_2, RS_3, and RS_4 respectively;<br>
+H111 and H321 are pieces memory associated with stream objects Stream_l and<br>
+Stream_2.<br>
+[0054] According to one embodiment, a heap is one piece of memory associated with<br>
+the top object of a hierarchical tree and subheaps of this heap are the pieces of memory<br>
+associated with the rest of tire objects. For example in FIG. 7, HO, which is associated<br>
+with the top object Conn_l, would be a heap, and the memory associated with the rest of<br>
+the objects (HI, H2, H3, etc.) are subheaps of HO.<br>
+[0055] Hierarchical data is maintained that determines the hierarchy of the<br>
+hierarchical memory tree, and is maintained in such a way that the hierarchical memory<br>
+tree reflects the hierarchical relationship between the set of objects in the hierarchical<br>
+tree. This data could be among other tilings pointers and references that are maintained:<br>
+(1) in data members of the set of objects, (2) in the memory associated with the set of<br>
+objects, or (3) in one or more tables.<br>
+[0056] By maintaining hierarchical data for the memory that reflects the hierarchical<br>
+relationship of the set of objects, a memory subtree can be released with a single request,<br><br>
+such as an object destructor or a function, without impacting other objects in the<br>
+hierarchical tree or the memory associated with the other objects in the hierarchical tree.<br>
+[0057] According to one embodiment, this hierarchical data is a pair of sibling and<br>
+children pointers associated with the heap and each subheap in the hierarchical memory<br>
+tree. The heap and each subheap points to a list of its own children and its own siblings.<br>
+For example, the children of heap HO, which is associated with Conn_l, are subheaps HI,<br>
+H2, and H3. The siblings of subheap HI are subheaps H2 and H3.<br>
+RELEASING MEMORY ASSOCIATED WITH A MEMORY SUBTREE USING A<br>
+SINGLE REQUEST<br>
+[0058] FIG. 9, 10A, and 10B are block diagrams depicting classes for creating objects<br>
+that have a hierarchical relationship and the memory associated with these objects<br>
+according to an embodiment of the present invention. FIG. 9 is a block diagram depicting<br>
+class definitions for the connection, statement, and resultset classes. FIGS. 10A and 10B<br>
+are block diagrams depicting the methods associated with these classes. In this example,<br>
+the classes are used to create connection, statement, and resultset objects. FIG. 11 is a<br>
+block diagram depicting programs that create objects with classes depicted in FIGS. 9,<br>
+10 A. and 10B according to an embodiment of the present invention.<br>
+[0059] According to one embodiment, releasing memory associated with a memory<br>
+subtree in a single request is performed in conjunction with common memory<br>
+management. In this case, the Connection class 900, Statement class 910, and the<br>
+Resultset Class 920 would be subclasses of specialized templates. For example, when<br>
+Connection class 900 is used to create an object A, the new operator 230 is invoked.<br>
+Likewise, when object A is destroyed, a destructor in Connection class 900 (not shown) is<br>
+invoked, which in turn invokes the delete operator 240. Then the delete operator 240, or<br>
+a function the delete operator 240 invokes, traverses the hierarchical data to release the<br>
+memory associated with object A and the subtree associated with object A. For example,<br>
+if the destructor for Stmt_l, as depicted in FIG. 7, is invoked from an application<br>
+program, the destructor can use the children and sibling pointers, as depicted in FIG. 8, to<br>
+determine that subheaps HI, HI 1, H12, HI 11 should be released.<br>
+[0060] According to another embodiment, releasing memory associated with a<br>
+memory subtree in a single request is performed without common memory management<br>
+code. For example, the Connection class 900, Statement class 910, and the Resultset<br>
+Class 920 are not subclasses of specialized templates.<br>
+[0061] A pointer (906, 916, 923) to memory is associated with each class (900, 910,<br>
+920) that is used to create objects in a hierarchical tree. For example, the connection class<br>
+900, statement class 910, and the resultset class 920 all have pointers (906, 916, 923) to<br>
+either a heap or a subheap. Constructors (1000, 1020, 1040) are used to initialize these<br>
+pointers (906, 916, 923) using initialization instructions (1001, 1021, 1041). For<br>
+example, connection's constructor 1000, statement's constructor 1020, and resultset's<br>
+constructor 1040 initialize their respective memory pointers to point to heaps or subheaps<br>
+in initialization instructions 1001, 1021, and 1041. Factory methods (1010, 1030) are<br>
+used not only to create new objects of other class types but also to allocate memory for<br>
+the newly created objects (1011, 1032) and maintain hierarchical data (907, 908, 917,<br>
+918, 924, 925) for the memory that reflects the hierarchical relationship between the set<br>
+of objects. For example, connection's createStatement method 1010: (1) creates anew<br>
+subheap of the connection object's heap (906) at instruction 1011, (2) creates a statement<br>
+object and associates the newly created subheap with the statement object at instruction<br>
+1012, and (3) maintains hierarchical data, in the form of children and sibling pointers<br>
+(907 and 908), for the subheaps so that the subheaps reflect the hierarchical relationship<br>
+between the set of objects at instruction 1013.<br>
+[0062] By creating objects in factory methods and maintaining hierarchical data in<br>
+either the memory associated with these objects or as data members of the objects<br>
+themselves, a subtree and its associated memory can be released with a single request.<br>
+An example of maintaining the hierarchical data in the memory has already been<br>
+described herein. Assuming that the hierarchical data is maintained as data members in<br>
+the objects, a function could use the data members in objects Stmt_l, RS_1, RS_2, and<br>
+Stream_l, to determine that subheaps HI, HI 1, H12, HI 11 should be released.<br>
+OTHER EMBODIMENTS<br>
+[0063] According to another embodiment, all the memory for a hierarchical memory'<br>
+tree is in a single piece of contiguous memory, which is subdivided into separate pieces of<br>
+memory that are associated with each object in the hierarchical tree. Pointers are used to<br>
+maintain the relationship between the pieces of memory associated with the individual<br>
+objects. Any known method for maintaining these pointers may be used such as<br>
+maintaining the pointers within the single piece of memory itself or maintaining the<br>
+pointers in a table.<br><br>
+HARDWARE OVERVIEW<br>
+[0064] Figure 12 is a block diagram that illustrates a computer system 1200 upon<br>
+which an embodiment of the invention maybe implemented. Computer system 1200<br>
+includes a bus 1202 or other communication mechanism for communicating information,<br>
+and a processor 1204 coupled with bus 1202 for processing information. Computer<br>
+system 1200 also includes a main memory 1206, such as a random access memory<br>
+(RAM) or other dynamic storage device, coupled to bus 1202 for storing information and<br>
+instructions to be executed by processor 1204. Main memory 1206 also may be used for<br>
+storing temporary variables or other intermediate information during execution of<br>
+instructions to be executed by processor 1204. Computer system 1200 further includes a<br>
+read only memory (ROM) 1208 or other static storage device coupled to bus 1202 for<br>
+storing static information and instructions for processor 1204. A storage device 1210,<br>
+such as a magnetic disk or optical disk, is provided and coupled to bus 1202 for storing<br>
+information and instructions.<br>
+[0065] Computer system 1200 may be coupled via bus 1202 to a display 1212, such<br>
+as a cathode ray tube (CRT), for displaying information to a computer user. An input<br>
+device 1214, including alphanumeric and other keys, is coupled to bus 1202 for<br>
+communicating information and command selections to processor 1204. Another type of<br>
+user input device is cursor control 1216, such as a mouse, a trackball, or cursor direction<br>
+keys for communicating direction information and command selections to processor 1204<br>
+and for controlling cursor movement on display 1212. This input device typically has<br>
+two degrees of freedom in two axes, a first axis (e.g., x) and a second axis (e.g., y), that<br>
+allows the device to specify positions in a plane.<br>
+[0066 j The invention is related to the use of computer system 1200 for implementing<br>
+the techniques described herein. According to one embodiment of the invention, those<br>
+techniques are performed by computer system 1200 in response to processor 1204<br>
+executing one or more sequences of one or more instructions contained in main memory<br>
+1206. Such instructions may be read into main memory 1206 from another computer-<br>
+readable medium, such as storage device 1210. Execution of the sequences of<br>
+instructions contained in main memory 1206 causes processor 1204 to perform the<br>
+process steps described herein. In alternative embodiments, hard-wired circuitry may be<br>
+used in place of or in combination with software instructions to implement the invention.<br>
+Thus, embodiments of the invention are not limited to any specific combination of<br>
+hardware circuitry and software.<br><br>
+[0067] The term "computer-readable medium" as used herein refers to any medium<br>
+that participates in providing instructions to processor 1204 for execution. Such a<br>
+medium may take many forms, including but not limited to, non-volatile media, volatile<br>
+media, and transmission media. Non-volatile media includes, for example, optical or<br>
+magnetic disks, such as storage device 1210. Volatile media includes dynamic memory,<br>
+such as main memory 1206. Transmission media includes coaxial cables, copper wire<br>
+and fiber optics, including the wires that comprise bus 1202. Transmission media can<br>
+also take the form of acoustic or light waves, such as those generated during radio-wave<br>
+and infra-red data communications.<br>
+[0068] Common forms of computer-readable media include, for example, a floppy<br>
+disk, a flexible disk, hard disk, magnetic tape, or any other magnetic medium, a CD-<br>
+ROM, any other optical medium, pimchcards, papertape, any other physical medium with<br>
+patterns of holes, a RAM, a PROM, and EPROM, a FLASH-EPROM, any other memory<br>
+chip or cartridge, a carrier wave as described hereinafter, or any other medium from<br>
+which a computer can read.<br>
+[0069] Various forms of computer readable media may be involved in carrying one or<br>
+more sequences of one or more instructions to processor 1204 for execution. For<br>
+example, the instructions may initially be carried on a magnetic disk of a remote<br>
+computer. The remote computer can load the instructions into its dynamic memory and<br>
+send the instructions over a telephone line using a modem. A modem local to computer<br>
+system 1200 can receive the data on the telephone line and use an infra-red transmitter to<br>
+convert the data to an infra-red signal. An infra-red detector can receive the data carried<br>
+in the infra-red signal and appropriate circuitry can place the data on bus 1202. Bus 1202<br>
+carries the data to main memory 1206, from which processor 1204 retrieves and executes<br>
+the instructions. The instructions received by main memory 1206 may optionally be<br>
+stored on storage device 1210 either before or after execution by processor 1204.<br>
+[0070] Computer system 1200 also includes a communication interface 1218 coupled<br>
+to bus 1202. Communication interface 1218 provides a two-way data communication<br>
+coupling to a network link 1220 that is connected to a local network 1222. For example,<br>
+communication interface 1218 may be an integrated services digital network (ISDN) card<br>
+or a modem to provide a data communication connection to a corresponding type of<br>
+telephone line. As another example, communication interface 1218 maybe a local area<br>
+network (LAN) card to provide a data communication connection to a compatible LAN.<br>
+Wireless links may also be implemented. In any such implementation, commumcation<br>
+interface 1218 sends and receives electrical, electromagnetic or optical signals that carry<br>
+digital data streams representing various types of information.<br>
+[0071] Network link 1220 typically provides data communication through one or<br>
+more networks to other data devices. For example, network link 1220 may provide a<br>
+connection through local network 1222 to a host computer 1224 or to data equipment<br>
+operated by an Internet Service Provider (ISP) 1226. ISP 1226 in turn provides data<br>
+communication services through the world wide packet data communication network now<br>
+commonly referred to as the "Internet" 1228. Local network 1222 and Internet 1228 both<br>
+use electrical, electromagnetic or optical signals that carry digital data streams. The<br>
+signals through the various networks and the signals on network link 1220 and through<br>
+communication interface 1218, winch carry the digital data to and from computer system<br>
+1200, are exemplary forms of carrier waves transporting the information.<br>
+[0072] Computer system 1200 can send messages and receive data, including<br>
+program code, through the network(s), network link 1220 and communication interface<br>
+1218. In the Internet example, a server 1230 might transmit a requested code for an<br>
+application program through Internet 1228, ISP 1226, local network 1222 and<br>
+communication interface 1218.<br>
+[0073] The received code may be executed by processor 1204 as it is received, and/or<br>
+stored in storage device 1210, or other non-volatile storage for later execution. In this<br>
+manner, computer system 1200 may obtain application code in the form of a carrier wave.<br>
+[0074] In the foregoing specification, the invention has been described with reference<br>
+to specific embodiments thereof. It will, however, be evident that various modifications<br>
+and changes may be made thereto without departing from the broader spirit and scope of<br>
+the invention. The specification and drawings are, accordingly, to be regarded in an<br>
+illustrative rather than a restrictive sense.<br><br>
+WE CLAIM<br>
+1. A method of releasing the memory associated with a set of objects that have a hierarchical<br>
+tree relationship, the method comprising the computer-implemented steps of:<br>
+creating the set of objects that have the hierarchical tree relationship;<br>
+allocating memory for each object;<br>
+maintaining data that defines a relationship between the memory for each object; wherein<br>
+the data reflects the organization of the hierarchical tree relationship;<br>
+receiving a request to release memory associated with an object; and<br>
+in response to receiving the request,<br>
+accessing the data to determine what memory is associated with one or<br>
+more objects that are descendants of the object,<br>
+releasing the memory associated with the object and the memory<br>
+associated with the descendants of the object; and<br>
+wherein the data comprises child and sibling pointer pairs and the step of<br>
+maintaining the data that defines the relationship further comprises:<br>
+maintaining the child and sibling pointer pairs that define the relationship<br>
+between the memory for each object;<br>
+wherein releasing the memory associated with the object and the memory<br>
+associated with the descendants of the object comprises using the child<br>
+and sibling pointer pairs to determine the descendants of the object.<br>
+2. The method as claimed in claim 1, wherein memory associated with an object at the top<br>
+of the hierarchical tree relationship is a heap and memory associated with the rest of the<br>
+objects in the hierarchical tree relationship are subheaps of the heap, and the step of<br>
+allocating further comprises:<br>
+allocating the heap for the object at the top and allocating the subheaps of the<br>
+heap for the rest of the objects in the hierarchical tree relationship.<br>
+3. The method as claimed in claim 1, wherein the step of accessing the data comprises:<br>
+accessing the child and sibling pointer pairs to determine the one or more objects that<br>
+are descendants of the object.<br>
+4. The method as claimed in claim 1, wherein the step of allocating comprises:<br>
+allocating the memory for each object by invoking a memory management<br>
+executable that was generated from pre-processor code.<br>
+5. The method as claimed in claim 4, wherein the memory management executable is a<br>
+new operator, and the step of allocating comprises:<br>
+allocating the memory for each object by invoking the new operator.<br>
+6. The method as claimed in claim 1, wherein the step of releasing comprises:<br>
+releasing the memory associated with the object and the memory management<br>
+executable that was generated from pre-processor code.<br>
+7. The method as claimed in claim 6, wherein the memory management executable is a<br>
+delete operator, and the step of releasing comprises:<br>
+releasing the memory associated with the object and the memory associated with the<br>
+descendants of the object by invoking the delete operator.<br>
+8. The method as claimed in claim 6, wherein the step of releasing comprises:<br>
+causing the release of the memory associated with the object and the memory associated<br>
+with the descendants of the object by invoking a single request.<br>
+9. The method as claimed in claim 8, wherein the single request is a destructor for the<br>
+object, and the step of releasing comprises:<br>
+releasing the memory associated with the object and the memory associated with the<br>
+descendants of the object by invoking the destructor.<br>
+10. The method as claimed in claim 1, wherein memory for a particular object is created in a<br>
+factory method and the step of allocating comprises:<br>
+allocating the memory in the factory method for the particular object.<br>
+11. The method as claimed in claim 1, wherein at least a portion of the data that defines the<br>
+relationship is maintained in a factory method, and the step of maintaining the data<br>
+comprises:<br>
+maintaining at least the portion of the data that defines the relationship between the<br>
+memory for the particular object and the memory for the rest of the objects is performed<br>
+in the factory method.<br>
+12. The method as claimed in claim 1, wherein the data is maintained in data members of the<br>
+set of objects and the step of maintaining the data that defines the relationship comprises:<br>
+maintaining the data members to define the relationship between the memory for each<br>
+object.<br>
+13. The method as claimed in claim 1, wherein the data is maintained in the memory for each<br>
+object and the step of maintaining the data that defines the relationship comprises:<br>
+maintaining the data in the memory for each object to define the relationship between the<br>
+memory for each object.<br><br></connectionabs></connectionabs></connectionabs></connectionabs></connectionabs></connectionsts></cormectionsts></resultsetabs></statementabs></connectionabs></statementabs></statementabs></statementabs></mm_abs></t></t></a_abs></connectionabs></connectionabs></resultsetabs></statementabs></connectionabs></b_abs></a_abs></a_abs></a_abs></mm_abs></mm_abs></mm_abs></mm_abs></c_abs></b_abs></a_abs></a_abs></a_abs></t></a_abs></a_abs></c_abs></b_abs></a_abs></a_abs></a_abs></a_abs></a_abs></t></t></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LSgxNy0xMC0yMDExKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-(17-10-2011)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LUFCU1RSQUNUIDEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-ABSTRACT 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LUFNRU5ERUQgQ0xBSU1TLnBkZg==" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-AMENDED CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWFzc2lnbm1lbnQucGRm" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWNvcnJlc3BvbmRlbmNlLnBkZg==" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-correspondence.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LURFU0NSSVBUSU9OIChDT01QTEVURSkgMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-DESCRIPTION (COMPLETE) 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LUVYQU1JTkFUSU9OIFJFUE9SVCBSRVBMWSBSRUNJRVZFRCAxLjEucGRm" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-EXAMINATION REPORT REPLY RECIEVED 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWV4YW1pbmF0aW9uIHJlcG9ydC5wZGY=" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-examination report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWZvcm0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LUZPUk0gMTMtMS4yLnBkZg==" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-FORM 13-1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LUZPUk0gMTMtMS4zLnBkZg==" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-FORM 13-1.3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWZvcm0gMTMucGRm" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-form 13.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWZvcm0gMTgucGRm" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-form 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LUZPUk0gMi4xLjEucGRm" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-FORM 2.1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWZvcm0gMi5wZGY=" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWZvcm0gMjYucGRm" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-form 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWZvcm0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LUZPUk0gNSAxLjEucGRm" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-FORM 5 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWZvcm0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LUZPUk0tMjcucGRm" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-FORM-27.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWZvcm0uMS5wZGY=" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-form.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWdyYW50ZWQtYWJzdHJhY3QucGRm" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-granted-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWdyYW50ZWQtY2xhaW1zLnBkZg==" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-granted-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWdyYW50ZWQtZGVzY3JpcHRpb24gKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-granted-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWdyYW50ZWQtZHJhd2luZ3MucGRm" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-granted-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWdyYW50ZWQtZm9ybSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-granted-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWdyYW50ZWQtZm9ybSAyLnBkZg==" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-granted-form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LWdyYW50ZWQtc3BlY2lmaWNhdGlvbi5wZGY=" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-granted-specification.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LU9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LVBBIDEuMi5wZGY=" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-PA 1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LVBFVElUSU9OIFVOREVSIFJVTEUgMTM3LTEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-PETITION UNDER RULE 137-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LVBFVElUSU9OIFVOREVSIFJVTEUgMTM3LnBkZg==" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-PETITION UNDER RULE 137.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LXJlcGx5IHRvIGV4YW1pbmF0aW9uIHJlcG9ydC5wZGY=" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-reply to examination report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1LT0xOUC0yMDA0LVJFUExZIFRPIEVYQU1JTkFUSU9OIFJFUE9SVDEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">1633-KOLNP-2004-REPLY TO EXAMINATION REPORT1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTYzMy1rb2xucC0yMDA0LXNwZWNpZmljYXRpb24ucGRm" target="_blank" style="word-wrap:break-word;">1633-kolnp-2004-specification.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="250192-metohod-and-system-for-controlling-wireless-network-traffic.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="250194-a-method-for-establishing-a-push-to-talk-ptt-communication-session-in-a-wireless-communication-system-and-a-mobile-station.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>250193</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1633/KOLNP/2004</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>50/2011</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>16-Dec-2011</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>14-Dec-2011</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>02-Nov-2004</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>ORACLE INTERNATIONAL CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>500 ORACLE PARKWAY, M/S5OP7 REDWOOD SHORES, CALIFORNIA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>LARI, MOHAMMED, SHOAIB</td>
+											<td>STARR KING CIRCLE, PALO ALTO, CA 94306</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>KRISHNASWAMY, SRINATH</td>
+											<td>550 SHANNON WAY, A PT. NO. 6106, FREMONT, CA 94065</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>KASAMSETTY, RAVILANTH</td>
+											<td>4631 MARITIME LOOP, UNION CITY, CA 94587</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 12/02</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2003/013276</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2003-04-28</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/209,514</td>
+									<td>2002-07-30</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>60/384,646</td>
+									<td>2002-05-31</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>60/378,871</td>
+									<td>2002-05-07</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/250193-simplified-deallocation-of-memory-for-programming-objects by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 14:34:24 GMT -->
+</html>

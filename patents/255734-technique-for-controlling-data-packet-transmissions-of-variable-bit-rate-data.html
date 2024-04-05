@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/255734-technique-for-controlling-data-packet-transmissions-of-variable-bit-rate-data by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 10:19:36 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 255734:TECHNIQUE FOR CONTROLLING DATA PACKET TRANSMISSIONS OF VARIABLE BIT RATE DATA</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">TECHNIQUE FOR CONTROLLING DATA PACKET TRANSMISSIONS OF VARIABLE BIT RATE DATA</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A technique is disclosed for controlling data packet transmissions of variable bit rate data from a server to a client having a client buffer wherein the server switches among different versions of a stream of variable bit rate data being transmitted based on a status of the client buffer. The technique operates to select an initial version of a stream of variable bit rate data for transmission and to track a value representative of an amount of data within the client buffer. A bit rate of a next portion of variable bit rate data to be transmitted is determined. Then, the server controls switches to different versions of the stream, having different mean bit rates, based on the value representative of the amount of data within the client buffer in combination with the bit rate of the portion of variable bit rate data yet to be transmitted.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>DESCRIPTION<br>
+Field of the Invention<br>
+The invention relates to the communication of data and, more specifically, to a technique<br>
+for controlling streaming data packet transmissions.<br>
+Background of the Invention<br>
+Increasing amounts of data are being transmitted from servers to clients via<br>
+communication infrastructures such as packet-based Internet Protocol (IP) networks. One<br>
+particular application that is increasing in popularity is multimedia streaming. However,<br>
+improvements must be made in providing reliable data streams before widespread<br>
+adoption of such services. For example, as data transmission link rates between the IP<br>
+network and a client device of a user tend to fluctuate, any disturbances in data delivery to<br>
+the user may result in severe degradation of the playout to the end user, i.e. a degradation<br>
+in the quality of the media observed by the user. In particular, it is important that there be a<br>
+sufficient supply of packets of data at the client device to be fetched by a multimedia<br>
+application as playout (i.e., the display of the multimedia file by the multimedia<br>
+application or player) progresses.<br>
+In many cases, the packet transmission rate cannot be changed, as this rate depends upon<br>
+the bandwidth of communication link (or it is at least impractical to change the packet<br>
+transmission rate). However, the rate at which data is fed to the output device of the user<br>
+often must be changed. Typically, for streaming applications, such adjustments are<br>
+achieved using "stream switching". With stream switching, the same media content, e.g. a<br>
+particular video sequence, is pre-encoded at different bit rates and stored at the server.<br>
+Hence, different versions of the same stream are available. During transmission, the server<br>
+selects the particular version that has a data bit rate most appropriate based upon the<br>
+current available bandwidth in the network and based upon the status of the client buffer.<br>
+Switching logic employed by the server decides if and when to switch to another version<br>
+of the stream. In the case of a so-called "down-switch", the stream is switched to a version<br>
+with a lower encoded bit rate. In the case of an "up-switch", the switch is made to a<br>
+version with a higher encoded bit rate. In many implementations, the criteria for switching<br>
+employs predefined thresholds defined with respect to client buffer status. In one example,<br>
+thresholds are based upon a buffer fill level, which represents the amount of data within<br>
+the client buffer in bytes. In another example, the thresholds are based upon a playout<br>
+2<br><br>
+length (PT) of stored media in the client buffer, which represents the amount of time in<br>
+seconds it will take for the data already within the client buffer to be played out to the user.<br>
+Herein, examples involving playout length are described, though buffer fill level or other<br>
+appropriate parameters can instead be used.<br>
+Some conventional techniques for determining the status of the client buffer utilize<br>
+information within Real Time Transport Control Protocol (RTCP) receiver reports (RRs).<br>
+Information pertaining to the next sequence number (NSN) or oldest buffered sequence<br>
+number (OBSN) within the client buffer and the highest received sequence number<br>
+(HRSN) within the client buffer is contained with the RR and is used to determine the<br>
+consumed buffer space as the size of each packet within the range from the HRSN to the<br>
+NSN/OBSN is known. If the free space within the client buffer is below a preferred client<br>
+buffer fill level, then a different version of the stream is selected. For example, if buffer<br>
+playout length (PT) falls below a predetermined minimum threshold (PTDOWN), then a risk<br>
+of buffer draining occurs, i.e. the client buffer becomes empty such that there is no data to<br>
+stream to the user. This results in a playout freeze, wherein the last image displayed to the<br>
+user is typically frozen until a sufficient amount of additional data can be added to the<br>
+client buffer to restart the stream to the output device employed by the user, i.e. a<br>
+"rebuffering" of the client buffer is required. Rebuffering can be extremely annoying from<br>
+the standpoint of the user.<br>
+To avoid possible rebuffering due to client buffer draining, the server detects when the<br>
+playout length (PT) within the client buffer drops below threshold PTDOWN, then adjusts<br>
+the bit rate (i.e. selects a version of the stream having a different bit rate) in an attempt to<br>
+prevent the client buffer from becoming completely drained. More specifically, the server<br>
+performs a down-switch, i.e. a switch to a lower bit rate stream. The reason that a down-<br>
+switch is performed, rather than up-switch, is that the most likely reason that the client<br>
+buffer is being drained is that the link rate between the server and the client buffer is less<br>
+than anticipated, i.e. the effective bandwidth is less than needed for the bit rate currently<br>
+being used. As a result, data is not being received by the client buffer at the same rate at<br>
+which the client buffer is feeding data to the output device of the user. Hence, the client<br>
+buffer, which should remain fairly well populated with data, becomes drained. By<br>
+switching to the lower bit rate, the client buffer feeds data to the display unit at a lower<br>
+rate, thereby allowing more time for data to be received from the server, and thereby<br>
+preventing the client buffer from becoming completely drained. From the standpoint of the<br>
+user, the quality of the media stream is downgraded because of the down-switch, e.g. the<br>
+size of the displayed image of the video stream becomes smaller, the resolution of the<br>
+3<br><br>
+image becomes less, or higher distortions are observed in the image. Yet, this is preferable<br>
+to the aforementioned playout freeze that occurs during rebuffering.<br>
+On the other hand, if buffer playout (PT) length exceeds a predetermined maximum<br>
+threshold (PTup), then a risk of buffer overflow occurs, i.e. the client buffer becomes full<br>
+such there is no room for additional packets. Any packets received by the client buffer but<br>
+not stored therein are typically not re-sent by the server and hence the data of those packets<br>
+are simply not forwarded to the output device of user. Once the client buffer is again<br>
+capable of storing packets, the data stream resumes with the new packets. Thus, from the<br>
+standpoint of the user, there is a sudden loss of content as the stream simply jumps ahead.<br>
+In the case of a film or movie, dialogue can be lost, thus interfering with the ability of the<br>
+user to follow story. In the case of music, the song simply jumps ahead. As will be<br>
+appreciated, this can be quite annoying from standpoint of the user as well.<br>
+To avoid a disruption of the stream due to client buffer overflow, the server detects when<br>
+the playout length (PT) within the client buffer exceeds threshold PTUP and then performs<br>
+an up-switch, i.e. a switch to a higher bit rate stream. The reason that an up-switch is<br>
+performed, rather than down-switch, is that the most likely reason that the client buffer is<br>
+becoming to full is that the link rate between the server and the client buffer is greater than<br>
+anticipated, i.e. the effective bandwidth is greater than needed for the bit rate currently<br>
+being used. As a result, data being received by the client buffer at a rate higher than the<br>
+rate at which the client buffer feeds the data to the output device of the user. Hence, the<br>
+client buffer overflows. By switching to the higher bit rate, the client buffer feeds data to<br>
+the output device at the higher rate, thereby preventing the client buffer from overflowing.<br>
+From the standpoint of the user, the quality of the media stream is improved due to the up-<br>
+switch, e.g. the size of the displayed image of the video stream becomes larger or the<br>
+resolution of the image becomes greater. Hence, the up-switch helps prevent interruption<br>
+of the stream and improves media quality, which both benefit the user.<br>
+Simple logic for performing up-switches and down-switches may be represented as<br>
+follows:<br>
+IfPT&gt; PTUP then<br>
+Perform up-switch<br>
+else if PT<ptdown></ptdown>
+Perform down-switch<br>
+end if.<br>
+4<br><br>
+Appropriate selection of these thresholds is critical to the overall media impression of the<br>
+user. In the case of down-switch that is performed too late, a rebuffering event will<br>
+happen. In the case of an up-switch that is performed too late, the user receives a lower<br>
+quality media then is otherwise necessary and, as noted, a break in the data stream may<br>
+occur as the result of a buffer overflow. Likewise, if a down-switch is performed earlier<br>
+than necessary, the user receives a lower quality media than is otherwise necessary. If an<br>
+up-switch is performed earlier than necessary, a down-switch may then soon be required,<br>
+resulting in annoying fluctuations in the quality of the media. To avoid these problems,<br>
+multiple down-switch thresholds and multiple up-switch thresholds can potentially be<br>
+used. As playout length decreases towards buffer drainage, a series of the down-switch<br>
+thresholds are crossed, each triggering a down-switch. Conversely, as playout length<br>
+increases towards buffer overflow, a series of up-switch thresholds are crossed, each<br>
+triggering an up-switch.<br>
+However, after a switch has occurred and a stream with the new bit rate has been<br>
+transmitted, it takes some time before the switch has any effect on the playout length of the<br>
+client buffer. First, there is a transmission delay until a first packet containing data<br>
+encoded at the new rate reaches the client buffer. During this time period, the playout<br>
+length of the stored media in the client buffer is unaffected by the new rate. Hence, if the<br>
+playout length was increasing toward a possible buffer overflow, it will likely continue to<br>
+increase. Conversely, if the playout length was a decreasing toward possible buffer<br>
+drainage, it will likely continue to decrease. Also, even after the arrival of the first packet<br>
+at the new bit rate, the playout length may change only slowly at first. For example, there<br>
+may still be some packets sent with data at the previous bit rate that had not yet been<br>
+received by the client buffer. Therefore, the switching conditions are often still valid and<br>
+several switches then follow a first switch, which are often unnecessary. In the case of a<br>
+first down-switch, several further down-switches may be performed, resulting in a stream<br>
+bit rate that is much lower than necessary. Often, the down-switches do not stop until the<br>
+lowest stream bit rate has been selected. This behavior results in an unnecessarily low<br>
+media stream quality for the user. In the case of an up-switch, several further up-switches<br>
+can happen, resulting in a stream bit rate that is too high, often to the highest rate possible.<br>
+This results in a stream bit rate that is much too high compared with the current available<br>
+network bandwidth, triggering a series of down-switches.<br>
+As a result, frequent and annoying variations in stream quality are observed by the user.<br>
+Moreover, if a bit rate that is much too high has been selected, subsequent down-switches<br>
+often cannot be executed fast enough, resulting in annoying rebuffering events and playout<br>
+freeze. Likewise, if a bit rate that is much too low has been selected, subsequent up-<br>
+5<br><br>
+switches often cannot be executed fast enough, resulting in annoying buffer overflows and<br>
+associated loss of data. Even with only a single up-switch threshold and a single down-<br>
+switch threshold, these sorts of problems can arise, particularly if the thresholds are set too<br>
+close together.<br>
+Even more problems can arise when transmitting media content that has a variable bit rate.<br>
+Conventionally, each pre-encoded version of the multimedia stream has a single bit rate,<br>
+and hence the bit rate of a stream only changes if the server switches to a different stream<br>
+having a faster or slower rate, as already described. However, in some cases, it is<br>
+appropriate to provide streams with a varying bit rate, particularly to accommodate storage<br>
+and transmission of large media files. In other words, each version of a stream may have<br>
+portions at one bit rate and other portions at another. Preferably, the bit rate for individual<br>
+sections of a particular version of a stream is chosen based on the content of the individual<br>
+section. For example, one portion of a stream may be fairly static, permitting a low bit rate<br>
+to adequately capture the content. Thereafter, a higher bit rate may be needed to adequately<br>
+capture more dynamic content. By setting the bit rate of each portion of a multimedia<br>
+stream based on the dynamic content of that portion of the stream, overall file size can be<br>
+reduced while still adequately conveying the content.<br>
+When applying conventional stream switching techniques to variable bit rate streams,<br>
+various problems can arise. In particular, the changing bit rates of the stream can<br>
+compound the aforementioned problems, resulting in even more frequent and unnecessary<br>
+switches, causing further annoyance to the user and, often, wasting bandwidth.<br>
+Accordingly, there is a need for an improved technique for controlling stream switching of<br>
+variable bit rate data so as to provide more stable and reliable content to user, and it is to<br>
+this end that the invention is principally directed.<br>
+Summary of the Invention<br>
+The invention may be embodied in a method for controlling packet transmissions of<br>
+variable bit rate data from a server to a client having a client buffer wherein the server<br>
+switches among different versions of a stream of variable bit rate data being transmitted<br>
+based on a status of the client buffer. In accordance with the method, an initial version of a<br>
+stream of variable bit rate data is selected for transmission and a value (PT) representative<br>
+of an amount of data within the client buffer is tracked. A bit rate (BR) of a portion of<br>
+variable bit rate data yet to be transmitted within the selected version of the stream is<br>
+determined. Then, switches to different versions of the stream, having different mean bit<br>
+6<br><br>
+rates, are controlled by the server based on the value (PT) representative of the amount of<br>
+data within the client buffer in combination with the bit rate (BR) of the portion of variable<br>
+bit rate data yet to be transmitted.<br>
+In one example, the bit rate (BRNEXT) of the next sequential portion of data to be<br>
+transmitted is determined. If a BRNEXT exceeds an average bit rate (BRAVE), then the step<br>
+of controlling switching is performed to delay any switch to a version of the stream having<br>
+a generally higher bit rate, i.e. up-switches are delayed.<br>
+In another example, if BRNEXT exceeds the average bit rate (BRAVE), the step of controlling<br>
+switching is performed to expedite any switch to a version of the stream having a generally<br>
+lower bit rate, i.e. down-switches are expedited.<br>
+In yet another example, if BRNEXT is below the average bit rate (BRAVE), the step of<br>
+controlling switching is performed to expedite any switch to a version of the stream having<br>
+a generally higher bit rate, i.e. up-switches are expedited.<br>
+In a preferred implementation, the server controls switches to different versions of the<br>
+stream based on a current status of the client buffer by applying one or more thresholds to<br>
+data already in the client buffer. The step of controlling switching is performed by<br>
+dynamically adjusting the one or more thresholds based on the bit rates (BR) of the portion<br>
+of variable bit rate data to be transmitted and then determining whether to switch to a<br>
+different version of the stream by applying the one or more adjustable thresholds to the<br>
+value (PT) representative of the amount of data within the client buffer.<br>
+In an example of the preferred implementation, the one or more thresholds include an up-<br>
+switch threshold (PTUP) and a down-switch threshold (PTDOWN). The step of dynamically<br>
+adjusting the one or more thresholds is performed by determining an average bit rate<br>
+(BRAVE) of the variable bit rate data and then selectively adjusting the up-switch and<br>
+down-switch thresholds (PTUP and PTDOWN) based on a comparison of the bit rate<br>
+(BRNEXT) of a next portion of variable bit rate data to be transmitted with the average bit<br>
+rate (BRAVE) of the variable bit rate data. The step of selectively adjusting the up-s witch<br>
+and down-switch thresholds includes the step of increasing the up-switch and down-switch<br>
+thresholds (PTUP and PTDOWN) if the bit rate (BRNEXT) of the next portion of variable bit<br>
+rate data exceeds the average bit rate (BRAVE). The step of selectively adjusting the up-<br>
+switch and down-switch thresholds also includes the step of decreasing the up-switch<br>
+threshold (PTUP) if the bit rate (BRNEXT) of the next portion of the variable bit rate data is<br>
+below the average bit rate (BRAVE) and if the up-switch threshold (PTUP) exceeds the<br>
+7<br><br>
+down-switch threshold (PTDOWN)- In other words, PTUP is not adjusted downwardly if it<br>
+would then fall below PTDOWN.<br>
+In the preferred implementation, the step of increasing the up-switch and down-switch<br>
+thresholds (PTUP and PTDOWN) if the bit rate (BR) of the next portion of variable bit rate<br>
+data exceeds the average bit rate (BRAVE) is performed by determining the bit rate<br>
+(BRNEXT) of the next portion of variable bit rate data then calculating a ratio (F) of the bit<br>
+rate (BRNEXT) of the next portion of variable bit rate data to the average bit rate (BRAVE).<br>
+The up-switch and down-switch thresholds (PTUP and PTDOWN) are then multiplied by the<br>
+ratio (F) to thereby increase the thresholds. The step of decreasing the up-switch threshold<br>
+(PTUP) is also performed by determining the bit rate (BRNEXT) of the next portion of<br>
+variable bit rate data and then calculating a ratio (F) of the bit rate (BRNEXT) of the next<br>
+portion of variable bit rate data to the average bit rate (BRAVE). The up-switch threshold<br>
+(PTUP) is then multiplied by the ratio (F) to thereby decrease the threshold. Then, the larger<br>
+of the decreased up-switch threshold (PTUP*F) and the down-switch threshold (PTDOWN) is<br>
+selected for use as a new up-switch threshold.<br>
+In various implementations, the values representative amounts of data within the client<br>
+buffer are representative of playout lengths (PT) of the data or buffer fill levels. The<br>
+average bit rate (BRAVE) may be representative of an average bit rate over the entire<br>
+version of the stream being transmitted or may instead be representative of an average bit<br>
+rate of data that has already been transmitted within the version of the stream being<br>
+transmitted.<br>
+Depending on the implementation, the client may be a mobile communications terminal<br>
+such as a mobile telephone, and in addition, or in the alternative, the server may be<br>
+integrated into a mobile communications terminal so that the link between the server and<br>
+the network may be wireless. In addition, the method according to the present invention<br>
+may be performed by one or more intermediary network nodes (such as proxies) arranged<br>
+between the server and the client. The method may also be utilized in architectures having<br>
+plurality of data streams being buffered by the client buffer (or multiple client buffers<br>
+depending on the configuration of the client).<br>
+The invention may also be embodied in a computer program product, which may be stored<br>
+on a computer readable recording medium, comprising program code portions for<br>
+performing any of the steps of the above methods when the computer program product is<br>
+run on a computer system.<br>
+8<br><br>
+The invention may further comprise an apparatus comprising a computer processor and a<br>
+memory coupled to the processor, where the memory is encoded with one or more<br>
+programs that may perform any of the steps of the above methods.<br>
+In yet another embodiment, the invention relates to an apparatus for controlling packet<br>
+transmissions of variable bit rate data from a server to a client having a client buffer<br>
+wherein the server switches among different versions of a stream of variable bit rate data<br>
+being transmitted based on a status of the client buffer. The apparatus comprises: an<br>
+anticipatory variable bit rate stream transmission controller for selecting an initial version<br>
+of a stream of variable bit rate data for transmission; a client buffer monitor for tracking a<br>
+value representative of an amount of data within the client buffer; a variable bit rate<br>
+determination unit a bit rate (BR) of a portion of variable bit rate data yet to be transmitted<br>
+within the selected version of the stream; and wherein the anticipatory variable bit rate<br>
+stream transmission controller then controls switches to different versions of the stream,<br>
+having different mean bit rates, based on the value (PT) representative of the amount of<br>
+data within the client buffer in combination with the bit rate (BR) of the portion of variable<br>
+bit rate data yet to be transmitted<br>
+The apparatus may be configured as a fixed or mobile network component, such as a<br>
+network server and/or a wireless terminal. In addition, the apparatus may be constituted by<br>
+an intermediary network node, such as a proxy.<br>
+Brief Description of the Drawings<br>
+In the following the invention will be described with reference to exemplary embodiments<br>
+illustrated in the figures, in which:<br>
+Fig. 1	is a schematic diagram of a communication system useful for understanding<br>
+and implementing the invention;<br>
+Fig. 2	is a process flow diagram providing an overview of a method embodiment<br>
+of the invention;<br>
+Fig. 3	is a graph illustrating various versions of a stream of variable bit rate data,<br>
+particularly illustrating different mean bit rates of the various versions of<br>
+the stream;<br>
+9<br><br>
+Fig. 4	is a block diagram of a single stream of variable bit rate data, particularly<br>
+illustrating bit rates of various portions of the stream;<br>
+Fig. 5	is a process flow diagram illustrating an exemplary implementation of<br>
+variable bit rate logic of the invention;<br>
+Fig. 6	is a block diagram of a client buffer, particularly illustrating various<br>
+thresholds employed by the invention;<br>
+Fig. 7	is a block diagram illustrating an exemplary apparatus implementation of a<br>
+server component of the invention.<br>
+Detailed Description of the Preferred Embodiments<br>
+In the following description, for purposes of explanation and not limitation, specific details<br>
+are set forth, such as particular sequences of steps and various configurations, in order to<br>
+provide a thorough understanding of the invention. It will be apparent to one skilled in the<br>
+art that the invention may be practiced in other embodiments that depart from these<br>
+specific details. Moreover, those skilled in the art will appreciate that the functions<br>
+explained herein below may be implemented using software functioning in conjunction<br>
+with a programmed microprocessor or general purpose computer, and/or using an<br>
+application specific integrated circuit (ASIC). It will also be appreciated that while the<br>
+invention is primarily described as a method, it may also be embodied in a computer<br>
+program product as well as a system or apparatus comprising a computer processor and a<br>
+memory coupled to the processor, where the memory is encoded with one or more<br>
+programs that may perform the methods disclosed herein.<br>
+Fig. 1 illustrates a sample architecture 100 that may be used in connection with the<br>
+invention including a server 105 that may be coupled to a client 115 via a communications<br>
+pathway such as an IP network 110. The server include a media content module 120 that<br>
+accesses and transmits certain media content (e.g., multimedia data files) via a RTP/UDP<br>
+module 125 using a streaming standard such as RTP (Real time Transport Protocol) over<br>
+UDP or other data transport protocol for managing the real-time transmission of<br>
+multimedia data (with a transport layer protocol such as UDP - User Datagram Protocol).<br>
+The packets are transmitted to a public network 130 (e.g., the Internet, however, an<br>
+external public network is not required when the server is directly coupled to the operator<br>
+network 135) that delivers the packets to an operator network 135, such as a mobile<br>
+communications operator "wired" network, coupled thereto.<br>
+10<br><br>
+The operator network 135 includes a core network 140 that provides communication links<br>
+between the server 105 and the client 115. The core network 140, which may optionally<br>
+have a buffer, provides the packets received from the RTP/UDP module 125 for buffering<br>
+in a buffer within a radio access network (RAN) 145 (such as a buffer in the SGSN or in<br>
+the RNC) prior to their transmission by a wireless transmitter 150. The buffers of the core<br>
+network 140 (if buffering is utilized) and the RAN 145 are arranged in series and<br>
+constitute a network buffer.<br>
+The client 115 receives the packets transmitted by the wireless transmitter 150 in a client<br>
+buffer 155. The packets are transferred from the client buffer 155 to a RTP/UDP module<br>
+160 for delivery to and use by the media application module 165 (or multimedia player).<br>
+For purposes of this application, the phrase "packet transmission rate" will refer to the rate<br>
+of transmission of packets from the server 105 to the IP network 110, the phrase "link<br>
+rate" will refer to the rate of transmission of packets from the IP network 110 to the client<br>
+115, and the phrase "content rate" shall refer to the rate that data is transferred from the<br>
+client buffer 115 to the media application module 165 for playout by the media application<br>
+module 165.<br>
+With reference to Fig. 2, a method embodiment 200 of the invention is illustrated which<br>
+may be performed, for example, by the system of Fig. 1. The method is preferably<br>
+implemented by the server, such as a server 105 of Fig. 1, but may be implemented by any<br>
+other appropriate network component. In the following descriptions, it will be assumed<br>
+that a server implements the steps of the method. Beginning at step 202, the server selects<br>
+an initial version of a stream of variable bit rate data for transmission. The initial version<br>
+of the stream is selected, in accordance with otherwise conventional techniques, from<br>
+among a group of different versions of the stream having generally different pre-encoded<br>
+transmission rates. For example, a first stream may begin with a bit rate of 1 megabit<br>
+(Mbit)/second, whereas a second stream may begin with a bit rate of 2 Mbits/second. Since<br>
+the stream itself has a variable bit rate, each version of the stream likewise has a variable<br>
+bit rate. Hence, whichever version of the stream is selected, the bit rate of data encoded<br>
+within the stream will change. For example, the first version of the stream may switch to a<br>
+bit rate of 2 Mbits/second after ten seconds, whereas the second version of the stream may<br>
+switch to a bit rate of 3 megabits Mbits/second after ten seconds, i.e. both versions of the<br>
+stream have pre-encoded bit rates that increase by 1 Mbit/sec after ten seconds.<br>
+Three exemplary versions of a single bit stream are shown in Fig. 3. Each version of the<br>
+stream has a bit rate that varies with time. The versions are all synchronized with one<br>
+11<br><br>
+another, i.e. the bit rates all increase at the same time or all decrease by the same time.<br>
+However, the mean bit rates of the various versions of the stream differ from one another.<br>
+The server performs up-switches and down-switches by switching between the different<br>
+versions of the stream. In the example if Fig. 3, only three versions of the stream are<br>
+shown. Typically, more versions are pre-stored. Also, in the example, the lowest bit rate of<br>
+the highest bit rate version 205 of the stream is at a higher rate than the highest bit rate of<br>
+the next version 207 of the stream. Likewise, the lowest bit rate of version 205 of the<br>
+stream is at a higher rate than the highest bit rate of version 209. This, however, need not<br>
+be the case. Often there is at least some overlap in bit rates. Also, in the example, the rate<br>
+changes are shown as being smooth, i.e. the rate increases smoothly to a peak then<br>
+decreases smoothly. This need not be the case either. In many examples, the bit rates<br>
+change discontinuously, i.e. the rate jumps from one level (such as 1 Mbit/sec) to a<br>
+different level (such as 2 Mbit/sec).<br>
+Returning to Fig. 2, the selected version of the stream is transmitted at step 202 from the<br>
+server to the client by taking pre-encoded data from the version of the stream and placing<br>
+that pre-encoded data into data packets, which are transmitted at a predetermined packet<br>
+transmission rate to the client. Note that any change in the bit rate of the variable bit rate<br>
+data within a stream being transmitted does not typically require a change in the packet<br>
+transmission rate, which is determined base upon bandwidth considerations. Likewise, the<br>
+choice of one version of the stream over another version typically does not entail any<br>
+changes in packet transmission rate.<br>
+At step 204, the server tracks a value representative of the amount of data currently within<br>
+the client buffer. This too may be performed in accordance with otherwise conventional<br>
+techniques. In one example, if the client buffer is implemented in accordance with RTCP<br>
+protocols, the server receives feedback from the client buffer, which includes the<br>
+NSN/OBSN and HRSN data fields from which the amount of data in the client buffer is<br>
+determined. As noted, the amount of data in the client buffer may be represented, for<br>
+example, in terms of a playout length (PT), a client buffer fill level, or other appropriate<br>
+value. In the following descriptions, examples will be described using playout length (PT).<br>
+At step 206, the server determines the bit rate (BR) of a portion of the variable bit rate data<br>
+yet to be transmitted. Preferably, it is the next sequential portion of data to be transmitted<br>
+that the server examines, i.e. the server determines a value (BRNEXT) representative of the<br>
+bit rate of the next portion of data to be transmitted. The next portion of data may be<br>
+defined, for example, in terms of a predetermined number of seconds worth of data to be<br>
+transmitted or may be defined as that portion of data from the data currently being<br>
+12<br><br>
+transmitted until a next preset change in the data. For example, if the pre-encoded stream<br>
+of variable bit rate data is to maintain its current bit rate for the next 12 seconds before<br>
+switching to another bit rate, then the next portion of data comprises the next 12 seconds<br>
+worth of data.<br>
+Figure 4 illustrates an exemplary version 208 of a stream of variable bit rate data being<br>
+transmitted. The stream includes portions of differing bit rates, denoted BR#1, BR#2, BR#3,<br>
+BR#4 etc. BR#1 and BR#3 may both be, for example, 1 Mbit/second, whereas BR#2 and<br>
+BR#4 may both be, for example, 2 Mbits/second. As can be seen, portions may be of<br>
+different lengths, i.e. durations. In the example, arrow 210 denotes the point within the<br>
+stream corresponding to data currently being transmitted. The next portion of data,<br>
+therefore, is data commencing at point 210. The rate of that data is BR#2. If the next<br>
+portion of data is defined in terms of that portion of data from the data currently being<br>
+transmitted until a next preset change in the data, then BRNEXT is simply BR#2. If, instead,<br>
+the next portion of data is defined in terms of a predetermined number of seconds' worth<br>
+of data to be transmitted, then the next portion of data may encompass two or more<br>
+different bit rates. In that case, the server may be configured to simply select the first of<br>
+those bit rates for use as BRNEXT or may instead be configured to calculate the average bit<br>
+rate BRAVE over that predetermined period of time for use as BRNEXT. In any case, a value<br>
+representative of the bit rate of some portion of data yet to be transmitted is determined at<br>
+step 206 of Fig. 2.<br>
+At step 212 of Fig. 2, the server then controls switches to different versions of the steam,<br>
+having the different mean bit rates, based on the value (PT) representative of the amount of<br>
+data currently within the client buffer and based on the bit rate (BR) of the portion of<br>
+variable bit rate data yet to be transmitted, e.g. the server controls up-switches and down-<br>
+switches based upon both PT and BRNEXT. By taking into account the bit rate of data yet to<br>
+be transmitted, in addition to PT, the server is capable of avoiding many of the<br>
+unnecessary rate switches that occur in conventional systems employing only fixed rate<br>
+switched thresholds.<br>
+Preferably, if BRNEXT exceeds BRAVE, any up-switch due to a change in the status of client<br>
+buffer is delayed. In other words, if any increase in playout length within the client buffer<br>
+would otherwise have triggered a switch to a different version of the stream having a<br>
+generally higher transmission rate, that switch is delayed. If an up-switch were instead<br>
+performed by the server prior to a point in the stream where the variable bit rate was due to<br>
+increase anyway, the up-switch would likely be counterproductive and might necessitate a<br>
+compensatory down-switch. In this regard, by performing an up-switch prior to a point in<br>
+13<br><br>
+the stream where the bit rate of the variable bit rate stream increases, two bit rate increases<br>
+thereby occur, one after the other. As a result, the bit rate is then probably higher than<br>
+necessary, likely triggering a compensatory down-switch to prevent possible buffer<br>
+drainage. By instead delaying an up-switch in circumstances where the bit rate of variable<br>
+bit rate data is due to increase anyway, the server likely avoids both an unnecessary up-<br>
+switch and a subsequent compensatory down-switch, thereby providing a more consistent<br>
+level of media quality to the end-user.<br>
+Also preferably, if BRNEXT exceeds BRAVE, down-switch due to a change in the status of<br>
+client buffer is expedited. In other words, if a decrease in playout length within the client<br>
+buffer would otherwise have triggered a switch to a different version of the stream having<br>
+a generally lower transmission rate, that switch is expedited if the variable bit rate is due to<br>
+increase. By expediting the down-switch in circumstances where the bit rate of the data<br>
+being transmitted is due to increase, the server thereby helps prevent a possible rebuffering<br>
+event. If, on the other hand, the server did not anticipate the increase in bit rate within the<br>
+variable bit rate data, a down-switch triggered by the playout length falling below the<br>
+conventional fixed down-switch threshold (PTDOWN) might be too late to prevent<br>
+rebuffering given that the increasing bit rate of the stream itself will accelerate buffer<br>
+drainage.<br>
+Preferably, if BRNEXT is instead below BRAVE, any up-switch due to a change in the status<br>
+of client buffer is expedited. In other words, if an increase in playout length within the<br>
+client buffer would otherwise have triggered a switch to a different version of the stream<br>
+having a generally higher transmission rate, that switch is expedited if the variable bit rate<br>
+is due to decrease. By expediting the up-switch in circumstances where the bit rate of the<br>
+data being transmitted is due to decrease, the server thereby helps prevent a possible<br>
+overflow event. If, on the other hand, the server did not anticipate the decrease in bit rate<br>
+within the variable bit rate data, an up-switch triggered by the playout length exceeding the<br>
+conventional fixed up-switch threshold (PTUP) might be too late to prevent buffer overflow<br>
+given that the decreasing bit rate of the stream itself will accelerate buffer overflow.<br>
+Moreover, the expedited up-switch provides improved media quality to the user more<br>
+promptly.<br>
+Note however, that when BRNEXT is below BRAVE, any down-switch due to a change in the<br>
+status of client buffer is preferably not delayed (nor expedited). Rather, in that case, down-<br>
+switches are preferably triggered based on the conventional fixed down-switch threshold<br>
+(PTDOWN). Although a down-switch could potentially be delayed in view of the fact that<br>
+the bit rate of the variable bit rate data is due to decrease soon anyway, such is not<br>
+14<br><br>
+performed in the preferred implementation of invention so as to avoid risk of buffer<br>
+drainage.<br>
+Turning now to Fig. 5, a preferred implementation of variable bit rate logic for use at step<br>
+two 212 of Fig. 2 will now be described. Beginning at step 300, the server determines<br>
+values for PTUP and PTDOWN. PTUP and PTDOWN may be predetermined, fixed up-switch<br>
+and down-switch thresholds and may be set in accordance with otherwise conventional<br>
+techniques. At step 302, the server determines values for BRNEXT and BRAVE. BRNEXT may<br>
+be determined by examining the encoded bit rates associated with data to be transmitted,<br>
+which is stored within the server or otherwise accessible by the server. In one example,<br>
+BRAVE is calculated by examining a record of the encoded bit rates of data already<br>
+transmitted (along the durations of time during which packets containing the data encoded<br>
+at the various bit rates were transmitted.) Otherwise routine arithmetic may be used to<br>
+calculate the actual average. In a second example, a BRAVE value for the entire stream may<br>
+be calculated and stored beforehand (as the individual streams are encoded before the<br>
+streaming session starts, individual BRAVE values may be determined for the individual<br>
+streams before play out.) In other words, in that second example, BRAVE is not the average<br>
+bit rate of only that portion of data that has already been transmitted but instead represents<br>
+the average over the entire stream, i.e. BRAVE is the mean bit rate illustrated, e.g., in Fig. 3.<br>
+At step 304, the server calculates a value F, which is representative of a ratio of BRNEXT to<br>
+BRAVE, i-e. F = BRNEXT/BRAVE- Hence, if BRNEXT exceeds BRAVE, F is then greater than<br>
+1.0. If BRNEXT exceeds BRAVE, F is then less than 1.0. In cases where BRNEXT is equal to<br>
+BRAVE, F is then equal to 1.0. If no data has yet been transmitted (such that there is no<br>
+current value of BRAVE), then F is simply set to 1.0. If no data remains to be transmitted<br>
+within a current stream of data, such that there is no current value for BRNEXT, then F is<br>
+also preferably re-set to 1.0 for use in connection with a next stream of data to be<br>
+transmitted.<br>
+At step 306, the server sets an adjustable up-switch threshold (PTUP-ADJ) equal to PTUP<br>
+multiplied by F, i.e. PTUP*F, and also sets an adjustable down-switch threshold (PTDOWN.<br>
+ADJ) equal to PTDOWN multiplied by F, i.e. PTDOWN*F. Hence, if BRNEXT exceeds BRAVE,<br>
+then PTUP-ADJ is greater than PTUP and PTDOWN-ADJ is also greater than PTDOWN-<br>
+Conversely, if BRNEXT is below BRAVE, then PTUP-ADJ is less than PTUP and PTDOWN-ADJ is<br>
+also less than PTDOWN.<br>
+The thresholds are illustrated in Fig. 6, which provides a block diagram representation of<br>
+client buffer 115 of Fig. 1. In the example of Fig. 6, the adjustable thresholds are greater<br>
+15<br><br>
+than the corresponding fixed thresholds. Note that circumstances can potentially arise<br>
+where PTUP-ADJ may be calculated to be greater than the maximum value of client buffer<br>
+(MAX). This may occur if BRNEXT is quite a bit larger than BRAVE, yielding a high value<br>
+for F. If that is the case, than PTUP-ADJ is simply set equal to MAX or to some other lesser,<br>
+default value. In the extremely unlikely case that PTDOWN-ADJ is also calculated to be<br>
+greater than MAX due to an extremely high value for F, then PTDOWN-ADJ is preferably also<br>
+set to some default value, which is less than the default value to which PTUP-ADJ is set, thus<br>
+assuring that PTDOWN-ADJ remains less than PTUP-ADJ-<br>
+Returning to Fig. 5, at step 308, the server begins determining values for PT, i.e. the<br>
+current playout length of data already contained within the client buffer, tracked at step<br>
+204 of Fig. 2. If, at decision step 310, PT is greater than PTDOWN and PT is also greater<br>
+than PTUP-ADJ, then an up-switch is triggered at step 312. If not, then decision step 314 is<br>
+performed wherein, if PT is less than PTDOWN or PT is less than PTDOWN-ADJ, then a down-<br>
+switch is triggered at step 316.<br>
+The logic of decision steps 310 and 316 may be represented as follows:<br>
+If PT &gt; PTDOWN AND PT &gt; PTUP.ADJ then<br>
+Perform up-switch<br>
+else<br>
+if PT 
+Perform down-switch<br>
+end if<br>
+where, as noted,<br>
+PTUP-ADJ = PTUP*F and<br>
+PTDOWN-ADJ = PTDOWN*F-<br>
+Hence, an up-switch is triggered if the current playout length (PT) of the client buffer<br>
+exceeds the adjustable up-switch threshold (PTUP-ADJ), assuming that PT also exceeds<br>
+PTDOWN- This latter condition prevents inappropriate up-switches in circumstances where a<br>
+down-switch may be more appropriate. By triggering up-switches based upon the<br>
+16<br><br>
+adjustable up-switch threshold, rather than on the fixed up-switch threshold, the server<br>
+thereby takes into account the current status of the client buffer (as represented by PT)<br>
+while also anticipating changes in bit rate within the variable bit rate data stream (via the<br>
+adjustment of the up-switch threshold). This helps prevent other inappropriate up-<br>
+switches.<br>
+Consider an example wherein the adjustable up-switch threshold is initially exactly equal<br>
+to the fixed up-switch threshold. Hence, if the playout length of client buffer exceeds that<br>
+threshold level, an up-switch is performed. If the bit rate of the variable bit rate data is then<br>
+due to increase, the adjustable up-switch threshold will be increased so as to the greater<br>
+than the fixed threshold. In that case, a further up-switch will only be performed if the<br>
+playout length exceeds the new, higher threshold value. In other words, it becomes more<br>
+difficult for an up-switch to be triggered since a higher threshold value must be exceeded<br>
+thus delaying further up-switches in circumstances where such a delay is warranted, as<br>
+discussed above in connection with Fig. 1. Now consider an example wherein the<br>
+adjustable up-switch threshold is again initially set equal to the fixed up-switch threshold<br>
+but wherein the bit rate of the variable bit rate data is instead due to decrease. In the case,<br>
+the adjustable up-switch threshold will then be lower than the fixed threshold. In that case,<br>
+it becomes easier for an up-switch to be triggered thus expediting further up-switches in<br>
+circumstances where one is warranted, as also discussed above.<br>
+Turning now to down-switches, a down-switch is triggered if the current playout length<br>
+(PT) of the client buffer falls below either the fixed threshold PTDOWN or the adjustable<br>
+down-switch threshold (PTDOWN-ADJ)- In other words, a down-switch is triggered if PT falls<br>
+below the larger of the two down-switch thresholds. The fixed threshold is still used to<br>
+trigger a down-switch so as to prevent a down-switch from being delayed so as to help<br>
+prevent rebuffering events. However, a down-switch can be expedited, which occurs if PT<br>
+falls below the adjustable down-switch threshold. As noted above, the adjustable down-<br>
+switch threshold may turn out to be either above or below the fixed down-switch<br>
+threshold. If it is below the fixed threshold, it is superfluous, as the fixed threshold is used<br>
+to immediately trigger a down-switch anyway. However, if the adjustable down-switch<br>
+threshold exceeds the fixed down-switch threshold, the adjustable down-switch threshold<br>
+can then trigger an expedited down-switch, i.e. it becomes easier for a down-switch to be<br>
+triggered thus expediting further down-switches in circumstances where warranted, as also<br>
+discussed above.<br>
+If neither of the conditions of decision steps 310 and 314 are true, then processing returns<br>
+to step 302, wherein the values of BRNEXT and BRAVE are updated to reflect any changes<br>
+17<br><br>
+therein, the adjustable thresholds are adjusted and the latest value for PT is input for<br>
+applying to the various threshold values.<br>
+Thus, an exemplary method implementation has been described of a technique for<br>
+adjusting the overall transmission rate of data in a packet-based system by switching<br>
+among different versions of a pre-encoded stream. The packet transmission rate typically is<br>
+not changed, as it depends upon the bandwidth of the communication link. However, in<br>
+other implementations, the packet transmission rate may be changed as well using, for<br>
+example, adaptive techniques.<br>
+Although the invention has been primarily described with reference to method<br>
+implementations, apparatus implementations are also part of the invention. Figure 7<br>
+illustrates, at a high-level, an exemplary apparatus implementation. Briefly, network<br>
+component 400, which may be a part of server 105 of Fig. 1, includes an anticipatory<br>
+variable bit rate stream transmission controller (402) for selecting (202) an initial version<br>
+of a stream of variable bit rate data for transmission. A client buffer monitor (404) tracks a<br>
+value representative of an amount of data within the client buffer. A variable bit rate<br>
+determination unit (406) determines a bit rate (BR) of a portion of variable bit rate data yet<br>
+to be transmitted within the selected version of the stream. The anticipatory variable bit<br>
+rate stream transmission controller (402) then controls switches to different versions of the<br>
+stream, having different mean bit rates, based on the value (PT) representative of the<br>
+amount of data within the client buffer in combination with the bit rate (BR) of the portion<br>
+of variable bit rate data yet to be transmitted, i.e. controller 402 anticipates changes in bit<br>
+rate of the variable bit rate stream and controls up-switches and down-switches<br>
+accordingly.<br>
+As can be appreciated by one of ordinary skill in the art, the current invention and the<br>
+techniques associated therewith provide an enhanced end user perceived experience for<br>
+applications such as multimedia streaming by avoiding client buffer overflows.<br>
+Furthermore, the skilled artisan will also appreciate that there are many different<br>
+techniques that may be used to determine client buffer fill levels, including estimations<br>
+based on data within RRs and Sender Reports, and that the current invention may be<br>
+implemented in parallel with a plurality of data packet streams simultaneously being<br>
+buffered for transmission to one or more clients.<br>
+One of ordinary skill in the art will further appreciate that the invention may be<br>
+implemented in and by various types of network components, such as network terminals,<br>
+18<br><br>
+network nodes, and the like. In particular, the invention may be practiced by mobile<br>
+terminals, proxies (that could divide the transmission path), and fixed terminals.<br>
+While the invention has been described with respect to particular embodiments, those<br>
+skilled in the art will recognize that the invention is not limited to the specific<br>
+embodiments described and illustrated herein. Therefore, while the invention has been<br>
+described in relation to its preferred embodiments, it is to be understood that this<br>
+disclosure is only illustrative. Accordingly, it is intended that the invention be limited only<br>
+by the scope of the claims appended hereto.<br>
+19<br><br>
+WE CLAIM:<br>
+1.	A method for controlling packet transmissions of variable bit rate data from a<br>
+server (105) to a client (115) having a client buffer (155), wherein the server switches<br>
+among different versions of a stream of variable bit rate data being transmitted based on a<br>
+status of the client buffer, the method comprising the steps of:<br>
+selecting (202) an initial version of a stream of variable bit rate data for<br>
+transmission;<br>
+tracking (204) a value (PT) representative of an amount of data within the client<br>
+buffer;<br>
+determining (206) a bit rate (BR) of a portion of variable bit rate data yet to be<br>
+transmitted within the selected version of the stream; and<br>
+controlling switches (212) to different versions of the stream, having different<br>
+mean bit rates, based on the value (PT) representative of the amount of data within the<br>
+client buffer in combination with the bit rate (BR) of the portion of variable bit rate data<br>
+yet to be transmitted.<br>
+2.	The method of claim 1, wherein the step of controlling switches (212) includes the<br>
+step of:<br>
+if a bit rate (BRNEXT) of a next portion of variable bit rate data to be transmitted<br>
+exceeds an average bit rate (BRAVE), then delaying (310) a switch to a version of the<br>
+stream having a generally higher bit rate.<br>
+3.	The method of claim 1, wherein the step of controlling switching (212) includes the<br>
+step of:<br>
+if a bit rate (BRNEXT) of a next portion of variable bit rate data to be transmitted<br>
+exceeds an average bit rate (BRAVE), then expediting (314) a switch to a version of the<br>
+stream having a generally lower bit rate.<br>
+4.	The method of claim 1, wherein the step of controlling switching (212) includes the<br>
+step of:<br>
+if a bit rate (BRNEXT) of a next portion of variable bit rate data to be transmitted is<br>
+below an average bit rate (BRAVE), then expediting a switch (310) to a version of the<br>
+stream having a generally higher bit rate.<br>
+5.	The method of claim 1, wherein the server (105) controls switches to different<br>
+versions of the stream based on a current status of the client buffer (155) by applying one<br>
+20<br><br>
+or more thresholds to data already in the client buffer and wherein the step of controlling<br>
+switching (212) comprises:<br>
+dynamically adjusting (306) the one or more thresholds based on the bit rate (BR)<br>
+of the portion of variable bit rate data to be transmitted; and<br>
+determining whether to switch to a different version of the stream based on the<br>
+current status of the client buffer (155) by applying one or more adjustable thresholds to<br>
+the value (PT) representative of the amount of data within the client buffer (115).<br>
+6.	The method of claim 5, wherein the one or more thresholds includes at least one of<br>
+an up-switch threshold (PTUP) and a down-switch threshold (PTDOWN)-<br>
+7.	The method of claim 6, wherein the step of dynamically adjusting (306) the one or<br>
+more thresholds includes the steps of:<br>
+determining an average bit rate (BRAVE) of the variable bit rate data; and<br>
+selectively adjusting (306) the up-switch and down-switch thresholds (PTUP,<br>
+PTDOWN) based on a comparison of a bit rate (BRNEXT) of a next portion of variable bit rate<br>
+data to be transmitted with an average bit rate (BRAVE) of the variable bit rate data.<br>
+8.	The method of claim 7, wherein the step of selectively adjusting (306) the up-<br>
+switch and down-switch thresholds (PTUP, PTDOWN) includes the steps of:<br>
+increasing (306) the up-switch and down-switch thresholds if the bit rate (BRNEXT)<br>
+of the next portion of variable bit rate data exceeds the average bit rate (BRAVE); and<br>
+decreasing (306) the up-switch threshold if the bit rate (BRNEXT) of the next portion<br>
+of the variable bit rate data is below the average bit rate (BRAVE) and if the up-switch<br>
+threshold exceeds the down-switch threshold.<br>
+9.	The method of claim 8, wherein the step of increasing the up-switch and down-<br>
+switch thresholds (PTUP, PTDOWN) if the bit rate of the next portion of variable bit rate data<br>
+exceeds the average bit rate includes the steps of:<br>
+determining (302) the bit rate of the next portion of variable bit rate data;<br>
+calculating (304) a ratio (F) of the bit rate of the next portion of variable bit rate<br>
+data to the average bit rate; and<br>
+multiplying (306) the up-switch and down-switch thresholds (PTUP, PTDOWN) by<br>
+the ratio to thereby increase the thresholds.<br>
+10.	The method of claim 8, wherein the step of decreasing the up-switch threshold<br>
+(PTup) includes the steps of:<br>
+determining (302) the bit rate of the next portion of variable bit rate data;<br>
+21<br><br>
+calculating (304) a ratio (F) of the bit rate of the next portion of variable bit rate<br>
+data to the average bit rate;<br>
+multiplying (306) the up-switch threshold by the ratio to thereby decrease the<br>
+threshold; and<br>
+selecting (310) the larger of the decreased up-switch threshold and the down-switch<br>
+threshold for use as a new up-switch threshold.<br>
+11.	The method of any of claims 2 through 12, wherein the average bit rate (BRAVE) is<br>
+representative of an average bit rate over the entire version of the stream being transmitted.<br>
+12.	The method of any of claims 2 through 12, wherein the average bit rate (BRAVE) is<br>
+representative of an average bit rate of data that has already been transmitted within the<br>
+version of the stream being transmitted.<br>
+13.	The method of any of the preceding claims, wherein the value associated with data<br>
+in the client buffer is representative of a playout length (PT) of the data.<br>
+14.	The method of any of the preceding claims, wherein the value associated with data<br>
+in the client buffer is representative of a buffer fill level of the data.<br><br>
+15.	A computer program product comprising program code portions for performing<br>
+the steps of any of the preceding claims when the computer program product is run on a<br>
+computer system.<br>
+16.	The computer program product of claim 15, wherein the computer program<br>
+product is stored on a computer readable recording medium.<br>
+17.	An apparatus comprising a computer processor and a memory coupled to the<br>
+processor, where the memory is encoded with one or more programs that may perform the<br>
+steps of any of claims 1 through 14.<br>
+18.	An apparatus (400) for controlling packet transmissions of variable bit rate data<br>
+from a server (105) to a client (115) having a client buffer (155), wherein the server<br>
+switches among different versions of a stream of variable bit rate data being transmitted<br>
+based on a status of the client buffer, the apparatus comprising:<br>
+an anticipatory variable bit rate stream transmission controller (402) for selecting<br>
+(202) an initial version of a stream of variable bit rate data for transmission;<br>
+22<br><br>
+a client buffer monitor (404) for tracking a value representative of an amount of<br>
+data within the client buffer;<br>
+a variable bit rate determination unit (406) a bit rate (BR) of a portion of variable<br>
+bit rate data yet to be transmitted within the selected version of the stream; and<br>
+23<br>
+wherein the anticipatory variable bit rate stream transmission controller (402) then<br>
+controls switches to different versions of the stream, having different mean bit rates, based<br>
+on the value (PT) representative of the amount of data within the client buffer in<br>
+combination with the bit rate (BR) of the portion of variable bit rate data yet to be<br>
+transmitted.<br><br>
+A technique is disclosed for controlling data packet transmissions of variable bit rate data<br>
+from a server to a client having a client buffer wherein the server switches among different<br>
+versions of a stream of variable bit rate data being transmitted based on a status of the<br>
+client buffer. The technique operates to select an initial version of a stream of variable bit<br>
+rate data for transmission and to track a value representative of an amount of data within<br>
+the client buffer. A bit rate of a next portion of variable bit rate data to be transmitted is<br>
+determined. Then, the server controls switches to different versions of the stream, having<br>
+different mean bit rates, based on the value representative of the amount of data within the<br>
+client buffer in combination with the bit rate of the portion of variable bit rate data yet to<br>
+be transmitted.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1jbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1jb3JyZXNwb25kZW5jZSBvdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-correspondence others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1kZXNjcmlwdGlvbiBjb21wbGV0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-description complete.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1mb3JtIDEucGRm" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1mb3JtIDIucGRm" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1mb3JtIDMucGRm" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1mb3JtIDUucGRm" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1ncGEucGRm" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1pbnRlcm5hdGlvbmFsIHB1YmxpY2F0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-international publication.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1pbnRlcm5hdGlvbmFsIHNlYXJjaCByZXBvcnQucGRm" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-international search report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1wY3QgcHJpb3JpdHkgZG9jdW1lbnQgbm90aWZpY2F0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-pct priority document notification.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1wY3QgcmVxdWVzdCBmb3JtLnBkZg==" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-pct request form.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDQyMzgta29sbnAtMjAwNy1wcmlvcml0eSBkb2N1bWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">04238-kolnp-2007-priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LSgxNy0xMC0yMDEyKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-(17-10-2012)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LSgyMC0wMi0yMDEzKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-(20-02-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LSgyMC0wMi0yMDEzKS1PVEhFUlMucGRm" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-(20-02-2013)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LSgyMi0xMS0yMDExKS1DT1JSRVNQT05ERU5DRSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-(22-11-2011)-CORRESPONDENCE 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LSgyMi0xMS0yMDExKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-(22-11-2011)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUFCU1RSQUNULnBkZg==" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUFNQU5ERUQgQ0xBSU1TLnBkZg==" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-AMANDED CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUNBTkNFTExFRCBQQUdFUy5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-CANCELLED PAGES.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIDEuMy5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-CORRESPONDENCE 1.3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIDEuNC5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-CORRESPONDENCE 1.4.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIE9USEVSUyAxLjEucGRm" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-CORRESPONDENCE OTHERS 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFLTEuMi5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-CORRESPONDENCE-1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFLTEuNS5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-CORRESPONDENCE-1.5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LURFU0NSSVBUSU9OIChDT01QTEVURSkucGRm" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LURSQVdJTkdTLnBkZg==" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUV4YW1pbmF0aW9uIFJlcG9ydCBSZXBseSBSZWNpZXZlZC5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-Examination Report Reply Recieved.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUVYQU1JTkFUSU9OIFJFUE9SVC5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUZPUk0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUZPUk0gMi5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUdQQS5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-GPA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUdSQU5URUQtQUJTVFJBQ1QucGRm" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-GRANTED-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUdSQU5URUQtQ0xBSU1TLnBkZg==" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-GRANTED-CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUdSQU5URUQtREVTQ1JJUFRJT04gKENPTVBMRVRFKS5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-GRANTED-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUdSQU5URUQtRFJBV0lOR1MucGRm" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-GRANTED-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-GRANTED-FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAyLnBkZg==" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-GRANTED-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAzLnBkZg==" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-GRANTED-FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSA1LnBkZg==" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-GRANTED-FORM 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUdSQU5URUQtU1BFQ0lGSUNBVElPTi1DT01QTEVURS5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-GRANTED-SPECIFICATION-COMPLETE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUlOVEVSTkFUSU9OQUwgUFVCTElDQVRJT04ucGRm" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-INTERNATIONAL PUBLICATION.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LUlOVEVSTkFUSU9OQUwgU0VBUkNIIFJFUE9SVCAmIE9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-INTERNATIONAL SEARCH REPORT &amp; OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LU9USEVSUyAxLjEucGRm" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-OTHERS 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LU9USEVSUy0xLjIucGRm" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-OTHERS-1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LVBBLnBkZg==" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-PA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDIzOC1LT0xOUC0yMDA3LVJFUExZIFRPIEVYQU1JTkFUSU9OIFJFUE9SVC5wZGY=" target="_blank" style="word-wrap:break-word;">4238-KOLNP-2007-REPLY TO EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QtMDQyMzgta29sbnAtMjAwNy5qcGc=" target="_blank" style="word-wrap:break-word;">abstract-04238-kolnp-2007.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="255733-an-irrigation-and-aspiration-machine-used-in-endoscopy.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="255735-apparatus-for-the-improved-vertical-continuous-pan.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>255734</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>4238/KOLNP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>12/2013</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>22-Mar-2013</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>19-Mar-2013</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>05-Nov-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>TELEFONAKTIEBOLAGET LM ERICSSON (PUBL)</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>S-164 83 STOCKHOLM</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>KAMPMANN, MARKUS</td>
+											<td>AN SPEENBRUCH 13, 52134 HERZOGENRATH</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>PLUM, CHRISTOPH</td>
+											<td>SCHURBERG 1, 41836 HÜCKELHOVEN</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04L 12/56</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/EP2005/003786</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-04-11</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td></td>
+									<td></td>
+								    <td>NA</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/255734-technique-for-controlling-data-packet-transmissions-of-variable-bit-rate-data by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 10:19:37 GMT -->
+</html>

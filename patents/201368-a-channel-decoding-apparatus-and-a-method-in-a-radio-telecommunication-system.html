@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/201368-a-channel-decoding-apparatus-and-a-method-in-a-radio-telecommunication-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 01:50:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 201368:A CHANNEL DECODING APPARATUS AND A METHOD IN A RADIO TELECOMMUNICATION SYSTEM</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A CHANNEL DECODING APPARATUS AND A METHOD IN A RADIO TELECOMMUNICATION SYSTEM</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>An adaptive MAP channel decoding apparatus and method in a mobile communication system. In the adaptive MAP channel decoding apparatus, a channel estimator calculates channel noise power and a scaling factor, a controller determines an operation mode by checking accumulated channel noise power and the scaling factor, and a MAP channel decoder performs a Map decoding operation with an E function including a log function in a static channel mode and an E function free of a log function in a time - varying channel mode.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>-1-<br>
+BACKGROUND OF THE INVENTION<br>
+1.	Field of the Invention<br>
+The present invention relates generally to a channel decoding apparatus and method in a radio telecommunication system, and in particular, to a MAP (Maximum Aposteriori Probability) channel decoding apparatus and method. <br>
+2.	Description of the Related Art<br>
+Various channel codes are widely used to conduct communications reliably<br>
+in a radio telecommunication system (e.g., satellite system, WCDMA, UMTS, and CDMA 2000) The present invention pertains to a turbo code decoding apparatus and method using recursive systematic convomtional codes for data transmission in a bad channel environment.<br>
+Turbo code decoding is implemented in a MAP or a SOVA (Soft Output Viterbi Algorithm) method. The former exhibits optimal performance in terms of bit error rate (BER). The performance of a MAP channel decoder is about 0.6-0.7dB higher than that of a SOVA channel decoder in an ideal receiver., To achieve ideal operation of a receiver for MAP or SOVA turbo decoding, the following conditions must be satisfied: (1) the receiver estimates the current channel state accurately; and (2) the receiver uses a sufficient number of bits for inner operations.<br>
+Meanwhile, the receiver can also subject an input signal to RF (Radio Frequency) processing, down-conversion, ADC (analog-to-digital conversion), and symbol demodulation.<br>
+Generally, noise power estimation in a channel environment precedes a MAP operation. Therefore, a MAP channel decoder receives noise power estimated by a channel estimator and the noise power determines decoding performance.<br><br>
+-2-<br>
+A plurality of metrics are used as main variables in a MAP algorithm. Hereinbelow, equations required to implement the MAP algorithm will be described.<br>
+A branch metric (BM) is calculated by<br><br>
+where La(dk) is extrinsic information obtained from a feed-back loop in a MAP channel decoder, Lc is channel reliability which can be expressed as 2/?? (?? is noise power estimated by a channel estimator), xk is a systematic code, yk is a parity code, i is an expected systematic code, and Yii(m) is an expected parity code.<br>
+A forward state metric (FSM), Alpha is<br><br>
+where SbJ(m) indicates a backward changed state when an information bit is j to set a current state to m. The E function is defined as<br>
+  	(3)<br>
+In MAP algorithm, x and y can be metric values such as Beta and Alpha as can be seen in (4) and (2)<br>
+A reverse state metric (RSM), Beta is<br>
+where Sfj(m) is a state changed forward when an information bit is input in a current encode state m.<br>
+If an information bit is  dk at time k of MAP, a log likelihood ratio (LLR) is<br><br>
+where L(dk) is an LLR when an information bit is dk at time k of MAP and ENS-1 indicates that an operation is performed on NS E functions.<br><br>
+- 3 -<br>
+The MAP decoder calculates a BM from a received code and then an RSM in the above equations, as stated above. The MAP decoder calculates an LLR being a decoded soft output simultaneously with calculation of an FSM.<br>
+As noted from Eq. 1, the MAP channel decoder needs Lc to calculate the BM. That is, the MAP channel decoder can calculate the BM only after it finds out the noise power of a channel environment. According to a general MAP algorithm, therefore, the decoding performance of the MAP channel decoder is sensitively influenced by the operation of a channel estimator.<br>
+If a channel decoder is implemented for turbo decoding, it is preferred that the channel decoder operates stably in a real mobile communication channel environment regardless of the current channel state.<br>
+Particularly, an input signal is multiplied by a scaling factor according to changes in the channel status, like fading, and it is not easy for a receiver to obtain an accurate scaling factor with respect to the current channel state. However, an accurate scaling factor must be reflected to obtain accurate estimation of the channel state. That is, when the channel reliability Lc is degraded, the decoding performance of a MAP algorithm is also degraded, unless the scaling factor is accurately calculated.<br>
+The receiver quantizes an input analog signal with limited bits. As a result, an input signal with strength greater than a predetermined level is clipped. The dynamic range of this input signal seriously influences the performance of the channel decoder, especially in power control.<br>
+SUMMARY OF THE INVENTION<br>
+It is, therefore, an object of the present invention to provide a stable MAP channel decoding apparatus and method in the preset mobile communication channel environment.<br>
+It is another object of the present invention to provide an apparatus and method for decoding data stably in a real channel environment of a mobile communication system.<br><br>
+-4-<br>
+It is a further object of the present invention to provide a MAP channel decoding apparatus and method in which decoding is stably performed regardless of channel noise power in a channel environment of a mobile communication system.<br>
+It is still another object of the present invention to provide a stable MAP channel decoding apparatus and method in which a MAP channel decoding is performed with a first E function including a log function if the current channel state is a static channel state and with a second E function free of a log function if the current channel state is a time-varying channel state to ensure optimal decoding performance in a real mobile communication channel environment.<br>
+Briefly, these and other objects can be achieved by providing an adaptive MAP channel decoding apparatus and method in a mobile communication system. In the adaptive MAP channel decoding apparatus, a channel estimator calculates channel noise power and a scaling factor, a controller determines an operation mode by checking accumulated channel noise power and the scaling factor, and a MAP channel decoder performs a MAP decoding operation with an E function including a log function in a static channel mode(good channel status) and an E function free of a log function in a time-varying channel mode.(bad channel status)<br>
+In the adaptive MAP channel decoding method according to another aspect of the present invention, a current channel state is first estimated. Then, an E function including a log function is performed if the current channel state is static and an E function free of a log function is performed if the current channel state is time-varying.<br><br>
+BRIEF DESCRIPTION OF THE ACCOMPANYING DRAWINGS<br>
+The above and other objects, features and advantages of the present invention will become more apparent from the following detailed description when taken in conjunction with the accompanying drawings in which:<br>
+FIG. 1 is a graph illustrating the significance of a new E function according   ¦ to an embodiment of the present invention;<br><br>
+-5-<br>
+FIG. 2 is a graph illustrating performance comparisons between a real implemented MAP turbo decoder, sub-MAP turbo decoder, a simulated MAP turbo decoder and sub-MAP turbo decoder;<br>
+FIG. 3 is a graph illustrating performance comparisons between a real sub-MAP turbo decoder and a real MAP turbo decoder at various scaling factors at a corresponding Eb/N0 according to the embodiment of the present invention;<br>
+FIG. 4 is a block diagram illustrating an adaptive MAP recursive decoding apparatus depending on a channel state according to the embodiment of the present invention;<br>
+FIG. 5A is a graph illustrating a procedure of implementing a log function by referring to a look-up table according to the embodiment of the present invention;<br>
+FIG. 5B illustrates the look-up table referred to for implementing a log function according to the embodiment of the present invention; and<br>
+FIG. 6 is a flowchart illustrating a MAP decoding method adaptive to a current channel state according to the embodiment of the present invention.<br>
+DETAILED DESCRIPTION OF THF, PREFERRED EMBODIMENT<br>
+A preferred embodiment of the present invention will be described hereinbelow with reference to the accompanying drawings. In the following description, well-known functions or constructions are not described in detail to avoid obscuring the invention in unnecessary detail.<br>
+The present invention provides a MAP channel decoding apparatus and method in which MAP channel decoding is stably implemented regardless of the noise power of a channel in a real mobile communication channel environment when a channel decoder is implemented using a MAP algorithm, which is one of the main algorithms for turbo decoding.<br>
+In the present invention, a general MAP algorithm is implemented in a static channel state and a sub-MAP algorithm is implemented using a two E functions, presented according to the present invention in a time-varying channel state, for stable MAP channel decoding.<br>
+To calculate a BM without Lc in Eq. 1, an E function should be amended in Eq. 3.  The E function is defined as the difference between a min function and a log<br><br>
+-6-<br>
+function. The log function shows nonlinear characteristics. Therefore, the present invention defines a new E function (referred to as 2E function hereinafter) obtained by removing the log function from the E function as follows.<br>
+xEy = min(x, y)		(6)<br>
+The reason for omitting log(l+e    -[x-y]   ) in Eq. 6 can be found by evaluating<br>
+Eq. 7.<br>
+F(z) = log(l+e-z)		(7)<br>
+Eq. 7 is symmetrical and as z increases, F(z) rapidly converges to 0 as illustrated in FIG. 1. FIG. 1 is a graph illustrating the significance of the log function from the new 2E function according to the embodiment of the present invention. The horizontal axis in the graph indicates z and the vertical axis, F(z) of Eq. 7. As shown in the graph, F(z) is rapidly converged to 0 as   z   increases.<br>
+It can be noted from FIG. 1 that as x-y of Eq. 3 increases, log(l+e -x-y ) is converged to 0, having no influence on the E function. Accordingly, it can be expected that log(l+e ) does not influence the E function unless the difference between x and y is small, that is, a SNR is very small. That is, a change in the performance of a real MAP algorithm without log(l+e -x-y ) in the conventional E function is negligible only if a certain SNR is maintained for a channel environment.<br>
+FIG. 2 is a graph illustrating performance comparisons between a MAP channel decoder and a sub-MAP channel decoder when they are implemented and simulated. The vertical axis represent a BER (bit error rate) and FER (frame error rate) and the horizontal axis represent Eb/N0. Each component decoder has a constraint length k = 4, a code rate r = 1/2, and a frame length of 375 bits. A test was performed on an AWGN (Additive White Gaussian Noise) channel in an ideal channel estimation state.<br>
+As shown in FIG. 2, the gain performance of the sub-MAP algorithm is less than that of the MAP algorithm by about 0.ldB. However, if an SNR is 2.5dB, there is little difference in performance between the MAP channel decoder and the sub-<br><br>
+-7-<br>
+MAP channel decoder. According to the test result, if a channel environment ensures an SNR of a predetermined level, log(l+e -x-y ) in Eq. 3 converges to approximately near 0.<br>
+Meanwhile, according to the definition of the new E function as Eq. 6, Eqs. 1, 2, 4, and 5 can be changed respectively to<br><br>
+where Lc is offset. Since extrinsic information La obtained from a recursive decoder feed-back loop starts from 0 and thus initial FSM and RSM do not involve Lc multiplication. Therefore, Eq. 8 can be changed to<br><br>
+where Lc is not used in the sub-MAP algorithm according to the embodiment of the present invention as the new E function is defined as Eq. 6. That is, the sub-MAP algorithm is independent of channel noise power.<br>
+Now, the sensitivity of the decoding performances of the MAP algorithm and the sub-MAP algorithm when real channel noise power is mismatched will be discussed. Fixed point simulation is assumed herein for the MAP channel decoder and the sub-MAP channel decoder.. That is, a predetermined number of quantization bits are used for an internal metric in a component decoder.<br>
+As a simulationcondition, an input signal on an AWGN is scaled as<br>
+S = (c + ?-n).g		(10)<br><br>
+-8-<br>
+where S is an input signal, c?{+l,-l} is a code symbol, n is a sample value of normal distribution N(0, 1), g is a scaling factor, and ?? is the standard deviation of channel noise. Thus, a is the channel noise power.<br>
+In Eq. 10, c-g is the signal component and ?-n-g is the noise component. When, the scaling factor g is removed, the SNR of the input signal S will be a constant value SNR=(c-g)/(?-n-g) = c/(?-n), regardless of g. That is, the scaling in Eq. 10 is based on the assumption that the variation of a channel state is equal to the resulting change in a transmission signal. Therefore, the simulation condition of Eq. 10 maintains the SNR constant via the scaling factor g. To satisfy the above condition, the level of the input signal is artificially increased or decreased. As a result, the input signal deviates from the dynamic range of a quantizer having limited quantization levels and a limited quantization range.<br>
+The sensitivity of the decoding performance of the MAP algorithm and the sub-MAP algorithm will be described in the context of the above simulation condition. Unless Lc as related with scaling is accurately reflected in the MAP algorithm, the decoding performance of the MAP channel decoder will rapidly drop relative to the sub-MAP decoder. If the MAP channel decoder operates within the simulation condition, a component decoder must multiply an input signal by Lc=2/(g-?)2 where an accurate scaling factor is reflected but receives Lc=2/?2 instead. Consequently, the decoding performance of the MAP channel decoder is decreased.<br>
+On the other hand, the sub-MAP channel decoder operates regardless of LC| the decrease in performance when an input signal level deviates from a dynamic range is attributed to the relative change of a quantization range and resolution due to a scaling factor.<br>
+FIG. 3 is a graph illustrating performance comparisons between a real MAP channel decoder and a real sub-MAP channel decoder when a scaling factor in Eb/N0 is changed according to the embodiment of the present invention. The vertical axis in the graph denotes the BER and FER and the horizontal axis, the value of factor g, is expressed in dB. If the horizontal axis is set to 20xlog(g) and g is 3, 20xlog(3) will be shown as g in the graph.  For g=l, logl=0. Therefore, g is 0 on the graph.<br><br>
+-9-<br>
+It can be noted from FIG. 3 that the MAP channel decoder is superior to the sub-MAP channel decoder in terms of decoding performance as long as an accurate g is obtained. However, as the scaling factor g is gradually increased or decreased, the decoding performance of the MAP channel decoder rapidly decreases. This implies that the decoding performance of the MAP channel decoder is very sensitive to a current channel state.<br>
+On the other hand, the sub-MAP channel decoder exhibits a slow change in decoding performance with respect to the change of the scaling factor g. That is, the sub-MAP decoding has a wider operation range with respect to the change of the scaling factor g than the MAP decoding. Accordingly, the sub-MAP decoding scheme according to the embodiment of the present invention is more stable with less influence from the current channel state in a real mobile radio environment, as compared to the MAP decoding scheme.<br>
+As shown in FIG. 3, the sub-MAP channel decoder has a stable operation range from about -l0dB to +10dB, whereas the MAP channel decoder has a stable operation range from about -3dB to +6dB.<br>
+Depending on the SNRs, MAP channel decoders differ in performance from the sub-MAP channel decoder, as noted from FIGs. 2 and 3. But they are equal at an SNR over a specific level. In this case, the decrease of performance caused by channel noise power mismatch cannot be found in a range from +10 to -lOdB.<br>
+FIG. 4 is a block diagram illustrating a MAP channel decoding apparatus<br>
+adaptive to a channel state according to the embodiment of the present   invention.<br><br>
+Referring to FIG. 4, a receiver 410 subjects an analog radio signal received through an antenna (not shown) to RF processing, down conversion of the RF signal to IF signal, Analog to Digital Converting the IF signal, and symbol demodulation and outputs an demodulated signal. A channel estimator 420 calculates a channel noise power and a scaling factor from the output of the receiver 410. A controller 430 determines the operation mode of a MAP channel decoder between a static channel mode and a time-varying mode according to the output of the channel estimator 420. The determination is made based on changes in channel noise power and the scaling factor. The controller 430 can determine the operation mode based on BER/FER received from the MAP channel decoder 440.    For example, if a predetermined<br><br>
+- 10-<br>
+number of successive occurrences of a scaling factor approximate to a predetermined dB are observed, the controller 430 determines the operation mode to be a static channel mode.<br>
+Meanwhile, if the controller 430 determines that the current channel state is a static channel mode, an E function operator 450 of the MAP channel decoder 440 processes inputs x and y in Eq. 3 for optimal decoding performance. The MAP channel decoder 440 decodes the input signal using Eqs. 1, 2, 4, and 5. In the time-varying channel mode, the E function operator 450 processes the inputs x and y in Eq. 6 and then the MAP channel decoder 440 decodes the input signal using Eq. 9.<br>
+A large function in the E function operator 450 can be implemented using a look-up table. The look-up table may be stored in a relatively small amount of memory because the log(l+e-!x-yl) function rapidly drops as |x-y| increases, as stated in FIG. 1.<br>
+FIG. 5A is a graph illustrating the procedure for implementing a log function by referring to a look-up table according to the embodiment of the present invention and FIG. 5B illustrates the look-up table for implementing the log function according to the embodiment of the present invention.<br>
+The horizontal axis in the graph shown in FIG. 5A represents the level of a function input value corresponding to the difference between input values x and y of the E function operator 450 and the vertical axis represents log(l+e-|x-y|) versus the function input levels stored in the table.<br>
+The input values x and y have been quantized and there are a limited number of |x-y| values. As shown in FIG. 5B, the look-up table uses the difference between x and y as a memory address and stores an already calculated function value corresponding to the memory address in a data area.<br>
+Due to the nature of the log(l+elog(l+e-|x-y|), an output value is inversely proportional to an input value in the look-up table according to the embodiment of<br><br>
+- l1the present invention.   Hence, the look-up table may be stored in a relatively small amount of memory.<br>
+FIG. 6 is a flowchart illustrating a MAP decoding method adaptive to a current channel state according to the embodiment of the present invention. The adaptive MAP decoding method will be described referring to FIGs. 1 to 6.<br>
+The controller 430 estimates a current channel state through the channel estimator 420 in step 610. In step 620, the controller receives accumulated channel noise power or a scaling factor from the channel estimator 420 and determines the current channel state according to the variations in the channel noise power or the scaling factor. In addition, the controller 430 can determine the current channel state according to a change in BER/FER received &amp;om the MAP channel decoder 440.<br>
+The controller 430 outputs a mode select signal to the MAP channel decoder 440 to operate the MAP channel decoder 440 in a static channel mode in step 630. That is, the E function operator 450 of the MAP channel decoder 440 processes input x and y using Eq. 3, namely, a general E function in step 630. Thus, the MAP channel decoder 440 decodes the input signal using Eqs. 1, 2, 4, and 5, as illustrated by step 640. Here, the E function operator 450 can implement a log function referring to a look-up table.<br>
+If the controller 430 determines the current channel state to be time varying in step 620, the controller 430 outputs the mode select signal to the MAP channel decoder 440 to operate it in a time-varying channel mode in step 650. That is, the E function operator 450 performs MAP channel decoding using Eq. 9, namely, the 2E function according to the present invention, as illustrated by step 660.<br>
+As described referring to FIGs.  1 to 6, the sub-MAP channel decoding algorithm according to the present invention is independent of a current channel' state, which can reduce the sensitivity of a MAP algorithm to a channel state change. In  addition,  the   sub-MAP  algorithm  has  increased   stability  in  a real  mobile communication channel environment as compared to the MAP algorithm<br>
+In accordance with the adaptive MAP channel decoding apparatus and method of the present invention, a current channel state is first checked based on the change of accumulated  channel noise power  or a  scaling factor  of a  channel<br><br>
+- 12-<br>
+estimator, or a change in BER/FER of a MAP channel decoder. If the current channel state is determined to be static, decoding is performed using an E function including a log function to ensure optimal decoding performance. If the current channel state is to be time-varying, the log function is not used in the E function operation regardless of the current channel state to perform stable channel decoding in a real mobile communication channel environment. Therefore, MAP channel decoding is implemented adaptively to a channel state.<br>
+While the invention has been shown and described with reference to a certain preferred embodiment thereof, it will be understood by those skilled in the art that various changes in form and details may be made therein without departing from the spirit and scope of the invention as defined by the appended claims.<br><br>
+13<br>
+WE CLAIM<br>
+1.	An adaptive MAP channel decoding apparatus, comprising:<br>
+a channel estimator (420) for calculating a channel noise power and a scaling factor;<br>
+a controller (430)for determining an operating mode using the channel noise power and the scaling factor; and<br>
+a MAP channel decoder (440) having an E function operator for selectively operating a static channel mode or a time-varying mode, in the static channel mode according to the following equation:<br>
+xEy = min(x,y)-log(l+e-|x-y|) and in the time-varying mode, according to the following equation:<br>
+xEy = min(x,y) where x and y are metric values.<br>
+2.	The adaptive MAP channel decoding apparatus as claimed in claim 1,<br>
+wherein the MAP channel decoder perfoms a first MAP channel decoding<br>
+operation using the following equations while in the static channel mode:<br><br><br>
+14<br><br>
+La(dk) = extrinsic information obtained from a feed-back loop in the MAP<br>
+channel decoder;<br>
+Lc = channel reliability which can be expressed as 2/o2 (a2 is noise<br>
+power);<br>
+Xk = a systematic code;<br>
+yk = a parity code;<br>
+i = an expected systematic code;<br>
+Yl(m) = an expected parity code;<br>
+Alk(m) = a forward state metric (FSM);<br>
+SbJ(m) = a backward changed state when an information bit is j to set a<br>
+current state to m;<br>
+Bkj(m) = a reverse state metric (RSM);<br>
+Sfi (m) = a state changed forward when an information bit is input in a<br>
+current encode state m; and<br>
+L(dk) = a fog likelihood ratio (LLR) LLR when an information bit is dk at<br>
+time K of MAP; and<br>
+performs a second MAP channel decoding operation using the following<br>
+equations while in a time-varying mode:<br><br>
+where Dklm) = a BM<br>
+La(dk) = extrinsic information obtained from a feed-back loop in the MAP<br>
+channel decoder;<br>
+XK = a systematic code;<br><br>
+15<br>
+yk = a parity code;<br>
+i = an expected systematic code;<br>
+Yi(m) = an expected parity code;<br>
+Alk(m) = a forward state metric (FSM);<br>
+Sbj(m) = a backward changed state when an information bit is j to set a<br>
+current state to m;<br>
+Bkj(m) = an RSM;<br>
+Sfj (m) = a state changed forward when an information bit is input in a<br>
+current encode state m; and<br>
+L(dk) = a log likelihood ratio (LLR) LLR when an information bit is dk at<br>
+time K of MAP;<br>
+3.	The adaptive MAP channel decoding apparatus as claimed in claim 2,<br>
+wherein the E function operator uses the absolute value of the difference<br>
+between function input values as a memory address to Iook-up stored<br>
+corresponding calculated log function values in a data area of a memory<br>
+and output the corresponding log function values.<br><br>
+4.	The adaptive MAP channel decoding apparatus as claimed in claim  1,<br>
+wherein the controller determines the  operation mode  according to changes in the accumulated channel noise power and the scaling factor.<br>
+5.	The adaptive MAP channel decoding apparatus as claimed in claim 1,<br>
+wherein the controller determines the operation mode according to a bit<br>
+error rate (BER) and a frame error rate (FER) received from the MAP<br>
+channel decoder.<br>
+6.	An adaptive MAP channel decoding method in a communication system,<br>
+comprising the steps of :<br><br>
+14<br>
+estimating a current channel state (610);<br>
+controlling an E function using determined channel noise power and scaling factor according to the estimated current channel state<br>
+performing an E function operation (630) according to the following first MAP<br>
+decoding equation when the current channel state is static:	<br>
+xEy = min (x,y) - log(l+e-|x-y|) where x and y are metric values; and<br>
+performing the E function operation (650) according to the following second MAP decoding equation when the current state is time-varying:<br>
+xEy = min(x,y)<br>
+where x and y are metric values.	!<br>
+7. The adaptive MAP channel decoding method as claimed in claim 6, wherein the second MAP channel decoding operation is performed (660) using the following equations:<br><br><br>
+17<br>
+where Dkl(m) = a BM<br>
+La(dk) = extrinsic information obtained from a feed-back loop in the MAP<br>
+channel decoder;<br>
+Xk = a systematic code;<br>
+yk = a parity code;<br>
+i = an expected systematic code;<br>
+Yif(m) = an expected parity code;<br>
+Alk(m) = a forward state metric (FSM);<br>
+Sbj(m) = a backward changed state when an information bit is j to set a<br>
+current state to m;<br>
+Bkl(m) = an RSM;<br>
+Sfl (m) = a state changed forward when an information bit is input in a<br>
+current encode state m; and<br>
+L(dk) = an LLR when an information bit is dk at time K of MAP;<br>
+8.	The  adaptive MAP channel decoding method as claimed in claim  6,<br>
+wherein the current channel state is estimated by checking changes in<br>
+accumulated channel noise power and a scaling factor.<br>
+9.	The adaptive MAP channel decoding method as claimed in claim  6,<br>
+wherein   the   current   channel   state    is   estimated   by   checking   of<br>
+accumulated BER and FER.<br>
+10.	A receiving device in a communication system, comprising:<br>
+a MAP channel decoder for decoding a signal received in a frame:<br>
+a channel estimator (420) for calculating the channel state and scaling factor of the input signal; and<br><br>
+1 8<br>
+a controller (430) for controlling the operation mode of the MAP channel decoder according to the calculated channel state value and scaling factor received from the channel estimator, wherein the channel decoder performs map decoding in a static mode or a time varying mode under the control of the controller.<br>
+An adaptive MAP channel decoding apparatus and method in a mobile communication system. In the adaptive MAP channel decoding apparatus, a channel estimator calculates channel noise power and a scaling factor, a controller determines an operation mode by checking accumulated channel noise power and the scaling factor, and a MAP channel decoder performs a Map decoding operation with an E function including a log function in a static channel mode and an E function free of a log function in a time - varying channel mode.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLWNvcnJlc3BvbmRlbmNlLnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-correspondence.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLWZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLWZvcm0tMTgucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLWZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLWZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLWcucC5hLnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-g.p.a.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLWxldHRlcnMgcGV0ZW50LnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-letters petent.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLXByaW9yaXR5IGRvY3VtZW50IG90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-priority document others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMDAxMDUta29sLXByaW9yaXR5IGRvY3VtZW50LnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-00105-kol-priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1jb3JyZXNwb25kZW5jZS5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-correspondence.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1leGFtaW5hdGlvbiByZXBvcnQucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-examination report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1mb3JtIDE4LnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-form 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1mb3JtIDMucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1mb3JtIDUucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=SU4tUENULTIwMDEtMTA1LUtPTC1GT1JNLTI3LnBkZg==" target="_blank" style="word-wrap:break-word;">IN-PCT-2001-105-KOL-FORM-27.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1ncGEucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1ncmFudGVkLWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-granted-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1ncmFudGVkLWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-granted-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1ncmFudGVkLWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-granted-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1ncmFudGVkLWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-granted-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1ncmFudGVkLWZvcm0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-granted-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1ncmFudGVkLWZvcm0gMi5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-granted-form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1ncmFudGVkLWxldHRlciBwYXRlbnQucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-granted-letter patent.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1ncmFudGVkLXNwZWNpZmljYXRpb24ucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-granted-specification.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1wcmlvcml0eSBkb2N1bWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC1yZXBseSB0byBleGFtaW5hdGlvbiByZXBvcnQucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-reply to examination report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=aW4tcGN0LTIwMDEtMTA1LWtvbC10cmFuc2xhdGVkIGNvcHkgb2YgcHJpb3JpdHkgZG9jdW1lbnQucGRm" target="_blank" style="word-wrap:break-word;">in-pct-2001-105-kol-translated copy of priority document.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="201367-bushing-type-post-insulator-for-a-metal-clad-air-insulated-medium-voltage-switchgear-assembly.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="201369-composite-sheet.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>201368</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>IN/PCT/2001/105/KOL</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>08/2007</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>23-Feb-2007</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>23-Feb-2007</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>25-Jan-2001</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>SAMSUNG ELECTRONICS CO. LTD.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>416 MAETAN-DONG, PALDAL-GU, SUWON-SHI, 442-370 KYUNGKI-DO</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>KIM BEONG-JO</td>
+											<td>MUJIGAEMAEUL #201, KUMI DONG, PUNTANG-GU, SONGNAM-SHI, KYONGGI-DO 463-500, KOREA</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>KIM MIN-GOA</td>
+											<td>973-3, YOUNGTONG-DONG, PALTAL-GU, SUWON-SHI, KYONGGI-DO 442-470, KOREA</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H 04Q 7/20</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/KR00/00554</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2000-05-29</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>19476/1999</td>
+									<td>1999-05-28</td>
+								    <td>Republic of Korea</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/201368-a-channel-decoding-apparatus-and-a-method-in-a-radio-telecommunication-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 01:50:16 GMT -->
+</html>

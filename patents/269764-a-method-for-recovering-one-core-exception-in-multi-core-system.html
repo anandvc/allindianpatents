@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/269764-a-method-for-recovering-one-core-exception-in-multi-core-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 06:34:33 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 269764:A METHOD FOR RECOVERING ONE CORE EXCEPTION IN MULTI-CORE SYSTEM</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD FOR RECOVERING ONE CORE EXCEPTION IN MULTI-CORE SYSTEM</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>The invention relates to a multi-core CPU system, and in particular to a recovery method for one core exception in multi-core system. When exception occurs on one core, then this core will be recovered without pause of the operation. In the exception processing program of the invention, a core in an exceptional state sets its state value to &quot;exception&quot; at first, and then selects a core in a normal state to assist recovery, and a system scheduling module is informed of the reassignment to system tasks, so as to ensure that the recovery work can be completed as soon as possible and the recovery time can be shortened . The present invention has the advantages that:the recovery method can effectively ensure that the operation of the system cannot be interrupted and the resources of the system cannot be lost before and after one core exception and recovery; the abnormal core can work normally after recovery, which prolongs the possible run time of the system and strengthens the reliability of the system.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+Specification<br>
+A Method for Recovering one Core Exception in Multi-core System Technical Field<br>
+The invention relates to a multi-core CPU system, and in particular to a recovery method for one core exception in multi-core system.<br>
+Background of the Invention<br>
+In multi-core CPU embedded system (hereinafter referred to as multi-core system), exceptions may occur on one core regardless in a symmetrical multi-core system or in a niastcr-slavcr multi-core system. The exception includes illegal instructions, non-align operations, cache exceptions, data bus errors, etc. There are many reasons for the exceptions. One reason could be an accidental hardware error or invalid data that may cause program processing exceptions, and another reason could be that the system runs a branch that is hard to access in the program. However, most of these errors just cause one-off damage to the system since regular errors will be detected and solved during system testing.<br>
+In the prior art, usual approach to solve the situation of exception occurring on one core is just to record the exception information and then restart the whole system.Although this approach can recover system operation, it will pause all services and shorten the operating time of the system.For existing multiple systems, in particular, they are generally placed in high-level or core positions, such as the provincial level core router, the PBX(private baranch exchange), etc.Once malfunction of the equipment occurs, the consequences will be serious. Also it will take a long time for the system to restart and restore normal operation, which may cause enormous impact.Therefore, it is particularly important to extend the operating time of multi-core system.Also, it is not worth to restart the whole system just for some non-fatal errors.<br>
+Content of Invention<br>
+Technical problems to be solved in the invention focus on the above-mentioned problems in existing technology. The invention provides a recovery method for one core exception in multi-core system. When exception occurs on one core, then this core will be recovered without pause of the operation.<br><br>
+The technical scheme adopted in the invention to solve the above-mentioned technical problems is a method for recovering from one core exceptions in a multi-core system, including the shared memory and the system scheduling module. The invention comprises the following steps;<br>
+a.	Set storage cell in the shared memory, store the state value of each core, and set the<br>
+initial state value of all cores to "normal".<br>
+b.	When exception occurs on one core, this core runs an exception processing program<br>
+automatically, sets its state value to "exception" and notifies an other selected core in a<br>
+normal state, then the core in an exceptional state enters infinite loop automatically;<br>
+c.	The selected core in a normal state sets the core in an exceptional state to the reset<br>
+state and notifies the system scheduling module. Then the module will dispatch tasks<br>
+originally assigned to the core in the exceptional state to any other core in a normal<br>
+state. The selected core in a normal state will recycle all resources occupied by the<br>
+core in the exceptional state and finally release the core in the exceptional state.<br>
+d.	After release from reset, the core in an exceptional state will restart and set its state<br>
+value to "waiting for recovery" after the start-up is completed;<br>
+e.	After the selected core in a normal state detects the value of the core in an<br>
+exceptional state is "waiting for recovery", it will set the state value of that exceptional<br>
+core to "normal" and notifies the system scheduling module;<br>
+Furthermore, in Step b, inter-core interrupt is used to send a notification in multi-core communication.<br>
+Furthermore, the system scheduling module will monitor the state of each core according to state value stored in storage cell. In case the module detects state of one core is in an exceptional state, it will not assign more tasks to the core in an exceptional state.<br>
+Specifically, in case the multi-core system is a symmetrical multi-core system, in Step b, the selected core in a normal state can be any core that is in a normal state.<br>
+Specifically, in case the multi-core system is master-slaver multi-core system, in Step b, the selected core in a normal state is the core that is in master state.<br>
+The invention has the following beneficial effects: when an exception occurs on one<br><br>
+core in the multi-core system, tasks originally assigned to the core in an exceptional state will be dispatched to other normal core to ensure these tasks to be run in time, and effectively ensure that the whole system operation will not be paused and system resources will not be lost before or after the core in an exceptional state is recovered.After recovery, the core in an exceptional state can operate normally, which extends operation time of the system and enhance reliability of the system.<br>
+Description of the Drawings<br>
+Figure 1 is a program flowchart of the embodiment of the invention.<br>
+Detailed Description of the Preferred Embodiments<br>
+Technical scheme of the invention is described in more details in combination with attached drawings and embodiment.<br>
+In multi-core system with the shared memory and the system scheduling module, the invention defines a special storage cell in the shared memory and adopts a global array to store state of each core. Subscript of the array can use the No. of each core, and each array element corresponds to the state value of each core.AU state values of the core are defined as "normal", "exceptional" and "waiting for recovery". The initial state value of all'cores is set to "normal".In multi-core system, all tasks executed by each core are assigned by the system scheduling module.A state monitoring program is arranged in the system scheduling module. When the system scheduling module is assigning tasks, first it will monitor the current state of each core, and if the state of one core is in an exceptional state, the module will not assign task to it.When an exception occurs on one core, the CPU exception processing program will run.<br>
+In the exception processing program of the invention, a core in an exceptional state sets its state value to "exception" at first, and then selects a core in a normal state and uses a inter-core interrupt communication to notify the selected core in a normal state.Then the system scheduling module dispatches all tasks assigned to the core in exception to other core in a normal state according to its scheduling algorithm, so as to ensure recovery can be accomplished as soon as possible and shorten recovery time. After notification is sent, the core in an exceptional state enters infinite loop and can not exit the exception processing program, so as to avoid more errors and damage occur.<br><br>
+In a symmetrical multi-core system, any core can set the state of any other core. Therefore, when exception occurs on one core, this core can select any other core in a normal state. In addition, any core has the function to reset any other one or multiple cores.There are two algorithms to select one core in a normal state, namely sequential search and random search.The advantage of sequential search is simple, while its disadvantage is that the selected core in a normal state is comparatively fixed. The advantage of random search is that the selected core in a normal state is not fixed, which can increase the probability of successful recovery, while its disadvantage is that the algorithm is comparatively complicated.<br>
+In a master-slaver multi-core system, only one core in master state can recover the core in an exceptional state. In other words, when one core is in an exceptional state, it must notify the core in master state so that it can carry out recovery operation.<br>
+Multi-core CPU has inter-core communication mechanisms, of which one communication mechanism is to use inter-core interrupt. Its advantage is very fast and this mechanism can send event notification in first time. As a result, the invention adopts inter-core interrupt to send notification.<br>
+Embodiment<br>
+In a symmetrical mulfi-core CPU embedded system, as shown in Figure 1, in Step 101, illegal operation occurs on the core A and causes exception. Only the core A jumps to exception vector and enters the CPU exception processing program, and other cores continue normal operation.In the exception processing program, the core A first records exception information, including: exception type, exception PC pointer, values of all state registers, stack structure, etc.<br>
+In Step 102, in the exception processing program, the core A modifies its state value in storage cell in the shared memory to "exception".When the system scheduling module assigns tasks, first it will detect the state of each current core. If a current core is in an exceptional state, the module will not assign task to this core.<br>
+In Step 103, in the exception processing program, the core A randomly selects the core B in a normal state, then uses interrupt to notify core B, and finally it enters infinite loop, which means the core A will never exit the exception processing program to prevent further exception of the instruction when it is re-executed.<br><br>
+In Step 104, the core B in a normal state receives interrupt information from the core A, then awakes its daemon process for the core exception recovery, prepares to search and find out which core is in an exceptional state and prepares for recovery.<br>
+In Step 105,the core B utilizes CPU global control register to set core A to the reset state. Because in multi-core CPU, when one core is set to the reset state, it will not execute any code, which means it is in a stop state. Once the core is released from the reset state, it will read and run instructions from a fixed start address, that is, it performs restart operation.<br>
+In Step 106, the core B notifies the system scheduling module. Then the module transfers tasks originally assigned to the core A to another core in a normal state according to itb scheduling algorithm, so as to ensure the timeliness of task execution.<br>
+In Step 107, core B recycles resources originally occupied by core A to the system. These resources mainly include: task queue, stack space, interrupt, etc.<br>
+In Step 108, the core B utilizes CPU global control register to release core A from the reset state and core A restarts. Then the core B polls state value of the core A in storage cell in the shared memory and waits for it changes to "waiting for recovery".<br>
+In Step 201, after the core A is released from the reset state, it starts to read and run instructions from the CPU fixed start address, and then restarts.<br>
+In Step 202, the core A re-executes initialization operation. Because core A uses new resources, so it is definite that the core A can restart successfully.After the start-up is completed, the core A changes its state in the storage cell in the shared memory to "waiting for recovery", which shows that the core A has already started up.<br>
+In Step 203, the core B detects that the state of the core A changes to "waiting for recovery", which shows the core A has already started up. Then the core B modifies the state of the core A in storage cell in the shared memory to "normal". Next the core B notifies the system scheduling module of assigning tasks to the core A.<br>
+Exception recovery is completed.<br><br>
+WE CLAIM<br>
+1.	A method for recovering one core exception in multi-core system, including the<br>
+shared memory and the system scheduling module, comprising the following steps;<br>
+a.	Set storage cell in the shared memory, store the state value of each core, and set the<br>
+initial state value of all cores to "normal";<br>
+b.	When exception occurs on one core, this core runs an exception processing program<br>
+automatically, sets its state value to "exception" and notifies an other selected core in a<br>
+normal state, then the core in an exceptional state enters infinite loop automatically;<br>
+c.	The selected core in a normal state sets the core in an exceptional state to the reset<br>
+state and notifies the system scheduling module. Then the module will dispatch tasks<br>
+originally assigned to the core in the exceptional state to any other core in a normal<br>
+state. The selected core in a normal state will recycle all resources occupied by the<br>
+core in the exceptional state and finally release the core in the exceptional state;<br>
+d.	After release from reset, the core in an exceptional state will restart and set its state<br>
+value to "waiting for recovery" after the start-up is completed;<br>
+e.	After the selected core in a normal state detects the value of the core in an<br>
+exceptional state is "waiting for recovery", it will set the state value of that exceptional<br>
+core to "normal" and notifies the system scheduling module.<br>
+2.	A method for recovering one core exception in multi-core system as in claim 1, in said Step b, inter-core interrupt is used to send a notification in multi-core communication.<br>
+3.	A method for recovering one core exception in multi-core system as in claim 1, said system scheduling module will monitor the state of each core according to state value stored in storage cell. In case the module detects state of one core is in an exceptional state, it will not assign more tasks to the core in an exceptional state.<br>
+4.	A method for recovering one core exception in multi-core system as in claim 1 or 2 or 3, in case the multi-core system is a symmetrical multi-core system, in Step b, the selected core in a normal state can be any core that is in a normal state.<br><br>
+5. A method for recovering one core exception in multi-core system as in claim 1 or 2 or 3, in case the multi-core system is master-slaver multi-core system, in Step b, the selected core in a normal state is the core that is in master state.<br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=2uwd0njrzLxr3opmPJ4ekg==&amp;amp;loc=egcICQiyoj82NGgGrC5ChA==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=2uwd0njrzLxr3opmPJ4ekg==&amp;amp;loc=egcICQiyoj82NGgGrC5ChA==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="269763-diffused-gas-aeration-apparatus.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="269765-personal-height-rescue-apparatus.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>269764</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>4501/CHENP/2009</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>45/2015</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>06-Nov-2015</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>05-Nov-2015</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>30-Jul-2009</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>MAIPU COMMUNICATION TECHNOLOGY CO., LTD.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>MAIPU MANSION,NO.16, JIU XING AVENUE, HIGH-TECH PARK, CHENGDU,SICHUAN 610041</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>YAN, XIAOQIANG,</td>
+											<td>MAIPU MANSION,NO.16, JIU XING AVENUE, HIGH-TECH PARK, CHENGDU,SICHUAN PROVINCE 610041</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>LI, JIANGNING,</td>
+											<td>MAIPU MANSION,NO.16, JIU XING AVENUE, HIGH-TECH PARK, CHENGDU,SICHUAN PROVINCE 610041</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>XU, FANG,</td>
+											<td>MAIPU MANSION,NO.16, JIU XING AVENUE, HIGH-TECH PARK, CHENGDU,SICHUAN PROVINCE 610041</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F11/28</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/CN08/00224</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2008-01-30</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>200710048366.6</td>
+									<td>2007-01-31</td>
+								    <td>China</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/269764-a-method-for-recovering-one-core-exception-in-multi-core-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 06:34:34 GMT -->
+</html>

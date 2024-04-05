@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/279956-audio-encoder-and-decoder by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:34:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 279956:AUDIO ENCODER AND DECODER</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">AUDIO ENCODER AND DECODER</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>The present invention teaches a new audio coding system that can code both general audio and speech signals well at low bit rates. A proposed audio coding system comprises linear prediction unit for filtering an input signal based on an adaptive filter, a transformation unit for transforming a frame of the filtered input signal into a transform domain; and a quantization unit for quantizing the transform domain signal. The quantization unit decides, based on input signal characteristics, to encode the transform domain signal with a model-based quantizer or a non-model-based quantizer. Preferably, the decision is based on the frame size applied by the transformation unit.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>AUDIO ENCODER AND DECODER<br>
+TECHNICAL FIELD<br>
+The present invention relates to coding of audio signals, and in particular to the coding of any audio<br>
+signal not limited to either speech, music or a combination thereof.<br>
+BACKGROUND OF THE INVENTION<br>
+In prior art there are speech coders specifically designed to code speech signals by basing the coding<br>
+upon a source model of the signal, i.e. the human vocal system. These coders cannot handle arbitrary<br>
+audio signals, such as music, or any other non-speech signal. Additionally, there are in prior art<br>
+music-coders, commonly referred to as audio coders that base their coding on assumptions on the<br>
+human auditory system, and not on the source model of the signal. These coders can handle arbitrary<br>
+signals very well, albeit at low bit rates for speech signals, the dedicated speech-coder gives a superior<br>
+audio quality. Hence, no general coding structure exists so far for coding of arbitrary audio signals<br>
+that performs as well as a speech coder for speech and as well as a music coder for music, when<br>
+operated at low bit rates.<br>
+Thus, there is a need for an enhanced audio encoder and decoder with improved audio quality and/or<br>
+reduced bit rates.<br>
+SUMMARY OF THE INVENTION<br>
+The present invention relates to efficiently coding arbitrary audio signals at a quality level equal or<br>
+better than that of a system specifically tailored to a specific signal.<br>
+The present invention is directed at audio codec algorithms that contain both a linear prediction coding<br>
+(LPC) and a transform coder part operating on a LPC processed signal.<br>
+The present invention further relates to a quantization strategy depending on a transform frame size.<br>
+Furthermore, a model-based entropy constraint quantizer employing arithmetic coding is proposed. In<br>
+addition, the insertion of random offsets in a uniform scalar quantizer is provided. The invention<br>
+further suggests a model-based quantizer, e.g, an Entropy Constraint Quantizer (ECQ), employing<br>
+arithmetic coding.<br>
+The present invention further relates to efficiently coding of scalefactors in the transform coding part<br>
+of an audio encoder by exploiting the presence of LPC data.<br>
+The present invention further relates to efficiently making use of a bit reservoir in an audio encoder<br>
+with a variable frame size.<br>
+The present invention further relates to an encoder for encoding audio signals and generating a<br>
+bitstream, and a decoder for decoding the bitstream and generating a reconstructed audio signal that is<br>
+perceptually indistinguishable from the input audio signal.<br>
+A first aspect of the present invention relates to quantization in a transform encoder that, e.g., applies<br>
+a Modified Discrete Cosine Transform (MDCT). The proposed quantizer preferably quantizes MDCT<br>
+lines. This aspect is applicable independently of whether the encoder further uses a linear prediction<br>
+coding (LPC) analysis or additional long term prediction (LTP).<br>
+The present invention provides an audio coding system comprising a linear prediction unit for filtering<br>
+an input signal based on an adaptive filter; a transformation unit for transforming a frame of the<br>
+filtered input signal into a transform domain; and a quantization unit for quantizing the transform<br>
+domain signal. The quantization unit decides, based on input signal characteristics, to encode the<br>
+transform domain signal with a model-based quantizer or a non-model-based quantizer. Preferably, the<br>
+decision is based on the frame size applied by the transformation unit. However, other input signal<br>
+dependent criteria for switching the quantization strategy are envisaged as well and are within the<br>
+scope of the present application.<br>
+Another important aspect of the invention is that the quantizer may be adaptive. In particular the<br>
+model in the model-based quantizer may be adaptive to adjust to the input audio signal. The model<br>
+may vary over time, e.g., depending on input signal characteristics. This allows reduced quantization<br>
+distortion and, thus, improved coding quality.<br>
+According to an embodiments, the proposed quantization strategy is conditioned on frame-size. It is<br>
+suggested that the quantization unit may decide, based on the frame size applied by the transformation<br>
+unit, to encode the transform domain signal with a model-based quantizer or a non-model-based<br>
+quantizer. Preferably, the quantization unit is configured to encode a transform domain signal for a<br>
+frame with a frame size smaller than a threshold value by means of a model-based entropy<br>
+constrained quantization. The model-based quantization may be conditioned on assorted parameters.<br>
+Large frames may be quantized, e.g., by a scalar quantizer with e.g. Huffman based entropy coding,<br>
+as is used in e.g. the AAC codec.<br>
+The audio coding system may further comprise a long term prediction (LTP) unit for estimating the<br>
+frame of the filtered input signal based on a reconstruction of a previous segment of the filtered input<br>
+signal and a transform domain signal combination unit for combining, in the transform domain, the<br>
+long term prediction estimation and the transformed input signal to generate the transform domain<br>
+signal that is input to the quantization unit.<br>
+The switching between different quantization methods of the MDCT lines is another aspect of a<br>
+preferred embodiment of the invention. By employing different quantization strategies for different<br>
+transform sizes, the codec can do all the quantization and coding in the MDCT-domain without<br>
+having the need to have a specific time domain speech coder running in parallel or serial to the<br>
+transform domain codec. The present invention teaches that for speech like signals, where there is an<br>
+LTP gain, the signal is preferably coded using a short transform and a model-based quantizer. The<br>
+model-based quantizer is particularly suited for the short transform, and gives, as will be outlined<br>
+later, the advantages of a time-domain speech specific vector quantizer (VQ), while still being<br>
+operated in the MDCT-domain, and without any requirements that the input signal is a speech signal.<br>
+In other words, when the model-based quantizer is used for the short transform segments in<br>
+combination with the LTP, the efficiency of the dedicated time-domain speech coder VQ is retained<br>
+without loss of generality and without leaving the MDCT-domain.<br>
+In addition for more stationary music signals, it is preferred to use a transform of relatively large size<br>
+as is commonly used in audio codecs, and a quantization scheme that can take advantage of sparse<br>
+spectral lines discriminated by the large transform. Therefore, the present invention teaches to use<br>
+this kind of quantization scheme for long transforms.<br>
+Thus, the switching of quantization strategy as a function of frame size enables the codec to retain<br>
+both the properties of a dedicated speech codec, and the properties of a dedicated audio codec, simply<br>
+by choice of transform size. This avoids all the problems in prior art systems that strive to handle,<br>
+speech and audio signals equally well at low rates, since these systems inevitably run into the<br>
+problems and difficulties of efficiently combining time-domain coding (the speech coder) with<br>
+frequency domain coding (the audio coder).<br>
+According to another aspect of the invention, the quantization uses adaptive step sizes. Preferably, the<br>
+quantization step size(s) for components of the transform domain signal is/are adapted based on linear<br>
+prediction and/or long term prediction parameters. The quantization step size(s) may further be<br>
+configured to be frequency depending. In embodiments of the invention, the quantization step size is<br>
+determined based on at least one of: the polynomial of the adaptive filter, a coding rate control<br>
+parameter, a long term prediction gain value, and an input signal variance.<br>
+Preferably, the quantization unit comprises uniform scalar quantizers for quantizing the transform<br>
+domain signal components. Each scalar quantizer is applying a uniform quantization, e.g. based on a<br>
+probability model, to a MDCT line. The probability model may be a Laplacian or a Gaussian model,<br>
+or any other probability model that is suitable for signal characteristics. The quantization unit may<br>
+further insert a random offset into the uniform scalar quantizers. The random offset insertion provides<br>
+vector quantization advantages to the uniform scalar quantizers. According to an embodiment, the<br>
+random offsets are determined based on an optimization of a quantization distortion, preferably in a<br>
+perceptual domain and/or under consideration of the cost in terms of the number of bits required to<br>
+encode the quantization indices.<br>
+The quantization unit may further comprise an arithmetic encoder for encoding quantization indices<br>
+generated by the uniform scalar quantizers. This achieves a low bit rate approaching the possible<br>
+minimum as given by the signal entropy.<br>
+The quantization unit may further comprise a residual quantizer for quantizing a residual quantization<br>
+signal resulting from the uniform scalar quantizers in order to further reduce the overall distortion.<br>
+The residual quantizer preferably is a fixed rate vector quantizer.<br>
+Multiple quantization reconstruction points may be used in the de-quantization unit of the encoder<br>
+and/or the inverse quantizer in the decoder. For instance, minimum mean squared error (MMSE)<br>
+and/or center point (midpoint) reconstruction points may be used to reconstruct a quantized value<br>
+based on its quantization index. A quantization reconstruction point may further be based on a<br>
+dynamic interpolation between a center point and a MMSE point, possibly controlled by<br>
+characteristics of the data. This allows controlling noise insertion and avoiding spectral holes due to<br>
+assigning MDCT lines to a zero quantization bin for low bit rates.<br>
+A perceptual weighting in the transform domain is preferably applied when determining the<br>
+quantization distortion in order to put different weights to specific frequency components. The<br>
+perceptual weights may be efficiently derived from linear prediction parameters.<br>
+Another independent aspect of the invention relates to the general concept of making use of the<br>
+coexistence of LPC and SCF (ScaleFactor) data. In a transform based encoder, e.g. applying a<br>
+Modified Discrete Cosine Transform (MDCT), scalefactors may be used in quantization to control the<br>
+quantization step size. In prior art, these scalefactors are estimated from the original signal to<br>
+determine a masking curve. It is now suggested to estimate a second set of scalefactors with the help<br>
+of a perceptual filter or psychoacoustic model that is calculated from LPC data. This allows a<br>
+reduction of the cost for transmitting/storing the scalefactors by transmitting/storing only the<br>
+difference of the actually applied scalefactors to the LPC-estimated scalefactors instead of<br>
+transmitting/storing the real scalefactors. Thus, in an audio coding system containing speech coding<br>
+elements, such as e.g. an LPC, and transform coding elements, such as a MDCT, the present invention<br>
+reduces the cost for transmitting scalefactor information needed for the transform coding part of the<br>
+codec by exploiting data provided by the LPC. It is to be noted that this aspect is independent of other<br>
+aspects of the proposed audio coding system and can be implemented in other audio coding systems<br>
+as well.<br>
+For instance, a perceptual masking curve may be estimated based on the parameters of the adaptive<br>
+filter. The linear prediction based second set of scalefactors may be determined based on the<br>
+estimated perceptual masking curve. Stored/transmitted scalefactor information is then determined<br>
+based on the difference between the scalefactors actually used in quantization and the scalefactors that<br>
+are calculated from the LPC-based perceptual masking curve. This removes dynamics and<br>
+redundancy from the stored/transmitted information so that fewer bits are necessary for<br>
+storing/transmitting the scalefactors.<br>
+In case that the LPC and the MDCT do not operate on the same frame rate, i.e. having different frame<br>
+sizes, the linear prediction based scalefactors for a frame of the transform domain signal may be<br>
+estimated based on interpolated linear prediction parameters so as to correspond to the time window<br>
+covered by the MDCT frame.<br>
+The present invention therefore provides an audio coding system that is based on a transform coder<br>
+and includes fundamental prediction and shaping modules from a speech coder. The inventive system<br>
+comprises a linear prediction unit for filtering an input signal based on an adaptive filter; a<br>
+transformation unit for transforming a frame of the filtered input signal into a transform domain; a<br>
+quantization unit for quantizing a transform domain signal; a scalefactor determination unit for<br>
+generating scalefactors, based on a masking threshold curve, for usage in the quantization unit when<br>
+quantizing the transform domain signal; a linear prediction scalefactor estimation unit for estimating<br>
+linear prediction based scalefactors based on parameters of the adaptive filter; and a scalefactor<br>
+encoder for encoding the difference between the masking threshold curve based scalefactors and the<br>
+linear prediction based scalefactors. By encoding the difference between the applied scalefactors and<br>
+scalefactors that can be determined in the decoder based on available linear prediction information,<br>
+coding and storage efficiency can be improved and only fewer bits need to be stored/transmitted.<br>
+Another independent encoder specific aspect of the invention relates to bit reservoir handling for<br>
+variable frame sizes. In an audio coding system that can code frames of variable length, the bit<br>
+reservoir is controlled by distributing the available bits among the frames. Given a reasonable<br>
+difficulty measure for the individual frames and a bit reservoir of a defined size, a certain deviation<br>
+from a required constant bit rate allows for a better overall quality without a violation of the buffer<br>
+requirements that are imposed by the bit reservoir size. The present invention extends the concept of<br>
+using a bit reservoir to a bit reservoir control for a generalized audio codec with variable frame sizes.<br>
+An audio coding system may therefore comprise a bit reservoir control unit for determining the<br>
+number of bits granted to encode a frame of the filtered signal based on the length of the frame and a<br>
+difficulty measure of the frame. Preferably, the bit reservoir control unit has separate control<br>
+equations for different frame difficulty measures and/or different frame sizes. Difficulty measures for<br>
+different frame sizes may be normalized so they can be compared more easily. In order to control the<br>
+bit allocation for a variable rate encoder, the bit reservoir control unit preferably sets the lower<br>
+allowed limit of the granted bit control algorithm to the average number of bits for the largest allowed<br>
+frame size.<br>
+A further aspect of the invention relates to the handling of a bitreservoir in an encoder employing a<br>
+model-based quantizer, e.g, an Entropy Constraint Quantizer (ECQ). It is suggested to minimize the<br>
+variation of ECQ step size. A particular control equation is suggested that relates the quantizer step<br>
+size to the ECQ rate.<br>
+The adaptive filter for filtering the input signal is preferably based on a Linear Prediction Coding<br>
+(LPC) analysis including a LPC filter producing a whitened input signal. LPC parameters for the<br>
+present frame of input data may be determined by algorithms known in the art. A LPC parameter<br>
+estimation unit may calculate, for the frame of input data, any suitable LPC parameter representation<br>
+such as polynomials, transfer functions, reflection coefficients, line spectral frequencies, etc. The<br>
+particular type of LPC parameter representation that is used for coding or other processing depends on<br>
+the respective requirements. As is known to the skilled person, some representations are more suited<br>
+for certain operations than others and are therefore preferred for carrying out these operations. The<br>
+linear prediction unit may operate on a first frame length that is fixed, e.g. 20 msec. The linear<br>
+prediction filtering may further operate on a warped frequency axis to selectively emphasize certain<br>
+frequency ranges, such as low frequencies, over other frequencies.<br>
+The transformation applied to the frame of the filtered input signal is preferably a Modified Discrete<br>
+Cosine Transform (MDCT) operating on a variable second frame length. The audio coding system<br>
+may comprise a window sequence control unit determining, for a block of the input signal, the frame<br>
+lengths for overlapping MDCT windows by minimizing a coding cost function, preferably a simplistic<br>
+perceptual entropy, for the entire input signal block including several frames. Thus, an optimal<br>
+segmentation of the input signal block into MDCT windows having respective second frame lengths is<br>
+derived. In consequence, a transform domain coding structure is proposed, including speech coder<br>
+elements, with an adaptive length MDCT frame as only basic unit for all processing except the LPC.<br>
+As the MDCT frame lengths can take on many different values, an optimal sequence can be found and<br>
+abrupt frame size changes can be avoided, as are common in prior art where only a small window size<br>
+and a large window size is applied. In addition, transitional transform windows having sharp edges, as<br>
+used in some prior art approaches for the transition between small and large window sizes, are not<br>
+necessary.<br>
+Preferably, consecutive MDCT window lengths change at most by a factor of two (2) and/or the<br>
+MDCT window lengths are dyadic values. More particular, the MDCT window lengths may be dyadic<br>
+partitions of the input signal block. The MDCT window sequence is therefore limited to<br>
+predetermined sequences which are easy to encode with a small number of bits. In addition, the<br>
+window sequence has smooth transitions of frame sizes, thereby excluding abrupt frame size changes.<br>
+The window sequence control unit may be further configured to consider long term prediction<br>
+estimations, generated by the long term prediction unit, for window length candidates when searching<br>
+for the sequence of MDCT window lengths that minimizes the coding cost function for the input<br>
+signal block. In this embodiment, the long term prediction loop is closed when deterrnining the MDCT<br>
+window lengths which results in an improved sequence of MDCT windows applied for encoding.<br>
+The audio coding system may further comprise a LPC encoder for recursively coding, at a variable<br>
+rate, line spectral frequencies or other appropriate LPC parameter representations generated by the<br>
+linear prediction unit for storage and/or transmission to a decoder. According to an embodiment, a<br>
+linear prediction interpolation unit is provided to interpolate linear prediction parameters generated on<br>
+a rate corresponding to the first frame length so as to match the variable frame lengths of the transform<br>
+domain signal.<br>
+According to an aspect of the invention, the audio coding system may comprise a perceptual modeling<br>
+unit that modifies a characteristic of the adaptive filter by chirping and/or tilting a LPC polynomial<br>
+generated by the linear prediction unit for a LPC frame. The perceptual model received by the<br>
+modification of the adaptive filter characteristics may be used for many purposes in the system. For<br>
+instance, it may be applied as perceptual weighting function in quantization or long term prediction.<br>
+Another aspect of the invention relates to long term prediction (LTP), in particular to long term<br>
+prediction in the MDCT-domain, MDCT frame adapted LTP and MDCT weighted LTP search. These<br>
+aspects are applicable irrespective whether a LPC analysis is present upstream of the transform coder.<br>
+According to an embodiment, the audio coding system further comprises an inverse quantization and<br>
+inverse transformation unit for generating a time domain reconstruction of the frame of the filtered<br>
+input signal. Furthermore, a long term prediction buffer for storing time domain reconstructions of<br>
+previous frames of the filtered input signal may be provided These units may be arranged in a<br>
+feedback loop from the quantization unit to a long term prediction extraction unit that searches, in the<br>
+long term prediction buffer, for the reconstructed segment that best matches the present frame of the<br>
+filtered input signal. In addition, a long term prediction gain estimation unit may be provided that<br>
+adjusts the gain of the selected segment from the long term prediction buffer so that it best matches the<br>
+present frame. Preferably, the long term prediction estimation is subtracted from the transformed input<br>
+signal in the transform domain. Therefore, a second transform unit for transforming the selected<br>
+segment into the transform domain may be provided. The long term prediction loop may further<br>
+include adding the long term prediction estimation in the transform domain to the feedback signal after<br>
+inverse quantization and before inverse transformation into the time-domain. Thus, a backward<br>
+adaptive long term prediction scheme may be used that predicts, in the transform domain, the present<br>
+frame of the filtered input signal based on previous frames. In order to be more efficient, the long term<br>
+prediction scheme may be further adapted in different ways, as set out below for some examples.<br>
+According to an embodiment, the long term prediction unit comprises a long term prediction extractor<br>
+for determining a lag value specifying the reconstructed segment of the filtered signal that best fits the<br>
+current frame of the filtered signal. A long term prediction gain estimator may estimate a gain value<br>
+applied to the signal of the selected segment of the filtered signal. Preferably, the lag value and the<br>
+gain value are determined so as to minimize a distortion criterion relating to the difference, in a<br>
+perceptual domain, of the long term prediction estimation to the transformed input signal. A modified<br>
+linear prediction polynomial may be applied as MDCT-domain equalization gain curve when<br>
+minimizing the distortion criterion.<br>
+The long term prediction unit may comprise a transformation unit for transforming the reconstructed<br>
+signal of segments from the LTP buffer into the transform domain. For an efficient implementation of<br>
+a MDCT transformation, the transformation is preferably a type-IV Discrete-Cosine Transformation.<br>
+Another aspect of the invention relates to an audio decoder for decoding the bitstream generated by<br>
+embodiments of the above encoder. A decoder according to an embodiment comprises a de-<br>
+quantization unit for de-quantizing a frame of an input bitstream based on scalefactors; an inverse<br>
+transformation unit for inversely transforming a transform domain signal; a linear prediction unit for<br>
+filtering the inversely transformed transform domain signal; and a scalefactor decoding unit for<br>
+generating the scalefactors used in de-quantization based on received scalefactor delta information<br>
+that encodes the difference between the scalefactors applied in the encoder and scalefactors that are<br>
+generated based on parameters of the adaptive filter. The decoder may further comprise a scalefactor<br>
+determination unit for generating scalefactors based on a masking threshold curve that is derived from<br>
+linear prediction parameters for the present frame. The scalefactor decoding unit may combine the<br>
+received scalefactor delta information and the generated linear prediction based scalefactors to<br>
+generate scalefactors for input to the de-quantization unit.<br>
+A decoder according to another embodiment comprises a model-based de-quantization unit for de-<br>
+quantizing a frame of an input bitstream; an inverse transformation unit for inversely transforming a<br>
+transform domain signal; and a linear prediction unit for filtering the inversely transformed transform<br>
+domain signal. The de-quantization unit may comprise a non-model based and a model based de-<br>
+quantizer.<br>
+Preferably, the de-quantization unit comprises at least one adaptive probability model. The de-<br>
+quantization unit may be configured to adapt the de-quantization as a function of the transmitted<br>
+signal characteristics.<br>
+The de-quantization unit may further decide a de-quantization strategy based on control data for the<br>
+decoded frame. Preferably, the de-quantization control data is received with the bitstream or derived<br>
+from received data. For example, the de-quantization unit decides the de-quantization strategy based<br>
+on the transform size of the frame.<br>
+According to another aspect, the de-quantization unit comprises adaptive reconstruction points.<br>
+The de-quantization unit may comprise uniform scalar de-quantizers that are configured to use two de-<br>
+quantization reconstruction points per quantization interval, in particular a midpoint and a MMSE<br>
+reconstruction point.<br>
+According to an embodiment, the de-quantization unit uses a model based quantizer in combination<br>
+with arithmetic coding.<br>
+In addition, the decoder may comprise many of the aspects as disclosed above for the encoder. In<br>
+general, the decoder will mirror the operations of the encoder, although some operations are only<br>
+performed in the encoder and will have no corresponding components in the decoder. Thus, what is<br>
+disclosed for the encoder is considered to be applicable for the decoder as well, if not stated<br>
+otherwise.<br>
+The above aspects of the invention may be implemented as a device, apparatus, method, or computer<br>
+program operating on a programmable device. Inventive aspects may further be embodied in signals,<br>
+data structures and bitstreams.<br>
+Thus, the application further discloses an audio encoding method and an audio decoding method. An<br>
+exemplary audio encoding method comprises the steps of: filtering an input signal based on an<br>
+adaptive filter, transforming a frame of the filtered input signal into a transform domain; quantizing<br>
+the transform domain signal; generating scalefactors, based on a masking threshold curve, for usage<br>
+in the quantization unit when quantizing the transform domain signal; estimating linear prediction<br>
+based scalefactors based on parameters of the adaptive filter; and encoding the difference between the<br>
+masking threshold curve based scalefactors and the linear prediction based scalefactors.<br>
+Another audio encoding method comprises the steps: filtering an input signal based on an adaptive<br>
+filter; transforming a frame of the filtered input signal into a transform domain; and quantizing the<br>
+transform domain signal; wherein the quantization unit decides, based on input signal characteristics,<br>
+to encode the transform domain signal with a model-based quantizer or a non-model-based quantizer.<br>
+An exemplary audio decoding method comprises the steps of: de-quantizing a frame of an input<br>
+bitstream based on scalefactors; inversely transforming a transform domain signal; linear prediction<br>
+filtering the inversely transformed transform domain signal; estimating second scalefactors based on<br>
+parameters of the adaptive filter, and generating the scalefactors used in de-quantization based on<br>
+received scalefactor difference information and the estimated second scalefactors.<br>
+Another audio encoding method comprises the steps: de-quantizing a frame of an input bitstream;<br>
+inversely transforming a transform domain signal; and linear prediction filtering the inversely<br>
+transformed transform domain signal; wherein the de-quantization is using a non-model and a model-<br>
+based quantizer.<br>
+These are only examples of preferred audio encoding/decoding methods and computer programs that<br>
+are taught by the present application and that a person skilled in the art can derive from the following<br>
+description of exemplary embodiments.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+The present invention will now be described by way of illustrative examples, not limiting the scope or<br>
+spirit of the invention, with reference to the accompanying drawings, in which:<br>
+Fig. 1 illustrates a preferred embodiment of an encoder and a decoder according to the present<br>
+invention;<br>
+Fig. 2 illustrates a more detailed view of the encoder and the decoder according to the present<br>
+invention;<br>
+Fig. 3 illustrates another embodiment of the encoder according to the present invention;<br>
+Fig. 4 illustrates a preferred embodiment of the encoder according to the present invention;<br>
+Fig. 5 illustrates a preferred embodiment of the decoder according to the present invention;<br>
+Fig. 6 illustrates a preferred embodiment of the MDCT lines encoding and decoding according to the<br>
+present invention;<br>
+Fig. 7 illustrates a preferred embodiment of the encoder and decoder, and examples of relevant control<br>
+data transmitted from one to the other, according to the present invention;<br>
+Fig. 7a is another illustration of aspects of the encoder according to an embodiment of the invention;<br>
+Fig. 8 illustrates an example of a window sequence and the relation between LPC data and MDCT<br>
+data according to an embodiment of the present invention;<br>
+Fig. 9 illustrates a combination of scale-factor data and LPC data according to the present invention;<br>
+Fig. 9a illustrates another embodiment of the combination of scale-factor data and LPC data according<br>
+to the present invention;<br>
+Fig. 9b illustrates another simplified block diagram of an encoder and a decoder according to the<br>
+present invention;<br>
+Fig. 10 illustrates a preferred embodiment of translating LPC polynomials to a MDCT gain curve<br>
+according to the present invention;<br>
+Fig. 11 illustrates a preferred embodiment of mapping the constant update rate LPC parameters to the<br>
+adaptive MDCT window sequence data, according to the present invention;<br>
+Fig. 12 illustrates a preferred embodiment of adapting the perceptual weighting filter calculation based<br>
+on transform size and type of quantizer, according to the present invention;<br>
+Fig. 13 illustrates a preferred embodiment of adapting the quantizer dependent on the frame size,<br>
+according to the present invention;<br>
+Fig. 14 illustrates a preferred embodiment of adapting the quantizer dependent on the frame size,<br>
+according to the present invention;<br>
+Fig. 15 illustrates a preferred embodiment of adapting the quantization step size as a function of LPC<br>
+and LTP data, according to the present invention;<br>
+Fig. 15a illustrates how a delta-curve is derived from LPC and LTP parameters by means of a delta-<br>
+adapt module;<br>
+Fig. 16 illustrates a preferred embodiment of a model-based quantizer utilizing random offsets,<br>
+according to the present invention;<br>
+Fig. 17 illustrates a preferred embodiment of a model-based quantizer according to the present<br>
+invention;<br>
+Fig. 17a illustrates a another preferred embodiment of a model-based quantizer according to the<br>
+present invention;<br>
+Fig. 17b illustrates schematically a model-based MDCT lines decoder 2150 according to an<br>
+embodiment of the invention;<br>
+Fig. 17c illustrates schematically aspects of quantizer pre-processing according to an embodiment of<br>
+the invention;<br>
+Fig. 17d illustrates schematically aspects of the step size computation according to an embodiment of<br>
+the invention;<br>
+Fig. 17e illustrates schematically a model-based entropy constrained encoder according to an<br>
+embodiment of the invention;<br>
+Fig. 17f illustrates schematically the operation of a uniform scalar quantizer (USQ) according to an<br>
+embodiment of the invention;<br>
+Fig. 17g illustrates schematically probability computations according to an embodiment of the<br>
+invention;<br>
+Fig. 17h illustrates schematically a de-quantization process according to an embodiment of the<br>
+invention;<br>
+Fig. 18 illustrates a preferred embodiment of a bit reservoir control, according to the present invention;<br>
+Fig. 18a illustrates the basic concept of a bit reservoir control;<br>
+Fig. 18b illustrates the concept of a bit reservoir control for variable frame sizes, according to the<br>
+present invention;<br>
+Fig. 18c shows an exemplary control curve for bit reservoir control according to an embodiment;<br>
+Fig. 19 illustrates a preferred embodiment of the inverse quantizer using different reconstruction<br>
+points, according to the present invention.<br>
+DESCRIPTION OF PREFERRED EMBODIMENTS<br>
+The below-described embodiments are merely illustrative for the principles of the present invention<br>
+for audio encoder and decoder. It is understood that modifications and variations of the arrangements<br>
+and the details described herein will be apparent to others skilled in the art. It is the intent, therefore,<br>
+to be limited only by the scope of the accompanying patent claims and not by the specific details<br>
+presented by way of description and explanation of the embodiments herein. Similar components of<br>
+embodiments are numbered by similar reference numbers.<br>
+In Jig. 1 an encoder 101 and a decoder 102 are visualized. The encoder 101 takes the time-domain<br>
+input signal and produces a bitstream 103 subsequently sent to the decoder 102. The decoder 102<br>
+produces an output wave-form based on the received bitstream 103. The output signal psycho-<br>
+acoustically resembles the original input signal.<br>
+In Fig. 2 a preferred embodiment of the encoder 200 and the decoders 210 are illustrated. The input<br>
+signal in the encoder 200 is passed through a LPC (Linear Prediction Coding) module 201 that<br>
+generates a whitened residual signal for an LPC frame having a first frame length, and the<br>
+corresponding linear prediction parameters. Additionally, gain normalization may be included in the<br>
+LPC module 201. The residual signal from the LPC is transformed into the frequency domain by an<br>
+MDCT (Modified Discrete Cosine Transform) module 202 operating on a second variable frame<br>
+length. In the encoder 200 depicted in Fig. 2, an LTP (Long Term Prediction) module 205 is included.<br>
+LTP will be elaborated on in a further embodiment of the present invention. The MDCT lines are<br>
+quantized 203 and also de-quantized 204 in order to feed a LTP buffer with a copy of the decoded<br>
+output as will be available to the decoder 210. Due to the quantization distortion, this copy is called<br>
+reconstruction of the respective input signal. In the lower part of Fig. 2 the decoder 210 is depicted.<br>
+The decoder 210 takes the quantized MDCT lines, de-quantizes 211 them, adds the contribution from<br>
+the LTP module 214, and does an inverse MDCT transform 212, followed by an LPC synthesis filter<br>
+213.<br>
+An important aspect of the above embodiment is that the MDCT frame is the only basic unit for<br>
+coding, although the LPC has its own (and in one embodiment constant) frame size and LPC<br>
+parameters are coded, too. The embodiment starts from a transform coder and introduces fundamental<br>
+prediction and shaping modules from a speech coder. As will be discussed later, the MDCT frame<br>
+size is variable and is adapted to a block of the input signal by determining the optimal MDCT<br>
+window sequence for the entire block by minimizing a simplistic perceptual entropy cost function.<br>
+This allows scaling to maintain optimal time/frequency control. Further, the proposed unified<br>
+structure avoids switched or layered combinations of different coding paradigms.<br>
+In Fig. 3 parts of the encoder 300 are described schematically in more detail. The whitened signal as<br>
+output from the LPC module 201 in the encoder of Fig. 2 is input to the MDCT filterbank 302. The<br>
+MDCT analysis may optionally be a time-warped MDCT analysis that ensures that the pitch of the<br>
+signal (if the signal is periodic with a well-defined pitch) is constant over the MDCT transform<br>
+window.<br>
+In Fig. 3 the LTP module 310 is outlined in more detail. It comprises a LTP buffer 311 holding<br>
+reconstructed time-domain samples of the previous output signal segments. A LTP extractor 312 finds<br>
+the best matching segment in the LTP buffer 311 given the current input segment. A suitable gain<br>
+value is applied to this segment by gain unit 313 before it is subtracted from the segment currently<br>
+being input to the quantizer 303. Evidently, in order to do the subtraction prior to quantization, the<br>
+LTP extractor 312 also transforms the chosen signal segment to the MDCT-domain. The LTP<br>
+extractor 312 searches for the best gain and lag values that minimize an error function in the<br>
+perceptual domain when combining the reconstructed previous output signal segment with the<br>
+transformed MDCT-domain input frame. For instance, a mean squared error (MSE) function between<br>
+the transformed reconstructed segment from the LTP module 310 and the transformed input frame<br>
+(i.e. the residual signal after the subtraction) is optimized. This optimization may be performed in a<br>
+perceptual domain where frequency components (i.e. MDCT lines) are weighted according to their<br>
+perceptual importance. The LTP module 310 operates in MDCT frame units and the encoder300<br>
+considers one MDCT frame residual at a time, for instance for quantization in the quantization<br>
+module 303. The lag and gain search may be performed in a perceptual domain. Optionally, the LTP<br>
+may be frequency selective, i.e. adapting the gain and/or lag over frequency. An inverse quantization<br>
+unit 304 and an inverse MDCT unit 306 are depicted. The MDCT may be time-warped as explained<br>
+later.<br>
+In Fig. 4 another embodiment of the encoder 400 is illustrated. In addition to Fig. 3, the IPC analysis<br>
+401 is included for clarification. A DCT-IV transform 414 used to transform a selected signal<br>
+segment to the MDCT-domain is shown. Additionally, several ways of calculating the minimum error<br>
+for the LTP segment selection are illustrated. In addition to the minimization of the residual signal as<br>
+shown in Fig. 4 (identified as LTP2 in Fig. 4), the minimization of the difference between the<br>
+transformed input signal and the de-quantized MDCT-domain signal before being inversely<br>
+transformed to a reconstructed time-domain signal for storage in the LTP buffer 411 is illustrated<br>
+(indicated as LTP3). Minimization of this MSE function will direct the LTP contribution towards an<br>
+optimal (as possible) similarity of transformed input signal and reconstructed input signal for storage<br>
+in the LTP buffer 411. Another alternative error function (indicated as LTP1) is based on the<br>
+difference of these signals in the time-domain. In this case, the MSE between LPC filtered input<br>
+frame and the corresponding time-domain reconstruction in the LTP buffer 411 is minimized. The<br>
+MSE is advantageously calculated based on the MDCT frame size, which may be different from the<br>
+LPC frame size. Additionally, the quantizer and de-quantizer blocks are replaced by the spectrum<br>
+encoding block 403 and the spectrum decoding blocks 404 ("Spec enc" and "Spec dec") that may<br>
+contain additional modules apart from quantization as will be outlined in Fig 6. Again, the MDCT<br>
+and inverse MDCT may be time-warped (WMDCT, rWMDCT).<br>
+In Fig. 5 a proposed decoder 500 is illustrated. The spectrum data from the received bitstream is<br>
+inversely quantized 511 and added with a LTP contribution provided by a LTP extractor from a LTP<br>
+buffer 515. LTP extractor 516 and LTP gain unit 517 in the decoder 500 are illustrated, too. The<br>
+summed MDCT lines are synthesized to the time-domain by a MDCT synthesis block, and the time-<br>
+domain signal is spectrally shaped by a LPC synthesis filter 513.<br>
+In Fig. 6 the "Spec dec" and "Spec enc" blocks 403,404 of Fig. 4 are described in more detail. The<br>
+"Spec enc" block 603 illustrated to the right in the figure comprises in an embodiment an Harmonic<br>
+Prediction analysis module 610, a TNS analysis (Temporal Noise Shaping) module 611, followed by<br>
+a scale-factor scaling module 612 of the MDCT lines, and finally quantization and encoding of the<br>
+lines in a Enc lines module 613. The decoder "Spec Dec" block 604 illustrated to the left in the figure<br>
+does the inverse process, i.e. the received MDCT lines are de-quantized in a Dec lines module 620<br>
+and the scaling is un-done by a scalefactor (SCF) scaling module 621. TNS synthesis 622 and<br>
+Harmonic prediction synthesis 623 are applied.<br>
+In Fig. 7 a very general illustration of the inventive coding system is outlined. The exemplary encoder<br>
+takes the input signal and produces a bitstream containing, among other data:<br>
+• quantized MDCT lines;<br>
+• scalefactors;<br>
+• LPC polynomial representation;<br>
+• signal segment energy (e.g. signal variance);<br>
+• window sequence;<br>
+• LTP data.<br>
+The decoder according to the embodiment reads the provided bitstream and produces an audio output<br>
+signal, psycho-acoustically resembling the original signal.<br>
+Fig. 7a is another illustration of aspects of an encoder 700 according to an embodiment of the<br>
+invention. The encoder 700 comprises an LPC module 701, a MDCT module 704, a LTP module 705<br>
+(shown only simplified), a quantization module 703 and an inverse quantization module 704 for<br>
+feeding back reconstructed signals to the LTP module 705. Further provided are a pitch estimation<br>
+module 750 for estimating the pitch of the input signal, and a window sequence determination module<br>
+751 for determining the optimal MDCT window sequence for a larger block of the input signal (e.g. 1<br>
+second). In this embodiment, the MDCT window sequence is determined based on an open-loop<br>
+approach where sequence of MDCT window size candidates is determined that minimizes a coding<br>
+cost function, e.g. a simplistic perceptual entropy. The contribution of the LTP module 705 to the<br>
+coding cost function that is minimized by the window sequence determination module 751 may<br>
+optionally be considered when searching for the optimal MDCT window sequence. Preferably, for<br>
+each evaluated window size candidate, the best long term prediction contribution to the MDCT frame<br>
+corresponding to the window size candidate is determined, and the respective coding cost is -<br>
+estimated. In general, short MDCT frame sizes are more appropriate for speech input while long<br>
+transform windows having a fine spectral resolution are preferred for audio signals.<br>
+Perceptual weights or a perceptual weighting function are determined based on the LPC parameters as<br>
+calculated by the LPC module 701, which will be explained in more detail below. The perceptual<br>
+weights are supplied to the LTP module 70S and the quantization module 703, both operating in the<br>
+MDCT-domain, for weighting error or distortion contributions of frequency components according to<br>
+their respective perceptual importance. Fig. 7a further illustrates which coding parameters are<br>
+transmitted to the decoder, preferably by an appropriate coding scheme as will be discussed later.<br>
+Next, the coexistence of LPC and MDCT data and the emulation of the effect of the LPC in the<br>
+MDCT, both for counteraction and actual filtering omission, will be discussed.<br>
+According to an embodiment, the LP module filters the input signal so that the spectral shape of the<br>
+signal is removed, and the subsequent output of the LP module is a spectrally flat signal. This is<br>
+advantageous for the operation of, e.g., the LTP. However, other parts of the codec operating on the<br>
+spectrally flat signal may benefit from knowing what the spectral shape of the original signal was<br>
+prior to LP filtering. Since the encoder modules, after the filtering, operate on the MDCT transform of<br>
+the spectrally flat signal, the present invention teaches that the spectral shape of the original signal<br>
+prior to LP filtering can, if needed, be re-imposed on the MDCT representation of the spectrally flat<br>
+signal by mapping the transfer function of the used LP filter (i.e. the spectral envelope of the original<br>
+signal) to a gain curve, or equalization curve, that is applied on the frequency bins of the MDCT<br>
+representation of the spectrally flat signal. Conversely, the LP module can omit the actual filtering,<br>
+and only estimate a transfer function that is subsequently mapped to a gain curve which can be<br>
+imposed on the MDCT representation of the signal, thus removing the need for time domain filtering<br>
+of the input signal.<br>
+One prominent aspect of embodiments of the present invention is that an MDCT-based transform<br>
+coder is operated using a flexible window segmentation, on a LPC whitened signal. This is outlined in<br>
+Fig. 8, where an exemplary MDCT window sequence is given, along with the windowing of the LPC.<br>
+Hence, as is clear from the figure, the LPC operates on a constant frame-size (e.g. 20 ms), while the<br>
+MDCT operates on a variable window sequence (e.g. 4 to 128 ms). This allows for choosing the<br>
+optimal window length for the LPC and the optimal window sequence for the MDCT independently.<br>
+Fig. 8 further illustrates the relation between LPC data, in particular the LPC parameters, generated at<br>
+a first frame rate and MDCT data, in particular the MDCT lines, generated at a second variable rate.<br>
+The downward arrows in the figure symbolize LPC data that is interpolated between the LPC frames<br>
+(circles) so as to match corresponding MDCT frames. For instance, a LPC-generated perceptual<br>
+weighting function is interpolated for time instances as determined by the MDCT window sequence.<br>
+The upward arrows symbolize refinement data (i.e. control data) used for the MDCT lines coding. For<br>
+the AAC frames this data is typically scalefactors, and for the ECQ frames the data is typically<br>
+variance correction data etc. The solid vs dashed lines represent which data is the most "important"<br>
+data for the MDCT lines coding given a certain quantizer. The double downward arrows symbolize the<br>
+codec spectral lines.<br>
+The coexistence of LPC and MDCT data in the encoder may be exploited, for instance, to reduce the<br>
+bit requirements of encoding MDCT scalefactors by taking into account a perceptual masking curve<br>
+estimated from the LPC parameters. Furthermore, LPC derived perceptual weighting may be used<br>
+when detennining quantization distortion. As illustrated and as will be discussed below, the quantizer<br>
+operates in two modes and generates two types of frames (ECQ frames and AAC frames) depending<br>
+on the frame size of received data, i.e. corresponding to the MDCT frame or window size.<br>
+Fig. 11 illustrates a preferred embodiment of mapping the constant rate LPC parameters to adaptive<br>
+MDCT window sequence data. A LPC mapping module 1100 receives the LPC parameters according<br>
+to the LPC update rate. In addition, the LPC mapping module 1100 receives information on the<br>
+MDCT window sequence. It then generates a LPC-to-MDCT mapping, e.g., for mapping LPC-based<br>
+psycho-acoustic data to respective MDCT frames generated at the variable MDCT frame rate. For<br>
+instance, the LPC mapping module interpolates LPC polynomials or related data for time instances<br>
+corresponding to MDCT frames for usage, e.g., as perceptual weights in LTP module or quantizer.<br>
+Now, specifics of the LPC-based perceptual model are discussed by referring to Fig. 9. The LPC<br>
+module 901 is in an embodiment of the present invention adapted to produce a white output signal, by<br>
+using linear prediction of, e.g., order 16 for a 16 kHz sampling rate signal. For example, the output<br>
+from the LPC module 201 in Fig. 2 is the residual after LPC parameter estimation and filtering. The<br>
+estimated LPC polynomial A(z), as schematically visualized in the lower left of Fig. 9, may be<br>
+chirped by a bandwidth expansion factor, and also tilted by, in one implementation of the invention,<br>
+modifying the first reflection coefficient of the corresponding LPC polynomial. Chirping expands the<br>
+bandwidth of peaks in the LPC transfer function by moving the poles of the polynomial inwards into<br>
+the unit circle, thus resulting in softer peaks. Tilting allows making the LPC transfer function flatter in<br>
+order to balance the influence of lower and higher frequencies. These modifications strive to generate<br>
+a perceptual masking curve A'(z) from the estimated LPC parameters that will be available on both the<br>
+encoder and the decoder side of the system. Details to the manipulation of the LPC polynomial are<br>
+presented in Fig. 12 below.<br>
+The MDCT coding operating on the LPC residual has, in one implementation of the invention,<br>
+scalefactors to control the resolution of the quantizer or the quantization step sizes (and, thus, the noise<br>
+introduced by quantization). These scalefactors are estimated by a scalefactor estimation module 960<br>
+on the original input signal. For example, the scalefactors are derived from a perceptual masking<br>
+threshold curve estimated from the original signal, m an embodiment, a separate frequency transform<br>
+(having possibly a different frequency resolution) may be used to determine the masking threshold<br>
+curve, but this is not always necessary. Alternatively, the masking threshold curve is estimated from<br>
+the MDCT lines generated by the transformation module. The bottom right part of Fig. 9<br>
+schematically illustrates scalefactors generated by the scalefactor estimation module 960 to control<br>
+quantization so that the introduced quantization noise is limited to inaudible distortions.<br>
+If a LPC filter is connected upstream of the MDCT transformation module, a whitened signal is<br>
+transformed to the MDCT-domain. As this signal has a white spectrum, it is not well suited to derive a<br>
+perceptual masking curve from it. Thus, a MDCT-domain equalization gain curve generated to<br>
+compensate the whitening of the spectrum may be used when estimating the masking threshold curve<br>
+and/or the scalefactors. This is because the scalefactors need to be estimated on a signal that has<br>
+absolute spectrum properties of the original signal, in order to correctly estimate perceptually masking.<br>
+The calculation of the MDCT-domain equalization gain curve from the LPC polynomial is discussed<br>
+in more detail with reference to Fig. 10 below.<br>
+An embodiment of the above outlined scalefactor estimation schema is outlined in Fig. 9a. In this<br>
+embodiment, the input signal is input to the LP module 901 that estimates the spectral envelope of the<br>
+input signal described by A(z), and outputs said polynomial as well as a filtered version of the input<br>
+signal. The input signal is filtered with the inverse of A(z) in order to obtain a spectrally white signal<br>
+as subsequently used by other parts of the encoder. The filtered signal x\n) is input to a MDCT<br>
+transformation unit 902, while the A(z) polynomial is input to a MDCT gain curve calculation unit<br>
+970 (as outlined in Fig. 14). The gain curve estimated from the LP polynomial is applied to the MDCT<br>
+coefficients or lines in order to retain the spectral envelope of the original input signal prior to<br>
+scalefactor estimation. The gain adjusted MDCT lines are input to the scalefactor estimation module<br>
+960 that estimates the scalefactors for the input signal.<br>
+Using the above outlined approach, the data transmitted between the encoder and decoder contains<br>
+both the LP polynomial from which the relevant perceptual information as well as a signal model can<br>
+be derived when a model-based quantizer is used, and the scalefactors commonly used in a transform<br>
+codec.<br>
+In more detail, returning to Fig. 9, the LPC module 901 in the figure estimates from the input signal a<br>
+spectral envelope A(z) of the signal and derives from this a perceptual representation A'(z). In<br>
+addition, scalefactors as normally used in transform based perceptual audio codecs are estimated on<br>
+the input signal, or they may be estimated on the white signal produced by a LP filter, if the transfer<br>
+function of the LP filter is taken into account in the scalefactor estimation (as described in the context<br>
+of Fig. 10 below). The scalefactors may then be adapted in scalefactor adaptation module 961 given<br>
+the LP polynomial, as will be outlined below, in order to reduce the bit rate required to transmit<br>
+scalefactors.<br>
+Normally, the scalefactors are transmitted to the decoder, and so is the LP polynomial. Now, given<br>
+that they are both estimated from the original input signal and that they both are somewhat correlated<br>
+to the absolute spectrum properties of the original input signal, it is proposed to code a delta<br>
+representation between the two, in order to remove any redundancy that may occur if both were<br>
+transmitted separately. According to an embodiment, this correlation is exploited as follows. Since the<br>
+LPC polynomial, when correctly chirped and tilted, strives to represent a masking threshold curve, the<br>
+two representations may be combined so that the transmitted scalefactors of the transform coder<br>
+represent the difference between the desired scalefactors and those that can be derived from the<br>
+transmitted LPC polynomial. The scalefactor adaptation module 961 shown in Fig. 9 therefore<br>
+calculates the difference between the desired scalefactors generated from the original input signal and<br>
+the LPC-derived scalefactors. This aspect retains the ability to have a MDCT-based quantizer that has<br>
+the notion of scalefactors as commonly used in transform coders, within an LPC structure, operating<br>
+on a LPC residual, and still have the possibility to switch to a model-based quantizer that derives<br>
+quantization step sizes solely from the linear prediction data.<br>
+In Fig. 9b a simplified block diagram of encoder and decoder according to an embodiment are given.<br>
+The input signal in the encoder is passed through the LPC module 901 that generates a whitened<br>
+residual signal and the corresponding linear predication parameters. Additionally, gain normalization<br>
+may be included in the LPC module 901. The residual signal from the LPC is transformed into the<br>
+frequency domain by an MDCT transform 902. To the right of Fig. 9b the decoder is depicted. The<br>
+decoder takes the quantized MDCT lines, de-quantizes 911 them, and applies an inverse MDCT<br>
+transform 912, followed by an LPC synthesis filter 913.<br>
+The whitened signal as output from the LPC module 901 in the encoder of Fig. 9b is input to the<br>
+MDCT filterbank 902. The MDCT lines as result of the MDCT analysis are transform coded with a<br>
+transform coding algorithm consisting of a perceptual model that guides the desired quantization step<br>
+size for different parts of the MDCT spectrum. The values determining the quantization step size are<br>
+called scalefactors and there is one scalefactor value needed for each partition, named scalefactor<br>
+band, of the MDCT spectrum. In prior art transform coding algorithms, the scalefactors are<br>
+transmitted via the bitstream to the decoder.<br>
+According to one aspect of the invention, the perceptual masking curve estimated from the LPC<br>
+parameters, as explained with reference to Fig. 9, is used when encoding the scalefactors used in<br>
+quantization. Another possibility to estimate a perceptual masking curve is to use the unmodified LPC<br>
+filter coefficients for an estimation of the energy distribution over the MDCT lines. With this energy<br>
+estimation, a psychoacoustic model, as used in transform coding schemes, can be applied in both<br>
+encoder and decoder to obtain an estimation of a masking curve.<br>
+The two representations of a masking curve are then combined so that the scalefactors to be<br>
+transmitted of the transform coder represent the difference between the desired scalefactors and those<br>
+that can be derived from the transmitted LPC polynomial or LPC-based psychoacoustic model. This<br>
+feature retains the ability to have a MDCT-based quantizer that has the notion of scalefactors as<br>
+commonly used in transform coders, within a LPC structure, operating on a LPC residual, and still<br>
+have the possibility to control quantization noise on a per scalefactor band basis according to the<br>
+psychoacoustic model of the transform coder. The advantage is that transmitting the difference of the<br>
+scalefactors will cost less bits compared to transmitting the absolute scalefactor values without taking<br>
+the already present LPC data into account. Depending on bit rate, frame size or other parameters, the<br>
+amount of scalefactor residual to be transmitted may be selected. For having full control of each<br>
+scalefactor band, a scalefactor delta may be transmitted with an appropriate noiseless coding scheme.<br>
+In other cases, the cost for transmitting scalefactors can be reduced further by a coarser representation<br>
+of the scalefactor differences. The special case with lowest overhead is when the scalefactor difference<br>
+is set to 0 for all bands and no additional information is transmitted.<br>
+Fig. 10 illustrates a preferred embodiment of translating LPC polynomials into a MDCT gain curve.<br>
+As outlined in Fig. 2, the MDCT operates on a whitened signal, whitened by the LPC filter 1001. In<br>
+order to retain the spectral envelope of the original input signal, a MDCT gain curve is calculated by<br>
+the MDCT gain curve module 1070. The MDCT-domain equalization gain curve may be obtained by<br>
+estimating the magnitude response of the spectral envelope described by the LPC filter, for the<br>
+frequencies represented by the bins in the MDCT transform. The gain curve may then be applied on<br>
+the MDCT data, e.g., when calculating the minimum mean square error signal as outlined in Fig 3, or<br>
+when estimating a perceptual masking curve for scalefactor determination as outlined with reference<br>
+to Fig. 9 above.<br>
+Fig. 12 illustrates a preferred embodiment of adapting the perceptual weighting filter calculation based<br>
+on transform size and/or type of quantizer. The LP polynomial A(z) is estimated by the LPC module<br>
+1201 in Fig 16. A LPC parameter modification module 1271 receives LPC parameters, such as the<br>
+LPC polynomial A(z), and generates a perceptual weighting filter A'(z) by modifying the LPC<br>
+parameters. For instance, the bandwidth of the LPC polynomial A(z) is expanded and/or the<br>
+polynomial is tilted. The input parameters to the adapt chirp &amp; tilt module 1272 are the default chirp<br>
+and tilt values p and y. These are modified given predetermined rules, based on the transform size<br>
+used, and/or the quantization strategy Q used. The modified chirp and tilt parameters p' and ?' are<br>
+input to the LPC parameter modification module 1271 translating the input signal spectral envelope,<br>
+represented by A(z), to a perceptual masking curve represented by A'(z).<br>
+In the following, the quantization strategy conditioned on frame-size, and the model-based<br>
+quantization conditioned on assorted parameters according to an embodiment of the invention will be<br>
+explained. One aspect of the present invention is that it utilizes different quantization strategies for<br>
+different transform sizes or frame sizes. This is illustrated in Fig. 13, where the frame size is used as a<br>
+selection parameter for using a model-based quantizer or a non-model-based quantizer. It must be<br>
+noted that this quantization aspect is independent of other aspects of the disclosed encoder/decoder<br>
+and may be applied in other codecs as well. An example of a non-model-based quantizer is Huffman<br>
+table based quantizer used in the AAC audio coding standard. The model-based quantizer may be an<br>
+Entropy Constraint Quantizer (ECQ) employing arithmetic coding. However, other quantizers may be<br>
+used in embodiments of the present invention as well.<br>
+According to an independent aspect of the present invention, it is suggested to switch between<br>
+different quantization strategies as function of frame size in order to be able to use the optimal<br>
+quantization strategy given a particular frame size. As an example, the window-sequence may dictate<br>
+the usage of a long transform for a very stationary tonal music segment of the signal. For this<br>
+particular signal type, using a long transform, it is highly beneficial to employ a quantization strategy<br>
+that can take advantage of "sparse" character (i.e. well defined discrete tones) in the signal spectrum.<br>
+A quantization method as used in AAC in combination with Huffman tables and grouping of spectral<br>
+lines, also as used in AAC, is very beneficial. However, and on the contrary, for speech segments, the<br>
+window-sequence may, given the coding gain of the LTP, dictate the usage of short transforms. For<br>
+this signal type and transform size it is beneficial to employ a quantization strategy that does not try to<br>
+find or introduce sparseness in the spectrum, but instead maintains a broadband energy that, given the<br>
+LTP, will retain the pulse like character of the original input signal.<br>
+A more general visualization of this concept is given in Fig. 14, where the input signal is transformed<br>
+into the MDCT-domain, and subsequently quantized by a quantizer controlled by the transform size or<br>
+frame size used for the MDCT transform.<br>
+According to another aspect of the invention, the quantizer step size is adapted as function of LPC<br>
+and/ or LTP data. This allows a determination of the step size depending on the difficulty of a frame<br>
+and controls the number of bits that are allocated for encoding the frame. In Fig. 15 an illustration is<br>
+given on how model-based quantization may be controlled by LPC and LTP data. In the top part of<br>
+Fig. 15, a schematic visualization of MDCT lines is given. Below the quantization step size delta A as<br>
+a function of frequency is depicted. It is clear from this particular example that the quantization step<br>
+size increases with frequency, i.e. more quantization distortion is incurred for higher frequencies. The<br>
+delta-curve is derived from the LPC and LTP parameters by means of a delta-adapt module depicted in<br>
+Fig. 15a. The delta curve may further be derived from the prediction polynomial A(z) by chirping<br>
+and/or tilting as explained with reference to Fig. 13.<br>
+A preferred perceptual weighting function derived from LPC data is given in the following equation:<br>
+<br>
+where A(z) is the LPC polynomial, t is a tilting parameter, p controls the chirping and r1 is the first<br>
+reflection coefficient calculated from the A(z) polynomial. It is to be noted that the A(z) polynomial<br>
+can be re-calculate to an assortment of different representations in order to extract relevant information<br>
+from the polynomial. If one is interested in the spectral slope in order to apply a "tilt" to counter the<br>
+slope of the spectrum, re-calculation of the polynomial to reflection coefficients is preferred, since the<br>
+first reflection coefficient represents the slope of the spectrum.<br>
+In addition, the delta values ? may be adapted as a function of the input signal variance o, the LTP<br>
+gain g, and the first reflection coefficient r1 derived from the prediction polynomial. For instance, the<br>
+adaptation may be based on the following equation:<br>
+<br>
+In the following, aspects of a model-based quantizers according to an embodiment of the present<br>
+invention are outlined. In Fig. 16 one of the aspects of the model-based quantizer is visualized. The<br>
+MDCT lines are input to a quantizer employing uniform scalar quantizers. In addition, random offsets<br>
+are input to the quantizer, and used as offset values for the quantization intervals shifting the interval<br>
+borders. The proposed quantizer provides vector quantization advantages while maintaining<br>
+searchability of scalar quantizers. The quantizer iterates over a set of different offset values, and<br>
+calculates the quantization error for these. The offset value (or offset value vector) that minimizes the<br>
+quantization distortion for the particular MDCT lines being quantized is used for quantization. The<br>
+offset value is then transmitted to the decoder along with the quantized MDCT lines. The use of<br>
+random offsets introduces noise-filling in the de-quantized decoded signal and, by doing so, avoids<br>
+spectral holes in the quantized spectrum. This is particularly important for low bit rates where many<br>
+MDCT lines are otherwise quantized to a zero value which would lead to audible holes in the<br>
+spectrum of the reconstructed signal.<br>
+Fig. 17 illustrates schematically a Model-based MDCT Lines Quantizer (MBMLQ) according to an<br>
+embodiment of the invention. The top of Fig. 17 depicts a MBMLQ encoder 1700. The MBMLQ<br>
+encoder 1700 takes as input the MDCT lines in an MDCT frame or the MDCT lines of the LTP<br>
+residual if an LTP is present in the system. The MBMLQ employs statistical models of the MDCT<br>
+lines, and source codes are adapted to signal properties on an MDCT frame-by-frame basis yielding<br>
+efficient compression to a bitstream.<br>
+A local gain of the MDCT lines may be estimated as the RMS value of the MDCT lines, and the<br>
+MDCT lines normalized in gain normalization module 1720 before input to the MBMLQ encoder<br>
+1700. The local gain normalizes the MDCT lines and is a complement to the LP gain normalization.<br>
+Whereas the LP gain adapts to variations in signal level on a larger time scale, the-local gain adapts to<br>
+variations on a smaller time scale, yielding improved quality of transient sounds and on-sets in speech.<br>
+The local gain is encoded by fixed rate or variable rate coding and transmitted to the decoder.<br>
+A rate control module 1710 may be employed to control the number of bits used to encode an MDCT<br>
+frame. A rate control index controls the number of bits used. The rate control index points into a list of<br>
+nominal quantizer step sizes. The table may be sorted with step sizes in descending order (see<br>
+Fig. 17g).<br>
+The MBMLQ encoder is run with a set of different rate control indices, and the rate control index that<br>
+yields a bit count which is lower than the number of granted bits given by the bit reservoir control, is<br>
+used for the frame. The rate control index varies slowly and this can be exploited to reduce search<br>
+complexity and to encode the index efficiently. The set of indices that is tested can be reduced if<br>
+testing is started around the index of the previous MDCT frame. Likewise, efficient entropy coding of<br>
+the index is obtained if the probabilities peak around the previous value of the index. E.g., for a list of<br>
+32 step sizes, the rate control index can be coded using 2 bits per MDCT frame on the average.<br>
+Fig. 17 further illustrates schematically the MBMLQ decoder 1750 where the MDCT frame is gain<br>
+renonnalized if a local gain was estimated in the encoder 1700.<br>
+Fig. 17a illustrates schematically the model-based MDCT lines encoder 1700 according to an<br>
+embodiment in more detail. It comprises a quantizer pre-processing module 1730 (see Fig. 17c), a<br>
+model-based entropy-constrained encoder 1740 (see Fig. 17e), and an arithmetic encoder 1720 which<br>
+may be a prior art arithmetic encoder. The task of the quantizer pre-processing module 1730 is to<br>
+adapt the MBMLQ encoder to the signal statistics, on an MDCT frame-by-frame basis. It takes as<br>
+input other codec parameters and derives from them useful statistics about the signal that can be used<br>
+to modify the behavior of the model-based entropy-constrained encoder 1740. The model-based<br>
+entropy-constrained encoder 1740 is controlled, e.g., by a set of control parameters: a quantizer step<br>
+size A (delta, interval length), a set of variance estimates of the MDCT lines V (a vector; one<br>
+estimated value per MDCT line), a perceptual masking curve Pmod, a matrix or table of (random)<br>
+offsets, and a statistical model of the MDCT lines that describe the shape of the distribution of the<br>
+MDCT lines and their inter-dependencies. All the above mentioned control parameters can vary<br>
+between MDCT frames.<br>
+Fig. 17b illustrates schematically a model-based MDCT lines decoder 1750 according to an<br>
+embodiment of the invention. It takes as input side information bits from the bitstream and decodes<br>
+those into parameters that are input to the quantizer pre-processing module 1760 (see Fig. 17c). The<br>
+quantizer pre-processing module 1760 has preferably the exact same functionality in the encoder 1700<br>
+as in the decoder 1750. The parameters that are input to the quantizer pre-processing module 1760 are<br>
+exactly the same in the encoder as in the decoder. The quantizer pre-processing module 1760 outputs a<br>
+set of control parameters (same as in the encoder 1700) and these are input to the probability<br>
+computations module 1770 (see Fig. 17g; same as in encoder, see Fig. 17e) and to the de-quantization<br>
+module 1780 (see Fig. 17h; same as in encoder, see Fig. 17e). The cdf tables from the probability<br>
+computations module 1770, representing the probability density functions for all the MDCT lines<br>
+given the delta used for quantization and the variance of the signal, are input to the arithmetic decoder<br>
+(which may be any arithmetic coder as known by those skilled in the artart) which then decodes the<br>
+MDCT lines bits to MDCT lines indices. The MDCT lines indices are then de-quantized to MDCT<br>
+lines by the de-quantization module 1780.<br>
+Fig. 17c illustrates schematically aspects of quantizer pre-processing according to an embodiment of<br>
+the invention which consists of i) step size computation, ii) perceptual masking curve modification, iii)<br>
+MDCT lines variance estimation, iv) offset table construction.<br>
+The step size computation is explained in more detail in Fig. 17d. It comprises i) a table lookup where<br>
+rate control index points into a table of step sizes produce a nominal step size Anon, (deltanom), ii)<br>
+low energy adaptation, and iii) high-pass adaptation.<br>
+Gain normalization normally results in that high energy sounds and low energy sounds are coded with<br>
+the same segmental SNR. This can lead to an excessive number of bits being used on low energy<br>
+sounds. The proposed low energy adaptation allows for fine tuning a compromise between low energy<br>
+and high energy sounds. The step size may be increased when the signal energy becomes low as<br>
+depicted in fig. 17d-ii) where an exemplary curve for the relation between signal energy (gain g) and<br>
+a control factor qLe is shown. The signal gain g may be computed as the RMS value of the input signal<br>
+itself or of the LP residual. The control curve in Fig. 17d-u) is only one example and other control<br>
+functions for increasing the step size for low energy signals may be employed. In the depicted<br>
+example, the control function is determined by step-wise linear sections that are defined by thresholds<br>
+T1 and T2 and the step size factor L.<br>
+High pass sounds are perceptually less important than low pass sounds. The high-pass adaptation<br>
+function increases the step size when the MDCT frame is high pass, i.e. when the energy of the signal<br>
+in the present MDCT frame is concentrated to the higher frequencies, resulting in fewer bits spent on<br>
+such frames. If LTP is present and if the LTP gain gLTP is close to 1, the LTP residual can become high<br>
+pass; in such a case it is advantageous to not increase the step size. This mechanism is depicted in<br>
+Fig. 17d-iif) where r is the 1st reflection coefficient from LPC. The proposed high-pass adaptation may<br>
+use the following equation:<br>
+<br>
+Fig. 17c-ii) illustrates schematically the perceptual masking curve modification which employs a low<br>
+frequency (LF) boost to remove "rumble-like" coding artifacts. The LP boost may be fixed or made<br>
+adaptive so that only a part below the first spectral peak is boosted. The LF boost may be adapted by<br>
+using the LPC envelope data.<br>
+Fig. 17c-iii) illustrates schematically the MDCT lines variance estimation. With an LPC whitening<br>
+filter active, the MDCT lines all have unit variance (according to the LPC envelope). After perceptual<br>
+weighting in the model-based entropy-constrained encoder 1740 (see Fig. 17e), the MDCT lines have<br>
+variances that are the inverse of the squared perceptual masking curve, or the squared modified<br>
+masking curve Pmod. If a LTP is present, it can reduce the variance of the MDCT lines. In Fig. 17c-iii)<br>
+a mechanism that adapts the estimated variances to the LTP is depicted. The figure shows a<br>
+modification function qLTP over frequency f. The modified variances may be determined by VLTPmod =<br>
+V • qLTP. The value Lltp may be a function of the LTP gain so that LLTP is closer to 0 if the LTP gain is<br>
+around 1 (indicating that the LTP has found a good match), and LLtp is closer to 1 if the LTP gain is<br>
+around 0. The proposed LTP adaption of the variances V = {v1, V2,..., vj.....vN} only affects MDCT<br>
+lines below a certain frequency (fLTPcutoff). In result, MDCT line variances below the cutoff frequency<br>
+fLTPcutoff are reduced, the reduction being depending on the LTP gain.<br>
+Fig. 17c-iv) illustrates schematically the offset table construction. The nominal offset table is a matrix<br>
+filled with pseudo random numbers distributed between -0.5 and 0.5. The number of columns in the<br>
+matrix equals the number of MDCT lines that are coded by the MBMLQ. The number of rows is<br>
+adjustable and equals the number of offsets vectors that are tested in the RD-optimization in the<br>
+model-based entropy constrained encoder 1740 (see Fig. 17e). The offset table construction function<br>
+scales the nominal offset table with the quantizer step size so that the offsets are distributed between -<br>
+?/2 and +?/2.<br>
+Fig. 17g illustrates schematically an embodiment for an offset table. The offset index is a pointer into<br>
+the table and selects a chosen offset vector O = {o1, o2,..., on ..., on}, where N is the number of<br>
+MDCT lines in the MDCT frame.<br>
+As described below, the offsets provide a means for noise-filling. Better objective and perceptual<br>
+quality is obtained if the spread of the offsets is- limited for MDCT lines that have low variance Vj<br>
+compared to the quantizer step size ?. An example of such a limitation is described in Fig. 17c-iv)<br>
+where k1 and k2 are tuning parameters. The distribution of the offsets can be uniform and distributed<br>
+between -s and +s. The boundaries s may be determined according to<br>
+<br>
+For low variance MDCT lines (where Vj is small.compared to ?) it can be advantageous to make the<br>
+offset distribution non-uniform and signal dependent.<br>
+Fig. 17e illustrates schematically the model-based entropy constrained encoder 1740 in more detail.<br>
+The input MDCT lines are perceptually weighed by dividing them with the values of the perceptual -<br>
+masking curve, preferably derived from the LPC polynomial, resulting in the weighted MDCT lines<br>
+vector y = (y1,..., yn). The aim of the subsequent coding is to introduce white quantization noise to<br>
+the MDCT lines in the perceptual domain. In the decoder, the inverse of the perceptual weighting is<br>
+applied which results in quantization noise that follows the perceptual masking curve.<br>
+First, the iteration over the random offsets is outlined. The following operations are performed for<br>
+each row j in the offset matrix: Each MDCT line is quantized by an offset uniform scalar quantizer<br>
+(USQ), wherein each quantizer is offset by its own unique offset value taken from the offset row<br>
+vector.<br>
+The probability of the minimum distortion interval from each USQ is computed in the probability<br>
+computations module 1770 (see Fig. 17g). The USQ indices are entropy coded. The cost in terms of<br>
+the number of bits required to encode the indices is computed as shown in Fig. 17e yielding a<br>
+theoretical codeword length Rj. The overload border of the USQ of MDCT line j can be computed as<br>
+k3 • vVj , where k3 may be chosen to be any appropriate number, e.g. 20. The overload border is the<br>
+boundary for which the quantization error is larger than half the quantization step size in magnitude.<br>
+A scalar reconstruction value for each MDCT line is computed by the de-quantization module 1780<br>
+(see Fig. 17h) yielding the quantized MDCT vector y. In the RD optimization module 1790 a<br>
+distortion Dj = d(y, y ) is computed. d(y, y) may be the mean squared error (MSE), or another<br>
+perceptually more relevant distortion measure, e.g., based on a perceptual weighting function. In<br>
+particular, a distortion measure that weighs together MSE and the mismatch in energy between y and<br>
+y may be useful.<br>
+In the RD-optimization module 1790, a cost C is computed, preferably based on the distortion Dj<br>
+and/or the theoretical codeword length Rj for each row j in the offset matrix. An example of a cost<br>
+function is C = 10*log10 (Dj) + ?*Rj/N. The offset that minimizes C is chosen and the corresponding<br>
+USQ indices and probabilities are output from the model-based entropy constrained encoder 1780.<br>
+The RD-optimization can optionally be improved further by varying other properties of the quantizer<br>
+together with the offset. For example, instead of using the same, fixed variance estimate V for each<br>
+offset vector that is tested in the RD-optimization, the variance estimate vector V can be varied. For<br>
+offset row vector m, one would then use a variance estimate km.V where km may span for example the<br>
+range 0.5 to 1.5 as m varies from m=1 to m=(number of rows in offset matrix). This makes the entropy<br>
+coding and MMSE computation less sensitive to variations in input signal statistics that the statistical<br>
+model cannot capture. This results ina lower cost C in general.<br>
+The de-quantized MDCT lines may be further refined by using a residual quantizer as depicted in<br>
+Fig. 17e. The residual quantizer may be, e.g., a fixed rate random vector quantizer.<br>
+The operation of the Uniform Scalar Quantizer (USQ) for quantization of MDCT line n is<br>
+schematically illustrated in Fig. 17f which shows the value of MDCT line n being in the minimum<br>
+distortion interval haying index in. The 'x' markings indicate the center (midpoint) of the quantization<br>
+intervals with step size A. The origin of the scalar quantizer is shifted by the offset on from offset<br>
+vector O = {o1, o2,..., on,..., on}. Thus, the interval boundaries and midpoints are shifted by the<br>
+offset.<br>
+The use of offsets introduces encoder controlled noise-filling in the quantized signal, and by doing so,<br>
+avoids spectral holes in the quantized spectrum. Furthermore, offsets increase the coding efficiency by<br>
+providing a set of coding alternatives that fill the space more efficiently than a cubic lattice. Also,<br>
+offsets provide variation in the probability tables that are computed by the probability computations<br>
+module 1770, which leads to more efficient entropy coding of the MDCT lines indices (i.e. fewer bits<br>
+required).<br>
+The use of a variable step size A (delta) allows for variable accuracy in the quantization so that more<br>
+accuracy can be used for perceptually important sounds, and less accuracy can be used for less<br>
+important sounds.<br>
+Fig. 17g illustrates schematically the probability computations in probability computation module<br>
+1770. The inputs to this module are the statistical model applied for the MDCT lines, the quantizer<br>
+step size A, the variance vector V, the offset index, and the offset table. The output of the probability<br>
+computation module 1770 are cdf tables. For each MDCT line xj the statistical model (i.e. a<br>
+probability density function, pdf) is evaluated, The area under the pdf function for an interval i is the<br>
+probability pij of the interval. This probability is used for the arithmetic coding of the MDCT lines.<br>
+Fig. 17h illustrates schematically the de-quantization process as performed, e.g. in de-quantization<br>
+module 1780. The center of mass (MMSE value) xmmse for the minimum distortion interval of each<br>
+MDCT line is computed together with the midpoint xmp of the interval. Considering that an N-<br>
+dimensional vector of MDCT lines is quantized, the scalar MMSE value is suboptimal and in general<br>
+too low. This results in a loss of variance and spectral imbalance in the decoded output. This problem<br>
+may be mitigated by variance preserve decoding as described in Fig. 17h where the reconstruction<br>
+value is computed as a weighted sum of the MMSE value and the midpoint value. A further optional<br>
+improvement is to adapt the weight so that the MMSE value dominates for speech and the midpoint<br>
+dominates for non-speech sounds. This yields cleaner speech while spectral balance and energy is<br>
+preserved for non-speech sounds.<br>
+Variance preserving decoding according to an embodiment of the invention is achieved by<br>
+determining the reconstruction point according to the following equation:<br>
+<br>
+Adaptive variance preserving decoding may be based on the following rule for determining the<br>
+interpolation factor:<br>
+<br>
+The adaptive weight may further be a function of, for example, the LTP prediction gain gLTP:<br>
+X = f(gLTP). The adaptive weight varies slowly and can be efficiently encoded by a recursive<br>
+entropy code.<br>
+The statistical model of the MDCT lines that is used in the probability computations (Fig. 17g) and in<br>
+the de-quantization (Fig. 17h) should reflect the statistics of the real signal. In one version the<br>
+statistical model assumes the MDCT lines are independent and Laplacian distributed. Another version<br>
+models the MDCT lines as independent Gaussians. One version models the MDCT lines as Guassian<br>
+mixture models, including inter-dependencies between MDCT lines within and between MDCT<br>
+frames. Another version adapts the statistical model to online signal statistics. The adaptive statistical<br>
+models can be forward and/or backward adapted.<br>
+Another aspect of the invention relating to the modified reconstruction points of the quantizer is<br>
+schematically illustrated in Fig. 19 where an inverse quantizer as used in the decoder of an<br>
+embodiment is depicted. The module has, apart from the normal inputs of an inverse-quantizer, i.e.<br>
+the quantized lines and information on quantization step size (quantization type), also information on<br>
+the reconstruction point of the quantizer. The inverse quantizer of this embodiment can use multiple<br>
+types of reconstruction points when determining a reconstructed value yn from the corresponding<br>
+quantization index in. As mentioned above reconstruction values y are further used, e.g., in the<br>
+MDCT lines encoder (see Fig. 17) to determine the quantization residual for input to the residual<br>
+quantizer. Furthermore, quantization reconstruction is performed in the inverse quantizer 304 for<br>
+reconstructing a coded MDCT frame for use in the LTP buffer (see Fig. 3) and, naturally, in the<br>
+decoder.<br>
+The inverse-quantizer may, e.g., choose the midpoint of a quantization interval as the reconstruction<br>
+point, or the MMSE reconstruction point. In an embodiment of the present invention, the<br>
+reconstruction point of the quantizer is chosen to be the mean value between the centre and MMSE<br>
+reconstruction points. In general, the reconstruction point may be interpolated between the midpoint<br>
+and the MMSE reconstruction point, e.g., depending on signal properties such as signal periodicity.<br>
+Signal periodicity information may be derived from the LTP module, for instance. This feature allows<br>
+the system to control distortion and energy preservation. The center reconstruction point will ensure<br>
+energy preservation, while the MMSE reconstruction point will ensure minimum distortion. Given the<br>
+signal, the system can then adapt the reconstruction point to where the best compromise is provided.<br>
+The present invention further incorporates a new window sequence coding format. According to an<br>
+embodiment of the invention, the windows used for the MDCT transformation are of dyadic sizes, and<br>
+may only vary a factor two in size from window to window. Dyadic transform sizes are, e.g., 64, 128,<br>
+..., 2048 samples corresponding to 4, 8,..., 128 ms at 16 kHz sampling rate. In general, variable size<br>
+windows are proposed which can take on a plurality of window sizes between a minimum window<br>
+size and a maximum size. In a sequence, consecutive window sizes may vary only by a factor of two<br>
+so that smooth sequences of window sizes without abrupt changes develop. The window sequences as<br>
+defined by an embodiment, i.e. limited to dyadic sizes and only allowed to vary a factor two in size<br>
+from window to window, have several advantages. Firstly, no specific start or stop windows are<br>
+needed, i.e. windows with sharp edges. This maintains a good time/frequency resolution. Secondly,<br>
+the window sequence becomes very efficient to code, i.e. to signal to a decoder what particular<br>
+window sequence is used. Finally, the window sequence will always fit nicely into a hyperframe<br>
+structure.<br>
+The hyper-frame structure is useful when operating the coder in a real-world system, where certain<br>
+decoder configuration parameters need to be transmitted in order to be able to start the decoder. This<br>
+data is commonly stored in a header field in the bitstream describing the coded audio signal. In order<br>
+to minimize bitrate, the header is not transmitted for every frame of coded data, particularly in a<br>
+system as proposed by the present invention, where the MDCT frame-sizes may vary from very short<br>
+to very large. It is therefore proposed by the present invention to group a certain amount of MDCT<br>
+frames together into a hyper frame, where the header data is transmitted at the beginning of the hyper<br>
+frame. The hyper frame is typically defined as a specific length in time. Therefore, care needs to be<br>
+taken so that the variations of MDCT frame-sizes fits into a constant length, pre-defined hyper frame<br>
+length. The above outlined inventive window-sequence ensures that the selected window sequence<br>
+always fits into a hyper-frame structure.<br>
+According to an embodiment of the present invention, the LTP lag and the LTP gain are coded in a<br>
+variable rate fashion. This is advantageous since, due to the LTP effectiveness for stationary periodic<br>
+signals, the LTP lag tends to be the same over somewhat long segments. Hence, this can be exploited<br>
+by means of arithmetic coding, resulting in a variable rate LTP lag and LTP gain coding.<br>
+Similarly, an embodiment of the present invention takes advantage of a bit reservoir and variable rate<br>
+coding also for the coding of the LP parameters. In addition, recursive LP coding is taught by the<br>
+present invention.<br>
+Another aspect of the present invention is the handling of a bit reservoir for variable frame sizes in the<br>
+encoder. In Fig. 18 a bit reservoir control unit 1800 according to the present invention is outlined. In<br>
+addition to a difficulty measure provided as input, the bit reservoir control unit also receives<br>
+information on the frame length of the current frame. An example of a difficulty measure for usage in<br>
+the bit reservoir control unit is perceptual entropy, or the logarithm of the power spectrum. Bit<br>
+reservoir control is important in a system where the frame lengths can vary over a set of different<br>
+frame lengths. The suggested bit reservoir control unit 1800 takes the frame length into account when<br>
+calculating the number of granted bits for the frame to be coded as will be outlined below.<br>
+The bit reservoir is defined here as a certain fixed amount of bits in a buffer that has to be larger than<br>
+the average number of bits a frame is allowed to use for a given bit rate. If it is of the same size, no<br>
+variation in the number of bits for a frame would be possible. The bit reservoir control always looks at<br>
+the level of the bit reservoir before taking out bits that will be granted to the encoding algorithm as<br>
+allowed number of bits for the actual frame. Thus a full bit reservoir means that the number of bits<br>
+available in the bit reservoir equals the bit reservoir size. After encoding of the frame, the number of<br>
+used bits will be subtracted from the buffer and the bit reservoir gets updated by adding the number of<br>
+bits that represent the constant bit rate. Therefore the bit reservoir is empty, if the number of the bits in<br>
+the bit reservoir before coding a frame is equal to the number of average bits per frame.<br>
+In Fig. 18a the basic concept of bit reservoir control is depicted. The encoder provides means to<br>
+calculate how difficult to encode the actual frame compared to the previous frame is. For an average<br>
+difficulty of 1.0, the number of granted bits depends on the number of bits available in the bit<br>
+reservoir. According to a given line of control, more bits than corresponding to an average bit rate will<br>
+be taken out of the bit reservoir if the bit reservoir is quite full. In case of an empty bit reservoir, less<br>
+bits compared to the average bits will be used for encoding the frame. This behavior yields to an<br>
+average bit reservoir level for a longer sequence of frames with average difficulty. For frames with a<br>
+higher difficulty, the line of control may be shifted upwards, having the effect that difficult to encode<br>
+frames are allowed to use more bits at the same bit reservoir level. Accordingly, for easy to encode<br>
+frames, the number of bits allowed for a frame will be lower just by shifting down the line of control<br>
+in Fig. 18a from the average difficulty case to the easy difficulty case. Other modifications than<br>
+simple shifting of the control line are possible, too. For instance, as shown in Fig. 18a the slope of the<br>
+control curve may be changed depending on the frame difficulty.<br>
+When calculating the number of granted bits, the limits on the lower end of the bit reservoir have to be<br>
+obeyed in order not to take out more bits from the buffer than allowed. A bit reservoir control scheme<br>
+including the calculation of the granted bits by a control line as shown in Fig. 18a is only one example<br>
+of possible bit reservoir level and difficulty measure to granted bits relations. Also other control<br>
+algorithms will have in common the hard limits at the lower end of the bit reservoir level that prevent<br>
+a bit reservoir to violate the empty bit reservoir restriction, as well as the limits at the upper end, where<br>
+the encoder will be forced to write fill bits, if a too low number of bits will be consumed by the<br>
+encoder.<br>
+For such a control mechanism being able to handle a set of variable frame sizes, this simple control<br>
+algorithm has to be adapted. The difficulty measure to be used has to be normalized so that the<br>
+difficulty values of different frame sizes are comparable. For every frame size, there will be a different<br>
+allowed range for the granted bits, and because the average number of bits per frame is different for a<br>
+variable frame size, consequently each frame size has its own control equation with its own<br>
+limitations. One example is shown in Fig. 18b. An important modification to the fixed frame size case<br>
+is the lower allowed border of the control algorithm. Instead of the average number of bits for the<br>
+actual frame size, which corresponds to the fixed bit rate case, now the average number of bits for the<br>
+largest allowed frame size is the lowest allowed value for the bit reservoir level before taking out the<br>
+bits for the actual frame. This is one of the main differences to the bit reservoir control for fixed frame<br>
+sizes. This restriction guarantees that a following frame with the largest possible frame size can utilize<br>
+at least the average number of bits for this frame size.<br>
+The difficulty measure may be based, e.g., a perceptual entropy (PE) calculation that is derived from<br>
+masking thresholds of a psychoacoustic model as it is done in AAC, or as an alternative the bit count<br>
+of a quantization with fixed step size as it is done in the ECQ part of an encoder according to an<br>
+embodiment of the present invention. These values may be normalized with respect to the variable<br>
+frame sizes, which may be accomplished by a simple division by the frame length, and the result will<br>
+be a PE respectively a bit count per sample. Another normalization step may take place with regard to<br>
+the average difficulty. For that purpose, a moving average over the past frames can be used, resulting<br>
+in a difficulty value greater than 1.0 for difficult frames or less than 1.0 for easy frames. In case of a<br>
+two pass encoder or of a large lookahead, also difficulty values of future frames could be taken into<br>
+account for this normalization of the difficulty measure.<br>
+Another aspect of the invention relates to specifics of the bit reservoir handling for ECQ. The bit<br>
+reservoir management for ECQ works under the assumption that ECQ produces an approximately<br>
+constant quality when using a constant quantizer step size for encoding. Constant quantizer step size<br>
+produces a variable rate and the objective of the bit reservoir is to keep the variation in quantizer step .<br>
+size among different frames as small as possible, while not violating the bit reservoir buffer<br>
+constraints. In addition to the rate produced by the ECQ, additional information (e.g. LTP gain and<br>
+lag) is transmitted on an MDCT-frame basis. The additional information is in general also entropy<br>
+coded and thus consumes different rate from frame to frame.<br>
+In an embodiment of the invention, a proposed bit reservoir control tries to minimize the variation of<br>
+ECQ step size by introducing three variables (see Fig. 18c):<br>
+- Recq_avg: Average ECQ rate per sample used previously;<br>
+- Aecq_avg: Average quantizer step size used previously.<br>
+These variables are both updated dynamically to reflect the latest coding statistics.<br>
+- Recq_avg_des: The ECQ rate corresponding to average total bitrate.<br>
+This value will differ from Recq_avg in case the bit reservoir level has changed during the time frame<br>
+of the averaging window, e.g. a bitrate higher or lower than the specified average bitrate has been used<br>
+during this time frame. It is also updated as the rate of the side information changes, so that the total<br>
+rate equals the specified bitrate.<br>
+The bit reservoir control uses these three values to determine an initial guess on the delta to be used<br>
+for the current frame. It does so by finding ?ecg_avg_des on the Recq-? curve shown in Fig. 18c that<br>
+corresponds to Recq_avg des. In a second stage this value is possibly modified if the rate is not in<br>
+accordance with the bit reservoir constraints. The exemplary Recq-? curve in Fig. 18c is based on the<br>
+following equation:<br>
+<br>
+Of course, other mathematical relationships between Recq and ? may be used, too.<br>
+In the stationary case, Recq_avg will be close to Recq_avg_des and the variation in A will be very small.<br>
+In the non-stationary case, the averaging operation will ensure a smooth variation of A.<br>
+While the foregoing has been disclosed with reference to particular embodiments of the present<br>
+invention, it is to be understood that the inventive concept is not limited to the described embodiments.<br>
+On the other hand, the disclosure presented in this application will enable a skilled person to<br>
+understand and carry out the invention. It will be understood by those skilled in the art that various<br>
+modifications can be made without departing from the spirit and scope of the invention as set out<br>
+exclusively by the accompanying claims.<br>
+CLAIMS<br>
+1. Audio coding system comprising:<br>
+a linear prediction (LP) unit (201) for filtering an audio signal based on a LP filter, the LP unit<br>
+operating on a first frame length of the audio signal:<br>
+an adaptive length transformation unit (202) for transforming a frame of the audio signal into a<br>
+transform domain, the transformation being a Modified Discrete Cosine Transform (MDCT) operating on<br>
+a variable second frame length;<br>
+a quantization unit (203) for quantizing a MDCT-domain signal;<br>
+a gain curve generation unit (1470) for generating MDCT-domain gain curves based on<br>
+magnitude responses of the LP filter; and<br>
+a mapping unit (1500) for mapping MDCT-domain gain curves to corresponding frames of the<br>
+MDCT-domain signal.<br>
+2. Audio coding system of claim 1, comprising:<br>
+a window sequence control unit for determining, for a block of the audio signal, the second frame<br>
+lengths for overlapping MDCT windows.<br>
+3. Audio coding system according to any previous claim, comprising a perceptual modeling unit<br>
+that modifies a characteristic of the LP filter by chirping and/or tilting an LPC polynomial generated by<br>
+the linear prediction unit for an LPC frame.<br>
+4. Audio coding system according to any previous claim, comprising:<br>
+a frequency splitting unit for splitting the audio signal into a lowband component and a highband<br>
+component; and<br>
+a highband encoder for encoding the highband component,<br>
+wherein the lowband component is input to the linear prediction unit and the transformation unit.<br>
+5. Audio coding system of claim 4, wherein the frequency splitting unit comprises a quadrature<br>
+mirror filter bank and a quadrature mirror filter synthesis unit configured to downsample the audio signal.<br>
+6. Audio coding system of claim 4 or 5, wherein the boundary between the lowband and the<br>
+highband is variable and the frequency splitting unit determines the cross-over frequency based on audio<br>
+signal properties and/or encoder bandwidth requirements.<br>
+7. Audio coding system of any of claims 4 to 6, wherein the highband encoder is a spectral band<br>
+replication encoder.<br>
+8. Audio coding system according to any previous claim, comprising:<br>
+a scalefactor estimation unit (1360) for estimating scalefactors to control the quantization noise of<br>
+the quantization unit (203).<br>
+9. Audio coding system of claim 8, wherein the scalefactors are determined based on the mapped<br>
+MDCT-domain gain curves.<br>
+10. Audio coding system according to any previous claim, comprising a parametric stereo unit for<br>
+calculating a parametric stereo representation of left and right input channels.<br>
+11. Audio coding system according to any previous claim, wherein the mapping unit (1500)<br>
+interpolates MDCT-domain gain curves generated on a rate corresponding to the first frame length so as<br>
+to match frames of the MDCT-domain signal generated on a rate corresponding to the second frame<br>
+length.<br>
+12. Audio decoder comprising:<br>
+a de-quantization unit (211) for de-quantizing a frame of an input bitstream and generating a<br>
+transform domain signal;<br>
+an adaptive length inverse MDCT transformation unit (212) for inversely transforming the<br>
+transform domain signal, the inverse MDCT transformation unit operating on a variable frame length;<br>
+a gain curve generation unit (1470) for generating MDCT-domain gain curves based on<br>
+magnitude responses of linear prediction filters, wherein parameters for the linear prediction filters are<br>
+received in the bitstream; and<br>
+a mapping unit (1500) for mapping MDCT-domain gain curves to corresponding frames of the<br>
+MDCT-domain signal.<br>
+13. Audio encoding method comprising the steps:<br>
+performing a linear prediction (LP) analysis on an audio signal, the LP analysis operating on a<br>
+first frame length and generating LP filter parameters;<br>
+transforming a frame of the audio signal into a Modified Discrete Cosine Transform (MDCT)-<br>
+domain, the MDCT operating on a variable second frame length;<br>
+quantizing a MDCT-domain signal;<br>
+generating MDCT-domain gain curves based on magnitude responses of the generated LP filters;<br>
+and<br>
+mapping MDCT-domain gain curves to corresponding frames of the MDCT-domain signal.<br>
+14. Audio decoding method comprising the steps:<br>
+de-quantizing a frame of an input bitstream and generating a transform domain signal;<br>
+inverse MDCT-transforming the transform domain signal, the inverse MDCT transformation<br>
+operating on a variable frame length;<br>
+generating MDCT-domain gain curves based on magnitude responses of linear prediction filters,<br>
+wherein parameters for the linear prediction filters are received in the bitstream; and<br>
+mapping MDCT-domain gain curves to corresponding frames of the MDCT-domain signal.<br>
+15. Computer program for causing a programmable device to perform an audio coding method<br>
+according to claim 13 or 14.<br>
+<br>
+The present invention teaches a new audio coding system that can code both general audio and speech signals well<br>
+at low bit rates. A proposed audio coding system comprises linear prediction unit for filtering an input signal based on an adaptive<br>
+filter, a transformation unit for transforming a frame of the filtered input signal into a transform domain; and a quantization unit for<br>
+quantizing the transform domain signal. The quantization unit decides, based on input signal characteristics, to encode the transform<br>
+domain signal with a model-based quantizer or a non-model-based quantizer. Preferably, the decision is based on the frame size<br>
+applied by the transformation unit.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=/fBVZ8aGbuZSg+BacYfS2A==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=/fBVZ8aGbuZSg+BacYfS2A==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="279955-enteric-coated-granule-and-method-for-preparing-the-same.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="279957-1-4-benzothiazepines-compounds.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>279956</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2478/KOLNP/2010</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>06/2017</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>10-Feb-2017</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>06-Feb-2017</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>07-Jul-2010</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>DOLBY INTERNATIONAL AB</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>ATLAS COMPLEX, AFRICA BUILDING, HOOGOORDDREEF 9, NL -1001 BA AMSTERDAM THE NETHERLAND</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>HEDELIN, PER, HENRIK</td>
+											<td>KULLEGATAN 14B, S-412 62 GÖTEBORG SWEDEN</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>CARLSSON, PONTUS, JAN</td>
+											<td>BYGGMÄSTARVÄGEN 3, S-168 32 BROMMA SWEDEN</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>SAMUELSSON, JONAS, LEIF</td>
+											<td>FÖRRADSGATAN 2, S-169 39 SOLNA SWEDEN</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>SCHUG, MICHAEL</td>
+											<td>AM DINKELFELD 31, 91056 ERLANGEN GERMANY</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G10L 19/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/EP2008/011144</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2008-12-30</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>0800032-5</td>
+									<td>2008-01-04</td>
+								    <td>Sweden</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>61/055,978</td>
+									<td>2008-05-24</td>
+								    <td>Sweden</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>08009530.0</td>
+									<td>2008-05-24</td>
+								    <td>Sweden</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/279956-audio-encoder-and-decoder by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:34:23 GMT -->
+</html>

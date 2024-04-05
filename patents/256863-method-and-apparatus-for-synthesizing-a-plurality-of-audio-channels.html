@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/256863-method-and-apparatus-for-synthesizing-a-plurality-of-audio-channels by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 09:05:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 256863:METHOD AND APPARATUS FOR SYNTHESIZING A PLURALITY OF AUDIO CHANNELS</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD AND APPARATUS FOR SYNTHESIZING A PLURALITY OF AUDIO CHANNELS</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>The invention relates to Method for synthesizing a plurality of audio channels, comprising retrieving from an audio stream at least one sum signal representing a sum of source signals, retrieving from the audio stream statistical information about one or more source signals, receiving from the audio stream, or determining locally, parameters describing an output audio format and source mixing parameters, computing output mixer parameters from the received statistical information, the parameters describing an output audio format, and the source mixing parameters, synthesizing the plurality of audio channels from the at least one sum signal based on the computed output mixer parameters.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+PARAMETRIC JOINT-CODING OF AUDIO SOURCES<br>
+1. INTRODUCTION<br>
+In a general coding problem, we have a number of (mono) source signals s,(n) (1 '<br>
+&gt;M) and a scene description vector S(n), where n is the time index. The scene<br>
+description vector contains parameters such as (virtual) source positions, source<br>
+widths, and acoustic parameters such as (virtual) room parameters. The scene<br>
+description may be time-invariant or may be changing over time. The source signals<br>
+and scene description are coded and transmitted to a decoder. The coded source<br>
+signals, s\(n) are successively mixed as a function of the scene description, S{n), to<br>
+generate wavefield synthesis, multi-channel, or stereo signals as a function of the<br>
+scene description vector. The decoder output signals are denoted x\(n) (0 &gt;i <n></n>
+Note that the scene description vector S(n) may not be transmitted but may be<br>
+determined at the decoder. In this document, the term "stereo audio signal" always<br>
+refers to two-channel stereo audio signals.<br>
+ISO/IEC MPEG-4 addresses the described coding scenario. It defines the scene<br>
+description and uses for each ("natural") source signal a separate mono audio coder,<br>
+e.g. an AAC audio coder. However, when a complex scene with many sources is to<br>
+be mixed, the bitrate becomes high, i.e. the bitrate scales up with the number of<br>
+sources. Coding one source signal with high quality requires about 60 - 90 kb/s.<br>
+Previously, we addressed a special case of the described coding problem [1][2] with<br>
+a scheme denoted Binaural Cue Coding (BCC) for Flexible Rendering. By<br>
+transmitting only the sum of the given source signals plus low bitrate side information,<br>
+low bitrate is achieved. However, the source signals can not be recovered at the<br>
+decoder and the scheme was limited to stereo and multi-channel surround signal<br>
+generation. Also, only simplistic mixing was used, based on amplitude and delay<br>
+panning. Thus, the direction of sources could be controlled but no other auditory<br>
+spatial image attributes. Another limitation of this scheme was its limited audio<br>
+quality. Especially, a decrease in audio quality as the number of source signals is<br>
+increased.<br><br>
+The document [1], (Binaural Cue Coding, Parametric Stereo, MP3 Surround, MPEG<br>
+Surround) covers the case where N audio channels are encoded and N audio<br>
+channels with similar cues then the original audio channels are decoded. The<br>
+transmitted side information includes inter-channel cue parameters relating to<br>
+differences between the input channels.<br>
+The channels of stereo and multi-channel audio signals contain mixes of audio<br>
+sources signals and are thus different in nature than pure audio source signals.<br>
+Stereo and multi-channel audio signals are mixed such that when played back over<br>
+an appropriate playback system, the listener will perceive an auditory spatial image<br>
+("sound stage") as captured by the recording setup or designed by the recording<br>
+engineer during mixing. A number of schemes for joint-coding for the channels of a<br>
+stereo or multi-channel audio signal have been proposed previously.<br>
+SUMMARY OF THE INVENTION<br>
+The aim of the invention is to provide a method to transmit a plurality of source<br>
+signals while using a minimum bandwidth. In most of known methods, the playback<br>
+format (e.g. stereo, 5.1) is predefined and has a direct influence on the coding<br>
+scenario. The audio stream on the decoder side should use only this predefined<br>
+playback format, therefore binding the user to a predefined playback scenario (e.g.<br>
+stereo).<br>
+The proposed invention encodes N audio source signals, typically not channels of a<br>
+stereo or multi-channel signals, but independent signals, such as different speech or<br>
+instrument signals. The transmitted side information includes statistical parameters<br>
+relating to the input audio source signals.<br>
+The proposed invention decodes M audio channels with different cues than<br>
+the original audio source signals. These different cues are either implicitly<br>
+synthesized by applying a mixer to the received sum signal. The mixer is<br>
+controlled as a function of the received statistical source information and the<br>
+received (or locally determined) audio format parameters and mixing<br>
+parameters. Alternatively, these different cues are explicitly computed as a<br>
+function of the received statistical source information and the received (or<br><br>
+locally determined) audio format parameters and mixing parameters. These<br>
+computed cues are used to control a prior art decoder (Binaural Cue Coding,<br>
+Parametric Stereo, MPEG Surround) for synthesizing the output channels<br>
+given the received sum signal.<br>
+The proposed scheme for joint-coding of audio source signals is the first of its kind. It<br>
+is designed for joint-coding of audio source signals. Audio source signals are usually<br>
+mono audio signals which are not suitable for playback over a stereo or multi-channel<br>
+audio system. For brevity, in the following, audio source signals are often denoted<br>
+source signals.<br>
+Audio source signals first need to be mixed to stereo, multi-channel, or wavefield<br>
+synthesis audio signals prior to playback. An audio source signal can be a single<br>
+instrument or talker, or the sum of a number of instruments and talkers. Another type<br>
+of audio source signal is a mono audio signal captured with a spot microphone during<br>
+a concert. Often audio source signals are stored on multi-track recorders or in<br>
+harddisk recording systems.<br>
+The claimed scheme for joint-coding of audio source signals, is based on only<br>
+transmitting the sum of the audio source signals,<br><br>
+or a weighted sum of the source signals. Optionally, weighted summation can be<br>
+carried out with different weights in different subbands and the weights may be<br>
+adapted in time. Summation with equalization, as described in Chapter 3.3.2 in [1],<br>
+may also be applied. In the following, when we refer to the sum or sum signal, we<br>
+always mean a signal generate by (1) or generated as described. In addition to the<br>
+sum signal, side information is transmitted. The sum and the side information<br>
+represent the outputted audio stream. Optionally, the sum signal is coded using a<br>
+conventional mono audio coder. This stream can be stored in a file (CD, DVD,<br>
+Harddisk) or broadcasted to the receiver. The side information represents the<br>
+statistical properties of the source signals which are the most important factors<br>
+determining the perceptual spatial cues of the mixer output signals. It will be shown<br><br>
+that these properties are temporally evolving spectral envelopes and auto-correlation<br>
+functions. About 3 kb/s of side information is transmitted per source signal. At the<br>
+receiver, source signals si(n) (1 
+statistical properties approximating the corresponding properties of the original<br>
+source signals and the sum signal.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+The invention will be better understood thanks to the attached Figures in which:<br>
+-	figure 1 shows a scheme in which the transmission of each source signal is made<br>
+independently for further processing,<br>
+-	figure 2 shows a number of sources transmitted as sum signal plus side<br>
+information,<br>
+-	figure 3 shows a block diagram of a Binaural Cue Coding (BCC) scheme,<br>
+-	figure 4 shows a mixer for generating stereo signals based on several source<br>
+signals,<br>
+-	figure 5 shows the dependence between ICTD, ICLD and ICC and the source<br>
+signal subband power,<br>
+-	figure 6 shows the process of side information generation,<br>
+-	figure 7 shows the process of estimating the LPC parameters of each source signal,<br>
+-	figure 8 shows the process of re-creating the source signals from a sum signal,<br>
+-	figure 9 shows an alternative scheme for the generation of each signal from the sum<br>
+signal,<br>
+-	figure 10 shows a mixer for generating stereo signals based on the sum signal,<br>
+-	figure 11 shows an amplitude panning algorithm preventing that the source levels<br>
+depends on the mixing parameters,<br>
+-	figure 12 shows a loudspeaker array of a wavefield synthesis playback system,<br>
+-	figure 13 shows how to recover an estimate of the source signals at the receiver by<br>
+processing the downmix of the transmitted channels,<br><br>
+- figure 14 shows how to recover an estimate of the source signals at the receiver by<br>
+processing the transmitted channels.<br>
+II. DEFINITIONS, NOTATION, AND VARIABLES<br>
+X<br>
+The following notation and variables are used in this paper:<br>
+n	time index;<br>
+i	audio channel or source index;<br>
+d	delay index;<br>
+M	number of encoder input source signals;<br>
+N	number of decoder output channels;<br>
+X,(n)	mixed original source signals;<br>
+xf (n)	mixed decoder output signals;<br>
+s,(«)	encoder input source signals;<br>
+si,-(«)	transmitted source signals also called pseudo-source signals;<br>
+s(ri)	transmitted sum signal;<br>
+yt(ri)	L-channel audio signal; (audio signal to be re-mixed);<br>
+s(k)	one subband signal of st(n) (similarly defined for other signals);<br>
+E{5. («)}	short- time estimate of st (n) (similarly defined for other<br>
+signals);<br>
+ICLD	inter-channel level difference;<br>
+ICTD	inter-channel time difference;<br>
+ICC	inter-channel coherence;<br>
+AL(n)	estimated subband ICLD;<br>
+x(n)	estimated subband ICTD;<br>
+c(n)	estimated subband ICC;<br>
+pt(n)	relative source subband power;<br>
+a,, bi	mixer scale factors;<br><br>
+Cj, d\	mixer delays;<br>
+Mj, x{ri)	mixer level and time difference;<br>
+G,	mixer source gain;<br>
+III. JOINT-CODING OF AUDIO SOURCE SIGnalS<br>
+First, Binaural Cue Coding (BCC), a parametric multi-channel audio coding tech-<br>
+nique, is described. Then it is shown that with the same insight as BCC is based on<br>
+one can devise an algorithm for jointly coding the source signals for a coding<br>
+scenario.<br>
+A. Binaural Cue Coding (BCC)<br>
+A BCC scheme [1][2] for multi-channel audio coding is shown in the figure bellow.<br>
+The input multi-channel audio signal is downmixed to a single channel. As opposed<br>
+to coding and transmitting information about all channel waveforms, only the<br>
+downmixed signal is coded (with a conventional mono audio coder) and transmitted.<br>
+Additionally, perceptually motivated "audio channel differences" are estimated<br>
+between the original audio channels and also transmitted to the decoder. The<br>
+decoder generates its output channels such that the audio channel differences<br>
+approximate the corresponding audio channel differences of the original audio signal.<br>
+Summing localization implies that perceptually relevant audio channel differences for<br>
+a loudspeaker signal channel pair are the inter-channel time difference (ICTD) and<br>
+inter-channel level difference (ICLD). ICTD and ICLD can be related to the perceived<br>
+direction of auditory events. Other auditory spatial image attributes, such as apparent<br>
+source width and listener envelopment, can be related to interaural coherence (IC).<br>
+For loudspeaker pairs in the front or back of a listener, the interaural coherence is<br>
+often directly related to the inter-channel coherence (ICC) which is thus considered<br>
+as third audio channel difference measure by BCC. ICTD, ICLD, and ICC are<br>
+estimated in subbands as a function of time. Both, the spectral and temporal<br>
+resolution that is used, are motivated by perception.<br><br>
+B. Parametric joint-coding of audio sources<br>
+A BCC decoder is able to generate a multi-channel audio signal with any auditory<br>
+spatial image by taking a mono signal and synthesizing at regular time intervals a<br>
+single specific ICTD, ICLD, and ICC cue per subband and channel pair. The good<br>
+performance of BCC schemes for a wide range of audio material [see 1] implies that<br>
+the perceived auditory spatial image is largely determined by the ICTD, ICLD, and<br>
+ICC. Therefore, as opposed to requiring "clean" source signals st(ri) as mixer input<br>
+in Figure 1, we just require pseudo-source signals si,.(n) with the property that they<br>
+result in similar ICTD, ICLD, and ICC at the mixer output as for the case of supplying<br>
+the real source signals to the mixer. There are three goals for the generation of si,.(n)<br>
+•	If si,(n) are supplied to a mixer, the mixer output channels will have<br>
+approximately the same spatial cues (ICLD, ICTD, ICC) as if s,-(n) were<br>
+supplied to the mixer.<br>
+•	si,(n) are to be generated with as little as possible information about the<br>
+original source signals s(n) (because the goal is to have low bitrate side<br>
+information).<br>
+•	si.(n)are generated from the transmitted sum signal s(ri) such that a<br>
+minimum amount of signal distortion is introduced.<br>
+For deriving the proposed scheme we are considering a stereo mixer (M = 2). A<br>
+further simplification over the general case is that only amplitude and delay panning<br>
+are applied for mixing. If the discrete source signals were available at the decoder, a<br>
+stereo signal would be mixed as shown in Figure 4, i.e.<br><br>
+In this case, the scene description vector S(n) contains just source directions which<br>
+determine the mixing parameters,<br><br><br>
+where T is the transpose of a vector. Note that for the mixing parameters we ignored<br>
+the time index for convenience of notation.<br>
+More convenient parameters for controlling the mixer are time and level difference, Ti<br>
+and ^L which are related to a,, bi c,, and di by<br><br>
+where Gi is a source gain factor in dB.<br>
+In the following, we are computing ICTD, ICLD, and ICC of the stereo mixer output as<br>
+a function of the input source signals si(n). The obtained expressions will give<br>
+indication which source signal properties determine ICTD, ICLD, and ICC (together<br>
+with the mixing parameters). si,-(n) are then generated such that the identified source<br>
+signal properties approximate the corresponding properties of the original source<br>
+signals.<br>
+B.1 ICTD, ICLD, and ICC of the mixer output<br>
+The cues are estimated in subbands and as a function of time. In the following it is<br>
+assumed that the source signals si{n) are zero mean and mutually independent. A<br>
+pair of subband signals of the mixer output (2) is denoted x,(n) and x2{ri). Note that<br>
+for simplicity of notation we are using the same time index n for time-domain and<br>
+subband-domain signals. Also, no subband index is used and the described<br>
+analysis/processing is applied to each subband independently. The subband power<br>
+of the two mixer output signals is<br><br>
+where si(n) 's one subband signal of source s,(n) and E{.} denotes short-time<br>
+expectation, e.g.<br><br><br>
+where K determines the length of the moving average. Note that the subband power<br>
+values E {s22 (n)} represent for each source signal the spectral envelope as a<br>
+function of time. The ICLD, AL(n), is<br><br>
+For estimating ICTD and ICC the normalized cross-correlation function,<br><br>
+is estimated. The ICC, c(n), is computed according to<br><br>
+For the computation of the ICTD, J{n), the location of the highest peak on the delay<br>
+axis is computed,<br><br>
+Now the question is, how can the normalized cross-correlation function be computed<br>
+as a function of the mixing parameters. Together with (2), (8) can be written as<br><br>
+which is equivalent to<br><br>
+where the normalized auto-correlation function φ(n,e) is<br><br><br>
+and Ti= di- ci. Note that for computing (12) given (11) it has been assumed that the<br>
+signals are wide sense stationary within the considered range of delays, i.e.<br><br>
+A numerical example for two source signals, illustrating the dependence between<br>
+ICTD, ICLD, and ICC and the source subband power, is shown in Figure 5. The top,<br>
+middle, and bottom panel of Figure 5 show ΔL(n), T(n), and c(n), respectively, as a<br>
+function of the ratio of the subband power of the two source signals, <br>
+  for different mixing parameters (4) ΔL1 , ΔL2 , 7i and T2.<br>
+Note that when only one source has power in the subband (a = 0 or a = 1), then the<br>
+computed ΔL (n) and T(n) are equΔL to the mixing parameters (ΔL,, ΔL2, 71 , T2).<br>
+B.2 Necessary side information<br>
+The ICLD (7) depends on the mixing parameters (a,, si&gt;,, ch di) and on the short-time<br>
+subband power of the sources, The normΔlized subband cross-<br>
+correlation function ®(n,d) (12), that is needed for ICTD (10) and ICC (9)<br>
+computation, depends on and additionally on the normΔlized subband<br>
+auto-correlation function, Oj(n, e) (13), for each source signal. The maximum of <br>
+φ(n,d) lies within the range mirii{7i} <d simaxj for source mixer parameter></d>
+= di - c, the corresponding range for which the source signal subband property Oj(n,<br>
+e) (13) is needed is<br><br><br>
+Since 0the ICTD, ICLD, and ICC cues depend on the source signal subband<br>
+properties and φi(n, e) in the range (14), in principle these source signal<br>
+subband properties need to be transmitted as side information. We assume that any<br>
+other kind of mixer (e.g. mixer with effects, wavefield synthesis mixer/convoluter, etc.)<br>
+has similar properties and thus this side information is useful ΔLso when other mixers<br>
+than the described one are used. For reducing the amount of side information, one<br>
+could store a set of predefined auto-correlation functions in the decoder and only<br>
+transmit indices for choosing the ones most closely matching the source signal<br>
+properties. A first version of our ΔLgorithm assumes that within the range (14) ®,{n, e)<br>
+= 1 and thus (12) is computed using only the subband power vΔLues (6) as side<br>
+information. The data shown in Figure 5 has been computed assuming 
+In order to reduce the amount of side information, the relative dynamic range of the<br>
+source signals is limited. At each time, for each subband the power of the strongest<br>
+source is selected. We found it sufficient to lower bound the corresponding subband<br>
+power of ΔLl the other sources at a vΔLue 24 dB lower than the strongest subband<br>
+power. Thus the dynamic range of the quantizer can be limited to 24 dB.<br>
+Assuming that the source signals are independent, the decoder can compute the<br>
+sum of the subband power of ΔLl sources as . Thus, in principle it is<br>
+enough to transmit to the decoder only the subband power vΔLues of M - 1 sources,<br>
+while the subband power of the remaining source can be computed locally. Given this<br>
+idea, the side information rate can be slightly reduced by transmitting the subband<br>
+power of sources with indices 2 s / 
+ <br>
+Note that dynamic range limiting as described previously is carried out prior to (15).<br>
+As an ΔLternative, the subband power vΔLues could be normΔlized relative to the sum<br>
+signal subband power, as opposed to normΔlization relative to one source's subband<br>
+power (15). For a sampling frequency of 44.1 kHz we use 20 subbands and transmit<br>
+for each subband ApX") (2 s / s M) about every 12 ms. 20 subbands corresponds to<br>
+hΔLf the spectraL resolution of the auditory system (one subband is two "critical<br><br>
+bandwidths" wide). InformΔL experiments indicate that only slight improvement is<br>
+achieved by using more subbands than 20, e.g. 40 subbands. The number of<br>
+subbands and subband bandwidths are chosen according to the time and frequency<br>
+resolution of the auditory system. A low quΔlity implementation of the scheme<br>
+requires at least three subbands (low, medium, high frequencies).<br>
+According to a particular embodiment, the subbands have different bandwidths,<br>
+subbands at lower frequencies have smΔLler bandwidth than subbands at higher<br>
+frequencies.<br>
+The relative power vΔLues are quantized with a scheme similar to the ICLD quantizer<br>
+described in [2], resulting in a bitrate of approximately 3(M -1) kb/s. Figure 6<br>
+illustrates the process of side information generation (corresponds to the "Side infor-<br>
+mation generation" block in Figure 2).<br>
+Side information rate can be additionally reduced by analyzing the activity for each<br>
+source signal and only transmitting the side information associated with the source if<br>
+it is active.<br>
+As opposed to transmitting the subband power vΔLues E {s] (n)} as statistical<br>
+information, other information representing the spectraL envelopes of the source<br>
+signals could be transmitted. For example, linear predictive coding (LPC) parameters<br>
+could be transmitted, or corresponding other parameters such as lattice filter<br>
+parameters or line spectraL pair (LSP) parameters. The process of estimating the<br>
+LPC parameters of each source signal is illustrated in Figure 7.<br>
+B.3 Computing st(n)<br>
+Figure 8 illustrates the process that is used to re-create the source signals, given the<br>
+sum signal (1). This process is part of the "Synthesis" block in Figure 2. The<br>
+individuΔL source signals are recovered by scaling each subband of the sum signal<br>
+with g,{/i) and by applying a de-correlation filter with impulse response hi (n),<br><br><br>
+where * is the linear convolution operator and is computed with the side<br>
+information by<br><br>
+As de-correlation filters h{n), complementary comb filters, ΔLl-pass filters, delays, or<br>
+filters with random impulse responses may be used. The goΔL for the de-correlation<br>
+process is to reduce correlation between the signals while not modifying how the<br>
+individuΔL waveforms are perceived. Different de-correlation techniques cause<br>
+different artifacts. Complementary comb filters cause coloration. ΔLl the described<br>
+techniques are spreading the energy of transients in time causing artifacts such as<br>
+"pre-echoes". Given their potentiΔL for artifacts, de-correlation techniques should be<br>
+applied as little as possible. The next section describes techniques and strategies<br>
+which require less de-correlation processing than simple generation of independent<br>
+signals si,(n).<br>
+An ΔLternative scheme for generation of the signals i,.(n) is shown in Figure 9. First<br>
+the spectrum of s(n) is flattened by means of computing the linear prediction error<br>
+e(n). Then, given the LPC filters estimated at the encoder, fh the corresponding ΔLl-<br>
+pole filters are computed as the inverse z-transform of<br><br>
+The resulting ΔLl-pole filters, fn represent the spectraL envelope of the source<br>
+signals. If other side information than LPC parameters is transmitted, the LPC<br>
+parameters first need to be computed as a function of the side information. As in the<br>
+other scheme, de-correlation filters h, are used for making the source signals<br>
+independent.<br>
+IV. IMPLEMENTATIONS CONSIDERING PRACTIcal CONSTRAINTS<br><br>
+In the first part of this section, an implementation example is given, using a BCC<br>
+synthesis scheme as a stereo or multi-channel mixer. This is particularly interesting<br>
+since such a BCC type synthesis scheme is part of an upcoming ISO/IEC MPEG<br>
+standard, denoted "spatiΔL audio coding". The source signals si,(n) are not explicitly<br>
+computed in this case, resulting in reduced computational complexity. ΔLso, this<br>
+scheme offers the potentiΔL for better audio quΔlity since effectively less de-<br>
+correlation is needed than for the case when the source signals s.(ri) are explicitly<br>
+computed.<br>
+The second part of this section discusses issues when the proposed scheme is<br>
+applied with any mixer and no de-correlation processing is applied at ΔLl. Such a<br>
+scheme has a lower complexity than a scheme with de-correlation processing, but<br>
+may have other drawbacks as will be discussed.<br>
+IdeΔLly, one would like to apply de-correlation processing such that the generated<br>
+si,(n)can be considered independent. However, since de-correlation processing is<br>
+problematic in terms of introducing artifacts, one would like to apply de-correlation<br>
+processing as little as possible. The third part of this section discusses how the<br>
+amount of problematic de-correlation processing can be reduced while getting<br>
+benefits as if the generated i, (n) were independent.<br>
+A. Implementation without explicit computation of s,.(n)<br>
+Mixing is directly applied to the transmitted sum signal (1) without explicit<br>
+computation of si.(n). A BCC synthesis scheme is used for this purpose. In the<br>
+following, we are considering the stereo case, but ΔLl the described principles can be<br>
+applied for generation of multi-channel audio signals as well.<br>
+A stereo BCC synthesis scheme (or a "parametric stereo" scheme), applied for<br>
+processing the sum signal (1), is shown in Figure 10. Desired would be that the BCC<br>
+synthesis scheme generates a signal that is perceived similarly as the output signal<br>
+of a mixer as shown in Figure 4. This is so, when ICTD, ICLD, and ICC between the<br>
+BCC synthesis scheme output channels are similar as the corresponding cues<br>
+appearing between the mixer output (4) signal channels.<br><br>
+The same side information as for the previously described more generaL scheme is<br>
+used, ΔLlowing the decoder to compute the short-time subband power vΔLues E<br>
+  of the sources. Given the gain factors gi and 0/2 in Figure 10 are<br>
+computed as<br><br>
+such that the output subband power and ICLD (7) are the same as for the mixer in<br>
+Figure 4. The ICTD T{n) is computed according to (10), determining the delays D1<br>
+and D2 in Figure 10,<br><br>
+The ICC c(n) is computed according to (9) determining the de-correlation processing<br>
+in Figure 10. De-correlation processing (ICC synthesis) is described in [1]. The<br>
+advantages of applying de-correlation processing to the mixer output channels<br>
+compared to applying it for generating independent si,(n) are:<br>
+•	UsuΔLly the number of source signals M is larger than the number of audio output<br>
+channels N. Thus, the number of independent audio channels that need to be<br>
+generated is smΔLler when de-correlating the N output channels as opposed to<br>
+de-correlating the M source signals.<br>
+•	Often the N audio output channels are correlated (ICC &gt; 0) and less de-<br>
+correlation processing can be applied than would be needed for generating<br>
+independent M or N channels.<br>
+Due to less de-correlation processing better audio quΔlity is expected.<br>
+Best audio quΔlity is expected when the mixer parameters are constrained such that<br>
+  In this case, the power of each source in the transmitted<br>
+sum signal (1) is the same as the power of the same source in the mixed decoder<br>
+output signal. The decoder output signal (Figure 10) is the same as if the mixer<br><br>
+output signal (Figure 4) were encoded and decoded by a BCC encoder/decoder in<br>
+this case. Thus, ΔLso similar quΔlity can be expected.<br>
+The decoder can not only determine the direction at which each source is to appear<br>
+but ΔLso the gain of each source can be varied. The gain is increased by choosing<br>
+  and decreased by choosing <br>
+B. Using no de-correlation processing<br>
+The restriction of the previously described technique is that mixing is carried out with<br>
+a BCC synthesis scheme. One could imagine implementing not only ICTD, ICLD, and<br>
+ICC synthesis but additionally effects processing within the BCC synthesis.<br>
+However, it may be desired that existing mixers and effects processors can be used.<br>
+This ΔLso includes wavefield synthesis mixers (often denoted "convoluters"). For<br>
+using existing mixers and effects processors, the i,(n)are computed explicitly and<br>
+used as if they were the original source signals.<br>
+When applying no de-correlation processing (hj(n) = 8(n) in (16)) good audio quΔlity<br>
+can ΔLso be achieved. It is a compromise between artifacts introduced due to de-<br>
+correlation processing and artifacts due to the fact that the source signals st(n)are<br>
+correlated. When no de-correlation processing is used the resulting auditory spatiΔL<br>
+image may suffer from instability [1]. But the mixer may introduce itself some de-<br>
+correlation when reverberators or other effects are used and thus there is less need<br>
+for de-correlation processing.<br>
+If si,(n)are generated without de-correlation processing, the level of the sources<br>
+depends on the direction to which they are mixed relative to the other sources. By<br>
+replacing amplitude panning ΔLgorithms in existing mixers with an ΔLgorithm<br>
+compensating for this level dependence, the negative effect of loudness dependence<br>
+on mixing parameters can be circumvented. A level compensating amplitude<br>
+ΔLgorithm is shown in Figure 11 which aims to compensate the source level<br>
+dependence on mixing parameters. Given the gain factors of a conventional<br><br>
+amplitude panning ΔLgorithm (e.g. Figure 4), a, and bh the weights in Figure 11, a,<br>
+and bt, are computed by<br><br>
+Note that ai and b{ are computed such that the output subband power is the same<br>
+as if st(n) were independent in each subband.<br>
+c. Reducing the amount of de-correlation processing<br>
+As mentioned previously, the generation of independent si,(n) is problematic. Here<br>
+strategies are described for applying less de-correlation processing, while effectively<br>
+getting a similar effect as if the i,(n)were independent.<br>
+Consider for example a wavefield synthesis system as shown in Figure 12. The<br>
+desired virtuΔL source positions for Si, s2, ..., Se {M = 6) are indicated. A strategy for<br>
+computing si,-(n) (16) without generating M fully independent signals is:<br>
+1.	Generate groups of source indices corresponding to sources close to each<br>
+other. For example in Figure 8 these could be: {1}, {2, 5}, {3}, and {4, 6}.<br>
+2.	At each time in each subband select the source index of the strongest source,<br><br>
+Apply no de-correlation processing for the source indices part of the group containing<br>
+/'max, i.e. h{n) = 8(n).<br>
+3. For each other group choose the same h{n) within the group.<br>
+The described ΔLgorithm modifies the strongest signal components least. Additionally,<br>
+the number of different hj(n) that are used are reduced. This is an advantage<br>
+because de-correlation is easier the less independent channels need to be<br><br>
+generated. The described technique is ΔLso applicable when stereo or multi-channel<br>
+audio signals are mixed.<br>
+V.	ScalABIliTY IN TERMS OF QUΔliTY AND BITRATE<br>
+The proposed scheme transmits only the sum of ΔLl source signals, which can be<br>
+coded with a conventional mono audio coder. When no mono backwards<br>
+compatibility is needed and capacity is available for transmission/storage of more<br>
+than one audio waveform, the proposed scheme can be scaled for use with more<br>
+than one transmission channel. This is implemented by generating severaL sum<br>
+signals with different subsets of the given source signals, i.e. to each subset of<br>
+source signals the proposed coding scheme is applied individuΔLly. Audio quΔlity is<br>
+expected to improve as the number of transmitted audio channels is increased<br>
+because less independent channels have to be generated by de-correlation from<br>
+each transmitted channel (compared to the case of one transmitted channel).<br>
+VI.	BACKWARDS COMPATIBIliTY TO EXISTING STEREO AND SURROUND<br>
+AUDIO FORMATS<br>
+Consider the following audio delivery scenario. A consumer obtains a maximum<br>
+quΔlity stereo or multi-channel surround signal (e.g. by means of an audio CD, DVD,<br>
+or on-line music store, etc.). The goΔL is to optionally deliver to the consumer the<br>
+flexibility to generate a custom mix of the obtained audio content, without<br>
+compromising standard stereo/surround playback quΔlity.<br>
+This is implemented by delivering to the consumer (e.g. as optional buying option in<br>
+an on-line music store) a bit stream of side information which ΔLlows computation of<br>
+i.(n)as a function of the given stereo or multi-channel audio signal. The consumer's<br>
+mixing ΔLgorithm is then applied to the si,(n) In the following, two possibilities for<br>
+computing si,-(n), given stereo or multi-channel audio signals, are described.<br>
+A. Estimating the sum of the source signals at the receiver<br>
+The most straight forward way of using the proposed coding scheme with a stereo or<br>
+multi-channel audio transmission is illustrated in Figure 13, where y{n) (1 s i 
+the L channels of the given stereo or multi-channel audio signal. The sum signal of<br><br>
+the sources is estimated by downmixing the transmitted channels to a single audio<br>
+channel. Downmixing is carried out by means of computing the sum of the channels<br>
+y{n) (1 si i si L) or more sophisticated techniques may be applied.<br>
+For best performance, it is recommended that the level of the source signals is<br>
+adapted prior to estimation (6) such that the power ratio between the<br>
+source signals approximates the power ratio with which the sources are contained in<br>
+the given stereo or multi-channel signal. In this case, the downmix of the transmitted<br>
+channels is a relatively good estimate of the sum of the sources (1) (or a scaled<br>
+version thereof).<br>
+An automated process may be used to adjust the level of the encoder source signal<br>
+inputs Sj(n) prior to computation of the side information. This process adaptively in<br>
+time estimates the level at which each source signal is contained in the given stereo<br>
+or multi-channel signal. Prior to side information computation, the level of each<br>
+source signal is then adaptively in time adjusted such that it is equΔL to the level at<br>
+which the source is contained in the stereo or multi-channel audio signal.<br>
+B. Using the transmitted channels individuΔLly<br>
+Figure 14 shows a different implementation of the proposed scheme with stereo or<br>
+multi-channel surround signal transmission. Here, the transmitted channels are not<br>
+downmixed, but used individuΔLly for generation of the st(n). Most generaLly, the<br>
+subband signals of s((n) are computed by<br><br>
+where w,(ri) are weights determining specific linear combinations of the transmitted<br>
+channels' subbands. The linear combinations are chosen such that the si,•(n) are<br>
+ΔLready as much decorrelated as possible. Thus, no or only a smΔLl amount of de-<br>
+correlation processing needs to be applied, which is favorable as discussed earlier.<br>
+VII. APPliCATIONS<br><br>
+ΔLready previously we mentioned a number of applications for the proposed coding<br>
+schemes. Here, we summarize these and mention a few more applications.<br>
+A.	Audio coding for mixing<br>
+Whenever audio source signals need to be stored or transmitted prior to mixing them<br>
+to stereo, multi-channel, or wavefield synthesis audio signals, the proposed scheme<br>
+can be applied. With prior art, a mono audio coder would be applied to each source<br>
+signal independently, resulting in a bitrate which scales with the number of sources.<br>
+The proposed coding scheme can encode a high number of audio source signals<br>
+with a single mono audio coder plus relatively low bitrate side information. As<br>
+described in Section V, the audio quΔlity can be improved by using more than one<br>
+transmitted channel, if the memory/capacity to do so is available.<br>
+B.	Re-mixing with meta-data<br>
+As described in Section VI, existing stereo and multi-channel audio signals can be re-<br>
+mixed with the help of additional side information (i.e. "meta-data"). As opposed to<br>
+only selling optimized stereo and multi-channel mixed audio content, meta data can<br>
+be sold ΔLlowing a user to re-mix his stereo and multi-channel music. This can for<br>
+example ΔLso be used for attenuating the vocals in a song for karaoke, or for<br>
+attenuating specific instruments for playing an instrument ΔLong the music.<br>
+Even if storage would not be an issue, the described scheme would be very attractive<br>
+for enabling custom mixing of music. That is, because it is likely that the music<br>
+industry would never be willing to give away the multi-track recordings. There is too<br>
+much a danger for abuse. The proposed scheme enables re-mixing capability without<br>
+giving away the multi-track recordings.<br>
+Furthermore, as soon as stereo or multi-channel signals are re-mixed a certain<br>
+degree of quΔlity reduction occurs, making illegΔL distribution of re-mixes less<br>
+attractive.<br>
+c. Stereo/multi-channel to wavefield synthesis conversion<br>
+Another application for the scheme described in Section VI is described in the<br>
+following. The stereo and multi-channel (e.g. 5.1 surround) audio accompanying<br><br>
+moving pictures can be extended for wavefield synthesis rendering by adding side<br>
+information. For example, Dolby AC-3 (audio on DVD) can be extended for 5.1<br>
+backwards compatibly coding audio for wavefield synthesis systems, i.e. DVDs play<br>
+back 5.1 surround sound on conventional legacy players and wavefield synthesis<br>
+sound on a new generation of players supporting processing of the side information.<br>
+VIII.	SUBJECTIVE EVΔLUATIONS<br>
+We implemented a reΔL-time decoder of the ΔLgorithms proposed in Section IV-A and<br>
+IV-B. An FFT-based STFT filterbank is used. A 1024-point FFT and a STFT window<br>
+size of 768 (with zero padding) are used. The spectraL coefficients are grouped<br>
+together such that each group represents signal with a bandwidth of two times the<br>
+equivΔLent rectangular bandwidth (ERB). InformΔL listening reveΔLed that the audio<br>
+quΔlity did not notably improve when choosing higher frequency resolution. A lower<br>
+frequency resolution is favorable since it results in less parameters to be transmitted.<br>
+For each source, the amplitude/delay panning and gain can be adjusted individuΔLly.<br>
+The ΔLgorithm was used for coding of severaL multi-track audio recordings with 12 -<br>
+14 tracks.<br>
+The decoder ΔLlows 5.1 surround mixing using a vector base amplitude panning<br>
+(VBAP) mixer. Direction and gain of each source signal can be adjusted. The<br>
+software ΔLlows on the-fly switching between mixing the coded source signal and<br>
+mixing the original discrete source signals.<br>
+CasuΔL listening usuΔLly reveΔLs no or little difference between mixing the coded or<br>
+original source signals if for each source a gain G, of zero dB is used. The more the<br>
+source gains are varied the more artifacts occur. Slight amplification and attenuation<br>
+of the sources (e.g. up to ± 6 dB) still sounds good. A critical scenario is when ΔLl the<br>
+sources are mixed to one side and only a single source to the other opposite side. In<br>
+this case the audio quΔlity may be reduced, depending on the specific mixing and<br>
+source signals.<br>
+IX.	CONCLUSIONS<br>
+A coding scheme for joint-coding of audio source signals, e.g. the channels of a<br>
+multi-track recording, was proposed. The goΔL is not to code the source signal<br><br>
+waveforms with high quΔlity, in which case joint-coding would give minimΔL coding<br>
+gain since the audio sources are usuΔLly independent. The goΔL is that when the<br>
+coded source signals are mixed a high quΔlity audio signal is obtained. By<br>
+considering statistical properties of the source signals, the properties of mixing<br>
+schemes, and spatiΔL hearing it was shown that significant coding gain improvement<br>
+is achieved by jointly coding the source signals.<br>
+The coding gain improvement is due to the fact that only one audio waveform is<br>
+transmitted.<br>
+Additionally side information, representing the statistical properties of the source<br>
+signals which are the relevant factors determining the spatiΔL perception of the final<br>
+mixed signal, are transmitted.<br>
+The side information rate is about 3 kbs per source signal. Any mixer can be applied<br>
+with the coded source signals, e.g. stereo, multi-channel, or wavefield synthesis<br>
+mixers.<br>
+It is straight forward to scale the proposed scheme for higher bitrate and quΔlity by<br>
+means of transmitting more than one audio channel. Furthermore, a variation of the<br>
+scheme was proposed which ΔLlows re-mixing of the given stereo or multi-channel<br>
+audio signal (and even changing of the audio format, e.g. stereo to multi-channel or<br>
+wavefield synthesis).<br>
+The applications of the proposed scheme are manifold. For example MPEG-4 could<br>
+be extended with the proposed scheme to reduce bitrate when more than one<br>
+"naturaL audio object" (source signal) needs to be transmitted. ΔLso, the proposed<br>
+scheme offers compact representation of content for wavefield synthesis systems. As<br>
+mentioned, existing stereo or multi-channel signals could be complemented with side<br>
+information to ΔLlow that the user re-mixes the signals to his liking.<br>
+REFERENCES<br>
+[1] C. FΔLler, Parametric Coding of SpatiΔL Audio, Ph.D. thesis, Swiss FederaL<br>
+Institute of Technology Lausanne (EPFL), 2004, Ph.D. Thesis No. 3062.<br><br>
+[2] C. FΔLler and F. Baumgarte, "BinauraL Cue Coding - Part II: Schemes and<br>
+applications," IEEE Trans, on Speech and Audio Proa, vol. 11, no. 6, Nov. 2003.<br><br>
+We Claim:<br>
+1.	Method for synthesizing a plurality of audio channels, comprising:<br>
+retrieving from an audio stream at least one sum signal representing a sum<br>
+of source signals,<br>
+retrieving from the audio stream statistical information about one or more<br>
+source signals,<br>
+receiving from the audio stream, or determining locally, parameters<br>
+describing an output audio format and source mixing parameters,<br>
+computing output mixer parameters from the received statistical information,<br>
+the parameters describing an output audio format, and the source mixing<br>
+parameters,<br>
+synthesizing the plurality of audio channels from the at least one sum signal<br>
+based on the computed output mixer parameters.<br>
+2.	Method as claimed in claim 1, wherein the statistical information represent<br>
+spectraL envelopes of the source signals, or the spectraL envelopes of the<br>
+one or more audio source signals comprise lattice filter parameters or line<br>
+spectraL parameters or in which the statistical information represent a<br>
+relative power as a function of frequency and time of the plurality of<br>
+source signals.<br><br>
+3.	Method as claimed in claim 1, wherein the step of computing the output<br>
+mixer parameters comprises computing the cues of the plurality of audio<br>
+channels and computing the output mixer parameters using the calculated<br>
+cues of the plurality of audio channels.<br>
+4.	Method as claimed in claim 1, wherein the audio channels are synthesized<br>
+in a subband domain of a filterbank.<br>
+5.	Method as claimed in claim 4, wherein a number and bandwidths of the<br>
+subband domain are determined according to a spectraL and temporaL<br>
+resolution of an human auditory system.<br>
+6.	Method as claimed in claim 4, wherein a number of subbands is between<br>
+3 and 40.<br>
+7.	Method as claimed in claim 4, wherein subbands in the subband domain<br>
+have different bandwidths, wherein subbands at lower frequencies have<br>
+smΔLler bandwidths than subbands at higher frequencies.<br><br>
+8.	Method as claimed in claim 4, wherein a short time Fourier transform<br>
+(STFT) based filterbank is used and spectraL coefficients are combined to<br>
+form groups of spectraL coefficients such that each group of spectraL<br>
+coefficients forms a subband.<br>
+9.	Method as claimed in claim 1, wherein the statistical information ΔLso<br>
+comprises auto-correlation functions.<br>
+10.	Method as claimed in claim 2, wherein spectraL envelopes are represented<br>
+as linear predictive coding (LPC) parameters.<br>
+11.	Method as claimed in claim 3, wherein the computed cues are level<br>
+difference, time difference, or coherence fcr different frequencies and<br>
+time instants.<br>
+12.Apparatus for synthesizing a plurality of audio channels, wherein the<br>
+apparatus is operative for:<br><br>
+retrieving from an audio stream at least one; sum signal representing a<br>
+sum of source signals,<br>
+retrieving from the audio stream statistical information about one or more<br>
+source signals,<br>
+receiving from the audio stream, or determining locally, parameters<br>
+describing an output audio format and source mixing parameters,<br>
+computing output mixer parameters from the received statistical information,<br>
+the parameters describing an output audio format, and the source mixing<br>
+parameters,<br>
+synthesizing the plurality of audio channels from the at least one sum signal<br>
+based on the computed output mixer parameters.<br><br><br><br>
+ABSTRACT<br><br><br>
+TITLE: Method and Apparatus for synthesizing a plurality of audio channels<br>
+The invention relates to Method for synthesizing a plurality of audio channels,<br>
+comprising retrieving from an audio stream at least one sum signal<br>
+representing a sum of source signals, retrieving from the audio stream<br>
+statistical information about one or more source signals, receiving from the<br>
+audio stream, or determining locally, parameters describing an output audio<br>
+format and source mixing parameters, computing output mixer parameters<br>
+from the received statistical information, the parameters describing an output<br>
+audio format, and the source mixing parameters, synthesizing the plurality of<br>
+audio channels from the at least one sum signal based on the computed<br>
+output mixer parameters.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1jbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1jb3JyZXNwb25kZW5jZSBvdGhlcnMgMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-correspondence others 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1jb3JyZXNwb25kZW5jZSBvdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-correspondence others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1kZXNjcmlwdGlvbiBjb21wbGV0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-description complete.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1mb3JtIDEucGRm" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1mb3JtIDE4LnBkZg==" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-form 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1mb3JtIDIucGRm" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1mb3JtIDMucGRm" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1mb3JtIDUucGRm" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1pbnRlcm5hdGlvbmFsIHB1YmxpY2F0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-international publication.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1pbnRlcm5hdGlvbmFsIHNlYXJjaCByZXBvcnQucGRm" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-international search report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1wY3QgcmVxdWVzdCBmb3JtLnBkZg==" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-pct request form.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI3Nzgta29sbnAtMjAwNy1wcmlvcml0eSBkb2N1bWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">02778-kolnp-2007-priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LSgxOS0wOS0yMDEyKS1BQlNUUkFDVC5wZGY=" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-(19-09-2012)-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LSgxOS0wOS0yMDEyKS1BTUFOREVEIENMQUlNUy5wZGY=" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-(19-09-2012)-AMANDED CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LSgxOS0wOS0yMDEyKS1BTk5FWFVSRSBUTyBGT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-(19-09-2012)-ANNEXURE TO FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LSgxOS0wOS0yMDEyKS1ERVNDUklQVElPTiAoQ09NUExFVEUpLnBkZg==" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-(19-09-2012)-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LSgxOS0wOS0yMDEyKS1EUkFXSU5HLnBkZg==" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-(19-09-2012)-DRAWING.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LSgxOS0wOS0yMDEyKS1FWEFNSU5BVElPTiBSRVBPUlQgUkVQTFkgUkVDRUlWRUQucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-(19-09-2012)-EXAMINATION REPORT REPLY RECEIVED.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LSgxOS0wOS0yMDEyKS1GT1JNLTEucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-(19-09-2012)-FORM-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LSgxOS0wOS0yMDEyKS1GT1JNLTIucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-(19-09-2012)-FORM-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LSgxOS0wOS0yMDEyKS1PVEhFUlMucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-(19-09-2012)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUFTU0lHTk1FTlQucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-ASSIGNMENT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUNBTkNFTExFRCBQQUdFUy5wZGY=" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-CANCELLED PAGES.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIDEuNC5wZGY=" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-CORRESPONDENCE 1.4.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIE9USEVSUyAxLjIucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-CORRESPONDENCE OTHERS 1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIE9USEVSUyAxLjMucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-CORRESPONDENCE OTHERS 1.3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFLnBkZg==" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUVYQU1JTkFUSU9OIFJFUE9SVC5wZGY=" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUZPUk0gMTMucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-FORM 13.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUZPUk0gMTgucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-FORM 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUdSQU5URUQtQUJTVFJBQ1QucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-GRANTED-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUdSQU5URUQtQ0xBSU1TLnBkZg==" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-GRANTED-CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUdSQU5URUQtREVTQ1JJUFRJT04gKENPTVBMRVRFKS5wZGY=" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-GRANTED-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUdSQU5URUQtRFJBV0lOR1MucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-GRANTED-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-GRANTED-FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAyLnBkZg==" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-GRANTED-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSAzLnBkZg==" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-GRANTED-FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUdSQU5URUQtRk9STSA1LnBkZg==" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-GRANTED-FORM 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUdSQU5URUQtU1BFQ0lGSUNBVElPTi1DT01QTEVURS5wZGY=" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-GRANTED-SPECIFICATION-COMPLETE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LUlOVEVSTkFUSU9OQUwgU0VBUkNIIFJFUE9SVCAmIE9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-INTERNATIONAL SEARCH REPORT &amp; OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LU9USEVSUyAxLjEucGRm" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-OTHERS 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LU9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LVBBLnBkZg==" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-PA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mjc3OC1LT0xOUC0yMDA3LVJFUExZIFRPIEVYQU1JTkFUSU9OIFJFUE9SVC5wZGY=" target="_blank" style="word-wrap:break-word;">2778-KOLNP-2007-REPLY TO EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QtMDI3Nzgta29sbnAtMjAwNy5qcGc=" target="_blank" style="word-wrap:break-word;">abstract-02778-kolnp-2007.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="256862-semiconductor-light-emitting-devices-and-submounts-and-methods-for-forming-the-same.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="256864-method-and-apparatus-for-recognizing-radio-link-failures-associated-with-hsupa-and-hsdpa-channels.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>256863</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2778/KOLNP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>32/2013</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>09-Aug-2013</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>05-Aug-2013</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>30-Jul-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>FRAUNHOFER-GESELLSCHAFT ZUR FORDERUNG DER ANGEWANDTEN FORSCHUNG E.V.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>HANSASTRASSE 27 C 80686 MUNCHEN</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>FALLER CHRISTOF</td>
+											<td>GUETRAIN 1 8274 TAGERWILEN</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G10L 19/00,H04S 3/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/EP2006/050904</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2006-02-13</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>05101055.1</td>
+									<td>2005-02-14</td>
+								    <td>EPO</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/256863-method-and-apparatus-for-synthesizing-a-plurality-of-audio-channels by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 09:05:07 GMT -->
+</html>

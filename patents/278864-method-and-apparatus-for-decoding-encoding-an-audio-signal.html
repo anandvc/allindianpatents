@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/278864-method-and-apparatus-for-decoding-encoding-an-audio-signal by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 23:42:07 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 278864:METHOD AND APPARATUS FOR DECODING/ENCODING AN AUDIO SIGNAL</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD AND APPARATUS FOR DECODING/ENCODING AN AUDIO SIGNAL</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>The present invention is a method and an apparatus for processing an encoding signal capable of compressing and decompressing an audio signal at high efficiency. According to one embodiment of the present invention, an audio signal processing method is provided that includes discerning whether the coding type of an audio signal is a music signal coding type or not by using a first type information, discerning whether the coding type of the audio signal is a speech signal coding type or a mixed signal coding type by using a second type information, if the coding type of the audio signal is not a music signal coding type, extracting spectral data and linear prediction coefficients from the audio signal; if the coding type of the audio signal is a mixed signal coding type, generating a residual signal for linear prediction by performing Inverse Fourier Transform on the spectral data, decompressing the audio signal by linear prediction coding the linear prediction coefficients and the residual signal, and decompressing a high frequency area signal by using an extended base signal which is a partial area of the decompressed audio signal and bandwidth extension information. The method of the present invention enables a wide variety of audio signal types to be encoded and decoded at high efficiency.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br>
+<br>
+METHOD AMD APPARATUS FOR PROCESSING AH AUDIO SIGNAL<br>
+This is a continuation of International Application<br>
+FCT/KR2009/001081, with an international filing date of March 4,2009<br>
+BACKGROUND OF THE INVENTION<br>
+Field of the Invention<br>
+The present invention relates to an audio signal<br>
+processing apparatus for encoding and decoding various<br>
+kinds of audio signals effectively and method thereof.<br>
+Discussion of the Related Art<br>
+Generally, coding technologies are conventionally<br>
+classified into two types such as perceptual audio coders<br>
+and linear prediction based coders. For instance, the<br>
+perceptual audio coder optimized for music adopts a scheme<br>
+of reducing an information size in a coding process using<br>
+the masking principle, which is human aural psychoacoustic<br>
+theory, on a frequency axis. On the contrary, the linear<br>
+prediction based coder optimized for speech adopts a scheme<br>
+of reducing an information size by modeling speech<br>
+vocalization on a time axis.<br>
+However, each of the above-described technologies has<br>
+good performance on each optimized audio signal (e.g., a<br>
+speech signal, a music signal) but fails to provide<br>
+consistent performance on an audio signal generated from<br>
+ <br>
+complicatedly mixing different types of audio signals or<br>
+speech and music signals together.<br>
+SUMMARY OF THE INVENTION<br>
+Accordingly, the present invention is directed to an<br>
+apparatus for processing an audio signal and method thereof<br>
+that substantially obviate one or more of the problems due<br>
+to limitations and disadvantages of the related art.<br>
+An object of the present invention is to provide an<br>
+apparatus for processing an audio signal and method thereof,<br>
+by which different types of audio signals can be compressed<br>
+and/or reconstructed in higher efficiency.<br>
+Another object of the present invention is to provide<br>
+an audio coding scheme suitable for characteristics of an<br>
+audio signal.<br>
+Additional features and advantages of the invention<br>
+will be set forth in the description which follows, and in<br>
+part will be apparent from the description, or may be<br>
+learned by practice of the invention. The objectives and<br>
+other advantages of the invention will be realized and<br>
+attained by the structure particularly pointed out in the<br>
+written description and claims thereof as well as the<br>
+appended drawings.<br>
+To achieve these and other advantages and in<br>
+ <br>
+accordance with the purpose of the present invention, as<br>
+embodied and broadly described, a method of processing an<br>
+audio signal according to the present invention includes<br>
+the steps of identifying whether a coding type of the audio<br>
+signal is a music signal coding type using first type<br>
+information, if the coding type of the audio signal is not<br>
+the music signal coding type, identifying whether the<br>
+coding type of the audio signal is a speech signal coding<br>
+type or a mixed signal coding type using second type<br>
+information, if the coding type of the audio signal is the<br>
+mixed signal coding type, extracting spectral data and a<br>
+linear predictive coefficient from the audio signal,<br>
+generating a residual signal for linear prediction by<br>
+performing inverse frequency conversion on the spectral<br>
+data, reconstructing the audio signal by performing linear<br>
+prediction coding on the linear predictive coefficient and<br>
+the residual signal, and reconstructing a high frequency<br>
+region signal using an extension base signal corresponding<br>
+to a partial region of the reconstructed audio signal and<br>
+band extension information.<br>
+To further achieve these and other advantages and in<br>
+accordance with the purpose of the present invention, an<br>
+apparatus for processing an audio signal includes a<br>
+demultiplexer extracting first type information and second<br>
+ <br>
+type information from a bitstream, a decoder determining<br>
+unit identifying whether a coding type of the audio signal<br>
+is a music signal coding type using first type information,<br>
+the decoder, if the coding type of the audio signal is not<br>
+the music signal coding type, identifying whether the<br>
+coding type of the audio signal is a speech signal coding<br>
+type or a mixed signal coding type using second type<br>
+information, the decoder then determining a decoding scheme,<br>
+an information extracting unit, if the coding type of the<br>
+audio signal is the mixed signal coding type, extracting<br>
+spectral data and a linear predictive coefficient from the<br>
+audio signal, a frequency transforming unit generating a<br>
+residual signal for linear prediction by performing inverse<br>
+frequency conversion on the spectral data, a linear<br>
+prediction unit reconstructing the audio signal by<br>
+performing linear prediction coding on the linear<br>
+predictive coefficient and the residual signal, and a<br>
+bandwidth extension decoding unit reconstructing a high<br>
+frequency region signal using an extension base signal<br>
+corresponding to a partial region of the reconstructed<br>
+audio signal and band extension information.<br>
+Preferably, the audio signal includes a plurality of<br>
+subframes and wherein the second type information exists by<br>
+a unit of the subframe.<br>
+ <br>
+Preferably, a bandwidth of the high frequency region<br>
+signal is not equal to that of the extension base signal.<br>
+Preferably, the band extension information includes at<br>
+least one of a filter range applied to the reconstructed<br>
+audio signal, a start frequency of the extension base<br>
+signal and an end frequency of the extension base signal.<br>
+Preferably, if the coding type of the audio signal is<br>
+the music signal coding type, the audio signal comprises a<br>
+frequency-domain signal, wherein if the coding type of the<br>
+audio signal is the speech signal coding type, the audio<br>
+signal comprises a time-domain signal, and wherein if the<br>
+coding type of the audio signal is the mixed signal coding<br>
+type, the audio signal comprises an MDCT-domain signal.<br>
+Preferably, the linear predictive coefficient<br>
+extracting includes extracting a linear predictive<br>
+coefficient mode and extracting the linear predictive<br>
+coefficient having a variable bit size corresponding to the<br>
+extracted linear predictive coefficient mode.<br>
+It is to be understood that both the foregoing<br>
+general description and the following detailed description<br>
+are exemplary and explanatory and are intended to provide<br>
+further explanation of the invention as claimed.<br>
+ <br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+The accompanying drawings, which are included to<br>
+provide a further understanding of the invention and are<br>
+incorporated in and constitute a part of this specification,<br>
+illustrate embodiments of the invention and together with<br>
+the description serve to explain the principles of the<br>
+invention.<br>
+In the drawings:<br>
+FIG. 1 is a block diagram of an audio coding<br>
+apparatus according to one embodiment of the present<br>
+invention;<br>
+FIG. 2 is a block diagram of an audio coding<br>
+apparatus according to another embodiment of the present<br>
+invention;<br>
+FIG. 3 is a detailed block diagram of a bandwidth<br>
+preprocessing unit 150 according to an embodiment of the<br>
+present invention;<br>
+FIG. 4 is a flowchart for a method of coding an audio<br>
+signal using audio type information according to one<br>
+embodiment of the present invention;<br>
+FIG. 5 is a diagram for an example of an audio<br>
+bitstream structure coded according to the present<br>
+invention;<br>
+FIG. 6 is a block diagram of an audio decoding<br>
+ <br>
+apparatus according to one embodiment of the present<br>
+invention;<br>
+FIG. 7 is a block diagram of an audio decoding<br>
+apparatus according to another embodiment of the present<br>
+invention;<br>
+FIG. 8 is a detailed block diagram of a bandwidth<br>
+extending unit 250 according to an embodiment of the<br>
+present invention;<br>
+FIG. 9 is a diagram for a configuration of a product<br>
+implemented with an audio decoding apparatus according to<br>
+an embodiment of the present invention;<br>
+FIG. 10 is a diagram for an example of relations<br>
+between products implemented with an audio decoding<br>
+apparatus according to an embodiment of the present<br>
+invention; and<br>
+FIG. 11 is a flowchart for an audio decoding method<br>
+according to one embodiment of the present invention.<br>
+DETAILED DESCRIPTION OF THE INVENTION<br>
+Reference will now be made in detail to the preferred<br>
+embodiments of the present invention, examples of which are<br>
+illustrated in the accompanying drawings.<br>
+In the present invention, terminologies in the<br>
+present invention can be construed as the following<br>
+ <br>
+references. First of all, 'coding' can be occasionally<br>
+construed as encoding or decoding. Information is a<br>
+terminology that includes values, parameters, coefficients,<br>
+elements and the like.<br>
+Regarding the present invention, 'audio signal' in<br>
+the present invention is conceptionally discriminated from<br>
+a video signal. And, the audio signal indicates all signals<br>
+that can be aurally identified in reproduction. Therefore,<br>
+audio signals can be classified into a speech signal mainly<br>
+relevant to human vocalization or a signal similar to the<br>
+speech signal (hereinafter named 'speech signal'), a music<br>
+signal mainly relevant to a mechanical noise and sound or a<br>
+signal similar to the music signal (hereinafter named<br>
+'music signal'), and a 'mixed signal' generated from mixing<br>
+the speech signal and the music signal together. The<br>
+present invention intends to provide an apparatus for<br>
+encoding/decoding the above three types of audio signals<br>
+and method thereof in order to encode/decode the audio<br>
+signals to be suitable for characteristics of the audio<br>
+signals. Yet, the audio signals are classified for the<br>
+description of the present invention only. And, it is<br>
+apparent that the technical idea of the present invention<br>
+is identically applicable to a case of classifying the<br>
+audio signal according to a different method.<br>
+ <br>
+FIG. 1 is a block diagram of an audio coding<br>
+apparatus according to one preferred embodiment of the<br>
+present invention. In particular, FIG. 1 shows a process of<br>
+classifying an inputted audio signal according to a preset<br>
+reference and then coding the classified audio signal by<br>
+selecting an audio coding scheme suitable for the<br>
+corresponding audio signal.<br>
+Referring to FIG. 1, an audio coding apparatus<br>
+according to one preferred embodiment of the present<br>
+invention includes a signal classifying unit (sound<br>
+activity detector) 100 classifying an inputted audio signal<br>
+into a type of a speech signal, a music signal or a mixed<br>
+signal of speech and music by analyzing a characteristic of<br>
+the inputted audio signal, a linear prediction modeling<br>
+unit 110 coding the speech signal of the signal type<br>
+determined by the signal classifying unit 100, a<br>
+psychoacoustic model unit 120 coding the music signal, and<br>
+a mixed signal modeling unit 130 coding the mixed signal of<br>
+speech and music. And, the audio coding apparatus can<br>
+further include a switching unit 101 configured to select a<br>
+coding scheme suitable for the audio signal classified by<br>
+the signal classifying unit 100. The switching unit 101 is<br>
+operated using audio signal coding type information (e.g.,<br>
+first type information and second type information, which<br>
+ <br>
+will be explained in detail with reference to FIG. 2 and<br>
+Fig. 3) generated by the signal classifying unit 100 as a<br>
+control signal. Moreover, the mixed signal modeling unit<br>
+130 can include a linear prediction unit 131, a residual<br>
+signal extracting unit 132 and a frequency transforming<br>
+unit 133. In the following description, the respective<br>
+elements shown in FIG. 1 are explained in detail.<br>
+First of all, the signal classifying unit 100<br>
+classifies a type of an inputted audio signal and then<br>
+generates a control signal to select an audio coding scheme<br>
+suitable for the classified type. For instance, the signal<br>
+classifying unit 100 classifies whether an inputted audio<br>
+signal is a music signal, a speech signal or a mixed signal<br>
+of speech and music. Thus, the type of the inputted audio<br>
+signal is classified to select an optimal coding scheme per<br>
+audio signal type from audio coding schemes which will be<br>
+explained later. Therefore, the signal classifying unit 100<br>
+performs a process of analyzing an inputted audio signal<br>
+and then selecting an audio coding scheme optimal for the<br>
+inputted audio signal. For instance, the signal classifying<br>
+unit 100 generates audio coding type information by<br>
+analyzing an inputted audio signal. The generated audio<br>
+coding type information is utilized as a reference for<br>
+selecting a coding scheme. The generated audio coding type<br>
+ <br>
+information is included as a bitstream in a finally-coded<br>
+audio signal and is then transferred to a decoding or<br>
+receiving device. Besides, a decoding method and apparatus<br>
+using the audio coding type information will be explained<br>
+in detail with reference to FIGs. 6 to 8 and FIG. 11.<br>
+Moreover, the audio coding type information generated by<br>
+the signal classifying unit 100 can include first type<br>
+information and second type information for example. This<br>
+will be described with reference to FIG. 4 and FIG. 5.<br>
+The signal classifying unit 100 determines an audio<br>
+signal type according to a characteristic of an inputted<br>
+audio signal. For instance, if the inputted audio signal is<br>
+a signal better for modeling with a specific coefficient<br>
+and a residual signal, the signal classifying unit 100<br>
+determines the inputted audio signal as a speech signal. If<br>
+the inputted audio signal is a signal poor for modeling<br>
+with a specific coefficient and a residual signal, the<br>
+signal classifying unit 100 determines the inputted audio<br>
+signal as a music signal. If it is difficult to determine<br>
+the inputted audio signal as a speech signal or a music<br>
+signal, the signal classifying unit 100 determines the<br>
+inputted audio signal as a mixed signal. Regarding a<br>
+detailed determination reference, for example, when the<br>
+signal is modeled with a specific coefficient and a<br>
+ <br>
+residual signal, if an energy level ratio of the residual<br>
+signal to the signal is smaller than a preset reference<br>
+value, the signal can be determined as a signal good for<br>
+modeling. Therefore, the signal can be determined as a<br>
+speech signal. If the signal has high redundancy on a time<br>
+axis, the signal can be determined as a signal good for<br>
+modeling by linear prediction for predicting a current<br>
+signal from a past signal. Therefore, the signal can be<br>
+determined as a music signal.<br>
+If a signal inputted according to this reference is<br>
+determined as a speech signal, it is able to code an input<br>
+signal using a speech coder optimized for the speech signal.<br>
+According to the present embodiment, the linear prediction<br>
+modeling unit 100 is used for a coding scheme suitable for<br>
+a speech signal. The linear prediction modeling unit 100 is<br>
+provided with various schemes. For instance, ACELP<br>
+(algebraic code excited linear prediction) coding scheme,<br>
+AMR (adaptive multi-rate) coding scheme or AMR-WB (adaptive<br>
+multi-rate wideband) coding scheme is applicable to the<br>
+linear prediction modeling unit 110.<br>
+The linear prediction modeling unit 110 is able to<br>
+perform linear prediction coding on an inputted audio<br>
+signal by frame unit. The linear prediction modeling unit<br>
+110 extracts a predictive coefficient per frame and then<br>
+ <br>
+quantizes the extracted predictive coefficient. For<br>
+instance, a scheme of extracting a predictive coefficient<br>
+using 'Levinson-Durbin algorithm' is widely used in general.<br>
+In particular, if an inputted audio signal is<br>
+constructed with a plurality of frames or there exist a<br>
+plurality of super frames, each of which has a unit of a<br>
+plurality of frames, for example, it is able to determine<br>
+whether to apply a linear prediction modeling scheme per<br>
+frame. It is possible to apply a different linear<br>
+prediction modeling scheme per unit frame existing within<br>
+one super frame or per sub frame of a unit frame. This can<br>
+raise coding efficiency of an audio signal.<br>
+Meanwhile, if an inputted audio signal is classified<br>
+into a music signal by the signal classifying unit 100, it<br>
+is able to code an input signal using a music coder<br>
+optimized for the music signal. The psychoacoustic modeling<br>
+unit 120 is configured based on a perceptual audio coder.<br>
+Meanwhile, if an inputted audio signal is classified<br>
+into a mixed signal, in which speech and music are mixed<br>
+together, by the signal classifying unit 100, it is able to<br>
+code an input signal using a coder optimized for the mixed<br>
+signal. According to the present embodiment, the mixed<br>
+signal modeling unit 130 is used for a coding scheme<br>
+suitable for a mixed signal.<br>
+ <br>
+The mixed signal modeling unit 130 is able to perform<br>
+coding by a mixed scheme resulting from mixing the<br>
+aforesaid linear prediction modeling scheme and the<br>
+psychoacoustic modeling scheme together. In particular, the<br>
+mixed signal modeling unit 130 performs linear prediction<br>
+coding on an input signal, obtains a residual signal<br>
+amounting to a difference between a linear prediction<br>
+result signal and an original signal, and then codes the<br>
+residual signal by a frequency transform coding scheme.<br>
+For instance, FIG. 1 shows an example that the mixed<br>
+signal modeling unit 130 includes the linear prediction<br>
+unit 131, the residual signal extracting unit 132 and the<br>
+frequency transforming unit 133.<br>
+The linear prediction unit 131 performs linear<br>
+predictive analysis on an inputted signal and then extracts<br>
+a linear predictive coefficient indicating a characteristic<br>
+of the signal. The residual signal extracting unit 132<br>
+extracts a residual signal, from which a redundancy<br>
+component is removed, from the inputted signal using the<br>
+extracted linear predictive coefficient. Since the<br>
+redundancy is removed from the residual signal, the<br>
+corresponding residual signal can have a type of a white<br>
+noise. The linear prediction unit 131 is able to perform<br>
+linear prediction coding on an inputted audio signal by<br>
+ <br>
+frame unit. The linear prediction unit 131 extracts a<br>
+predictive coefficient per frame and then quantizes the<br>
+extracted predictive coefficient. For instance, in<br>
+particular, if an inputted audio signal is constructed with<br>
+a plurality of frames or there exist a plurality of super<br>
+frames, each of which has a unit of a plurality of frames,<br>
+it is able to determine whether to apply a linear<br>
+prediction modeling scheme per frame. It is possible to<br>
+apply a different linear prediction modeling scheme per<br>
+unit frame existing within one super frame or per subframe<br>
+of a unit frame. This can raise coding efficiency of an<br>
+audio signal.<br>
+The residual signal extracting unit 132 receives an<br>
+input of a remaining signal coded by the linear prediction<br>
+unit 131 and an input of an original audio signal having<br>
+passed through the signal classifying unit 100 and then<br>
+extracts a residual signal that is a difference signal<br>
+between the two inputted signals.<br>
+The frequency transforming unit 133 calculates a<br>
+masking threshold or a signal-to-mask ratio (SMR) by<br>
+performing frequency domain transform on an inputted<br>
+residual signal by MDCT or the like and then codes the<br>
+residual signal. The frequency transforming unit 133 is<br>
+able to code a signal of a residual audio tendency using<br>
+ <br>
+TCX as well as the psychoacouatic modeling.<br>
+As the linear prediction modeling unit 100 and the<br>
+linear prediction unit 131 extract an audio characteristic<br>
+reflected linear predictive coefficient (LPC) by performing<br>
+linear prediction and analysis on an inputted audio signal,<br>
+it is able to consider a scheme of using variable bits for<br>
+a method of transferring the LPC data.<br>
+For instance, an LPC data mode is determined by<br>
+considering a coding scheme per frame. It is then able to<br>
+assign a linear predictive coefficient having a viable bit<br>
+number per the determined LPC data mode. Through this, an<br>
+overall audio bit number is reduced. Therefore, audio<br>
+coding and decoding can be performed more efficiently.<br>
+Meanwhile, as mentioned in the foregoing description,<br>
+the signal classifying unit 100 generates coding type<br>
+information of an audio signal by classifying the audio<br>
+signal into one of two types of the coding type information,<br>
+enables the coding type information to be included in a<br>
+bitstream, and then transfers the bitstream to a decoding<br>
+apparatus. In the following description, audio coding type<br>
+information according to the present invention is explained<br>
+in detail with reference to FIG. 4 and FIG. 5.<br>
+FIG. 4 is a flowchart for a method of coding an audio<br>
+signal using audio type information according to one<br>
+ <br>
+preferred embodiment of the present invention.<br>
+First of all, the present invention proposes a method<br>
+of representing a type of an audio signal in a manner of<br>
+using first type information and second type information<br>
+for classification. For instance, if an inputted audio<br>
+signal is determined as a music signal [S100], the signal<br>
+classifying unit 100 controls the switching unit 101 to<br>
+select a coding scheme (e.g., psychoacoustic modeling<br>
+scheme shown in FIG. 2) suitable for the music signal and<br>
+then enables coding to be performed according to the<br>
+selected coding scheme [S110]. Thereafter, the<br>
+corresponding control information is configured as first<br>
+type information and is then transferred by being included<br>
+in a coded audio bitstream. Therefore, the first type<br>
+information plays a role as coding identification<br>
+information indicating that a coding type of an audio<br>
+signal is a music signal coding type. The first type<br>
+information is utilized in decoding an audio signal<br>
+according to a decoding method and apparatus.<br>
+Moreover, if the inputted signal is determined as a<br>
+speech signal [S120], the signal classifying unit 100<br>
+controls the switching unit 101 to select a coding scheme<br>
+(e.g., linear prediction modeling shown in FIG. 1) suitable<br>
+for the speech signal and then enables coding to be<br>
+ <br>
+performed according to the selected coding scheme [S130].<br>
+If the inputted signal is determined as a mixed signal<br>
+[S120], the signal classifying unit 100 controls the<br>
+switching unit 101 to select a coding scheme (e.g., mixed<br>
+signal modeling shown in FIG. 2) suitable for the mixed<br>
+signal and then enables coding to be performed according to<br>
+the selected coding scheme [S140]. Subsequently, control<br>
+information indicating either the speech signal coding type<br>
+or the mixed signal coding type is configured into second<br>
+type information. The second type is then transferred by<br>
+being included in a coded audio bitstream together with the<br>
+first type information. Therefore, the second type<br>
+information plays a role as coding identification<br>
+information indicating that a coding type of an audio<br>
+signal is either a speech signal coding type or a mixed<br>
+signal coding type. The second type information is utilized<br>
+together with the aforesaid first type information in<br>
+decoding an audio signal according to a decoding method and<br>
+apparatus.<br>
+Regarding the first type information and the second<br>
+type information, there are two cases according to<br>
+characteristics of inputted audio signals. Namely, the<br>
+first information needs to be transferred only or both of<br>
+the first type information and the second type information<br>
+ <br>
+need to be transferred. For instance, if a type of an<br>
+inputted audio signal is a music signal coding type, the<br>
+first type information is transferred only by being<br>
+included in a bitstream and the second type information may<br>
+not be included in the bitstream [ (a) of FIG. 5] . Namely,<br>
+the second type information is included in a bitstream only<br>
+if an inputted audio signal coding type is a speech signal<br>
+coding type or a mixed signal coding type. Therefore, it is<br>
+able to prevent the unnecessary bit number to represent a<br>
+coding type of an audio signal.<br>
+Although the example of the present invention teaches<br>
+that the first type information indicates a presence or<br>
+non-presence of a music signal type, it is just exemplary.<br>
+And, it is apparent that the first type information is<br>
+usable as information indicating a speech signal coding<br>
+type or a mixed signal coding type. Thus, by utilizing an<br>
+audio coding type having probability of high occurrence<br>
+frequency according to a coding environment to which the<br>
+present invention is applied, it is able to reduce an<br>
+overall bit number of a bitstream.<br>
+FIG. 5 is a diagram for an example of an audio<br>
+bitstream structure coded according to the present<br>
+invention.<br>
+Referring to (a) of FIG. 5, an inputted audio signal<br>
+ <br>
+corresponds to a music signal. First type information 301<br>
+is included in a bitstream only but second type information<br>
+is not included therein. Within the bitstream, audio data<br>
+coded by a coding type corresponding to the first type<br>
+information 301 is included (e.g., AAC bitstream 302).<br>
+Referring to (b) of FIG. 5, an inputted audio signal<br>
+corresponds to a speech signal. Both first type information<br>
+311	and second type information 312 are included in a<br>
+bibstream. Within the bitstream, audio data coded by a<br>
+coding type corresponding to the second type information<br>
+312	is included (e.g., AMR bitstream 313).<br>
+Referring to (c) of FIG. 5, an inputted audio signal<br>
+corresponds to a mixed signal. Both first type information<br>
+321	and second type information 322 are included in a<br>
+bitstream. Within the bitstream, audio data coded by a<br>
+coding type corresponding to the second type information<br>
+322	is included (e.g., TCX applied AAC bitstream 323).<br>
+Regarding this description, the information included<br>
+in an audio bitstream coded by the present invention is<br>
+exemplarily shown in (a) to (c) of FIG. 5. And, it is<br>
+apparent that various applications are possible within the<br>
+range of the present invention. For instance, in the<br>
+present invention, examples of AMR and AAC are taken as<br>
+examples of coding schemes by adding information for<br>
+ <br>
+identifying the corresponding coding schemes. Further,<br>
+various coding schemes are applicable and coding<br>
+identification information for identifying the various<br>
+coding schemes are variously available as well. Besides,<br>
+the present invention shown in (a) to (c) of FIG. 5 is<br>
+applicable to one super frame, unit frame and subframe.<br>
+Namely, the present invention is able to provide audio<br>
+signal coding type information per preset frame unit.<br>
+In the following description, an audio signal coding<br>
+method and apparatus, in which a coding processing process<br>
+is included, according to another embodiment of the present<br>
+invention are explained with reference to FIG. 2 and FIG. 3.<br>
+First of all, as a preprocessing process of an input<br>
+signal using the linear prediction modeling unit 110, the<br>
+psychoacoustic modeling unit 120 and the mixed signal<br>
+modeling unit 130, a frequency bandwidth extending process<br>
+and a channel number changing process can be performed.<br>
+For instance, as one embodiment of the frequency band<br>
+extending process, a bandwidth preprocessing unit ( '150' in<br>
+FIG. 2) is able to generate a high frequency component<br>
+using a low frequency component. As an example of the<br>
+bandwidth processing unit, it is able to use SBR (spectral<br>
+band replication) and HBE (high band extension), which are<br>
+modified and enhanced.<br>
+ <br>
+Moreover, the channel number changing process reduces<br>
+a bit allocation size by coding channel information of an<br>
+audio signal into side information. As one embodiment of<br>
+the channel number changing process, it is able to use a<br>
+downmix channel generating unit ('140' in FIG. 2). The<br>
+downmix channel generating unit 140 is able to adopt a PS<br>
+(parametric stereo) system. In this case, PS is a scheme<br>
+for coding a stereo signal and downmixes a stereo signal<br>
+into a mono signal. The downmix channel generating unit 140<br>
+generates a downmix signal and spatial information relevant<br>
+to reconstruction of the downmixed signal.<br>
+According to one embodiment, if a 48 kHz stereo<br>
+signal is transferred using SBR and PS (parametric stereo),<br>
+a mono 24 kHz signal remains through the SBR/PS. This mono<br>
+signal can be encoded by an encoder. Thus, the input signal<br>
+of the encoder has 24 kHz. This is because a high frequency<br>
+component is coded by SBR and is downsampled into a half of<br>
+a previous frequency. Thus, input signal becomes the mono<br>
+signal. This is because a stereo audio is extracted as a<br>
+parameter through the PS (parametric stereo) to be changed<br>
+into a sum of the mono signal and an additional audio.<br>
+FIG. 2 relates to a coding pre-processing process and<br>
+shows a coding apparatus including the above-described<br>
+downmix channel generating unit 140 and the above-described<br>
+ <br>
+bandwidth preprocessing unit 150.<br>
+Operations of the linear prediction modeling unit 110,<br>
+the psychoacoustic modeling unit 120, the mixed signal<br>
+modeling unit 130 and the switching unit 101, which are<br>
+described with reference to FIG. 1, are identically applied<br>
+to operations of the corresponding elements shown in FIG. 2.<br>
+Moreover, although the signal classifying unit 100<br>
+generates control signal for controlling an activation of<br>
+the downmix channel generating unit 140 and the bandwidth<br>
+preprocessing unit 150.<br>
+In other words, the signal classifying unit 100<br>
+further generates a control signal 100a for controlling an<br>
+presence or non-presence of activation of the downmix<br>
+channel generating unit 140 and an operative range of the<br>
+downmix channel generating unit 140 and a control signal<br>
+100b for controlling an presence or non-presence of<br>
+activation of the bandwidth preprocessing unit 150 and an<br>
+operative range of the bandwidth preprocessing unit 150.<br>
+FIG. 3 is a detailed block diagram of a bandwidth<br>
+preprocessing unit 150 according to an embodiment of the<br>
+present invention.<br>
+Referring to FIG. 3, a bandwidth preprocessing unit<br>
+150 for band extension includes a high frequency region<br>
+removing unit 151, an extension information generating unit<br>
+ <br>
+152 and a spatial information inserting unit 153. The high<br>
+frequency region removing unit 151 receives a downmix<br>
+signal and spatial information from the downmix channel<br>
+generating unit 140. The high frequency region removing<br>
+unit 151 generates a low frequency downmix signal, which<br>
+results from removing a high frequency signal corresponding<br>
+to a high frequency region from a frequency signal of the<br>
+downmix signal, and reconstruction information including a<br>
+start frequency and end frequency of an extension base<br>
+signal (described later).<br>
+In this case, it is able to determine the<br>
+reconstruction information based on a characteristic of an<br>
+input signal. Generally, a start frequency of a high<br>
+frequency signal is a frequency amounting to a half of a<br>
+whole bandwidth. On the contrary, according to a<br>
+characteristic of an input signal, the reconstruction<br>
+information can determine a start frequency as a frequency<br>
+above or below a half of a whole frequency band. For<br>
+instance, if using a whole bandwidth signal of the downmix<br>
+signal is more efficient than encoding the downmix signal<br>
+by removing a high frequency region using a bandwidth<br>
+extension technique, the reconstruction information is able<br>
+to represent a start frequency as a frequency located at an<br>
+end of a bandwidth. It is able to determine the<br>
+ <br>
+reconstruction information using at least one of a signal<br>
+size, a length of segment used for coding and a type of a<br>
+source, by which the present invention is non-limited.<br>
+The extension information generating unit 152<br>
+generates extension information for determining an<br>
+extension base signal, which will be used for decoding,<br>
+using the downmix signal and the spatial information<br>
+generated by the downmix channel generating unit 140. The<br>
+extension base signal is a frequency signal of a downmix<br>
+signal, which is used to reconstruct the high frequency<br>
+signal of the downmix signal removed by the high frequency<br>
+region removing unit 151 in decoding. And, the extension<br>
+base signal may be a low frequency signal or a partial<br>
+signal of the low frequency signal. For instance, if is<br>
+able to divide a low frequency signal into a low frequency<br>
+band region and a middle frequency band region again by<br>
+performing band-pass filtering on the downmix signal. In<br>
+doing so, it is able to generate extension information<br>
+using the low frequency band region only. A boundary<br>
+frequency for discriminating the low frequency band region<br>
+and the middle frequency band region can be set to a random<br>
+fixed value. Alternatively, the boundary frequency can be<br>
+variably set per frame according to information for<br>
+analyzing a ratio of speech and music for a mixed signal.<br>
+ <br>
+The extension information may match information on a<br>
+downmix signal not removed by the high frequency region<br>
+removing unit 151, by which the present invention is non-<br>
+limited. And, the extension information may be the<br>
+information on a partial signal of the downmix signal. If<br>
+the extension information is the information on a partial<br>
+signal of the downmix signa], it can include a start<br>
+frequency and an end frequency of the extension base signal<br>
+and can further include a range of a filter applied to the<br>
+frequency signal of the downmix signal.<br>
+The spatial information inserting unit 153 generates<br>
+new spatial information resulting from inserting the<br>
+reconstruction information generated by the high frequency<br>
+region removing unit 121 and the extension information<br>
+generated by the extension information generating unit 122<br>
+into the spatial information generated by the downmix<br>
+channel generating unit 140.<br>
+FIG. 6 is a block diagram of an audio decoding<br>
+apparatus according to one embodiment of the present<br>
+invention.<br>
+Referring to FIG. 6, a decoding apparatus is able to<br>
+reconstruct a signal from an inputted bitstream by<br>
+performing a process reverse to the coding process<br>
+performed by the coding apparatus described with reference<br>
+ <br>
+to FIG. 1. In particular, the decoding apparatus can<br>
+include a demultiplexer 210, a decoder determining unit 220,<br>
+a decoding unit 230 and a synthesizing unit 240. The<br>
+decoding unit 230 can include a plurality of decoding units<br>
+231, 232 and 233 to perform decoding by different schemes,<br>
+respectively. And, they are operated under the control of<br>
+the decoder determining unit 220. In more particular, the<br>
+decoding unit 230 can include a linear prediction decoding<br>
+unit 231, a psychoacoustic decoding unit 232 and a mixed<br>
+signal decoding unit 233. Moreover, the mixed signal<br>
+decoding unit 233 can include an information extracting<br>
+unit 234, a frequency transforming unit 235 and a linear<br>
+prediction unit 236.<br>
+The demultiplexer 210 extracts a plurality of coded<br>
+signals and side information from an inputted bitstream. In<br>
+this case, the side information is extracted to reconstruct<br>
+the signals. The demultiplexer 210 extracts the side<br>
+information, which is included in the bitstream, e.g.,<br>
+first type information and second type information (just<br>
+included if necessary) and then transfers the extracted<br>
+side information to the decoder determining unit 220.<br>
+The decoder determining unit 220 determines one of<br>
+decoding schemes within the decoding units 231, 232 and 233<br>
+from the received first type information and the received<br>
+ <br>
+second type information (just included if necessary).<br>
+Although the decoder determining unit 220 is able to<br>
+determine the decoding scheme using the side information<br>
+extracted from the bitstream, if the side information does<br>
+not exist within the bitstream, the decoder determining<br>
+unit 220 is able to determined scheme by an independent<br>
+determining method. This determining method can be<br>
+performed in a manner of utilizing the features of the<br>
+aforesaid signal classifying unit (cf. '100' in FIG. 1).<br>
+The linear prediction decoder 231 within the decoding<br>
+unit 230 is able to decode a speech signal type of an audio<br>
+signal. The psychoacoustic decoder 233 decodes a music<br>
+signal type of an audio signal. And, the mixed signal<br>
+decoder 233 decodes a speech &amp; music mixed type of an audio<br>
+signal. In particular, the mixed signal decoder 233<br>
+includes an information extracting unit 234 extracting<br>
+spectral data and a linear predictive coefficient from an<br>
+audio signal, a frequency transforming unit 235 generating<br>
+a residual signal for linear prediction by inverse-<br>
+transforming the spectral data, and a linear prediction<br>
+unit 236 generating an output signal by performing linear<br>
+predictive coding on the linear predictive coefficient and<br>
+the residual signal. The decoded signals are reconstructed<br>
+into an audio signal before coding by being synthesized<br>
+ <br>
+together by the synthesizing unit 240.<br>
+FIG. 7 shows a decoding apparatus according to one<br>
+embodiment of the present invention, which relates to a<br>
+post-processing process of a coded audio signal. The post-<br>
+processing process means a process for performing bandwidth<br>
+extension and channel number change for a decoded audio<br>
+signal using one of the linear prediction decoding unit 231,<br>
+the psychoacoustic decoding unit 232 and the mixed signal<br>
+decoding unit 233. The post-processing process can include<br>
+a bandwidth extension decoding unit 250 and a multi-channel<br>
+generating unit 260 to correspond to the aforesaid downmix<br>
+channel generating unit 140 and the aforesaid bandwidth<br>
+preprocessing unit 150 shown in FIG. 2.<br>
+FIG. 8 shows a detailed configuration of the<br>
+bandwidth extension decoding unit 250.<br>
+In a frequency band extending process, the<br>
+demultiplexer 210 extracts the extension information<br>
+generated by the bandwidth preprocessing unit 150 from the<br>
+bitstream and the extracted extension information is<br>
+utilized. And, spectral data of a different band (e.g., a<br>
+high frequency band) is generated from a portion of the<br>
+spectral data or the whole spectral data using the<br>
+extension information included in the audio signal<br>
+bitstream. In this case, units having similar<br>
+ <br>
+characteristics can be grouped into a block in extending<br>
+the frequency band. This is the same method of generating<br>
+an envelope region by grouping type slots (or, samples)<br>
+having a common envelope (or an envelope characteristic) .<br>
+Referring to FIG. 8, a bandwidth extension decoding<br>
+unit 250 includes an extension base region determining unit<br>
+251, a high frequency region reconstructing unit 252 and a<br>
+bandwidth extending unit 253.<br>
+The extension region determining unit 251 determines<br>
+an extension base region in a received downmix signal based<br>
+on the received extension information and then generates an<br>
+extension base signal as a result of the determination. The<br>
+downmix signal may be a signal in a frequency domain and<br>
+the extension base signal means a partial frequency region<br>
+in the downmix signal of the frequency domain. Therefore,<br>
+the extension information is used to determine the<br>
+extension base signal and may include start and end<br>
+frequencies of the extension base signal or a range of<br>
+filter for filtering a portion of the downmix signal.<br>
+The high frequency region reconstructing unit 252<br>
+receives a downmix signal and extension information and<br>
+also receives the extension base signal. The high frequency<br>
+region reconstructing unit 252 is then able to reconstruct<br>
+a high frequency region signal of the downmix signal, which<br>
+ <br>
+was removed by the coding side, using the extension base<br>
+signal and the extension information. The high frequency<br>
+region signal may not be included in the downmix signal but<br>
+may be included in an original signal. The high frequency<br>
+region signal may not be an integer multiple of the downmix<br>
+signal and a bandwidth of the high frequency region signal<br>
+may not be equal to that of the extension base signal.<br>
+In a bandwidth extending apparatus and method<br>
+according to one embodiment of the present invention, even<br>
+if a reconstructed high frequency region is not an integer<br>
+multiple of the downmix signal, it is able to use the<br>
+bandwidth extending technique in a manner of using a signal<br>
+corresponding to a partial frequency region in the downmix<br>
+signal as the extension base signal instead of using the<br>
+whole downmix signal of which high frequency region was<br>
+removed by the coding side.<br>
+The high frequency region reconstructing unit 252 can<br>
+further include a time extension downmix signal generating<br>
+unit (not shown in the drawing) and a frequency signal<br>
+extending unit (not shown in the drawing). The time<br>
+extension downmix signal generating unit is able to extend<br>
+the downmix signal into a time domain by applying the<br>
+extension information to the extension base signal. The<br>
+frequency signal extending unit is able to extend a signal<br>
+ <br>
+in a frequency region of the downmix signal by reducing the<br>
+sample number of the time extension downmix signal<br>
+(decomation)<br>
+If the high frequency region reconstructing unit 252<br>
+includes a reconstructed high frequency region signal only<br>
+but does not include a low frequency region signal, the<br>
+bandwidth extending unit 253 generates an extension downmix<br>
+signal, of which bandwidth is extended, by combining the<br>
+downmix signal and the high frequency region signal<br>
+together. The high frequency region signal may not be an<br>
+integer multiple of the downmix signal. Therefore, the<br>
+bandwidth extending technique according to one embodiment<br>
+of the present invention is usable for upsampling into a<br>
+signal now in a multiple relation.<br>
+The extension downmix signal, which is finally<br>
+generated by the bandwidth extending unit 253, is inputted<br>
+to the multi-channel generating unit 260 to be converted to<br>
+a multi-channel signal.<br>
+In the following description, a decoding method<br>
+according to the present invention is explained in detail<br>
+with reference to a flowchart shown in FIG. 11.<br>
+First of all, the demultiplexer 210 extracts first<br>
+type information and second type information (if necessary)<br>
+from an inputted bitstream. Moreover, the demultiplexer 210<br>
+ <br>
+extracts informations (e.g., band extension information,<br>
+reconstruction information, etc.) for a post-processing<br>
+process. The decoder determining unit 220 determines a<br>
+coding type of a received audio signal using the first type<br>
+information of the extracted information in the first place<br>
+[S1000]. If a coding type of the received audio signal is a<br>
+music signal coding type, the psychoacoustic decoding unit<br>
+232 within the decoding unit 230 is utilized. A coding<br>
+scheme applied per frame or subframe is determined<br>
+according to the first type information. Decoding is then<br>
+performed by applying a suitable coding scheme [S1100] .<br>
+If it is determined that the coding type of the<br>
+received audio signal is not the music signal coding type<br>
+using the first type information, the decoder determining<br>
+unit 220 determines whether the coding type of the received<br>
+audio signal is a speech signal coding type or a mixed<br>
+signal coding type using the second type information<br>
+[S1200].<br>
+If the second type information means the speech<br>
+signal coding type, the coding scheme applied per frame or<br>
+subframe is determined by utilizing coding identification<br>
+information extracted from the bitstream in a manner of<br>
+utilizing the linear prediction decoding unit 231 within<br>
+the decoding unit 230. Decoding is then performed by<br>
+ <br>
+applying a suitable coding scheme [S1300].<br>
+If the second type information means the mixed signal<br>
+coding type, the coding scheme applied per frame or<br>
+subframe is determined by utilizing coding identification<br>
+information extracted from the bitstream in a manner of<br>
+utilizing the mixed signal decoding unit 233 within the<br>
+decoding unit 230. Decoding is then performed by applying a<br>
+suitable coding scheme [S1400].<br>
+Besides, as a post-processing of the audio signal<br>
+decoding process using the linear prediction decoding unit<br>
+231, the psychoacoustic decoding unit 232 and the mixed<br>
+signal decoding unit 233, a bandwidth extension decoding<br>
+unit 250 can perform a frequency band extending process<br>
+[S1500]. The frequency band extending process is performed<br>
+in a manner that the bandwidth extension decoding unit 250<br>
+generates spectral data of a different band (e.g., a high<br>
+frequency band) from a portion of the spectral data or the<br>
+whole spectral data by decoding bandwidth extension<br>
+information extracted from an audio signal bitstream.<br>
+Subsequently, the multi-channel generating unit 260<br>
+can perform a process for generating a multi-channel for<br>
+the bandwidth-extended audio signal generated after the<br>
+band extending process [S1600].<br>
+FIG. 9 is a diagram for a configuration of a product<br>
+ <br>
+implemented with an audio decoding apparatus according to<br>
+an embodiment of the present invention. And, FIG. 10 is a<br>
+diagram for an example of relations between products<br>
+implemented with an audio decoding apparatus according to<br>
+an embodiment of the present invention.<br>
+Referring to FIG. 9, a wire/wireless communication<br>
+unit 910 receives a bitstream through a wire/wireless<br>
+communication system. In particular, the wire/wireless<br>
+communication unit 910 can include at least one of a wire<br>
+communication unit 910A, an IR (infrared) communication<br>
+unit 910B, a Bluetooth unit 910C and a wireless LAN<br>
+communication unit 910D.<br>
+A user authenticating unit 920 receives an input of<br>
+user information and then performs user authentication. The<br>
+user authenticating unit 920 can include at least one of a<br>
+fingerprint recognizing unit 920A, an iris recognizing unit<br>
+920B, a face recognizing unit 920C and a speech recognizing<br>
+unit 920D. The user authenticating unit 920 is able to<br>
+perform the user authentication in a manner of inputting<br>
+fingerprint/iris/face contour/speech information to the<br>
+corresponding recognizing unit 920A/920B/920C/920D,<br>
+converting the inputted information to user information and<br>
+then determining whether the user information matches<br>
+previously-registered user data.<br>
+ <br>
+An input unit 930 is an input device for enabling a<br>
+user to input various kinds of commands. The input unit 930<br>
+is able to include at least one of a keypad unit 930A, a<br>
+touchpad unit 930B and a remote controller unit 930C, by<br>
+which the present invention is non-limited. A signal<br>
+decoding unit 940 analyzes signal characteristics using a<br>
+received bitstream and frame type information.<br>
+A signal decoding unit 940 may includes audio<br>
+decoding apparatus 945 which may be audio decoding<br>
+apparatus described with reference to FIG. 6. The audio<br>
+decoding apparatus 945 decides at least one of different<br>
+schemes and performs decoding using at least one of a<br>
+linear prediction decoding unit, a psychoacoustic decoding<br>
+unit and a mixed signal decoding unit. The signal decoding<br>
+unit 940 outputs an output signal by decoding a signal<br>
+using a decoding unit corresponding to the signal<br>
+characteristic.<br>
+A control unit 950 receives input signals from input<br>
+devices and controls all processes of the signal decoding<br>
+unit 940 and an output unit 960. And, the output unit 960<br>
+is an element for outputting the output signal generated by<br>
+the signal decoding unit 940 or the like. The output unit<br>
+960 is able to include a speaker unit 960A and a display<br>
+unit 960B. If an output signal is an audio signal, it is<br>
+ <br>
+outputted to a speaker. If an output signal is a video<br>
+signal, it is outputted via a display.<br>
+FIG. 10 shows relations between a terminal and a<br>
+server corresponding to the products shown in FIG. 9.<br>
+Referring to (A) of FIG. 10, it can be observed that a<br>
+first terminal 1001 and a second terminal 1002 are able to<br>
+bi-directionally communicate with each other via a<br>
+wire/wireless communication unit to exchange data and/or<br>
+bitstreams. Referring to (B) of FIG. 10, it can be observed<br>
+that a server 1003 and a first terminal 1001 are able to<br>
+perform wire/wireless communications.<br>
+An audio signal processing method according to the<br>
+present invention can be implemented into a program to be<br>
+run in a computer and can be stored in a computer-readable<br>
+recording medium. And, multimedia data having a data<br>
+structure according to the present invention can be stored<br>
+in a computer-readable recording medium as well. The<br>
+computer-readable media include all kinds of recording<br>
+devices in which data readable by a computer system are<br>
+stored. The computer-readable media include ROM, RAM, CD-<br>
+ROM, magnetic tapes, floppy discs, optical data storage<br>
+devices, and the like for example and also include carrier-<br>
+wave type implementations (e.g., transmission via Internet).<br>
+Moreover, a bitstream generated by the encoding method is<br>
+ <br>
+stored in a computer-readable recording medium or can be<br>
+transmitted via wire/wireless communication network.<br>
+Accordingly, the present invention provides the<br>
+following effects or advantages.<br>
+First of all, the present invention classifies audio<br>
+signals into different types and provides an audio coding<br>
+scheme suitable for characteristics of the classified audio<br>
+signals, thereby enabling more efficient compression and<br>
+reconstruction of an audio signal.<br>
+While the present invention has been described and<br>
+illustrated herein with reference to the preferred<br>
+embodiments thereof, it will be apparent to those skilled<br>
+in the art that various modifications and variations can be<br>
+made therein without departing from the spirit and scope of<br>
+the invention. Thus, it is intended that the present<br>
+invention covers the modifications and variations of this<br>
+invention that come within the scope of the appended claims<br>
+and their equivalents.<br>
+ <br>
+WHAT IS CLAIMED IS:<br>
+1. In an audio signal processing apparatus<br>
+including an audio decoder, a method of processing an audio<br>
+signal, comprising the steps of:<br>
+identifying whether a coding type of the audio signal<br>
+is a music signal coding type using first type information;<br>
+if the coding type of the audio signal is not the<br>
+music signal coding type, identifying whether the coding<br>
+type of the audio signal is a speech signal coding type or<br>
+a mixed signal coding type using second type information;<br>
+if the coding type of the audio signal is the mixed<br>
+signal coding type, extracting spectral data and a linear<br>
+predictive coefficient from the audio signal;<br>
+generating a residual signal for linear prediction by<br>
+performing inverse frequency conversion on the spectral<br>
+data;<br>
+reconstructing the audio signal by performing linear<br>
+prediction coding on the linear predictive coefficient and<br>
+the residual signal; and<br>
+reconstructing a high frequency region signal using<br>
+an extension base signal corresponding to a partial region<br>
+of the reconstructed audio signal and band extension<br>
+information.<br>
+ <br>
+2.	The method of claim 1, wherein the audio<br>
+signal includes a plurality of subframes and wherein the<br>
+second type information exists by a unit of the subframe.<br>
+3.	The method of claim 1, wherein a bandwidth<br>
+of the high frequency region signal is not equal to that of<br>
+the extension base signal.<br>
+4.	The method of claim 1, wherein the band<br>
+extension information includes at least one of a filter<br>
+range applied to the reconstructed audio signal, a start<br>
+frequency of the extension base signal and an end frequency<br>
+of the extension base signal.<br>
+5.	The method of claim 1, wherein if the<br>
+coding type of the audio signal is the music signal coding<br>
+type, the audio signal comprises a frequency-domain signal,<br>
+wherein if the coding type of the audio signal is the<br>
+speech signal coding type, the audio signal comprises a<br>
+time-domain signal, and wherein if the coding type of the<br>
+audio signal is the mixed signal coding type, the audio<br>
+signal comprises an MDCT-domain signal.<br>
+ <br>
+6.	The method of claim 1, the linear<br>
+predictive coefficient extracting step comprises the steps<br>
+of:<br>
+extracting a linear predictive coefficient mode; and<br>
+extracting the linear predictive coefficient having a<br>
+variable bit size corresponding to the extracted linear<br>
+predictive coefficient mode.<br>
+7.	An apparatus for processing an audio<br>
+signal, comprising:<br>
+a demultiplexer extracting first type information and<br>
+second type information from a bitstream;<br>
+a decoder determining unit identifying whether a<br>
+coding type of the audio signal is a music signal coding<br>
+type using first type information, the decoder, if the<br>
+coding type of the audio signal is not the music signal<br>
+coding type, identifying whether the coding type of the<br>
+audio signal is a speech signal coding type or a mixed<br>
+signal coding type using second type information, the<br>
+decoder then determining a decoding scheme;<br>
+an information extracting unit, if the coding type of<br>
+the audio signal is the mixed signal coding type,<br>
+extracting spectral data and a linear predictive<br>
+coefficient from the audio signal;<br>
+ <br>
+a frequency transforming unit generating a residual<br>
+signal for linear prediction by performing inverse<br>
+frequency conversion on the spectral data;<br>
+a linear prediction unit reconstructing the audio<br>
+signal by performing linear prediction coding on the linear<br>
+predictive coefficient and the residual signal; and<br>
+a bandwidth extension decoding unit reconstructing a<br>
+high frequency region signal using an extension base signal<br>
+corresponding to a partial region of the reconstructed<br>
+audio signal and band extension information.<br>
+8.	The apparatus of claim 7, wherein the<br>
+audio signal includes a plurality of subframes and wherein<br>
+the second type information exists by a unit of the<br>
+subframe.<br>
+9.	The apparatus of claim 7, wherein a<br>
+bandwidth of the high frequency region signal is not equal<br>
+to that of the extension base signal.<br>
+10.	The apparatus of claim 7, wherein the band<br>
+extension information includes at least one of a filter<br>
+range applied to the reconstructed audio signal, a start<br>
+frequency of the extension base signal and an end frequency<br>
+ <br>
+of the extension base signal.<br>
+11.	The apparatus of claim 7, wherein if the<br>
+coding type of the audio signal is the music signal coding<br>
+type, the audio signal comprises a frequency-domain signal,<br>
+wherein if the coding type of the audio signal is the<br>
+speech signal coding type, the audio signal comprises a<br>
+time-domain signal, and wherein if the coding type of the<br>
+audio signal is the mixed signal coding type, the audio<br>
+signal comprises an MDCT-domain signal.<br>
+12.	The apparatus of claim 7, the linear<br>
+predictive coefficient extracting comprising:<br>
+extracting a linear predictive coefficient mode; and<br>
+extracting the linear predictive coefficient having a<br>
+variable bit size corresponding to the extracted linear<br>
+predictive coefficient mode.<br>
+13.	In an audio signal processing apparatus<br>
+including an audio coder for processing an audio signal, a<br>
+method of processing the audio signal, comprising the steps<br>
+of:<br>
+removing a high frequency band signal of the audio<br>
+signal and generating band extension information for<br>
+ <br>
+reconstructing the high frequency band signal;<br>
+determining a coding type of the audio signal;<br>
+if the audio signal is a music signal, generating<br>
+first type information indicating that the audio signal is<br>
+coded into a music signal coding type;<br>
+if the audio signal is not the music signal,<br>
+generating second type information indicating that the<br>
+audio signal is coded into either a speech signal coding<br>
+type or a mixed signal coding type;<br>
+if the coding type of the audio signal is the mixed<br>
+signal coding type, generating a linear predictive<br>
+coefficient by performing linear prediction coding on the<br>
+audio signal;<br>
+generating a residual signal for the linear<br>
+prediction coding;<br>
+generating a spectral coefficient by frequency-<br>
+transforming the residual signal; and<br>
+generating an audio bitstream including the first<br>
+type information, the second type information, the linear<br>
+predictive coefficient and the residual signal.<br>
+14. An apparatus for processing an audio<br>
+signal, comprising:<br>
+a bandwidth preprocessing unit removing a high<br>
+ <br>
+frequency band signal of the audio signal, the bandwidth<br>
+preprocessing unit generating band extension information<br>
+for reconstructing the high frequency band signal;<br>
+a signal classifying unit determining a coding type<br>
+of the audio signal, the signal classifying unit, if the<br>
+audio signal is a music signal, generating first type<br>
+information indicating that the audio signal is coded into<br>
+a music signal coding type, the signal classifying unit, if<br>
+the audio signal is not the music signal, generating second<br>
+type information indicating that the audio signal is coded<br>
+into either a speech signal coding type or a mixed signal<br>
+coding type;<br>
+a linear prediction modeling unit, if the coding type<br>
+of the audio signal is the mixed signal coding type,<br>
+generating a linear predictive coefficient by performing<br>
+linear prediction coding on the audio signal;<br>
+a residual signal extracting unit generating a<br>
+residual signal for the linear prediction coding; and<br>
+a frequency transforming unit generating a spectral<br>
+coefficient by frequency-transforming the residual signal.<br>
+15. The apparatus of claim 14, wherein the<br>
+audio 3ignal includes a plurality of subframes and wherein<br>
+the second type information is generated per the subframe.<br>
+ <br>
+<br>
+The present invention is a method and an apparatus for processing an encoding signal capable of compressing and<br>
+decompressing an audio signal at high efficiency. According to one embodiment of the present invention, an audio signal processing<br>
+method is provided that includes discerning whether the coding type of an audio signal is a music signal coding type or not by<br>
+using a first type information, discerning whether the coding type of the audio signal is a speech signal coding type or a mixed signal<br>
+coding type by using a second type information, if the coding type of the audio signal is not a music signal coding type, extracting<br>
+spectral data and linear prediction coefficients from the audio signal; if the coding type of the audio signal is a mixed signal<br>
+coding type, generating a residual signal for linear prediction by performing Inverse Fourier Transform on the spectral data,<br>
+decompressing the audio signal by linear prediction coding the linear prediction coefficients and the residual signal, and decompressing<br>
+a high frequency area signal by using an extended base signal which is a partial area of the decompressed audio signal<br>
+and bandwidth extension information. The method of the present invention enables a wide variety of audio signal types to be encoded<br>
+and decoded at high efficiency.<br>
+</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=mWSa/6dbtItWiLpB5V4izw==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=mWSa/6dbtItWiLpB5V4izw==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="278863-a-sine-wave-stepless-dump-load-for-frequency-control-of-weak-grid.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="278865-modular-design-for-ophthalmic-surgical-probe.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>278864</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>3270/KOLNP/2010</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>01/2017</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>06-Jan-2017</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>31-Dec-2016</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>03-Sep-2010</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>LG ELECTRONICS INC.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>20, YEOUIDO-DONG, YEONGDEUNGPO-GU, SEOUL 150-721 REPUBLIC OF KOREA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>LEE, HYUN KOOK</td>
+											<td>LG ELECTRONICS INC. IP GROUP 221 YANGJAE-DONG SEOCHO-GU, SEOUL 137-130 REPUBLIC OF KOREA</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>YOON, SUNG YONG</td>
+											<td>LG ELECTRONICS INC. IP GROUP 221 YANGJAE-DONG SEOCHO-GU, SEOUL 137-130 REPUBLIC OF KOREA</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>KIM, DONG SOO</td>
+											<td>LG ELECTRONICS INC. IP GROUP 221 YANGJAE-DONG SEOCHO-GU, SEOUL 137-130 REPUBLIC OF KOREA</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>LIM, JAE HYUN</td>
+											<td>LG ELECTRONICS INC. IP GROUP 221 YANGJAE-DONG SEOCHO-GU, SEOUL 137-130 REPUBLIC OF KOREA</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G10L 19/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/KR2009/001081</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2009-03-04</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>61/033,715</td>
+									<td>2008-03-04</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>61/078,762</td>
+									<td>2008-07-07</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/278864-method-and-apparatus-for-decoding-encoding-an-audio-signal by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 23:42:08 GMT -->
+</html>

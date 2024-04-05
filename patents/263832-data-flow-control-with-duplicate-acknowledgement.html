@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/263832-data-flow-control-with-duplicate-acknowledgement by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:49:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 263832:DATA FLOW CONTROL WITH DUPLICATE ACKNOWLEDGEMENT</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">DATA FLOW CONTROL WITH DUPLICATE ACKNOWLEDGEMENT</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method of controlling the flow of an amount of data from a sending peer to a receiving peer of a predetermined communication protocol is described. The method comprises dividing the amount of data into a plurality of data segments, where the data segments are ordered in a sequence. The segments are sent to the receiving peer in the order of said sequence. The receiving peer acknowledges the correct receipt of a data segment and identifies the last correctly received data segment of the sequence that was received in the proper order of the sequence. The sending peer is arranged such that if it receives a threshold number of duplicate acknowledgements, it performs a retransmission. The threshold number that trigger a retransmission is an adaptive parameter determined based on the size of a receive window, the size of the receive window representing a number of data segments which can be stored in a buffer space at the receiving peer.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>[Field of the invention]<br>
+The present invention relates to a method of controlling the flow of an amount of data<br>
+from a sending peer to a receiving peer of a given communication protocol.<br>
+[Background of the invention]<br>
+In the field of communications, data transmission techniques are known where an amount<br>
+of data to be transmitted is divided into a plurality of data segments, the data segments<br>
+being ordered in a sequence. These data segments are then transmitted in the order of said<br>
+sequence.<br>
+This procedure occurs at a so-called sending peer of a communication governed by a<br>
+predetermined protocol that contains the rules for handling such data segments. The<br>
+receiving entity associated with the predetermined protocol is referred to as the receiving<br>
+peer. The concepts of protocols, protocol hierarchies, layering, and protocol peers is well<br>
+known in the art, see for example "TCP/IP Illustrated Volume 1, The Protocols" by W.<br>
+Richard Stevens, Addison Wesley 1994. The well known Transmission Control Protocol<br>
+(TCP) from the TCP/IP protocols suite is an example of such a protocol that arranges data<br>
+to be sent into a sequence of segments.<br>
+Typically, in order to be sent, the individual segments will be placed into data units having<br>
+a structure defined by the given protocol. These data units may have different names in the<br>
+context of different protocols, such as packets, frames, protocol data units, cells, etc. In the<br>
+present description the term "data unit" shall be used generically to cover any such defined<br>
+data structure. The present specification shall use the terms "segment" and "data unit"<br>
+interchangeably.<br>
+The sending peer will hand the data unit downwards to a lower layer, e.g. a TCP sending<br>
+peer will hand a TCP segments via the IP layer to a link layer, and on the receiving side<br>
+the receiving peer shall receive data units from the lower layers. The predetermined<br>
+structure defining the data units, e.g. defining a beginning and an end, allows the receiving<br>
+peer to identify individual segments.<br>
+It may be noted that in accordance with the OSI layering concept, it does not matter how<br>
+the data units passed to a lower layer are processed and transported there. Namely, the<br>
+2<br><br>
+given sending peer passes a stream of bits downward and the receiving peer receives a<br>
+stream of bits, where this stream of bits contains certain identifying elements, such as<br>
+frame boundary indicators, with the help of which the receiving peer can identify<br>
+individual data units and individual segments.<br>
+In order to ensure the reliable transmission of data, many protocols provide the feature of<br>
+data unit retransmission, which means that segments from the sequence can be<br>
+retransmitted if necessary. Typically this will be done with the help of an<br>
+acknowledgement technique, which means that the correct receipt of a data unit by the<br>
+receiving peer is acknowledged with an appropriate acknowledgement message that the<br>
+receiving peer sends back to the sending peer. Once the sending peer has received such an<br>
+acknowledgment message, it can appropriately continue sending further data units, or if no<br>
+acknowledgement or a non-acknowledgement message is received, the data unit that was<br>
+not correctly received by the receiving peer can be retransmitted by the sending peer.<br>
+Several mechanisms are known with the help of which a sending peer is supposed to<br>
+obtain an indication that the loss of a data unit or segment has occurred, such that an<br>
+appropriate retransmission can take place. One such known feature is retransmission time-<br>
+out, which means that after sending a data unit, a timer is monitored, and if a<br>
+predetermined amount of time passes without having received an acknowledgement for<br>
+the given data unit, then it is assumed that the data unit has been lost and it is accordingly<br>
+retransmitted.<br>
+Another such mechanism is that of counting duplicate acknowledgements. A duplicate<br>
+acknowledgement is an acknowledgement that identifies as the last correctly received data<br>
+segment a data segment that has already been acknowledged previously. Namely, many<br>
+protocols, such as e.g. TCP, have an acknowledgement generating mechanism for<br>
+receiving peers that operates to send out an acknowledgement message for each correctly<br>
+received segment of the sequence, where the acknowledgement identifies the last correctly<br>
+received data segment in the order of sequence. In other words, if for example the first to<br>
+fourth data segments have been received and acknowledged, and then the fifth data<br>
+segment arrives, the receiving peer will send out an acknowledgement for that fifth<br>
+segment. If thereafter the seventh and eight segments correctly arrive, then the receiving<br>
+peer will again send out one or two acknowledgement messages, but these<br>
+acknowledgement messages will only identify the fifth segment, because the fifth was the<br>
+last segment that was correctly received in the order of the sequence. Namely, the<br>
+3<br><br>
+receiving peer is expecting the sixth segment, and even if it correctly receives segments<br>
+above the sixth segment, it will continue to acknowledge the fifth segment. Consequently,<br>
+the receipt of duplicate acknowledgements by the sending peer gives the sending peer an<br>
+indication that a data unit has been lost.<br>
+As a consequence, in protocols that use the above described acknowledgement mechanism<br>
+according to which acknowledgement messages only acknowledge the last data unit that<br>
+was correctly received in the order of the sequence, even if data units are received that lie<br>
+further on in said sequence, a retransmission mechanism may be implemented that<br>
+performs a retransmission if a predetermined number of duplicate acknowledgements is<br>
+received by the sending peer. In TCP, the corresponding mechanism is known as "fast<br>
+retransmit", where a retransmission is enacted after the receipt of three duplicate<br>
+acknowledgements. A detailed description of the fast retransmit mechanism in TCP can<br>
+e.g. be found in the above mentioned book by Stevens, chapter 21.7.<br>
+[Problem underlying the invention]<br>
+All such mechanisms as described above for receiving an indication that a data unit has<br>
+been lost, suffer from the problem that the sending peer only receives an indirect<br>
+indication that a data unit was lost, and in fact the occurrence of the predetermined<br>
+triggering event (a time-out or a predetermined number of duplicate acknowledgements)<br>
+does not necessarily mean that a data unit was really lost. These triggering events can also<br>
+be caused spuriously, e.g. if a data unit is delayed in the transmission network, while data<br>
+units associated with segments further on in the sequence are delivered by the network.<br>
+Such a phenomenon is also referred to as reordering.<br>
+[Object of the present invention]<br>
+It is the object of the present invention to generally improve the possibilities for handling<br>
+the retransmission of segments in a sending peer.<br>
+[Summary of the invention]<br>
+This object of the invention is solved by a method of controlling the flow of a sequence of<br>
+data segments from a sending peer to a receiving peer, comprising transmitting data<br>
+segments from the sending peer to the receiving peer in the order of the sequence;<br>
+4<br><br>
+receiving acknowledgement messages from the receiving peer, wherein an<br>
+acknowledgement message indicates the correct receipt of a data segment in the proper<br>
+order of the sequence; receiving a duplicate acknowledgement message from the receiving<br>
+peer at the sending peer, if a data segment was received but not in the proper order of the<br>
+sequence, the duplicate acknowledgement message being received in association with the<br>
+last correctly received packet in the order of the sequence of data segments; deciding that a<br>
+data segment was lost, which was sent but not acknowledged, if the number of duplicate<br>
+acknowledgement messages received by the sending peer reaches a duplicate<br>
+acknowledgement message threshold determined based on the size of a receive window,<br>
+the size of the receive window corresponding to a number of data segments which can be<br>
+stored in a buffer space at the receiving peer; and retransmitting the data segment<br>
+determined to be lost.<br>
+Accordingly, the sending peer can set the duplicate acknowledgement message threshold<br>
+by considering the situation at the receiving peer.<br>
+According to another embodiment, the duplicate acknowledgement threshold is set such<br>
+that the data segment determined to be lost is retransmitted before a point in time in the<br>
+sequence of data segments selected such that the acknowledgement message indicating<br>
+proper receipt of the data segment determined to be lost, i.e. the retransmitted data<br>
+segment, is expected to be received at the sending peer before transmitting the data<br>
+segment with a sequence number exceeding the sequence number of the data segment<br>
+determined to be lost by the size of the receive window. Accordingly, the threshold can<br>
+always be maintained on a value with optimum utilization of the resources at the receiving<br>
+peer.<br>
+According to another embodiment, the duplicate acknowledgement message threshold is<br>
+determined on the basis of a size of a usable window constituted by the difference between<br>
+the size of the receive window and a flight size, the flight size representing the number of<br>
+transmitted data segments which have not yet been acknowledged.<br>
+Still further, the duplicate acknowledgement message threshold may be determined based<br>
+on the difference between the size of the usable window and the flight size.<br>
+5<br><br>
+According to another embodiment, the duplicate acknowledgement message threshold is<br>
+determined one instant in time prior to receiving the first duplication message as the larger<br>
+value of the value 1 and the value obtained by calculating<br>
+(size of receive window - (k x flight size)),<br>
+wherein k is a float. Advantageously, k = 2.<br>
+Still further, the duplicate acknowledgement message threshold may be determined as<br>
+size of the receive window - (2 x flight size) + N,<br>
+with N constituting a tuning parameter satisfying the condition<br>
+(2 x flight size) - size of receive window + 1 
+According to another embodiment, the duplicate acknowledgement message threshold is<br>
+updated upon determining a change in the size of the receive window.<br>
+Alternatively, the duplicate acknowledgement threshold may be updated at least each first<br>
+time a duplicate acknowledgement message for one of the data segments is received. In<br>
+this case the tuning parameter N may preferably be set to 5.<br>
+In another alternative, the duplicate acknowledgement message threshold is updated each<br>
+time an acknowledgement message is received.<br>
+According to another embodiment, the data segment determined to be lost is retransmitted,<br>
+if the sending peer is blocked from transmitting a previously unsent data segment.<br>
+In this embodiment, the sending peer is considered blocked, if one of the following<br>
+conditions is fulfilled: the number of previously unsent data segments exceeds the size of<br>
+the receive window; the number of previously unsent data segments exceeds the size of<br>
+the send window; or an application constituting the source of the data segments does not<br>
+supply data segments for transmission.<br>
+6<br><br>
+A computer program may be arranged to perform at least one of the above operations<br>
+when executed on a computer.<br>
+A computer readable memory device may store the computer program.<br>
+Still further, the object of the invention is solved by a communication device controlling<br>
+the flow of a sequence of data segments from a sending peer to a receiving peer,<br>
+comprising means for transmitting data segments from the sending peer to the receiving<br>
+peer in the order of the sequence, means for receiving acknowledgment messages from the<br>
+receiving peer, where an acknowledgment message indicates the correct receipt of a data<br>
+segment in the proper order of the sequence, means for receiving a duplicate<br>
+acknowledgement message from the receiving peer at the sending peer, if a data segment<br>
+was received but not in the proper order of the sequence, the duplicate acknowledgement<br>
+message being received in association with the last correctly received packet in the order<br>
+of the sequence of data segments, means for deciding that a data segment was lost, which<br>
+was sent but not acknowledged, if the number of duplicate acknowledgement messages<br>
+reaches a duplicate acknowledgement threshold determined based on the size of a receive<br>
+window, the size of the receive window corresponding to a number of data segments<br>
+which can be stored in a buffer space at the receiving peer; and means for retransmitting<br>
+the data segment determined to be lost.<br>
+[Brief Description of the Figures]<br>
+Fig. 1	illustrates operations of a method for controlling the flow of a data<br>
+sequence according to an embodiment of the invention,<br>
+Fig. 2	illustrates operations for determining the duplicate acknowledgement<br>
+threshold according to an embodiment of the invention,<br>
+Fig. 3	illustrates operations for controlling the flow of data segments from a<br>
+sending peer to a receiving peer according to another embodiment of the<br>
+invention, particularly outlining a flow for retransmitting an<br>
+unacknowledged data segment,<br>
+Fig. 4	illustrates operations for updating the duplicate acknowledgement threshold<br>
+according to an embodiment of the invention,<br>
+7<br><br>
+Fig. 5	illustrates operations for updating the duplicate acknowledgement threshold<br>
+according to an embodiment of the invention, and<br>
+Fig. 6	illustrates a communication device for controlling the flow of data<br>
+segments, the communication device at least acting as a sending peer, and<br>
+Fig. 7	shows a detailed illustration of a flow of data segments and<br>
+acknowledgement messages between a sending peer and a receiving peer to<br>
+illustrate determination of the duplicate acknowledgement threshold.<br>
+[Detailed Description of Preferred Embodiments]<br>
+The present invention is applicable to any implementation of a given communication<br>
+protocol to which an amount of data that is to be sent is divided into a plurality of data<br>
+segments, and said data segments are ordered in a sequence, where the data segments are<br>
+sent from the sending peer to the receiving peer in the order of said sequence, where a<br>
+receiving peer sends acknowledgements to the sending peer, said acknowledgements<br>
+indicating the correct receipt in the proper order of the sequence, such that an<br>
+acknowledgement message indicates the last correctly received data segment of said<br>
+sequence that was received in the proper order of the sequence, and where if the sending<br>
+peer receives a threshold number of acknowledgement messages that each identify the<br>
+same data segment as the last correctly received data segment of the segment that was<br>
+received in the proper order, the segment that immediately follows the segment for which<br>
+duplicate acknowledgements were received is retransmitted.<br>
+An example of such a protocol is TCP. However, it is explicitly noted that the invention is<br>
+also applicable to any other communication protocol that has the above described<br>
+characteristics as far as they are relevant for implementing the inventive concept.<br>
+According to the present invention, the threshold number of acknowledgement messages,<br>
+i.e. the duplicate acknowledgement threshold is a parameter determined based on the size<br>
+of a receive window, the size of the receive window representing a number of data<br>
+segments which can be stored in a buffer space at the receiving peer.<br>
+8<br><br>
+As already mentioned previously, therefore, the duplicate acknowledgement threshold is a<br>
+parameter that is associated with the sending peer's decision on how long to wait until a<br>
+given segment for which duplicate acknowledgements are being received is assumed to<br>
+have been lost. Due to the solution of the present invention, according to which the<br>
+threshold is adapted, it is possible to make this decision itself adaptive and thereby more<br>
+flexible.<br>
+Fig. 1 illustrates operations for controlling a flow of data segments between a sending peer<br>
+and a receiving peer (not shown) according to an embodiment of the invention.<br>
+In a first operation 101 the sending peer is considered to carry out a normal routine of<br>
+transmitting data segments to a receiving peer in a certain given sequence. For example,<br>
+the data segments are numbered consecutively such as 01, 02, 03, 04, 05, 06,... and<br>
+scheduled for transmission at the sending peer in the order of the sequential numbering.<br>
+The sequential numbering may suitably correspond to the output of data segments of a<br>
+data source, e.g. as known in the art. It is understood that the data segments may carry any<br>
+kind of payload data, i.e. data relating to any kind of application or format, such as voice<br>
+data, data exchange between computing device in a communication session, video data,<br>
+audio data and similar.<br>
+The receiving peer (not shown in Fig. 1) receives the data segments and acknowledges the<br>
+receipt of the data segments with an acknowledgement message returned to the sending<br>
+peer. These acknowledgement messages from the receiving peer are received at the<br>
+sending peer in an operation 102. If operation is normal and data segments transmitted in a<br>
+sequence are received in the same sequence at the receiving peer, each data packet is<br>
+acknowledged with an acknowledgement message and the sending peer knows that the<br>
+data segments are received in the proper order of the sequence. The data segments which<br>
+have been transmitted from the sending peer and properly acknowledged, can be<br>
+discarded, e.g. removed from a transmit buffer at the sending peer, as it a retransmission of<br>
+the transmitted data segments will not be required.<br>
+Generally, each correctly received data segment, i.e. error free and in the order of the<br>
+sequence, triggers an acknowledgement message at the receiving peer, which is returned<br>
+to the sending peer. If after a correctly received data segment a data segment is received<br>
+which is not in the order of the sequence, i.e. a delay or fault in transmitting a data<br>
+segment occurred, then the acknowledgement message for the last correctly received data<br>
+9<br><br>
+segment is repeated, and this repeated acknowledgement message is termed duplicate<br>
+acknowledgement message.<br>
+In the above example, if for one reason or the other a data segment is not received in the<br>
+proper order of the transmitting sequence, e.g. if data segment 05 is received after<br>
+segments 01, 02, 03 but before data segment 04, the receiving peer thus does not return an<br>
+acknowledgement message to the sending peer. Instead, the receiving peer transmits a<br>
+duplicate acknowledgement message to the sending peer, indicating that a data segment<br>
+was received, but not in the order of the sequence. The duplicate acknowledgement<br>
+message is associated with the last correctly received packet in the order of the sequence<br>
+of data segments. The duplicate acknowledgement message in the above example of<br>
+receiving data segment 05 before data segment 04 will indicate that the last data segment<br>
+which was correctly received in the order of the sequence was data segment 03.<br>
+The duplicate acknowledgement message received at the sending peer in an operation 103<br>
+consequently notifies the sending peer that a retransmission of the packet following the<br>
+last correctly received packet may be required, in case it turns out or is determined that<br>
+this data packet was actually lost during the transmission path from the sending peer to the<br>
+receiving peer. Hence, the sending peer may not discard all those data packets from the<br>
+sending buffer, which were transmitted after the last correctly received data packet<br>
+indicated by the duplicate acknowledgement message received in operation 103.<br>
+However, the sending peer continuous to transmit data segments to the receiving peer, and<br>
+thus, presuming that the data segment 04 of the above example is still not received at the<br>
+receiving peer for a longer period of time, the receiving peer continues to transmit<br>
+duplicate acknowledgement messages for each received data segment. Accordingly, the<br>
+sending peer receives an increasing number of duplicate acknowledgement messages, and<br>
+with each duplicate acknowledgement message the probability that the unacknowledged<br>
+data segment was actually lost, increases.<br>
+In an operation 104 the sending peer now decides whether the number of duplicate<br>
+acknowledgement messages reaches or exceeds an appropriately set (as will be described<br>
+later) duplicate acknowledgement message threshold set at the sending peer. If in<br>
+operation 104 the decision is "NO", indicating that the duplicate acknowledgement<br>
+message threshold is not yet been reached, the flow of operation returns to operation 101,<br>
+i.e., the sending peer continues to transmit data segments in the order of the sequence.<br>
+10<br><br>
+However, if in operation 104 the decision is "YES", indicating that the duplicate<br>
+acknowledgement message threshold is reached or exceeded, in an operation 105 the<br>
+sending peer decides that the data segment was lost, which was sent but not<br>
+acknowledged. Continuing with the above example, with the duplicate acknowledgement<br>
+messages indicating that the last correctly received data segment in the order of the<br>
+sequence was data segment 3, the sending peer will decide that the data segment 4 was<br>
+actually lost.<br>
+In an operation 106 the data segment determined to be lost, i.e. in the example data<br>
+segment 04, is retransmitted. The retransmission may for example be carried out by a fast<br>
+retransmit according to the TCP protocol.<br>
+Of course, it is of highest importance to suitably set the duplicate acknowledgement<br>
+message threshold keeping in mind that a to early retransmission of data packets causes<br>
+unnecessary traffic, and that a refraining from retransmitting a data segment for too long<br>
+may cause a blocking of further transmissions, as all data segments which have been<br>
+transmitted but not acknowledged must be kept in the buffers of the sending peer receiving<br>
+peer.<br>
+Most importantly, for superior flow control, the duplicate acknowledgement message<br>
+threshold can be set under consideration of the size of a receive window at the receiving<br>
+peer, the size of the receive window constituting the number of data segments which can<br>
+be stored in a buffer space at the receiving peer. This size of the receive window may be<br>
+reported by the receiving peer for example with the acknowledgement messages, such that<br>
+the sending peer is always aware of the present size of the receive window.<br>
+More precisely, the threshold should be set such that a transmission of data segments at no<br>
+point in time is prohibited due to reaching at the sending peer the maximum allowed<br>
+transmitted but not acknowledged data segments, this maximum number being equal to the<br>
+size of the receive window. Note that according to a sliding window protocol a data<br>
+segment from the sending peer according to a communication protocol may only be<br>
+scheduled for transmission, if the difference in sequence numbers of the oldest<br>
+acknowledged data segment and the next data segment for transmission does not exceed<br>
+the size of the receive window.<br>
+11<br><br>
+The above illustrated an embodiment where the calculation of the duplicate<br>
+acknowledgement threshold uses the size of the receive window. It is noted that, even<br>
+though not further described here, the duplicate acknowledgement threshold may in<br>
+addition thereto be further adapted based on the situation at the sending peer, e.g. a size of<br>
+a window at the sending peer to further improve the setting of the duplicate<br>
+acknowledgement threshold.<br>
+In the following a further embodiment of the invention will be described with regard to<br>
+Fig. 2. Fig. 2 illustrates operations for suitably setting the duplicate acknowledgement<br>
+message threshold.<br>
+As noted above, the threshold is suitably to be selected such that a buffer overflow at the<br>
+receiving peer can surely be avoided and that further a stalling of a transmission of data<br>
+segments from the sending peer can surely be avoided. A stalling or blocking of a<br>
+transmission at the sending peer can occur if the number of sent but unacknowledged data<br>
+segments is about to exceed the sized of the receive window.<br>
+To meet these conditions, it must always be assured that the number of data segments<br>
+which have been transmitted after and including the oldest unacknowledged data segment<br>
+does not exceed the size of the receive window at the receiving peer.<br>
+Accordingly, if a data segment has not been acknowledged, a retransmission of this data<br>
+segment is to be scheduled at a point in time that still allows an acknowledgement of<br>
+proper receipt of the retransmission of this data segment to reach the sending peer before a<br>
+data segment with a sequence number is scheduled for transmission which would<br>
+potentially lead to an overflow of the receiver buffer if no proper acknowledgement of the<br>
+retransmitted data segment were received.<br>
+In other words, the retransmission of the unacknowledged data segment needs to be<br>
+performed such that an acknowledgement pertaining to this retransmission is expected to<br>
+be received at the sending peer before the transmitted number of data segments since and<br>
+including the unacknowledged data segment exceeds the size of the receive window. If<br>
+this condition were not met, the sending peer would not be allowed to transmit further data<br>
+packets, and the connection would stall.<br>
+12<br><br>
+In Fig. 2, in an operation 201, it is decided whether the duplicate acknowledgement<br>
+message threshold should be updated according to conditions to be described later. If the<br>
+decision is "YES", in operation 202, in accordance with the above said, the duplicate<br>
+acknowledgement message threshold is set such that the data segment determined to be<br>
+lost is retransmitted at or before a point in time in the sequence of data segments selected<br>
+such that the acknowledgement message indicating proper receipt of the data segment<br>
+determined to be lost is expected to be received at the sending peer before the data<br>
+segment with a sequence number exceeding the sequence number of the data segment<br>
+determined to be lost by the size of the receive window is scheduled for transmission.<br>
+Accordingly, it can be avoided that the sending peer is barred from transmitting further<br>
+data segments.<br>
+In this case a window stalling in the data transmission can be avoided and further, an<br>
+overflow of the receive buffer can be avoided.<br>
+Fig. 3 shows a flow chart that describes an embodiment of the present invention. The left<br>
+hand side of the flow chart relates to general flow control, and due to the fact that the<br>
+present invention is not concerned with the general type of flow control, e.g. as provided<br>
+by TCP or any other flow control protocol, this part is only shown schematically as a<br>
+dashed line. The right hand side of the Fig. discloses a procedure for handling duplicate<br>
+acknowledgements. Namely, if in the course of the general flow control an<br>
+acknowledgement (ACK) is received, see operation 301 then the procedure for handling<br>
+duplicate acknowledgements is triggered.<br>
+In operation 302 it is determined if the acknowledgement is a duplicate acknowledgement.<br>
+Namely, the number of times N that the specific acknowledgement, which identifies the<br>
+last correctly received data segment of the sequence that was received in the proper order<br>
+of the sequence, is determined and it is judged if this number N is larger than 1. If not,<br>
+then the ACK is not a duplicate ACK, and the procedure returns to the general flow<br>
+control.<br>
+If the outcome of operation 302 indicates that the acknowledgement is a duplicate<br>
+acknowledgement, the procedure goes to operation 303, where it is determined if N(ACK)<br>
+reached the duplicate acknowledgement threshold Th. Depending on the implementation,<br>
+the duplicate acknowledgement threshold may be considered to be reached if N(ACK) is<br>
+equal to the duplicate acknowledgement threshold. Alternatively, the duplicate<br>
+13<br><br>
+acknowledgement threshold may be considered to be reached if N(ACK) is larger than the<br>
+duplicate acknowledgement threshold.<br>
+This operation can be implemented in any appropriate way, for example by simply<br>
+keeping a record of the last acknowledged segment and setting an associated counter, such<br>
+that if a newly received acknowledgment is identical to the previous acknowledgement<br>
+(i.e. a duplicate acknowledgement) the counter is incremented by one, and if the new<br>
+acknowledgement identifies a segment that is subsequent to the segment identified in the<br>
+last received acknowledgement, then the counter is reset to 1.<br>
+In the example of Fig. 3, N(ACK) indicates the number of times that the sending peer has<br>
+received the given acknowledgement ACK. In other words, N = 1 means that the<br>
+acknowledgement for a given segment has been received the first time, and a number N &gt;<br>
+1 indicates that it is a duplicate acknowledgement.<br>
+If operation 303 determines that the number of acknowledgments has reached the<br>
+threshold, then the oldest unacknowledged segment is retransmitted in operation 305. The<br>
+oldest unacknowledged segment then immediately follows the segment identified in the<br>
+duplicate acknowledgments. On the other hand, if the outcome of operation 303 is<br>
+negative, the flow proceeds to operation 304 to also consider the situation at the sending<br>
+peer.<br>
+In operation 304 it is determined whether the sending peer is blocked from transmitting<br>
+data segments due to a condition arising at the sending peer. Blocked in this connection<br>
+means that the sending peer is not allowed or otherwise unable to transmit data segments<br>
+to the receiving peer.<br>
+According to an example, the sending peer is considered blocked, if the number of<br>
+previously unsent data segments exceeds the size of the receive window. For example due<br>
+to an error or an unforeseen condition the duplicate acknowledgement threshold may be<br>
+selected to large and the receive window size may be reached. This situation may be<br>
+termed receiver limited.<br>
+According to another example, the sending peer is considered blocked, if the number of<br>
+previously unsent data segments exceeds the size of the send window. For example the<br>
+transmit buffer of the sending peer may be a shared memory area with a space left for<br>
+14<br><br>
+storing data segments reduced in size, such as below the size of the receive window. This<br>
+situation may be termed sender limited.<br>
+According to another example, the sending peer is considered blocked, if an application<br>
+constituting the source of the data segments does not supply data segments for<br>
+transmission. For example, data segments may be generated dynamically, e.g. of a web<br>
+page, and the application may temporarily cease generating new data segments. Further,<br>
+an application may simply presently have no further data segments for transmission. This<br>
+situation may be termed application limited.<br>
+If in operation 304 it is determined that the sending peer is blocked from transmitting data<br>
+segments, then the oldest unacknowledged segment is retransmitted in operation 305.<br>
+If in operation 304 it is determined that the sending peer is not blocked from transmitting<br>
+data segments, then the next segment in the sequence following the segment that<br>
+immediately follows the segment identified in the duplicate acknowledgment is<br>
+transmitted in an operation 306.<br>
+After operations 305 or 306, the procedure returns to the general flow control.<br>
+It is noted that operation 304 may be optional and that in an alternative the flow may<br>
+return, if the decision in operation 303 is "NO", to the general flow instead or proceed to<br>
+operation 306 for transmitting the next data segment in the sequence.<br>
+It may be noted that the embodiment of Fig. 3 is only one example, and this example can<br>
+be varied in a number of ways. The skilled person will understand that the operations can<br>
+also be arranged differently. Moreover, operation 306 is only an example, as the present<br>
+invention is not specifically concerned with the procedure after the duplicate<br>
+acknowledgment threshold is exceeded. In other words, the procedure after exceeding the<br>
+duplicate acknowledgment threshold can be chosen in any appropriate or suitable way,<br>
+where different possibilities for TCP-like protocols shall be discussed further on.<br>
+Equally, the response in the general flow control to duplicate acknowledgments is not<br>
+essential to the present invention. For example, after the negative outcome of operation<br>
+303, which means that a duplicate acknowledgment has been received, but the number of<br>
+15<br><br>
+duplicate acknowledgments has not yet reached the threshold, the general flow control can<br>
+stop sending any further segments, or can equally well continue to send further segments.<br>
+The duplicate acknowledgment threshold can be set or updated in any suitable or desirable<br>
+way. For example, it can be updated at regular intervals, based on one or more values used<br>
+for adapting the threshold. In other words, these one or more values are regularly<br>
+measured or determined, and the threshold Th is accordingly updated. This process occurs<br>
+outside of what is shown in Fig. 3, in an independent procedure. Consequently, this<br>
+independent procedure regularly updates the value of Th that is appropriately stored, and<br>
+operations 303 and 304 simply access or call the current value of Th. On the other hand, it<br>
+is also possible to update Th at the occurrence of a predetermined triggering event. One<br>
+possibility can consist in updating Th only if one or more of the one or more values used<br>
+to adapt Th have changed. Such a procedure would again be independent of what is shown<br>
+in Fig. 3, and operations 303 and 304 would simply access or call the current value of Th.<br>
+However, the specified triggering event can also be a part of the procedure shown in Fig.<br>
+4. Namely, it is possible to perform an updating of Th at the occurrence of a triggering<br>
+event that is associated with the receipt of acknowledgments. For example, Th can be<br>
+updated at every first receipt of a duplicate ACK. This is shown in Fig. 4, where the same<br>
+reference numerals as used in Fig. 3 refer to the same operations. In other words, the<br>
+operations 401 and 402 shown in Fig. 4 are implemented between the operations 302 and<br>
+303 as shown in Fig. 3. After operation 302 has determined that a duplicate<br>
+acknowledgment has been received, operation 401 determines if the duplicate<br>
+acknowledgment is the first duplicate acknowledgment, namely if N(ACK) = 2, and if this<br>
+is the case, then Th is updated in operation 402. After operations 401 or 402, operation<br>
+303 is performed, and all the other operations already discussed in connection with Fig. 3,<br>
+such that a further discussion is not necessary.<br>
+It is also possible to perform an updating of Th at every duplicate acknowledgment. This<br>
+is shown in Fig. 5. Namely, the updating operation 501 follows after operation 302, such<br>
+that every duplicate acknowledgment leads to an updating of Th.<br>
+As another alternative, which is not shown in the figures, the threshold Th can also be<br>
+updated at every acknowledgment. In other words, the updating operation would be<br>
+implemented between operations 301 and 302 of Fig. 3. Another variation can consist in<br>
+updating the threshold Th at every ACK that relates to outstanding data segments, i.e. only<br>
+16<br><br>
+for such acknowledgments where N(ACK) = 1. Consequently, the updating operation<br>
+could be implemented at the negative output of operation 302 in Fig. 3.<br>
+As described above, the updating of the duplicate acknowledgment threshold Th can be<br>
+done whenever suitable or desirable. Equally, it can be done on any appropriate or suitable<br>
+basis by taking into account the size of the receiving window at the receiving peer, as<br>
+noted above.<br>
+In the following a further embodiment of the invention will be described with regard to<br>
+Fig. 6. Fig. 6 illustrates elements of a sending peer for controlling a flow of data segments<br>
+transmitted between a sending peer and receiving peer, for example utilizing the TCP<br>
+protocol or any other suitable communication protocol.<br>
+Fig. 6 illustrates a sending peer 600, such as any kind of computing device, e.g. a desktop<br>
+computer, laptop computer, mobile computing device such as PDA or mobile telephone<br>
+and similar. The invention is equally applicable to wire-bound data exchange as well as<br>
+wireless or at least partially wireless data transmission.<br>
+The sending peer comprises transmitting/retransmitting means 601 for transmitting data<br>
+segments from the sending peer to the receiving peer in the order of the sequence and for<br>
+retransmitting a data segment determined to be lost, as noted with regard to previous<br>
+embodiments.<br>
+Further, the sending peer comprises receiving means 602, for receiving acknowledgement<br>
+messages from the receiving peer, were an acknowledgement message in case the correct<br>
+receipt of a data segment in the proper order of the sequence, and for receiving a duplicate<br>
+acknowledgement message from the receiving peer if a data segment was received, but not<br>
+in the proper order of the sequence, the duplicate acknowledgement message being<br>
+received in association with the last correctly received data segment in order of the<br>
+sequence of data segments.<br>
+Further, the sending peer comprises packet loss determining means 603 for deciding that a<br>
+data segment was lost which was sent but not acknowledged, if the number of duplicate<br>
+acknowledgement messages reaches a duplicate acknowledgement message threshold<br>
+determined based on the size of a receive window, the size of the receive window<br>
+corresponding to a number of data segments which can be stored in a buffer space at the<br>
+17<br><br>
+receiving peer. The packet loss determining means may obtain information on the size of<br>
+the receive window with acknowledgement messages received from the receiving peer, or<br>
+by any other means.<br>
+Further, the packet loss determining means may be adapted to set the duplicate<br>
+acknowledgement threshold such that the data segment determined to be lost is<br>
+retransmitted at a point in time in the sequence of data segments selected such that the<br>
+acknowledgement message indicating proper receipt of the data segment determined to be<br>
+lost, i.e. the retransmitted data segment, is expected to be received at the sending peer<br>
+before transmitting the data segment with a sequence number exceeding the sequence<br>
+number of the data segment determined to be lost by the size of the receive window.<br>
+In the following a further embodiment of the invention will be described with regard to<br>
+Fig. 6.<br>
+Fig. 7 illustrates a detailed embodiment for further illustrating the principles of<br>
+determining the duplicate acknowledgement message threshold by use an example of the<br>
+TCP protocol.<br>
+Fig. 7 illustrates a sending peer and a receiving peer, as for example noted with regard to<br>
+previous embodiments.<br>
+At the sending peer a sequence of data segments labelled 01, 02, 03 ... 30 for transmission<br>
+to the receiving peer is illustrated, including a retransmission of data segment 01 which is<br>
+considered lost or excessively delayed on the transmission path. Data segment 01 is<br>
+retransmitted after data segment 22, for reasons explained in the following.<br>
+In the embodiment of Fig. 7 the duplicate acknowledgement threshold is set based on the<br>
+size of the receive window and more precisely, is set such that the data segment<br>
+determined to be lost is retransmitted at a point in time in the sequence of data segments<br>
+selected such that the acknowledgement message indicating proper receipt of the data<br>
+segment determined to be lost is expected to be received at the sending peer before<br>
+transmitting the data segment with the sequence number exceeding the sequence number<br>
+of the data segment determined to be lost by the size of the receive window. The point in<br>
+time for retransmitting the data segment 01 constitutes the latest point in time possible<br>
+before stalling at the sending peer would occur. Therefore, while further delayed<br>
+18<br><br>
+transmission, i.e. a further increased duplicate acknowledgement threshold should be<br>
+avoided, a lesser delay, i.e. a reduced duplicate acknowledgement threshold would<br>
+generally be possible.<br>
+In the present case the size of the receive window is considered to be 30, i.e., the receive<br>
+buffer has 30 storage locations for data segments. This implies for the transmission of data<br>
+segments, that a 31 st data segment can only be transmitted after an acknowledgement for<br>
+the first data segment is received.<br>
+In the example of Fig. 7, as noted before, and as indicated by the dashed arrow, data<br>
+segment 01 transmitted at the sending peer as a first data segment, is considered to be lost<br>
+along the transmission path. Data segments 02, 03 etc., are considered to be transmitted<br>
+and received properly.<br>
+Accordingly, as data segment 01 is missing at the receiving peer, the receipt of the data<br>
+segment 02 at the receiving peer will trigger a return of a first duplicate acknowledgement<br>
+message (DUPACK) which is considered to be received at the sending peer after<br>
+transmission of data packet 10 and before transmission of data packet 11. This delay of the<br>
+DUPACK is associated with the transmission delays, processing delays and similar.<br>
+Similarly, as data segment 01 continuous to be missing, all subsequent receptions of data<br>
+segments at the receiving peer will trigger the transmission of duplicate acknowledgement<br>
+messages from the receiving peer to the sending peer, the sending peer receiving an<br>
+increasing number of duplicate acknowledgement messages as indicated on the left hand<br>
+side of Fig. 7. If the sending peer would continue to transmit data segments in the order of<br>
+the sequence, without retransmitting the first data segment 01, eventually the data segment<br>
+30 will be transmitted and transmission would have to be halted, as the size of the receive<br>
+window would be reached. In other words, further transmissions after the data segment 30<br>
+would be not allowed, as acknowledgements for 30 data segments are outstanding, 30 data<br>
+segments from and including the data segment 01. A stalling or blocking of a transmission<br>
+at the sending peer can for example occur if the number of sent but unacknowledged data<br>
+segments is about to exceed the sized of the receive window.<br>
+In order to avoid this situation, as shown in the figure, the first data packet 01 is<br>
+retransmitted after receiving the 13th duplicate acknowledgement message triggered by the<br>
+14th transmitted data packet, data packet 14, in order to allow enough time for the<br>
+acknowledgement of the retransmitted data segment 01 to reach the sending peer before<br>
+19<br><br>
+data segment 31 is to be transmitted. Accordingly, data segment 01 should exactly or at<br>
+the latest be transmitted after receiving the 13l duplicate acknowledgement message, after<br>
+data segment 22, allowing to avoid a stalling of the transmission of the sequence of data<br>
+segments beyond the data segment 30.<br>
+Retransmitting the data segment 01 after the 13th duplicate acknowledgement message in<br>
+this example must therefore be avoided unless a stalling of the transmission is accepted or<br>
+by other means avoided. Earlier transmission does not lead to any stalling, but increases<br>
+the network traffic caused by possibly unnecessary retransmissions. In other words, it<br>
+should be waited as long as possible with retransmitting data segment 01 such that a<br>
+stalling at the sending peer of the transmission can be avoided, as depicted in Fig. 7.<br>
+Advantageously, the duplicate acknowledgement message threshold therefore is<br>
+determined on the basis of a size of a usable window constituted by the difference between<br>
+the size of the receive window and a flight size, the flight size representing the number of<br>
+transmitted data segments which have not yet been acknowledged. If it is for example<br>
+assumed that the duplicate acknowledgement message threshold is calculated when<br>
+transmitting the data segment 10, the flight size, i.e., the transmitted but not yet<br>
+acknowledged data segments, is 10. Further, the usable window as indicated in the figure<br>
+is defined as the size of the receive window minus the size of the send window, i.e., the<br>
+difference between the left edge of the send window being the lowest sequence number of<br>
+data segments that has been sent but not acknowledged and the right edge of the send<br>
+window being the lowest sequence number of data segments not yet being sent. The usable<br>
+window, in other words, is the amount of data that a TCP sender could send at any given<br>
+point in time, if permitted by conditions, until becoming limited by the receiving peer.<br>
+Still further, it is preferred to set the duplicate acknowledgement threshold based on the<br>
+difference between the size of the usable window and the flight size. More precisely,<br>
+according to another example, if it is again assumed that the duplicate acknowledgement<br>
+threshold is calculated just prior to receiving the first duplicate acknowledgement<br>
+message, i.e., when transmitting the data segment 10, the duplicate acknowledgement<br>
+message threshold meeting the condition shown in Fig. 7 and explained above, is the<br>
+size of usable window + 2 - (flight size -1)<br>
+which is equal<br>
+20<br><br>
+size of usable window - the flight size + 3.<br>
+If in another alternative it were assumed that the duplicate acknowledgement threshold is<br>
+calculated on receiving the first duplicate acknowledgement message, i.e., upon<br>
+transmitting the data segment 11, please be referred to the previous embodiments for<br>
+updating the threshold, the usable window would be reduced by 1, the flight size would be<br>
+increased by 1 and thus the duplicate acknowledgement threshold would be calculated as<br>
+usable window - flight size + 5.<br>
+In more general terms the duplicate acknowledgement threshold can be calculated as the<br>
+size of usable window - the flight size + N<br>
+and with the above explained condition that the<br>
+usable window = receive window - flight size<br>
+the duplicate acknowledgement threshold is obtained as<br>
+size of receive window - 2 x flight size<br>
+or still more general,<br>
+size of receive window - (k x flight size))<br>
+wherein k is a floating value.<br>
+Still further, according to another example, the duplicate acknowledgement threshold is<br>
+determined as<br>
+size of receive window - (2 x flight size) + N,<br>
+with N constituting the tuning parameter satisfying the condition<br>
+21<br><br>
+(2 x flight size) - size of receive window + 1 
+if it is assumed that the duplicate acknowledgement threshold is calculated one operation<br>
+prior to receiving the first duplicate acknowledgement message, as indicated in Fig. 7.<br>
+Again, as outlined before, if the duplicate acknowledgement threshold is calculated one<br>
+operation later, i.e., upon receiving the first duplicate acknowledgement message, N 
+to be replaced by N 
+to 5, thus fulfilling the above discussed condition that an acknowledgement for the<br>
+retransmitted data segment is received before the number of previously unsent data<br>
+segments, i.e. data segments which are sent for the first time, exceeds the size of the<br>
+receive window. If the condition were not fulfilled, this would lead to a transmission stall<br>
+at the sending peer, as the sending peer is only allowed to transmit a further data segment<br>
+in the sequence, if the number of sent but unacknowledged data segments does not exceed<br>
+the size of the receive window as advertised by the receiving peer.<br>
+Using the above formulas, it is possible that a negative duplicate acknowledgement<br>
+threshold is obtained, in cases were the flight size is large in relation to the receive<br>
+window. In order to avoid such a negative duplicate acknowledgement threshold, a max-<br>
+operator can be used, which can prevent the duplicate acknowledgement threshold from<br>
+obtaining such negative values. Accordingly, the preferred way of calculating the<br>
+duplicate acknowledgement threshold at the time indicated in Fig. 7, i.e., prior to receiving<br>
+the first duplicate acknowledgement message, is<br>
+duplicate acknowledgement message threshold =<br>
+max (size of receive window - 2 x flight size + N, 1).<br>
+In the following examples are described, how the tuning parameter N can be determined.<br>
+As noted above, with N = 3 and determining the duplicate acknowledgement message<br>
+threshold one operation prior to receiving the first duplicate acknowledgement message,<br>
+the acknowledgement for the retransmission of the first data packet 01 is exactly received<br>
+after the receive window is "filled up". This is, however, valid only under the condition<br>
+that only one packet was lost and that no packet reordering occurred. In cases where the<br>
+two conditions are valid, any increase of N beyond 3 would eventually lead to a window<br>
+stalling, i.e., the sending peer would not be allowed to transmit any further data packets.<br>
+Therefore, N = 3 is considered the upper bound for N. However, it is noted that in cases<br>
+where more than one segment has been lost, it is possible to increase N further, and still to<br>
+22<br><br>
+avoid window stalling. This however, should not be the typical case, and N = 3 may<br>
+preferably be selected as upper bound.<br>
+Regarding the lower bound for N it is a reasonable requirement that any algorithm for<br>
+calculating the duplicate acknowledgement threshold should calculate a value larger or<br>
+equal to 1. This is the value obtained if<br>
+N = (2 x flight size - receive window -1).<br>
+Generally, if N is decreased, the system is made less conservative, i.e., error recovery is<br>
+triggered earlier, in other words it is earlier judged that a data packet is lost. However,<br>
+with a decreased N and thus duplicate acknowledgement threshold, the sending peer is less<br>
+robust to a packet reordering the network.<br>
+As a reasonable value between the upper bound and lower bound leading to good results,<br>
+the duplicate acknowledgement message threshold may be set to<br>
+max (size of receive window - 2 x flight size, 1)<br>
+i.e.N = 0.<br>
+The communication device of Fig. 6 may be configured to perform the above calculations<br>
+and operations.<br>
+More precisely, in another embodiment, the communication device comprises means for<br>
+setting the duplicate acknowledgement threshold such that the data segment determined to<br>
+be lost is retransmitted before a point in time in the sequence of data segments selected<br>
+such that the acknowledgement message indicating proper receipt of the data segment<br>
+determined to be lost, i.e. the retransmitted data segment, is expected to be received at the<br>
+sending peer before transmitting the data segment with a sequence number exceeding the<br>
+sequence number of the data segment determined to be lost by the size of the receive<br>
+window.<br>
+Further, in another embodiment, the communication device comprises means for<br>
+determining the duplicate acknowledgement threshold on the basis of a size of a usable<br>
+window constituted by the difference between the size of the receive window and a flight<br>
+23<br><br>
+size, the flight size representing the number of transmitted data segments which have not<br>
+yet been acknowledged.<br>
+Further, in another embodiment, the communication device comprises means for<br>
+determining the duplicate acknowledgement threshold based on the difference between the<br>
+size of the usable window and the flight size.<br>
+The means for determining the duplicate acknowledgement may be adapted perform the<br>
+determination one instant in time prior to receiving the first duplication message as the<br>
+larger value of:<br>
+the value 1 and the value obtained by calculating<br>
+(size of receive window - (k x flight size)),<br>
+wherein k is a float.<br>
+The means for determining the duplicate acknowledgement may be adapted to use k = 2.<br>
+Further, in another embodiment, the communication device comprises means for<br>
+determining the duplicate acknowledgement threshold as<br>
+size of receive window - (2 x flight size) + N,<br>
+with N constituting a tuning parameter satisfying the condition<br>
+(2 x flight size) - size of receive window + 1 
+Further, in another embodiment, the communication device comprises means for updating<br>
+the duplicate acknowledgement threshold upon determining a change in the size of the<br>
+receive window.<br>
+Further, in another embodiment, the communication device comprises means for updating<br>
+the duplicate acknowledgement threshold at least each first time that a duplicate<br>
+acknowledgement message for one of the data segments is received.<br>
+24<br><br>
+Further, in another embodiment, the communication device comprises means for updating<br>
+the duplicate acknowledgement threshold each time that an acknowledgement message is<br>
+received.<br>
+In addition to the above outlined setting of the duplicate acknowledgement message<br>
+threshold based on the size of a receive window, with the size of the receive window<br>
+representing a number of data segments which can be stored in a buffer space at the<br>
+receiving peer, the situation at the sending peer may be taken into account as well. More<br>
+precisely, according to another embodiment, the data segment determined to be lost is<br>
+retransmitted, if the sending peer is blocked from transmitting a previously unsent data<br>
+segment. In this case, the sending peer may be considered blocked, if one of the following<br>
+conditions is fulfilled: the number of previously unsent data segments exceeds the size of<br>
+the receive window; the number of previously unsent data segments exceeds the size of<br>
+the send window; or an application constituting the source of the data segments does not<br>
+supply data segments for transmission.<br>
+The method of the present invention can be put to practice in any suitable or appropriate<br>
+way, and can especially be present in the form of a computer program, and consequently<br>
+also in the form of a storage medium carrying such a computer program. Equally, the<br>
+invention can be present in the form of a communication device arranged to operate in<br>
+accordance with the method of the invention.<br>
+Although the present invention has been described by way of detailed embodiments, the<br>
+invention is by no means restricted to these embodiments, as it is defined by the appended<br>
+claims. Also, reference numerals in the claims are not to be understood as restrictive, as<br>
+they only serve to make the claims easier to read.<br>
+25<br><br>
+We Claim:<br>
+1.	A method of controlling the flow of a sequence of data segments from a sending<br>
+peer to a receiving peer, comprising:<br>
+transmitting data segments from the sending peer to the receiving peer in the order<br>
+of the sequence;<br>
+receiving acknowledgment messages from the receiving peer, where an<br>
+acknowledgment message indicates the correct receipt of a data segment in the<br>
+proper order of the sequence;<br>
+receiving a duplicate acknowledgement message from the receiving peer at the<br>
+sending peer, indicating that a data segment was received, but not in the proper<br>
+order of the sequence, the duplicate acknowledgement message being received in<br>
+association with the last correctly received data segment in the order of the<br>
+sequence of data segments;<br>
+deciding that a data segment was lost, which was sent but not acknowledged, if the<br>
+number of duplicate acknowledgement messages reaches a duplicate<br>
+acknowledgement threshold determined based on the size of a receive window, the<br>
+size of the receive window corresponding to a number of data segments which can<br>
+be stored in a buffer space at the receiving peer; and<br>
+retransmitting the data segment decided to be lost.<br>
+2.	Method according to claim 1, wherein the duplicate acknowledgement threshold is<br>
+set such that the data segment determined to be lost is retransmitted before a point<br>
+in time in the sequence of data segments selected such that the acknowledgement<br>
+message indicating proper receipt of the data segment determined to be lost is<br>
+expected to be received at the sending peer before transmitting the data segment<br>
+with a sequence number exceeding the sequence number of the data segment<br>
+determined to be lost by the size of the receive window.<br>
+26<br><br>
+3.	Method of at least one of claims 1 and 2, wherein the duplicate acknowledgement<br>
+threshold is determined on the basis of a size of a usable window constituted by the<br>
+difference between the size of the receive window and a flight size, the flight size<br>
+representing the number of transmitted data segments which have not yet been<br>
+acknowledged.<br>
+4.	Method of at least one of claims 1 to 3, wherein the duplicate acknowledgement<br>
+threshold is determined based on the difference between the size of the usable<br>
+window and the flight size.<br>
+5.	Method of at least one of claims 1 to 4, wherein the duplicate acknowledgement<br>
+threshold is determined one instant in time prior to receiving the first duplication<br>
+message as the larger value of:<br>
+the value 1 and the value obtained by calculating (size of receive window - (k x<br>
+flight size)),<br>
+wherein k is a float.<br>
+6.	Method of claim 5, wherein k = 2.<br>
+7.	Method of at least one of claims 1 to 4, wherein the duplicate acknowledgement<br>
+threshold is determined as<br>
+size of receive window - (2 x flight size) + N,<br>
+with N constituting a tuning parameter satisfying the condition<br>
+(2 x flight size) - size of receive window + 1 
+8.	Method of at least one of claims 1 to 7, wherein the duplicate acknowledgement<br>
+threshold is updated upon determining a change in the size of the receive window.<br>
+9.	The method of at least one of claims 1 to 7, wherein the duplicate<br>
+acknowledgement threshold is updated at least each first time that a duplicate<br>
+acknowledgement message for one of the data segments is received.<br>
+27<br><br>
+10.	The method of claims 7 and 9, wherein N = 5.<br>
+11.	The method of at least one claims 1 to 7, wherein the duplicate acknowledgement<br>
+threshold is updated each time that an acknowledgement message is received.<br>
+12.	The method of at least one of claims 1 to 11, wherein the data segment determined<br>
+to be lost is retransmitted, if the sending peer is blocked from transmitting a<br>
+previously unsent data segment.<br>
+13.	The method of claim 12, wherein the sending peer is considered blocked, if one of<br>
+the following conditions is fulfilled:<br>
+the number of previously unsent data segments exceeds the size of the receive<br>
+window;<br>
+the number of previously unsent data segments exceeds the size of the send<br>
+window;<br>
+an application constituting the source of the data segments does not supply data<br>
+segments for transmission.<br>
+14.	A computer program arranged to perform the method of at least one of claims 1 to<br>
+13 when executed on a computer.<br>
+15.	A computer readable memory device that stores the computer program of claim 14.<br>
+16.	A communication device controlling the flow of a sequence of data segments from<br>
+a sending peer to a receiving peer, comprising:<br>
+means for transmitting data segments from the sending peer to the receiving peer in<br>
+the order of the sequence,<br>
+means for receiving acknowledgment messages from the receiving peer, where an<br>
+acknowledgment message indicates the correct receipt of a data segment in the<br>
+proper order of the sequence,<br>
+28<br><br>
+means for receiving a duplicate acknowledgement message from the receiving peer<br>
+at the sending peer, wherein the duplicate acknowledgement message indicates that<br>
+a data segment was received but not in the proper order of the sequence, the<br>
+duplicate acknowledgement message being received in association with the last<br>
+correctly received packet in the order of the sequence of data segments,<br>
+means for deciding that a data segment was lost, which was sent but not<br>
+acknowledged, if the number of duplicate acknowledgement messages reaches a<br>
+duplicate acknowledgement threshold determined based on the size of a receive<br>
+window, the size of the receive window corresponding to a number of data<br>
+segments which can be stored in a buffer space at the receiving peer; and<br>
+means for retransmitting the data segment decided to be lost.<br>
+Dated this 12th day of July 2007.<br><br>
+29<br><br>
+A method of controlling the flow of an amount of data from a sending peer to a receiving<br>
+peer of a predetermined communication protocol is described. The method comprises<br>
+dividing the amount of data into a plurality of data segments, where the data segments are<br>
+ordered in a sequence. The segments are sent to the receiving peer in the order of said<br>
+sequence. The receiving peer acknowledges the correct receipt of a data segment and<br>
+identifies the last correctly received data segment of the sequence that was received in the<br>
+proper order of the sequence. The sending peer is arranged such that if it receives a<br>
+threshold number of duplicate acknowledgements, it performs a retransmission. The<br>
+threshold number that trigger a retransmission is an adaptive parameter determined based<br>
+on the size of a receive window, the size of the receive window representing a number of<br>
+data segments which can be stored in a buffer space at the receiving peer.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1jbGFpbXMgMS4wLnBkZg==" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-claims 1.0.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1jbGFpbXMgMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-claims 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1jb3JyZXNwb25kZW5jZSBvdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-correspondence others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1kZXNjcmlwdGlvbiBjb21wbGV0ZS5wZGY=" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-description complete.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1mb3JtIDEucGRm" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1mb3JtIDIucGRm" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1mb3JtIDMucGRm" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1mb3JtIDUucGRm" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1ncGEucGRm" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1pbnRlcm5hdGlvbmFsIHB1YmxpY2F0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-international publication.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1pbnRlcm5hdGlvbmFsIHNlYXJjaCByZXBvcnQucGRm" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-international search report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDI2MjEta29sbnAtMjAwNy1wcmlvcml0eSBkb2N1bWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">02621-kolnp-2007-priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgwNS0wNi0yMDEzKS1BTk5FWFVSRSBUTyBGT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(05-06-2013)-ANNEXURE TO FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgwNS0wNi0yMDEzKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(05-06-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgxMS0wNC0yMDEzKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(11-04-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgxMi0xMC0yMDEyKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(12-10-2012)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgxNy0wNi0yMDE0KS1BTk5FWFVSRSBUTyBGT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(17-06-2014)-ANNEXURE TO FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgxNy0wNi0yMDE0KS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(17-06-2014)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyNi0wNS0yMDE0KS1BTk5FWFVSRSBUTyBGT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(26-05-2014)-ANNEXURE TO FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyNi0wNS0yMDE0KS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(26-05-2014)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyNy0wMS0yMDEyKS1BQlNUUkFDVC5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(27-01-2012)-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyNy0wMS0yMDEyKS1BTUFOREVEIENMQUlNUy5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(27-01-2012)-AMANDED CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyNy0wMS0yMDEyKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(27-01-2012)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyNy0wMS0yMDEyKS1ERVNDUklQVElPTiAoQ09NUExFVEUpLnBkZg==" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(27-01-2012)-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyNy0wMS0yMDEyKS1GT1JNIDIucGRm" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(27-01-2012)-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyNy0wMS0yMDEyKS1GT1JNIDUucGRm" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(27-01-2012)-FORM 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyNy0wMS0yMDEyKS1PVEhFUlMucGRm" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(27-01-2012)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyNy0wMS0yMDEyKS1QQS5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(27-01-2012)-PA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyOC0xMS0yMDExKS1FWEFNSU5BVElPTiBSRVBPUlQgUkVQTFkgUkVDSUVWRUQuUERG" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(28-11-2011)-EXAMINATION REPORT REPLY RECIEVED.PDF</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgyOC0xMS0yMDExKS1PVEhFUlMucGRm" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(28-11-2011)-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgzMC0wNC0yMDE0KS1BTk5FWFVSRSBUTyBGT1JNIDMucGRm" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(30-04-2014)-ANNEXURE TO FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LSgzMC0wNC0yMDE0KS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-(30-04-2014)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1rb2xucC0yMDA3LSgzMC0wOC0yMDEzKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">2621-kolnp-2007-(30-08-2013)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFIDEuMi5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-CORRESPONDENCE 1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1LT0xOUC0yMDA3LUNPUlJFU1BPTkRFTkNFLTEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">2621-KOLNP-2007-CORRESPONDENCE-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1rb2xucC0yMDA3LUNPUlJFU1BPTkRFTkNFLnBkZg==" target="_blank" style="word-wrap:break-word;">2621-kolnp-2007-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MjYyMS1rb2xucC0yMDA3LWZvcm0gMTgucGRm" target="_blank" style="word-wrap:break-word;">2621-kolnp-2007-form 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QtMDI2MjEta29sbnAtMjAwNy5qcGc=" target="_blank" style="word-wrap:break-word;">abstract-02621-kolnp-2007.jpg</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=UGV0aXRpb24gdW5kZXIgcnVsZSAxMzctIGNvcnJlc3BvbmRpbmcgZm9yZWlnbiBmaWxpbmcucGRm" target="_blank" style="word-wrap:break-word;">Petition under rule 137- corresponding foreign filing.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="263831-active-manipulation-of-light-in-a-lsilicon-on-insulator-soi-structusre.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="263833-method-and-network-node-for-a-call-set-up.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>263832</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2621/KOLNP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>48/2014</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>28-Nov-2014</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>24-Nov-2014</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>13-Jul-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>TELEFONAKTIEBOLAGET LM ERICSSON (PUBL)</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>S-164 83 STOCKHOLM</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>LUDWIG, REINER</td>
+											<td>BERGSTRASSE 18, 52393 HUERTGENWALD</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>EKSTRÖM, HANNES</td>
+											<td>ESSINGE BROGATA 1, S-112 61 STOCKHOLM, SWEDEN</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04L 1/18</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/EP2004/014624</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2004-12-22</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td></td>
+									<td></td>
+								    <td>NA</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/263832-data-flow-control-with-duplicate-acknowledgement by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:49:14 GMT -->
+</html>

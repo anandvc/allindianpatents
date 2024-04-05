@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/226631-scheduling-packet-transmissions by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:40:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 226631:SCHEDULING PACKET TRANSMISSIONS</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">SCHEDULING PACKET TRANSMISSIONS</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>This disclosure provides a synchronous packet manager contaning a data structure for scheduling future synchronous packet transimissions and arbitrating between synchronous and asynchronous packet transimissions. Slots required for transmitting a synchronous packet are reserved by marking the corresponding entries in a synchronous packet reservation table. Rather than writing packets to many different queues, the application software fills in a single reservation table per BTS sector.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>FORM 2<br>
+THE PATENTS ACT, 1970<br>
+(39 of 1970)<br>
+&amp;<br>
+THE PATENTS RULES, 2003<br>
+COMPLETE SPECIFICATION<br>
+(See section 10, rule 13)<br>
+"SCHEDULING PACKET TRANSMISSIONS"<br><br>
+QUALCOMM INCORPORATED, a US Company, of 5775 Morehouse Drive, San Diego, California 92121, United States of America.<br>
+The following specification particularly describes the invention and the manner in which it is to be performed.<br><br>
+WO 2005/029793<br><br>
+PCTYUS2004/030487<br><br>
+2<br>
+SCHEDULING PACKET TRANSMISSIONS<br>
+Claim of Priority under 35 U.S.C. §119<br>
+[0001]	The present Application for Patent claims priority to Provisional Application<br>
+No.     60/503,550,      entitled     "SCHEDULING      SYNCHRONOUS     PACKET<br>
+TRANSMISSIONS ON A lxEV-DO FORWARD LINK" filed September 16, 2003,<br>
+and assigned to the assignee hereof and hereby expressly incorporated by reference<br>
+herein.<br>
+BACKGROUND<br>
+Field<br>
+[0002]	The present invention relates generally to data packet communications and more<br>
+specifically to scheduling synchronous packet transmissions on a Time-Division<br>
+Multiplexed (TDM) communications system.<br>
+Background<br>
+[0003]	Recently there is a demand for a transmission system to handle both unicast and<br>
+multicast/broadcast transmission. Unicast transmission is directed to one user, whereas multicast/broadcast is directed to multiple users. In a time-division multiplexed scheme, time slots may be scheduled for unicast or multicast/broadcast packet transmissions. Multicast and broadcast packets are typically synchronous. Thus multicast and broadcast packets are transmitted in specific time slots on a periodic basis. These synchronous packets may come from one or more sources, such as synchronous control channels, sub-synchronous control channels, or multicast/broadcast channels. Unicast packets are typically asynchronous and may be transmitted in any available slot. In other words, the synchronous packets typically have less flexible scheduling requirements than unicast packets.<br>
+[0004]	Packets may take multiple time slots to complete transmission, so the unicast<br>
+scheduler schedules a unicast packet to complete transmission before the next synchronous packet is sent. When scheduling an asynchronous/unicast packet, the scheduler must be aware of future synchronous packet transmissions. When scheduling a unicast packet, the scheduler looks ahead, for example, the scheduler may consider as many as 64 slots, for synchronous packets that would be due to transmit within that time.  In many cases, synchronous packets are not available sufficiently in advance to<br><br>
+WO 2005/029793	PCT/US2004/030487<br>
+3&gt;<br>
+allow the scheduler to plan; but the unicast scheduler must still leave the appropriate slots open for synchronous packets. There is a need, therefore, to provide a simple, generic mechanism for handling synchronous and asynchronous packet transmissions in one system.<br>
+SUMMARY<br>
+[0005]	  The embodiments disclosed herein address the above stated needs by providing<br>
+a synchronous packet manager that contains a data structure for scheduling future synchronous packet transmissions. Slots required for transmitting a synchronous packet can be reserved by marking the corresponding entries in a synchronous packet . reservation table. Rather than writing packets to many different queues, the network device fills in a single reservation table per Base Station Transceiver Sub-system (BTS) sector.<br>
+[0006]	Each entry in the reservation table may be assigned a priority, and the<br>
+synchronous packet manager ensures that a lower priority packet will not preempt or overwrite a higher priority packet<br>
+[00071	Finally, the synchronous packet manager provides a mechanism to automatically<br>
+reserve slots in the reservation table .on a periodic basis. This mechanism inserts<br>
+placeholder reservations into the reservation tables. Each placeholder reservation has a<br>
+priority to ensure the slots wont get filled by a lower priority packet	'<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[0008]	The features, objects, and advantages of the presently disclosed method and<br>
+apparatus will become more apparent from the detailed description set forth below when<br>
+taken in conjunction with the drawings:<br>
+[0009]	FIG. 1 is a diagram showing timeslots where packet data communications are<br>
+transmitted on the Forward Link (FL).<br>
+[0010]	FIG. 2 is a diagram showing queues for the synchronous channels in a<br>
+communication system.<br>
+[0011]	. FIG. 3 is a diagram showing thneslots interlaced on the FL.<br>
+[0012]	FIG. 4 is a table representing the timeslots where packet data communications<br>
+are transmitted on the FL.<br><br>
+WO 2005/029793	PCT/US2004/030487<br>
+4<br>
+[0013]	FIG. 5 is a block diagram showing the interaction between the Base Station<br>
+Controller (BSC) and the Base Station Transceiver Sub-system (BTS).<br>
+[0014]	FIG. 6 is a table representing a packet reservation table.<br>
+[0015]	FIG. 7 is a table representing a synchronous packet reservation table.<br>
+[0016]	FIG. 8 is a representation of three tables showing periodic synchronous<br>
+reservation tables being filled simultaneously.<br>
+[0017]	FIG. 9 is a table showing an example of a periodic synchronous packet<br>
+reservation.<br>
+[0018]	FIG. 10 is a diagram showing synchronous packet manager processing of a<br>
+command.<br>
+[0019]	FIG. 11 is a table showing synchronous packet scheduling.<br>
+[0020]	FIG. 12 is a table showing computation of the index SyncMaxNumSlots.<br>
+DETAILED DESCRIPTION<br>
+[0021]	The following discussion provides one or more embodiments serving as<br>
+examples, instances, and/or for illustration purposes and clarity of understanding. Any embodiment described herein is not necessarily to be construed as preferred or advantageous over other embodiments.<br>
+[0022]	Increasing demand for wireless data transmission and the expansion of services<br>
+available via wireless communication technology have led to the development of specific data services. One such service is referred to as High Data Rate (HDR). An example of a HDR type system is the one proposed in the "cdma2000 High Rate Packet Data Air Interface Specification" referred to as "the HAI specification" and as "TIA/EIA/IS-856."<br>
+[0023]	In one embodiment, a transmission system supports the standard protocols<br>
+referred to as lxEV-DO. As shown in FIG. 1, the lxEV-DO forward link is time-division multiplexed, consisting of time slots; each of duration 1.66 ms, that may be scheduled for unicast or multicast/broadcast packet transmissions. When packets are sent to a single user, this is called "unicast" and when packets are sent to multiple users, this is called "multicast." Multicast and broadcast packets are typically synchronous, meaning they have to be transmitted in specific time slots, on a periodic basis. These synchronous packets may come from one or more sources, such as synchronous control channels 10 and 15, sub-synchronous control channels, or multicast/broadcast channels.<br><br>
+WO 2005/029793	PCT/US2004/030487<br>
+5"<br>
+Unicast packets are typically asynchronous and may be transmitted in any available slot.<br>
+Traffic channels are also considered "unicast." In other words, the synchronous packets<br>
+from the channels mentioned above typically have less flexible scheduling requirements<br>
+than unicast packets.<br>
+[0024]	The data on a synchronous Control Channel (CC) is sent in at least one packet<br>
+every 256 slots, as shown in FIG. 1. This data may consist of information sent to the Mobile Station (MS) such as system parameters. The data on a multicast/broadcast channel is sent periodically and has less flexible scheduling requirements than unicast. This data may consist of streaming video services. Finally, the data on a sub-synchronous control channel, a subdivision of the control channel, is also periodic but has a much smaller period than 256 slots. This data may consist of pages to the MS and may be used when 256 slots is too long a period to wait<br>
+[0025]	The basic problem in this system is to keep the synchronous and asynchronous<br>
+data packets separate. In this particular system, packet transmissions are interlaced over four timeslots. A packet mat takes multiple slots to transmit will occupy every fourth slot until it completes transmission, as shown in FIG. 3. For example, the synchronous control channel is sent on timeslots 0 and 4 because me timeslots are interlaced and these data packets are not sent consecutively. Timeslot 1 may be used for sending asynchronous data such as traffic channel data. Interlacing gives the MS time to receive and attempt to decode a multi-slot packet before all slots of the packet have been transmitted. If the MS is able to decode the packet early, then it sends an ACK back to the Base Station (BS) to acknowledge receipt and successful decoding of the data packet.<br>
+[0026]	Others have solved this problem by using a "smart scheduler" as shown in FIG.<br>
+2. The smart scheduler knows the timing requirements of different types of synchronous channels. In this example, there are at least three logical channels: Control Channel (CC); Broadcast Channel (BC); and Sub-synchronous Control Channel (SCC). Each logical channel has a queue 45, 50, and 55, etc., in which application software submits to the scheduler the packets that need to be transmitted on the channel. There can be a large number of these queues 45, 50, and 55 (e.g., many broadcast channels). The scheduler looks at the different synchronous packet queues and decides when each packet is to be transmitted. After deciding when the synchronous packets will be<br><br>
+WO 2005/029793	PCT/US2004/030487<br>
+L<br><br>
+transmitted, the scheduler can schedule unicast/asynchronous transmissions to fill the remaining time slots.<br>
+[0027]	In FIG. 3, a control channel packet is sent on timeslots 0, 4, and 8 and   a<br>
+broadcast channel packet is sent on timeslot 10. The traffic channel data, which is a unicast data packet, is sent on timeslot 1 after the control channel and broadcast channel data packets have been assigned and reserved on specific slots. If other unicast data is to be sent on timeslots 2 and 6, for example, the scheduler will look ahead four other timeslots, that is, to make sure that there is no synchronous channel data reserved on timeslot 10. hi this case, since timeslot 10 is reserved for broadcast channel data, only timeslots 2 and 6 may be used for unicast channel data. That is, we. look ahead four timeslots from timeslot 6. Since timeslot 10 is already for broadcast channel data, unicast reservation stops at timeslot 6. The "smart scheduler" approach is more complicated. It does not have a reservation table, so the way it "looks ahead" is by examining all of its synchronous packet queues to see when the next sync packet is due to transmit Then it can decide how many slots are available for unicast<br>
+[0028]	FIG. 4 is a table representing me timeslots described in FIG. 3. This table is an<br>
+easier way to represent packets being sent on four interlaces. Each entry in the sync packet reservation table may contain one of the following two types of reservations: a physical layer packet mat should begin transmitting in the slot mat it occupies; or a placeholder for a physical layer packet that should begin transmitting in the designated slot, provided that the actual packet is submitted to the sync packet manager before the scheduled start time. The first row (row 0) of the table represents the control channel data packets. In row 1, the first slot is reserved for traffic channel data. In row 2, since broadcast channel data is reserved on slot 10, only slots 2 and 6 can be used for unicast channel data. Data packets may take anywhere from 1 to 16 slots. The system looks ahead 16 slots to make sure there is no data scheduled within this range. Low rate packets take many slots to transmit, at most 16 slots * 4 interlaces = 64 slots. When scheduling a unicast packet, the scheduler has to be able to look ahead as many as 64 slots for synchronous packets that would be due to transmit within that time. In many cases, synchronous packets are not available 64 slots in advance, but the unicast scheduler still leaves the appropriate slots open for synchronous packets. In other words, the scheduler operation is limited so as to avoid over-writing synchronous data packets.<br><br>
+WO 2005/029793	PCT/US2004/030487<br>
+1<br>
+[0029],	The scheduling of timeslots is performed in BTS 25 of FIG. 5. As illustrated in<br>
+this figure, the BSC 20 sends data to the BTS 25. A Content Server (CS) 29 is illustrated as providing data to BTS 25 and may also provide data via BSC 20. A problem occurs when BSC 20 does not send synchronous data; the BTS 25 still reserves a slot for synchronous data packets. The BSC sends the sync data after unicast scheduling decisions have already been made that could potentially conflict with the sync packet. There are two aspects to the problem. First, the scheduler must ensure asynchronous packets do not over-write synchronous packets. Second, even if the BSC 20 has not sent data to the BTS 25, the BTS 25 ensures that slots are reserved for synchronous data packets. In other words, the smart scheduler must know when synchronous packets are due to transmit even if the packet has not yet been written to its queue. The BTS 25 includes a scheduler 27, a synchronous packet manager 28, and a synchronous packet reservation table 30.<br>
+(0030]	The scheduler 27 dedicates memory for these queues and has knowledge of the<br>
+timing requirements of the broadcast channel. The scheduler 27 will typically examine the head of each queue to determine if the channel has data to send. One problem with this method is complexity. This method requires extra memory to store channel information (eg, queues). Further this method is not flexible because the scheduler is updated on introduction of each new synchronous channel.<br>
+Synchronous packet management<br>
+[0031]	In order to solve the above-mentioned problems, the following reservation table<br>
+is described, m this regard, the reservation table is a simple and flexible solution because the scheduler 27 may operate without information regarding specific types of channels. As shown in the synchronous packet reservation table 30 as in FIG. 6, the synchronous packet manager 28 simply reports how many of the subsequent slots (if . any) are available for asynchronous/unicast packets. For example, the first 5 slots in row 0 can be used for unicast packets. The synchronous packet manager 28 arrives at this slot count by examining the next one or more entries in the reservation table. If a reservation table entry is empty then the slot is made available for unicast.<br>
+[0032]	The placeholder reservations ensure that a multi-slot unicast packet is not<br>
+scheduled which overlaps the slots required by a future synchronous packet (one that may not have been written into the table yet). The synchronous packet manager 28 has<br><br>
+WO 2005/029793<br><br>
+PCT/US2004/030487<br><br>
+2'<br>
+no knowledge of specific synchronous channels, which makes it more flexible and capable of handling a wide range of channel types. Any number of logical channels (e.g., handled by application software) can write to the synchronous packet reservation table 30. The simplicity and flexibility of the synchronous packet manager 28 or scheduler 27 make each a good candidate for hardware implementation.<br>
+[0033]	The synchronous packet manager 28 or scheduler 27 has the following<br>
+advantages. First, the generic mechanism easily extends to new synchronous channel types without firmware/hardware modification. The synchronous packet manager 28 was originally designed to handle the synchronous control channel and broadcast/multicast channels, but it will easily handle the new sub-synchronous control channel as well. Second, it scales well to large numbers of logical synchronous channels. A logical channel is one instance of a particular type of channel. For example, a three sector BTS could have 48 logical broadcast channels, 3 synchronous control channels, and 3 sub-synchronous control channels. Finally, it is a simple design mat could easily be implemented in hardware.<br>
+[0034]	In one embodiment, me FL DSP supports a generic synchronous packet interface<br>
+mat can be used to transmit physical layer packets at specified start times. This interface is suitable for transmitting both synchronous control channel and broadcast channel packets, since in both cases, the host driver at me BTS knows ahead of time exactly when the packets are to be transmitted. In other words, this synchronous packet interface provides a means of bypassing the unicast scheduler and requesting a physical layer packet transmission beginning in a specific time slot.<br>
+Sync packet reservation table<br>
+[0035]	In one embodiment, the FL DSP maintains a sync packet reservation    table for<br>
+each sector, as shown in FIG. 7. This reservation table is basically a calendar of future sync packet transmissions. The sync packet reservation table contains SYNC_PKT_WINDOW_SIZE entries, where each entry in the table represents one slot The table may be thought of as a sliding window of reservations, such that table entry 0 always represents the current slot, and table entry SYNC_PKT_WTNDOW_SIZE-l always represents the future-most reservation in the table.<br>
+[0036]	An example of a sync packet reservation table is shown below in FIG. 7.  The<br>
+table is shown containing four rows, which represent the four physical layer interlaces.<br><br>
+WO 2005/029793	PCT/US2004/030487<br>
+This layout makes it easier to identify the slots that a multi-slot physical layer packet will occupy. A multi-slot packet that begins transmitting in slot S will also transmit in slots iS+4, S+8, etc., which are adjacent in the table shown in FIG. 7.<br>
+[0037]	Each entry in the sync packet reservation table may contain one of the   following<br>
+two types of reservations: a physical layer packet that should begin transmitting in the slot that it occupies; or a placeholder for a physical layer packet that should begin transmitting in the designated slot, provided that the actual packet is submitted to the sync packet manager before the scheduled start time.<br>
+[003S]	Each sync packet reservation table entry contains the following parameters:<br>
+?	Priority (0 to 15) — the priority of this sync packet reservation. The sync packet manager ensures that a lower priority sync packet will not transmit in a slot reserved by a higher priority sync packet (or placeholder). Priority 0 is the lowest (unreserved) and priority 15 is the highest. An unreserved slot will have a priority of 0.<br>
+?	Medium Access Control (MAC) Index (0 to 63) -the MAC index on which the physical layer packet should be transmitted. An unreserved slot or a placeholder reservation will have a MAC index of 0.<br>
+?	Rate (1 to 12) — the rate at which the physical layer packet should be transmitted. The rate values are the same as those specified for Data Rate Control (DRQ rates. Note mat physical layer packet rates other than the specific DRC rates may be achieved by adjusting "Num Slots," which is described below. An unreserved slot or a placeholder reservation will have a Rate of 0.<br>
+?	Num Slots (1 to 16) — the number of slots over which the physical layer packet should be transmitted. The number of slots to be less than or equal to the maximum number of slots required for a physical layer packet at the specified rate.. An unreserved slot or a placeholder reservation will have Num Slots set to 0.<br><br>
+WO 20057029793	PCT/US2004/030487<br>
+9-<br>
+■   Encoder  Indices - array of MAX_SYNC_PKTS_PER_SLOT  encoder<br>
+indices (e.g., 2) that identify the MAC layer packets in this physical layer<br>
+packet.  If a physical layer packet at the specified rate requires fewer than<br>
+MAX_SYNC_PKTS_PER_SLOT MAC layer packets, then the sync packet<br>
+manager ignores the extra values.   An unreserved slot or a placeholder<br>
+reservation will have its encoder indices set to 0.<br>
+[0039]	Note, a multi-slot sync packet will occupy one entry in the sync packet<br>
+reservation table (i.e., the one that corresponds with its start time).  The sync packet<br>
+manager resolves collisions, or overlapping sync packets, at the time of scheduling,<br>
+which is approximately one slot before a sync packet's start time.<br>
+Periodic sync packet reservations<br>
+[0040]	This section describes how and when the sync packet manager writes the<br>
+'placeholder7' reservations to the sync packet reservation tables.<br>
+[0041]	Most synchronous packet transmissions occur on a periodic basis.    The<br>
+synchronous control channel, for example, has a period of 256 slots, or 64 interlace slots on an interlace. Sync packets often aren't available until only a few slots before their scheduled start time, and without any means of reserving the slots for a sync packet transmission, an overlapping multi-slot packet could get scheduled before the sync packet write even occurs. As shown in FIG. 8, the sync packet manager provides the "placeholder" reservations as a way to hold slots open for sync packets that will be written into the reservation tables 65,70, and 75 at any time within the reservation table window. Reservation tables 65,70, and 75 are sync packet reservation tables for sectors 0,1, and 2, respectively.<br>
+[0042]	The sync packet manager maintains a separate list of periodic reservations 60,<br>
+which trigger the placeholder writes into the sync packet reservation tables. These periodic reservations are updated by the ReserveSyncSlotsCmd and the UnreserveSyncSlotsCmd. Each periodic reservation has the following properties:<br>
+?	Priority - the priority that the placeholder entry will have in the sync packet reservation table(s).<br>
+?	SectorMask — the sectors) that identify the sync packet reservation table(s) that the placeholders should be written to.<br><br>
+WO 2005/029793	PCTAJS2004/030487<br>
+*	11<br>
+?	StaxtTime — the system time that identifies the first slot that should be reserved. The sync packet manager writes all placeholders to the future-most slot of the reservation table(s)5 so the start time must be at least SYNC_PKT_W1ND0W_SIZE slots in the future.<br>
+?	InterlacePeriod - the period of the reservation in units of interlace slots.<br>
+?	InterlaceBurstLength - the duty cycle of the reservation in units of interlace slots (less than or equal to InterlacePeriod).<br>
+?	InterlaceNumSlots - the period (in units of interlace slots) at which the placeholder reservations should be written to the sync packet reservation table(s).<br>
+[0043]	The sync packet manager processes all periodic reservations every slot. FIG. 8<br>
+shows the processing of the periodic reservations. Note that all placeholders are written to die future-most entries of the sync packet reservation tables to ensure that the slots won't get allocated to unicast A single reservation 60 can be sent to multiple tables 65, 70, and 75.<br>
+(0044]	The sync packet manager maintains counters that track the period, burst length,<br>
+and num slots for each periodic reservation. Daring the first "burst length" slots of the period, the sync packet manager writes the placeholders every "num slots.** Two examples are shown in FIG. 9. The example shows two reservations flowing through the sync packet reservation table. Both  periodic reservations have an interlace period of 8 slots and an interlace burst length of 6 slots. The periodic reservation on interlace 0 has InterlaceNumSlots set to 1, whereas the periodic reservation on interlace 2 has InterlaceNumSlots set to 2. Interlace 0 begins in the slot 0 (the current slot) and is a burst of 6 slots. Since the NumSlots is set to 1, the period for slot reservation is one, i.e., each consecutive slot Interlace 2 begins in the slot 0 and is a burst of 1 slot. Since the NumSlots is set to 2, the period for slot reservation is two, i.e., after every other slot<br>
+[0045]	Two or more periodic reservations may overlap.   If a reservation table entry<br>
+already has a placeholder reservation, which is recorded in the scheduler, then the sync packet manager preserves the one with the highest priority.<br>
+Sync packet writes<br>
+[0046]	This   section   describes   how   the   sync   packet   manager   processes   the<br>
+SendSyncPktsCmd- Each SendSyncPkts command contains one or more physical layer<br><br>
+WO 2005/029793	PCT/US2004/030487<br>
+'y	12<br>
+packets, which may be transmitted on one or more sectors (as specified by SectorMask).<br>
+FIG. 10 shows the sync packet reservation tables for three sectors and several<br>
+SendSynkPkts commands. A single command can be sent to multiple tables 85, 90, and<br>
+95.<br>
+[0047]	When processing a SendSyncPktsCmd, the sync packet manager iterates over<br>
+the packets in the command, and performs the following for each packet<br>
+1.	Validate the StartTime. The StartTime is to be within the current sync packet reservation table window of time. If StartTime is invalid, the sync packet manager issues a packet drop message for this packet for each sector present in SectorMask.<br>
+2.	Find conflicting packets. At this stage, sync packet reservations only conflict if they have the same start time, hi other words, as long as the sync packet manager can write the packet to the reservation table, it doesn't care if multi-slot packets will overlap. If a sync packet already- occupies the reservation table entry, men the sync packet manager issues a packet drop message for me lower priority packet If the packets have the same priority men me sync packet manager drops me older packet If the reservation table entry contains a placeholder packet reservation, men me write will succeed only if the packet has a priority greater man or equal to the placeholder's priority.<br>
+3.	Write the sync packet reservations). For each sector present in the<br>
+command's SectorMask, and provided the packet was not dropped on this<br>
+sector, write the packet information to the sector's reservation table entry that corresponds with the packet's start time.<br>
+Sync packet scheduling<br>
+[0048]	The sync packet manager must look at each reservation table of a sector to see if<br>
+a sync packet is to be transmitted. As shown in FIG. 11, if the sync packet manager finds a packet reservation in the "next slof' entry of a reservation table in each sector, then it ensures that the sync packet can be transmitted without colliding with a packet that is already transmitting or colliding with a higher priority sync packet (or sync packet placeholder) in subsequent slots on the interlace. For example, on interlace 1, "next slot" 1 knows that it will not collide with another slot having higher priority until<br><br>
+WO 2005/029793	PCTAJS2004/030487<br>
+Y	J3<br>
+many slots later.   Therefore, all the slots that are not reserved may be used for<br>
+unicast/asynchronous packets.<br>
+|0049]	More specifically, the sync packet manager performs the following two tests<br>
+when finding a sync packet reservation in the "next slof' reservation table entry:<br>
+?	If there is already a packet transmitting on the "next slot" interlace, and this packet is due to repeat in the next slot, then the next-slot sync packet is dropped. There are two reasons why this may occur. Either the sync packet was written to the reservation table after a multi-slot unicast packet was already scheduled on the interlace (and the sync packet did not have a placeholder reservation), or an earlier higher priority multi-slot sync packet was given priority on the interlace.<br>
+?	If the "next slot" sync packet will require more than one slot to transmit, then the sync packet manager looks ahead NumSlots-1 (where NumSlots is the. number of slots that the packet will require) on the interlace to make sure that the packet won't collide with any higher priority sync packet or sync packet placeholder reservation, as shown in FIG. 11.<br>
+[0050]	If    either    test    tails,    then    the    sync    packet    manager    issues    a<br>
+CSDTDEFS SyncPktDroppedMsg for the "next slot" sync packet<br>
+Interaction with the unicast scheduler<br>
+[0051]	hi one embodiment,  the FL DSP gives priority to  sync packets over<br>
+unicast/asynchronous packets, so sync packet scheduling always occurs before unicast scheduling. However, if a "next slot" sync packet reservation table entry is free, then the slot is made available to the unicast scheduler. Furthermore, the sync packet manager looks ahead on the "next slot" interlace to see how many subsequent slots can be made available for unicast. This count is called SyncMaxNumSlots, which is provided to the unicast scheduler every slot for each sector. If SyncMaxNumSlots for a sector is zero then the next slot is not available for unicast data; otherwise, the unicast scheduler may schedule a packet that does not exceed SyncMaxNumSlots. FIG. 12 depicts the computation of SyncMaxNumSlots for a particular sector.<br>
+[0052]	Physical layer packets do not exceed 16 slots, so the sync packet manager<br>
+examines each reservation table entry on the interlace until encountering a sync packet reservation, as shown in FIG. 12, or SyncMaxNumSlots reaches 16.<br><br>
+WO 2005/029793<br><br>
+PCT/US2004/030487<br><br>
+43-<br>
+[0053]	Note, if the "next slot" reservation table entry contains a placeholder reservation,<br>
+then SyncMaxNumSlots will normally be zero (i.e., not available for unicast data). The lack of an actual sync packet for the "next slot" will result in an idle slot transmission during the next slot. In many cases, this is desirable; however, the sync packet manager also supports a mode that allows unused "next slot" placeholder reservations to be released for unicast data. This mode may be useful for bursty logical synchronous channels (e.g., some types of broadcast channels), in which unicast data could be sent if the synchronous channel does not have data available. The synchronous packet manager supports this mode via a particular placeholder reservation priority level, as described below.<br>
+[0054]	For the purpose of updating SyncMaxNumSlots, placeholder packet reservations<br>
+with a "next slot" 1 have a slightly different behavior. A "next slof' 1 placeholder reservation in table entry 1 will be considered available for unicast A priority 1 placeholder reservation in table entries greater than 1 (e.g., slots 5, 9, 13, etc. in FIG. 12) will be excluded from unicast data when updating SyncMaxNumSlots. In other words, a priority 1 placeholder in the next-slot position will be released for unicast, but a next-slot placeholder reservation with    priority greater man 1 will force an idle slot transmission.<br>
+[0055]	Note: SYNC_PKT_WINDOW_SIZE will be at least 16*4=64 slots since<br>
+SyncMaxNumSlots ranges from 1 to 16.<br>
+ [0056]	Those of skill in the art would understand that various steps or elements in the<br>
+   embodiments may be altered or their order rearranged without varying from         the invention that has been disclosed.<br>
+[0057]	Those of skill in the art would understand that information and signals may be<br>
+represented using any of a variety of different technologies and techniques. For example, data, instructions, commands, information, signals, bits, symbols, and chips that may be referenced throughout the above description may be represented by voltages, currents, electromagnetic waves, magnetic fields or particles, optical fields or particles, or any combination thereof.<br>
+[0058]	Those of skill would further appreciate that the various illustrative logical<br>
+blocks, modules, circuits, and algorithm steps described in connection with the embodiments disclosed herein may be implemented as electronic hardware, computer software, or combinations of both.    To clearly illustrate this interchangeability of<br><br>
+WO 2005/029793	PCT/US2004/030487<br>
+hardware and software, various illustrative components, blocks, modules, circuits, and<br>
+steps have been described above generally in terms of their functionality. Whether such<br>
+functionality is implemented as hardware or software depends upon the particular<br>
+application and design constraints imposed on the overall system. Skilled artisans may<br>
+implement the described functionality in varying ways for each particular application,<br>
+but such implementation decisions should not be interpreted as causing a departure from  the scope of the present invention<br>
+[0059]	The various illustrative logical blocks, modules, and circuits described in<br>
+connection with the embodiments disclosed herein may be implemented or performed with a general purpose processor, a digital signal processor (DSP), an application specific integrated circuit (ASIC), a field programmable gate array (FPGA) or other programmable logic device, discrete gate or transistor logic, discrete hardware components, or any combination thereof designed to perform the functions described herein. A general purpose processor may be a microprocessor may be any conventional processor, controller, microcontroller, or state machine.   A processor may also be implemented as a combination of computing devices, eg., a combination of a DSP and a microprocessor, a plurality of microprocessors, one or more microprocessors in conjunction with a DSP cove, or any other such configuration.<br>
+[0060]	The steps of a method or algorithm described in connection with the<br>
+embodiments disclosed herein may be embodied directly in hardware, in a software<br>
+module executed by a processor, or in a combination of the two. A software module<br>
+may reside in RAM memory, flash memory, ROM memory, EPROM memory,<br>
+,   EEPROM memory, registers, hard disk, a removable disk, a CD-ROM, or any other<br>
+form of storage medium known in the art. An exemplary storage medium is coupled to<br>
+the processor such the processor may read information from, and write information to,<br>
+the storage medium.   In the alternative, the storage medium may be integral to the<br>
+processor. The processor and the storage medium may reside in an ASIC. The ASIC<br>
+may reside in a user terminal such as the MS or reside at the BS. In the alternative, the<br>
+processor and the storage medium may reside as discrete components in a user terminal.<br>
+[0061]	The previous description of the disclosed embodiments is provided to enable any<br>
+person skilled in the art to make or use the present invention. Various modifications to<br>
+these embodiments will be readily apparent to those skilled in the art, and the generic<br><br>
+WO 2005/029793	PCT/US2004/030487<br>
+principles defined herein may be applied to other embodiments without departing from<br>
+the spirit or scope of the invention.  Thus, the present invention is not intended to be<br>
+limited to the embodiments shown herein but is to be accorded the widest scope<br>
+consistent with the principles and novel features disclosed herein.<br>
+[0062]	WHAT IS CLAIMED IS:<br><br>
+WO 2005/029793<br><br>
+17<br><br>
+PCTYUS2004/030487<br><br>
+CLAIMS<br>
+1.	    An apparatus for scheduling synchronous packet transmissions, comprising:<br>
+a synchronous packet manager for scheduling synchronous packet transmissions;<br>
+ and<br>
+a synchronous packet reservation table for storing slot reservations for the synchronous packet transmissions.<br>
+2.	The apparatus in claim 1, wherein the synchronous packet manager further comprises a packet scheduler for scheduling asynchronous packet transmissions in response to the synchronous packet reservation table.<br>
+3.	The apparatus in claim 1, wherein the synchronous packet reservation table is further for storing status information, wherein me status irrformation comprises:<br>
+a priority of a synchronous packet reservation; and a number of slots over which the packet is transmitted.<br>
+4.	The apparatus m claim 1, wherein the synchronous packet manager  determines<br>
+reservation to be written in the synchronous packet reservation table.<br>
+5.	The apparatus in claim 1, wherein the synchronous packet manager maintains a record of a period, burst length, and num slots for each of said reservation.<br>
+6.	The apparatus in claim 2, wherein the synchronous packet manager is further adapted to:<br>
+validate a start time; find conflicting packets; and<br>
+write a synchronous packet reservation in the synchronous packet reservation table.<br>
+7.	The apparatus in claim 2, wherein the asynchronous packet transmissions are<br>
+traffic data.<br><br>
+WO 2005/029793	PCT/US2004/030487<br>
+JS XT<br>
+8.	The apparatus in claim 4, wherein the reservation comprises:<br>
+a priority for a placeholder entry;<br>
+a Start_Time that identifies a first slot to be reserved; an Interlace_Period that indicates a period of the reservation; an Interlace_Burst_Length that indicates a duty cycle of the reservation; and an Interlace_Num_Slots  index that indicates a period at which the reservation is written.<br>
+9.	The apparatus in claim 4, wherein the reservation is sent to multiple<br>
+synchronous packet reservation tables.<br>
+10.	A method for scheduling synchronous packet transmissions, comprising:<br>
+scheduling synchronous packet transmissions; and<br>
+storing slot reservations for the synchronous packet transmissions.<br>
+11.	The method in claim 10, wherein scheduling synchronous packet transmissions further comprises scheduling asynchronous packet transmissions in response to a synchronous packet reservation table.<br>
+12.	The method in claim 10, wherein scheduling synchronous packet transmissions further comprises writing a reservation in the synchronous packet reservation table.<br>
+13.	The method in claim 10, wherein scheduling synchronous packet transmissions further comprises maintaining a record of a period, burst length, and num-slots for each of said reservation.<br>
+14.	The method in claim 11, wherein the asynchronous packet transmissions are traffic data.<br>
+15.	The method in claim 12, wherein writing the reservation further comprises:<br>
+validating a start time;<br>
+finding conflicting packets; and<br><br>
+WO 2005/029793	PCT/US2004/030487<br>
+19<br>
+writing a synchronous packet reservation in the synchronous packet reservation table.<br>
+16.	The method in claim 12, wherein writing the reservation is performed on<br>
+multiple synchronous packet reservation tables.<br>
+17.	An apparatus for scheduling synchronous packet transmissions, comprising:<br>
+means for scheduling synchronous packet transmissions; and<br>
+means for storing slot reservations for the synchronous packet transmissions.<br>
+18.	The apparatus in claim 17, wherein the means for scheduling synchronous packet transmissions further comprises a packet scheduler for scheduling asynchronous packet transmissions in response to a synchronous packet reservation table.<br>
+19.	The apparatus in claim 17, wherein the status information comprises:<br>
+a priority of a synchronous packet reservation; and<br>
+a number of slots corresponding to a period of slots for the synchronous packet reservation over which the packet is transmitted.<br>
+20.	The apparatus in claim 17, wherein the means for scheduling maintains a record of a period, burst length, and num-slots for each of said reservation.<br>
+21.	The apparatus in claim 17, wherein the means for scheduling further determines a reservation to be written in the synchronous packet reservation table.<br>
+22.	The apparatus in claim 17, wherein the means for scheduling synchronous packet transmissions is further adapted to:<br>
+validate a start time; find conflicting packets; and<br>
+write a synchronous packet reservation in the synchronous packet reservation table.<br>
+23.	The apparatus in claim 20, wherein the reservation comprises:<br><br>
+WO 2005/029793<br><br>
+PCTYUS2004/030487<br><br>
+2o<br>
+a priority for a placeholder entry,<br>
+a Start-Time that identifies a first slot to be reserved;<br>
+an Interlace-Period that indicates a period of the reservation;<br>
+an Interlace_Burst_Length that indicates a duty cycle of the reservation; and<br>
+an lnterlace-Num-_Slots index that indicates a period at which the reservation is<br>
+written.<br>
+24.	The apparatus in claim 20, wherein the reservation is sent to multiple synchronous packet reservation tables.<br>
+25.	An apparatus for scheduling synchronous packet transmissions, comprising:<br>
+a memory storage unit; and<br>
+a processor coupled to the memory storage unit and adapted for: scheduling synchronous packet transmissions; and storing    slot    reservations    for    the    synchronous    packet transmissions.<br>
+26.	An apparatus for scheduling synchronous packet transmissions and a method for scheduling synchronous packet transmissions, <br>
+27.	<br>
+28.	substantially as herein described, particularly with reference to, and as illustrated in the accompanying drawings.<br>
+Dated this 27th day of March 2006<br><br>
+RAJESHWARIH.<br>
+Of K &amp; S PARTNERS<br>
+ATTORNEY FOR THE APPLICANTS<br><br>
+2-1<br>
+ABSTRACT<br>
+This disclosure provides a synchronous packet manager containing a data structure for scheduling future synchronous packet transmissions and arbitrating between synchronous and asynchronous packet transmissions. Slots required for transmitting a synchronous packet are reserved by marking the corresponding entries in a synchronous packet reservation table. Rather than writing packets to many different queues, the application software fills in a single reservation table per BTS sector.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bS0yMDA2LWZvcm0tMi5kb2M=" target="_blank" style="word-wrap:break-word;">372-mum-2006-form-2.doc</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtYWJzdHJhY3QtMS5qcGc=" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-abstract-1.jpg</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtYWJzdHJhY3QuZG9j" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-abstract.doc</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtYWJzdHJhY3QucGRm" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtY2FuY2VsbGVkIHBhZ2VzKDIzLTEwLTIwMDgpLnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-cancelled pages(23-10-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtY2xhaW1zKGdyYW50ZWQpKDIzLTEwLTIwMDgpLnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-claims(granted)(23-10-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtY2xhaW1zLnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtY29ycmVzcG9uZGFuY2UtcmVjZWl2ZWQucGRm" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-correspondance-received.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtY29ycmVzcG9uZGVuY2UoMjMtMTAtMjAwNykucGRm" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-correspondence(23-10-2007).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtY29ycmVzcG9uZGVuY2UoaXBvKS0oMjItMTItMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-correspondence(ipo)-(22-12-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZGVzY3JpcHRpb24gKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZHJhd2luZygyMy0xMC0yMDA4KS5wZGY=" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-drawing(23-10-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZHJhd2luZ3MucGRm" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybSAxKDIzLTEwLTIwMDgpLnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form 1(23-10-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybSAxOCgxNS0wOS0yMDA2KS5wZGY=" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form 18(15-09-2006).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybSAyKGdyYW50ZWQpLSgyMy0xMC0yMDA4KS5wZGY=" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form 2(granted)-(23-10-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybSAyNigyMy0xMC0yMDA4KS5wZGY=" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form 26(23-10-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybSAzKDAzLTA0LTIwMDYpLnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form 3(03-04-2006).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybSAzKDE2LTA5LTIwMDYpLnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form 3(16-09-2006).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybSAzKDIzLTEwLTIwMDgpLnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form 3(23-10-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybSA1KDAzLTA0LTIwMDYpLnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form 5(03-04-2006).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybS0xLnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybS0yLnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybS0zLnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybS01LnBkZg==" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtZm9ybS1wY3QtaXNhLTIxMCgyMy0xMC0yMDA4KS5wZGY=" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-form-pct-isa-210(23-10-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzcyLW11bW5wLTIwMDYtcGV0aXRpb24gdW5kZXIgcnVsZSAxMzcoMjMtMTAtMjAwOCkucGRm" target="_blank" style="word-wrap:break-word;">372-mumnp-2006-petition under rule 137(23-10-2008).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QxLmpwZw==" target="_blank" style="word-wrap:break-word;">abstract1.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="226630-ball-valve-operation-by-pneumatic-torque-wrench.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="226632-crystalline-polymorph-a-form-a-of-flibanserin-1-and-process-for-preparing-the-same.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>226631</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>372/MUMNP/2006</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>10/2009</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>06-Mar-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>22-Dec-2008</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>03-Apr-2006</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>QUALCOMM INCORPORATED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>5775 MOREHOUSE DRIVE, SAN DIEGO, CALIFORNIA 92121</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>CARLSON, NEIL, CHARLES</td>
+											<td>7382 LOS BRAZOS, SAN DIEGO,CA 92127</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>PANKAJ RAJESH K</td>
+											<td>7356 PARK VILLAGE ROAD, SAN DIEGO, CA 92129</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04L12/56</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2004/030487</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2004-09-16</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/942,214</td>
+									<td>2004-09-15</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>60/503,550</td>
+									<td>2003-09-16</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/226631-scheduling-packet-transmissions by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:40:58 GMT -->
+</html>

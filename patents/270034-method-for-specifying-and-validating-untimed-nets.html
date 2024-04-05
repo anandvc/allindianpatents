@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/270034-method-for-specifying-and-validating-untimed-nets by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 05:47:33 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 270034:“METHOD FOR SPECIFYING AND VALIDATING UNTIMED NETS”</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">“METHOD FOR SPECIFYING AND VALIDATING UNTIMED NETS”</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>In accordance with an aspect of the invention, the method for specifying a portion of a circuit design to be treated as untimed by static timing analysis is performed on the RTL design by means of an attribute annotation. The process is operable to map through to the Physical Design by correlating latches and chip-level nets. This allows the testing process to become closed-loop. Design and simulation time is also greatly reduced due to the accessibility of RTL design.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>FORM 2<br>
+THE PATENTS ACT 1970 (as amended)<br>
+[39 OF 1970]<br>
+&amp;<br>
+THE PATENTS RULES, 2003<br>
+COMPLETE SPECIFICATION<br>
+[See section 10 and rule 13]<br>
+Title: “METHOD FOR SPECIFYING AND VALIDATING UNTIMED NETS”<br>
+Name and address of the Applicant:<br>
+INTERNATIONAL BUSINESS MACHINES CORPORATION, 1, North Castle<br>
+Drive, Armonk, New York 10504, USA<br>
+Nationality: United States of America<br>
+The following specification particularly describes the invention and the manner in<br>
+which it is to be performed.<br>
+2<br>
+BACKGROUND<br>
+This invention was made with United States Government support under<br>
+Agreement No. HR0011-07-9-002 awarded by DARPA. The Government has certain<br>
+rights in the invention.<br>
+Integrated circuits may typically be designed using two basic design stages.<br>
+The first design stage, known as the Register Transfer Level (RTL), describes the<br>
+behavior of a circuit in terms of logical functions using registers and combinational<br>
+logic, e.g., logic gates. The RTL may be verified against a higher level specification,<br>
+such as for example, an instruction architecture. The verification of the RTL entails<br>
+simulation and other means to ensure that the RTL design performs its intended<br>
+functions. The second design stage is the Physical Design (PD). This stage represents<br>
+the same circuit design in what will be its actual layout using physical components,<br>
+e.g., transistors. The PD is conventionally tested in two separate ways. The first test<br>
+uses Static Timing Analysis (STA) to verify that the PD of the circuit can correctly<br>
+operate at a target frequency. The second test is a Boolean equivalence test between<br>
+the RTL and the PD. It should be noted that a verification of the RTL is independent of<br>
+the PD, whereas the Boolean equivalence test relies on both the RTL and the PD.<br>
+Certain parts of a circuit may not be required to operate at the target frequency for a<br>
+variety of reasons, and thus may be bypassed during STA and may be considered<br>
+“untimed.” These untimed sections may typically be manually denoted in the PD for<br>
+the STA to recognize. Manually denoting untimed sections of a circuit is tedious and<br>
+may not directly translate to the RTL from the PD. As such the conventional method of<br>
+denoting untimed sections of a circuit in the PD is not versatile in the event of a circuit<br>
+redesign.<br>
+FIG. 1 illustrates an example circuit design system 100, which includes an RTL<br>
+102 and a PD 104. Once a circuit is designed in RTL 102, the circuit design then<br>
+undergoes a synthesis 106 to produce PD 104. Of course synthesis is not required. In<br>
+some example circuit design systems, a PD may be custom designed.<br>
+More specifically, RTL 102 contains the functional design of the circuit. The<br>
+synthesis process 106 refines this design into PD 104, thereby maximizing some aspect<br>
+of the circuit’s performance or design; i.e. speed, or type of components. PD 104 still<br>
+performs the expected function, within its respective embodiment. The internal design<br>
+3<br>
+of PD 104 however, does not necessarily mirror RTL 102. This will be described in<br>
+more detail with reference to FIG. 2.<br>
+FIG. 2 illustrates a block diagram example of a design process 200, which<br>
+includes an RTL 202 and a PD 204. RTL 202 contains a circuit 208, which includes<br>
+macros 210, 212, and 214 connected by net 222. A macro is a block of circuit<br>
+components that can be designed independently of other macros and iterated. Circuit<br>
+208 has one input 216 and two outputs 218 and 220. PD 204 is synthesized from RTL<br>
+202 via synthesis process 106. PD 204 contains circuit 224, which corresponds to<br>
+circuit 208 of RTL 202. Circuit 224 includes three macros 226, 228, and 230<br>
+connected by net 223, which correspond to macros 210, 212, and 214 connected by net<br>
+222, respectively. Circuit 224 has one input 225 and two outputs 229 and 231. Circuit<br>
+208 inputs example test values 232 and outputs values 234. Likewise, circuit 224<br>
+inputs example signals 236 and outputs signals 238.<br>
+In operation, circuit 208 in the RTL 202 should input test value stream 232 on<br>
+input pin 216 and output the value streams in output 234 on output pins 218 and 220.<br>
+After synthesis 106, PD 204 will contain circuit 224 that will input the test signal<br>
+stream 236 on pin 225 and output the signal streams in output 238 on pins 229 and 231.<br>
+[0007] Using a Boolean verification test, the input tests 232 and 236 should match in<br>
+value within their respective embodiments. Likewise, output tests 234 and 238 should<br>
+also match in value, respectively. The existence of a discrepancy in either input values<br>
+or output values between RTL 202 and PD 204 might indicate a design flaw or process<br>
+flaw.<br>
+While macros 210, 212 and 214 may correspond to macros 226, 228 and 230,<br>
+respectively, macros 210, 212 and 214 are internally different from macros 226, 228<br>
+and 230, respectively, due to the synthesis process 106. This is because synthesis 106<br>
+changes the design of circuit 224 based on a desired performance/design aspect while<br>
+maintaining its overall input/output function. Therefore, Boolean verification only<br>
+checks for the equivalence of input and output values of both layers.<br>
+FIG. 3 illustrates a more detailed example of a circuit design within a RTL. In<br>
+the figure, circuit 300 has three macros 302, 304 and 306. Each macro is designed to<br>
+4<br>
+perform a specific function. In this example, each macro consists of combinational<br>
+logic and latches designed to manipulate signals according to a desired function.<br>
+[0010] Macro 302 includes AND gate 316, AND gate 318, OR gate 320 and a latch<br>
+322. Macro 302 has four inputs 308, 310, 312 and 314. Inputs 308 and 310 feed AND<br>
+gate 316, whereas inputs 312 and 314 feed AND gate 318. The output of AND gate<br>
+316 and the output of AND gate 318 feed OR gate 320. The output of OR gate 320<br>
+feeds the input of latch 322. The output of latch 322 is the output of Macro 302.<br>
+Macro 304 includes AND gate 326 and a latch 328. Macro 304 has a first input<br>
+from a net 323 and a second input 325. First input from node 323 and second input 325<br>
+feed AND gate 326. The output of AND gate 326 feeds the input of latch 328. The<br>
+output of latch 328 is the output 329 of Macro 304.<br>
+Macro 306 includes AND gate 332 and a latch 330. Macro 306 has a first input<br>
+from a net 323 and a second input 334. First input from node 323 and second input 334<br>
+feed AND gate 332. The output of AND gate 332 feeds the input of latch 330. The<br>
+output of latch 330 is the output 336 of Macro 306.<br>
+In operation, input signals are provided to inputs 308, 310, 312 and 314 of<br>
+macro 302. The signals are passed through combinational logic of gates 316, 318 and<br>
+320. A resulting signal is provided to net 321. A clock signal from clock 324 enables<br>
+latch 322 to sample the data on net 321 and to output the data to net 323. The clock<br>
+signal from clock 324 may enable a latch by any known method, non-limiting examples<br>
+of which include on the rising edge of a clock signal pulse, on the falling edge of a<br>
+clock signal pulse, etc.<br>
+From net 323, the data is then passed to macro 304 and macro 306. The logic<br>
+of macro 304 is output at output 329, whereas the logic of macro 306 is output at output<br>
+336. The data at each of output 329 and output 336 is known as the “state” of the<br>
+latches therein, and may be changed on each clock pulse from of clock 324.<br>
+Boolean verification may be performed on the output data for each macro or<br>
+even on the inputs for each individual latch within each macro. As such, there should<br>
+be latch correspondence between the RTL and PD. At the RTL, each macro, each latch<br>
+and each gate is presumed to transmit data ideally in each clock cycle. Therefore, time<br>
+delay based on specific physical parameters is not considered. Because the circuitry in<br>
+5<br>
+RTL is designed without consideration given to the time delays inherent in the<br>
+electronic components, STA is not performed on the RTL.<br>
+FIG. 4 illustrates a more detailed example of a circuit design within a PD that<br>
+has been synthesized from RTL in FIG. 3, wherein the synthesis was set to produce a<br>
+circuit that used only NAND gates and inverters. In FIG. 4, circuit 400 has three<br>
+macros 402, 404 and 406.<br>
+Macro 402 includes NAND gate 420, NAND gate 418, NAND gate 422 and a<br>
+latch 424. Macro 402 has four inputs 408, 410, 412 and 414. Inputs 408 and 410 feed<br>
+NAND gate 420, whereas inputs 412 and 414 feed NAND gate 418. The output of<br>
+NAND gate 420 and the output of NAND gate 418 feed NAND gate 422. The output<br>
+of NAND gate 422 feeds the input of latch 424. The output of latch 424 is the output of<br>
+Macro 402.<br>
+Macro 404 includes NAND gate 428, NOT gate 430 and a latch 432. Macro<br>
+404 has a first input from a net 423 and a second input 426. First input from node 423<br>
+and second input 426 feed NAND gate 428. The output of NAND gate 428 feeds the<br>
+input of NOT gate 430. The output of NOT gate 430 feeds the input of latch 432. The<br>
+output of latch 432 is the output 434 of Macro 404.<br>
+Macro 406 includes NAND gate 438, NOT gate 440 and a latch 442. Macro<br>
+406 has a first input from a net 423 and a second input 444. First input from node 423<br>
+and second input 444 feed NAND gate 438. The output of NAND gate 438 feeds the<br>
+input of NOT gate 440. The output of NOT gate 440 feeds the input of latch 442. The<br>
+output of latch 442 is the output 446 of Macro 406.<br>
+In some instances, the PD might include actual physical components as<br>
+exemplified in circuit 403, which corresponds to NAND gate 418. In this example,<br>
+circuit 403 includes a resistor 448, a transistor 450, a transistor 452, a resistor 454 and a<br>
+resistor 456. For the sake of simplicity, circuit 400 is illustrated with a lower level<br>
+logic symbol for each component.<br>
+In operation, input signals are provided to inputs 408, 410, 412 and 414 of<br>
+macro 402. The signals are passed through combinational logic of gates 420, 418 and<br>
+422. A resulting signal is provided to latch 424. A clock signal from clock 436 enables<br>
+latch 424 to sample the data from gate 422 and to output the data to net 423. The clock<br>
+6<br>
+signal from clock 436 may enable a latch by any known method, non-limiting examples<br>
+of which include on the rising edge of a clock signal pulse, on the falling edge of a<br>
+clock signal pulse, etc.<br>
+From net 423, the data is then passed to macro 404 and macro 406. The logic<br>
+of macro 404 is output at output 434, whereas the logic of macro 406 is output at output<br>
+446. The data at each of output 434 and output 446 is known as the “state” of the<br>
+latches therein, and may be changed on each clock pulse of clock 436.<br>
+In operation, PD circuit 400 would operate much like RTL circuit 300.<br>
+However, note that the internals of the macros are different due to synthesis. For<br>
+example, macro 402 consists of a combinational logic of two NAND gates 420 and 418<br>
+that are fed into NAND gate 422 to create a circuit of NAND gates that is identical in<br>
+logical function to the combinational circuit of macro 302 in FIG. 3.<br>
+Since the components in a PD are physical, inherent delays are present and must<br>
+be considered in the design. If each NAND gate has a delay of X picoseconds, each<br>
+latch has a total delay of 2X picoseconds, and each inverter with a delay of X/2<br>
+picoseconds; then the longest path a signal would take would be from latch 424 through<br>
+NAND gate 428, inverter 430 and to latch 432. Therefore the clock period of CLK 436<br>
+must be larger than 2X + X + X/2 + 2X for a signal to be properly sampled into the<br>
+latch 432. In addition to a signal’s total path delay being a concern in circuit design,<br>
+the separate set-up and hold requirements inherent in every latch must be considered.<br>
+So a STA on each latch is required to verify that all sequential storage elements of the<br>
+circuit operate within the target clock frequency.<br>
+FIG. 5 illustrates a wave diagram of set-up and hold times inherent in a latch.<br>
+In the figure, clock signal 502 sends out a pulse train having a period 504. Included in<br>
+clock signal 502 are a rising edge 506 and falling edge 508. A DATA signal 510<br>
+includes a valid data portion 512, which is transmitted over a period 514. Included in<br>
+period 514 is a set-up period 516 and a hold period 518.<br>
+In operation, a clock signal 502 will pulse with period 504. Rising edge 506<br>
+will trigger a sample action of DATA signal 510 into a latch. The data input into the<br>
+latch must be valid data portion 512 before rising edge 506 arrives at the latch in order<br>
+for the data to be properly sampled into the latch. This is known as the “set-up” time or<br>
+7<br>
+set-up period 516. The data must also still be valid for hold period 518, which is the<br>
+period after the rising edge 506 has arrived. Set-up period 516 and hold period 518<br>
+combine for a total time of period 514 that the data must be valid for proper sampling<br>
+into a latch.<br>
+During STA, an STA tool performs a set-up and hold test on each latch. A set<br>
+up and hold test is a comparison of arrival times of clock and data on the latch input<br>
+pins. The STA applies a “phase tag” to each clock signal, which it propagates to each<br>
+clock input of each latch. The phase tag is a marker of which clock is clocking the<br>
+latch. The STA also applies a phase tag to the output of each latch, based on which<br>
+phase tag was propagated to the latch’s clock input. Such a phase tag is a marker of<br>
+which edge of which clock is responsible for launching a transition from the output of<br>
+the latch. The STA tool propagates the phase tag through each net in the path from the<br>
+latch output to each other latch’s input, keeping track of arrival times at each point<br>
+relative to the phase tag. If the difference is outside the time constraints of a target<br>
+clock period, then a circuit redesign is possibly needed.<br>
+It is sometimes desirable for the STA to ignore certain sections of a circuit for<br>
+various reasons. For example, if macro 404 in FIG. 4 is used only for test purposes,<br>
+then it would not need to follow the constraints of normal operation. Therefore, its<br>
+timing would not matter. In this situation its phase tag at net 431 might be renamed to<br>
+be “don’t-care.” In some cases, this is performed through a control file known as a<br>
+“DCADJ” or “don’t-care and adjust” file. This effectively makes the circuit of net 431<br>
+an “untimed” circuit, thus preventing STA from testing propagations through the<br>
+specified circuit.<br>
+There are problems with the use of the DCADJ file however. It is a<br>
+specification of the untimed nets in a circuit; but it is essentially a human-written text<br>
+file, making it tedious to create and maintain. Because it generally uses regular<br>
+expressions to specify named nets to be untimed nets, the regular expressions may over<br>
+specify nets. Also, any change to the design requires a rewrite of the DCADJ file as<br>
+well. Because the nets do not necessarily correspond to the RTL design, it is also<br>
+manual and tedious to locate the corresponding nets for change. Because the DCADJ<br>
+file only specifies nets on the PD, there is no mapping of the corresponding nets<br>
+between both the PD and RTL. This allows the check to become an “open-loop”<br>
+8<br>
+process where, an error on either side may go undetected until the manufacture of the<br>
+unit.<br>
+What is needed is a method of specifying untimed nets on both the RTL and PD<br>
+of a system allowing for the automation of verification of the RTL and phase renaming<br>
+in the STA of the PD.<br>
+BRIEF DESCRIPTION OF THE ACCOMPANYING DRAWINGS<br>
+The accompanying drawings, which are incorporated in and form a part of the<br>
+specification, illustrate an exemplary embodiment of the invention and, together with<br>
+the description, serve to explain the principles of the invention. In the drawings:<br>
+FIG. 1 illustrates a circuit design system;<br>
+FIG. 2 illustrates a block diagram example of a design process;<br>
+FIG. 3 illustrates a more detailed example of a circuit design within a RTL;<br>
+FIG. 4 illustrates a more detailed example of a circuit design within a PD that<br>
+has been synthesized from the RTL in FIG. 3;<br>
+FIG. 5 illustrates a wave diagram of set-up and hold times inherent in a latch;<br>
+and<br>
+FIG. 6 is a flowchart illustrating an example process of designing an integrated<br>
+circuit in accordance with an aspect of the invention.<br>
+DETAILED DESCRIPTION<br>
+An aspect in accordance with the invention specifies timing attributes of signals<br>
+by method of annotation in the RTL that map into attributes of corresponding signals in<br>
+the PD.<br>
+An example embodiment in accordance with the invention is drawn to a method<br>
+of modeling an integrated circuit design. The method includes creating a RTL design<br>
+of the integrated circuit, wherein the RTL design including an untimed net. The<br>
+method further includes associating a timing parameter to the untimed net.<br>
+9<br>
+In one embodiment of the invention, a method of modeling an integrated circuit<br>
+design, an integrated circuit having the integrated circuit design being operable to<br>
+perform intended functions, said method comprising: creating a register transfer level<br>
+design of the integrated circuit, the register transfer level design including an untimed<br>
+net; and associating a timing parameter to the untimed net.<br>
+In yet another embodiment of the invention, method as defined herein above<br>
+further comprises associating a second timing parameter, wherein said creating a<br>
+register transfer level design of the integrated circuit comprises creating a register<br>
+transfer level design of the integrated circuit, the register transfer level design further<br>
+including a timed net, and wherein said associating a second timing parameter<br>
+comprises associating a second timing parameter to the timed net.<br>
+In still another embodiment of the invention, the method as defined herein<br>
+above further comprises creating a physical design of the integrated circuit based on the<br>
+register transfer level design.<br>
+In still another embodiment of the invention, said creating a register transfer<br>
+level design of the integrated circuit comprises creating a register transfer level design<br>
+of the integrated circuit, the register transfer level design further including a functional<br>
+macro connected to the untimed net, and wherein said creating a physical design of the<br>
+integrated circuit based on the register transfer level design comprises creating a<br>
+physical design of the integrated circuit based on the register transfer level design, the<br>
+register transfer level design including a physical component and the untimed net,<br>
+wherein the physical component corresponds to the functional macro and is connected<br>
+to the untimed net.<br>
+In still another embodiment of the invention, said creating a physical design of<br>
+the integrated circuit based on the register transfer level design comprises creating a<br>
+physical design of the integrated circuit based on the register transfer level design, the<br>
+timing parameter remains associated to the untimed net.<br>
+In still another embodiment of the invention, the method as defined herein<br>
+above further comprises performing a verification of the register transfer level design of<br>
+10<br>
+the integrated circuit using the timing parameter to verify that the integrated circuit is<br>
+operable to perform the intended functions.<br>
+In still another embodiment of the invention, the method as defined herein<br>
+above further comprises performing static timing analysis on the physical design of the<br>
+integrated circuit.<br>
+Another embodiment of the invention is a system for modeling an integrated<br>
+circuit design, an integrated circuit having the integrated circuit design being operable<br>
+to perform intended functions, said system comprising configured to perform the<br>
+method as claimed in any of the preceding claims 1 to 7.<br>
+Another embodiment of the invention is a data processing system program<br>
+product for executing instructions in a data processing system, the data processing<br>
+system program product comprising a data processing system-readable storage medium<br>
+having data processing system-readable program code embodied in the medium, the<br>
+data processing system-readable program code being operable to instruct the data<br>
+processing system to perform the method as claimed in any of the preceding claims 1 to<br>
+7.<br>
+Additional advantages and novel features of the invention are set forth in part in<br>
+the description which follows, and in part will become apparent to those skilled in the<br>
+art upon examination of the following or may be learned by practice of the invention.<br>
+The advantages of the invention may be realized and attained by means of the<br>
+instrumentalities and combinations particularly pointed out in the appended claims.<br>
+In accordance with an aspect of the invention, untimed nets are determined in<br>
+the RTL to properly account for untimed nets in the verification of the RTL. One<br>
+manner of verification of the RTL includes driving indeterminate values on untimed<br>
+nets during simulation of the RTL. In some example embodiments, certain parts of a<br>
+circuit in the RTL are annotated with a timing parameter, which is carried through to<br>
+the PD. In some example embodiments, untimed nets within the RTL are annotated<br>
+with an “untimed” parameter, which is carried through to the PD. Accordingly, all<br>
+untimed nets developed in the PD, which originated from untimed nets in the RTL, will<br>
+always have correct untimed annotations, even when modifications in the PD occur.<br>
+11<br>
+Example methods of designing an integrated circuit in accordance with an<br>
+aspect of the invention will now be described with reference to FIGs. 1-6.<br>
+FIG. 6 is a flowchart illustrating an example process 600 of designing an<br>
+integrated circuit in accordance with an aspect of the invention.<br>
+After process 600 starts (S602), the RTL of the integrated circuit is designed.<br>
+Using the design process as illustrated in FIG. 1, a timing parameter may be associated<br>
+with any untimed nets within RTL 102 (S604). After RTL 102 is created, a synthesis<br>
+process 106 generates PD 104 (S606). At this point STA is then performed on PD 104<br>
+(S608). Further, a verification process may be performed on RTL 102 (S610). It is<br>
+then determined whether there are any failures in the STA on PD 104 or whether there<br>
+are any failures in the verification of RTL 102 (S612). If there are any failures, then<br>
+the RTL 102 is modified (S614) and the designing continues. If there are no failures, a<br>
+Boolean equivalence test is performed between RTL 102 and PD 104 (S616). It is then<br>
+determined whether there is Boolean equivalence between PD 104 and RTL 102 based<br>
+the outcome of the Boolean equivalence test (S618). If there is Boolean equivalence<br>
+between PD 104 and RTL 102, then the process stops (S620) and the circuit design is<br>
+functionally acceptable. If there is not Boolean equivalence between PD 104 and RTL<br>
+102, then the RTL 102 is modified (S614) and the designing continues.<br>
+12<br>
+The timing parameter that is associated with untimed nets within RTL 102 will<br>
+carry through synthesis process 106 to PD 104. Nets in PD 104 that correspond to<br>
+untimed nets within RTL 102 are untimed nets. Accordingly, any untimed nets<br>
+developed in PD 104 that originated from untimed nets in RTL 102 will always have<br>
+the correct untimed annotations associated therewith. RTL 102 and PD 104 may be<br>
+developed by any method, i.e., drafted on paper, coded in a hardware description<br>
+language (HDL) program, etc. Whatever the development method, an aspect in<br>
+accordance with the invention may be applied, e.g., adding a timing parameter to<br>
+untimed nets in the RTL, which will carry through synthesis and into the PD.<br>
+In the more detailed illustration of FIG. 2, take the example that net 222 of RTL<br>
+202 is untimed. Net 222 would then be attributed with a timing parameter with an<br>
+untimed value in RTL 202. After RTL 202 undergoes synthesis process 106 to create<br>
+PD 204, corresponding net 223 will have a timing parameter associated therewith,<br>
+which indicates that net 223 is untimed. Therefore, in any case in which PD 204 is to<br>
+be modified, it is known that any net that corresponds to net 222 will have an untimed<br>
+timing parameter associated therewith.<br>
+Assigning a timing parameter to untimed nets in the RTL in accordance with an<br>
+aspect of the invention method automatically and accurately correlates untimed nets<br>
+between the RTL and PD. Contrary to conventional design methods, in accordance<br>
+with an aspect of the invention, a net in the PD that corresponds to an untimed net in<br>
+the RTL will not be incorrectly labeled as a timed net, even if the PD is modified. In<br>
+conventional systems, such a net in the PD may incorrectly be labeled as a timed net<br>
+because of the conventional manual nature of correlating the named nets.<br>
+In an example embodiment, an RTL may be written in a HDL, a non-limiting<br>
+example of which includes the VHSIC HDL (VHDL). VHDL contains an “attribute”<br>
+shell that can be applied to annotate parts of a circuit design. Using this construct, the<br>
+attribute can then be used to specifically influence the processing of the circuit design.<br>
+The attribute may be assigned to nets disposed in between macros or to the input of a<br>
+macro that is connected to such a net. For example, if an attribute type named<br>
+“TIMING_TYPE” were defined, one of its values could be “UNTIMED.” Returning to<br>
+FIG. 3, if an element such as net 323 in FIG. 3 were named NET1_DC using VHDL,<br>
+net 323 could be attributed with:<br>
+13<br>
+ATTRIBUTE TIMING_TYPE OF NET1_DC : SIGNAL IS UNTIMED.<br>
+This attribute would indicate to the STA that all transitions through net 323<br>
+would receive a phase rename causing its value to be don’t-care. This effectively<br>
+causes net 323 into macros 304 and 306 to be untimed. On the other hand, taking the<br>
+earlier example of using macro 404 in FIG. 4 to be instead used for testing purposes<br>
+only, an attribute could be placed on input 331 of macro 304 of FIG. 3 if input 331<br>
+were named pin “A” as follows:<br>
+ATTRIBUTE TIMING_TYPE OF A : SIGNAL IS UNTIMED.<br>
+In accordance with an aspect of the invention, the attribute associated with input<br>
+331 would map to input 433 in FIG. 4 of PD 400, causing input 433 to be untimed.<br>
+An advantage of attributing in a timing parameter to untimed nets in the RTL is<br>
+that any human error in syntax will be caught upon compilation of the RTL. Other<br>
+advantages also stem from the general efficiencies of programming. For example, if a<br>
+particular macro is needed multiple times, a simple macro iterative copy will carry any<br>
+timing parameter attributes such that each copy will be untimed. Further, any macro<br>
+having an untimed timing parameter associated therewith will maintain the untimed<br>
+timing parameter independent of renaming of the macro or its instances.<br>
+Not every untimed net specified in the RTL may have a timing parameter<br>
+associated therewith, in accordance with one aspect of the invention. Because of<br>
+synthesis, nets inside a given macro in the PD may not directly correspond to nets<br>
+within a corresponding macro in the RTL. Therefore, in accordance with another<br>
+aspect of the invention, untimed nets that exist outside a macro in the RTL may be<br>
+attributed with a timing parameter. For example, as discussed above, timing<br>
+parameters may be associated with untimed nets in the RTL, which carry over to the<br>
+PD. However, there may be situations where further design is performed at the PD.<br>
+All untimed specification may be done in the RTL. If a net within a macro has no<br>
+corresponding net in the PD, then the attribute would not get carried over to PD, and<br>
+the net would be timed in the normal manner, likely resulting in a setup time failure.<br>
+Such a setup time failure provides feedback to the designer that the untimed net<br>
+specification failed to work due to changes by synthesis. Such a failure can be rectified<br>
+by moving the attribute to a different net for which there is a PD counterpart, or by<br>
+14<br>
+instructing synthesis to preserve the original net (e.g., apply a "no modification"<br>
+attribute to the net).<br>
+In general, in accordance with an aspect of the invention, timing parameters<br>
+may be attributed to untimed nets in the RTL at the input and output of macros, at nets<br>
+which are outside (e.g, run between) macros, and at nets inside macros, which have<br>
+corresponding nets in the PD.<br>
+In accordance with another aspect of the invention, timing parameters may be<br>
+attributed to untimed nets in the RTL within macros. Specifically, nets within a given<br>
+macro at the RTL may have timing parameters attributed thereto if such nets are<br>
+directly connected to latches. Because of the verification process, where each latch in<br>
+the RTL must be verified against its corresponding latch in the PD, all latches<br>
+correspond through synthesis and do not change in design. Therefore, in accordance<br>
+with this aspect of the invention, a timing attribute may also be placed on any untimed<br>
+net directly connected to a latch in the RTL, such as net 327 in FIG.3 for example.<br>
+Because timing parameters may be attributed in the RTL, in accordance with<br>
+aspects of the invention, identification of untimed nets for driving onto them<br>
+indeterminate values may be performed using a hierarchical RTL netlist, as opposed to<br>
+the physical netlist of the PD referred to by a DCADJ file. Therefore, in accordance<br>
+with the invention, there is no longer any need to match physical net names with those<br>
+named in the RTL. This allows much more freedom for change and redesign without<br>
+need for respecification of untimed nets. Also, there is no danger that some nets, which<br>
+are untimed by STA, would fail to be verified due to lack of mapping at the RTL. An<br>
+example of driving values to untimed nets is described in published US. patent<br>
+application having publication number US 2008/0016480, the entire disclosure of<br>
+which is incorporated herein by reference.<br>
+The above discussed embodiments and aspects of the invention discuss<br>
+attributing timing parameters to untimed nets. In accordance with other embodiments<br>
+and aspects of the invention, timing parameters may additionally be attributed to nets<br>
+that are not untimed, but timed at a slower period than the driving clock cycle. In an<br>
+example embodiment, using a DCADJ file, such a change may include an adjustment in<br>
+the DCADJ file in addition to the change in the original design. By attributing a timing<br>
+parameter to a net in the RTL, the net could be annotated as a “slow net” thus<br>
+15<br>
+signifying the STA should automatically adjust the net’s arrival time by a designated<br>
+amount and the simulation of the RTL should drive the indeterminate value for the<br>
+designated duration.<br>
+Example aspects and embodiments in accordance with the invention as<br>
+discussed above are drawn to a method of modeling an integrated circuit design. Other<br>
+aspects and embodiments in accordance with the invention, may be similar in purpose<br>
+and function, but drawn to somewhat different subject matter as discussed below.<br>
+Additional example aspects and embodiments in accordance with the invention<br>
+are drawn to a device operable to model an integrated circuit design. Non-limiting<br>
+examples of such a device include a computer having a data input portion, a user<br>
+interface and a data processing portion. For example, referring to FIG. 1, an<br>
+embodiment of the invention may include a system wherein the data processing portion<br>
+includes a register transfer level design portion, a synthesis portion and a physical<br>
+design portion. The register transfer level design portion may be operable to create a<br>
+register transfer level design of the integrated circuit. The physical design portion may<br>
+be able to create a physical design of the integrated circuit. The synthesis portion may<br>
+be able to convert the transfer level design into data for use by the physical design<br>
+portion. Further, an example system in accordance with the invention may include a<br>
+Boolean verification portion operable to perform a Boolean verification between the<br>
+register transfer level design of the integrated circuit and the physical design of the<br>
+integrated circuit. Still further, an example system in accordance with the invention<br>
+may include a static timing analysis portion operable to perform static analysis on the<br>
+register transfer level design of the integrated circuit.<br>
+In some embodiments of the invention, the system includes a separate device<br>
+for at least one of the register transfer level design portion, the synthesis portion and the<br>
+physical design portion. In some embodiments of the invention, the system includes a<br>
+single device for the register transfer level design portion, the synthesis portion and the<br>
+physical design portion. Similarly, in some embodiments of the invention, the system<br>
+includes a separate device for at least one of the register transfer level design portion,<br>
+the synthesis portion, the physical design portion, the Boolean verification portion and<br>
+the static timing analysis portion. In some embodiments of the invention, the system<br>
+includes a single device for the register transfer level design portion, the synthesis<br>
+16<br>
+portion, the physical design portion, the Boolean verification portion and the static<br>
+timing analysis portion.<br>
+Additional example aspects and embodiments in accordance with the invention<br>
+are drawn to a data processing system program product for executing instructions in a<br>
+data processing system, wherein the data processing system program product includes a<br>
+data processing system-readable storage medium having data processing systemreadable<br>
+program code embodied in the medium, and wherein the data processing<br>
+system-readable program code is operable to instruct the data processing system to<br>
+perform a method of modeling an integrated circuit design. For example, referring to<br>
+FIG. 1, an embodiment of the invention may include a data processing system having a<br>
+media therein wherein the media has program code operable to instruct the data<br>
+processing portion to create a register transfer level design of the integrated circuit and<br>
+create a physical design of the integrated circuit. Further, an example system in<br>
+accordance with the invention may include program code operable to instruct the data<br>
+processing portion to perform a Boolean verification between the register transfer level<br>
+design of the integrated circuit and the physical design of the integrated circuit. Still<br>
+further, an example system in accordance with the invention may include program code<br>
+operable to instruct the data processing portion to perform static analysis on the register<br>
+transfer level design of the integrated circuit.<br>
+There is also interest in verifying that attributed untimed nets do not actually<br>
+toggle in certain modes of operation. With designation held in the RTL, it becomes<br>
+easily possible to develop a checker program within the RTL to check that a signal does<br>
+not transition in such a net.<br>
+Further creating the closed-loop process is the before mentioned ability to<br>
+correlate latch points. If an error caused by the STA over-applying phase renames due<br>
+to a programming error, some paths might go untimed that should be timed. Because<br>
+the latch points correlate, a latch for which a setup and hold test is not performed due to<br>
+a phase rename as reported by the STA could be mapped back to the RTL latch name.<br>
+This list of names could then be verified against the list of latch names that can receive<br>
+indeterminate values resulting from untimed nets as can be determined from<br>
+verification of the RTL. A discrepancy could indicate inconsistencies in interpretation<br>
+17<br>
+of untimed specifications between the STA and verification processes, thus, closing the<br>
+loop between the two processes.<br>
+The terminology used herein is for the purpose of describing particular<br>
+embodiments only and is not intended to be limiting of the invention. As used herein,<br>
+the singular forms "a", "an" and "the" are intended to include the plural forms as well,<br>
+unless the context clearly indicates otherwise. It will be further understood that the<br>
+terms "comprises" and/or "comprising," when used in this specification, specify the<br>
+presence of stated features, integers, steps, operations, elements, and/or components,<br>
+but do not preclude the presence or addition of one or more other features, integers,<br>
+steps, operations, elements, components, and/or groups thereof.<br>
+The description of the invention has been presented for purposes of illustration<br>
+and description, but is not intended to be exhaustive or limited to the invention in the<br>
+form disclosed. Many modifications and variations will be apparent to those of<br>
+ordinary skill in the art without departing from the scope and spirit of the invention.<br>
+The embodiment was chosen and described in order to best explain the principles of the<br>
+invention and the practical application, and to enable others of ordinary skill in the art<br>
+to understand the invention for various embodiments with various modifications as are<br>
+suited to the particular use contemplated.<br>
+18<br>
+We claim:<br>
+1. A method of modeling an integrated circuit design, an integrated circuit having the<br>
+integrated circuit design being operable to perform intended functions, said method<br>
+comprising:<br>
+creating a register transfer level design of the integrated circuit, the register<br>
+transfer<br>
+level design including an untimed net; and<br>
+associating a timing parameter to the untimed net.<br>
+2. The method as claimed in claim 1, further comprising:<br>
+associating a second timing parameter,<br>
+wherein said creating a register transfer level design of the integrated circuit<br>
+comprises creating a register transfer level design of the integrated circuit, the register<br>
+transfer level design further including a timed net, and<br>
+wherein said associating a second timing parameter comprises associating a<br>
+second timing parameter to the timed net.<br>
+3. The method as claimed in claim 2, further comprising creating a physical design of<br>
+the integrated circuit based on the register transfer level design.<br>
+4. The method as claimed in claim 3,<br>
+wherein said creating a register transfer level design of the integrated circuit<br>
+comprises creating a register transfer level design of the integrated circuit, the register<br>
+transfer level design further including a functional macro connected to the untimed net,<br>
+and<br>
+wherein said creating a physical design of the integrated circuit based on the<br>
+register transfer level design comprises creating a physical design of the integrated<br>
+circuit based on the register transfer level design, the register transfer level design<br>
+including a physical component and the untimed net,<br>
+wherein the physical component corresponds to the functional macro and is<br>
+connected to the untimed net.<br>
+19<br>
+5. The method as claimed in claim 4, wherein said creating a physical design of the<br>
+integrated circuit based on the register transfer level design comprises creating a<br>
+physical design of the integrated circuit based on the register transfer level design,<br>
+the timing parameter remains associated to the untimed net.<br>
+6. The method as claimed in claim 3, further comprising performing a verification of<br>
+the register transfer level design of the integrated circuit using the timing parameter<br>
+to verify that the integrated circuit is operable to perform the intended functions.<br>
+7. The method as claimed in claim 3, further comprising performing static timing<br>
+analysis on the physical design of the integrated circuit.<br>
+8. A system for modeling an integrated circuit design, an integrated circuit having the<br>
+integrated circuit design being operable to perform intended functions, said system<br>
+comprising configured to perform the method as claimed in any of the preceding<br>
+claims 1 to 7.<br>
+9. A data processing system program product for executing instructions in a data<br>
+processing system, the data processing system program product comprising a data<br>
+processing system-readable storage medium having data processing systemreadable<br>
+program code embodied in the medium, the data processing systemreadable<br>
+program code being operable to instruct the data processing system to<br>
+perform the method as claimed in any of the preceding claims 1 to 7.<br>
+Dated this 3rd day of November, 2009<br>
+Madhusudan S.T.<br>
+Of K &amp; S Partners<br>
+Agent for the Applicant</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=wDUfttx1doX+B8IxLMBbHg==&amp;amp;loc=egcICQiyoj82NGgGrC5ChA==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=wDUfttx1doX+B8IxLMBbHg==&amp;amp;loc=egcICQiyoj82NGgGrC5ChA==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="270033-method-and-system-of-implementing-call-authority-based-on-intellectual-mobile-network.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="270035-8-speed-transmission.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>270034</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2675/CHE/2009</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>48/2015</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>27-Nov-2015</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>26-Nov-2015</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>03-Nov-2009</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>INTERNATIONAL BUSINESS MACHINES CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>1  North Castle Drive  Armonk  New York 10504  United States of America</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>Gavin Balfour Meil</td>
+											<td>803 Shady Bluff Cove  Round Rock  Texas 78665  United States of America</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>Jack DiLullo</td>
+											<td>15516 Gustine Cove  Austin  Texas 78717  United States of America</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>Ronald Nick Kalla</td>
+											<td>1100 Pine Forest Cove  Round Rock  Texas 78665  United States of America</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>Jeffrey Mark Ritzinger</td>
+											<td>12217 102nd Avenue  Chippewa Falls  Wisconsin 54729  United States of America</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 17/50</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>12/264,992</td>
+									<td>2008-11-05</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/270034-method-for-specifying-and-validating-untimed-nets by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 05:47:34 GMT -->
+</html>

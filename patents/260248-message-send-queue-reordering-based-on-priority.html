@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/260248-message-send-queue-reordering-based-on-priority by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 23:13:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 260248:&quot;MESSAGE SEND QUEUE REORDERING BASED ON PRIORITY&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;MESSAGE SEND QUEUE REORDERING BASED ON PRIORITY&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method of ordering a message send queue (410) in a server (108) sending respective response data to a wireless communication device (102) in response to a plurality of requests from the wireless communication device, the method comprising the steps of placing data comprising a response to a first request in the send queue (410) and serially transmitting the data in said send queue to the wireless device (102); receiving data comprising a response to a second request, said second request being determined to have a respective relative priority that is higher than a priority of the first request; and placing some of the data comprising the response to the second request in the send queue (410) ahead of at least some of the data comprising the response to the first request still in the queue and serially transmitting the data in said send queue to the wireless device (102).</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>MESSAGE SEND QUEUE REORDERING BASED ON PRIORITY<br>
+FIELD OF THE INVENTION<br>
+The present invention relates to a method and system for reordering a message send queue based on a priority of the message to be sent.<br>
+BACKGROUND OF THE INVENTION<br>
+Mobile devices such as wireless communication devices providing voice communications, data communications or both in a wireless communication network are increasingly prevalent in modern society. Such devices may also provide additional personal digital assistant (PDA) functions such as a calendar, alarm, contact lists, calculators, etc. One common feature of such devices is a World Wide Web browser facility whereby a user may navigate web pages such as those made available through an intranet or the public Internet.<br>
+During a browsing experience, a web browser acquires web page data to render the web page on a display of the device. The web browser formulates requests for data using a protocol such as the Hyper Text Transfer Protocol (HTTP) for requesting data from a web page server. In a wireless device, the requests and responses are typically communicated between the wireless device and the web page server through an intermediate server providing gateway services, bridging communications between the wireless network and the network of the web page server.<br>
+The gateway receives the requests from the wireless device and forwards them to the web server for service. Responses from the web server are received by the gateway and queued for communication to the wireless device.<br>
+To obtain the data for a single web page, a browser is often required to formulate more than one request. Occasionally, a response for a second request is required to be received and processed before the response for an earlier request is fully processed by the wireless device. When such a secondary HTTP request is made to the server while the communication of a response to an earlier request may be pending or in progress, the gateway sends any data that it has in its send queue until the entire response of the first request is completed. As a result, the web browser is delayed in receiving the response to<br>
+the secondary request until it receives the entire response to the earlier request.<br>
+By way of an example, a browser of the wireless device may encounter a JavaScript™ source or cascading style sheet (ess) reference in a response while loading a web page. Such references require immediate action. The browser is required to fetch the data for the reference, via a second request. It is also required to pause any further rendering of the page for any response data it may have until the new reference is completed. However, the send queue of the gateway may contain the remainder of the response to the first request while it receives the response to the second request. Send queues operate in accordance with first in first out (FIFO) rules. As such, the gateway puts the response to the second request at the end of its queue for sending after it completes the sending of the first response. Though such a manner of FIFO operation in a queue serializing response data is often desirable, it is apparent there are situations were a different ordering of communications may be required. When a secondary response requiring immediate action itself comprises a reference requiring immediate action, the delay experienced may be further compounded. As a result, a satisfying user experience may be affected. Web page loading times appear to lengthen when incomplete screens are displayed while waiting for additional data.<br>
+WO03085934A1 discloses a method of transferring additional Hyper Text Mark up Language (HTML) code objects from a server to a client device in response to further client device requests initiated by the presence of the additional objects in an HTML code object provided to the client device by the server in response to a first request. The server determines the priorities for the additional HTML code objects among the further requests from the client. The server then delays or forwards each additional object in dependence on its respective priority. The method disclosed in WO0308934A1 operates at the Transport Control Protocol (TCP) level and, as such, does not order, i.e. reorder, data already placed in the server's message send queue.<br>
+A solution to one or more of these shortcomings is therefore desired.<br>
+SUMMARY<br>
+Therefore, there is a need for a method and system whereby a first device (e.g. a wireless handheld device or mobile station) may send a request to a second device (e.g. a wireless<br>
+gateway server or other server) for response data having a higher priority than response data for an earlier request which is still transferring to the first device from the second device. Further there is a need for a second device (e.g. the server) to process the prioritized requests accordingly, inserting the higher priority response data into a content stream that the second device is transmitting to the first device, pre-empting any earlier lower priority response data that may already be queued.<br>
+Accordingly, the present invention provides in one main aspect a method of ordering a message send queue in a server sending respective response data to a wireless communication device in response to a plurality of requests from the wireless communication device, the method comprising the steps of: placing data comprising a response to a first request in the send queue and serially transmitting the data in said send queue to the wireless device; receiving data comprising a response to a second request, said second request being determined to have a respective relative priority that is higher than a priority of the first request; and placing some of the data comprising the response to the second request in the send queue ahead of at least some of the data comprising the response to the first request still in the queue and serially transmitting the data in said send queue to the wireless device.<br>
+Preferably, to accommodate a need for multiple levels of priority, a multi-level priority mechanism is desired whereby higher-priority responses pre-empt any lower-priority responses in a response queue.<br>
+In accordance with an embodiment of the invention, an HTTP header for a send request is adapted to include a priority indication of the request's relative priority (e.g.: x-rim-priority-request "priority number"). The priority indication instructs a gateway to order the response data for the request so that the response data for the request arrives at the requesting device ahead of lower priority response data that may be in the gateway's send queue.<br>
+These and other aspects including one or more method aspects and computer program product aspects will be apparent to those of ordinary skill in the art.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+In order that the invention may be readily understood, embodiments of the invention are illustrated by way of examples in the accompanying drawings, in which:<br>
+Fig. 1 is a schematic diagram of a system architecture in accordance with an embodiment of the invention;<br>
+Fig. 2 is a detailed diagram of a preferred wireless communication device of FIG. 1 in accordance with an embodiment of the invention;<br>
+Figs. 3A and 3B are flowcharts of operations of a mobile device in accordance with an embodiment of the invention illustrating a method for including a priority with a request for data; and<br>
+Fig. 4 is an illustration of a wireless gateway server in accordance with an embodiment of the invention.<br>
+DETAILED DESCRIPTION<br>
+FIG. 1 is a schematic illustration of an architecture for a system 100 in accordance with an embodiment of the invention. System 100 comprises a wireless communication device 102 coupled for communicating wirelessly with a wireless network 104 symbolized by a base station. Wireless network 104 may conform to any of the wireless network technologies and protocols capable of supporting data communications including cellular, wide-area network, GSM, GPRS, CDMA, iDEN™, Mobitex™, etc.<br>
+Wireless communication device 102 is adapted for web browsing and is capable of sending HTTP requests for web page data and receiving responses thereto comprising response data through wireless network 104 in accordance with one or more protocols implemented by the network 104. Wireless network 104 is further coupled for communication to a wireless gateway server 108 providing data communications services to the wireless device 102. In the present embodiment, wireless gateway server 108 is configured behind a firewall 106 well-known to those skilled in the art. Though not shown, intermediate wireless gateway server 108 and wireless network 104 may be a public relay and a public network such as the Internet. Wireless gateway server 108 may include but is not limited to a BlackBerry™ Enterprise Server or a wireless access protocol (WAP) gateway.<br>
+Through wireless gateway server 108, wireless device 102 may be coupled for communication over a network such as the public Internet 110 or an intranet 112 to a content server such as web servers 114 and 116.<br>
+In the illustrated embodiment of this invention, the wireless device 102 sends an HTTP request (i.e. a GET) for service by web server 114 or 116 through the firewall 106, to wireless gateway server 108. The wireless transport gateway is configured to provide access (i.e. HTTP connectivity), which is preferably secure, to intranet 116 and the public Internet 114. The wireless gateway server 108 performs the necessary address and protocol translation to route data between the wireless and IP networks. Optionally and preferably for handheld wireless devices such as device 102, the wireless gateway may convert and process data that passes between a content server, such as web server 114, 116, and an application resident on wireless device 102. Gateways may perform custom filtering and other data functions to deliver content to handhelds in an efficient and appropriate format.<br>
+Wireless gateway server 108 routes communications from the wireless device 102 (e.g. a GET) to the appropriate web server on the appropriate network. Once a response including response data (e.g. a portion of a web page such as part of an Hyper Text Markup Language (HTML) file) is returned to the gateway 108, the gateway prepares the response data for the appropriate wireless protocol of wireless network 104. The gateway 108 puts the response data, typically in a packet form according to a protocol of the wireless network, in a send queue for communicating to the wireless device 102 via the firewall<br>
+and network 104.<br>
+In accordance with the present embodiment, the wireless device 102 is adapted to include in an HTTP request a priority indication for instructing a priority handling by the gateway, at least for some requests. As well, the gateway is adapted to prioritize the return of response data in accordance with the priorities of the requests the gateway receives.<br>
+FIG. 2 is a block diagram illustrating an embodiment of wireless communication device 104 comprising a mobile electronic device 200 including preferred embodiments of the apparatus and method of the current application. Mobile electronic device 200 is preferably a two-way wireless electronic communication device having at least voice and data communication capabilities. Mobile electronic device 200 preferably has the capability to communicate with other computer systems on the Internet. Depending on the specific functionality provided, the wireless device may be referred to as a data messaging device, a two-way pager, a wireless e-mail device, a cellular telephone with data messaging capabilities, a wireless Internet appliance, or a data communication device, as examples.<br>
+Where mobile electronic device 200 is enabled for two-way communication, it incorporates a communication antenna subsystem 211, including both a receiver 212 and a transmitter 214, as well as associated components such as one or more, preferably embedded or internal, antenna elements 216 and 218, local oscillators (LOs) 213, and a processing module such as a digital signal processor (DSP) 220. As will be apparent to those skilled in the field of communications, the particular design of the communication subsystem 211 is dependent upon the protocols of the wireless communications network in which the device 200 is intended to operate.<br>
+Mobile electronic device 200 preferably includes a microprocessor 238 that controls the overall operation of the device. Communication functions, including at least data and preferably voice communications, are performed through communication subsystem 211. Microprocessor 238 also interacts with further device subsystems such as the display 222, flash memory 224, random access memory (RAM) 226, auxiliary input/output (I/O) subsystems 228, serial port 230, keyboard 232, speaker 234, microphone 236, a short-range communications subsystem 240 and any other device subsystems generally designated as 242.<br>
+Flash memory 224 may provide a local store of instructions and data of one or more applications for adapting and configuring the microprocessor to provide various features such as PDA features, a web browser, games, etc. A preferred application that may be loaded onto mobile station 202 may be a personal information manager (PIM) application having the ability to organize and manage data items relating to the user such as, but not limited to, instant messaging (IM), e-mail, calendar events, voice mails, appointments, and task items. Thus flash memory 224 of the present embodiment stores programs 250 (e.g. a web browser, PIM) device state information 252, address book 254, other PIM data 256, and other data and/or instructions 258.<br>
+Figs. 3A and 3B illustrate flowcharts of operations of a mobile wireless device (e.g. device 102) in accordance with an embodiment of the invention illustrating a method for including a priority with a request for data. Operations 300 and 310 represent exemplary steps for an embodiment of a browser application for loading web pages. Persons of ordinary skill in the art will appreciate that other applications requesting data may be adapted in a similar manner.<br>
+Operations 300 are initiated on the start of a loading of a page. At step 302 an initial priority level is set. The level may be sent with a request for data, for example as part of an HTTP header, as would be understood to a person of ordinary skill in the art. In accordance with the present embodiment of the invention, the priority level is included in requests the responses for which require priority treatment by the gateway but is otherwise omitted from other requests. When a priority level is omitted, the respective responses are given a normal treatment by the gateway (i.e. a respective low priority treatment) and placed at a tail end rather than a head end of the FIFO send queue.<br>
+At step 304, a first request for web page data is issued to the gateway to request a response and thereafter at step 306 a process for handling the response to the request is started together with the current priority level. Operations 300 may then end 308.<br>
+Operations 310 represent a method for handling a response to a request which may be implemented in accordance with various well-known techniques such as objected-oriented programming and re-entrant coding techniques for programming a processor for handling the response data. At step 312, processing begins to act upon the response data, for example, to render the response on a display of the device. Persons of ordinary skill will<br>
+appreciate that the response data is typically received as a stream of data in one or more packets and the response is typically processed serially in portions. Hence, as the stream is received, it is processed and a determination is made {step 312) whether the processing of the complete response is complete. If it is not complete, via No branch to step 314, the response is evaluated for a reference requiring a further request for data from a content source such as a web server. If a reference is not found, the portion of the response may be acted on, for example, to render the portion of data on a display of the device (step 315) before looping to step 312.<br>
+In the present embodiment relating to processing HTML, a variety of types of references may be encountered that require or otherwise may benefit from an immediate request for the matter identified by the reference. As previously discussed, ess and JavaScript™ are examples of such references. However, those of ordinary skill in the art will appreciate that references defining other embedded media within a page may be included. The embodiment disclosed herein is useful when making a determination as to whether or not to render matter identified by an HTML reference; and when that determination changes the path to be taken for processing the rest of the HTML page. For example if an object tag inside an HTML page is encountered, a determination as to whether the device can render that item is to be made. Before the determination is made, it may be necessary to fetch the data.<br>
+Object tags may reference a variety of media such as Shockwave-flash, scalable vector graphics (svg), images, and other forms of media. Now typically rendering agents pre-allocate display space for the object and render additional portions of the pate, going back to adjust the content that was rendered if the object that is fetched can't be processed. However, a rendering agent could also fetch the object and wait for it and then continue processing once a response is received.<br>
+If a reference is found at step 314, a further determination is made whether action on the reference is to be immediately taken (step 316). If action is to be immediate, processing of responses on outstanding requests is suspended (step 322). At step 324 a Get request is sent with the priority level increased by one. A process for handling the response is started and the current level plus one is passed to initiate the process. The current process (i.e. current instance of operations 310) then waits on the processing of the response data for the higher priority reference (step 326). Once that other process response instance (i.e.<br>
+new instance of operations 310) started by step 326 completes, the current process resumes operations, starting the processing of earlier response (step 328), if any, and looping to step 312 for a further determination whether more response data of the current response requires processing.<br>
+If at step 316 it is determined that the further reference in the current response does not require immediate action, via No branch to step 318, a request for data identified by the new reference is sent without a priority level and a process initiated to handle a response for the new reference. Processing of the current response then continues at step 312.<br>
+If at step 312 no further response data requires processing, operations 310 end at step 330.<br>
+Consider operations 300 and 310 with reference to the pseudo-code block below for a sample web page defined by MainDocument.htm:<br>
+MainDocumenthtm<br><br>
+This is text<br><script language="JavaScript" src="../index.html" x><br/>
+Text after script<br/>
+</html><br/>
+Operations 300 commence for loading page MainDocument.htm. The initial priority level may be set (e.g. 0) and at step 304 a GET issued for MainDocumenthtm to a web server hosting the page. At step 306, a process (i.e. operations 310) is initiated for handling a response to the request. The current priority level is provided to initiate the level of priority of these operations.<br/>
+In response to the packets of data received comprising MainDocument.htm, operations 310 process the data. At step 314, the reference JavaScriptTestjs is determined and at step 316 evaluated as a reference requiring immediate action. Processing of response data is suspended, and a GET for the reference is issued (steps 322-324). The GET includes the initial priority level increased by 1 (e.g. 1) in a header portion of the request. The priority<br/>
+may be identified by a reference such as "x-rim-request-priority". At step 326 the current process waits until another instance of operations 310 complete the processing of a response for the reference JavaScriptTest.js. The initial priority level plus 1 is provided to initiate the other process.<br/>
+The following workflow exchange represents an exchange between mobile device 102 and gateway 108 for the above web page:<br/>
+—> GET MainDocumenthtm<br/>
+<— First packet of MainDocumenthtm<br/>
+—> Get JavaScriptTestjs (with x-rim-request-priority=l)<br/>
+<— First packet of JavaScriptTestjs<br/>
+<— Last packet of JavaScriptTest.js<br/>
+<— Last packet of MainDocumenthtm<br/>
+Consider operations 300 and 310 with reference to the pseudo-code blocks below for a sample web page defined by MainDocumenthtm, Scriptl.js and Script2.js:<br/>
+Script l.js documentwriteln("<scriptsrc=\"script2.js\"language=\"JavaScript\">");<br/>
+Script2.js<br/>
+document. writeln("Output of script2");<br/>
+MainDocument htm<br/>
+<html><br/>
+<script src="scriptl.js" language="JavaScript"x/script><br/>
+After scripts<br/>
+</html><br/>
+During rendering of MainDocument.htm, device 102 must first fetch "Scriptl.js" (priority level 1) and execute it; but during the execution of "Scriptl.js" it must also fetch "Script2.js" (priority level 1). As such operations 310 for Scriptl.js issue a GET for Script2.js having a priority level 2 and initiate a further instance of operations 310 at that priority level to process the response. The following workflow exchange represents message data flow between mobile device 102 and gateway 108 for the second above web page:<br/>
+—> GET MainDocument.htm<br/>
+<— First packet of MainDocumenthtm<br/>
+—> Get Scriptl.js (with x-rim-request-priority=l)<br/>
+<— First packet of Scriptl.js<br/>
+—> Get Script2.js (with x-rim-request-priority=2)<br/>
+<— First packet of Script2.js<br/>
+<— Last packet of Script2.js<br/>
+<— Last packet of Script 1 js<br/>
+<— Last packet of MainDocument.htm Fig. 4 illustrates a wireless transport gateway server 108 in accordance with an embodiment of the invention. Gateway server 108 comprises message receive queues 404 and send queues 410 for communicating with a plurality of wireless devices, such as device 102. Typically, there is a receive and send queue instance for each connection to a wireless device with which gateway 108 is communicating. An individual wireless device typically communicates via a single connection to the gateway. Thus all communications are serialized in a FIFO manner in accordance with the prior art.<br/>
+Gateway 108 further comprises queues 408 and 414 for communicating with other devices coupled to gateway 108 such as web server 114 and 116. Gateway 108 further comprises a get handler 406 for processing GET requests from wireless devices, evaluating headers for priority levels and a get response handler 412 for processing responses, reordering data in<br/>
+respective queues 410 in response to the respective priority levels received.<br/>
+Not shown, though understood to persons skilled in the art, are components of wireless gateway server 108 for maintaining connectivity between wireless devices and the gateway and translation components for communicating in accordance with various network protocols, for example, to pass data received in a wireless protocol to a server in a wired protocol and the converse thereof. Also not shown are components for routing communications between the particular devices for which the gateway provides its services.<br/>
+In operation, gateway 108 receives GET requests for data and get handler 406 evaluates a header portion for a priority level, passing the request through to send to the appropriate web server. Responses received for the requests are handled by get response handler 412 in accordance with the priority level of the request as received. Data packets for a response to a request having no priority are placed at a tail end of the respective FIFO send queue for the device originating the request so that existing data in the queue is sent in accordance with FIFO rules. Data packets for a request having a higher priority are placed at a head end of the respective queue for the device originating the request, higher priority data being placed ahead of lower priority data, so that new data in the queue is sent in accordance with "last in first out" LIFO rules.<br/>
+Though described herein with reference to a web browser application for navigating the Internet in accordance with a request/response protocol such as HTTP, for example, the present invention may be useful for other applications having a web page-like interface or for other communication protocols than HTTP.<br/>
+The manor of reordering the queue could be done for various communication protocols. An alternative to including a priority indication in a header may be to add or otherwise include a byte for the priority in a message body portion of the stream, e.g. in a packet.<br/>
+Benefits in accordance with a feature of the invention are better achieved when there is a relatively large amount of data in the send queue and a slower bandwidth communication between the queue and the receiving device. A disadvantage of the typical FIFO send queue sought to be overcome is that the send queue is so large that it will take a noticeable time for it to empty. Thus on faster communication networks, the send queue may not<br/>
+have much of a delay.<br/>
+Persons of ordinary skill in the art will recognize that the priority does not necessarily have to advance by 1 for each request. If 2 items are encountered and their order of receipt is not important, two respective requests with the same priority may be sent and then the first response received by the gateway will be put in the queue first.<br/>
+Consideration may be given to ensuring requests from the device do not time-out. Though not shown, it is common to time-out a connection if a response to a request is not received within a predetermined time. If a request is left too long without a packet being sent (e.g. after two minutes wait time on the device) then the connection will timeout. So it is desirable to periodically pre-empt the queue ordering and send something from responses in the queue that have "aged" (i.e. been delayed by higher-priority responses).<br/>
+The above-described embodiments of the present application are intended to be examples only. Those of skill in the art may effect alterations, modifications and variations to the particular embodiments without departing from the scope of the application. The invention described herein in the recited claims intends to cover and embrace all suitable changes in technology.<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+We Claim:<br/>
+1.	A method of ordering a message send queue (410) in a server (108) sending respective<br/>
+response data to a wireless communication device (102) in response to a plurality of<br/>
+requests from the wireless communication device, the method comprising the steps of:<br/>
+placing data comprising a response to a first request in the send queue (410) and serially transmitting the data in said send queue to the wireless device (102);<br/>
+receiving data comprising a response to a second request, said second request being determined to have a respective relative priority that is higher than a priority of the first request; and<br/>
+placing some of the data comprising the response to the second request in the send queue (410) ahead of at least some of the data comprising the response to the first request still in the queue and serially transmitting the data in said send queue to the wireless device (102).<br/>
+2.	The method as claimed in claim 1, wherein it includes the steps of:<br/>
+receiving data comprising a response to a third request, said third request being determined to have a respective relative priority that is higher than the priority of the second request; and<br/>
+placing some of the data comprising the third response in the send queue (410) ahead of at least some of the data comprising the response to the second request still in the queue and serially transmitting the data in the queue to the wireless device (102).<br/>
+3.	The method as claimed in claim 1 or claim 2, wherein it comprises periodically placing<br/>
+some of the data comprising the first response ahead of any data in the queue and serially<br/>
+transmitting the data in the queue to the wireless device (102) in order to avoid a timing<br/>
+out of a connection between the server (108) and the wireless device (102).<br/>
+ <br/>
+4.	The method as claimed in any one of claims 1 to 3, wherein determining a respective relative priority comprises evaluating a priority indication of a request, said priority indication defining the relative priority of the response data for that request.<br/>
+5.	The method as claimed in any one of claims 1 to 4 further comprising receiving said plurality of requests wherein at least some of said requests comprise a respective priority indication for ordering the sending of their respective response data relative to other response data.<br/>
+6.	The method as claimed in any one of claims 1 to 5 further comprising receiving the respective response data for sending via said message queue (410) in response to the respective request.<br/>
+7.	The method as claimed in any one of claims 1 to 6, wherein the message queue comprises a first in first out (FIFO) queue and wherein ordering comprises placing the respective response data at one of the ends of the message queue in response to their respective relative priorities.<br/>
+8.	The method as claimed in any one of claims 1 to 7, wherein the server (108) receives a priority indication for at least one of the requests from the wireless device (102).<br/>
+9.	The method as claimed in claim 8, wherein the server (108) receives a priority indication from the wireless device (102) for any request deemed to require immediate action.<br/>
+10.	The method as claimed in claim 9, wherein the priority indication received by the server (108) for each subsequent request requiring immediate action has a value comprising an incremented value of a last such request.<br/>
+11.	The method as claimed in any one of claims 1 to 10, wherein the server (108) is a wireless gateway server and wherein the method comprises formatting the response data for transmitting in accordance with a wireless communications protocol.<br/>
+ <br/>
+12.	The method as claimed in any one of claims 1 to 11, further comprising:<br/>
+establishing the communication connection between the server (108) and the wireless device (102), the communication connection having the send queue (410) for serially transmitting data.<br/>
+13.	The method as claimed in claim 12, wherein the data comprising the response to the first request comprises a plurality of data packets, and the placing comprises placing some of the data comprising the response to the second request in the send queue of the communication connection ahead of at least one data packet of the data comprising the response to the first request.<br/>
+14.	A method of processing respective response data in a system comprising a server (108) and a wireless communication device (102), the response data being received in the wireless communication device (102) from the server (108) responding to a plurality of requests from the wireless device for the data, comprising the steps of:<br/>
+at the wireless device (102), sending a first request for data to said server (108);<br/>
+at the server, placing data comprising a response to a first request in a message send queue (410) and serially transmitting the data in said send queue to the wireless device (102);<br/>
+at the wireless device, processing data being received comprising a response to said first request;<br/>
+at the wireless device, sending a second request for data to said server, said second request being sent with a respective relative priority that is higher than a priority of the first request;<br/>
+at the server, receiving data comprising a response to the second request, said second request being determined to have a respective relative priority that is higher than a priority of the first request;<br/>
+ <br/>
+at the server, placing some of the data comprising the response to the second request in the send queue (410) ahead of at least some of the data comprising the response to the first request still in the queue and serially transmitting the data in said send queue to the wireless device;<br/>
+at the wireless device, serially receiving data comprising a response to said second request, some of said data comprising a response to said second request being serially received ahead of at least some of the data comprising the response to the first request;<br/>
+at the wireless device, processing the response data for the second request; and,<br/>
+once processing of the response data for the second request is completed at the wireless device, completing processing of the response data for the first request.<br/>
+15.	The method as claimed in claim 14, wherein it includes the steps of:<br/>
+sending a third request for data to said server (108) from the wireless device; said third request being sent with a respective relative priority that is higher than the priority of the second request;<br/>
+serially receiving data comprising a response to said third request, some of said data comprising a response to said third request being serially received ahead of the data comprising the response to the second request;<br/>
+processing the response data for the third request at the wireless device; and,<br/>
+once processing of the response data for the third request is completed at the wireless device, completing processing of the response data for the second request.<br/>
+16.	The method as claimed in claim 14 or claim 15, wherein it includes periodically receiving<br/>
+some of the data comprising the first response ahead of the data comprising the second<br/>
+response at the wireless device and processing said periodically received data in order to<br/>
+avoid timing out of a connection between the server (108) and the wireless device (102).<br/>
+ <br/>
+17.	The method as claimed in any one of claims 14 to 16, wherein the wireless device (102) assigns a priority indication to any request deemed to require immediate action.<br/>
+18.	The method as claimed in claim 17, wherein the wireless device (102) assigns to each subsequent request deemed to require immediate action a priority indication comprising an incremented value of a last such request.<br/>
+19.	The method as claimed in claim 17 or claim 18, wherein the wireless device (102) sends the priority indication in a header portion of the request.<br/>
+20.	The method as claimed in any one of claims 14 to 19, wherein determining a respective relative priority comprises evaluating a first portion of the first response data to determine the second request for the second respective response data having a higher priority than a remaining portion of the first respective response data and defining the respective relative priority in response to the higher priority.<br/>
+21.	The method as claimed in any one of claims 14 to 20, further comprising suspending processing of said first respective response data at the wireless device until the processing of the second respective response data is complete.<br/>
+22.	The method as claimed in any one of claims 14 to 21, further comprising:<br/>
+establishing a communication connection between the server (108) and the wireless device (102), the communication connection having the message send queue (410) for serially transmitting data.<br/>
+23.	A system comprising a server (108) and a wireless communication device (102), the<br/>
+server communicating with the wireless communication device via a wireless gateway in<br/>
+a wireless network (104) part of a communications system (100), the wireless<br/>
+communication device and wireless gateway communicating serially in accordance with<br/>
+a request/response protocol, wherein the server comprises:<br/>
+a processor coupled to the communication system (100) for processing a plurality of requests from the wireless communication device (102) and sending respective response data to said device via the gateway (108), said plurality of requests having<br/>
+ <br/>
+respective relative priorities; and<br/>
+a memory coupled to the processor for storing instructions to configure the processor to order a server message send queue (410) to:<br/>
+place data from the server (114, 116) comprising a response to a first request in the send queue (410) and serially transmit the data in said send queue to the wireless device (102);<br/>
+receive data from the server (114, 116) comprising a response to a second request, said second request being determined to have a respective relative priority that is higher than a priority of the first request; and<br/>
+place some of the data comprising the response to the second request in the send queue (410) ahead of at least some of the data comprising the response to the first request still in the queue and serially transmitting the data in said send queue to the wireless device (102)<br/>
+and wherein the wireless device comprises:<br/>
+a communication system (211) for transmitting and receiving via the wireless network (104);<br/>
+a processor (238) coupled to the communication system (211) for sending requests and processing respective response data; and<br/>
+a memory (224) coupled to the processor and storing instructions to configure the processor to send a priority indication in association with a request for particular response data to denote a priority of the particular response data relative to other response data,<br/>
+wherein said processor (238) is configured to:<br/>
+send a first request for data to said server (108);<br/>
+process data being serially received from said server comprising a response to said first request;<br/>
+ <br/>
+send a second request for data to said server, said second request being sent with a respective relative priority that is higher than a priority of the first request;<br/>
+said communications system (211) being arranged to serially receive data comprising a response to said second request, some of said data comprising a response to said second request being serially received ahead of the data comprising the response to the first request;<br/>
+said processor is further configured to process the response data for the second request; and,<br/>
+once processing of the response data for the second request is completed, complete processing of the response data for the first request.<br/>
+24.	The system as claimed in claim 23, wherein the wireless device processor (238) is configured to send a priority indication in association with a request for particular response data for any request deemed to require immediate action.<br/>
+25.	The system as claimed in claim 24, wherein the wireless device processor (238) is configured to increment the value of a priority indication for each subsequent request deemed to require immediate action.<br/>
+26.	The system as claimed in any one of claims 23 to 25, wherein said wireless device memory (224) comprises instructions to configure the wireless device processor (238) to send the priority indication in a header portion of the request.<br/>
+27.	The system as claimed in any one of claims 23 to 26, wherein said wireless device memory (224) comprises instructions to configure the wireless device processor (238) to determine the priority of the particular response data relative to other response data.<br/>
+28.	The system as claimed in claim 27, wherein said instructions to configure the wireless device processor (238) to determine the priority comprise instructions to:<br/>
+evaluate a first portion of a first response data to determine a second request for a second respective response data having a higher priority than a remaining portion of the<br/>
+ <br/>
+first respective response data; and<br/>
+define the priority indication in response to the higher priority.<br/>
+29.	The system as claimed in any one of claims 23 to 28 wherein the wireless communication device (102) and the server (108) communicate serially via a communication connection established between the wireless communication device and the server, the communication connection having the server message send queue (410) for serially transmitting data.<br/>
+30.	A wireless gateway for communicating with a wireless communication device (102) coupled to the gateway (108) via a wireless network (104), the wireless communication device and wireless gateway communicating serially in accordance with a request/response protocol, the wireless gateway comprising:<br/>
+a communication system for transmitting and receiving via the wireless network (104);<br/>
+a processor coupled to the communication system for processing received requests and sending respective response data; and<br/>
+a memory coupled to the processor for storing instructions to configure the processor to:<br/>
+place data comprising a response to a first request in a send queue (410) and serially transmit the data in said send queue to the wireless device (102);<br/>
+receive data comprising a response to a second request, said second request being determined to have a respective relative priority that is higher than a priority of the first request; and<br/>
+place some of the data comprising the response to the second request in the send queue (410) ahead of at least some of the data comprising the response to the first request still in the queue and serially transmit the data in said send queue to the wireless device (102).<br/>
+ <br/>
+31.	The wireless gateway as claimed in claim 30, wherein the gateway (108) is coupled to at least one further device (114, 116) configured for providing response data and wherein the gateway is adapted to obtain the response data from the second device in response to the received requests.<br/>
+32.	The wireless gateway as claimed in claim 30 or claim 31, wherein the instructions further configure the processor to:<br/>
+establish a communication connection between the wireless gateway (108) and the wireless device (102), the communication connection having the send queue (410) for serially transmitting data.<br/>
+33.	A server (114, 116) for communicating with a wireless communication device (102) via a<br/>
+wireless gateway (108) in a wireless network (104) part of a communications system<br/>
+(100), the wireless communication device and the wireless gateway communicating over<br/>
+the wireless network serially in accordance with a request/response protocol, wherein the<br/>
+server comprises:<br/>
+a processor coupled to the communication system (100) for processing a plurality of requests from the wireless communication device (102) and sending respective response data to said device via the gateway (108), said plurality of requests having respective relative priorities; and<br/>
+a memory coupled to the processor for storing instructions to configure the processor to order a server message send queue (410) to:<br/>
+place data from the server (114, 116) comprising a response to a first request in a message send queue (410) and serially transmit the data in said send queue to the wireless device (102);<br/>
+receive data from the server (114, 116) comprising a response to a second request, said second request being determined to have a respective relative priority that is higher than a priority of the first request; and<br/>
+place some of the data comprising the response to the second request in the send<br/>
+ <br/>
+queue (410) ahead of at least some of the data comprising the response to the first request still in the queue and serially transmitting the data in said send queue to<br/>
+the wireless device (102).<br/>
+34. The server as claimed in claim 33 wherein the wireless communication device (102) and the server (114, 116) communicate serially via a communication connection having the server message send queue (410) for serially transmitting data.</span></p></td>
+    </tr>
+
+    </table>
+
+                </div>
+                <br />
+            </div>
+            <span id="LblCompatibility" style="color:White;font-family:Arial;font-size:Small;">Best View in Resolution of 1024x768 or later. Enable Javascript for Better Performance.</span>
+        </center>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("ToolkitScriptManager_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();//]]>
+</script></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LURFTC0yMDA1LUFic3RyYWN0LSgwMy0xMS0yMDExKS5wZGY=" target="_blank" style="word-wrap:break-word;">905-DEL-2005-Abstract-(03-11-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LUFic3RyYWN0LSgyOC0wMy0yMDE0KS5wZGY=" target="_blank" style="word-wrap:break-word;">905-del-2005-Abstract-(28-03-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">905-del-2005-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LUFzc2lnbm1lbnQtKDI4LTAzLTIwMTQpLnBkZg==" target="_blank" style="word-wrap:break-word;">905-del-2005-Assignment-(28-03-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LURFTC0yMDA1LUNsYWltcy0oMDMtMTEtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">905-DEL-2005-Claims-(03-11-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">905-del-2005-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LURFTC0yMDA1LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMDItMDUtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">905-DEL-2005-Correspondence Others-(02-05-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LURFTC0yMDA1LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMDMtMTEtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">905-DEL-2005-Correspondence Others-(03-11-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMTMtMDQtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">905-del-2005-Correspondence Others-(13-04-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMTgtMDYtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">905-del-2005-Correspondence Others-(18-06-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMjAtMTItMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">905-del-2005-Correspondence-Others-(20-12-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LUNvcnJlc3BvbmRlbmNlLU90aGVycy0oMjgtMDMtMjAxNCkucGRm" target="_blank" style="word-wrap:break-word;">905-del-2005-Correspondence-Others-(28-03-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LWNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">905-del-2005-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">905-del-2005-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">905-del-2005-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LWZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">905-del-2005-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LURFTC0yMDA1LUZvcm0tMTMtKDAzLTExLTIwMTEpLnBkZg==" target="_blank" style="word-wrap:break-word;">905-DEL-2005-Form-13-(03-11-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LWZvcm0tMTgucGRm" target="_blank" style="word-wrap:break-word;">905-del-2005-form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LUZvcm0tMi0oMjgtMDMtMjAxNCkucGRm" target="_blank" style="word-wrap:break-word;">905-del-2005-Form-2-(28-03-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LWZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">905-del-2005-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LURFTC0yMDA1LUZvcm0tMy0oMDItMDUtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">905-DEL-2005-Form-3-(02-05-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LURFTC0yMDA1LUZvcm0tMy0oMDMtMTEtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">905-DEL-2005-Form-3-(03-11-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LUZvcm0tMy0oMTMtMDQtMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">905-del-2005-Form-3-(13-04-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LUZvcm0tMy0oMTgtMDYtMjAxMikucGRm" target="_blank" style="word-wrap:break-word;">905-del-2005-Form-3-(18-06-2012).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LUZvcm0tMy0oMjAtMTItMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">905-del-2005-Form-3-(20-12-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LWZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">905-del-2005-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LWZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">905-del-2005-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LUdQQS0oMjgtMDMtMjAxNCkucGRm" target="_blank" style="word-wrap:break-word;">905-del-2005-GPA-(28-03-2014).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=OTA1LWRlbC0yMDA1LWdwYS5wZGY=" target="_blank" style="word-wrap:break-word;">905-del-2005-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=UGV0aXRpb24gMTM3IGZvciBGb3JtIDMucGRm" target="_blank" style="word-wrap:break-word;">Petition 137 for Form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=UGV0aXRpb24gMTM3IGZvciBQcm9vZiBvZiBSaWdodC5wZGY=" target="_blank" style="word-wrap:break-word;">Petition 137 for Proof of Right.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="260247-ophthalmic-compositions-containing-mucoadhesive-polysaccharides-able-to-promote-corneal-re-epthelization.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="260249-detecting-legacy-spoofing-in-reduced-functionality-user-terminals.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>260248</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>905/DEL/2005</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>16/2014</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>18-Apr-2014</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>15-Apr-2014</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>08-Apr-2005</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>RESEARCH IN MOTION LIMITED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>295 PHILLIP STREET, WATERLOO, ONTARIO N2L 3W8, CANADA.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>TAPUSKA DAVID</td>
+											<td>712 WILLOW WOOD PLACE, WATERLOO, ONTARIO N2T 2T7, CANADA.</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>KNOWLES MICHAEL</td>
+											<td>847 BRANDENBURG BLVD., WATERLOO, ONTARIO N2T 2X5, CANADA.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04B 7/185</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>04252119.5</td>
+									<td>2004-04-08</td>
+								    <td>EPO</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/260248-message-send-queue-reordering-based-on-priority by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 23:13:18 GMT -->
+</html>

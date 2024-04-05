@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/272289-adaptive-coding-and-decoding by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:41:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 272289:ADAPTIVE CODING AND DECODING</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">ADAPTIVE CODING AND DECODING</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>The invention relates to a method of transmitting an image portion, which method comprises, in a coding phase: • analyzing a coding context; • adapting a parameter of a group of prediction functions that can be used for coding; • forming a first predicted descriptor using a selected prediction function; and • determining and transmitting a residue (&amp;#61541;) between the first predicted descriptor and the current descriptor. The method further includes a decoding phase comprising: • analyzing a decoding context; • adapting a parameter of a group of prediction functions that can be used for decoding; • forming a second predicted descriptor (P*) using a selected prediction function; and • combining the second predicted descriptor and the received residue to deliver a decoded version of the current descriptor (V*).</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>ADAPTIVE CODING AND DECODING<br>
+The present invention relates to image coding<br>
+techniques.<br>
+Many image coders support Interframe coding in which<br>
+movement between the images of a sequence is estimated in<br>
+order for the most recent image to be coded relative to<br>
+one or more preceding images.<br>
+Each image of the sequence can also be coded without<br>
+reference to the others. This is known as Intraframe<br>
+coding and exploits spatial correlations in an image.<br>
+For a given transmission bit rate from the coder to the<br>
+decoder, it achieves lower video quality than Interframe<br>
+coding because it does not make use of temporal<br>
+correlation between images of the sequence.<br>
+A sequence commonly has its first image Intraframe-<br>
+coded and subsequent images Interframe-coded.<br>
+Information included in the output stream from the coder<br>
+indicates the Intraframe-coded and Interframe-coded<br>
+images and, when Interframe-coded, which reference<br>
+image(s) to use.<br>
+A number of existing coding methods code a current<br>
+image portion by determining representative information<br>
+known as descriptors that consist of information relating<br>
+to the pixels, for example, such as the luminance and the<br>
+chrominance, or movement vectors for coding mode-choice<br>
+information.<br>
+Some of those descriptors, in particular the<br>
+movement vectors, can be predicted. It is then possible<br>
+to analyze image portions to obtain predicted descriptors<br>
+that are thereafter compared with current descriptors to<br>
+extract a residue representing the difference between the<br>
+predicted and current descriptors. Only this residue<br>
+needs to be transmitted to a decoder.<br>
+The corresponding decoding methods are adapted to<br>
+determine the predicted descriptors, such as the<br>
+predicted movement vectors, locally and combine them with<br>
+ <br>
+the residue received from the coder to obtain the current<br>
+descriptors and therefore the current image portion.<br>
+Thus in such coding the stream between the coder and<br>
+the decoder contains only the residue, and where<br>
+applicable the reference of the image portions to use.<br>
+However, the prediction function that is used is<br>
+sometimes not the optimum function. Employing groups of<br>
+prediction functions that can be used in the coder and<br>
+the decoder can overcome this problem. Each of the<br>
+functions is tested in the coder before the coder selects<br>
+one of them, generally the function producing the minimum<br>
+residue.<br>
+In particular, among the descriptors, the movement<br>
+vectors require a high bandwidth, in particular because<br>
+of their accuracy, and are thus liable to be transmitted<br>
+using a residue.<br>
+It is therefore necessary to include in the coder<br>
+output stream an identifier of the prediction function<br>
+used to enable the decoder to apply the correct<br>
+prediction function.<br>
+The bandwidth allocated to the identifier of the<br>
+prediction function is not negligible and increases with<br>
+the size of the group from which the function is<br>
+obtained.<br>
+This problem is addressed in IEEE Transactions on<br>
+Image Processing, Vol. 8, no. 8, August 1999, by Sung<br>
+Deuk Kim and Jong Beom Ra, who propose a particular<br>
+coding system for the identifier of the prediction<br>
+function used for the movement vectors.<br>
+Thus an increase in the size of the group of usable<br>
+prediction functions improves prediction quality, but<br>
+requires the allocation of a greater bandwidth for the<br>
+identifier.<br>
+An object of the present invention is to solve this<br>
+problem by proposing a coding method and a corresponding<br>
+decoding method producing an optimum prediction by<br>
+limiting bandwidth reduction.<br>
+ <br>
+To this end, the present invention consists in a<br>
+method of coding images, the coding of a current image<br>
+portion comprises the following steps:<br>
+•	determining a current descriptor of the current<br>
+image portion;<br>
+•	selecting a prediction function in a tunable group<br>
+of usable functions;<br>
+•	forming a predicted descriptor of the current<br>
+image portion from at least one other image portion and<br>
+the selected prediction function;<br>
+•	determining a residue representing a difference<br>
+between the predicted descriptor and the current<br>
+descriptor; and<br>
+•	integrating the residue into an output stream<br>
+intended for a decoder;<br>
+the method being characterized in that it further<br>
+comprises:<br>
+•	analyzing a coding context; and<br>
+•	adapting at least one parameter of the usable<br>
+function group as a function of the analysis of the<br>
+coding context.<br>
+The invention also consists in a method of decoding<br>
+images, the decoding of a current image portion<br>
+comprising the following steps:<br>
+•	receiving a data stream comprising a residue;<br>
+•	selecting a prediction function in a tunable group<br>
+of usable prediction functions;<br>
+•	forming a predicted descriptor of the current<br>
+image portion from at least one other image portion and<br>
+the selected prediction function; and<br>
+•	combining the predicted descriptor and the residue<br>
+to deliver a current descriptor of the current image<br>
+portion;<br>
+the method being characterized in that it further<br>
+comprises:<br>
+•	analyzing the decoding context; and<br>
+ <br>
+• adapting at least one parameter of the group of<br>
+usable functions as a function of the analysis of the<br>
+decoding context.<br>
+These coding and decoding methods form a method of<br>
+transmitting information concerning an image portion.<br>
+Thus the adaptations of the groups of usable<br>
+prediction functions are not transmitted but are<br>
+determined independently in the coder and the decoder.<br>
+Consequently, it is possible to optimize the group of<br>
+usable prediction functions without impacting on the<br>
+bandwidth.<br>
+According to other features of the invention,<br>
+forming a predicted descriptor includes applying a<br>
+prediction function that has parameters that can be<br>
+adapted, adaptation includes modifying at least one of<br>
+the parameters of the prediction function, and some of<br>
+the adapted parameters are not transmitted between the<br>
+coder and the decoder.<br>
+Thus to optimize a prediction function without<br>
+reducing the bandwidth available for the data, it is<br>
+possible to apply the principle of the invention to the<br>
+parameters of a function that has parameters that can be<br>
+adapted.<br>
+If the group of usable functions includes distinct<br>
+elements, the invention includes, in the coder,<br>
+expressing an identifier of the selected prediction<br>
+function relative to the group of usable functions with<br>
+parameters that have been adapted and integrating that<br>
+identifier into an output stream. Symmetrically, this<br>
+identifier is received by and used in the decoder.<br>
+In this implementation, the bandwidth necessary to<br>
+transmit the identifier is reduced because the identifier<br>
+is expressed relative to a group of usable functions<br>
+whose parameters are adapted to the context.<br>
+In one particular implementation, selection<br>
+comprises testing each of the functions of the group of<br>
+usable functions and selecting a particular function in<br>
+ <br>
+relation to those tests so that the prediction functions<br>
+can compete with each other.<br>
+The present invention further consists in programs<br>
+executing the methods described above and corresponding<br>
+coders and decoders.<br>
+Other features and advantages of the present<br>
+invention become apparent in the course of the<br>
+description given below by way of non-limiting example<br>
+and with reference to the appended drawings, in which:<br>
+•	Figure 1 is a diagram showing two communicating<br>
+stations provided with video coders-decoders;<br>
+•	Figure 2 is a block diagram of part of a video<br>
+coder of the invention;<br>
+•	Figure 3 is a block diagram of part of a video<br>
+decoder of the invention, able to restore images coded by<br>
+the Figure 2 coder.<br>
+The invention can be applied to any type of image<br>
+coding, for example to coding a video sequence of a<br>
+digital television stream between a transmitter 2<br>
+containing a video coder 4 and a receiver 6 containing a<br>
+decoder 8. For example, the transmitter 2 includes an<br>
+antenna transmitting on a digital television radio<br>
+channel in a format such as the DVB format and the<br>
+station 6 is a personal computer.<br>
+Referring to Figure 2, a portion of the coder 4 that<br>
+receives as input a stream F of images of a video<br>
+sequence to be transmitted is described in detail below.<br>
+The term "image" refers generally to an element of the<br>
+video sequence. Depending on the standard, it can be<br>
+interchangeably replaced by the term "frame".<br>
+In the coder 4, the stream F is first stored in a<br>
+buffer 10 and a control unit 12 determines descriptors,<br>
+'for each current image portion from the buffer including<br>
+pixel information, i.e. luminance and chrominance, a<br>
+movement vector, and a coding mode such as the Interframe<br>
+mode or the Intraframe mode.<br>
+ <br>
+There is described below only the processing of a<br>
+movement vector V which is Interframe-coded, i.e. coded<br>
+relative to portions of images in the video sequence<br>
+preceding the current image. The invention can<br>
+nevertheless be applied to other types of descriptors and<br>
+in particular to the descriptor of the coding mode.<br>
+The control unit 12 is connected to a coding<br>
+subsystem 16 that includes means 20 for predicting a<br>
+predicted movement vector for the current image portion<br>
+from one or more preceding image portions and coding<br>
+prediction parameters. To be more precise, the predicted<br>
+movement vector for the current image portion is obtained<br>
+by applying a prediction function to one or more movement<br>
+vectors of other image portions. Those movement vectors<br>
+are the result of analyzing those other image portions.<br>
+The means 20 include a database 22 of movement<br>
+vector prediction functions, some of which are extracted<br>
+from the database 22 to form a usable prediction<br>
+functions table 24.<br>
+ <br>
+ <br>
+In the embodiment described, this table 24 has<br>
+parameters that can be adapted, and its size and content<br>
+can in particular be varied, as described in detail<br>
+below, and so the coding prediction parameters are<br>
+parameters of the table 24.<br>
+The table 24 is connected to a selector unit 26 that<br>
+tests each of the usable prediction functions from the<br>
+table 24 for coding the current image portion movement<br>
+vector. To be more precise, the unit 26 applies each of<br>
+the prediction functions in turn to one or more image<br>
+portions preceding the current portion in the video<br>
+ <br>
+sequence, i.e. to one or more movement vectors resulting<br>
+from the analysis of those preceding image portions.<br>
+As a function of these tests, a particular<br>
+prediction function is retained to form a predicted<br>
+descriptor, i.e. a predicted movement vector P. This<br>
+selection is effected through competition between the<br>
+prediction functions in order to select, for example, the<br>
+function producing the smallest possible residue. The<br>
+selected prediction function is identified by an<br>
+identifier Id relative to the table 24 and in the example<br>
+described corresponding to the number of the function in<br>
+the table.<br>
+The predicted movement vector P is transmitted to a<br>
+combiner unit 30 which also receives the current vector V<br>
+and determines a residue  representing a difference<br>
+between the predicted descriptor P and the current<br>
+descriptor V.<br>
+The coder 4 also includes a unit 32 for generating<br>
+an output data stream Φ and receiving as input the<br>
+residue s and other standard information elements, for<br>
+example the identifiers of the image portions to which<br>
+the prediction function must be applied.<br>
+In the example described, the selection unit 26 also<br>
+transmits to the unit 32 the identifier Id of the<br>
+prediction function used. The size of that identifier is<br>
+directly dependent on the size of the table 24 and the<br>
+bandwidth reserved for this identifier Id in the output<br>
+stream Φ therefore varies as a function of the size of<br>
+the table 24.<br>
+Moreover, the coding subsystem 16 also includes<br>
+means 40 for adapting prediction parameters as a function<br>
+of the coding context and which for this purpose include<br>
+a unit 42 for analyzing the coding context.<br>
+The expression "analyzing the coding context" means<br>
+analyzing various indicators defining the general<br>
+framework in which coding is effected. These indicators<br>
+include:<br>
+ <br>
+•	statistical indicators linked to the prediction<br>
+step, such as percentage usages of the prediction<br>
+functions or differences that have been found between<br>
+prediction functions;<br>
+•	indicators describing variations in the images,<br>
+such as directional gradients between images, the overall<br>
+movement of an area, the activity, the quantity of<br>
+Intraframe-coded, Interframe-coded or unchanged images or<br>
+image fragments; and<br>
+•	indicators describing the transmission conditions,<br>
+such as bandwidth allocated as a function of transmission<br>
+conditions or image resolution choices.<br>
+The unit 44 adapts some prediction parameters as a<br>
+function of this coding context analysis. To be more<br>
+specific, this unit 44 adapts the parameters of the<br>
+usable prediction function table 24 by adding functions<br>
+to or removing functions from the table.<br>
+In the example described, predetermined rules govern<br>
+the adaptation of the table 24. Examples of such rules<br>
+follow.<br>
+According to a first rule, in a situation in which<br>
+the local characteristics of the image indicate that the<br>
+overall movement is regular over the area to be coded and<br>
+that the area to be coded contains sharp discontinuities,<br>
+priority is assigned to time prediction functions. The<br>
+overall movement is calculated by studying the values of<br>
+the movement vectors previously selected for coding<br>
+images or image portions. The discontinuities are<br>
+calculated by summing the absolute values after contour<br>
+detection filtering. Time functions are favored either<br>
+by adding time functions to the table 24 of usable<br>
+prediction functions or by eliminating space functions or<br>
+other type of functions.<br>
+In another situation, if the sequence of images is<br>
+determined to be static, i.e. if the number of movement<br>
+vectors equal to 0 is above a particular threshold and<br>
+the number of images or image portions unchanged is high,<br>
+ <br>
+or if the usage statistics for the temporal prediction<br>
+functions are low, the adaptation favors space prediction<br>
+functions in the table 24, to the detriment of time<br>
+functions.<br>
+Moreover, if two prediction functions from the<br>
+usable function table 24 are close in terms of distance,<br>
+i.e. if the sum of the difference between the predictions<br>
+obtained by each of these functions is small, their<br>
+common presence is no longer necessary and one of the<br>
+prediction functions is eliminated.<br>
+If it is found that a prediction function is very<br>
+rarely chosen, it can likewise be eliminated.<br>
+According to another rule, if a change of sequence<br>
+is predicted between successive images, the usable<br>
+prediction function table 24 is reinitialized.<br>
+Finally, according to a further rule, the size of<br>
+the table is determined in part as a function of the<br>
+bandwidth available for transmission, a larger size being<br>
+authorized if a large fraction of the pass-band is<br>
+available. Similarly, upper or lower limits on the size<br>
+of the table can be set as a function of the required<br>
+image quality and/or the available bandwidth.<br>
+Thus the size and content parameters of the table 24<br>
+are adapted to the coding context to retain only the most<br>
+pertinent prediction functions whilst keeping the table<br>
+24, and therefore the identifier Id, as small as<br>
+possible.<br>
+Some of the adapted prediction parameters are not<br>
+integrated into the output stream Φ. To be more precise,<br>
+in the example described, none of the adaptations of the<br>
+table 24 are described or referred to in the output<br>
+stream.<br>
+These adaptations result from the analysis of the<br>
+coding context and, as such can be reproduced<br>
+autonomously in the coder and the decoder, i.e. without<br>
+it being necessary to transmit them.<br>
+ <br>
+It is thus possible to obtain improved coding of the<br>
+descriptors of the current image portion, and in<br>
+particular of the movement vectors, using an adapted<br>
+prediction function and without impacting on the<br>
+bandwidth allocated to transmission of the identifier Id<br>
+of the prediction function used. This is a result of<br>
+limiting the size of this identifier by controlling the<br>
+parameters of the table 24.<br>
+A portion of the decoder 8 that receives the stream<br>
+Φ sent by the coder 4 is described in detail below with<br>
+reference to Figure 3.<br>
+This decoder 8 includes a buffer 50 which receives<br>
+the stream Φ and a control unit 52 which analyses the<br>
+data of the stream and in particular coding type<br>
+information.<br>
+The output of the control unit 52 is sent to a<br>
+decoder subsystem 56. In the same way as for the coder<br>
+subsystem, the decoder subsystem 56 is described only<br>
+with reference to a particular descriptor, which is an<br>
+Interframe-coded movement vector.<br>
+The decoding subsystem 56 includes means 60 for<br>
+predicting descriptors of the current image portion that<br>
+produce a predicted movement vector P* for decoding from<br>
+other image portions and prediction parameters. As in<br>
+the coder subsystem, the means 60 can apply a prediction<br>
+function to one or more movement vectors resulting from<br>
+the analysis of other image portions.<br>
+The means 60 include a prediction function database<br>
+62 that contains the same prediction functions as the<br>
+database 22 of the coder 4. The means 60 also include a<br>
+table 64 of usable prediction functions and a function<br>
+application unit 66. This unit 66 extracts a particular<br>
+'function to be used from the table 64 and extracts from<br>
+the buffer 50 the image portion(s) to which the<br>
+prediction function must be applied to deliver the<br>
+predicted movement vector P*.<br>
+ <br>
+In the embodiment described, the parameters of the<br>
+table 64 that can be adapted include its size and its<br>
+content, and so the prediction parameters are parameters<br>
+of the table 64.<br>
+The decoding system 56 also includes a combiner unit<br>
+70 receiving as input the predicted movement vector P*<br>
+and the residue  received in the stream Φ and delivering<br>
+as output a current movement vector V* corresponding to<br>
+the decoded version of the vector V. This vector V* must<br>
+be applied to obtain the decoded version of the current<br>
+image portion.<br>
+The decoding subsystem 56 further includes means 80<br>
+that adapt prediction parameters as a function of the<br>
+decoding context and function autonomously, i.e. without<br>
+instructions from the coder.<br>
+To be more precise, the means 80 include a unit 82<br>
+for analyzing the decoding context, similar to the unit<br>
+42 described above, and a unit 84 for adapting some<br>
+prediction parameters for decoding, similar to the unit<br>
+44.<br>
+The adaptation unit 82 modifies the usable<br>
+prediction function table 64 autonomously, subject to the<br>
+same rules and criteria as the adaptations effected by<br>
+the unit 42 in the coder 4. Consequently, these<br>
+adaptations are identical, and so the usable prediction<br>
+function tables 64 and 24 are modified in the same way in<br>
+the coder and in the decoder, respectively, without it<br>
+being necessary to transmit information describing the<br>
+adaptations.<br>
+The identifier Id of the prediction function,<br>
+corresponding to the number of the function used in the<br>
+table 24 or 64, is sufficient for the decoder to select<br>
+and apply the same prediction function as the coder.<br>
+This function is the optimum prediction function of all<br>
+the usable prediction functions because of the<br>
+adaptations made to the tables 24 and 64.<br>
+ <br>
+These coders and decoders therefore implement<br>
+specific coding and decoding methods, respectively.<br>
+Thus to code a current image portion, coding first<br>
+determines the current movement vector V and analyzes the<br>
+coding context, which leads to adaptation of parameters<br>
+of the table 24. In this example, this optimization<br>
+includes adaptation of the functions present in the table<br>
+24 as a function of the coding context in order to retain<br>
+only the functions that are most pertinent.<br>
+The selection unit 26 then tests each of the usable<br>
+functions in order finally to apply a particular<br>
+prediction function delivering the predicted movement<br>
+vector P. This function is referenced by its number in<br>
+the table 24, denoted Id.<br>
+The predicted vector P and the current vector V are<br>
+combined by the unit 3 0 to obtain the residue e that is<br>
+integrated into the output stream Φ with the identifier<br>
+Id. There is no information describing the adaptations<br>
+effected in the table 24 in the output stream.<br>
+In a corresponding way, decoding the current image<br>
+portion includes receiving the stream Φ, followed by<br>
+analyzing the decoding context and adapting parameters of<br>
+the table 64. As for coding, this adaptation includes<br>
+adapting functions present in the table 64. Once that<br>
+table 64 has been adapted, the identifier Id is used to<br>
+select a particular prediction function in the table and<br>
+to apply it to obtain the predicted movement vector P*.<br>
+That vector P* is then combined by the unit 7 0 with<br>
+the residue  received to obtain the current movement<br>
+vector V* that will yield the decoded version of the<br>
+current image portion.<br>
+The combination of coding and decoding methods forms<br>
+an image transmission method comprising autonomous coding<br>
+and decoding context analysis in the coder and the<br>
+decoder, respectively, and prediction parameter<br>
+adaptation.<br>
+ <br>
+Of course, other embodiments of the invention can be<br>
+envisaged.<br>
+In one embodiment, the prediction means used in the<br>
+coding and decoding subsystems include one or more<br>
+prediction functions with parameters that can be adapted.<br>
+For example, a time prediction function, such as a median<br>
+value function, can be applied to larger or smaller<br>
+reference areas, the size of the area forming a<br>
+prediction parameter. In the same way, a time prediction<br>
+function can use a multiplication parameter determined as<br>
+a function of the movement found in the images. The<br>
+parameters of that or those functions then form<br>
+prediction parameters.<br>
+Using and adapting such parameters optimizes the<br>
+prediction function and in particular reduces the residue<br>
+ to be transmitted.<br>
+As previously, these parameters are modified<br>
+autonomously in the coder and the decoder and so it is<br>
+not necessary to transmit information describing certain<br>
+adaptations of the parameters of the prediction functions<br>
+between the coder and the decoder.<br>
+Of course, if only one prediction function can be<br>
+used, for example if there is no provision for<br>
+competition between the prediction functions and a single<br>
+function with parameters that can be adapted is used, it<br>
+is not necessary to transmit an identifier of the<br>
+function between the coder and the decoder. The data<br>
+stream then includes only the residue and the reference<br>
+of the preceding image(s) to be used.<br>
+In a further embodiment, the image portions are<br>
+Intraframe-coded, i.e. coded relative to each other<br>
+within the same image. Under such circumstances, in<br>
+order to obtain the current image portion, it is equally<br>
+possible to use predictable descriptors, for example a<br>
+movement vector applied to an already decoded portion of<br>
+the image.<br>
+ <br>
+Implementation of the invention the coder and the<br>
+decoder can be based on programs that have the features<br>
+described above. Of course, it is equally possible to<br>
+use dedicated processors or dedicated circuits.<br>
+ <br>
+CLAIMS<br>
+1.	A method of coding images, the coding of a current<br>
+image portion comprising the following steps:<br>
+•	determining a current descriptor (V) of the<br>
+current image portion;<br>
+•	selecting a prediction function in a tunable group<br>
+(24) of usable functions ;<br>
+•	forming a predicted descriptor (P) of the current<br>
+image portion from at least one other image portion and<br>
+the selected prediction function;<br>
+•	determining a residue () representing a<br>
+difference between the predicted descriptor and the<br>
+current descriptor; and<br>
+•	integrating the residue into an output stream (Φ)<br>
+intended for a decoder (8);<br>
+the method being characterized in that it further<br>
+comprises:<br>
+•	analyzing a coding context; and<br>
+•	adapting at least one parameter of the usable<br>
+function group as a function of the analysis of the<br>
+coding context.<br>
+<br>
+2.	A method according to claim 1, characterized in that<br>
+forming a predicted descriptor includes applying a<br>
+prediction function that has parameters that can be<br>
+adapted, adaptation includes modifying at least one of<br>
+the parameters of the prediction function, and some of<br>
+the adapted parameters are not included in an output<br>
+stream intended for the decoder.<br>
+3.	A method according to claim 1 or claim 2,<br>
+characterized in that, if the group of usable functions<br>
+includes distinct elements, the method further includes<br>
+expressing an identifier (Id) of the selected prediction<br>
+function relative to the group of usable functions with<br>
+parameters that have been adapted and integrating that<br>
+identifier (Id) into an output stream (Φ).<br>
+ <br>
+4.	A method according to any one of claims 1 to 3,<br>
+characterized in that said selecting comprises testing<br>
+each of the functions of the group (24) of usable<br>
+functions and selecting a particular function in relation<br>
+to those tests.<br>
+5.	A computer program adapted to be installed in a video<br>
+processor device (4), comprising instructions for<br>
+executing the steps of a video coding method according to<br>
+any one of claims 1 to 4 upon execution of the program by<br>
+a calculation unit of said device.<br>
+6.	An image coder comprising:<br>
+<br>
+•	means (12) for determining a current descriptor<br>
+(V) for a current image portion;<br>
+•	means (26) for selecting a prediction function in<br>
+a tunable group of usable functions (24);<br>
+•	prediction means (20) for forming a predicted<br>
+descriptor (P) of the current image portion from at least<br>
+one other image portion and the selected prediction<br>
+function;<br>
+•	means (30) for determining a residue ()<br>
+representing a difference between the predicted<br>
+descriptor and the current descriptor; and<br>
+•	means (32) for integrating that residue into an<br>
+output stream (Φ) intended for a decoder (8);<br>
+the coder being characterized in that it further<br>
+comprises:<br>
+•	means (42) for analyzing the coding context;<br>
+•	means (44) for adapting at least one parameter of<br>
+the group of usable functions as a function of the<br>
+analysis of the coding context.<br>
+7.	A coder according to claim 6, characterized in that<br>
+said prediction means (20) comprise a unit for applying a<br>
+prediction function with parameters that can be adapted<br>
+ <br>
+and the adaptation means adapt at least one parameter of<br>
+the prediction function, some of the adapted parameters<br>
+not being integrated into an output stream intended for<br>
+the decoder.<br>
+8.	A coder according to claim 6 or claim 7, characterized<br>
+in that it further includes means for expressing an<br>
+identifier (Id) of the selected prediction function in<br>
+relation to the group of usable functions with parameters<br>
+that have been adapted and means for integrating that<br>
+identifier into an output stream intended for the<br>
+decoder.<br>
+9.	A method of decoding images, the decoding of a current<br>
+image portion comprising the following steps:<br>
+<br>
+•	receiving a data stream (Φ) comprising a residue<br>
+();<br>
+•	selecting a prediction function in a tunable group<br>
+(64) of usable prediction functions ;<br>
+•	forming a predicted descriptor (P*) of the current<br>
+image portion from at least one other image portion and<br>
+the selected prediction function; and<br>
+•	combining the predicted descriptor and the residue<br>
+to deliver a current descriptor (V*) of the current image<br>
+portion;<br>
+the method being characterized in that it further<br>
+comprises:<br>
+•	analyzing the decoding context; and<br>
+•	adapting at least one parameter of the group of<br>
+usable functions as a function of the analysis of the<br>
+decoding context.<br>
+1.0. A method according to claim 9, characterized in that<br>
+forming the predicted descriptor comprises applying a<br>
+tunable prediction function and adapting comprises<br>
+adapting at least one parameter of the prediction<br>
+function.<br>
+ <br>
+11.	A method according to claim 9 or claim 10,<br>
+characterized in that it comprises receiving an<br>
+identifier (Id) of the prediction function to be used in<br>
+relation to the group of usable functions with parameters<br>
+that have been adapted.<br>
+12.	A computer program adapted to be installed in a video<br>
+processor device, comprising instructions for executing<br>
+the steps of a decoding method according to any one of<br>
+claims 9 to 11 upon execution of the program by a<br>
+calculation unit of said device.<br>
+13.	An image decoder (8) comprising:<br>
+<br>
+•	means (50) for receiving a data stream (Φ)<br>
+containing a residue ();<br>
+•	means (64) for selecting a prediction function in<br>
+a tunable group (64) of usable prediction functions ;<br>
+•	prediction means (60) adapted to form a predicted<br>
+descriptor (p*) of a current image portion from at least<br>
+one other image portion and the selected prediction<br>
+function; and<br>
+•	means (70) for combining the predicted descriptor<br>
+and the residue to deliver a current descriptor (V*) of<br>
+the current image portion;<br>
+the decoder being characterized in that it further<br>
+comprises:<br>
+•	means (82) for analyzing the decoding context; and<br>
+•	means (84) for adapting at least one parameter of<br>
+the group of usable functions as a function of the<br>
+analysis of the decoding context.<br>
+14.	A decoder according to claim 13, characterized in<br>
+that the prediction means comprise a unit for applying at<br>
+least one tunable prediction function and said adaptation<br>
+means adapt at least one parameter of the prediction<br>
+function.<br>
+ <br>
+15. A method of transmitting images, characterized in<br>
+that it comprises, for a current image portion, a coding<br>
+phase comprising the following steps:<br>
+•	determining a current descriptor (V) of the<br>
+current image portion;<br>
+•	analyzing a coding context;<br>
+•	adapting at least one parameter of a tunable group<br>
+of prediction functions that can be used for coding as a<br>
+function of the analysis of the coding context;<br>
+•	selecting a prediction function in the group (24)<br>
+of prediction functions that can be used for coding;<br>
+•	forming a first predicted descriptor (P) of the<br>
+current image portion from at least one other image<br>
+portion and the prediction function selected for coding;<br>
+•	determining a residue () representing the<br>
+difference between the first predicted descriptor and the<br>
+current descriptor; and<br>
+•	integrating the residue into a data stream (Φ) ;<br>
+•	the method further including, for said current<br>
+image portion, a decoding phase comprising the following<br>
+Steps:<br>
+• receiving the data stream (Φ) comprising the<br>
+residue () ;<br>
+•	analyzing the decoding context;<br>
+•	adapting at least one parameter of a tunable group<br>
+of prediction functions that can be used for decoding as<br>
+a function of the analysis of the decoding context;<br>
+•	selecting a prediction function in the group of<br>
+prediction functions that can be used for decoding;<br>
+•	forming a second predicted descriptor (P*) of the<br>
+current image portion from at least one other image<br>
+portion and the prediction function selected for<br>
+decoding; and<br>
+•	combining the second predicted descriptor and the<br>
+received residue to deliver a decoded version of the (<br>
+current descriptor (V*).<br>
+<br>
+The invention relates to a method of transmitting an<br>
+image portion, which method comprises, in a coding phase:<br>
+•	analyzing a coding context;<br>
+•	adapting a parameter of a group of prediction<br>
+functions that can be used for coding;<br>
+•	forming a first predicted descriptor using a<br>
+selected prediction function; and<br>
+•	determining and transmitting a residue () between<br>
+the first predicted descriptor and the current<br>
+descriptor. The method further includes a decoding phase<br>
+comprising:<br>
+•	analyzing a decoding context;<br>
+•	adapting a parameter of a group of prediction<br>
+functions that can be used for decoding;<br>
+•	forming a second predicted descriptor (P*) using a<br>
+selected prediction function; and<br>
+•	combining the second predicted descriptor and the<br>
+received residue to deliver a decoded version of the<br>
+current descriptor (V*).</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=tOTFv5T9XRHQXiJbCpbBgw==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=tOTFv5T9XRHQXiJbCpbBgw==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="272288-power-determining-method-single-sided-multilayer-optical-disk-recording-method-computer-program-product-computer-readable-medium-and-optical-disk-apparatus.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="272290-a-method-for-inter-or-intra-mesh-forwarding-of-a-data-frame.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>272289</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>2747/KOLNP/2008</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>14/2016</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>01-Apr-2016</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>28-Mar-2016</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>08-Jul-2008</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>ORANGE</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>78 RUE OLIVIER DE SERRES, F-75015 PARIS, FRANCE</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>JUNG, JOËL</td>
+											<td>34, RUE DES TAILLANDIERS 78320 LE MESNIL SAINT DENIS</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>BAILLAVOINE, MARC</td>
+											<td>2, RÉSIDENCE DU VAL DE BIÈVRE 78530 BUC</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>LAROCHE, GUILLAUME</td>
+											<td>18, RUE YVART 75015 PARIS</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04N 7/32</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/IB2007/000812</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2007-01-12</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>06 00273</td>
+									<td>2006-01-12</td>
+								    <td>France</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/272289-adaptive-coding-and-decoding by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 22:41:19 GMT -->
+</html>

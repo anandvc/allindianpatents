@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/253494-device-management-scheduling-method-mobile-communications-terminal-and-device by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 12:43:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 253494:DEVICE MANAGEMENT SCHEDULING METHOD, MOBILE COMMUNICATIONS TERMINAL AND DEVICE</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">DEVICE MANAGEMENT SCHEDULING METHOD, MOBILE COMMUNICATIONS TERMINAL AND DEVICE</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A device management system and device management scheduling method thereof, in which a server (100) transmits to a client (200) a scheduling context including a device management command and a schedule for the performing of the device management command, and the client (200) generates a device management tree using the device management scheduling context, performs the command when a specific scheduling condition is satisfied, and, if necessary, reports the command performance result to the server (100), whereby the server performs a device management such as requesting a command to be performed under a specific condition, dynamically varying the scheduling condition, and the like.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>Description<br>
+Technical Field<br>
+[1] The present invention relates to device management and data synchronization<br>
+techniques, and particularly, to a device management system and a device management<br>
+command scheduling method thereof.<br>
+Background Art<br>
+[2] In general, Device Management (DM) techniques relate to performing specific<br>
+processing commands by a client as soon as a particular processing command is received<br>
+from a server.<br>
+[3]	In such a DM technique, a DM server instructs a processing command to a DM<br>
+client, and the DM client immediately performs the corresponding command. Afterwards,<br>
+the DM client performs a report procedure regarding the results in performing those<br>
+commands.<br>
+[4] In addition, the DM server requests the DM client to vary, update, and delete a<br>
+specific function. If the DM client is currently in a state that it cannot perform the request<br>
+from the DM server, a DM session for checking the state (status) of the DM client should<br>
+be periodically generated and/or inquired by the DM server, and the issues and problems<br>
+related thereto should be considered. Therefore, in the related art DM method, procedures<br>
+for allowing the DM server to performs commands of the DM server at a desired time<br>
+point, status, and have not been proposed thus far.<br>
+[5] Additionally, in the related art, because the DM client must immediately perform<br>
+the DM command (sent by the DM server upon opening (starting) a DM session) during<br>
+the DM session, such DM command cannot be performed outside (after) the DM session<br>
+upon considering the internal state of the device or upon occurrence of various events, and<br>
+cannot be performed at particular desired times or situations. These related art restrictions<br>
+not only increased the costs involved in performing state diagnosis procedures for the<br>
+device, but also, effective diagnosis and effective problem solving that could be achieved<br><br>
+by appropriate measures upon detecting problems before they may occur were impossible<br>
+to perform. Also, these related art restrictions always required new DM sessions for<br>
+performing DM commands, and thus, undesirably high device management costs had to be<br>
+tolerated.<br>
+US 5,913,037 may be construed to disclose a method and a terminal according to the<br>
+preambles of claims 1 and 13.<br>
+Disclosure of Invention<br>
+Technical Problem<br>
+[6] Therefore, an object of the present invention is to provide a device management<br>
+system in which a server can dynamically manage a device management scheduling of a<br>
+client, and a device management scheduling method in the system.<br>
+[7] Another object of the present invention is to provide a device management system<br>
+and a device management scheduling method in which a server can establish a device<br>
+management scheduling in a client and vary and delete the established device management<br>
+scheduling.<br>
+[8] Still another object of the present invention is to provide a device management<br>
+system and a device management scheduling method in the system in which a server can<br>
+schedule a device management command or a data synchronization command of a client<br>
+and thus the client can report the status of a device, perform scheduled programs and use<br>
+optimal parameter values.<br>
+Technical Solution<br>
+[9] To achieve these and other advantages and in accordance with the purpose of the<br>
+present invention, as embodied and broadly described herein, there is provided a device<br>
+management scheduling method comprising: delivering a scheduling context from a server<br>
+to a client; generating a device management tree using the delivered scheduling context<br>
+and establishing a device management scheduling by the client; and performing, by the<br><br>
+client, the device management scheduling according to a command performing condition<br>
+(i.e., a condition for performing a command) of the established device management<br>
+scheduling according to claims 1 and 12. Developments are set forth in dependent claims 2<br>
+toll.<br>
+[10]Preferably, the device management scheduling method further comprises: generating<br>
+the device management tree using a new scheduling context delivered from the server, and<br>
+varying the device management scheduling; selectively reporting to the server a<br>
+performance result of the device management scheduling, by the client, according to status<br>
+report gating information within the generated device management tree; and requesting the<br>
+client, by the server, to delete the pre-established device management scheduling.<br>
+[11] Preferably, the step of establishing the device management scheduling includes:<br>
+certifying validity of the delivered scheduling context; and generating at least one or more<br>
+device management scheduling sub-trees using the device management scheduling context<br>
+when the scheduling context is completely certified(see dependent claim 9 in slightly<br>
+amended form).<br>
+[12]Preferably, a device management system comprises: a server for generating and<br>
+transmitting a scheduling context including a device management command and a schedule<br>
+for performing the device management command; and a client for generating a device<br>
+management tree using the transmitted device management scheduling context to thus<br>
+generate a device management scheduling, and performing the device management<br>
+scheduling according to a command performing condition (i.e., a condition for performing<br>
+a command) of the generated device management scheduling.<br>
+[13] Preferably, the server transmits a new scheduling context to the client so as to request<br>
+the client to vary the device management scheduling, and transmits a device management<br>
+delete command to the client so as to request the delete for the pre-installed device<br>
+management scheduling context.<br>
+[14] Preferably, the client selectively reports to the server the performance result of the<br><br>
+device management scheduling according to status report gating information of the device<br>
+management scheduling.<br>
+[15] Preferably, the client includes: a command processing module for generating a device<br>
+management session with the server and thereafter receiving the scheduling context from<br>
+the server; and a scheduling module for generating the device management tree using the<br>
+scheduling context delivered from the command processing module, notifying the<br>
+satisfaction of the command performing condition to the command processing module so<br>
+as to perform the corresponding device management command when the command<br>
+performing condition is satisfied, and receiving a processing result of the device<br>
+management command from the command processing module to thusly selectively report<br>
+it to a DM (Device Management) server.<br>
+[16] Preferably, the command processing module includes: a function unit for delivering<br>
+the scheduling context transmitted from the server to the scheduling module; a function<br>
+unit for performing the corresponding scheduled command according to the notification of<br>
+the scheduling module, and transferring the performance result of the corresponding<br>
+command to the scheduling module; and a function unit for delivering a scheduling context<br>
+status report transferred from the scheduling module to the server on the basis of the<br>
+command performance result.<br>
+[17] Preferably, the scheduling module includes: a first function unit for generating a<br>
+device management scheduling sub-tree using the scheduling context delivered from the<br>
+server; a second function unit for reading a scheduled command performing condition (i.e.,<br>
+a condition performing a command) of the device management scheduling sub-tree and<br>
+thus continuously checking the state that the command performing condition is satisfied; a<br>
+third function unit for requesting the command performing function unit of the command<br>
+scheduling module to perform the device management command when the command<br>
+performing condition is satisfied; a fourth function unit for determining whether the server<br>
+should be reported on the command performance result of the command performing<br>
+function unit according to a gating node value of the device management scheduling sub-<br>
+tree; a fifth function unit for reporting to the server the performance result of the command<br>
+transferred from the fourth function unit or the checked result of the command performing<br><br>
+condition by the second function unit; and a sixth function unit for deleting the pre-<br>
+established device management scheduling sub-tree according to a device management<br>
+scheduling delete command requested from the server.<br>
+[18] Preferably, in the method and the system, the scheduling context includes the device<br>
+management command and scheduling information associated with the performance of the<br>
+command, and has an XML (extensible Markup Language) text format.<br>
+[19] Preferably, in the method and the system, the scheduling context includes: an<br>
+information element for the command performing condition; an information element for<br>
+scheduled device management commands; an information element for a user interface; and<br>
+an information element for the status report gate.<br>
+[20] Preferably, in the method and the system, the device management scheduling sub-tree<br>
+includes: a schedule node; a node for indicating an identifier of the device management<br>
+scheduling context; a node for indicating a performing condition of the scheduled device<br>
+management command; a node for indicating information of the user interface; and a node<br>
+for indicating whether to report the performance result of the command or a node for<br>
+indicating a server address to report the performance result of the command.<br>
+[21] Preferably, in the method and the system, the device denotes user equipment such as<br>
+terminals, PDAs, notebook Personal Computers (PCs), desktop PCs, and the like.<br>
+[22] The foregoing and other objects, features, aspects and advantages of the present<br>
+invention will become more apparent from the following detailed description of the present<br>
+invention when taken in conjunction with the accompanying drawings.<br>
+BRIEF DESCRIPTION OF THE ACCOMPANYING DRAWINGS<br>
+[23] The accompanying drawings, which are included to provide a further understanding of<br>
+the invention and are incorporated in and constitute a part of this specification, illustrate<br><br>
+embodiments of the invention and together with the description serve to explain the<br>
+principles of the invention.<br>
+[24] In the drawings:<br>
+[25] FIG. 1 is a block diagram showing a device management system according to the<br>
+present invention;<br>
+[26] FIG. 2 is a view showing a structure of a command XML (extensible Markup<br>
+Language) document shown in FIG. 1;<br>
+[27] FIG. 3 is a view showing a DTD (Document Type Definition) of the command XML<br>
+document;<br>
+[28] FIG. 4 is a view showing a structure of a scheduling information XML document<br>
+shown in FIG. 1;<br>
+[29] FIG. 5 is a view showing a DTD of the scheduling information XML document;<br>
+[30] FIG. 6 is a view showing an embodiment for a duration Dur element;<br>
+[31] FIG. 7 is a view defining contents of a threshold Th element;<br>
+[32] FIG. 8 is a view defining operators and specific symbols used in the Th element;<br>
+[33] FIG. 9 is a view showing a format of the Th element;<br>
+[34] FIG. 10 is a view showing an embodiment for constructing scheduling META data<br>
+using the Th element;<br><br>
+[35] FIG. 11 is a view showing a construction of a device management system according to<br>
+the present invention shown in FIG. 1 in detail;<br>
+[36] FIG. 12 is a view showing a signal flow in a device management scheduling method<br>
+in a device management system according to the present invention;<br>
+[37] FIG. 13 is a detailed view showing a signal flow in a step of generating and<br>
+performing a DM (Device Management) scheduling in the device management scheduling<br>
+method in the device management system according to the present invention shown in FIG.<br>
+12;<br>
+[38] FIG. 14 is a detailed view showing a signal flow in a step of varying the DM<br>
+scheduling in the device management scheduling method in the device management<br>
+system according to the present invention shown in FIG. 12; and<br>
+[39] FIG. 15 is a detailed signal flow view in a step of deleting the DM scheduling in the<br>
+device management scheduling method in the device management system according to the<br>
+present invention shown in FIG. 12.<br>
+DETAILED DESCRIPTION OF THE INVENTION<br>
+[40] Reference will now be made in detail to some preferred embodiments of the present<br>
+invention, examples of which are illustrated in the accompanying drawings.<br>
+[41] The present invention provides a device management system in which a server can<br>
+dynamically manage a device management scheduling of a client for device management<br>
+or data synchronization, and a device management scheduling method in the corresponding<br>
+system.<br>
+[42] In addition, the present invention provides a device management system in which a<br>
+server schedules a device management or a device management command of a client, and<br>
+accordingly the client spontaneously reports the status of a device (e.g., a terminal),<br><br>
+performs scheduled programs (diagnostic programs, status logging programs, virus<br>
+detecting programs, and the like), and uses optimal parameter values according to the<br>
+change of a usage environment at or in a specific time point or status, and a device<br>
+management scheduling method in the corresponding system.<br>
+[43] For this, in the device management system and the device management scheduling<br>
+method thereof, the server transmits a Device Management (DM) scheduling context<br>
+including a DM command and a scheduling information to a client of a target device, and<br>
+the client generates a DM tree (i.e., a type of information management hierarchy or<br>
+structure with multiple levels or branches that resemble a "tree") using the DM scheduling<br>
+context and thereafter performs the corresponding DM command according to a command<br>
+performing condition (i.e., a condition for performing a command). Preferably, the target<br>
+device refers to user equipment (UE) such as terminals, PDAs, notebook Personal<br>
+Computers (PCs) and desktop PCs, and the like, of which explanation will be provided<br>
+only for the terminals merely for the sake of convenience. Hereinafter, some preferred<br>
+embodiments of the present invention will now be described in detail.<br>
+[44] FIG. 1 is a block diagram showing a device management system according to the<br>
+present invention.<br>
+[45] As shown in FIG. 1, the device management system according to the present invention<br>
+includes: a Device Management (DM) server 100 for generating a DM scheduling context<br>
+and transmitting such to a device (e.g., a terminal); and a DM client 200 for generating a<br>
+DM tree in the terminal using the scheduling context transmitted from the DM server 100<br>
+and performing a corresponding DM command when a command performing condition<br>
+(i.e., a condition for performing a command) is satisfied.<br>
+[46] The DM client 200 includes: a command processing module 20 for receiving the<br>
+scheduling context from the DM server 100; a scheduling module 30 for generating a DM<br>
+tree 40 using the scheduling context transmitted from the command processing module 20,<br>
+notifying the satisfaction of the command performing condition to the command<br>
+processing module 20 in order to perform a corresponding DM command when the<br>
+command performing condition is satisfied, and receiving a processing result of the DM<br><br>
+command from the command processing module 20 to thereby selectively report it to the<br>
+DM server.<br>
+[47] The DM scheduling context includes the DM command and a schedule associated<br>
+with the performance of the DM command, for instance, an information element Condition<br>
+for the command performing condition, an information element Commands for the<br>
+scheduled DM commands, an information element 'Userlntef for a user interface, an<br>
+information element for a status report gating, and the like.<br>
+[48] FIG. 1 shows an example for the DM tree generated by the DM client.<br>
+[49] Referring to FIG. 1, the DM tree 40 includes at least one or more MD scheduling sub-<br>
+trees 41, each of which includes a plurality of scheduling nodes, namely, a schedule node<br>
+Schedl, a SchedID node, a Condition node, a Commands node, a Userlnter node, Gating<br>
+node, and the like.<br>
+[50] The schedule node Sche_l indicates each device management scheduling (Sched_l,..<br>
+. ), and connects the Commands node and the Condition node to each other. Especially, the<br>
+schedule node Sched_l is used as a "placeholder' (i.e., a position basis node). The<br>
+Condition node indicates a condition that the DM command is to be performed. The<br>
+Commands node indicates scheduled DM commands to be performed by the DM client<br>
+when the command performing condition is satisfied (i.e., at a specific time point or<br>
+status). Also, the Userlnter node indicates whether user confirmation should be received<br>
+regarding the performing of the corresponding command when the command performing<br>
+condition is satisfied. The Gating node indicates whether to notify the performance result<br>
+of the DM command to the DM server 100. In addition, the DM scheduling sub-tree 41<br>
+may further selectively (optionally) include a DM server Mgmtsvr node. Preferably, the<br>
+Mgmtsvr node stores a server address to report the performance result of the DM<br>
+command. For instance, if the processing result is to be reported to another server other<br>
+than the corresponding DM server, or the DM server to which the processing result is to be<br>
+reported is varied according to each processing result, the Mgmtsvr node includes ACL<br>
+(Access Control List) information indicating a server having a management authority for<br>
+each node.<br><br>
+[51] The DM tree 40 denotes a logical data structure in which the DM server can remotely<br>
+manage information stored in a common database 50 within the device by a DM session<br>
+and DM protocols which are the same with respect to all different types of devices. The<br>
+DM tree 40 provides names for each information stored in the common database 50 and<br>
+provides a path for accessing each information. The DM tree 40 includes properties such as<br>
+the logical and physical formats of the information, or the like.<br>
+[52] The common database 50 in which various information that the DM server 100 can<br>
+manage is stored, is used to store an actual value of each node within the DM scheduling<br>
+sub-tree 41. In particular, the Commands node and the Condition node correspond to one<br>
+command XML (extensible Markup Language) document and a scheduling XML<br>
+document, respectively.<br>
+[53] The command XML document includes DM commands to be processed by the DM<br>
+client at and/or in the time point and the status that the scheduling condition is satisfied.<br>
+Each command language is composed of commands defined by the DM protocols.<br>
+[54] FIG. 2 shows a construction of the command XML document, and FIG. 3 shows a<br>
+Document Type Definition (DTD) of the command XML document. As shown in FIGS. 2<br>
+and 3, a root element of the command XML document refers to a Command element. A<br>
+command language element defined in a corresponding DM protocol is included in<br>
+contents of the Command element.<br>
+[55] When the DM scheduling sub-tree 41 is constructed, the DM client 200 receives the<br>
+DM commands from the DM server 100 and stores them in the common database 50.<br>
+Thereafter, the DM commands can be varied or deleted in another DM session.<br>
+[56] The scheduling XML document includes scheduling information which describes a<br>
+condition in which the DM commands included in the command XML document are to be<br>
+performed. FIG. 4 shows a construction of the scheduling information XML document, and<br>
+FIG. 5 is a DTD of the scheduling information XML document.<br><br>
+[57] Referring to FIGS. 4 and 5, the scheduling XML document is one valid XML<br>
+document in which a <sched> element is the root element. Each information element<br>
+describes the scheduling conditions. When the DM scheduling sub-tree 41 is constructed,<br>
+the DM client 200 receives the scheduling information from the DM server 100 and stores<br>
+it in the common database 50. Afterwards, the scheduling information can be varied or<br>
+deleted in another DM session.<br>
+[58] The scheduling Sched element, as the root element of a scheduling information XML<br>
+document, is composed of one or several simple scheduling SimpSched elements. The<br>
+Sched element defines a trigger. In general, the Sched element corresponds to the sum of<br>
+triggers that the SimpSched elements define. The trigger informs the DM client that the<br>
+time point or condition, at/in which the DM commands included in the command XML<br>
+document are to be performed, is satisfied.<br>
+[59] The SimpSched element defines one simple scheduling specification and one or<br>
+several triggers. A definitive scheduling specification is defined by putting several simple<br>
+scheduling specifications together. The definitive scheduling specification is defined by the<br>
+Sched element. The SimpSched element is composed of unit scheduling specifications<br>
+defined by one or more of duration Dur, period Per and threshold Th elements. An<br>
+interrelation for assigning a condition, in which the trigger generated from each element is<br>
+to be delivered to the DM client, is formed between the unit scheduling specifications. That<br>
+is, if a logical value of a particular unit element is 'false', a trigger generated from another<br>
+unit element can never be delivered to the DM client.<br>
+[60] The Dur element is a unit scheduling specification for designating a time period or a<br>
+specific time point. The time period defines both a logical value and a trigger at the same<br>
+time, and the specific time point only defines a trigger.<br>
+[61] FIG. 6 is an embodiment of the duration Dur element.<br>
+[62] Referring to FIG. 6, a content of the duration element, as a clear-text based on a<br>
+special syntax to be described below, configures a starting point and an end point of the<br><br>
+time range by using a special operator ' . . . '. The duration element is represented with<br>
+data and time. When both the data and time are used together, the data is positioned prior<br>
+to the time and the data and time are divided by 'T'. For instance, Jul. 26, 2004, 23 hours<br>
+59 minutes 59 seconds is expressed as "2004-07-26T23:59:59". In addition, a minimum<br>
+unit of the duration element is limited to 10 seconds, and '*', "im", and '.about.', define<br>
+'every hour', 'immediately', and 'continuously', respectively in sequence. At this time, the<br>
+'.about.' may be used with the 'im'.<br>
+[63] The period Per element, as a unit scheduling element for defining a time period, is<br>
+used together with another unit scheduling element, and periodically generates sequential<br>
+triggers while the condition is 'true'.<br>
+[64] The Per element defines a period by a second unit, and refers to a numerical text<br>
+represented by using an integer or a real number without any symbol. The Per element<br>
+cannot be used independently in the SimpSched element. The trigger cannot be generated<br>
+in the Per element while an associated condition is 'false', but be generated repeatedly<br>
+when the condition is changed from 'false' into 'true' for the first time and while the<br>
+condition maintains 'true' depending on the period defined by the Per element.<br>
+[65] The threshold Th element, as a unit scheduling element for defining a value range, can<br>
+define two different types of ranges and a specific value in which the trigger is generated.<br>
+The Th element can be used together with other unit scheduling elements, such as another<br>
+Th element, the Dur element, or the Per element. The Th element has an attribute value<br>
+'Hyst', and indicates a hysteresis value for a specific threshold. The Th element also has an<br>
+attribute value 'MgmtObj' and a URI (Uniform Resource Indicator) of a management<br>
+object associated with the Th element. Contents of the threshold element are a plain text<br>
+string composed on the basis of a specific syntax to be described below.<br>
+[66] FIG. 7 is a view defining contents of a threshold (Th) element, which is described on<br>
+the basis of an ABNF (Augmented Backus-Naur Form) defined by RFC2234.<br><br>
+[67] As shown in FIG. 7, the contents of the Th element are a plain text string composed of<br>
+management object values, special symbols, and operators. Priorities of the operators are<br>
+the same as the order enumerated in FIG. 8.<br>
+[68] The contents of the Th element are represented as "ThContent" composed of more<br>
+than one "ThContentltem" which is divided by an "IS" operator. At this time, the<br>
+"ThContentltem" defines one of "ThGroup", "ThRange", and "EventRange".<br>
+[69] The ThGroup defines one or more triggers which are represented by a combination<br>
+between "Threshold' and 'Delta' or a combination between "TW(*)" and "ThExc". The<br>
+trigger, which is an indicator for informing a client that an associated command should be<br>
+processed, can be generated from the Th element, the Dur element and the Per element. At<br>
+this time, the trigger generated from a trigger element is related to a change of the<br>
+associated management object value.<br>
+[70] The "Threshold' defines a threshold defined as a certain value of the associated<br>
+management object, and is used when defining a boundary value, a trigger, and delta of a<br>
+threshold range.<br>
+[71] The 'TW' which defines a special symbol referred to as a threshold wildcard<br>
+represents all the management object values. At this time, the trigger is generated<br>
+according to the change of the management object value, but the threshold wildcard does<br>
+not define the condition.<br>
+[72] The "ThExc" defines a threshold excluded from another threshold group, and is<br>
+generally used together with the threshold wildcard.<br>
+[73] The "Delta" is composed of one or more thresholds, each of which represents each<br>
+delta. At this time, a boundary value of the event range is represented by event elements<br>
+which indicate an event start and an event end. When the event start of the event range<br>
+occurs, a logical value of the condition indicated by the "EventRange" element is "true".<br>
+When the event end of the event range occurs, the logical value of the condition is "false".<br>
+The "Event" denotes an event that a management object value has a specific value or falls<br><br>
+within a certain range. Therefore, the threshold, the threshold group, and the threshold<br>
+range may be used in order to represent the "Event'. For instance, an event in which the<br>
+management object value has a specific value or falls within a range of a default value can<br>
+be the "Event". One or both sides of the event range can be opened, and the range of which<br>
+both sides are opened is referred to as an event range wildcard.<br>
+[74] The "ThRange", which defines the threshold range, is used for defining a condition<br>
+and for generating a trigger. A certain side of the threshold range can be opened. A special<br>
+range of which both sides are opened is referred to as a threshold range wildcard. The<br>
+threshold range wildcard cannot be used independently, but be useful when using it<br>
+together with "ThRangeExc". A trigger is generated when a logical value of the condition<br>
+defined by the threshold range is changed into "true" for the first time. Afterwards,<br>
+whenever the logical value of the condition is changed, the trigger is also generated.<br>
+[75] The "ThRangeExc" element is composed of more than one TREP so as to represent an<br>
+exclusion from a specific threshold range. At this time, the TREP is a component only used<br>
+in the "ThRangeExc".<br>
+[76] The "EventRange" element, which indicates an event range, can define a condition and<br>
+a trigger as the "ThRange". At this time, a boundary value of the event range is represented<br>
+by event elements which indicate an event start and an event end. When the event start of<br>
+the event range occurs, a logical value of the condition indicated by the "EventRange"<br>
+element is "true". When the event end of the event range occurs, the logical value of the<br>
+condition is "false". The event denotes an event that a management object value has a<br>
+specific value or falls within a certain range. Therefore, the threshold, the threshold group,<br>
+and the threshold range may be used in order to represent the event. For instance, an event<br>
+in which the management object value has a specific value or falls within a range of a<br>
+default value can be the event. One or both sides of the event range can be opened, and the<br>
+range of which both sides are opened is referred to as an event range wildcard.<br>
+[77] FIG. 8 shows definitions of operators and special symbols used in the Th element,<br>
+FIG. 9 shows properties of the Th element, and FIG. 10 shows an embodiment for<br>
+constructing a DM scheduling context using the Th element.<br><br>
+[78] The embodiment shown in FIG. 10 indicates a DM scheduling context for 'Get,<br>
+which instructs to process the command "Get of a node value when it is equal to 1200,<br>
+1400, . . . , 3000, or every 60 seconds while the value falls between 1800 and 3000.<br>
+[79] FIG. 11 is a view showing a construction of the DM system shown in FIG. 1 in detail.<br>
+[80] As shown in the drawing, the DM server 100 and the DM client 200 (scheduling<br>
+module and command processing module) include a plurality of function units required for<br>
+performing such scheduling generating/establishing, DM scheduling performing, DM<br>
+scheduling varying/deleting, DM scheduling status reporting, and the like.<br>
+[81] A scheduling context generating/varying function unit 10 provided in the DM server<br>
+100 generates the DM scheduling context, and requests the command processing module<br>
+20 of the DM client 200 to install or vary the DM scheduling context.<br>
+[82] A scheduling context installing/reconstructing function unit 31 generates a DM<br>
+scheduling sub-tree to thusly generate a DM tree, when the DM server 100 requests to<br>
+install/vary the scheduling context through a request transferring function unit 21 of the<br>
+command processing module 20. The scheduling context installing/reconstructing function<br>
+unit 31 may receive user confirmation, if required, before installing the scheduling context.<br>
+[83] A command performing condition confirming function unit 32 confirms the scheduled<br>
+command performing condition within the DM scheduling sub-tree, and continuously<br>
+checks the state that the command performing condition is satisfied. For instance, whether<br>
+the command performing condition is satisfied can be determined when another<br>
+management object value existing on the DM tree corresponds to a designated threshold<br>
+value, or in a specific time point, or according to whether a specific event has occurred in<br>
+the device. When the command performing condition is satisfied, the command performing<br>
+condition confirming function unit 32 performs the user confirmation process, if required,<br>
+according to information of the user interface Userlnter within the DM scheduling sub-<br>
+tree.<br><br>
+[84] When the command performing condition is satisfied in the command performing<br>
+condition confirming function unit 32 or a user permits a DM operation, a DM command<br>
+performing function unit 33 requests a command performing function unit 22 of the<br>
+command processing module 20 to perform the DM command.<br>
+[85] The command performing function unit 22 performs the scheduled DM commands<br>
+within the DM scheduling sub-tree according to the request for the DM command<br>
+performing from the command performing condition confirming function unit 32. The<br>
+command performing function unit 22 transfers a command performance result<br>
+(status/result/generic alert) to the scheduling module 30 by a response message. The<br>
+response message, for instance, includes command performance result codes with respect<br>
+to that the commands have completely been performed, by which reason an error has<br>
+occurred, how the device status is after performing the commands, or the like.<br>
+[86] A status report gating function unit 34 filters data to be reported to the DM server 100.<br>
+The status report gating function unit 34 determines whether the command performance<br>
+result (status/result/generic alert) transferred from the command performing function unit<br>
+22 should be reported to the DM server 100.<br>
+[87] A scheduling context status reporting function unit 35 reports to the DM server the<br>
+command performance result (status/result/generic alert) transferred from the status report<br>
+gating function unit 34, and may report to another server the command performance result<br>
+using an ACL information of the Mgmtsvr node. The scheduling context status reporting<br>
+function unit 35 transmits a status report PDU (Protocol Data Unit) using a particular<br>
+protocol (e.g., a generic alert), thereby performing the process for the DM scheduling<br>
+context status reporting.<br>
+[88] Preferably, the status report PDU basically includes PDUs (status PDU, result PDU,<br>
+and generic alert PDU) for transmitting a status command language, a result command<br>
+language, and a generic alert command language, and a termination request PDU for the<br>
+DM scheduling context which a user is performing.<br><br>
+[89] The command performing condition confirming function unit 32 and the DM<br>
+command performing function unit 33 of the scheduling module 30 may be integrated in<br>
+one function unit if necessary. The status report gating function unit 34 can also be<br>
+integrated with the scheduling context status reporting function unit 35 if necessary<br>
+(indicated by a dotted line).<br>
+[90] Explanations will now be provided for functions of performing/varying/deleting the<br>
+DM scheduling and of reporting the DM scheduling status in more detail with reference to<br>
+the accompanying drawings. In this case, a DM session is established between the DM<br>
+server 100 and the DM client 200. While the session is established, an authentication<br>
+process between the DM server 100 and the DM client 200 is performed.<br>
+[91] Function of Establishing DM Scheduling<br>
+[92] Establishing the DM scheduling is requested by generating a Device Management<br>
+(DM) scheduling context, connecting a DM session, and transferring the DM scheduling<br>
+context to a device (e.g., a terminal) through a DM protocol.<br>
+[93] That is, as shown in FIGS. 11 and 12, the scheduling context generating/varying<br>
+function unit 10 of the DM server 100 generates a DM command and a scheduling context<br>
+including a schedule with respect to a performing of the DM command. The scheduling<br>
+context generating/varying function unit 10 transfers the generated scheduling context to<br>
+the device (e.g., the terminal) through the DM protocol. Here, the scheduling context<br>
+generating/varying function unit 10 adds the DM commands using an ADD command, and<br>
+makes all the DM commands to be scheduled one group using an automatic command. As<br>
+a result, the scheduling context generating/varying function unit 10 allows the device (e.g.,<br>
+the terminal) to process the one group of DM commands all together. Also, the scheduling<br>
+context generating/varying function unit 10 further includes a UI alert command in the<br>
+automatic command, so as to receive the user confirmation before the device installs the<br>
+corresponding scheduling context.<br>
+[94] The scheduling context having transmitted from the DM server 100 to the DM client<br>
+200 is transferred to the scheduling context installing/reconstructing function unit 31 of the<br><br>
+scheduling module 30 by the request transferring function unit 21 of the command<br>
+processing module 20 (S11).<br>
+[95] After receiving the user confirmation according to the UI alert command, the<br>
+scheduling context installing/reconstructing function unit 31 generates the DM tree 40<br>
+using the DM scheduling context, thereby installing the DM scheduling context. The DM<br>
+scheduling context, as shown in FIG. 1, is installed by generating the DM scheduling sub-<br>
+tree 41 having at least one or more scheduling nodes (=DM objects) on the DM tree 40.<br>
+When the DM tree is formed, actual values of a plurality of the scheduling nodes are stored<br>
+in the common database 50. In particular, the Condition node value and the Commands<br>
+node value having a valid XML document format are stored, respectively, in a command<br>
+XML document and a scheduling information XML document.<br>
+[96] Furthermore, when the DM scheduling sub-tree 41 is generated, the scheduling<br>
+context installing/reconstructing function unit 31 certifies whether syntax and context of<br>
+the XML document of the DM scheduling context transmitted are correct, and whether the<br>
+DM scheduling context can be installed (e.g., an access authority of a server, capability of<br>
+a client, etc). Afterwards, the scheduling context installing/reconstructing function unit 31<br>
+notifies the DM server 100 of the installation result with respect to the request for<br>
+installing the DM scheduling context (indicated as a dotted line).<br>
+[97] Function of Performing DM Scheduling<br>
+[98] After successfully certifying the XML document and thus generating the DM tree 40,<br>
+namely, one DM scheduling sub-tree 41, the DM client 200 analyzes the scheduling<br>
+information XML document of the database 50 to perform a scheduling process. That is,<br>
+when the one DM scheduling sub-tree 41 is generated, the command performing condition<br>
+confirming function unit 32 reads information of the DM command performing condition<br>
+of the DM scheduling context from the scheduling information XML document by a<br>
+constant period (Interval property of Th element), and then continuously checks the state<br>
+that the DM command performing condition is satisfied (S12). Whether the command<br>
+performing condition is satisfied, for instance, can be determined when another<br>
+management object value existing on the DM tree reaches a designated threshold value, or<br><br>
+at a specific time point, or according to whether a specific event has occurred in the device.<br>
+[99] When the command performing condition is satisfied, if the user confirmation should<br>
+be received according to the information of the user interface Userlnter within the DM<br>
+scheduling sub-tree 41, the user confirmation process is performed. In the user<br>
+confirmation process, a guide (i.e., notice, information, etc) related to performing the DM<br>
+commands is provided on the screen, and accordingly the user can permit or cancel the<br>
+performing of the DM commands. If the user cancels the DM command performing, the<br>
+command performing condition confirming function unit 32 does not perform the<br>
+scheduled DM commands but performs the process for confirming the command<br>
+performing condition once again.<br>
+[100] If the command performing condition is satisfied in the command performing<br>
+condition confirming function unit 32, or the user permits the DM operation (S13), the DM<br>
+command performing function unit 33 requests the command performing function unit 22<br>
+of the command processing module 20 to perform the DM commands (S14). The<br>
+command performing function unit 22 performs the DM commands scheduled within the<br>
+DM scheduling sub-tree 41 according to the request from the DM command performing<br>
+function unit 33, and transfers the command performance result (status/result/generic alert)<br>
+to the status report gating function unit 34 by using a response message (S15).<br>
+[101] The status report gating function unit 34 determines whether the command<br>
+performance result (status/result/generic alert) is to be reported to the DM server 100<br>
+according to a gating node value of the DM scheduling sub-tree 41 (SI6).<br>
+[102] The status report gating function unit 34 provides a part of the DM command<br>
+performance result to the scheduling context status reporting function unit 35 according to<br>
+the gating node value (S17). The scheduling context status reporting function unit 35<br>
+reports the corresponding command performance result to the status report processing<br>
+function unit 11 of the DM server 100 by the status report transferring function unit 23 of<br>
+the command processing module 20 (S18 and S19). At this time, the scheduling context<br>
+status reporting function unit 35 transmits a PDU (Protocol Data Unit) using a particular<br>
+protocol (e.g., a generic alert) and performs the process for reporting the DM scheduling<br><br>
+context status. The status report PDU basically includes PDUs (status PDU, result PDU,<br>
+and generic alert PDU) for transmitting a status command language, a result command<br>
+language,	and	a	generic	alert	command	language.<br>
+[103] That is, as shown in FIG. 13, the DM server 100 transfers the Dm scheduling context<br>
+to the DM client 200 and requests the DM client 200 to generate the DM scheduling (S50).<br>
+The DM client 200 having requested for generating the DM scheduling certifies the<br>
+corresponding command (request), and generates the DM scheduling sub-tree using the<br>
+DM scheduling context, of which result is then transmitted to the DM server 100 by the<br>
+DM client 200 (S51 and S52). Afterwards, the DM client 200 checks the command<br>
+performing condition of the DM scheduling sub-tree (S53). When the corresponding<br>
+condition is satisfied, the DM client 200 processes the scheduled DM commands (S54),<br>
+and selectively reports the processing result to the DM server 100 (S55).<br>
+[104] Function of Varying DM Scheduling<br>
+[105] As the DM server 100 varies the DM scheduling context which has already been<br>
+installed and transfers the varied DM scheduling context through a DM protocol, varying<br>
+the DM scheduling is requested (a process for transferring the DM scheduling context). Its<br>
+signal flow is the same as that in the performing of the DM scheduling aforementioned. In<br>
+this case, because the DM scheduling sub-tree already exists within the device, a Replace<br>
+command can generally be used. When the process for transferring the DM scheduling<br>
+context is performed, the DM server allows the DM client to manage all the scheduled DM<br>
+commands by a group by transmitting the automatic command. In addition, when the<br>
+process for transferring the DM scheduling context is performed, the user confirmation<br>
+should be received before performing the process for varying the DM scheduling context<br>
+by including the UI alert command in the automatic command. After receiving the user<br>
+confirmation, the DM scheduling context installing/reconstructing function unit 31 of the<br>
+DM client 100 reconstructs the DM scheduling context within the device.<br>
+[106] That is, the DM scheduling context installing/reconstructing function unit 31<br>
+generates a new DM scheduling sub-tree within the DM tree 40 using the new DM<br>
+scheduling context having transferred, and notifies the DM server 100 of the processing<br><br>
+result of the request for varying the DM scheduling context (indicated by a dotted line).<br>
+[107] In other words, as shown in FIG. 14, the DM server 100 transfers the new DM<br>
+scheduling context to the DM client 200 and requests the DM client 200 to vary the DM<br>
+scheduling (S60). The DM client 200 having requested for varying the DM scheduling<br>
+certifies the corresponding command (request), and varies the DM scheduling sub-tree<br>
+using the new DM scheduling context, of which result is then transmitted to the DM server<br>
+100 (S61 and S62).<br>
+[108] Function of Deleting DM Scheduling<br>
+[109] Deleting the DM scheduling refers to deleting the DM tree which has already been<br>
+generated, namely, the DM scheduling sub-tree 41 within the DM tree 40 by the DM server<br>
+100. The request for deleting the DM scheduling context is transferred from a scheduling<br>
+context delete requesting function unit 12 of the DM server 100 to a scheduling context<br>
+deleting function unit 36 of the DM client 200 (S20). At this time, the scheduling context<br>
+delete requesting function unit 12 transmits to the scheduling context deleting function unit<br>
+36 a Delete DM command using a URI of the DM scheduling sub-tree 41 to be deleted.<br>
+Therefore, the scheduling context deleting function unit 36 deletes the corresponding DM<br>
+scheduling sub-tree 41. As a result, the scheduling context deleting function unit 36 deletes<br>
+the DM scheduling context that has been installed, of which result is notified to the<br>
+scheduling context delete requesting function unit 12 (S21).<br>
+[110] That is, as shown in FIG. 15, the DM server 100 transfers the Delete DM command<br>
+to the DM client 200 and requests the DM client 200 to delete the DM scheduling (S70).<br>
+The DM client 200 having requested for deleting the DM scheduling certifies the<br>
+corresponding command (request) and varies the existing DM scheduling sub-tree, of<br>
+which result is then transmitted to the DM server 100 (S71 and S72).<br>
+[111] Function of Reporting DM Scheduling Status<br>
+[112] The explanations have been provided for the case that the DM scheduling status<br>
+report is performed by the status report gating, namely, the case that the command<br><br>
+processing result is reported to the DM server 100. However, the DM scheduling status<br>
+report can be performed when an error may occur while performing the process for<br>
+confirming the command performing condition or when a user requests a termination of<br>
+the scheduling context while the user performs the confirming process. In these cases, the<br>
+scheduling context status reporting function unit 35 transmits the DM scheduling context<br>
+status report PDUs to the DM server 100. The status report processing function unit 11 of<br>
+the DM server 100 having received the control PDUs performs the DM scheduling context<br>
+status report processing.<br>
+[113] As aforementioned, in the present invention, the server transmits the DM<br>
+command and the DM scheduling context including the scheduling information to the<br>
+client within the device, and the client installs the DM scheduling context to thereafter<br>
+perform the corresponding DM command according to the scheduling condition. As a<br>
+result, it is effective for the server to dynamically manage the DM schedule of the client.<br>
+[114] That is, in the related art, in order for the server to confirm a certain state of the<br>
+terminal, the DM session should be generated and the status of the terminal should be<br>
+questioned, periodically. This method has required great communication resources but no<br>
+particular effect has been obtained. As a result, it causes waste of communication resources<br>
+and shortening of battery using time. Therefore, as shown in the present invention, when<br>
+the terminal is under a specific situation, the status of the terminal is reported to the server<br>
+to thereby solve such problems.<br>
+[115] In addition, many programs, for instance, diagnostic programs, status logging<br>
+programs, virus detecting programs, and the like, may be installed or exist in the terminal.<br>
+In case of utilizing the present invention, the DM server can perform the scheduling so that<br>
+the programs can be performed at/in a desired time point or state. Once the performing of<br>
+the program is scheduled, the server does not have to individually establish the DM session<br>
+in order to perform the program every time, which leads to reduction of radio resource<br>
+consumption. These advantages can be useful in a situation that a communication channel<br>
+cannot be connected between the DM client and the DM server.<br><br>
+[116] Furthermore, various parameters for operating the terminal correctly exist in the<br>
+terminal. These parameters are determined as values by which the terminal can obtain an<br>
+optimal performance. However, if the usage environment is changed while the terminal is<br>
+used, the optimal parameter values may be changed according to the change. Therefore, by<br>
+utilizing the present invention, the server detects the environment of the terminal to thusly<br>
+perform the scheduling in order to use the optimal parameter values according to the<br>
+detection. This adjustment for the parameter values can be performed in real time without<br>
+any separate DM session, thereby providing user satisfaction and superior performance.<br>
+[117] As the present invention may be embodied in several forms without departing<br>
+from the spirit or essential characteristics thereof, it should also be understood that the<br>
+above-described embodiments are not limited by any of the details of the foregoing<br>
+description, unless otherwise specified, but rather should be construed broadly within the<br>
+scope as defined in the appended claims, and therefore all changes and modifications that<br>
+fall within that scope are to be embraced by the appended claims.<br><br>
+WE CLAIM:<br>
+1.	A device management scheduling method in a terminal (200) that performs a<br>
+device management with a server (100), the method comprising:<br>
+receiving (S10) a schedule for device management from the server via a device<br>
+management session using device management protocols, wherein the schedule comprises<br>
+a device management task and a trigger for performing a device management task;<br>
+characterized by:<br>
+installing (S11) the received schedule into device management objects;<br>
+performing (S14) the device management task in response to the trigger in the<br>
+schedule without receiving a device management command from the server; and<br>
+reporting (S18, S19) a result of performing the device management task to the<br>
+server according to a gating node in the device management objects,<br>
+wherein the gating node indicates (S16) whether the result of performing the device<br>
+management task is to be reported to the server.<br>
+2.	The method as claimed in claim 1, comprising installing (S61) a new schedule<br>
+from the server.<br>
+3.	The method as claimed in claim 1, comprising receiving (S70) a request to delete<br>
+the schedule from the server.<br>
+4.	The method as claimed in claim 1, wherein the schedule complies with an<br>
+extensible Markup Language, XML, document format.<br>
+5.	The method as claimed in claim 1, wherein the schedule is received together with<br>
+one or more of an add command, an automatic command, and a UI, User Interface, alert<br>
+command.<br>
+6.	The method as claimed in claim 1, wherein the schedule comprises one or more of:<br>
+a node for the trigger for performing the device management task;<br>
+a node for the device management task; and<br>
+a node for a user interaction.<br><br>
+7.	The method as claimed in claim 6, wherein each of the nodes has one or more<br>
+elements.<br>
+8.	The method as claimed in claim 7, wherein the node for the trigger comprises one<br>
+or more of:<br>
+a duration element for defining a specific time value or time range;<br>
+a period element for defining the time period; and<br>
+a threshold element for defining a threshold value.<br>
+9.	The method as claimed in claim 1, wherein installing the schedule comprises:<br>
+checking validity of the received schedule; and<br>
+generating at least one sub-tree in a device managements tree using the<br>
+corresponding schedule.<br>
+10.	The method as claimed in claim 1, wherein the schedule comprises one or more of:<br>
+an ID node;<br>
+a trigger node;<br>
+a task node; and<br>
+a user interaction node.<br>
+11.	The method as claimed in claim 1, wherein performing the device management<br>
+scheduling comprises:<br>
+checking (S12) whether the trigger is satisfied;<br>
+performing user confirmation according to information of a user interface when the<br>
+trigger is satisfied; and<br>
+performing the device management task when the user confirmation is received.<br>
+12.	A device management scheduling method in a terminal that performs a device<br>
+management with a server, the method comprising:<br>
+installing a schedule for the device management into device management objects,<br>
+wherein the schedule is received from the server via a device management session using<br>
+device management protocols;<br><br>
+performing a device management task according to a trigger included in the<br>
+schedule, wherein the device management task is performed in response to the trigger and<br>
+without receiving a device management command from the server; and<br>
+reporting a result of performing a device management task to the server according<br>
+to a gating node in the device management objects,<br>
+wherein the gating node indicates whether the result of performing the device<br>
+management task is to be reported to the server, and<br>
+wherein the device management objects have an access control list comprising an<br>
+identifier of the server that owns the schedule and the schedule includes the device<br>
+management task and the trigger for performing the device management task.<br>
+13.	A mobile communications terminal comprising:<br>
+a device management, DM, client (20) configured to establish a device<br>
+management session with a server using DM protocols, and to receive a schedule for<br>
+device management from the server,<br>
+characterized in that<br>
+the DM client is configured to install the schedule received from the server into<br>
+device management objects and to report a result of performing a device management task<br>
+to the server according to a gating node in the device management objects,<br>
+wherein the gating node is configured to indicate whether the result of performing<br>
+the device management task is to be reported to the server, and<br>
+wherein the schedule includes the device management task and a trigger configured<br>
+to perform the device management task, wherein the device management task is performed<br>
+in response to the trigger and without receiving a device management command from the<br>
+server; and<br>
+the terminal comprises a DM scheduling agent (30) configured to perform the<br>
+device management task if the trigger is satisfied.<br>
+14.	The terminal as claimed in claim 13, wherein the DM scheduling agent is<br>
+configured to perform a user confirmation process, if required, according to information of<br>
+a user interaction of the device management objects.<br><br>
+15. The terminal as claimed in claim 13, wherein the DM scheduling agent is<br>
+configured to report the result of performing the device management task to another server<br>
+using information of a device management server node of the device management objects.<br><br><br>
+ABSTRACT<br><br>
+DEVICE MANAGEMENT SCHEDULING METHOD,<br>
+MOBILE COMMUNICATIONS TERMINAL AND DEVICE<br>
+A device management system and device management scheduling method thereof,<br>
+in which a server (100) transmits to a client (200) a scheduling context including a device<br>
+management command and a schedule for the performing of the device management<br>
+command, and the client (200) generates a device management tree using the device<br>
+management scheduling context, performs the command when a specific scheduling<br>
+condition is satisfied, and, if necessary, reports the command performance result to the<br>
+server (100), whereby the server performs a device management such as requesting a<br>
+command to be performed under a specific condition, dynamically varying the scheduling<br>
+condition, and the like.</sched></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBhYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBjbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBjb3JyZXNwb25kZW5jZSBvdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 correspondence others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBkZXNjcmlwdGlvbihjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBkcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBmb3JtLTEucGRm" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBmb3JtLTMucGRm" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBmb3JtLTUucGRm" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBncGEucGRm" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBpbnRlcm5hdGlvbmFsIHB1YmxpY2F0aW9uLnBkZg==" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 international publication.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBpbnRlcm5hdGlvbmFsIHNlYXJjaCBhdXRob3JpdHkgcmVwb3J0LnBkZg==" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 international search authority report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBwY3Qgb3RoZXJzIGZvcm0ucGRm" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 pct others form.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBwY3QgcmVxdWVzdC5wZGY=" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 pct request.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNiBwcmlvcml0eSBkb2N1bWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006 priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNi1hc3NpZ25tZW50LnBkZg==" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006-assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNi1jb3JyZXNwb25kZW5jZS0xLjEucGRm" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006-correspondence-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNi1jb3JyZXNwb25kZW5jZS0xLjIucGRm" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006-correspondence-1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNi1mb3JtLTE4LnBkZg==" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006-form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDMzNzEta29sbnAtMjAwNi1mb3JtLTMtMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">03371-kolnp-2006-form-3-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LSgxNC0wMy0yMDEyKS1DT1JSRVNQT05ERU5DRS5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-(14-03-2012)-CORRESPONDENCE.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUFCU1RSQUNUIDEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-ABSTRACT 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUFCU1RSQUNULTEuMi5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-ABSTRACT-1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUFNQU5ERUQgQ0xBSU1TLTEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-AMANDED CLAIMS-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUFNQU5ERUQgQ0xBSU1TLnBkZg==" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-AMANDED CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUFTU0lHTk1FTlQucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-ASSIGNMENT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUNBTkNFTExFRCBQQUdFUyAxLjEucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-CANCELLED PAGES 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUNBTkNFTExFRCBQQUdFUy0xLjIucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-CANCELLED PAGES-1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUNPUlJFU1BPTkRFTkNFIDEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-CORRESPONDENCE 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUNPUlJFU1BPTkRFTkNFIDEuMi5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-CORRESPONDENCE 1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUNPUlJFU1BPTkRFTkNFIDEuNC5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-CORRESPONDENCE 1.4.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUNPUlJFU1BPTkRFTkNFLTEuMy5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-CORRESPONDENCE-1.3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LURFU0NSSVBUSU9OIChDT01QTEVURSkgMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-DESCRIPTION (COMPLETE) 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LURFU0NSSVBUSU9OIChDT01QTEVURSktMS4yLnBkZg==" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-DESCRIPTION (COMPLETE)-1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LURSQVdJTkdTIDEuMS5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-DRAWINGS 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUVYQU1JTkFUSU9OIFJFUE9SVC5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUZPUk0gMSAxLjEucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-FORM 1 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUZPUk0gMTMgMS4xLnBkZg==" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-FORM 13 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUZPUk0gMTMucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-FORM 13.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUZPUk0gMTgucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-FORM 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUZPUk0gMi0xLjEucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-FORM 2-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUZPUk0gMi5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUZPUk0gMyAxLjEucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-FORM 3 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUZPUk0gMyAxLjIucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-FORM 3 1.2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUZPUk0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-FORM 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUZPUk0gNSAxLjEucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-FORM 5 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUZPUk0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-FORM 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUdQQS5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-GPA.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUdSQU5URUQtQUJTVFJBQ1QucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-GRANTED-ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUdSQU5URUQtQ0xBSU1TLnBkZg==" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-GRANTED-CLAIMS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUdSQU5URUQtREVTQ1JJUFRJT04gKENPTVBMRVRFKS5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-GRANTED-DESCRIPTION (COMPLETE).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUdSQU5URUQtRFJBV0lOR1MucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-GRANTED-DRAWINGS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUdSQU5URUQtRk9STSAxLnBkZg==" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-GRANTED-FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUdSQU5URUQtRk9STSAyLnBkZg==" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-GRANTED-FORM 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LUdSQU5URUQtU1BFQ0lGSUNBVElPTi5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-GRANTED-SPECIFICATION.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LU1JU0NMTEVOSU9VUy0xLjEucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-MISCLLENIOUS-1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LU9USEVSUyAxLjEucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-OTHERS 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LU9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LVBFVElUSU9OIFVOREVSIFJVTEUgMTM3LnBkZg==" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-PETITION UNDER RULE 137.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LVJFUExZIFRPIEVYQU1JTkFUSU9OIFJFUE9SVCAxLjEucGRm" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-REPLY TO EXAMINATION REPORT 1.1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MzM3MS1LT0xOUC0yMDA2LVJFUExZIFRPIEVYQU1JTkFUSU9OIFJFUE9SVC5wZGY=" target="_blank" style="word-wrap:break-word;">3371-KOLNP-2006-REPLY TO EXAMINATION REPORT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzdHJhY3QtMDMzNzEta29sbnAtMjAwNi5qcGc=" target="_blank" style="word-wrap:break-word;">abstract-03371-kolnp-2006.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="253493-immediate-release-pharmaceutical-tablets-with-height-greater-than-width.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="253495-method-for-the-production-of-a-book-type-security-document-and-a-book-type-security-document.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>253494</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>3371/KOLNP/2006</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>30/2012</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>27-Jul-2012</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>25-Jul-2012</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>15-Nov-2006</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>LG ELECTRONICS INC.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>20, YOIDO-DONG, YONGDUNGPO-GU, SEOUL 150-721</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>KIM TE-HYUN</td>
+											<td>DONGAECOBIL APARTMENT, 102-1002, 518, POIL-DONG, UIWANG, GYEONGGI-DO 437-771</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04L12/24</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/KR2005/002203</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-07-08</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>60764/2005</td>
+									<td>2005-07-06</td>
+								    <td>Republic of Korea</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>53663/2004</td>
+									<td>2004-07-09</td>
+								    <td>Republic of Korea</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>61846/2004</td>
+									<td>2004-08-05</td>
+								    <td>Republic of Korea</td>
+								</tr>
+								<tr>
+									<td>4</td>
+									<td>60/621,590</td>
+									<td>2004-10-22</td>
+								    <td>Republic of Korea</td>
+								</tr>
+								<tr>
+									<td>5</td>
+									<td>60/677,046</td>
+									<td>2005-05-02</td>
+								    <td>Republic of Korea</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/253494-device-management-scheduling-method-mobile-communications-terminal-and-device by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 12:43:23 GMT -->
+</html>

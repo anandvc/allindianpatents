@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/212652-motion-vector-high-speed-decoding-circuit by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 02:56:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 212652:&quot;MOTION VECTOR HIGH SPEED DECODING CIRCUIT&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;MOTION VECTOR HIGH SPEED DECODING CIRCUIT&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A motion vector high-speed decoding circuit is provided, which can decode a motion vector of the MPEG-2 standards at high speed. The motion vector high speed decoding circuit realizes a motion vector decoding method using an exclusive-use hardware of a pipeline method, which includes a parameter store for storing the input motion vector decoding parameters, that is, a motion vector range determination code, a motion vector code, and a motion vector residual code, a motion vector decoder for storing motion vector to be decoded as a previous motion vector and decoding the motion vector using the parameter stored in the parameter store and the previous motion vector, a dual primer for receiving the previous motion vector stored in the motion vector decoder and generating dual motion vectors as many as a necessary number, and a motion vector controller for controlling the operations of all the elements via the input parameters and selecting one between the previous motion vector and the dual motion vector, to output the selected result as a finally decoded motion vector. A six-clock period of time is needed to decode one motion vector, and a 6+(n-l)-clock period of time is needed to decode n motion vectors via a pipeline processing, which enables the high-speed decoding circuit to be applied to a high-speed system such as a high-definition television.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>'fhe present invention relates to a motion vector high-speed decoding circuit<br>
+BACKGROUND OF THE INVENTION<br>
+The present invention relates to a motion vector decoding circuit, and more particularly, to a motion vector decoding circuit which can be applied to a high-speed system such as a high-definition television (HDTV).<br>
+A general image signal processing apparatus using a continuous digital image signal such as a HDTV, a digital VTR and a multi-media system uses various encoding methods in order to compress transmission data more effectively. A differential pulse coded modulation (DPCM) which is one of the various encoding methods encodes a digital image signal by using a data correlation remaining between adjacent frames of images.<br>
+When a difference signal between temporally adjacent frames is encoded using a DPCM method, a more amount of data is generated in a region having a mass of movement between frames than in a region lacking movement there between. However, the amount of data can be reduced by finding out the most similar segment at an adjacent frame to an image of a particular segment of a current frame and encoding the image difference between two segments. Such a method is called a motion compensated DPCM method. The motion compensated DPCM method encodes difference data between each segment of the current frame and the corresponding image segment of the adjacent frame, to thereby improve a transmission efficiency. A motion vector used for the motion compensated DPCM method represents a direction and magnitude of movement between the image segments of the adjacent frame and the current frame in which the<br><br>
+difference signal of between the image segments of the current frame and the adjacent frame are smallest. The motion vector is encoded prior to being transmitted. An example of encoding the motion vector will be described as follows.<br>
+When the motion vectors are 3, 10, 30, 30, -14, -16, 27 and 24, a difference between the two motion vectors which is referred to as delta, becomes 3, 7, 20, 0, -44, -2, 43 and -3, respectively. When a motion vector is represented as 6 bits and the range of the motion vector is between -32 and 31, 48 bits are needed to represent 8 motion vectors. Thus, concerning difference data -44 and 43 exceeding the motion vector range between -32 and 31, the data -44 smaller than the minimum value -32 of the motion vector range is added to the value 64 of the motion vector range. That is, -44+64=20. The value 64 of the motion vector range is subtracted from the data 43 larger than the maximum value 31 of the motion vector range. That is, 43-64= 21. A plurality of difference data which have been obtained is divided into a predetermined number of groups, and a residual code is allocated to each difference data in order to discriminate between various difference data belonging to the same group. Here, since the difference data of "0" has the highest probability, the residual code is not assigned thereto. To decode the encoded and transmitted motion vector, a conventional motion vector decoding is performed by a software conceptual method in a reduced instruction-set computer (RISC) or a microcontroller.<br>
+An image decoding system adapted in the HDTV standard proposed by the MPEG-2 requires a larger size of image and a higher speed processing. Thus, the conventional software conceptual method burdens a processor.<br>
+Thus, a hardware apparatus is needed to reduce the burden of a processor and exclusively perform a motion vector decoding.<br>
+SUMMARY OF THE INVENTION<br>
+To solve the above problem, it is an object of the present invention to provide a motion vector high-speed decoding circuit for decoding motion vectors at high speed by using an exclusive-use hardware capable of parallel processing for use in a HDTV high-speed system of MPEG-2 standards, in which parameters necessary for motion vector decoding are sequentially delayed and output via a pipeline having delays.<br>
+To accomplish the above object of the present invention, there is provided a motion vector high-speed decoding circuit comprising: an input port for receiving parameters necessary for motion vector decoding; a parameter store for storing the input parameters; motion vector decoding means for storing motion vector to be decoded as a previous motion vector and decoding the motion vector using the parameter stored in the parameter store and the previous motion vector! a dual primer for receiving the previous motion vector stored in the motion vector decoding means and generating dual motion vectors as many as a necessary number; and a motion vector controller for controlling the operations of all the elements via the input parameters and selecting one between the previous motion vector and the dual motion vector, to output the selected result as a finally decoded motion vector.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+The preferred embodiments are described with reference to the drawings wherein:<br>
+FIG. 1 is a block diagram showing an image decoding system adopting a motion vector high-speed decoding circuit according to the present invention.<br>
+FIG. 2 is a detailed block diagram showing the motion vector decoder of FIG. 1.<br>
+DETAILED DESCRIPTION OF THE EMBODIMENT OF THE INVENTION<br>
+A preferred embodiment of the present invention will be described in detail with reference to the accompanying drawings.<br>
+An image decoding system of FIG. 1 adopts a motion vector high-speed decoding circuit 2 according to the present invention. The motion vector ciecoding circuit 2 receives parameters necessary for motion vector decoding and performs a motion vector decoding. The image decoding system also includes a variable length decoder 1 for variable-length-decoding the received variable length encoded data, a first-in-first-out (FIFO) memory 3 lor storing the decoded motion vector output from the motion vector decoding circuit 2, and a memory 4 for storing restored image data of one frame. A motion compensator 5 performs a motion compensation using motion vectors, with respect to the outputs of unshown inverse-quantizer and inverse-discrete cosine transformer (IDCT) and the image data stored in the memory 4. The IDCT outputs the inversely quantized and inversely<br>
+discrete-cosine transformed data with respect to the variable-length-decoded data.<br>
+The motion vector decoding circuit 2 includes a parameter store 10 for storing parameters applied from the variable length decoder 1, and a motion vector decoder 20 for receiving the parameters and the previous motion vector and decoding the current motion vector. The detailed construction of the motion vector decoder 20 is shown in FIG. 2. The motion vector decoding circuit also includes a previous motion vector store 40 for storing the decoded motion vector as a previous motion vector, a dual primer 50 for receiving the previous motion vector and generating dual motion vectors as many as a predetermined number, and a motion vector controller 30 for controlling each component of the circuit.<br>
+FIG. 2 is a detailed block diagram showing the motion vector decoder 20 of FIG. 1. The motion vector decoder 20 of FIG. 2 embodies a motion vector decoding method by an exclusive-use hardware, in which the motion vector decoding method is described in section 7.6.3.1 of document entitled "ITU-T H.262 ISO/IEC 13818-2 international standard (March 1995, Lausan)."<br>
+r_size=f_code-l<br>
+f=l
+high=(16*f)-l;<br>
+low=(-16*f);<br>
+range=32*f;<br>
+if ((f==l) II (motion_coe==0)) delta=motion code',<br>
+SSE-0894-IN<br>
+else {delta-((abs(motion_code)-l)*f)+motion_residual+l; if (motion_code
+delta=- delta; }<br>
+prediction=PMV; if (mv_format== field) &amp;&amp; (t==l) &amp;&amp; (picture_structure=<br>
+frame_picture)) prediction=PMV DIV 2; vector=prediction+delta; if (vector<low></low>
+vector^vector+range; if (vector&gt;high)<br>
+vector=vector-range;<br>
+if (mv_format=^field) &amp;&amp; (t==l) &amp;&amp; (picture_structure= frame_picture)) PMV=vector*2; else PMV+vector;<br>
+Here, an operator "«" means a shift left with zero fill, an operator "*" means multiplication, an operator " II " means a logical OR operation, an operator "&amp;&amp;" means logical AND operation, and am operator "==" means an "equal to" symbol.<br>
+In FIG. 1, the VLD 1 receives the encoded data and<br>
+variable-length-decodes	the	received	data,	to	generate<br>
+variable-length-decoded   image   data   and   parity   data,   that   is,   parameters necessary  for motion  vector decoding.     The  image  data  output from  the<br>
+VLD 1 is supplied to the motion compensator 5 via the inverse quantizer (not shown) and the inverse DCT (not shown). Also, the parameters are applied to the parameter store 10 and the motion vector controller 30 in the motion vector decoding circuit 2. The parameter store 10 stores the applied parameters, that is, code (Lcode) for determining a motion vector range, a motion vector code (m_code), a motion vector residual code (m_resi). The motion vector decoder 20 reads the parameters stored in the parameter store 10 under control of the motion vector controller 30 and performs a motion vector decoding operation. The motion vector decoder 20 will be described below referring to FIG. 2.<br>
+In FIG. 2, the motion vector decoder 20 firstly reads a motion vector code (m_code) among the parameters stored in the parameter store 10. Delays 213, 225, 233 and 243 constituting a pipeline structure delay the incoming motion vector code (m_code) by one clock pulse and output the delayed result. During the time when the delay 213 delays the input motion vector code (m_code) by one clock pulse, an absolute value calculator 211 obtains an absolute value of the motion vector (m_code), and subtracts "1" from the obtained absolute value. A delay 212 delays the subtracted result and outputs the result to a first delta calculator 22. At this time, the motion vector code (m_code_ld) delayed by one clock pulse in the delay 213 is also output to the first delta calculator 22.<br>
+Then, the motion vector decoder 20 reads the motion vector residual code (m_resi) and the motion vector range determination code (f_code) from the parameter store 10 and applies the reads result to the first delta calculator 22. The motion vector range determination code (Lcode) is also<br>
+applied to a range controller 26. During the time when the delay 225 receives the one-clock delayed motion vector code (m_code_ld) and delays the received code by one clock pulse again in the first delta calculator 22, a shifter 221 subtracts "1" from the applied motion vector range determination code (Lcode), obtains the number of effective bits of the motion vector residual code (m_resi), left-shifts the obtained result to make it two-times the number (f) of bits, multiplies the obtained number of bits by the absolute value of the motion vector code applied from the delay 212 and then outputs the multiplied result to a delay 224. The delay 224 delays the input data and outputs the delayed result to a second delta calculator 23. The shifter 221 also masks the residual bit portion except for the effective bit portion as "0" in the applied motion vector residual code (m_resi) of a predetermined number of bits and outputs the masked result to a delay 223. The delay 223 delays the input data and outputs the delayed result to the second delta calculator 23. A condition logic unit 222 receives the one-clock delayed motion vector code (m_code_ld) and the motion vector range determination code (f_code) and logically operates. The condition logic unit 222 outputs the motion vector code of "0" or a binary signal having "1" when there is no motion vector residual code or "0" otherwise to the second delta calculator 23 via a delay 226.<br>
+An adder 231 in the second delta calculator 23 receives the respective outputs of the delays 223 and 224 and adds the outputs, to calculate a delta value by adding "1" applied to a carry input end Cin to the added result. The calculated delta value is delayed in a delay 232 and output to a delta determination portion 24. The delay 233 delays the motion vector code<br>
+(m_code_2d) delayed by two clock pulses via the delays 213 and 225, by one clock pulse again, and outputs the delayed result to the delta determination portion 24. The delay 234 receives the binary signal from the delay 226 and delays the received signal by one clock pulse, to output the delayed result to the delta determination portion 24.<br>
+In the delta determination portion 24, a delta determiner 241 receives the calculated delta value and the motion vector code (m_code_3d) delayed by three clock pulses via the delays 213, 225 and 233, and selects one of the calculated delta value and the three-clock delayed motion vector code according to the input binary signal input from the delay 234 to determine the selected result as a final delta value. That is, the delta determiner 241 determines the calculated delta value as a final delta value if the binary signal is zero, and three-clock delayed motion vector code as a final delta value if the binary signal is one. When the calculated delta value is determined as a final delta value, the delta determiner 241 reverses a sign of the finally determined delta value if the three-clock delayed motion vector code (m_code_3d) is smaller than zero. To do so, individual bits constituting the finally determined delta value are inverted. Here, a process of adding "1" to the inverted delta value is needed, which is performed by an adder 252 included in the motion vector determination portion 25. The delta value finally determined in the delta determiner 241 is output to the motion vector determination portion 25 via a delay 242. A delay 243 which receives the three-clock delayed motion vector code (m_code_3d) from the delay 233 delays a sign bit which is most significant bit (MSB) of the motion vector code (m_code_3d) by one clock pulse and outputs the delayed<br>
+result to the motion vector determination portion 25. The motion vector determination portion 25 receives the finally determined delta value via an adder 252 and receives the one-clock delayed sign bit via the carry input end Cin of the adder 252. A divider 251 divides the previous motion vector PMV read from the previous vector store 40 by "2" according to a control signal PMV_DIV applied from the motion vector controller 30 of FIG. 1, and is output to the adder 252.<br>
+The motion vector controller 30 outputs a control signal PMV_DIV of a value of "0" or "1" to the motion vector decoder 20, according to whether a picture type is a frame structure, and a motion vector is use for a field and vertical component in the motion vector decoded data applied from the VLD 1. Here, the motion vector controller 30 also outputs another control signal DBL_PMV corresponding to the control signal PMV_DIV.<br>
+The divider 251 receiving the control signal PMV_DIV outputs the previous motion vector PMV to the adder 252 if the control signal PMV_DIV is "0", and divides the previous motion vector PMV by "2" to output the divided result to the adder 252 if the control signal PMV_DIV is "1". The adder 252 adds the previous motion vector PMV applied from the divider 251 and the finally determined delta value output from the delta determination portion 24, and adds a sign bit of the motion vector code applied via the carry input end Cin to the added result, to obtain a motion vector. The obtained motion vector is output to the range controller 26 via the delay 253. The range controller 26 controls the range so that the motion vector exists within the boundary of the motion vector range determination code (f_code). For this purpose, the range control unit 261<br>
+compares the motion vector input from the delay 253 with the motion vector range determined according to the motion vector range determination code (f_code). In the result of comparison, the range control unit 261 adds the motion vector range to the motion vector if the motion vector is smaller than the minimum value of the motion vector range and subtracts the motion vector range from the motion vector if the former is greater than the maximum value of the latter, to thereby control the motion vector. The controlled motion vector is input to a multiplier 262. The multiplier 262 multiplies the controlled motion vector by "2" according to the control signal DBL_PMV when the divider 251 divided the previous motion vector PMV by "2", and outputs the controlled motion vector as a decoded motion vector via the delay 263 when the divider 251 outputted the previous motion vector PMV as it is. The decoded motion vector is stored in the previous motion vector store 40. Here, the operation of each component is accomplished within a one-clock pulse, and a high-speed motion vector decoding is accomplished via a pipeline processing. Thus, a six-clock period of time is needed to decode one motion vector, and only a thirteen-clock period of time is sufficient to decode eight motion vectors via a pipeline processing.<br>
+Returning to FIG. 1, the motion vector output from the motion vector decoder 20 is stored in the previous motion vector store 40, and is used as a previous motion vector for obtaining a next motion vector. The previous motion vector PMV stored in the previous motion vector store 40 is output to the motion vector decoder 20, the motion vector controller 30 and the dual primer 50 under the control of the motion vector controller 30. The dual primer 50 produces a plurality of dual motion vectors DP using the<br>
+previous motion vector PMV under the control of the motion vector controller 30 when the currently decoded motion vector is a predictive-picture (P-picture) and outputs the produced motion vectors to the motion vector controller 30. Since a technique for producing a plurality of the dual motion vectors DP in the dual primer 50 is well-known, the detailed description thereof will be omitted. The motion vector controller 30 selects the dual motion vector DP input from the dual primer 50 if the kind of the motion vector is judged as a P-picture via the parameters applied from the VLD 1, and in the other cases, and selects the previous motion vector PMV input from the previous motion vector store 40, to then store the selected result in the FIFO memory 3. The FIFO memory 3 stores the selected motion vector according to a write control FIFO_wr of the motion vector controller 30, and outputs the stored motion vector to the motion compensator 5 in turn. The motion compensator 5 receives the image data designated by the motion vector among the restored image data of one frame stored in the memory 4 and adds the received data and the inverse-discrete-cosine-transformed image data, to then store as well as output the restored image data to the display.<br>
+As described above, the present invention relates to a motion vector high-speed decoding circuit, and uses an exclusive-use hardware via a pipeline comprised of delays to enable to process a motion vector decoding at high speed. As a result, the present invention can be used in a high-speed system such as a HDTV.<br>
+While only certain embodiments of the invention have been specifically described herein, it will apparent that numerous modifications may be made<br>
+thereto without departing from the spirit and scope of the invention.<br>
+.<br><br><br><br><br>
+We claim:<br>
+1.	A motion vector high-speed decoding circuit comprising:<br>
+•	an input port for receiving parameters necessary for motion vector<br>
+decoding;<br>
+•	a parameter (10) store for storing the input parameters;<br>
+•	motion vector decoding means (20) for storing motion vectors to be<br>
+decoded as a previous motion vector and decoding the motion vectors<br>
+using the parameters stored in said parameter store (10) and the<br>
+previous motion vector;<br>
+•	a dual primer (50) for receiving the previous motion vector stored in<br>
+said motion vector decoding means (20) and generating a number of<br>
+dual motion vectors; and<br>
+•	a motion vector controller (30) for controlling the operations of all the<br>
+elements via the input parameters and selecting one between said<br>
+previous motion vector and said dual motion vector, to output the<br>
+selected result as a finally decoded motion vector.<br><br>
+2.	The motion vector high-speed decoding circuit as claimed in claim 1,<br>
+wherein the parameters stored iti said parameter store (10) are a motion<br>
+vector range determination code, a motion vector code and a motion vector<br>
+residual code in which said motion vector range determination code<br>
+determines a motion vector range, and said motion vector code and said<br>
+motion vector residual code are allocated to respective difference data in<br>
+order to discriminate a variety of differential data belonging to the same<br>
+group as the code corresponding to each group when difference data<br>
+between a plurality of motion vectors is divided into a predetermined<br>
+number of groups.<br>
+3.	The motion vector high-speed decoding circuit as claimed in claim 2,<br>
+wherein said motion vector decoding means (20) comprises:<br><br>
+•	pipeline means (213, 225, 233, 243) for reading the motion vector<br>
+code from said parameter store (10) and sequentially delaying the read<br>
+motion vector code to output the delayed result;<br>
+•	delta calculation means (21, 22, 23) for reading the motion vector<br>
+code, the motion vector residual code and the motion vector range<br>
+determination code and calculating a delta value being a difference<br>
+motion vector;<br>
+•	a delta determiner (24) for selecting one of the delta values calculated<br>
+in said delta calculation means (21, 22, 23) and the motion vector<br>
+code output from said pipeline means (213, 225, 233, 243) and<br>
+determining the selected result as a final delta value;<br>
+•	a motion vector determiner (25) for outputting the stored previous<br>
+motion vector as it is or dividing the stored previous motion vector by<br>
+"2" and adding the determined delta value and a sign bit of the motion<br>
+vector code output from said pipeline means (213, 225, 233, 243) to<br>
+the result, to then determine a current motion vector; and<br>
+•	a range controller (26) for comparing the current motion vector<br>
+determined in said motion vector determiner (25) with the motion<br>
+vector range by the said motion vector range determination code,<br>
+controls the motion vector range based on the comparison result, and<br>
+outputs the range controlled motion vector as it is or multiplies the<br>
+same by "2" under the control of said motion vector controller (30).<br><br>
+4.	The motion vector high-speed decoding circuit as claimed in claim 3,<br>
+wherein said pipeline means (213, 225, 233, 243) is composed of a plurality<br>
+of delays, in which respective delays have delay time as long as one clock<br>
+pulse.<br>
+5.	The motion vector high-speed decoding circuit as claimed in claim 3,<br>
+wherein said delta calculation means (22,23) comprises:<br><br>
+•	an absolute value calculator (21) for obtaining an absolute value of the<br>
+motion  vector  code  read  from  said  parameter  store  (10)  and<br>
+subtracting " 1" from the absolute value to output the subtracted result;<br>
+•	a first delta calculator (22) for reading the motion vector range<br>
+determination code and the motion vector residual code from said<br>
+parameter store (10), subtracting "1" from the motion vector range<br>
+determination code to left-shift by one bit, multiplying the left-shifted<br>
+result by the output of said absolute value calculator (21), and<br>
+masking a bit portion except for an effective portion of the motion<br>
+vector residual code; and<br>
+•	a second delta calculator (23) for adding the outputs of said first delta<br>
+calculator (22) and adding a carry input of " 1" to the added result, to<br>
+thereby calculate a delta value.<br>
+6.	The motion vector high-speed decoding circuit as claimed in claim 5,<br>
+wherein each operation of said absolute value calculator (21), said first delta<br>
+calculator (22), said second delta calculator (23), said delta determiner (24), said motion vector determiner (25) and said range controller (26) is performed in one clock pulse.<br>
+7.	The motion vector high-speed decoding circuit as claimed in any of the<br>
+preceding claims, wherein said motion vector decoding means (20) needs six<br>
+clock periods to decode one motion vector and 6+(n-l) clock periods to<br>
+decode n motion vectors.<br>
+8.	The motion vector high-speed decoding circuit as claimed in claim 5,<br>
+wherein said first delta calculator (22) comprises a shifter (221) which<br>
+subtracts "1" from said motion vector range determination code to obtain the<br>
+number of effective bits of said motion vector residual code and masks the<br>
+remainder bit portion of said motion vector residual code as "0" except for a<br>
+portion corresponding to the effective bit number.<br>
+9.	The motion vector high-speed decoding circuit as claimed in claim 7,<br>
+wherein said first delta calculator (22) comprises a condition logic unit (222)<br>
+which receives the motion vector code output from a first delay (213) of said<br>
+pipeline and the motion vector range determination code output from said<br>
+parameter store (10), performs a logical operation of a condition when the<br>
+motion vector code is "0" or the motion vector range determination code is<br>
+" 1" and outputs the logical operation result as a select signal for determining<br>
+a delta value of said delta determiner (24).<br><br>
+10.	The motion vector high-speed decoding circuit according to claim 9,<br>
+wherein a delay (234) for delaying the select signal output from said first<br>
+delta calculator (22) for one clock pulse during which said second delta<br>
+calculator (23) calculates the delta value is provided between said first delta<br>
+calculator (22) and said delta determiner (24).<br>
+11.	The motion vector high-speed decoding circuit according to claim 10,<br>
+wherein said delta determiner (24) which comprises a delta determiner (241)<br>
+which receives the calculated delta value output from said second delta<br>
+calculator (23) and the motion vector code output from a third delay (233) of<br>
+said pipeline, and determines said motion vector code as a final delta value if<br>
+the select signal meeting the condition of said logic operation is input via<br>
+said delay while determining said calculated delta value as a final delta value<br>
+if the select signal which does not meet the condition of the logic operation.<br>
+12.	The motion vector high-speed decoding circuit according to claim 11,<br>
+wherein said delta determiner (24) inverts individual bits constituting the<br>
+finally determined delta value in order to reverse a sign bit of the finally<br>
+determined delta value if said motion vector delayed by three clock pulses<br>
+via said third delay (233) is smaller than "0" when said calculated delta<br>
+value is determined as a final delta value.<br>
+13.	The motion vector high-speed decoding circuit according to claim 12,<br>
+wherein the last delay (243) in said pipeline applies the sign of the motion<br>
+vector   as   a   carry   input   of  said   motion   vector   determiner   (25).<br>
+14.	The motion vector high-speed decoding circuit according to claim 13,<br>
+wherein said motion vector determiner (25) comprises:<br><br>
+•	a divider (251) for outputting the stored previous motion vector as it is<br>
+or dividing the same by "2" to output the divided result under the<br>
+control of said motion vector controller (30);<br>
+•	an adder (252) for receiving the previous motion vector output from<br>
+said divider (251) and the delta value determined in said delta<br>
+determiner (24) to add the same, and adding the sign of the motion<br>
+vector code which is a carry input to the added result, to calculate a<br>
+current motion vector; and<br>
+•	a delay (253) for delaying the calculated motion vector and outputting<br>
+the delayed result.<br>
+15.	The motion vector high-speed decoding circuit according to claim 14,<br>
+wherein said range controller (26) comprises:<br>
+•	a range control unit (261) for receiving the current motion vector<br>
+calculated via said delay (253), comparing the received motion vector<br>
+with   the   motion   vector   range   by   the   motion   vector   range<br>
+determination code read from said parameter store (10), adding the<br>
+current motion vector to the motion vector range if the current motion<br>
+vector is smaller than the minimum value of the motion vector range<br>
+and subtracting the motion vector range from the current motion<br>
+vector if the current motion vector is greater than the maximum value<br>
+of the motion vector range;<br>
+•	a multiplier (262) for outputting the range-controlled motion vector or<br>
+multiplying the range-controlled motion vector by "2" to output the<br>
+multiplied result under the control of said motion vector controller<br>
+(30); and<br>
+•	a delay (263) for delaying the output of said multiplier.<br><br>
+16.	The motion vector high-speed decoding circuit according to claim 15,<br>
+wherein said motion vector controller (30) controls said divider (251) in said<br>
+motion vector determiner (25) to divide the previous motion vector by "2"<br>
+when the current motion vector is a vertical component at a field structure of<br>
+a frame picture from the input parameter, and then controls said multiplier<br>
+(262) in said range controller (26) to multiply the range-controlled current<br>
+motion vector by "2".<br>
+17.	The motion vector high-speed decoding circuit according to any of the<br>
+preceding claims, wherein said motion vector controller (30) selects the dual<br>
+motion vector applied from said dual primer (50) when the kind of the<br>
+motion vector is a predictive-picture (P-picture), and selects the previous<br>
+motion vector applied from said motion vector decoding means (20) in the<br>
+other cases, to thereby output a finally decoded motion vector.<br>
+18.	A motion vector high-speed decoding circuit substantially as herein<br>
+described with reference to and as illustrated by the accompanying drawings.<br><br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">634-del-1997-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">634-del-1997-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">634-del-1997-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWNvcnJlc3BvbmRlbmNlLXBvLnBkZg==" target="_blank" style="word-wrap:break-word;">634-del-1997-correspondence-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">634-del-1997-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">634-del-1997-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">634-del-1997-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWZvcm0tMTkucGRm" target="_blank" style="word-wrap:break-word;">634-del-1997-form-19.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">634-del-1997-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">634-del-1997-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWZvcm0tNC5wZGY=" target="_blank" style="word-wrap:break-word;">634-del-1997-form-4.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjM0LWRlbC0xOTk3LWZvcm0tNi5wZGY=" target="_blank" style="word-wrap:break-word;">634-del-1997-form-6.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="212650-a-base-station-for-interference-rejection-combining-and-downlink-beamforming-in-a-cellular-radiocommunications-system.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="212653-system-providing-mobile-telephony-and-remote-control-of-a-plurality-of-remotely-actvablr-peri-pheral-devices.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>212652</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>634/DEL/1997</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>51/2007</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>21-Dec-2007</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>10-Dec-2007</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>14-Mar-1997</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>SAMSUNG ELECTRONICS CO. LIMITED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>416, MAETAN-DONG, PALDAL-GU, SUWON-CITY, KYUNGKI-DO, REPUBLIC OF KOREA.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>JE-IK KIM</td>
+											<td>338-97 SUKKWAN 2-DONG, SUNGBUK-GU, SEOUL, REPUBLIC OF KOREA</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06T7/20</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>96-8373</td>
+									<td>1996-03-26</td>
+								    <td>Republic of Korea</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/212652-motion-vector-high-speed-decoding-circuit by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 02:56:39 GMT -->
+</html>

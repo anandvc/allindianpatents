@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/225420-a-method-of-ordering-data-writes by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 23:39:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 225420:A METHOD OF ORDERING DATA WRITES</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD OF ORDERING DATA WRITES</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A primary storage device (24) orders a plurality of data writes by associating data writes begun after a first time and before a second time with a first chunk of data (52), associating data writes begun after the second time with a second chunk of data (54) different from the first chunk of data, and, after completion of all writes associated with the first chunk of data, initiating transfer of writes associated with the first chunk of data to a secondary storage device (26).</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>A METHOD OF ORDERING DATA WRITES<br>
+Background of the Invention<br>
+1. Technical Field<br>
+This application relates to a method of ordering data writes, and generally to<br>
+computer storage devices, and more particularly to the field of transferring data<br>
+between storage devices.<br>
+2. Description of Related Art<br>
+Host processor systems may store and retrieve data using a storage device<br>
+containing a plurality of host interface units (host adapters), disk drives, and disk<br>
+interface units (disk adapters). Such storage devices are provided, for example, by<br>
+EMC Corporation of Hopkinton, Mass, and disclosed in U.S. Patent No. 5,206,939 to<br>
+Yanai et al., U.S. Patent No. 5,778,394 to Galtzur et al., U.S. Patent No. 5,845,147 to<br>
+Vishlitzky et al., and U.S. Patent No. 5,857,208 to Ofek. The host systems access the<br>
+storage device through a plurality of channels provided therewith. Host systems<br>
+provide data and access control information through the channels to the storage<br>
+device and the storage device provides data to the host systems also through the<br>
+channels. The host systems do not address the disk drives of the storage device<br>
+directly, but rather, access what appears to the host systems as a plurality of logical<br>
+disk units. The logical disk units may or may not correspond to the actual disk drives.<br>
+Allowing multiple host systems to access the single storage device unit allows the<br>
+host systems to share data stored therein.<br>
+In some instances, it may be desirable to copy data from one storage device to<br>
+another. For example, if a host writes data to a first storage device, it may be<br>
+desirable to copy that data to a second storage device provided in a different location<br>
+so that if a disaster occurs that renders the first storage device inoperable, the host<br>
+(or another host) may resume operation using the data of the second storage device.<br>
+Such a capability is provided, for example, by the Remote Data Facility (RDF) product<br>
+provided by EMC Corporation of Hopkinton, Massachusetts. With RDF, a first storage<br>
+device, denoted the "primary storage device" (or "R1") is coupled to the host. One or<br>
+more other storage devices, called "secondary storage devices" (or "R2") <br>
+receive copies of the data that is written to the primary storage device by the host. The<br>
+host interacts directly with the primary storage device, but any data changes made to<br>
+the primary storage device are automatically provided to the one or more secondary<br>
+storage devices using RDF. The primary and secondary storage devices may be<br>
+connected by a data link, such as an ESCON link, a Fibre Channel link, and/or a<br>
+Gigabit Ethernet link. The RDF functionality may be facilitated with an RDF adapter<br>
+(RA) provided at each of the storage devices.<br>
+RDF allows synchronous data transfer where, after data written from a host to<br>
+a primary storage device is transferred from the primary storage device to a secondary<br>
+storage device using RDF, receipt is acknowledged by the secondary storage device<br>
+to the primary storage device which then provides a write acknowledge back to the<br>
+host. Thus, in synchronous mode, the host does not receive a write acknowledge from<br>
+the primary storage device until the RDF transfer to the secondary storage device.has<br>
+been completed and acknowledged by the secondary storage device.<br>
+A drawback to the synchronous RDF system is that the latency of each of the<br>
+write operations is increased by waiting for the acknowledgement of the RDF<br>
+transfer. This problem is worse when there is a long distance between the primary<br>
+storage device and the secondary storage device; because of transmission delays, the<br>
+time delay required for making the RDF transfer and then waiting for an<br>
+acknowledgement back after the transfer is complete may be unacceptable.<br>
+It is also possible to use RDF in an a semi-synchronous mode, in which case<br>
+the data is written from the host to the primary storage device which acknowledges<br>
+the write immediately and then, at the same time, begins the process of transferring<br>
+the data to the secondary storage device. Thus, for a single transfer of data, this<br>
+scheme overcomes some of the disadvantages of using RDF in the synchronous mode.<br>
+However, for data integrity purposes, the semi-synchronous transfer mode does not<br>
+allow the primary storage device to transfer data to the secondary storage device until<br>
+a previous transfer is acknowledged by the secondary storage device. Thus, the<br>
+bottlenecks associated with using RDF in the synchronous mode are simply delayed<br>
+by one iteration because transfer of a second amount of data cannot occur until<br>
+transfer of previous data has been acknowledged by the secondary storage device.<br>
+Another possibility is to have the host write data to the primary storage device<br>
+in asynchronous mode and have the primary storage device copy data to the<br>
+secondary storage device in the background. The background copy involves cycling<br>
+through each of the tracks of the primary storage device sequentially and, when it is<br>
+determined that a particular block has been modified since the last time that block was<br>
+copied, the block is transferred from the primary storage device to the secondary<br>
+storage device. Although this mechanism may attenuate the latency problem<br>
+associated with synchronous and semi-synchronous data transfer modes, a difficulty<br>
+still exists because there can not be a guarantee of data consistency between the<br>
+primary and secondary storage devices. If there are problems, such as a failure of the<br>
+primary system, the secondary system may end up with out-of-order changes that<br>
+make the data unusable.<br>
+A proposed solution to this problem is the Symmetrix Automated Replication<br>
+(SAR) process, which is described in pending U.S. patent applications 10/224,918 and<br>
+10/225,021, both of which were filed on August 21, 2002. The SAR uses devices<br>
+(BCV's) that can mirror standard logical devices. A BCV device can also be split<br>
+from its standard logical device after being mirrored and can be resynced (i.e.,<br>
+reestablished as a mirror) to the standard logical devices after being split. However,<br>
+using the SAR process requires the significant overhead of continuously splitting and<br>
+resyncing the BCV's. The SAR process also uses host control and management,<br>
+which relies on the controlling host being operational. In addition, the cycle time for<br>
+a practical implementation of a SAR process is on the order of twenty to thirty<br>
+minutes, and thus the amount of data that may be lost when an RDF link and/or<br>
+primary device fails could be twenty to thirty minutes worth of data.<br>
+Thus, it would be desirable to have an RDF system that exhibits some of.the<br>
+beneficial qualities of each of the different techniques discussed above while reducing<br>
+the drawbacks. Such a system would exhibit low latency for each host write<br>
+regardless of the distance between the primary device and the secondary device and<br>
+would provide consistency (recoverability) of the secondary device in case of failure.<br>
+Summary of the Invention<br>
+According to the present invention, ordering data writes includes a primary<br>
+storage device receiving a plurality of data writes, the primary storage device<br>
+associating data writes begun after a first time and before a second time with a first<br>
+chunk of data, the primary storage device associating data writes begun after the<br>
+second time with a second chunk of data different from the first chunk of data, and,<br>
+after completion of all writes associated with the first chunk of data, the primary<br>
+storage device initiating transfer of writes associated with the first chunk of data to a<br>
+secondary storage device. Ordering data writes may also include, following the<br>
+primary storage device transferring all writes associated with the first chunk of data to<br>
+the secondary storage device, the primary storage device sending a message to the<br>
+secondary storage device, and, in response to receiving the message from the primary<br>
+storage device, the secondary storage device storing the data writes associated with<br>
+the first chunk of data. Ordering data writes may also include, after storing all of the<br>
+data writes associated with the first chunk of data, the secondary storage device<br>
+sending an acknowledge to the primary storage device. Ordering data writes may also<br>
+include, following sending a message to the secondary storage device, the primary<br>
+storage device suspending transferring data to the secondary storage device. Ordering<br>
+data writes may also include, following suspending transferring data, the primary<br>
+storage device associating data writes with a third chunk of data, different from the<br>
+first and second chunks of data, to subsequent data writes. Ordering data writes may<br>
+also include, in response to the secondary storage device sending an acknowledge to<br>
+the primary storage device, the primary storage device resuming transferring data to<br>
+the secondary storage device. Ordering data writes may also include providing data<br>
+writes to cache slots of the primary storage device. Ordering data writes may also<br>
+include, in response to a data write being associated with the second chunk of data<br>
+corresponding to a cache slot already associated with the first chunk of data, copying<br>
+the data to a new cache slot. Ordering data writes may also include the primary<br>
+storage device using a first list of pointers to the cache slots for data writes associated<br>
+with the first chunk of data, and the primary storage device using a second list of<br>
+pointers to the cache slots for data writes associated with the second chunk of data.<br>
+Ordering data writes may also include, providing a cache stamp field in a header<br>
+portion of each of the slots, the cache stamp field including a sequence number<br>
+associated with the slot, wherein the sequence number corresponds to a particular one<br>
+of the chunks of data. The cache stamp field may also include a password field that is<br>
+written when the slot is first used. Ordering data writes may also include, in response<br>
+to a slot no longer being used, clearing the password field. Ordering data writes may<br>
+also include the primary storage device using a first cache only virtual device for the<br>
+cache slots corresponding to data writes associated with the first chunk of data, and<br>
+the primary storage device using a second cache only virtual device for the cache slots<br>
+corresponding to data writes associated with the second chunk of data.<br>
+According further to the present invention, storing ordered writes to a remote<br>
+storage device includes receiving a message for data associated with a first chunk of<br>
+data, in response to data associated with a second chunk of data different from said<br>
+first chunk of data not yet being stored, waiting for the data associated with the<br>
+second chunk of data to be stored, and initiating storage of the data associated with<br>
+the first chunk of data. Storing ordered writes to a remote storage device may also<br>
+include acknowledging the message. Storing ordered writes to a remote storage<br>
+device may also include constructing a list of modified slots in connection with<br>
+receiving data associated with the first chunk of data. Initiating storage of data<br>
+associated with the first chunk of data may include traversing the list of modified<br>
+slots. Receiving a plurality of data writes may include receiving a plurality of data<br>
+writes from a host. Storing ordered writes to a remote storage device may also<br>
+include, following the primary storage device transferring all writes associated with<br>
+the first chunk of data to the secondary storage device, the primary storage device<br>
+sending a message to the secondary storage device.<br>
+According further to the present invention, computer software that orders data<br>
+writes includes executable code that associates data writes begun after a first time and<br>
+before a second time with a first chunk of data, executable code that associates data<br>
+writes begun after the second time with a second chunk of data different from the first<br>
+chunk of data, and executable code that initiates transfer of writes associated with the<br>
+first chunk of data to a storage device after completion of all writes associated with<br>
+the first chunk of data. The computer software may also include executable code that<br>
+sends a message to the storage device after transferring all writes associated with the<br>
+first chunk of data and executable code that suspends transferring data to the storage<br>
+device after sending the message thereto. The computer software may also include<br>
+executable code that associates data writes with a third chunk of data, different from<br>
+the first and second chunks of data, to subsequent data writes following suspending<br>
+transferring data. The computer software may also include executable code that<br>
+resumes transferring data to the storage device in response to the storage device<br>
+acknowledging handling the message. The computer software may also include<br>
+executable code that provides data writes to cache slots. The computer software may<br>
+also include executable code that copies data to a new cache slot in response to a data<br>
+write being associated with the second chunk of data corresponding to a cache slot<br>
+already associated with the first chunk of data. The computer software may also<br>
+include executable code that uses a first list of pointers to the cache slots for data<br>
+writes-associated with the first chunk of data and executable code that uses a second<br>
+list of pointers to the cache slots for data writes associated with the second chunk of<br>
+data. The computer software may also include executable code that provides a cache<br>
+stamp field in a header portion of each of the slots, the cache stamp field including a<br>
+sequence number associated with the slot, wherein the sequence number corresponds<br>
+to a particular one of the chunks of data. The cache stamp field may also include a<br>
+password field that is written when the slot is first used. The computer software may<br>
+also include executable code that clears the password field in response to a slot no<br>
+longer being used. The computer software may also include executable code that uses<br>
+a first cache only virtual device for the cache slots corresponding to data writes<br>
+associated with the first chunk of data and executable code that uses a second cache<br>
+only virtual device for the cache slots corresponding to data writes associated with the<br>
+second chunk of data. The computer software may also include executable code that<br>
+sends a message to the storage device after transferring all writes associated with the<br>
+first chunk of data.<br>
+According further to the present invention, computer software that stores<br>
+ordered writes to a remote storage device includes executable code that receives a<br>
+message for data associated with a first chunk of data, executable code that waits for<br>
+the data associated with a second chunk of data, different from the first chunk of data,<br>
+to be stored; and executable code that initiates storage of the data associated with the<br>
+first chunk of data after the second chunk of data has been stored. The computer<br>
+software may also include executable code that acknowledges the message. The<br>
+computer software may also include executable code that constructs a list of modified<br>
+slots in connection with receiving data associated with the first chunk of data.<br>
+Executable code that initiates storage of data associated with the first chunk of data<br>
+may include executable code that traverses the list of modified slots.<br>
+According further to the present invention, a data storage device, includes at<br>
+least one disk drive that contains data, at least one host adaptor, coupled to the at least<br>
+one disk drive, that receives data to be stored on the at least one disk drive., and at<br>
+least one remote adaptor, coupled to the at least one disk drive and the at least one<br>
+host adaptor, that transmits data to a remote storage device, where, in response to<br>
+receipt of data by the at least one host adaptor, data writes begun after a first time and<br>
+before a second time are associated with a first chunk of data, data writes begun after<br>
+the second time are associated with a second chunk of data different from the first<br>
+chunk of data and, after completion of all writes associated with the first chunk of<br>
+data, a transfer of writes associated with the first chunk of data to the remote storage<br>
+device is initiated.<br>
+According further to the present invention, ordering data writes include a host<br>
+computer providing a plurality of data writes to a primary storage device, the primary<br>
+storage device assigning a first sequence number to data writes begun after a first time<br>
+and before a second time, the primary storage device assigning a second sequence<br>
+number, different from the first sequence number, to data writes begun after the<br>
+second time, in response to completion of all writes assigned the first sequence<br>
+number, the primary storage device transferring writes assigned the first sequence<br>
+number to a secondary storage device, and, in response to the primary storage device<br>
+transferring all writes assigned the first sequence number to the secondary storage<br>
+device, the primary storage device sending a commit message to the secondary<br>
+storage device. Ordering data writes may also include, in response to receiving a<br>
+commit message from the primary storage device, the secondary storage device<br>
+storing the data writes having the first sequence number. Ordering data writes may<br>
+also include, in response to storing all of the data writes having the first sequence<br>
+number, the secondary storage device sending an acknowledge to the primary storage<br>
+device. Ordering data writes may also include, following sending a commit message<br>
+to the secondary storage device, the primary storage device suspending transferring<br>
+data to the secondary storage device. Ordering data writes may also include,<br>
+following suspending transferring data, the primary storage device assigning a third<br>
+sequence number, different from the first and second sequence numbers, to<br>
+subsequent data writes. Ordering data writes may also include, in response to the<br>
+secondary storage device sending an acknowledge to the primary storage device, the<br>
+primary storage device resuming transferring data to the secondary storage device.<br>
+Ordering data writes may also include providing data writes to cache slots of the<br>
+primary storage device. Ordering data writes may also include, in response to a data<br>
+write being assigned the second sequence number corresponding to a cache slot<br>
+already assigned the first sequence number, copying the data to a new cache slot.<br>
+Ordering data writes may also include the primary storage device using a first list of<br>
+pointers to the cache slots for data writes assigned the first sequence number and the<br>
+primary storage device using a second list of pointers to the cache slots for data writes<br>
+assigned the second sequence number. Ordering data writes may also include<br>
+providing a cache stamp field in a header portion of each of the slots, the cache stamp<br>
+field including a sequence number associated with the slot. The cache stamp field<br>
+may also include a password field that is written when the slot is first used. Ordering<br>
+data writes may also include, in response to a slot no longer being used, clearing the<br>
+password field. Ordering data writes may also include the primary storage device<br>
+using a first cache only virtual device for the cache slots corresponding to data writes<br>
+assigned the first sequence number and the primary storage device using a second<br>
+cache only virtual device for the cache slots corresponding to data writes assigned the<br>
+second sequence number.<br>
+According further to the present invention, storing ordered writes to a remote<br>
+storage device includes receiving a commit message for data associated with a first<br>
+sequence number, in response to data associated with a second sequence number<br>
+different from said first sequence number not yet being stored, waiting for the data<br>
+associated with the second sequence number to be stored, and initiating storage of the<br>
+data associated with the first sequence number. Storing ordered writes may also<br>
+include acknowledging the commit message. Storing ordered writes may also include<br>
+constructing a list of modified slots in connection with receiving data associated with<br>
+the first sequence number. Initiating storage of data associated with the first sequence<br>
+number may include traversing the list of modified slots.<br>
+According further to the present invention, computer software that orders data<br>
+writes includes executable code that assigns a first sequence number to data writes<br>
+begun after a first time and before a second time, executable code that assigns a<br>
+second sequence number, different from the first sequence number, to data writes<br>
+begun after the second time, executable code that transfers writes assigned the first<br>
+sequence number to a storage device in response to completion of all writes assigned<br>
+the first sequence number, and executable code that sends a commit message to the<br>
+storage device after transferring all writes assigned the first sequence number. The<br>
+computer software may also include executable code that suspends transferring data<br>
+to the storage device after sending a commit message thereto. The computer software<br>
+may also include executable code that assigns a third sequence number, different from<br>
+the first and second sequence numbers, to subsequent data writes following<br>
+suspending transferring data. The computer software may also include executable<br>
+code that resumes transferring data to the storage device in response to the storage<br>
+device acknowledging handling the commit. The computer software may also include<br>
+executable code that provides data writes to cache slots. The computer software may<br>
+also include executable code that copies data to a new cache slot in response to a data<br>
+write being assigned the second sequence number corresponding to a cache slot<br>
+already assigned the first sequence number. The computer software may also include<br>
+ executable code that uses a first list of pointers to the cache slots for data writes<br>
+assigned the first sequence number an executable code that uses a second list of<br>
+pointers to the cache slots for data writes assigned the second sequence number. The<br>
+computer software may also include executable code that provides a cache stamp field<br>
+in a header portion of each of the slots, the cache stamp field including a sequence<br>
+number associated with the slot. The cache stamp field may also include a password<br>
+field that is written when the slot is first used. The computer software may also<br>
+include executable code that clears the password field in response to a slot no longer<br>
+being used. The computer software may also include executable code that uses a first<br>
+cache only virtual device for the cache slots corresponding to data writes assigned the<br>
+first sequence number and executable code that uses a second cache only virtual<br>
+device for the cache slots corresponding to data writes assigned the second sequence<br>
+number.<br>
+According further to the present invention, computer software that stores<br>
+ordered writes to a remote storage device includes executable code that receives a<br>
+commit message for data associated with a first sequence number, executable code<br>
+that waits for the data associated with the second sequence number to be stored in<br>
+response to data associated with a second sequence number different from the first<br>
+sequence number not yet being stored, and executable code that initiates storage of the<br>
+data associated with the first sequence number. The computer software may also<br>
+include executable code that acknowledges the commit message. The computer<br>
+software may also include executable code that constructs a list of modified slots in<br>
+connection with receiving data associated with the first sequence number. Executable<br>
+code that initiates storage of data associated with the first sequence number may<br>
+include executable code that traverses the list of modified slots.<br>
+According further to the present invention, reading desired data from a remote<br>
+storage device that receives chunks of data from an other storage device includes<br>
+determining if the desired data is part of a chunk of data committed by the other<br>
+storage device, if the desired data is not part of a chunk of data committed by the<br>
+other storage device, reading the desired data from a corresponding standard logical<br>
+device, and if the desired data is part of a chunk of data committed by the other<br>
+storage device, transferring the desired data to the standard logical device and<br>
+obtaining the desired data from one of: the standard logical device after transferring<br>
+the desired data thereto and the chunk of data committed by the other storage device.<br>
+Reading desired data from a remote storage device may also include, if the desired<br>
+data is part of a chunk of data committed by the other storage device, locking a<br>
+corresponding slot of a cache only virtual device that points to the desired data.<br>
+Reading desired data from a remote storage device may also include, after locking the<br>
+corresponding slot, redetermining if the desired data is part of a chunk of data<br>
+committed by the other storage device. Reading desired data from a remote storage<br>
+device may also include, if the result of redetermining indicates that the desired data<br>
+is not part of a chunk of data committed by the other storage device, unlocking the<br>
+corresponding slot and reading the desired data from a corresponding standard logical<br>
+device. Reading desired data from a remote storage device may also include, locking<br>
+a corresponding slot of the standard logical device, merging corresponding cache<br>
+slots, and causing the corresponding slot of the cache only virtual device to point to<br>
+the standard logical device.<br>
+According further to the present invention, a host coupled to a remote storage<br>
+device reads desired data transmitted by a local storage device by identifying a most<br>
+recent and consistent set of data containing the desired data and by obtaining the<br>
+desired data from the most recent and consistent set of data. The set of data may be a<br>
+chunk of data committed by the local storage device. The chunk of data may be<br>
+assigned a sequence number that is less than a sequence number for other chunks of<br>
+data containing other data that an other host computer started to write after starting to<br>
+write the desired data. The host coupled to a remote storage device reading desired<br>
+data transmitted by a local storage device may also include determining if multiple<br>
+tracks of the remote storage device are being read, if multiple tracks are being read,<br>
+determining a first current sequence number prior to reading the tracks, reading the<br>
+tracks, and determining a second current sequence number, and if the first current<br>
+sequence number does not equal the second current sequence number, rereading the<br>
+tracks. The host coupled to a remote storage device reading desired data transmitted<br>
+'by a local storage device may also include determining if multiple tracks of the<br>
+remote storage device are being read, if multiple tracks are being read, determining a<br>
+first current sequence number prior to reading the tracks, reading the tracks, and<br>
+determining a second current sequence number, and if the first current sequence<br>
+number does not equal the second current sequence number, returning an error.<br>
+According further to the present invention, computer software that reads<br>
+desired data from a remote storage device that receives chunks of data from an other<br>
+storage device includes executable code that determines if the desired data is part of a<br>
+chunk of data committed by the other storage device, executable code that reads the<br>
+desired data from a corresponding standard logical device if the desired data is not<br>
+part of a chunk of data committed by the other storage device and executable code<br>
+that transfers the desired data to the standard logical device and obtains the desired<br>
+data from one of: the standard logical device after transferring the desired data thereto<br>
+and the chunk of data committed by the other storage device if the desired data is part<br>
+of a chunk of data committed by the other storage device. The computer software<br>
+may also include executable code that locks a corresponding slot of a cache only<br>
+virtual device that points to the desired data if the desired data is part of a chunk of<br>
+data committed by the other storage device. The computer software may also include<br>
+executable code that redetermines if the desired data is part of a chunk of data<br>
+committed by the other storage device after locking the corresponding slot. The<br>
+computer software may also include executable code that unlocks the corresponding<br>
+slot and reads the desired data from a corresponding standard logical device if the<br>
+result of redetermining indicates that the desired data is not part of a chunk of data<br>
+committed by the other storage device. The computer software may also include<br>
+executable code that locks a corresponding slot of the standard logical device,<br>
+executable code that merges corresponding cache slots, and executable code that<br>
+causes the corresponding slot of the cache only virtual device to point to the standard<br>
+logical device.<br>
+According further to the present invention, computer software for a host<br>
+coupled to a remote storage device to read desired data transmitted by a local storage<br>
+device, includes executable code that identifies a most recent and consistent set of<br>
+data containing the desired data and executable code that obtains the desired data<br>
+from the most recent and consistent set of data. The set of data may be a chunk of<br>
+data committed by the local storage device. The chunk of data may be assigned a<br>
+sequence number that is less than a sequence number for other chunks of data<br>
+containing other data that an other host computer started to write after starting to write<br>
+the desired data. The computer software may also include executable code that<br>
+determines if multiple tracks of the remote storage device are being read, executable<br>
+code that determines a first current sequence number prior to reading the tracks, reads<br>
+the tracks, and determines a second current sequence number if multiple tracks are<br>
+being read, and executable code that rereads the tracks if the first current sequence<br>
+number does not equal the second current sequence number. The computer software<br>
+may also include executable code that determines if multiple tracks of the remote<br>
+storage device are being read, executable code that determines a first current sequence<br>
+number prior to reading the tracks, reads the tracks, and determines a second current<br>
+sequence number if multiple tracks are being read, and executable code that returns an<br>
+error if the first current sequence number does not equal the second current sequence<br>
+number.<br>
+According further to the present invention, ordering data writes include a host<br>
+computer providing a plurality of data writes to a primary storage device, the primary<br>
+storage device assigning a first sequence number to data writes begun after a first time<br>
+and before a second time, the primary storage device assigning a second sequence<br>
+number, different from the first sequence number, to data writes begun after the<br>
+second time, in response to completion of all writes assigned the first sequence<br>
+number, the primary storage device transferring writes assigned the first sequence<br>
+number to a secondary storage device, and, in response to the primary storage device<br>
+transferring all writes assigned the first sequence number to the secondary storage<br>
+device, the primary storage device sending a commit message to the secondary<br>
+storage device. Ordering data writes may also include, in response to receiving a<br>
+commit message from the primary storage device, the secondary storage device<br>
+storing the data writes having the first sequence number. Ordering data writes may<br>
+also include, in response to storing all of the data writes having the first sequence<br>
+number, the secondary storage device sending an acknowledge to the primary storage<br>
+device. Ordering data writes may also include, following sending a commit message<br>
+to the secondary storage device, the primary storage device suspending transferring<br>
+data to the secondary storage device. Ordering data writes may also include,<br>
+following suspending transferring data, the primary storage device assigning a third<br>
+sequence number, different from the first and second sequence numbers, to<br>
+subsequent data writes. Ordering data writes may also include, in response to the<br>
+secondary storage device sending an acknowledge to the primary storage device, the<br>
+primary storage device resuming transferring data to the secondary storage device.<br>
+Ordering data writes may also include providing data writes to cache slots of the<br>
+primary storage device. Ordering data writes may also include, in response to a data<br>
+write being assigned the second sequence number corresponding to a cache slot<br>
+already assigned the first sequence number, copying the data to a new cache slot.<br>
+Ordering data writes may also include the primary storage device using a first list of<br>
+pointers to the cache slots for data writes assigned the first sequence number and the<br>
+primary storage device using a second list of pointers to the cache slots for data writes<br>
+assigned the second sequence number. Ordering data writes may also include<br>
+providing a cache stamp field in a header portion of each of the slots, the cache stamp<br>
+field including a sequence number associated with the slot. The cache stamp field<br>
+may also include a password field that is written when the slot is first used. Ordering<br>
+data writes may also include, in response to a slot no longer being used, clearing the<br>
+password field. Ordering data writes may also include the primary storage device<br>
+using a first cache only virtual device for the cache slots corresponding to data writes<br>
+assigned the first sequence number and the primary storage device using a second<br>
+cache only virtual device for the cache slots corresponding to data writes assigned the<br>
+second sequence number.<br>
+According further to the present invention, storing ordered writes to a remote<br>
+storage device includes receiving a commit message for data associated with a first<br>
+sequence number, in response to data associated with a second sequence number<br>
+different from said first sequence number not yet being stored, waiting for the data<br>
+associated with the second sequence number to be stored, and initiating storage of the<br>
+data associated with the first sequence number. Storing ordered writes may also<br>
+include acknowledging the commit message. Storing ordered writes may also include<br>
+constructing a list of modified slots in connection with receiving data associated with<br>
+the first sequence number. Initiating storage of data associated with the first sequence<br>
+number may include traversing the list of modified slots.<br>
+According further to the present invention, computer software that orders data<br>
+writes includes executable code that assigns a first sequence number to data writes<br>
+begun after a first time and before a second time, executable code that assigns a<br>
+second sequence number, different from the first sequence number, to data writes<br>
+begun after the second time, executable code that transfers writes assigned the first<br>
+sequence number to a storage device in response to completion of all writes assigned<br>
+the first sequence number, and executable code that sends a commit message to the<br>
+storage device after transferring all writes assigned the first sequence number. The<br>
+computer software may also include executable code that suspends transferring data<br>
+to the storage device after sending a commit message thereto. The computer software<br>
+may also include executable code that assigns a third sequence number, different from<br>
+the first and second sequence numbers, to subsequent data writes following<br>
+suspending transferring data. The computer software may also include executable<br>
+code that resumes transferring data to the storage device in response to the storage<br>
+device acknowledging handling the commit. The computer software may also include<br>
+executable code that provides data writes to cache slots. The computer software may<br>
+also include executable code that copies data to a new cache slot in response to a data<br>
+write being assigned the second sequence number corresponding to a cache slot<br>
+already assigned the first sequence number. The computer software may also include<br>
+executable code that uses a first list of pointers to the cache slots for data writes<br>
+assigned the first sequence number an executable code that uses a second list of<br>
+pointers to the cache slots for data writes assigned the second sequence number. The<br>
+computer software may also include executable code that provides a cache stamp field<br>
+in a header portion of each of the slots, the cache stamp field including a sequence<br>
+number associated with the slot. The cache stamp field may also include a password<br>
+field that is written when the slot is first used. The computer software may also<br>
+include executable code that clears the password field in response to a slot no longer<br>
+being used. The computer software may also include executable code that uses a first<br>
+cache only virtual device for the cache slots corresponding to data writes assigned the<br>
+first sequence number and executable code that uses a second cache only virtual<br>
+device for the cache slots corresponding to data writes assigned the second sequence<br>
+number.<br>
+According further to the present invention, computer software that stores<br>
+ordered writes to a remote storage device includes executable code that receives a<br>
+commit message for data associated with a first sequence number, executable code<br>
+that waits for the data associated with the second sequence number to be stored in<br>
+response to data associated with a second sequence number different from the first<br>
+sequence number not yet being stored, and executable code that initiates storage of the<br>
+data associated with the first sequence number. The computer software may also<br>
+include executable code that acknowledges the commit message. The computer<br>
+software may also include executable code that constructs a list of modified slots in<br>
+connection with receiving data associated with the first sequence number. Executable<br>
+code that initiates storage of data associated with the first sequence number may<br>
+include executable code that traverses the list of modified slots.<br>
+According further to the present invention, using a local storage device to read<br>
+desired data stored on a remote storage device that receives chunks of data from the<br>
+local storage device includes, if the desired data is entirely in a cache of the local<br>
+storage device, the local storage device returning the data from the cache and, if the<br>
+desired data is not entirely in a cache of the local storage device, reading data from<br>
+the remote storage device to the local storage device and the local storage device<br>
+merging the data from the remote storage device with data from the local storage<br>
+device at the local storage device. Using a local storage device to read desired data<br>
+stored on a remote storage device that receives chunks of data from the local storage<br>
+device may also include, prior to reading data from the remote storage device to the<br>
+local storage device, creating a temporary storage area at the local storage device if<br>
+there is data from the local storage device that is to be read. The temporary storage<br>
+area may be a scratch slot. Using a local storage device to read desired data stored on<br>
+a remote storage device that receives chunks of data from the local storage device<br>
+may also include, prior to creating a temporary storage area, locking slots of the local<br>
+storage device that correspond to of data from the local storage device that is to be<br>
+read. Using a local storage device to read desired data stored on a remote storage<br>
+device that receives chunks of data from the local storage device may also include,<br>
+after merging the data, unlocking the slots of the local storage device that correspond<br>
+to of data from the local storage device that is to be read. The data from the local<br>
+storage area may be merged on top of data from the remote storage area. Using a<br>
+local storage device to read desired data stored on a remote storage device that<br>
+receives chunks of data from the local storage device may also include the remote<br>
+storage device allocating a temporary storage area in response to data to be read being<br>
+stored in a cache slot of the remote storage device. Using a local storage device to<br>
+read desired data stored on a remote storage device that receives chunks of data from<br>
+the local storage device may also include reading data from the disk of the remote<br>
+storage area into the temporary storage area, and merging the data to be read stored in<br>
+the cache slot with data from a disk in the temporary storage area. Using a local<br>
+storage device to read desired data stored on a remote storage device that receives<br>
+chunks of data from the local storage device may also include, prior to the remote<br>
+storage area determining if there is data to be read stored in a cache slot of the remote<br>
+storage device, the remote storage device writing at least a portion of the data from at<br>
+least one cache slot of the remote storage device to a disk of the remote storage<br>
+device.<br>
+According further to the present invention, computer software that reads<br>
+desired data stored on a remote storage device that receives chunks of data from a<br>
+local storage device, includes executable code that returns the data from the cache if<br>
+the desired data is entirely in a cache of the local storage device, and, executable code<br>
+that reads data from the remote storage device to the local storage device and merges<br>
+the data from the remote storage device with data from the local storage device at the<br>
+local storage device if the desired data is not entirely in a cache of the local storage<br>
+device. The software may also include executable code that creates a temporary<br>
+storage area at the local storage device if there is data from the local storage device<br>
+that is to be read prior to reading data from the remote storage device to the local<br>
+storage device. The temporary storage area may be a scratch slot. The software may<br>
+also include executable code that locks slots of the local storage device that<br>
+correspond to of data from the local storage device that is to be read prior to creating<br>
+a temporary storage area. The software may also include executable code that<br>
+unlocks the slots of the local storage device that correspond to of data from the local<br>
+storage device that is to be read after merging the data. The data from the local<br>
+storage area may be merged on top of data from the remote storage area. The<br>
+software may also include executable code that allocates a temporary storage area at<br>
+the remote storage device in response to data to be read being stored in a cache slot<br>
+of the remote storage device. The software may also include executable code that<br>
+reads data from the disk of the remote storage area into the temporary storage area,<br>
+and, executable code that merges the data to be read stored in the cache slot with<br>
+data from a disk in the temporary storage area. The software may also include<br>
+executable code that writes at least a portion of the data from at least one cache slot<br>
+of the remote storage device to a disk of the remote storage device prior to the<br>
+remote storage area determining if there is data to be read stored in a cache slot of<br>
+the remote storage device.<br>
+Brief Description of the Accompanying Drawings<br>
+Figure 1 is a schematic diagram showing a host, a local storage device, and a<br>
+remote data storage device used in connection with the system described herein.<br>
+Figure 2 is a schematic diagram showing a flow of data between a host, a local<br>
+storage device, and a remote data storage device used in connection with the system<br>
+described herein.<br>
+Figure 3 is a schematic diagram illustrating items for constructing and<br>
+manipulating chunks of data on a local storage device according to the system<br>
+described herein.<br>
+Figure 4 is a diagram illustrating a data structure for a slot used in connection<br>
+with the system described herein.<br>
+Figure 5 is a flow chart illustrating operation of a host adaptor (HA) in<br>
+response to a write by a host according to the system described herein.<br>
+Figure 6 is a flow chart illustrating transferring data from a local storage<br>
+device to a remote storage device according to the system described herein.<br>
+Figure 7 is a schematic diagram illustrating items for constructing and<br>
+manipulating chunks of data on a remote storage device according to the system<br>
+described herein.<br>
+Figure 8 is a flow chart illustrating steps performed by a remote storage device<br>
+in connection with receiving a commit indicator from a local storage device according<br>
+to the system described herein.<br>
+Figure 9 is a flow chart illustrating storing transmitted data at a remote storage<br>
+device according to the system described herein.<br>
+Figure 10 is a flow chart illustrating steps performed in connection with a<br>
+local storage device incrementing a sequence number according to a system described<br>
+herein.<br>
+Figure 11 is a schematic diagram illustrating items for constructing and<br>
+manipulating chunks of data on a local storage device according to an alternative<br>
+embodiment of the system described herein.<br>
+Figure 12 is a flow chart illustrating operation of a host adaptor (HA) in<br>
+response to a write by a host according to an alternative embodiment of the system<br>
+described herein.<br>
+Figure 13 is a flow chart illustrating transferring data from a local storage<br>
+device to a remote storage device according to an alternative embodiment of the<br>
+system described herein.<br>
+Figure 14 is a schematic diagram showing a flow of data between a first host,<br>
+a local storage device, a remote data storage device, and a second host coupled to the<br>
+remcte storage device used in connection with the system described herein.<br>
+Figure 15 is a flow chart illustrating steps performed in connection with a host<br>
+reading virtual ordered writes from a remote storage device according to the system<br>
+described herein.<br>
+Figures 16A and 16B are a flow charts illustrating steps performed in<br>
+connection with different embodiments of a host reading multiple tracks of virtual<br>
+ordered writes from a remote storage device according to the system described herein.<br>
+Figure 17 is a schematic diagram showing a flow of data between a first host,<br>
+a local storage device, a remote data storage device, and another host coupled to the<br>
+local storage device used in connection with the system described herein.<br>
+Figure 18 is a flow chart illustrating steps performed in connection with a host<br>
+coupled to a local storage device reading virtual ordered writes from a remote storage<br>
+device according to the system described herein.<br>
+Figures 19A and 19B are flow charts illustrating steps performed by a remote<br>
+storage device in response to a read request from a local storage device coupled to a<br>
+host reading virtual ordered writes from a remote storage device according to the<br>
+system described herein.<br>
+Detailed Description of Various Embodiments<br>
+Referring to Figure 1, a diagram 20 shows a relationship between a host 22, a<br>
+local storage device 24 and a remote storage device 26. The host 22 reads and writes<br>
+data from and to the local storage device 24 via a host adapter (HA) 28, which<br>
+facilitates the interface between the host 22 and the local storage device 24. Although<br>
+the diagram 20 only shows one host 22 and one HA 28, it will be appreciated by one<br>
+of ordinary skill in the art that multiple HA's may be used and that one or more HA's<br>
+may have one or more hosts coupled thereto.<br>
+Data from the local storage device 24 is copied to the remote storage device 26<br>
+via an RDF link 29 to cause the data on the remote storage device 26 to be identical to<br>
+the data on the local storage device 24. Although only the one link 29 is shown, it is<br>
+possible to have additional links between the storage devices 24, 26 and to have links<br>
+between one or both of the storage devices 24, 26 and other storage devices (not<br>
+shown). Note that there may be a time delay between the transfer of data from the<br>
+local storage device 24 to the remote storage device 26, so that the remote storage<br>
+device 26 may, at certain points in time, contain data that is not identical to the data<br>
+on the local storage device 24. Communication using RDF is described, for example,<br>
+in U.S. Patent No. 5,742,792, which is incorporated by reference herein.<br>
+The local storage device 24 includes a first plurality of RDF adapter units<br>
+(RA's) 30a, 30b, 30c and the remote storage device 26 includes a second plurality of<br>
+RA's 32a-32c. The RA's 30a-30c, 32a-32c are coupled to the RDF link 29 and are<br>
+similar to the host adapter 28, but are used to transfer data between the storage<br>
+devices 24, 26. The software used in connection with the RA's 30a-30c, 32a-32c is<br>
+discussed in more detail hereinafter.<br>
+The storage devices 24, 26 may include one or more disks, each containing a<br>
+different portion of data stored on each of the storage devices 24, 26. Figure 1 shows<br>
+the storage device 24 including a plurality of disks 33a, 33b, 33c and the storage<br>
+device 26 including a plurality of disks 34a, 34b, 34c. The RDF functionality<br>
+described herein may be applied so that the data for at least a portion of the disks 33a-<br>
+33c of the local storage device 24 is copied, using RDF, to at least a portion of the<br>
+disks 34a-34c of the remote storage device 26. It is possible that other data of the<br>
+storage devices 24, 26 is not copied between the storage devices 24, 26, and thus is<br>
+not identical.<br>
+Each of the disks 33a-33c is coupled to a corresponding disk adapter unit<br>
+(DA) 35a, 35b, 35c that provides data to a corresponding one of the disks 33a-33c and<br>
+receives data from a corresponding one of the disks 33a-33c. Similarly, a plurality of<br>
+DA's 36a, 36b, 36c of the remote storage device 26 are used to provide data to<br>
+corresponding ones of the disks 34a-34c and receive data from corresponding ones of<br>
+the disks 34a-34c. An internal data path exists between the DA's 35a-35c, the HA 28<br>
+and the RA's 30a-30c of the local storage device 24. Similarly, an internal data path<br>
+exists between the DA's 36a-36c and the RA's 32a-32c of the remote storage device<br>
+26. Note that, in other embodiments, it is possible for more than one disk to be<br>
+serviced by a DA and that it is possible for more than one DA to service a disk.<br>
+The local storage device 24 also includes a global memory 37 that may be<br>
+used to facilitate data transferred between the DA's 35a-35c, the HA 28 and the RA's<br>
+30a-30c. The memory 37 may contain tasks that are to be performed by one or more<br>
+of the DA's 35a-35c, the HA 28 and the RA's 30a-30c, and a cache for data fetched<br>
+from one or more of the disks 33a-33c. Similarly, the remote storage device 26<br>
+includes a global memory 38 that may contain tasks that are to be performed by one<br>
+or more of the DA's 36a-36c and the RA's 32a-32c, and a cache for data fetched from<br>
+one or more of the disks 34a-34c. Use of the memories 37, 38 is described in more<br>
+detail hereinafter.<br>
+The storage space in the local storage device 24 that corresponds to the disks<br>
+33a-33c may be subdivided into a plurality of volumes or logical devices. The logical<br>
+devices may or may not correspond to the physical storage space of the disks 33a-33c.<br>
+Thus, for example, the disk 33a may contain a plurality of logical devices or,<br>
+alternatively, a single logical device could span both of the disks 33a, 33b. Similarly,<br>
+the storage space for the remote storage device 26 that comprises the disks 34a-34c<br>
+may be subdivided into a plurality of volumes or logical devices, where each of the<br>
+logical devices may or may not correspond to one or more of the disks 34a-34c.<br>
+Providing an RDF mapping between portions of the local storage device 24<br>
+and the remote storage device 26 involves setting up a logical device on the remote<br>
+storage device 26 that is a remote mirror for a logical device on the local storage<br>
+device 24. The host 22 reads and writes data from and to the logical device on the<br>
+local storage device 24 and the RDF mapping causes modified data to be transferred<br>
+from the local storage device 24 to the remote storage device 26 using the RA's, 30a-<br>
+30c, 32a-32c and the RDF link 29. In steady state operation, the logical device on the<br>
+remote storage device 26 contains data that is identical to the data of the logical<br>
+device on the local storage device 24. The logical device on the local storage device<br>
+24 that is accessed by the host 22 is referred to as the "Rl volume" (or just "Rl")<br>
+while the logical device on the remote storage device 26 that contains a copy of the<br>
+data on the R1 volume is called the "R2 volume" (or just "R2"). Thus, the host reads<br>
+and writes data from and to the Rl volume and RDF handles automatic copying and<br>
+updating of the data from the Rl volume to the R2 volume.<br>
+Referring to Figure 2, a path of data is illustrated from the host 22 to the local<br>
+storage device 24 and the remote storage device 26. Data written from the host 22 to<br>
+the local storage device 24 is stored locally, as illustrated by the data element 51 of<br>
+the local storage device 24. The data that is written by the host 22 to the local storage<br>
+device 24 is also maintained by the local storage device 24 in connection with being<br>
+sent by the local storage device 24 to the remote storage device 26 via the link 29.<br>
+In the system described herein, each data write by the host 22 (of, for example<br>
+a record, a plurality of records, a track, etc.) is assigned a sequence number. The<br>
+sequence number may be provided in an appropriate data field associated with the<br>
+write. In Figure 2, the writes by the host 22 are shown as being assigned sequence<br>
+number N. All of the writes performed by the host 22 that are assigned sequence<br>
+number N are collected in a single chunk of data 52. The chunk 52 represents a<br>
+plurality of separate writes by the host 22 that occur at approximately the same time.<br>
+Generally, the local storage device 24 accumulates chunks of one sequence<br>
+number while transmitting a previously accumulated chunk (having the previous<br>
+sequence number) to the remote storage device 26. Thus, while the local storage<br>
+device 24 is accumulating writes from the host 22 that are assigned sequence number<br>
+N, the writes that occurred for the previous sequence number (N-l) are transmitted by<br>
+the local storage device 24 to the remote storage device 26 via the link 29. A chunk<br>
+54 represents writes from the host 22 that were assigned the sequence number N-l<br>
+that have not been transmitted yet to the remote storage device 26.<br>
+The remote storage device 26 receives the data from the chunk 54<br>
+corresponding to writes assigned a sequence number N-l and constructs a new chunk<br>
+56 of host writes having sequence number N-l. The data may be transmitted using<br>
+appropriate RDF protocol that acknowledges data sent across the link 29. When the<br>
+remote storage device 26 has received all of the data from the chunk 54, the local<br>
+storage device 24 sends a commit message to the remote storage device 26 to commit<br>
+all the data assigned the N-l sequence number corresponding to the chunk 56.<br>
+Generally, once a chunk corresponding to a particular sequence number is committed,<br>
+that chunk may be written to the logical storage device. This is illustrated in Figure 2<br>
+with a chunk 58 corresponding to writes assigned sequence number N-2 (i.e., two<br>
+before the current sequence number being used in connection with writes by the host<br>
+22 to the local storage device 26). In Figure 2, the chunk 58 is shown as being written<br>
+to a data element 62 representing disk storage for the remote storage device 26. Thus,<br>
+the remote storage device 26 is receiving and accumulating the chunk 56<br>
+corresponding to sequence number N-l while the chunk 58 corresponding to the<br>
+previous sequence number (N-2) is being written to disk storage of the remote<br>
+storage device 26 illustrated by the data element 62. In some embodiments, the data<br>
+for the chunk 58 is marked for write (but not necessarily written immediately), while<br>
+the data for the chunk 56 is not.<br>
+Thus, in operation, the host 22 writes data to the local storage device 24 that is<br>
+stored locally in the data element 51 and is accumulated in the chunk 52. Once all of<br>
+the data for a particular sequence number has been accumulated (described elsewhere<br>
+herein), the local storage device 24 increments the sequence number. Data from the<br>
+chunk 54 corresponding to one less than the current sequence number is transferred<br>
+from the local storage device 24 to the remote storage device 26 via the link 29. The<br>
+chunk 58 corresponds to data for a sequence number that was committed by the local<br>
+storage device 24 sending a message to the remote storage device 26. Data from the<br>
+chunk 58 is written to disk storage of the remote storage device 26.<br>
+Note that the writes within a particular one of the chunks 52, 54, 56, 58 are not<br>
+necessarily ordered. However, as described in more detail elsewhere herein, every<br>
+write for the chunk 58 corresponding to sequence number N-2 was begun prior to<br>
+beginning any of the writes for the chunks 54, 56 corresponding to sequence number<br>
+N-1. In addition, every write for the chunks 54, 56 corresponding to sequence<br>
+number N-l was begun prior to beginning any of the writes for the chunk 52<br>
+corresponding to sequence number N. Thus, in the event of a communication failure<br>
+between the local storage device 24 and the remote storage device 26, the remote<br>
+storage device 26 may simply finish writing the last committed chunk of data (the<br>
+chunk 58 in the example of Figure 2) and can be assured that the state of the data at<br>
+the remote storage device 26 is ordered in the sense that the data element 62 contains<br>
+all of the writes that were begun prior to a certain point in time and contains no writes<br>
+that were begun after that point in time. Thus, R2 always contains a point in time<br>
+copy of Rl and it is possible to reestablish a consistent image from the R2 device.<br>
+Referring to Figure 3, a diagram 70 illustrates items used to construct and<br>
+maintain the chunks 52, 54. A standard logical device 72 contains data written by the<br>
+host 22 and corresponds to the data element 51 of Figure 2 and the disks: 33a-33c of<br>
+Figure 1. The standard logical device 72 contains data written by the host 22 to the<br>
+local storage device 24.<br>
+Two linked lists of pointers 74, 76 are used in connection with the standard<br>
+logical device 72. The linked lists 74, 76 correspond to data that may be stored, for<br>
+example, in the memory 37 of the local storage device 24. The linked list 74 contains<br>
+a plurality of pointers 81-85, each of which points to a slot of a cache 88 used in<br>
+connection with the local storage device 24. Similarly, the linked list 76 contains a<br>
+plurality of pointers 91-95, each of which points to a slot of the cache 88. In some<br>
+embodiments, the cache 88 may be provided in the memory 37 of the local storage<br>
+device 24. The cache 88 contains a plurality of cache slots 102-104 that may be used<br>
+in connection to writes to the standard logical device 72 and, at the same time, used in<br>
+connection with the linked lists 74, 76.<br>
+Each of the linked lists 74, 76 may be used for one of the chunks of data 52,<br>
+54 so that, for example, the linked list 74 may correspond to the chunk of data 52 for<br>
+sequence number N while the linked list 76 may correspond to the chunk of data 54<br>
+for sequence number N-l. Thus, when data is written by the host 22 to the local<br>
+storage device 24, the data is provided to the cache 88 and, in some cases (described<br>
+elsewhere herein), an appropriate pointer of the linked list 74 is created. Note that the<br>
+data will not be removed from the cache 88 until the data is destaged to the standard<br>
+logical device 72 and the data is also no longer pointed to by one of the pointers 81-85<br>
+of the linked list 74, as described elsewhere herein.<br>
+In an embodiment herein, one of the linked lists 74, 76 is deemed "active"<br>
+while the other is deemed "inactive". Thus, for example, when the sequence number<br>
+N is even, the linked list 74 may be active while the linked list 76 is inactive. The<br>
+active one of the linked lists 74, 76 handles writes from the host 22 while the inactive<br>
+one of the linked lists 74, 76 corresponds to the data that is being transmitted from the<br>
+local storage device 24 to the remote storage device 26.<br>
+While the data that is written by the host 22 is accumulated using the active<br>
+one of the linked lists 74, 76 (for the sequence number N), the data corresponding to<br>
+the inactive one of the linked lists 74, 76 (for previous sequence number N-I) is<br>
+transmitted from the local storage device 24 to the remote storage device 26. The<br>
+RA's 30a-30c use the linked lists 74, 76 to determine the data to transmit from the<br>
+local storage device 24 to the remote storage device 26.<br>
+Once data corresponding to a particular one of the pointers in one of the linked<br>
+lists 74, 76 has been transmitted to the remote storage device 26, the particular one of<br>
+the pointers may be removed from the appropriate one of the linked lists 74, 76. In<br>
+addition, the data may also be marked for removal from the cache 88 (i.c, the slot<br>
+may be returned to a pool of slots for later, unrelated, use) provided that the data in<br>
+the slot is not otherwise needed for another purpose (e.g., to be destaged to the<br>
+standard logical device 72). A mechanism may be used to ensure that data is not<br>
+removed from the cache 88 until all devices are no longer using the data. Such a<br>
+mechanism is described, for example, in U.S. Patent No. 5,537,568 issued on July 16,<br>
+1996 and in U.S. patent application no. 09/850,551 filed on July 7, 2001, both of<br>
+which are incorporated by reference herein.<br>
+Referring to Figure 4, a slot 120, like one of the slots 102-104 of the cache 88,<br>
+includes a header 122 and data 124. The header 122 corresponds to overhead<br>
+information used by the system to manage the slot 120. The data 124 is the<br>
+corresponding data from the disk that is being (temporarily) stored in the slot 120.<br>
+Information in the header 122 includes pointers back to the disk, time stamp(s), etc.<br>
+The header 122 also includes a cache stamp 126 used in connection with the<br>
+system described herein. In an embodiment herein, the cache stamp 126 is eight<br>
+bytes. Two of the bytes are a "password" that indicates whether the slot 120 is being<br>
+used by the system described herein. In other embodiments, the password may be one<br>
+byte while the following byte is used for a pad. As described elsewhere herein, the<br>
+two bytes of the password (or one byte, as the case may be) being equal to a particular<br>
+value indicates that the slot 120 is pointed to by at least one entry of the linked lists<br>
+74, 76. The password not being equal to the particular value indicates that the slot<br>
+120 is not pointed to by an entry of the linked lists 74, 76. Use of the password is<br>
+described elsewhere herein.<br>
+The cache stamp 126 also includes a two byte field indicating the sequence<br>
+number (e.g., N, N-l, N-2, etc.) of the data 124 of the slot 120. As described<br>
+elsewhere herein, the sequence number field of the cache stamp 126 may be used to<br>
+facilitate the processing described herein. The remaining four bytes of the cache<br>
+stamp 126 may be used for a pointer, as described elsewhere herein. Of course, the<br>
+two bytes of the sequence number and the four bytes of the pointer are only valid<br>
+when the password equals the particular value that indicates that the slot 120 is<br>
+pointed to by at least one entry in one of the lists 74, 76.<br>
+Referring to Figure S, a flow chart 140 illustrates steps performed by the<br>
+HA 28 in connection with a host 22 performing a write operation. Of course, when<br>
+the host 22 performs a write, processing occurs for handling the write in a normal<br>
+fashion irrespective of whether the data is part of an R1/R2 RDF group. For example,<br>
+when the host 22 writes data for a portion of the disk, the write occurs to a cache slot<br>
+which is eventually destaged to the disk. The cache slot may either be a new cache<br>
+slot or may be an already existing cache slot created in connection with a previous<br>
+read and/or write operation to the same track.<br>
+Processing begins at a first step 142 where a slot corresponding to the write is<br>
+locked. In an embodiment herein, each of the slots 102-104 of the cache 88<br>
+corresponds to a track of data on the standard logical device 72. Locking the slot at<br>
+the step 142 prevents additional processes from operating on the relevant slot during<br>
+the processing performed by the HA 28 corresponding to the steps of the flow chart<br>
+140.<br>
+Following step 142 is a step 144 where a value for N, the sequence number, is<br>
+set. As discussed elsewhere herein, the value for the sequence number obtained at the<br>
+step 144 is maintained during the entire write operation performed by the HA 28<br>
+while the slot is locked. As discussed elsewhere herein, the sequence number is<br>
+assigned to each write to set the one of the chunks of data 52, 54 to which the write<br>
+belongs. Writes performed by the host 22 are assigned the current sequence number.<br>
+It is useful that a single write operation maintain the same sequence number<br>
+throughout.<br>
+Following the step 144 is a test step 146 which determines if the password<br>
+field of the cache slot is valid. As discussed above, the system described herein sets<br>
+the password field to a predetermined value to indicate that the cache slot is already in<br>
+one of the linked lists of pointers 74, 76. If it is determined at the test step 146 that<br>
+the password field is not valid (indicating that the slot is new and that no pointers<br>
+from the lists 74, 76 point to the slot), then control passes from the step 146 to a step<br>
+148, where the cache stamp of the new slot is set by setting the password to the<br>
+predetermined value, setting the sequence number field to N, and setting the pointer<br>
+field to Null. In other embodiments, the pointer field may be set to point to the slot<br>
+itself.<br>
+Following the step 148 is a step 152 where a pointer to the new slot is added to<br>
+the active one of the pointer lists 74, 76. In an embodiment herein, the lists 74, 76 are<br>
+circular doubly linked lists, and the new pointer is added to the circular doubly linked<br>
+list in a conventional fashion. Of course, other appropriate data structures could be<br>
+used to manage the lists 74, 76. Following the step 152 is a step 154 where flags are<br>
+set. At the step 154, the RDF_WP flag (RDF write pending flag) is set to indicate that<br>
+the slot needs to be transmitted to the remote storage device 26 using RDF. In<br>
+addition, at the step 154, the IN_CACHE flag is set to indicate that the slot needs to<br>
+be destaged to the standard logical device 72. Following the step 154 is a step 156<br>
+where the data being written by the host 22 and the HA 28 is written to the slot.<br>
+Following the step 156 is a step 158 where the slot is unlocked. Following step 158,<br>
+processing is complete.<br>
+If it is determined at the test step 146 that the password field of the slot is valid<br>
+(indicating that the slot is already pointed to by at least one pointer of the lists 74, 76),<br>
+then control transfers from the step 146 to a test step 162, where it is determined<br>
+whether the sequence number field of the slot is equal to the current sequence<br>
+number, N. Note that there are two valid possibilities for the sequence number field<br>
+of a slot with a valid password. It is possible for the sequence number field to be<br>
+equal to N, the current sequence number. This occurs when the slot corresponds to a<br>
+previous write with sequence number N. The other possibility is for the sequence<br>
+number field to equal N-l. This occurs when the slot corresponds to a previous write<br>
+with sequence number N-l. Any other value for the sequence number field is invalid.<br>
+Thus, for some embodiments, it may be possible to include error/validity checking in<br>
+the step 162 or possibly make error/validity checking a separate step. Such an error<br>
+may be handled in any appropriate fashion, which may include providing a message<br>
+to a user.<br>
+If it is determined at the step 162 that the value in the sequence number field<br>
+of the slot equals the current sequence number N, then no special processing is<br>
+required and control transfers from the step 162 to the step 156, discussed above,<br>
+where the data is written to the slot. Otherwise, if the value of the sequence number<br>
+field is N-l (the only other valid value), then control transfers from the step 162 to a<br>
+step 164 where a new slot is obtained. The new slot obtained at the step 164 may be<br>
+used to store the data being written.<br>
+Following the step 164 is a step 166 where the data from the old slot is copied<br>
+to the new slot that was obtained at the step 164. Note that that the copied data<br>
+includes the RDFWP flag, which should have been set at the step 154 on a previous<br>
+write when the slot was first created. Following the step 166 is a step 168 where the<br>
+cache stamp for the new slot is set by setting the password field to the appropriate<br>
+value, setting the sequence number field to the current sequence number, N, and<br>
+setting the pointer field to point to the old slot. Following the step 168 is a step 172<br>
+where a pointer to the new slot is added to the active one of the linked lists 74, 76.<br>
+Following the step 172 is the step 156, discussed above, where the data is written to<br>
+the slot which, in this case, is the new slot.<br>
+Referring to Figure 6, a flow chart 200 illustrates steps performed in<br>
+connection with the RA's 30a-30c scanning the inactive one of the lists 72, 74 to<br>
+transmit RDF data from the local storage device 24 to the remote storage device 26.<br>
+As discussed above, the inactive one of the lists 72, 74 points to slots corresponding<br>
+to the N-I cycle for the Rl device when the N cycle is being written to the Rl device<br>
+by the host using the active one of the lists 72, 74.<br>
+Processing begins at a first step 202 where it is determined if there are any<br>
+entries in the inactive one of the lists 72,74. As data is transmitted, the corresponding<br>
+entries are removed from the inactive one of the lists 72, 74. In addition, new writes<br>
+are provided to the active one of the lists 72,74 and not generally to the inactive one<br>
+of the lists 72, 74. Thus, it is possible (and desirable, as described elsewhere herein)<br>
+for the inactive one of the lists 72, 74 to contain no data at certain times. If it is<br>
+determined at the step 202 that there is no data to be transmitted, then the inactive one<br>
+of the lists 72, 74 is continuously polled until data becomes available. Data for<br>
+sending becomes available in connection with a cycle switch (discussed elsewhere<br>
+herein) where the inactive one of the lists 72,74 becomes the active one of the lists<br>
+72, 74, and vice versa.<br>
+If it is determined at the step 202 that there is data available for sending,<br>
+control transfers from the step 202 to a step 204, where the slot is verified as being<br>
+correct. The processing performed at the step 204 is an optional "sanity check" that<br>
+may include verifying that the password field is correct and verifying that the<br>
+sequence number field is correct. If there is incorrect (unexpected) data in the slot,<br>
+error processing may be performed, which may include notifying a user of the error<br>
+and possibly error recovery processing.<br>
+Following the step 204 is a step 212, where the data is sent via RDF in a<br>
+conventional fashion. In an embodiment herein, the entire slot is not transmitted.<br>
+Rather, only records within the slot that have the appropriate mirror bits set<br>
+(indicating the records have changed) are transmitted to the remote storage device 26.<br>
+However, in other embodiments, it may be possible to transmit the entire slot,<br>
+provided that the remote storage device 26 only writes data corresponding to records<br>
+having appropriate mirror bits set and ignores other data for the track, which may or<br>
+may not be valid. Following the step 212 is a test step 214 where it is determined if<br>
+the data that was transmitted has been acknowledged by the R2 device. If not, the<br>
+data is resent, as indicated by the flow from the step 214 back to the step 212. In<br>
+other embodiments, different and more involved processing may used to siend data<br>
+and acknowledge receipt thereof. Such processing may include error reporting and<br>
+alternative processing that is performed after a certain number of attempts to send the<br>
+data have failed.<br>
+Once it is determined at the test step 214 that the data has been successfully<br>
+sent, control passes from the step 214 to a step 216 to clear the RDF_WP flag (since<br>
+the data has been successfully sent via RDF). Following the step 216 is a test step<br>
+218 where it is determined if the slot is a duplicate slot created in connection with a<br>
+write to a slot already having an existing entry in the inactive one of the lists 72, 74.<br>
+This possibility is discussed above in connection with the steps 162, 164, 166, 168,<br>
+172. If it is determined at the step 218 that the slot is a duplicate slot, then control<br>
+passes from the step 218 to a step 222 where the slot is returned to the pool of<br>
+available slots (to be reused). In addition, the slot may also be aged (or have some<br>
+other appropriate mechanism applied thereto) to provide for immediate reuse ahead of<br>
+other slots since the data provided in the slot is not valid for any other purpose.<br>
+Following the step 222 or the step 218 if the slot is not a duplicate slot is a step 224<br>
+where the password field of the slot header is cleared so that when the slot is reused,<br>
+the test at the step 146 of Figure S properly classifies the slot as a new slot.<br>
+Following the step 224 is a step 226 where the entry in the inactive one of the<br>
+lists 72, 74 is removed. Following the step 226, control transfers back to the step 202,<br>
+discussed above, where it is determined if there are additional entries on the inactive<br>
+one of the lists 72, 74 corresponding to data needing to be transferred.<br>
+Referring to Figure 7, a diagram 240 illustrates creation and manipulation of<br>
+the chunks 56, 58 used by the remote storage device 26. Data that is received by the<br>
+remote storage device 26, via the link 29, is provided to a cache 242 of the remote<br>
+storage device 26. The cache 242 may be provided, for example, in the memory 38 of<br>
+the remote storage device 26. The cache 242 includes a plurality of cache slots 244-<br>
+246, each of which may be mapped to a track of a standard logical storage device 252.<br>
+The cache 242 is similar to the cache 88 of Figure 3 and may contain data that can be<br>
+destaged to the standard logical storage device 252 of the remote storage device 26.<br>
+The standard logical storage device 252 corresponds to the data element 62 shown in<br>
+Figure 2 and the disks 34a-34c shown in Figure 1.<br>
+The remote storage device 26 also contains a pair of cache only virtual devices<br>
+254, 256. The cache only virtual devices 254, 256 corresponded device tables that<br>
+may be stored, for example, in the memory 38 of the remote storage device 26. Each<br>
+track entry of the tables of each of the cache only virtual devices 254, 256 point to<br>
+either a track of the standard logical device 252 or point to a slot of the cache 242.<br>
+Cache only virtual devices are described in a copending U.S. patent application titled<br>
+CACHE-ONLY VIRTUAL DEVICES, filed on March 25, 2003 and having serial no.<br>
+10/396,800, which is incorporated by reference herein.<br>
+The plurality of cache slots 244-246 may be used in connection to writes to the<br>
+standard logical device 252 and, at the same time, used in connection with the cache<br>
+only virtual devices 254, 256. In an embodiment herein, each of track table entry of<br>
+the cache only virtual devices 254, 256 contain a null to indicate that the data for that<br>
+track is stored on a corresponding track of the standard logical device 252.<br>
+Otherwise, an entry in the track table for each of the cache only virtual devices 254,<br>
+256 contains a pointer to one of the slots 244-246 in the cache 242.<br>
+Each of the cache only virtual devices 254, 256 corresponds to one of the data<br>
+chunks 56, 58. Thus, for example, the cache only virtual device 254 may correspond<br>
+ to the data chunk 56 while the cache only virtual device 256 may correspond to the<br>
+data chunk 58. In an embodiment herein, one of the cache only virtual devices 254,<br>
+256 may be deemed "active" while the other one of the cache only virtual devices<br>
+254, 256 may be deemed "inactive". The inactive one of the cache only virtual<br>
+devices 254, 256 may correspond to data being received from the local storage device<br>
+24 (i.e., the chunk 56) while the active one of the cache only virtual device 254, 256<br>
+corresponds to data being restored (written) to the standard logical device 252.<br>
+Data from the local storage device 24 that is received via the link 29 may be<br>
+placed in one of the slots 244-246 of the cache 242. A corresponding pointer of the<br>
+inactive one of the cache only virtual devices 254, 256 may be set to point to the<br>
+received data. Subsequent data having the same sequence number may be processed<br>
+in a similar manner. At some point, the local storage device 24 provides a message<br>
+committing all of the data sent using the same sequence number. Once the data for a<br>
+particular sequence number has been committed, the inactive one of the cache only<br>
+virtual devices 254, 256 becomes active and vice versa. At that point, data from the<br>
+now active one of the cache only virtual devices 254, 256 is copied to the standard<br>
+logical device 252 while the inactive one of the cache only virtual devices 254, 256 is<br>
+used to receive new data (having a new sequence number) transmitted from the local<br>
+storage device 24 to the remote storage device 26.<br>
+As data is removed from the active one of the cache only virtual devices 254,<br>
+256 (discussed elsewhere herein), the corresponding entry in the active one of the<br>
+cache only virtual devices 254, 256 may be set to null. In addition, the data may also<br>
+be removed from the cache 244 (i.e., the slot returned to the pool of free slots for later<br>
+use) provided that the data in the slot is not otherwise needed for another purpose<br>
+(e.g., to be destaged to the standard logical device 252). A mechanism may be used to<br>
+ensure that data is not removed from the cache 242 until all mirrors (including the<br>
+cache only virtual devices 254, 256) are no longer using the data. Such a mechanism<br>
+is described, for example, in U.S. Patent No. 5,537,568 issued on July 16, 1996 and in<br>
+U.S. patent application no. 09/850, 551 filed on July 7, 2001, both of which are<br>
+incorporated by reference herein.<br>
+In some embodiments discussed elsewhere herein, the remote storage device<br>
+26 may maintain linked lists 258, 262 like the lists 74, 76 used by the local storage<br>
+device 24. The lists 258, 262 may contain information that identifies the slots of the<br>
+corresponding cache only virtual devices 254, 256 that have been modified, where<br>
+one of the lists 258, 262 corresponds to one of the cache only virtual devices 254, 256<br>
+and the other one of the lists 258, 262 corresponds to the other one of the cache only<br>
+virtual devices 254, 256. As discussed elsewhere herein, the lists 258, 262 may be<br>
+used to facilitate restoring data from the cache only virtual devices 254, 256 to the<br>
+standard logical device 252.<br>
+Referring to Figure 8, a flow chart 270 illustrates steps performed by the<br>
+remote storage device 26 in connection with processing data for a sequence number<br>
+commit transmitted by the local storage device 24 to the remote storage device 26. As<br>
+discussed elsewhere herein, the local storage device 24 periodically increments<br>
+sequence numbers. When this occurs, the local storage device 24 Finishes<br>
+transmitting all of the data for the previous sequence number and then sends a commit<br>
+message for the previous sequence number.<br>
+Processing begins at a first step 272 where the commit is received. Following<br>
+the step 272 is a test step 274 which determines if the active one of the cache only<br>
+virtual devices 254, 256 of the remote storage device 26 is empty. As discussed<br>
+elsewhere herein, the inactive one of the cache only virtual devices 254, 256 of the<br>
+remote storage device 26 is used to accumulate data from the local storage device 24<br>
+sent using RDF while the active one of the cache only virtual devices 254, 256 is<br>
+restored to the standard logical device 252.<br>
+If it is determined at the test step 274 that the active one of the cache only<br>
+virtual devices 254, 256 is not empty, then control transfers from the test step 274 to a<br>
+step 276 where the restore for the active one of the cache only virtual devices 254,<br>
+256 is completed prior to further processing being performed. Restoring data from<br>
+the active one of the cache only virtual devices 254, 256 is described in more detail<br>
+elsewhere herein. It is useful that the active one of the cache only virtual devices 254,<br>
+256 is empty prior to handling the commit and beginning to restore data for the next<br>
+sequence number.<br>
+Following the step 276 or following the step 274 if the active one of the cache<br>
+only virtual devices 254, 256 is determined to be empty, is a step 278 where the active<br>
+one of the cache only virtual devices 254, 256 is made inactive. Following the step<br>
+278 is a step 282 where the previously inactive one of the cache only virtual devices<br>
+254, 256 (i.e., the one that was inactive prior to execution of the step 278) is made<br>
+active. Swapping the active and inactive cache only virtual devices 254, 256 at the<br>
+steps 278, 282 prepares the now inactive (and empty) one of the cache only virtual<br>
+devices 254, 256 to begin to receive data from the local storage device 24 for the next<br>
+sequence number.<br>
+Following the step 282 is a step 284 where the active one of the cache only<br>
+virtual devices 254, 256 is restored to the standard logical device 252 of the remote<br>
+storage device 26. Restoring the active one of the cache only virtual devices 254, 256<br>
+to the standard logical device 252 is described in more detail hereinafter. However,<br>
+note that, in some embodiments, the restore process is begun, but not necessarily<br>
+completed, at the step 284. Following the step 284 is a step 286 where the commit<br>
+that was sent from the local storage device 24 to the remote storage device 26 is<br>
+acknowledged back to the local storage device 24 so that the local storage device 24 is<br>
+informed that the commit was successful. Following the step 286, processing is<br>
+complete.<br>
+Referring to Figure 9, a flow chart 300 illustrates in more detail the steps 276,<br>
+284 of Figure 8 where the remote storage device 26 restores the active one of the<br>
+cache only virtual devices 254, 256. Processing begins at a first step 302 where a<br>
+pointer is set to point to the first slot of the active one of the cache only virtual devices<br>
+254, 256. The pointer is used to iterate through each track table entry of the active<br>
+one of the cache only virtual devices 254, 256, each of which is processed<br>
+individually. Following the step 302 is a test step 304 where it is determined if the<br>
+track of the active one of the cache only virtual devices 254, 256 that is being<br>
+processed points to the standard logical device 252. If so, then there is nothing to<br>
+restore. Otherwise, control transfers from the step 304 to a step a 306 where the<br>
+corresponding slot of the active one of the cache only virtual devices 254, 256 is<br>
+locked.<br>
+Following the step 306 is a test step 308 which determines if the<br>
+corresponding slot of the standard logical device 252 is already in the cache of the<br>
+remote storage device 26. If so, then control transfers from the test step 308 to a step<br>
+312 where the slot of the standard logical device is locked. Following step 312 is a<br>
+step 314 where the data from the active one of the cache only virtual devices 254, 256<br>
+is merged with the data in the cache for the standard logical device 252. Merging the<br>
+data at the step 314 involves overwriting the data for the standard logical device with<br>
+the new data of the active one of the cache only virtual devices 254, 256. Note that,<br>
+in embodiments that provide for record level flags, it may be possible to simply OR<br>
+the new records from the active one of the cache only virtual devices 254, 256 to the<br>
+records of the standard logical device 252 in the cache. That is, if the records are<br>
+interleaved, then it is only necessary to use the records from the active one of the<br>
+cache only virtual devices 254, 256 that have changed and provide the records to the<br>
+cache slot of the standard logical device 252. Following step 314 is a step 316 where<br>
+the slot of the standard logical device 252 is unlocked. Following step 316 is a step<br>
+318 where the slot of the active one of the cache only virtual devices 254, 256 that is<br>
+being processed is also unlocked.<br>
+If it is determined at the test step 308 that the corresponding slot of the<br>
+standard logical device 252 is not in cache, then control transfers from the test step<br>
+308 to a step 322 where the track entry for the slot of the standard logical device 252<br>
+is changed to indicate that the slot of the standard logical device 252 is in cache (e.g.,<br>
+an 1NCACHE flag may be set) and needs to be destaged. As discussed elsewhere<br>
+herein, in some embodiments, only records of the track having appropriate mirror bits<br>
+set may need to be destaged. Following the step 322 is a step 324 where a flag for the<br>
+track may be set to indicate that the data for the track is in the cache.<br>
+Following the step 324 is a step 326 where the slot pointer for the standard<br>
+logical device 252 is changed to point to the slot in the cache. Following the step 326<br>
+is a test step 328 which determines if the operations performed at the steps 322, 324,<br>
+326 have been successful. In some instances, a single operation called a "compare<br>
+and swap" operation may be used to perform the steps 322, 324, 326. If these<br>
+operations are not successful for any reason, then control transfers from the step 328<br>
+back to the step 308 to reexamine if the corresponding track of the standard logical<br>
+device 252 is in the cache. Otherwise, if it is determined at the test step 328 that the<br>
+previous operations have been successful, then control transfers from thetest step 328<br>
+to the step 318, discussed above.<br>
+Following the step 318 is a test step 332 which determines if the cache slot of<br>
+the active one of the cache only virtual devices 254, 256 (which is being restored) is<br>
+still being used. In some cases, it is possible that the slot for the active one of the<br>
+cache only virtual devices 254, 256 is still being used by another mirror. If it is<br>
+determined at the test step 332 that the slot of the cache only virtual device is not<br>
+being used by another mirror, then control transfers from the test step 332 to a step<br>
+334 where the slot is released for use by other processes (e.g., restored to pool of<br>
+available slots, as discussed elsewhere herein). Following the step 334 is a step 336<br>
+to point to the next slot to process the next slot of the active one of the cache only<br>
+virtual devices 254, 256. Note that the step 336 is also reached from the test step 332<br>
+if it is determined at the step 332 that the active one of the cache only virtual devices<br>
+254, 256 is still being used by another mirror. Note also that the step 336 is reached<br>
+from the test step 304 if it is determined at the step 304 that, for the slot being<br>
+processed, the active one of the cache only virtual devices 254, 256 points to the<br>
+standard logical device 252. Following the step 336 is a test step 338 which<br>
+determines if there are more slots of the active one of the cache only virtual devices<br>
+254, 256 to be processed. If not, processing is complete. Otherwise, control transfers<br>
+from the test step 338 back to the step 304.<br>
+In another embodiment, it is possible to construct lists of modified slots for the<br>
+received chunk of data 56 corresponding to the N-l cycle on the remote storage<br>
+device 26, such as the lists 258, 262 shown in Figure 7. As the data is received, the<br>
+remote storage device 26 constructs a linked list of modified slots. The lists that are<br>
+constructed may be circular, linear (with a NULL termination), or any other<br>
+appropriate design. The lists may then be used to restore the active one of the cache<br>
+only virtual devices 254, 256.<br>
+The flow chart 300 of Figure 9 shows two alternative paths 342, 344 that<br>
+illustrate operation of embodiments where a list of modified slots is used. At the step<br>
+302, a pointer (used for iterating through the list of modified slots) is made to point to<br>
+the first element of the list. Following the step 302 is the step 306, which is reached<br>
+by the alternative path 342. In embodiments that use lists of modified slots, the test<br>
+step 304 is not needed since no slots on the list should point to the standard logical<br>
+device 252.<br>
+Following the step 306, processing continues as discussed above with the<br>
+previous embodiment, except that the step 336 refers to traversing the list of modified<br>
+slots rather than pointing to the next slot in the COVD. Similarly, the test at the step<br>
+338 determines if the pointer is at the end of the list (or back to the beginning in the<br>
+case of a circular linked list). Also, if it is determined at the step 338 that there are<br>
+more slots to process, then control transfers from the step 338 to the step 306, as<br>
+illustrated by the alternative path 344. As discussed above, for embodiments that use<br>
+a list of modified slots, the step 304 may be eliminated.<br>
+Referring to Figure 10, a flow chart 350 illustrates steps performed in<br>
+connection with the local storage device 24 increasing the sequence number.<br>
+Processing begins at a first step 352 where the local storage device 24 waits at least M<br>
+seconds prior to increasing the sequence number. In an embodiment herein, M is<br>
+thirty, but of course M could be any number. Larger values for M increase the<br>
+amount of data that may be lost if communication between the storage devices 24, 26<br>
+is disrupted. However, smaller values for M increase the total amount of overhead<br>
+caused by incrementing the sequence number more frequently.<br>
+Following the step 352 is a test step 354 which determines if all of the HA's of<br>
+the local storage device 24 have set a bit indicating that the HA's have completed all<br>
+of the F/O's for a previous sequence number. When the sequence number changes,<br>
+each of the HA's notices the change and sets a bit indicating that all I/O's of the<br>
+previous sequence number are completed. For example, if the sequence number<br>
+changes from N-l to N, an HA will set the bit when the HA has completed all I/O's<br>
+for sequence number N-l. Note that, in some instances, a single I/O for an HA may<br>
+take a long time and may still be in progress even after the sequence number has<br>
+changed. Note also that, for some systems, a different mechanism may be used to<br>
+determine if all of the HA's have completed their N-l I/O's. The different<br>
+mechanism may include examining device tables in the memory 37.<br>
+If it is determined at the test step 354 that 1/O's from the previous sequence<br>
+number have been completed, then control transfers from the step 354 to a test step<br>
+356 which determines if the inactive one of the lists 74, 76 is empty. Note that a<br>
+sequence number switch may not be made unless and until all of the data<br>
+corresponding to the inactive one of the lists 74, 76 has been completely transmitted<br>
+from the local storage device 24 to the remote storage device 26 using the RDF<br>
+protocol. Once the inactive one of the lists 74, 76 is determined to be empty, then<br>
+control transfers from the step 356 to a step 358 where the commit for the previous<br>
+sequence number is sent from the local storage device 24 to the remote storage device<br>
+26. As discussed above, the remote storage device 26 receiving a commit message for<br>
+a particular sequence number will cause the remote storage device 26 to begin<br>
+restoring the data corresponding to the sequence number.<br>
+Following the step 358 is a step 362 where the copying of data for the inactive<br>
+one of the lists 74, 76 is suspended. As discussed elsewhere herein, the inactive one<br>
+of the lists is scanned to send corresponding data from the local storage device 24 to<br>
+the remote storage device 26. It is useful to suspend copying data until the sequence<br>
+number switch is completed. In an embodiment herein, the suspension is provided by<br>
+sending a message to the RA's 30a-30c. However, it will be appreciated by one of<br>
+ordinary skill in the art that for embodiments that use other components to facilitate<br>
+sending data using the system described herein, suspending copying may be provided<br>
+by sending appropriate messages/commands to the other components.<br>
+Following step 362 is a step 364 where the sequence number is incremented.<br>
+Following step 364 is a step 366 where the bits for the HA's that are used in the test<br>
+step 354 are all cleared so that the bits may be set again in connection with the<br>
+increment of the sequence number. Following step 366 is a test step 372 which<br>
+determines if the remote storage device 26 has acknowledged the commit message<br>
+sent at the step 358. Acknowledging the commit message is discussed above in<br>
+connection with Figure 8. Once it is determined that the remote storage device 26 has<br>
+acknowledged the commit message sent at the step 358, control transfers from the<br>
+step 372 to a step 374 where the suspension of copying, which was provided at the<br>
+step 362, is cleared so that copying may resume. Following step 374, processing is<br>
+complete. Note that it is possible to go from the step 374 back to the step 352 to<br>
+begin a new cycle to continuously increment the sequence number.<br>
+It is also possible to use COVD's on the Rl device to collect slots associated<br>
+with active data and inactive chunks of data. In that case, just as with the R2 device,<br>
+one COVD could be associated with the inactive sequence number and another<br>
+COVD could be associated with the active sequence number. This is described<br>
+below.<br>
+Referring to Figure 11, a diagram 400 illustrates items used to construct and<br>
+maintain the chunks 52, 54. A standard logical device 402 contains data written by<br>
+the host 22 and corresponds to the data element 51 of Figure 2 and the disks 33a-33c<br>
+of Figure 1. The standard logical device 402 contains data written by the host 22 to<br>
+the local storage device 24.<br>
+Two cache only virtual devices 404, 406 are used in connection with the<br>
+standard logical device 402. The cache only virtual devices 404, 406 corresponded<br>
+device tables that may be stored, for example, in the memory 37 of the local storage<br>
+device 24. Each track entry of the tables of each of the cache only virtual devices<br>
+404, 406 point to either a track of the standard logical device 402 or point to a slot of<br>
+a cache 408 used in connection with the local storage device 24. In some<br>
+embodiments, the cache 408 may be provided in the memory 37 of the local storage<br>
+device 24.<br>
+The cache 408 contains a plurality of cache slots 412-414 that may be used in<br>
+connection to writes to the standard logical device 402 and, at the same time, used in<br>
+connection with the cache only virtual devices 404, 406. In an embodiment herein,<br>
+each track table entry of the cache only virtual devices 404, 406 contains a null to<br>
+point to a corresponding track of the standard logical device 402. Otherwise, an entry<br>
+in the track table for each of the cache only virtual devices 404, 406 contains a pointer<br>
+to one of the slots 412-414 in the cache 408.<br>
+Each of the cache only virtual devices 404, 406 may be used for one of the<br>
+chunks of data 52, 54 so that, for example, the cache only virtual device 404 may<br>
+correspond to the chunk of data 52 for sequence number N while the cache only<br>
+virtual device 406 may correspond to the chunk of data 54 for sequence number N-l.<br>
+Thus, when data is written by the host 22 to the local storage device 24, the data is<br>
+provided to the cache 408 and an appropriate pointer of the cache only virtual device<br>
+404 is adjusted. Note that the data will not be removed from the cache 408 until the<br>
+data is destaged to the standard logical device 402 and the data is also released by the<br>
+cache only virtual device 404, as described elsewhere herein.<br>
+In an embodiment herein, one of the cache only virtual devices 404, 406 is<br>
+deemed "active" while the other is deemed "inactive". Thus, for example, when the<br>
+sequence number N is even, the cache only virtual device 404 may be active while the<br>
+cache only virtual device 406 is inactive. The active one of the cache only virtual<br>
+devices 404, 406 handles writes from the host 22 while the inactive one of the cache<br>
+only virtual devices 404, 406 corresponds to the data that is being transmitted from<br>
+the local storage device 24 to the remote storage device 26.<br>
+While the data that is written by the host 22 is accumulated using the active<br>
+one of the cache only virtual devices 404, 406 (for the sequence number N), the data<br>
+corresponding to the inactive one of the cache only virtual devices 404, 406 (for<br>
+previous sequence number N-l) is transmitted from the local storage device 24 to the<br>
+remote storage device 26. For this and related embodiments, the DA's 35a-35c of the<br>
+local storage device handle scanning the inactive one of the cache only virtual devices<br>
+404, 406 to send copy requests to one or more of the RA's 30a-30c to transmit the<br>
+data from the local storage device 24 to the remote storage device 26. Thus, the steps<br>
+362, 374, discussed above in connection with suspending and resuming copying, may<br>
+include providing messages/commands to the DA's 35a-35c.<br>
+Once the data has been transmitted to the remote storage device 26, the<br>
+corresponding entry in the inactive one of the cache only virtual devices 404, 406 may<br>
+be set to null. In addition, the data may also be removed from the cache 408 (i.e., the<br>
+slot returned to the pool of slots for later use) if the data in the slot is not otherwise<br>
+needed for another purpose (e.g., to be destaged to the standard logical device 402).<br>
+A mechanism may be used to ensure that data is not removed from the cache 408 until<br>
+all mirrors (including the cache only virtual devices 404, 406) are no longer using the<br>
+data. Such a mechanism is described, for example, in U.S. Patent No. 5,537,568<br>
+issued on July 16, 1996 and in U.S. patent application no. 09/850,551 filed on July 7,<br>
+2001, both of which are incorporated by reference herein.<br>
+Referring to Figure 12, a flow chart 440 illustrates steps performed by the<br>
+HA 28 in connection with a host 22 performing a write operation for embodiments<br>
+where two COVD's are used by the Rl device to provide the system described herein.<br>
+Processing begins at a first step 442 where a slot corresponding to the write is locked.<br>
+In an embodiment herein, each of the slots 412-414 of the cache 408 corresponds to a<br>
+track of data on the standard logical device 402. Locking the slot at the step 442<br>
+prevents additional processes from operating on the relevant slot during the<br>
+processing performed by the HA 28 corresponding to the steps of the flow chart 440.<br>
+Following the step 442 is a step 444 where a value for N, the sequence<br>
+number, is set. Just as with the embodiment that uses lists rather than COVD's on the<br>
+Rl side, the value for the sequence number obtained at the step 444 is maintained<br>
+during the entire write operation performed by the HA 28 while the slot is locked. As<br>
+discussed elsewhere herein, the sequence number is assigned to each write to set the<br>
+one of the chunks of data 52, 54 to which the write belongs. Writes performed by the<br>
+host 22 are assigned the current sequence number, (t is useful that a single write<br>
+operation maintain the same sequence number throughout.<br>
+Following the step 444 is a test step 446, which determines if the inactive one<br>
+of the cache only virtual devices 404, 406 already points to the slot that was locked at<br>
+the step 442 (the slot being operated upon). This may occur if a write to the same slot<br>
+was provided when the sequence number was one less than the current sequence<br>
+number. The data corresponding to the write for the previous sequence number may<br>
+not yet have been transmitted to the remote storage device 26.<br>
+If it is determined at the test step 446 that the inactive one of the cache only<br>
+virtual devices 404, 406 does not point to the slot, then control transfers from the test<br>
+step 446 to another test step 448, where it is determined if the active one of the cache<br>
+only virtual devices 404, 406 points to the slot. It is possible for the active one of the<br>
+cache only virtual devices 404, 406 to point to the slot if there had been a previous<br>
+write to the slot while the sequence number was the same as the current sequence<br>
+number. If it is determined at the test step 448 that the active one of the cache only<br>
+virtual devices 404, 406 does not point to the slot, then control transfers from the test<br>
+step 448 to a step 4S2 where a new slot is obtained for the data. Following the step<br>
+452 is a step 454 where the active one of the cache only virtual devices 404, 406 is<br>
+made to point to the slot.<br>
+Following the step 454, or following the step 448 if the active one of the cache<br>
+only virtual devices 404, 406 points to the slot, is a step 456 where flags are set. At<br>
+the step 456, the RDF_WP flag (RDF write pending flag) is set to indicate that the<br>
+slot needs to be transmitted to the remote storage device 26 using RDF. In addition,<br>
+at the step 456, the IN_CACHE flag is set to indicate that the slot needs to be<br>
+destaged to the standard logical device 402. Note that, in some instances, if the active<br>
+one of the cache only virtual devices 404, 406 already points to the slot (as<br>
+determined at the step 448) it is possible that the RDF_WP and IN_CACHE flags<br>
+were already set prior to execution of the step 456. However, setting the flags at the<br>
+step 456 ensures that the flags are set properly no matter what the previous state.<br>
+Following the step 456 is a step 458 where an indirect flag in the track table<br>
+that points to the slot is cleared, indicating that the relevant data is provided in the slot<br>
+and not in a different slot indirectly pointed to. Following the step 458 is a step 462<br>
+where the data being written by the host 22 and the HA 28 is written to the slot.<br>
+Following the step 462 is a step 464 where the slot is unlocked. Following step 464,<br>
+processing is complete.<br>
+If it is determined at the test step 446 that the inactive one of the cache only<br>
+virtual devices 404, 406 points to the slot, then control transfers from the step 446 to a<br>
+step 472, where a new slot is obtained. The new slot obtained at the step 472 may be<br>
+used for the inactive one of the cache only virtual devices 404, 406 to effect the RDF<br>
+transfer while the old slot may be associated with the active one of the cache only<br>
+virtual devices 404, 406, as described below.<br>
+Following the step 472 is a step 474 where the data from the old slot is copied<br>
+to the new slot that was obtained at the step 472. Following the step 474 is a step 476<br>
+where the indirect flag (discussed above) is set to indicate that the track table entry for<br>
+the inactive one of the cache only virtual devices 404, 406 points to the old slot but<br>
+that the data is in the new slot which is pointed to by the old slot. Thus, setting<br>
+indirect flag at the step 476 affects the track table of the inactive one of the cache only<br>
+virtual devices 404, 406 to cause the track table entry to indicate that the data is in the<br>
+new slot.<br>
+Following the step 476 is a step 478 where the mirror bits for the records in<br>
+the new slot are adjusted. Any local mirror bits that were copied when the data was<br>
+copied from the old slot to the new slot at the step 474 are cleared since the purpose of<br>
+the new slot is to simply effect the RDF transfer for the inactive one of the cache only<br>
+virtual devices. The old slot will be used to handle any local mirrors. Following the<br>
+step 478 is the step 462 where the data is written to the slot. Following step 462 is the<br>
+step 464 where the slot is unlocked. Following the step 464, processing is complete.<br>
+Referring to Figure 13, a flow chart 500 illustrates steps performed in<br>
+connection with the local storage device 24 transmitting the chunk of data 54 to the<br>
+remote storage device 26. The transmission essentially involves scanning the inactive<br>
+one of the cache only virtual devices 404, 406 for tracks that have been written thereto<br>
+during a previous iteration when the inactive one of the cache only virtual devices<br>
+404, 406 was active. In this embodiment, the DA's 35a-35c of the local storage<br>
+device 24 scan the inactive one of the cache only virtual devices 404, 406 to copy the<br>
+data for transmission to the remote storage device 26 by one or more of the RA's 30a-<br>
+30c using the RDF protocol.<br>
+Processing begins at a first step 502 where the first track of the inactive one of<br>
+the cache only virtual devices 404, 406 is pointed to in order to begin the process of<br>
+iterating through all of the tracks. Following the first step 502 is a test step 504 where<br>
+it is determined if the RDF_WP flag is set. As discussed elsewhere herein, the<br>
+RDF_WP flag is used to indicate that a slot (track) contains data that needs to be<br>
+transmitted via the RDF link. The RDFWP flag being set indicates that at least some<br>
+data for the slot (track) is to be transmitted using RDF. In an embodiment herein, the<br>
+entire slot is not transmitted. Rather, only records within the slot that have the<br>
+appropriate mirror bits set (indicating the records have changed) are transmitted to the<br>
+remote storage device 26. However, in other embodiments, it may be possible to<br>
+transmit the entire slot, provided that the remote storage device 26 only writes data<br>
+corresponding to records having appropriate mirror bits set and ignores other data for<br>
+the track, which may or may not be valid.<br>
+If it is determined at the test step 504 that the cache slot being processed has<br>
+the RDF_WP flag set, then control transfers from the step 504 to a test step 505,<br>
+where it is determined if the slot contains the data or if the slot is an indirect slot that<br>
+points to another slot that contains the relevant data. In some instances, a slot may not<br>
+contain the data for the portion of the disk that corresponds to the slot. Instead, the<br>
+slot may be an indirect slot that points to another slot that contains the data. If it is<br>
+determined at the step 505 that the slot is an indirect slot, then control transfers from<br>
+the step 505 to a step 506, where the data (from the slot pointed to by the indirect slot)<br>
+is obtained. Thus, if the slot is a direct slot, the data for being sent by RDF is stored<br>
+in the slot while if the slot is an indirect slot, the data for being sent by RDF is in<br>
+another slot pointed to by the indirect slot.<br>
+Following the step 506 or the step 505 if the slot is a direct slot is a step 507<br>
+where data being sent (directly or indirectly from the slot) is copied by one of the<br>
+DA's 35a-35c to be sent from the local storage device 24 to the remote storage device<br>
+26 using the RDF protocol. Following the step 507 is a test step 508 where it is<br>
+determined if the remote storage device 26 has acknowledged receipt of the data. If<br>
+not, then control transfers from the step 508 back to the step 507 to resend the data.<br>
+In other embodiments, different and more involved processing may used to send data<br>
+and acknowledge receipt thereof. Such processing may include error reporting and<br>
+alternative processing that is performed after a certain number of attempts to send the<br>
+data have failed.<br>
+Once it is determined at the test step 508 that the data has been successfully<br>
+sent, control passes from the step 508 to a step 512 to clear the RDF_WP flag (since<br>
+the data has been successfully sent via RDF). Following the step 512 is a step 514<br>
+where appropriate mirror flags are cleared to indicate that at least the RDF mirror<br>
+(R2) no longer needs the data. In an embodiment herein, each record that is part of a<br>
+slot (track) has individual mirror flags indicating which mirrors use the particular<br>
+record. The R2 device is one of the mirrors for each of the records and it is the flags<br>
+corresponding to the R2 device that are cleared at the step 514.<br>
+Following the step 514 is a test step 516 which determines if any of the<br>
+records of the track being processed have any other mirror flags set (for other mirror<br>
+devices). If not, then control passes from the step 516 to a step 518 where the slot is<br>
+released (i.e., no longer being used). In some embodiments, unused slots are<br>
+maintained in a pool of slots available for use. Note that if additional flags are still set<br>
+for some of the records of the slot, it may mean that the records need to be destaged to<br>
+the standard logical device 402 or are being used by some other mirror (including<br>
+another R2 device). Following the step 518, or following the step 516 if more mirror<br>
+flags are present, is a step 522 where the pointer that is used to iterate through each<br>
+track entry of the inactive one of the cache only virtual devices 404, 406 is made to<br>
+point to the next track. Following the step 522 is a test step 524 which determines if<br>
+there are more tracks of the inactive one of the cache only virtual devices 404, 406 to<br>
+be processed. If not, then processing is complete. Otherwise, control transfers back<br>
+to the test step 504, discussed above. Note that the step 522 is also reached from the<br>
+test step 504 if it is determined that the RDF_WP flag is not set for the track being<br>
+processed.<br>
+In some instances, it may be useful to be able to read data from an R2 device<br>
+using a host coupled to a remote storage device while the system is operating and<br>
+performing virtual ordered writes from a local storage device (Rl) to the remote<br>
+storage device. In connection with this, it is useful for the host coupled to the remote<br>
+storage device to be able to read the most up-to-date data that is consistent (i.e., part<br>
+of a committed chunk of data on the R2 side).<br>
+Figure 14 illustrates a path of data from a host 602 to a local storage device<br>
+604 and a remote storage device 606 via a link 608. The system of Figure 14 is<br>
+similar to the system illustrated in Figure 2 and discussed above. Data written from<br>
+the host 602 to the local storage device 604 is stored locally, as illustrated by the data<br>
+element 612 of the local storage device 604. The data that is written by the host 602<br>
+to the local storage device 604 is also maintained by the local storage device 604 in<br>
+connection with being sent by the local storage device 604 to the remote storage<br>
+device 606 via the link 608.<br>
+Each data write by the host 602 (of, for example a record, a plurality of<br>
+records, a track, etc.) is assigned a sequence number. The sequence number may be<br>
+provided in an appropriate data field associated with the write. In Figure 14, the<br>
+writes by the host 602 are shown as being assigned sequence number N. All of the<br>
+writes performed by the host 602 that are assigned sequence number N are collected<br>
+in a single chunk of data 614. The chunk 614 represents a plurality of separate writes<br>
+by the host 602 that occur at approximately the same time.<br>
+Generally, the local storage device 604 accumulates chunks of one sequence<br>
+number while transmitting a previously accumulated chunk (having the previous<br>
+sequence number) to the remote storage device 606. Thus, while the local storage<br>
+device 604 is accumulating writes from the host 602 that are assigned sequence<br>
+number N, the writes that occurred for the previous sequence number (N-l) are<br>
+transmitted by the local storage device 604 to the remote storage device 606 via the<br>
+link 608. A chunk 616 represents writes from the host 602 that were assigned the<br>
+sequence number N-l that have not been transmitted yet to the remote storage device<br>
+606.<br>
+The remote storage device 606 receives the data from the chunk 616<br>
+corresponding to writes assigned a sequence number N-l and constructs a new chunk<br>
+618 of host writes having sequence number N-l. The data may be transmitted using<br>
+appropriate RDF protocol that acknowledges data sent across the link 608. When the<br>
+remote storage device 606 has received all of the data from the chunk 616, the local<br>
+storage device 604 sends a commit message to the remote storage device 606 to<br>
+commit all the data assigned the N-l sequence number corresponding to the chunk<br>
+618. Generally, once a chunk corresponding to a particular sequence number is<br>
+committed, that chunk may be written to the logical storage device. This is illustrated<br>
+in Figure 14 with a chunk 622 corresponding to writes assigned sequence number N-2<br>
+(i.e., two before the current sequence number being used in connection with writes by<br>
+the host 602 to the local storage device 606).<br>
+In Figure 14, the chunk 622 is shown as being written to a data element 624<br>
+representing disk storage (standard logical device) for the remote storage device 606.<br>
+Thus, the remote storage device 606 is receiving and accumulating the chunk 618<br>
+corresponding to sequence number N-l while the chunk 622 corresponding to the<br>
+previous sequence number (N-2) is being written to disk storage of the remote storage<br>
+device 606 illustrated by the data element 624. In some embodiments, the data for the<br>
+chunk 622 is marked for write (but not necessarily written immediately), while the<br>
+data for the chunk 618 is not. Data stored on the data element 624 is shown as having<br>
+sequence number N-3, this indicating the data on the data element 624 may be one (or<br>
+more) generations behind the committed data represented by the chunk 622.<br>
+Thus, in operation, the host 602 writes data to the local storage device 604 that<br>
+is stored locally in the data element 612 and is accumulated in the chunk 614. Once<br>
+all of the data for a particular sequence number has been accumulated (described<br>
+elsewhere herein), the local storage device 604 increments the sequence number.<br>
+Data from the chunk 616 corresponding to one less than the current sequence number<br>
+is transferred from the local storage device 604 to the remote storage device 606 via<br>
+the link 608. The chunk 622 corresponds to data for a sequence number that was<br>
+committed by the local storage device 604 sending a message to the remote storage<br>
+device 606. Data from the chunk 622 is written to disk storage of the remote storage<br>
+device 264, which contains data from a previous generation corresponding to<br>
+sequence number N-3.<br>
+It may be desirable for an R2 host 626, coupled to the remote storage<br>
+device 606, to read data from the the remote storage device 606 that had been initially<br>
+provided by the host 602 to the local storage device 604 and transmitted from the<br>
+local storage device 604 via the link 608 to the remote storage device 606. Note that<br>
+the data corresponding to the chunk 618 is not necessarily consistent because it is still<br>
+being provided from the local storage device 604. However, data from the chunk 622<br>
+is consistent since the chunk 622 has been committed. Accordingly, when the R2<br>
+host 626 desires to read data from the remote storage device 606, the data is provided<br>
+either from the chunk 622 or, if the data is not in the chunk, then is provided from the<br>
+data element 624, as described in more detail below.<br>
+Referring to Figure 15, a flow chart 650 illustrates steps performed in<br>
+connection with the R2 host 626 reading data from remote storage device 606.<br>
+Processing begins at a first step 652 where it is determined if the COVD slot<br>
+corresponding to the data being read by the R2 host 626 points to the standard logical<br>
+device (i.e., points to the data element 624). If so, then the data desired by the R2<br>
+host 626 is on the data element 624 and control transfers from the step 652 to a<br>
+step 654 where the desired data is read from the standard logical device corresponding<br>
+to the data element 624. Note that reading from the standard logical device at the step<br>
+654 includes reading data from cache or, if the data is not initially in cache, reading<br>
+the data from the disk and, optionally, moving the data from the disk to the cache.<br>
+i<br>
+Following the step 654, processing is complete.<br>
+If it is determined at the test step 652 that the COVD slot corresponding to the<br>
+data being read by the R2 host 626 does not point to the standard logical device, then<br>
+control transfers from the test step 652 to a step 656 where the slot of the COVD is<br>
+locked. Locking the slot at the step 656 prevents access to the slot by other<br>
+operations, such as an operation that is restoring the data from the chunk 622 to the<br>
+data element 624.<br>
+Following the step 656 is a test step 658 where it is determined if the COVD<br>
+slot points to the standard logical device. The test step at the step 658 is identical to<br>
+the test step at the step 652. The test at the step 658 is useful since it is possible for<br>
+another process (such as the process that restores data from the chunk 622 to the data<br>
+element 624) to have accessed the COVD and restored the data to the standard logical<br>
+device after the test step 652 but before the COVD slot was locked at the step 656.<br>
+Retesting at the step 658 guards against such a race condition.<br>
+If it is determined at the test step 658 that the COVD slot that was locked at<br>
+the step 656 now points to the standard logical device, then control transfers from the<br>
+step 658 to a step 662 where the COVD slot is unlocked. Following the step 662 is<br>
+the step 654 where the data desired by the R2 host 626 is read from the data<br>
+element 624. Following the step 654, processing is complete.<br>
+If it is determined that the test step 658 that the COVD slot containing the data<br>
+desired by the R2 host 626 does not point to the standard logical device, then control<br>
+transfers from the step 658 to a step 664 where the data in the COVD is restored to the<br>
+standard logical device. Restoring the data at the step 664 is performed using steps<br>
+like the steps 308, 312, 314, 316, 318, 322, 324, 326, 328, 332, 334 discussed above<br>
+in connection with the flow chart of Figure 9. Following the step 664, control flows<br>
+to the step 654, discussed above, where the data is read from the standard logical<br>
+device. Following the step 654, processing is complete.<br>
+For some embodiments, it is useful to restrict each read operation performed<br>
+by the R2 host 626 to one track at a time. This reduces the likelihood of inconsistent<br>
+data caused by a cycle switch at the R2 device 606 occurring after the R2 host 626 has<br>
+read some of the tracks but before the R2 host 626 has read all of the tracks. In other<br>
+embodiments, it is possible for the R2 host 626 to read multiple tracks if appropriate<br>
+steps are taken.<br>
+Referring to Figure 16A, a flow chart 700 illustrates steps performed in<br>
+connection with the R2 host having the capability of reading more than one track at a<br>
+time. Processing begins at a first step 702 where it is determined if a read operation<br>
+encompasses more than one track. If not, then control passes from the step 702 to a<br>
+step 704 where the read operation is performed as described elsewhere herein.<br>
+Following the step 704, processing is complete.<br>
+If it is determined at the step 702 that there is more than one track that is being<br>
+read, control passes from the step 702 to a step 706 to obtain the current sequence<br>
+number for the R2 device 606 (i.e., the sequence number for the chunk 622).<br>
+Following the step 706 is a step 708 where the read is performed. Note that the read<br>
+at the step 708 is a read of more than one track. Following the step 708 is a step 7)2<br>
+where the current sequence number for the R2 device 606 is obtained again.<br>
+Following the step 712 is a step 714 where it is determined if the sequence number<br>
+obtained at the step 712 is the same as the sequence number obtained at the step 706.<br>
+If so, then the sequence number did not change during the multiple track read<br>
+operation and control passes from the step 714 to a step 716, where the data that has<br>
+been read is returned. Following the step 716, processing is complete. Otherwise, if<br>
+the sequence numbers are different at the step 714, control passes from the step 714<br>
+back to the step 706 to repeat the sequence discussed above. Note that if the time<br>
+between sequence number changes is long enough (e.g., thirty seconds), then it is not<br>
+expected that the sequence numbers will be different twice in a row at the step 714.<br>
+Referring to Figure 16B, a flow chart 720 illustrates steps performed in<br>
+connection with the R2 host having the capability of reading more than one track at a<br>
+time in an alternative embodiment than that illustrated in connection with the flow<br>
+chart 700 of Figure 16A. Processing begins at a first step 722 where it is determined<br>
+if a read operation encompasses more than one track. If not, then control passes from<br>
+the step 722 to a step 724 where the read operation is performed as described<br>
+elsewhere herein. Following the step 724, processing is complete.<br>
+If it is determined at the step 722 that there is more than one track that is being<br>
+read, control passes from the step 722 to a step 726 to obtain the current sequence<br>
+number for the R2 device 606 (i.e., the sequence number for the chunk 622).<br>
+Following the step 726 is a step 728 where the read is performed. Note that the read<br>
+at the step 728 is a read of more than one track. Following the step 728 is a step 732<br>
+where the current sequence number for the R2 device 606 is obtained again.<br>
+Following the step 732 is a step 734 where it is determined if the sequence number<br>
+obtained at the step 732 is the same as the sequence number obtained at the step 726.<br>
+If so, then the sequence number did not change during the multiple track read<br>
+operation and control passes from the step 734 to a step 736, where the data that has<br>
+been read is returned. Following the step 736, processing is complete. Otherwise, if<br>
+the sequence numbers are different at the step 734, control passes from the step 734 to<br>
+a step 738, where an error message is returned. Following the step 738, processing is <br>
+complete. Note that a host that receives the error message provided at the step 738<br>
+can simply reinitiate the read operation. Thus, the host may keep trying the read<br>
+operation until a successful result is obtained.<br>
+In some instances, it may be useful to be able to read data from an R2 device<br>
+using a host coupled to a local storage device while the system is operating and<br>
+performing virtual ordered writes from the local storage device (Rl) to a remote<br>
+storage device. In connection with this, it is useful for the host coupled to the local<br>
+storage device to be able to read the most up-to-date data that is consistent (i.e., part<br>
+of a committed chunk of data on the R2 side).<br>
+Figure 17 illustrates a path of data from a host 802 to a local storage device<br>
+804 and a remote storage device 806 via a link 808. The system of Figure 17 is<br>
+similar to the system illustrated in Figure 2 and discussed above. Data written from<br>
+the host 802 to the local storage device 804 is stored locally, as illustrated by the data<br>
+element 812 of the local storage device 804. The data that is written by the host 802<br>
+to the local storage device 804 is also maintained by the local storage device 804 in<br>
+connection with being sent by the local storage device 804 to the remote storage<br>
+device 806 via the link 808.<br>
+Each data write by the host 802 (of, for example a record, a plurality of<br>
+records, a track, etc.) is assigned a sequence number. The sequence number may be<br>
+provided in an appropriate data field associated with the write. In Figure 17, the<br>
+writes by the host 802 are shown as being assigned sequence number N. All of the<br>
+writes performed by the host 802 that are assigned sequence number N are collected<br>
+in a single chunk of data 814. The chunk 814 represents a plurality of separate writes<br>
+by the host 802 that occur at approximately the same time.<br>
+Generally, the local storage device 804 accumulates chunks of one sequence<br>
+number while transmitting a previously accumulated chunk (having the previous<br>
+sequence number) to the remote storage device 806. Thus, while the local storage<br>
+device 804 is accumulating writes from the host 802 that are assigned sequence<br>
+number N, the writes that occurred for the previous sequence number (N-l) are<br>
+transmitted by the local storage device 804 to the remote storage device 806 via the<br>
+link 808. A chunk 816 represents writes from the host 802 that were assigned the<br>
+sequence number N-l that have not been transmitted yet to the remote storage device<br>
+806.<br>
+The remote storage device 806 receives the data from the chunk 816<br>
+corresponding to writes assigned a sequence number N-l and constructs a new chunk<br>
+818 of host writes having sequence number N-l. The data may be transmitted using<br>
+appropriate RDF protocol that acknowledges data sent across the link 808. When the<br>
+remote storage device 806 has received all of the data from the chunk 816, the local<br>
+storage device 804 sends a commit message to the remote storage device 806 to<br>
+commit all the data assigned the N-l sequence number corresponding to the chunk<br>
+818. Generally, once a chunk corresponding to a particular sequence number is<br>
+committed, that chunk may be written to the logical storage device. This is illustrated<br>
+in Figure 17 with a chunk 822 corresponding to writes assigned sequence number N-2<br>
+(i.e., two before the current sequence number being used in connection with writes by<br>
+the host 802 to the local storage device 806).<br>
+In Figure 17, the chunk 822 is shown as being written to a data element 824<br>
+representing disk storage (standard logical device) for the remote storage device 806.<br>
+Thus, the remote storage device 806 is receiving and accumulating the chunk 818<br>
+corresponding to sequence number N-l while the chunk 822 corresponding to the<br>
+previous sequence number (N-2) is being written to disk storage of the remote storage<br>
+device 806 illustrated by the data element 824. In some embodiments, the data for the<br>
+chunk 822 is marked for write (but not necessarily written immediately), while the<br>
+data for the chunk 818 is not. Data stored on the data element 824 is shown as having<br>
+sequence number N-3, this indicating the data on the data element 824 may be one (or<br>
+more) generations behind the committed data represented by the chunk 822.<br>
+Thus, in operation, the host 802 writes data to the local storage device 804 that<br>
+is stored locally in the data element 812 and is accumulated in the chunk 814. Once<br>
+all of the data for a particular sequence number has been accumulated (described<br>
+elsewhere herein), the local storage device 804 increments the sequence number.<br>
+Data from the chunk 816 corresponding to one less than the current sequence number<br>
+is transferred from the local storage device 804 to the remote storage device 806 via<br>
+the link 808. The chunk 822 corresponds to data for a sequence number that was<br>
+committed by the local storage device 804 sending a message to the remote storage<br>
+device 806. Data from the chunk 822 is written to disk storage of the remote storage<br>
+device 806, which contains data from a previous generation corresponding to<br>
+sequence number N-3.<br>
+It may be desirable for an other host 826, coupled to the local storage<br>
+device 804, to read data from the remote storage device 806 that had been initially<br>
+provided by the host 802 to the local storage device 804 and transmitted from the<br>
+local storage device 804 via the link 808 to the remote storage device 806. It may<br>
+also be desirable for the host 802 to read the data. For example, in some cases the Rl<br>
+device may fail but it is desirable for one or both of the hosts 802, 826 to continue<br>
+operating with the most up-to-date version of the data while maintaining consistency<br>
+of the R2 side. Note that the desired data may have some components on the local<br>
+disk unit 812, in the N chunk 814, in the N-l chunks 816, 818. in the N-2 chunk 822,<br>
+and on the disk unit 824 of the remote storage device 806. The description herein for<br>
+reading the data applies to both the host 802 reading the data and/or the other host 826<br>
+reading the data.<br>
+Referring to Figure 18, a flow chart 8S0 illustrates steps performed in<br>
+connection with either or both of die hosts 802, 826 reading data from the R2 device<br>
+806. Processing begins at a first step 8S2 where it is determined if the desired data<br>
+(data being read) is in the cache of the Rl device. Note that if all of the desired data<br>
+is in the cache of the Rl device 804, then it is not necessary to obtain any data from<br>
+the R2 device 806. If it is determined at the step 852 that the data is in the cache of<br>
+the Rl device, then control passes from the step 852 to a step 854 where the data in<br>
+the cache of the Rl device 804 is returned in response to the read request. After the<br>
+step 854, processing is complete.<br>
+If it is determined at the test step 852 that all of the requested data is not in the<br>
+cache of the Rl device 804, then control passes from the step 852 to a test step 856<br>
+which determines if some of the data is in a slot for a track corresponding to either or<br>
+both of the N chunk 814 and the N-l chunk 816. If so, then control passes from the<br>
+step 856 to a step 862 where a scratch slot is created for receiving data read from the<br>
+R2 device (described below). Following the step 862 is a step 864 where the slots<br>
+corresponding to either or both of the N and N-l chunks 814, 816 are locked.<br>
+Locking the slots at step 864 prevents the data from changing while the read process<br>
+is being performed.<br>
+Following the step 864 is a test step 874 which determines if all of the desired<br>
+data is in either or both of the N chunks 814, 816. If not, then control passes from the<br>
+step 874 to a step 876 where the Rl device 804 sends a read request to the R2 device<br>
+806. Processing the read request at the R2 device 806 is discussed in more detail<br>
+hereinafter. Following 876 is a step 878 where the data from the R2 device 806 is<br>
+read by the Rl device 804. If a scratch slot was created at the step 862, the data from<br>
+the R2 device 806 is read into the scratch slot. Otherwise, the data may be received<br>
+directly to the Rl device 804.<br>
+Following step 878, or following the step 874 if all of the desired data is found<br>
+to be in either or both of die N and N-l chunks of data 814, 816 is a step 882 where<br>
+the N chunk of data 814, the N-l chunk of data 816 on the Rl device 804, and the<br>
+data returned by the R2 device 806 is all merged. Note that the N-l data (if any) is<br>
+merged on top of any data in the scratch slot (which is older) and the result of that<br>
+merger is merged on top of any N data, which is newest. Merging a first set of data<br>
+on top of a second set of data means that the first set of data take precedence over the<br>
+second set of data so that data from the first set overwrites corresponding data from<br>
+the second set.<br>
+Merginf the data at the step 882 is analogous to the merge step 314 of the flow<br>
+chart 300 of Figure 9. Note that it is possible for data from different parts of a track to<br>
+be associated with different sequence numbers and to be on either the Rl device 804<br>
+and/or the R2 device 806. Accordingly, the step 882 handles merging of all the data<br>
+in all the cache slots to provide a single track's worth of data in the scratch slot.<br>
+Following the step 882 is a step 884 where the merged data is returned to the<br>
+host that issued the read command. Following the step 884 is a step 886 where any of<br>
+the slots that were locked during the read process are unlocked. Following the step<br>
+886 is a step 888 where any scratch slots that were allocated during the read process<br>
+are de-allocated. Following the step 888, processing is complete.<br>
+In some embodiments, it is possible to forgo the test step 874 and always<br>
+execute the step 876 after the step 864 or following the test step 856 if there is no data<br>
+in either or both of the N and N-l chunks 814, 816. This is illustrated in the flow<br>
+chart 850 by the alternative path 892 from the step 864 to the step 876.<br>
+Referring to Figure 19A, a flow chart 900 illustrates one embodiment for<br>
+handling the read request at the R2 device 806 that is provided by the Rl device 804.<br>
+Processing begins at a first step 902 where any data in the N-2 chunk of data 822<br>
+(which has already been committed) is restored to the disk unit 824. That is, if there<br>
+is any data in the N-2 chunk of data 822 that is to be read, the data is restored to the<br>
+disk unit 824 at the step 902.<br>
+Following step 902 is a step 903 where it is determined if there is any data in<br>
+the N-l chunk of data 818 that is to be read. If so, control passes from the step 903 to<br>
+a step 904 where a scratch slot is allocated on the R2 device 806. Following step 904<br>
+is a step 906 where the data from the disk unit 824 is copied to the scratch slot<br>
+allocated at the step 904. Following step 906 is a step 908 where the data in the<br>
+scratch slot is merged with any corresponding data in the N-l chunk of data 818 on<br>
+the R2 device 806.<br>
+Following step 908 is a step 912 where the result of merging the data at the<br>
+step 908 is returned to the Rl device 804. Note, however, that the step 912 may also<br>
+be reached if it is determined at the step 903 that there is no data that is to be read in<br>
+the N-l chunk 818, in which case the data from the disk is returned at the step 912.<br>
+Following step 912 is a step 914 where the slot allocated at the step 904 (if the step<br>
+904 is executed) is deallocated. Following step 914, processing is complete.<br>
+Referring to Figure 19B, a flow chart 920 illustrates an alternative<br>
+embodiment for handling the read request at the R2 device 806. Processing begins at<br>
+a first step 921 where it is determined if there is any data in either or both of the N-l<br>
+and N-2 chunks of data 818, 822 that is to be read. If so, control passes from the step<br>
+921 to a step 922 where a scratch slot is allocated. Following step 922 is a step 924<br>
+where data from the disk unit 824 is copied to the scratch slot allocated at the step<br>
+922. Following step 924 is a step 926 where the data from the N-2 chunk of data 822<br>
+is merged with the data in the scratch slot. Following step 926 is a step 928 where the<br>
+data from the N-l chunk of data 818 on the R2 device 806 is merged with the scratch<br>
+slot.<br>
+Following step 928 is a step 932 where the result of all the merging into the<br>
+scratch slot is returned from the R2 device 806 to the Rl device 804. Note, however,<br>
+that the step 932 may also be reached if it is determined at the step 921 that there is no<br>
+data that is to be read in either or both of the N-l and N-2 chunks 818, 822, in which<br>
+case the data from the disk is returned at the step 932. Following step 932 is a step<br>
+934 where the scratch slot allocated at the step 922 (if the step 922 is executed) is<br>
+deallocated. Following step 934, processing is complete.<br>
+While the invention has been disclosed in connection with various<br>
+embodiments, modifications thereon will be readily apparent to those skilled in the<br>
+art. Accordingly, the spirit and scope of the invention is set forth in the following<br>
+claims.<br>
+WE CLAIM :<br>
+1. A method of ordering data writes, comprising:<br>
+a primary storage device receiving a plurality of data writes;<br>
+the primary storage device associating data writes begun after a first time and<br>
+before a second time with a first chunk of data;<br>
+the primary storage device associating data writes begun after the second time<br>
+with a second chunk of data different from the first chunk of data;<br>
+after completion of all writes associated with the first chunk of data, the primary<br>
+storage device initiating transfer of writes associated with the first chunk of data to a<br>
+secondary storage device;<br>
+following the primary storage device transferring all writes associated with the<br>
+first chunk of data to the secondary storage device, the primary storage device<br>
+sending a message to the secondary storage device; and<br>
+in response to receiving the message from the primary storage device, the<br>
+secondary storage device storing the data with the first chunk of data.<br>
+2. A method, as claimed in claim 1, comprising:<br>
+after storing all of the data writes associated with the first chunk of data, the<br>
+secondary storage device sending an acknowledge to the primary storage device.<br>
+3. A method, as claimed in claim 2, comprising:<br>
+following sending a message to the secondary storage device, the primary<br>
+storage device suspending transferring data to the secondary storage device.<br>
+4. A method, as claimed in claim 3, comprising:<br>
+following suspending transferring data, the primary storage device associating<br>
+data writes with a third chunk of data, different from the first and second chunks of<br>
+data.<br>
+5. A method, as claimed in claim 4, comprising:<br>
+in response to the secondary storage device sending an acknowledge to the<br>
+primary storage device, the primary storage device resuming transferring data to the<br>
+secondary storage device.<br>
+6. A method, as claimed in claim 1, comprising:<br>
+providing data writes to cache slots of the primary storage device.<br>
+7. A method, as claimed in claim 6, comprising:<br>
+the primary storage device employing a first list of pointers to the cache slots<br>
+for data writes associated with the first chunk of data; and<br>
+the primary storage device employing a second list of pointers to the cache<br>
+slots for data writes associated with the second chunk of data.<br>
+8. A method, as claimed in claim 7, comprising:<br>
+providing a cache stamp field in a header portion in each of the cache slots,<br>
+the cache stamp field containing a sequence number associated with each of the<br>
+cache slots, wherein the sequence number corresponds to a particular one of the<br>
+chunks of data.<br>
+9. A method, as claimed in claim 8, wherein the cache stamp field also contains a<br>
+password field that is written when each of the cache slots is first used.<br>
+10. A method, as claimed in claim 9, comprising:<br>
+in response to a slot no longer being used, clearing the password field.<br>
+A primary storage device (24) orders a plurality of data writes by associating<br>
+data writes begun after a first time and before a second time with a first chunk of data<br>
+(52), associating data writes begun after the second time with a second chunk of data<br>
+(54) different from the first chunk of data, and, after completion of all writes<br>
+associated with the first chunk of data, initiating transfer of writes associated with the<br>
+first chunk of data to a secondary storage device (26).</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+		<br>
+		<div class="pull-left">
+			<a href="225419-diaphragm-electrolytic-cell.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="225421-a-process-for-cathodically-electrodepositing-a-selected-metallic-material-on-a-permanent-or-temporary-substrate-in-nanocrystalline-form.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>225420</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>01648/KOLNP/2005</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>46/2008</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>14-Nov-2008</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>12-Nov-2008</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>17-Aug-2005</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>EMC CORPOTRATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>176 SOUTH STREET, HOPKINTON, MA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>MEIRI DAVID</td>
+											<td>392 FRANKLIN STREET, APT.2, CAMBRIDGE, MA 02139</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>YODER BENJAMIN W</td>
+											<td>1400 WORCESTER ROAD, APT.7209, FRAMINGHAM, MA 01702</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>HALSTEAD MARK J</td>
+											<td>1545 HIGHLAND STREET, HOLLISTON, MA 01746</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>KOPYLOVITZ HAIM</td>
+											<td>1175 CHESTNUT STREET, UNIT23, NEWTON, MA 02464</td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td>OFER ADI</td>
+											<td>96 WASHBURN AVENUE, WELLESLEY, MA 02481</td>
+										</tr>
+										<tr>
+											<td>6</td>
+											<td>MORESHET HANA</td>
+											<td>15, BELLWOOD WAY, FRAMINGHAM, MA 01701</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>C06F 12/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2004/003498</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2004-02-06</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/396,786</td>
+									<td>2003-03-25</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>10/607,041</td>
+									<td>2003-06-26</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>10/606,699</td>
+									<td>2003-06-26</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/225420-a-method-of-ordering-data-writes by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Apr 2024 23:39:06 GMT -->
+</html>

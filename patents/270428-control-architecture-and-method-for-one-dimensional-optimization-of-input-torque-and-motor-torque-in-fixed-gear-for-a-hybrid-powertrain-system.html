@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/270428-control-architecture-and-method-for-one-dimensional-optimization-of-input-torque-and-motor-torque-in-fixed-gear-for-a-hybrid-powertrain-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:29:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 270428:CONTROL ARCHITECTURE AND METHOD FOR ONE-DIMENSIONAL OPTIMIZATION OF INPUT TORQUE AND MOTOR TORQUE IN FIXED GEAR FOR A HYBRID POWERTRAIN SYSTEM</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">CONTROL ARCHITECTURE AND METHOD FOR ONE-DIMENSIONAL OPTIMIZATION OF INPUT TORQUE AND MOTOR TORQUE IN FIXED GEAR FOR A HYBRID POWERTRAIN SYSTEM</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>There is provided a control system for a powertrain system including an electro-mechanical transmission operative in a plurality of fixed gear modes and continuously variable modes. The control system is adapted to identify preferred operating conditions for operating the powertrain in a fixed gear operating range state. The method comprises determining a range of permissible input torques. States for input torque are iteratively selected, and a motor torque output from the first electrical machine is optimized based upon the selected state for the input torque. A motor torque output from the second electrical machine is determined based upon the optimized motor torque output from the first electrical machine. A cost for each of the iteratively selected states for the input torque and the motor torques from the first and second electrical machines is calculated. A preferred operating range is identified based upon the plurality of costs.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>CONTROL ARCHITECTURE AND METHOD FOR ONE-DIMENSIONAL<br>
+OPTIMIZATION OF INPUT TORQUE AND MOTOR TORQUE IN FIXED<br>
+GEAR FOR A HYBRID POWERTRAIN SYSTEM<br>
+TECHNICAL FIELD<br>
+[0001] This invention pertains generally to control systems for powertrain<br>
+control systems employing electro-mechanical transmissions.<br>
+BACKGROUND OF THE INVENTION<br>
+[0002] Powertrain architectures comprise torque-generative devices,<br>
+including internal combustion engines and electric machines, which transmit<br>
+torque through a transmission device to a vehicle driveline. One such<br>
+transmission includes a two-mode, compound-split, electro-mechanical<br>
+transmission which utilizes an input member for receiving motive torque from<br>
+a prime mover power source, typically an internal combustion engine, and an<br>
+output member for delivering motive torque from the transmission to the<br>
+vehicle driveline. Electrical machines, operatively connected to an electrical<br>
+energy storage device, comprise motor/generators operable to generate motive<br>
+torque for input to the transmission, independently of torque input from the<br>
+internal combustion engine. The electrical machines are further operable to<br>
+transform vehicle kinetic energy, transmitted through the vehicle driveline, to<br>
+electrical energy potential that is storable in the electrical energy storage<br>
+device. A control system monitors various inputs from the vehicle and the<br>
+operator and provides operational control of the powertrain system, including<br>
+controlling transmission gear shifting, controlling the torque-generative<br>
+devices, and regulating the electrical power interchange between the electrical<br>
+energy storage device and the electrical machines.<br>
+[0003] The exemplary electro-mechanical transmissions are selectively<br>
+operative in fixed gear modes and continuously variable modes through<br>
+actuation of the torque-transfer clutches, typically employing a hydraulic<br>
+circuit to effect clutch actuation. A fixed gear mode occurs when rotational<br><br>
+speed of the transmission output member is a fixed ratio of rotational speed of<br>
+the input member from the engine, typically due to actuation of one or more<br>
+torque-transfer clutches. A continuously variable mode occurs when<br>
+rotational speed of the transmission output member is variable based upon<br>
+operating speeds of one or more electrical machines. The electrical machines<br>
+can be connected to the output shaft via actuation of a clutch, or by direct<br>
+connection. Clutch actuation and deactivation is typically effected through a<br>
+hydraulic circuit.<br>
+[0004] Engineers implementing powertrain systems having electro-<br>
+mechanical transmissions are tasked with implementing control schemes to<br>
+monitor system states and control operation of various systems and actuators<br>
+to effectively control powertrain operation. Such a system is described<br>
+hereinafter.<br>
+SUMMARY OF THE INVENTION<br>
+[0005] In accordance with an embodiment of the invention, a method and an<br>
+apparatus are provided to control operation of a powertrain system comprising<br>
+a electro-mechanical torque transmission device operative to transmit torque<br>
+input from a plurality of torque-generative devices.<br>
+[0006] The method comprises operating the powertrain to determine a range<br>
+of permissible input torques from the internal combustion engine to the<br>
+electro-mechanical transmission. States for input torque from the range of<br>
+permissible torques are iteratively selected, and a motor torque output from the<br>
+first electrical machine is optimized based upon the selected state for the input<br>
+torque. A motor torque output from the second electrical machine is<br>
+determined based upon the optimized motor torque output from the first<br>
+electrical machine. A cost for each of the iteratively selected states for the<br>
+input torque and the motor torques from the first and second electrical<br>
+machines is calculated. A preferred input torque is identified based upon the<br>
+plurality of costs.<br><br>
+[0007] The invention will become apparent to those skilled in the art upon<br>
+reading and understanding the following detailed description of the<br>
+embodiments.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[0008] The invention may take physical form in certain parts and<br>
+arrangement of parts, an embodiment of which is described in detail and<br>
+illustrated in the accompanying drawings which form a part hereof, and<br>
+wherein:<br>
+[0009] Fig. 1 is a schematic diagram of an exemplary powertrain, in<br>
+accordance with the present invention;<br>
+[0010] Fig. 2 is a schematic diagram of an exemplary architecture for a<br>
+control system and powertrain, in accordance with the present invention;<br>
+[0011] Fig. 3 is a graphical depiction, in accordance with the present<br>
+invention; and,<br>
+[0012] Figs. 4 - 9 are schematic flowcharts, in accordance with the present<br>
+invention.<br>
+DETAILED DESCRIPTION OF AN EMBODIMENT OF THE INVENTION<br>
+[0013] Referring now to the drawings, wherein the showings are for the<br>
+purpose of illustrating the invention only and not for the purpose of limiting<br>
+the same, Figs. 1 and 2 depict a system comprising an engine 14, transmission<br>
+10, control system, and driveline which has been constructed in accordance<br>
+with an embodiment of the present invention. The control scheme described<br>
+herein comprises a method to determine operating conditions for a powertrain<br>
+comprising an internal combustion engine and a hybrid transmission<br>
+selectively operative to transmit torque therebetween. The method comprises<br>
+determining a torque output and an operating cost for operating the electrical<br>
+machines of the hybrid transmission effective to meet an operator torque<br>
+request when the engine is operating in an engine-off operating state, effective<br><br>
+to meet the operator torque request. Determining torque output for operating<br>
+the electrical machines comprises executing a predetermined system equation<br>
+effective to determine motor torque outputs from each of the electrical<br>
+machines based upon the selected state value for the input torque and the<br>
+operator torque request.<br>
+[0014] Referring now to Figs. 1 and 2, an exemplary hybrid powertrain<br>
+system is depicted, comprising an engine 14, transmission 10, control system,<br>
+and driveline 90 which has been constructed in accordance with an<br>
+embodiment of the present invention. The exemplary hybrid powertrain<br>
+system is configured to execute the tactical control scheme for controlling the<br>
+engine depicted in Figs. 3-9. Mechanical aspects of the exemplary<br>
+transmission 10 are disclosed in detail in commonly assigned U.S. Patent No.<br>
+6,953,409, entitled "Two-Mode, Compound-Split, Hybrid Electro-Mechanical<br>
+Transmission having Four Fixed Ratios", which is incorporated herein by<br>
+reference. The exemplary two-mode, compound-split, electro-mechanical<br>
+hybrid transmission embodying the concepts of the present invention is<br>
+depicted in Fig. 1. The transmission 10 includes an input shaft 12 having an<br>
+input speed, N1 that is preferably driven by the internal combustion engine 14,<br>
+and an output shaft 64 having an output rotational speed, No. The engine 14<br>
+has a crankshaft having characteristic speed NE which is operatively connected<br>
+to the transmission input shaft 12. When a torque converter clutch device (not<br>
+shown) operatively connects the engine and transmission, the engine speed NE<br>
+and output torque TE can differ from transmission input speed N, and input<br>
+torque T1.<br>
+[0015] The transmission 10 utilizes three planetary-gear sets 24, 26 and 28,<br>
+and four torque-transmittmg devices, i.e., clutches C1 70, C2 62, C3 73, and<br>
+C4 75. An electro hydraulic control system 42, preferably controlled by<br>
+transmission control module ('TCM') 17, is qperative to control actuation and<br>
+deactivation of the clutches. Clutches C2 and C4 preferably comprise<br>
+hydraulically-actuated rotating friction clutches. Clutches C1 and C3<br><br>
+preferably comprise comprising hydraulically-actuated stationary devices<br>
+grounded to the transmission case 68.<br>
+[0016] There is first electrical machine comprising a motor/generator 56<br>
+('MG-A'), and a second electrical machine comprising a motor/generator 72<br>
+('MG-B') operatively connected to the transmission via the planetary gears.<br>
+Transmission output shaft 64 is operably connected to a vehicle driveline 90 to<br>
+provide motive output torque, To to vehicle wheels. Each clutch is preferably<br>
+hydraulically actuated, receiving pressurized hydraulic fluid from a pump,<br>
+described below, via an electro-hydraulic control circuit 42.<br>
+[0017] The transmission 10 receives input torque from the torque-generative<br>
+devices, including the engine 14 and the MG-A 56 and MG-B 72, and referred<br>
+to as 'T1', 'TA', and 'TB' respectively, as a result of energy conversion from<br>
+fuel or electrical potential stored in an electrical energy storage device (ESD)<br>
+74. The ESD 74 is high voltage DC-coupled to transmission power inverter<br>
+module ('TPIM') 19 via DC transfer conductors 27. The TPIM 19 is an<br>
+element of the control system described hereinafter with regard to Fig. 2. The<br>
+TPIM 19 transmits electrical energy to and from MG-A 56 by transfer<br>
+conductors 29, and the TPIM 19 similarly transmits electrical energy to and<br>
+from MG-B 72 by transfer conductors 31. Electrical current is transmitted to<br>
+and from the ESD 74 in accordance with whether the ESD 74 is being charged<br>
+or discharged. TPIM 19 includes the pair of power inverters and respective<br>
+motor control modules configured to receive motor control commands and<br>
+control inverter states therefrom for providing motor drive or regeneration<br>
+functionality. Preferably, MG-A 56 and MG-B 72 are three-phase AC<br>
+machines each having a rotor operable to rotate within a stator that is mounted<br>
+on a case of the transmission. The inverters comprise known complementary<br>
+three-phase power electronics devices.<br><br>
+[0018] Referring now to Fig. 2, a schematic block diagram of the control<br>
+system, comprising a distributed control module architecture, is shown. The<br>
+elements described hereinafter comprise a subset of an overall vehicle control<br>
+architecture, and are operable to provide coordinated system control of the<br>
+powertrain system described herein. The control system is operable to<br>
+synthesize pertinent information and inputs, and execute algorithms to control<br>
+various actuators to achieve control targets, including such parameters as fuel<br>
+economy, emissions, performance, driveability, and protection of hardware,<br>
+including batteries of ESD 74 and MG-A and MG-B 56, 72. The distributed<br>
+control module architecture includes engine control module ('ECM') 23,<br>
+transmission control module ('TCM') 17, battery pack control module<br>
+('BPCM') 21, and TPIM 19. A hybrid control module ('HCP') 5 provides<br>
+overarching control and coordination of the aforementioned control modules.<br>
+There is a User Interface ('UI') 13 operably connected to a plurality of devices<br>
+through which a vehicle operator typically controls or directs operation of the<br>
+powertrain including the transmission 10 through a request for a torque output.<br>
+Exemplary vehicle operator inputs to the UI 13 include an accelerator pedal, a<br>
+brake pedal, transmission gear selector, and, vehicle speed cruise control.<br>
+Each of the aforementioned control modules communicates with other control<br>
+modules, sensors, and actuators via a local area network ('LAN') bus 6. The<br>
+LAN bus 6 allows for structured communication of control parameters and<br>
+commands between the various control modules. The specific communication<br>
+protocol utilized is application-specific. The LAN bus and appropriate<br>
+protocols provide for robust messaging and multi-control module interfacing<br>
+between the aforementioned control modules, and other control modules<br>
+providing functionality such as antilock brakes, traction control, and vehicle<br>
+stability.<br><br>
+[00191 The HCP 5 provides overarching control of the hybrid powertrain<br>
+system, serving to coordinate operation of the ECM 23, TCM 17, TPIM 19,<br>
+and BPCM 21. Based upon various input signals from the UI 13 and the<br>
+powertrain, including the battery pack, the HCP 5 generates various<br>
+commands, including: an operator torque request ('TO_REQ') output to driveline<br>
+90, the input torque T, originating from the engine, clutch torque, ('TCL_N') for<br>
+the N various torque-transfer clutches C1, C2, C3, C4 of the transmission 10;<br>
+and motor torques TA and TB for MG-A and MG-B. The TCM 17 is operatively<br>
+connected to the electro-hydraulic control circuit 42, including monitoring<br>
+various pressure sensing devices (not shown) and generating and executing<br>
+control signals for various solenoids to control pressure switches and control<br>
+valves contained therein.<br>
+[0020] The ECM 23 is operably connected to the engine 14, and functions to<br>
+acquire data from a variety of sensors and control a variety of actuators,<br>
+respectively, of the engine 14 over a plurality of discrete lines collectively<br>
+shown as aggregate line 35. The ECM 23 receives the engine torque<br>
+command from the HCP 5, and generates a desired axle torque, and an<br>
+indication of actual input torque, T1, to the transmission, which is<br>
+communicated to the HCP 5. For simplicity, ECM 23 is shown generally<br>
+having bi-directional interface with engine 14 via aggregate line 35. Various<br>
+other parameters that may be sensed by ECM 23 include engine coolant<br>
+temperature, engine input speed, NE, to shaft 12 which translate to<br>
+transmission input speed, N1, manifold pressure, ambient air temperature, and<br>
+ambient pressure. Various actuators that may be controlled by the ECM 23<br>
+include fuel injectors, ignition modules, and throttle control modules.<br>
+[0021] The TCM 17 is operably connected to the transmission 10 and<br>
+functions to acquire data from a variety of sensors and provide command<br>
+signals to the transmission. Inputs from the TCM 17 to the HCP 5 include<br>
+estimated clutch torques (TCL_EST_N) for each of the N clutches C1, C2, C3, and,<br>
+C4 and transmission output rotational speed No of shaft 64. Other actuators<br><br>
+and sensors may be used to provide additional information from the TCM to<br>
+the HCP for control purposes. The TCM 17 monitors inputs from pressure<br>
+switches and selectively actuates pressure control solenoids and shift solenoids<br>
+to actuate various clutches to achieve various transmission operating modes,<br>
+as described hereinbelow.<br>
+[0022] The BPCM 21 is signally connected one or more sensors operable to<br>
+monitor electrical current or voltage parameters of the ESD 74 to provide<br>
+information about the state of the batteries to the HCP 5. Such information<br>
+includes battery state-of-charge, battery voltage and available battery power,<br>
+referred to as a range PBAT_MIN to PBAT_MAX.<br>
+[0023] Each of the aforementioned control modules is preferably a general-<br>
+purpose digital computer generally comprising a microprocessor or central<br>
+processing unit, storage mediums comprising read only memory (ROM),<br>
+random access memory (RAM), electrically programmable read only memory<br>
+(EPROM), high speed clock, analog to digital (A/D) and digital to analog<br>
+(D/A) circuitry, and input/output circuitry and devices (I/O) and appropriate<br>
+signal conditioning and buffer circuitry. Each control module has a set of<br>
+control algorithms, comprising resident program instructions and calibrations<br>
+stored in ROM and executed to provide the respective functions of each<br>
+computer. Information transfer between the various computers is preferably<br>
+accomplished using the aforementioned LAN 6.<br>
+[0024] Algorithms for control and state estimation in each of the control<br>
+modules are typically executed during preset loop cycles such that each<br>
+algorithm is executed at least once each loop cycle. Algorithms stored in the<br>
+non-volatile memory devices are executed by one of the central processing<br>
+units and are operable to monitor inputs from the sensing devices and execute<br>
+control and diagnostic routines to control operation of the respective device,<br>
+using preset calibrations. Loop cycles are typically executed at regular<br>
+intervals, for example each 3.125, 6.25, 12.5, 25 and 100 milliseconds during<br><br>
+ongoing engine and vehicle operation. Alternatively, algorithms may be<br>
+executed in response to occurrence of an event.<br>
+[0025] The exemplary two-mode, compound-split, electro-mechanical<br>
+transmission operates in several fixed gear operating modes and continuously<br>
+variable operating modes, described with reference to Fig. 1, and Table 1,<br>
+below.<br><br>
+[0026] The various transmission operating range states described in the table<br>
+indicate which of the specific clutches C1, C2, C3, and C4 are engaged or<br>
+actuated for each of the operating range states. A first mode, i.e., Mode 1, is<br>
+selected when clutch C1 70 is actuated in order to "ground" the outer gear<br>
+member of the third planetary gear set 28. The engine 14 can be either on or<br>
+off. A second mode, i.e., Mode 2, is selected when clutch C1 70 is released<br>
+and clutch C2 62 is simultaneously actuated to connect the shaft 60 to the<br>
+carrier of the third planetary gear set 28. Again, the engine 14 can be either on<br>
+or off. For purposes of this description, Engine Off is defined by engine input<br>
+speed, NE, being equal to zero revolutions per minute (RPM), i.e., the engine<br>
+crankshaft is not rotating, typically as a result of the engine being decoupled<br>
+from the transmission. Other factors outside the scope of the invention affect<br><br>
+when the electrical machines 56, 72 operate as motors and generators, and are<br>
+not discussed herein.<br>
+[0027] The control system, shown primarily in Fig. 2, is operable to provide<br>
+a range of transmission output speeds at shaft 64 from relatively slow to<br>
+relatively fast within each operating range state. The combination of two<br>
+modes with a slow-to-fast output speed range in each range state allows the<br>
+transmission 10 to propel a vehicle from a stationary condition to highway<br>
+speeds, and meet various other requirements as previously described.<br>
+Additionally, the control system coordinates operation of the transmission 10<br>
+so as to allow synchronized shifts between the modes.<br>
+[0028] The first and second modes of operation refer to circumstances in<br>
+which the transmission functions are controlled by one clutch, i.e., either<br>
+clutch C1 62 or C2 70, and by the controlled speed and torque of the electrical<br>
+machines 56 and 72, which can be referred to as a continuously variable<br>
+transmission mode. Certain ranges of operation are described below in which<br>
+fixed gear ratios are achieved by applying an additional clutch. This additional<br>
+clutch may be clutch C3 73 or C4 75, as shown in the table, above.<br>
+[0029] When the additional clutch is applied, fixed ratio operation of input-<br>
+to-output speed of the transmission, i.e., N1/No, is achieved. The rotations of<br>
+machines MG-A and MG-B 56, 72 are dependent on internal rotation of the<br>
+mechanism as defined by the clutching and proportional to the input speed<br>
+measured at shaft 12. The machines MG-A and MG-B function as motors or<br>
+generators. They are independent of engine to output power flow, thereby<br>
+enabling both to be motors, both to function as generators, or any combination<br>
+thereof. This allows, for instance, during operation in Fixed Ratio 1 that<br>
+motive power output from the transmission at shaft 64 is provided by power<br>
+from the engine and power from MG-A and MG-B, through planetary gear set<br>
+28 by accepting power from ESD 74.<br><br>
+[0030] Referring now to Fig. 3, various transmission operating modes are<br>
+plotted as a function of transmission output speed, No, and transmission input<br>
+speed, N, for the exemplary powertrain control system shown in Fig. 1 and 2.<br>
+The Fixed Ratio operation is shown as individual lines for each of the specific<br>
+gear ratios, GR1, GR2, GR3, and GR4, as described with reference to Table 1,<br>
+above. The continuously variable Mode operation is shown as ranges of<br>
+operation for each of Mode 1 and Mode 2. The transmission operating range<br>
+state is switched between Fixed Ratio operation and continuously variable<br>
+Mode operation by activating or deactivating specific clutches. The control<br>
+system is operative to determine a specific transmission operating mode based<br>
+upon various criteria, using algorithms and calibrations executed by the<br>
+control system, and is outside the scope of this invention. Selection of the<br>
+operating range state of the transmission depends primarily on the operator<br>
+torque request TO_REQ and the ability of the powertrain to meet that output<br>
+torque request.<br>
+[0031] Referring to Table 1 and again to Fig. 3, the low range operating state<br>
+includes selective actuation of clutches C2, C1, and C4, facilitating operation<br>
+in any one of continuously variable Mode 1, and fixed gears GRl, and GR2.<br>
+The high range operating state includes selective actuation of clutches C2, C3,<br>
+and C4, facilitating operation in any one of continuously variable Mode 2 and<br>
+fixed gears GR3 and GR4. The ranges of continuously variable operation for<br>
+Mode 1 and Mode 2 can overlap.<br>
+[0032] In response to an operator's action, as captured by the UI 13, the<br>
+supervisory HCP control module 5 and one or more of the other control<br>
+modules determine the operator torque request TO_REQ, to be executed at shaft<br>
+64. Final vehicle acceleration is affected by other factors, including, e.g.,<br>
+road load, road grade, and vehicle mass. The operating mode is determined<br>
+for the exemplary transmission based upon a variety of operating<br>
+characteristics of the powertrain. This includes an operator demand for<br>
+torque, typically communicated through inputs to the UI 13 as previously<br><br>
+described. Additionally, a demand for output torque is predicated on external<br>
+conditions, including, e.g., road grade, road surface conditions, or wind load.<br>
+The operating mode may be predicated on a powertrain torque demand caused<br>
+by a control module command to operate of the electrical machines in an<br>
+electrical energy generating mode or in a torque generating mode. The<br>
+operating mode can be determined by an optimization algorithm or routine<br>
+operable to determine optimum system efficiency based upon operator<br>
+demand for power, battery state of charge, and energy efficiencies of the<br>
+engine 14 and MG-A and MG-B 56, 72. The control system manages torque<br>
+inputs from the engine 14 and MG-A and MG-B 56, 72 based upon an<br>
+outcome of the executed optimization routine, and system optimization occurs<br>
+to optimize system efficiencies to improve fuel economy and manage battery<br>
+charging. Furthermore, operation can be determined based upon a fault in a<br>
+component or system. The HCP 5 monitors the parametric states of the<br>
+torque-generative devices, and determines the output of the transmission<br>
+required to arrive at the desired torque output, as described hereinbelow.<br>
+Under the direction of the HCP 5, the transmission 10 operates over a range of<br>
+output speeds from slow to fast in order to meet the operator demand.<br>
+[0033] Referring now to Figs. 4 - 9, controlling operation of a hybrid<br>
+powertrain is described, with reference to the exemplary powertrain described<br>
+in Figs. 1, 2, and 3. Referring specifically to Fig. 4, the method and system<br>
+described herein comprise an aspect of strategic control optimization (Block<br>
+110), wherein a preferred or desired operating range state (Op_RangeDES) is<br>
+selected based primarily upon output speed, No of shaft 64 and the operator<br>
+torque request, TO_REQ. Output of the strategic control includes the preferred or<br>
+desired operating range state ('Op_RangeDES') and desired input speed<br>
+('N1_DES') each which are input to a shift execution control block 120. Other<br>
+aspects of the overall architecture for strategic optimization and control of the<br>
+exemplary powertrain are described in co-pending U.S. patent application<br>
+serial number 11/561,140 (Attorney Docket No. GP-308478-PTH-CD),<br><br>
+entitled CONTROL ARCHITECTURE FOR OPTIMIZATION AND CONTROL OF A<br>
+HYBRID POWERTRAIN SYSTEM which is incorporated by reference, and need<br>
+not be described herein. Further details can be found in commonly assigned,<br>
+co-pending U.S. patent application Serial No.11/561,156 (Attorney Docket<br>
+No. GP-308470-PTH-CD), entitled CONTROL ARCHITECTURE FOR SELECTION<br>
+OF OPTIMAL MODE OR GEAR AND INPUT SPEED FOR A HYBRID POWERTRAIN<br>
+SYSTEM, which is incorporated herein by reference in its entirety. The method<br>
+comprises the following steps, executed as one or more algorithms in the<br>
+control modules of the distributed control module architecture. The method<br>
+includes monitoring output of the transmission, typically No, the operator<br>
+torque request, TO_REQ, at shaft 64, and, the available battery power PBAT__MIN<br>
+and PBAT_MAX. At least one allowable operating range state, described with<br>
+reference to Table 1, is identified. A torque range for each of the allowable<br>
+range states is determined. A cost for operating in each of the determined<br>
+torque ranges is calculated, and one of the determined torque ranges is<br>
+selected as a preferred operating range state based upon the calculated costs<br>
+for each determined torque range. The powertrain is controlled to the<br>
+preferred operating range state thereafter.<br>
+[0034] Referring now to Fig. 5, a functional block diagram details the<br>
+strategic control block 110 of Fig. 4, and depicts inputs No and TO_REQ to a<br>
+strategic manager segment 220, which has outputs to a system constraint<br>
+segment 240 and an optimization segment 260. The output of the system<br>
+constraint segment 240 is input to the optimization segment 260. The outputs<br>
+of the optimization segment 260 are input to the shift stabilization and<br>
+arbitration segment 280, which has an output comprising the preferred<br>
+operating range state, OP_RangeDES and desired input speed, N1_DES.<br>
+[0035] Referring now to Fig. 6, the strategic manager segment 220 includes<br>
+operator inputs, typically torque requests and other inputs through the UI 13,<br>
+cost structure information, described hereinbelow, and raw strategic inputs,<br>
+comprising raw signals related to the hybrid powertrain operating conditions,<br><br>
+including those related to the ESD 74. Outputs from the strategic manager<br>
+segment 220 comprise cost structure information (COST), strategic inputs<br>
+including transmission output speed No, range of available battery power<br>
+PBAT_MIN and PBAT_MAX, and the operator torque request TO_REQ.<br>
+[0036] Referring now to Fig. 7, a detailed description of the strategic system<br>
+constraints segment 240 is now described. The output speed No is input to<br>
+strategic speed constraint segment 230. The speed constraint segment 230<br>
+determines minimum and maximum input speeds for operating in each<br>
+continuously variable mode, i.e., N1_MIN_M1, N1_MAX_M1, N1_MIK_M2, and<br>
+N1_MAX_M2. The minimum and maximum input speeds, the available battery<br>
+power PBAT_MIN and PBAT_MAX, and the operator torque request TO_REQ are output<br>
+to strategic system constraints segment 250 which determines the inputs to the<br>
+strategic optimization segment 260 for each of the hybrid operating range<br>
+states, i.e., GR1, GR2, GR3, GR4, M1_Eng_Off, M1_Eng_On, M2_Eng_Off,<br>
+and M2_Eng_On, based upon current operating constraints, specifically output<br>
+speed No. There are three output paths 242, 244, 246 from segment 250 which<br>
+supply inputs to optimization segment 260. In this invention, output path 244<br>
+provides relevant system constraint information, comprising a range of torque<br>
+values in form of minimum and maximum input torques (T1_MIN, T1-MAX) for<br>
+each of the fixed gear operations, i.e., GR1, GR2, GR3, and, GR4. This<br>
+information is communicated to each of segments 270, 272, 274, and 276 of<br>
+segment 260.<br>
+[0037] Referring now to Fig. 8, the strategic optimization segment 260 is<br>
+now described. The allowable hybrid operating range states output from<br>
+segment 240 to the strategic optimization segment 260 are used to identify<br>
+which of the optimization segments 270, 272, 274 and 276 are to be executed.<br>
+Segments 262, 264, 270, 272, 274 and 276 comprise optimization segments<br>
+and segments 266 and 268 comprise evaluation segments, wherein an<br>
+optimum operating cost (PCOST) is determined for each of the permissible<br>
+operating range states, based upon the inputs previously described, including<br><br>
+the previously described range of torque values and costs related to<br>
+driveability, fuel economy, emissions, and battery life. The optimum<br>
+operating cost preferably comprises a minimum operating cost at a powertrain<br>
+operating point within the range of attainable torque or speed values for each<br>
+operating range state.<br>
+[0038] Referring now to Fig. 9, a method to determine preferred operating<br>
+conditions for operating the exemplary powertrain in fixed gear mode<br>
+operating range state, i.e., any one of GR1, GR2, GR3, and GR4, is described.<br>
+The range of permissible input torque values to the transmission, comprising<br>
+minimum and maximum input torques T1_MIN and, T1_MAX are input from<br>
+segment 244 to segment 360 for each of blocks 270, 272, 274, and 276. Block<br>
+360 comprises a one-dimensional search engine ("ID Search Engine"), which<br>
+iteratively generates state values for input torque, [T1]j within the range of<br>
+permissible input torques, for execution in an iterative loop 366. The subscript<br>
+"j" refers to a specific iteration, and ranges in value from 1 to n. The quantity<br>
+of iterations, n, can be generated by any one of a number of methods, either<br>
+internal to the search engine, or as a part of the overall method.<br>
+[0039] The state value for input torque, [T1]j is input to a system equation<br>
+362 comprising a one-dimensional optimization equation from which an<br>
+optimum state value for motor torque TA is determined. A state value for<br>
+motor torque TB is determined based upon the determined optimum state value<br>
+for motor torque TA. The motor torques TA and TB and input torque Tr are<br>
+input to a cost function 364, which calculates a cost (PCOST)J for operating the<br>
+exemplary powertrain to achieve the specific input torques. The cost<br>
+determined each iteration is returned and captured, or analyzed, in the search<br>
+engine 360 depending upon specifics of the search engine 360. The search<br>
+engine 360 iteratively calculates values for the cost (PCOST)j and identifies a<br>
+preferred cost, which comprises a minimum cost for all the iteratively<br>
+calculated values in this embodiment. The preferred cost and corresponding<br>
+value for input torque [T1, PCOST)PREF are output to block 280 from each of<br><br>
+blocks 270, 272, 274, and 276, and comprise a preferred cost for each of the<br>
+fixed gear ratios.<br>
+[0040] The method includes determining the range of permissible input<br>
+torques T1_MIN to T1_MAX. The permissible input torques comprise practical<br>
+constraints associated with the specific engine embodiment, and are based<br>
+upon operating characteristics of the specific engine used, with limits related<br>
+to combustion stability and fuel cutoff. The permissible transmission input<br>
+torques and the "n" quantity of iterations are preferably input through line 244<br>
+for each of the gears GR1, GR2, GR3, GR4 to segment 360, which comprises<br>
+an element of each of segments 270, 272, 274, 276, and comprise an output<br>
+from segment 240, described above.<br>
+[0041] The range of permissible input torques T1_MIN and T1_MAX comprise<br>
+boundary conditions that are input to the one-dimensional search engine 360<br>
+including iterative search loop 366. The one-dimensional search engine<br>
+comprises any one of several known methods executed as an algorithm in one<br>
+of the control modules which is operative to generate state values for T1 within<br>
+the ranges of permissible values, output the state values [T1]j to the iteration<br>
+loop 366 to determine a correlated cost, (PCOST)J, and evaluate the resultant, i.e.,<br>
+[T1, PCOST]J in the search engine 360. The search engine determines a preferred<br>
+resultant, i.e., [T1, PCOST]PREF, by comparing the resultant from each iteration<br>
+with a previously determined resultant. When the preferred resultant<br>
+comprises a minimum value for the correlated cost, the engine 360 selects and<br>
+captures and stores the lesser value of the resultant and the previously<br>
+determined resultant. When the search engine has executed the search over<br>
+the range of state values for T1, the final captured resultant comprises the<br>
+preferred resultant, [T1, PCOST]PREF, which is then output to block 280.<br>
+[0042] The one-dimensional search engine 360 can comprise any one of<br>
+several known search engines operative to iteratively generate a value for T1<br>
+within the ranges of permissible values therefor. By way of example, one<br>
+such search engine iteratively generates inputs over the entire range of<br><br>
+permissible input torques T1_MIN to T1_MAX. By way of example, another search<br>
+engine comprises a heuristic sampling search process wherein a state value for<br>
+T, is determined for input to the system equation (Block 362), based upon<br>
+previously determined state values for T, and PCOST. The one-dimensional<br>
+search method solves optimization problems looking for the value of the<br>
+objective function, i.e., the output of the cost equation, to be lower than the<br>
+value at the current point. Regardless of the search engine utilized, it resides as<br>
+an algorithm in one of the control modules for execution during ongoing<br>
+operation of the vehicle.<br>
+[0043] Each state value for input torque, (T1)j is input to system equation<br>
+block 362, from which state values for motor torques TA and TB are<br>
+determined. The torque relationship between MG-A and MG-B is as defined<br>
+in Eqs 1 and 2, below:<br><br>
+wherein T1 is the input torque originating from engine 14, To is the<br>
+transmission output torque, i.e., the requested output torque, TO_REQ, TA and TB<br>
+are the operating torques for MG-A 56 and MG-B 72, N x represents time-<br>
+rate change in transmission input speed N,, and d11, d12, d13, d14, and g11, g12,<br>
+g13, g14 are known scalar values determined for each of the fixed gears of the<br>
+specific application. In this application, when the transmission output torque<br><br>
+To is known, there are two degrees of freedom, i.e., T1 and TA, by which TBcan<br>
+be optimized and determined, or T1 and TB, by which TA can be optimized and<br>
+determined, depending upon the fixed gear operating range state.<br>
+[0044] The system equation (Block 362) operates in two parts to determine a<br>
+preferred or optimum value for T1 In the first part, an optimum value for TA is<br>
+determined for each iterated value for T1, or over the range of permissible<br>
+input torques T1-MIN and T1_MAX, and is based upon minimization of the battery<br>
+power, PBAT, to operate the electrical motors MG-A and MG-B, which can<br>
+comprise a predetermined calibration or a one-dimensional optimization<br>
+search. Torque TB is calculated based upon the optimized TA using one of Eq.<br>
+1 and Eq. 2, above. Thus the system reduces to a single degree of freedom<br>
+i.e., T1, by which TA can be optimized and TB can be determined, or by which<br>
+TB can be optimized and TA can be determined.<br>
+[0045] The selected state values for T1 and the optimized value for TA and the<br>
+calculated state value for motor torque TB are all input to the cost equation<br>
+(Block 364) to calculate a cost, PCOST, which is associated with the selected<br>
+state values for T1 The input torque and cost [T1, PCOST]J are input back through<br>
+the search loop to segment 360, which iteratively executes the one-<br>
+dimensional search method over the range of permissible input torques T1 to<br>
+converge on a preferred or optimal value for cost, PCOST. The optimal value for<br>
+cost, PCOST is preferably a minimum cost value.<br>
+[0046] The cost information used in the cost function 364 preferably<br>
+comprises operating costs which are generally determined based upon factors<br>
+related to vehicle driveability, fuel economy, emissions, and battery life for the<br>
+determined torque range. Furthermore, costs in this invention are assigned<br>
+and associated with only electrical power consumption associated with a<br>
+specific operating point of the powertrain system for the vehicle. Lower<br>
+operating costs are generally associated with lower battery power usage, and<br>
+lower emissions for an operating point, and take into account a current<br>
+operating range state of the powertrain system. The optimum operating cost<br><br>
+(PCOST) can be determined by calculating a total powertrain system loss,<br>
+comprising an overall system power loss and a cost penalty, such as can be<br>
+associated with controlling battery state of charge. The overall system power<br>
+loss comprises a term based upon losses in the electrical system (e.g. wire<br>
+impedances and switching and solenoid losses), and heat losses. Other losses<br>
+include electrical machine power losses and internal battery power losses.<br>
+Other factors may also be considered, including factors related to battery life<br>
+due to depth of discharge of the ESD 74, current ambient temperatures and<br>
+their effect on state of charge of the battery. Operating costs are preferably<br>
+developed relative to specific powertrain/vehicle applications during vehicle<br>
+calibration pre-production. An exemplary method for determining engine<br>
+power losses are described in commonly assigned U.S. Patent Application<br>
+Publication Number 2005/0256633 A2, entitled COST STRUCTURE METHOD<br>
+INCLUDING FUEL ECONOMY AND ENGINE EMISSION CONSIDERATIONS, the<br>
+contents of which are incorporated herein by reference.<br>
+[0047] The preferred operating range is thus identified based upon the costs,<br>
+including the preferred input torque which expends a minimum cost. Ranges<br>
+of permissible motor torques from MA and MB can be determined based upon<br>
+the range of permissible input torques, based upon available battery power.<br>
+This leads to determining a preferred fixed gear operating range state based<br>
+upon the preferred input torque.<br>
+[0048] The invention has been described with specific reference to the<br>
+embodiments and modifications thereto. Further modifications and alterations<br>
+may occur to others upon reading and understanding the specification. It is<br>
+intended to include all such modifications and alterations insofar as they come<br>
+within the scope of the invention.<br><br>
+Having thus described the invention, it is claimed:<br>
+1.	Method for operating a powertrain comprising an internal combustion<br>
+engine and first and second electrical machines and an electro-mechanical<br>
+transmission selectively operative to transmit torque therebetween, the method<br>
+comprising:<br>
+determining a range of permissible input torques from the internal combustion<br>
+engine to the electro-mechanical transmission;<br>
+iteratively selecting states for input torque from the range of permissible<br>
+torques;<br>
+optimizing a motor torque output from the first electrical machine based upon<br>
+the selected state for the input torque;<br>
+determining a motor torque output from the second electrical machine based<br>
+upon the optimized motor torque output from the first electrical<br>
+machine;<br>
+calculating a cost for each of the iteratively selected states for the input torque<br>
+and the motor torques from the first and second electrical machines;<br>
+and,<br>
+identifying a preferred input torque based upon the plurality of costs.<br>
+2.	The method of claim 1, wherein identifying the preferred operating<br>
+range based upon the plurality of costs comprises identifying a state value for<br>
+input torque which expends a minimum cost.<br>
+3.	The method of claim 1, further comprising determining ranges of<br>
+permissible motor torques from each of the first and second electrical<br>
+machines based upon the range of permissible input torques.<br><br>
+4.	The method of claim 3, wherein the ranges of permissible motor<br>
+torques from each of the first and second electrical machines are determined<br>
+based upon available battery power.<br>
+5.	The method of claim 1, wherein the range of permissible input torques<br>
+is determined based upon an output speed of the transmission and an operator<br>
+torque request.<br>
+6.	The method of claim 1, further comprising determining a preferred<br>
+operating range state based upon the preferred input torque.<br>
+7.	The method of claim 1, wherein iteratively selecting state values for<br>
+the input torque comprises: executing a one-dimensional search engine to<br>
+generate state values for the input torque within the range of permissible input<br>
+torques.<br>
+8.	The method of claim 1, wherein each cost is calculated based upon<br>
+engine fuel consumption and an electrical battery power cost associated with<br>
+the input torque and the motor torques for the first and second electrical<br>
+machines.<br>
+9.	The method of claim 1, further comprising operating the electromechanical<br>
+transmission of the powertrain in a fixed gear operating range<br>
+state.<br>
+10.	The method of claim 9, further comprising identifying a preferred<br>
+fixed gear operating range state based upon the plurality of costs.<br><br>
+11.	The method of claim 1, wherein optimizing the motor torque output<br>
+from the first electrical machine based upon the selected state for the input<br>
+torque comprises selecting the motor torque output from the first electrical<br>
+machine based upon the selected state for the input torque to minimize battery<br>
+power to operate the first and second electrical machines.<br>
+12.	Method to identify preferred operating conditions for operating a<br>
+powertrain in a fixed gear operating range state the powertrain comprising an<br>
+internal combustion engine and first and second electrical machines and an<br>
+electro-mechanical transmission selectively operative to transmit torque<br>
+therebetween, the method comprising:<br>
+determining a range of permissible input torques;<br>
+determining a plurality of costs, each cost based upon a selected permissible<br>
+input torque; and,<br>
+identifying a preferred input torque based upon the plurality of costs.<br>
+13.	The method of claim 12, further comprising identifying the preferred<br>
+operating conditions for operating the powertrain in the fixed gear operating<br>
+range state to substantially meet an operator torque request.<br>
+14.	The method of claim 12, wherein determining the plurality of costs,<br>
+each cost based upon a selected permissible input torque further comprises:<br>
+iteratively selecting state values for input torque from the range of permissible<br>
+input torques;<br>
+determining an optimum motor torque from the first electrical machine based<br>
+upon each of the selected state values for the input torque;<br>
+determining a motor torque from the second electrical machine based upon the<br>
+selected state value for the input torque and the optimum motor torque<br>
+from the first electrical machine; and,<br><br>
+determining a cost for each iteratively selected state value for the input torque,<br>
+the optimum motor torque from the first electrical machine, and, the<br>
+motor torque from the second electrical machine determined<br>
+therefrom.<br>
+15.	The method of claim 14, wherein iteratively selecting state values for<br>
+the input torque comprises: executing a one-dimensional search engine to<br>
+generate the state values for the input torque across the range of permissible<br>
+input torques.<br>
+16.	The method of claim 14, wherein determining the motor torque from<br>
+the second electrical machine comprises executing a system equation based<br>
+upon the selected state value for the input torque and the selected state value<br>
+for the motor torque from the first electrical machine.<br>
+17.	The method of claim 14, further comprising determining the optimum<br>
+motor torque from the first electrical machine based upon each of the selected<br>
+state values for the input torque to minimize battery power to operate the first<br>
+and second electrical machines.<br>
+18.	Apparatus, comprising:<br>
+a distributed control module architecture comprising: a plurality of control<br>
+modules operatively connected to a powertrain comprising an internal<br>
+combustion engine and first and second electrical machines and an electro-<br>
+mechanical transmission selectively operative to transmit torque therebetween<br>
+the transmission selectively operative in one of a plurality of fixed gear<br>
+operating range states through selective actuation of a plurality of torque-<br>
+transfer clutches; the control modules adapted to execute a plurality of<br>
+algorithms contained therein to effect the following steps, the algorithms<br>
+comprising:<br><br>
+code to determine a range of permissible input torques from the internal<br>
+combustion engine to the electro-mechanical transmission;<br>
+code to iteratively select states for input torque from the range of permissible<br>
+torques;<br>
+code to optimize a motor torque output from the first electrical machine based<br>
+upon the selected state for the input torque;<br>
+code to determine a motor torque output from the second electrical machine<br>
+based upon the optimized motor torque output from the first electrical<br>
+machine;<br>
+code to calculate a cost for each of the iteratively selected states for the input<br>
+torque and the motor torques from the first and second electrical<br>
+machines;<br>
+code to identify a preferred input torque based upon the plurality of costs; and,<br>
+code to select a preferred fixed gear operating range state.<br>
+19.	The apparatus of claim 18, wherein code to optimize the motor torque<br>
+output from the first electrical machine based upon the selected state for the<br>
+input torque comprises code to select the motor torque output from the first<br>
+electrical machine based upon the selected state for the input torque to<br>
+minimize battery power to operate the first and second electrical machines.<br>
+20.	The apparatus of claim 18, wherein the code to iteratively select state<br>
+values for the input torque comprises: code to execute a one-dimensional<br>
+search engine to generate state values for the input torque within the range of<br>
+permissible input torques.<br><br>
+There is provided a control system for a powertrain system including an electro-mechanical transmission operative in a plurality of fixed gear modes and continuously variable modes. The control system is adapted to identify<br>
+preferred operating conditions for operating the powertrain in a fixed gear operating range state. The method comprises determining a range of permissible input torques. States for input torque are iteratively selected, and a motor torque output from the first electrical machine is optimized based upon the selected state for the input torque. A motor torque output from the<br>
+second electrical machine is determined based upon the optimized motor torque output from the first electrical machine. A cost for each of the<br>
+iteratively selected states for the input torque and the motor torques from the first and second electrical machines is calculated. A preferred operating range is identified based upon the plurality of costs.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=yQ9fQXGbrgd2NvgEnDk86A==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=yQ9fQXGbrgd2NvgEnDk86A==&amp;amp;loc=wDBSZCsAt7zoiVrqcFJsRw==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="270427-propylene-hexene-random-copolymer-produced-in-the-presence-of-a-ziegler-natta-catalyst.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="270429-encoding-method-and-apparatus-for-frame-synchronization-signal.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>270428</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1388/KOL/2008</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>52/2015</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>25-Dec-2015</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>21-Dec-2015</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>18-Aug-2008</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>GM GLOBAL TECHNOLOGY OPERATIONS, INC.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>300 GM RENAISSANCE CENTER DETROIT, MICHIGAN</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>ANTHONY H. HEAP</td>
+											<td>2969 LESLIE PARK CIRCLE ANN ARBOR, MICHIGAN 48105</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>B60W20/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>11/853,092</td>
+									<td>2007-09-11</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/270428-control-architecture-and-method-for-one-dimensional-optimization-of-input-torque-and-motor-torque-in-fixed-gear-for-a-hybrid-powertrain-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 04:29:44 GMT -->
+</html>

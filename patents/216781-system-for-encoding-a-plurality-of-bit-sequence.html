@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/216781-system-for-encoding-a-plurality-of-bit-sequence by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 11:01:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 216781:&quot;SYSTEM FOR ENCODING A PLURALITY OF BIT SEQUENCE&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;SYSTEM FOR ENCODING A PLURALITY OF BIT SEQUENCE&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>The present invention provides an improved system and method for encoding a plurality of bit sequences. The present invention includes reading a bif sequence; determining a minimum number of bits for a repeat factor for the bit sequence, where the minimum number of bits is variable; and encoding the bit sequence using the repeat factor. The method provides an improved run-length encoding algorithm by using a strategy where the number of bits used to represent the repeat factor (RF) varies for each individual sequence of equal-valued bits. Rather than conventionally representing the RF by any predetermined and fixed number of bits, the RF of the present invention is represented by the minimum number of bits to binary-encode that repeat factor as an unsigned integer. The key advantage of providing the variable width RF run-length encoding algorithm is that the RF for each individual bit sequence is represented using only the minimum number of bits necessary, regardless of any previous or following RF. Consequently, a compression ratio can be obtained, which is higher than that obtained with the conventional algorithms, over a wide range of sequence length distributions in the data to compress. Additionally, the variable width RF is data driven in that the data to compress is what controls how many bits are used to represent the RF. Therefore, it is unnecessary to know the bit value sequence distribution in advance, which makes the method in accordance with the present invention well suited for real-time application.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>FIELD OF THE INVENTION<br>
+The present invention relates to a method and system for providing an improved run-length encoding algorithm for data compression and more particularly to run-length encoding data compression.<br>
+BACKGROUND OF THE INVENTION<br>
+Data compression is important in the area  of data transmission and storage One <br>
+family of algorithms for data compression is the run-length encoding algorithms. Run-length encoding algorithms are frequently the method of choice for data compression when data predominantly consists of sequences of equal-valued bits, such as visual images, because of the high compression ratios they can attain.<br>
+In this family of data compression algorithms, often, an alphabet of symbols is defined, where such a symbol can consist of one or more bits. Then the data compression is achieved by representing the data as pairs of a symbol and its repeat factor, i.e., its successive occurrence. In the case where the alphabet consists only of two bit values, such as 0 and 1, an alphabet need not be defined because successive repeat factors, commonly also referred to as, run-lengths, can designate the length of sequences of alternating bit values: one repeat factor is the number of 0-valued bits and the next repeat factor is the number of 1-values bits. If one bit value predominantly occurs with a repeat factor of one, then only the repeat factor of the opposite bit value which occurs with varying repeat factors may be written. This implies that between any two such repeat factors, there is a single bit of the opposite bit value.<br>
+A problem that limits the efficiency of run-length encoding algorithms is that the repeat factors themselves occupy a certain number of bits, and it can be difficult or impossible to determine the optimal number of bits to represent these repeat factors, especially without knowing the actual data to compress. To aggravate the problem, even if the distribution of repeat factors for the entire data set or bit stream were known before the encoding process is to begin, the best choice of the number of bits to encode the repeat factor need not be constant throughout any one data set or bit stream. In these cases, a sub-optimal data compression ratio most likely results from any fixed choice of the number of bits to encode the repeat factor. Using too many bits to represent the repeat factors is wasteful and contrary to the objective of data compression. Using not enough bits to represent the repeat factors would force the algorithm to introduce zero-length sequences of the opposite bit-value, or other measures for the same purpose, and to then encode the remainder of the sequence that was too long to represent, in the same fashion.<br>
+One example of the problem above occurs in a multicast satellite system. Figure 1 illustrates such a conventional satellite system 100 which may use data compression algorithms. The system includes a central site 102, at which is a transponder 110 and a server 112. The central site 102 communicates with remote clients 104 via a satellite 108. Receivers 106 at the client sites facilitate this communication. To ensure the correct delivery of data over the satellite 108 to remote clients 104, the multicast application server 112  must be able to determine if the data was received correctly by all addressed clients, and the server 112 must resend the incorrectly received data. Therefore, the clients 104 must respond to the server 112, indicating which of the data need to be resent, either because they were missed altogether, or because they contain more transmission errors than what can be reconstructed.<br>
+The response from each client can be different from that of any other client, and the amount of back traffic from all clients 104 to the server 112 will scale approximately linearly with the number of receivers. This client response data traffic, or back traffic, is a serious burden not only for the central site server 112, but also for the server's local network which may not have sufficient bandwidth and/or responsiveness to handle this client response traffic without impacting other duties of that network. In the case where the server 112 sends the payload data by satellite 108 while the clients 104 respond over a much slower terrestrial network, this client response traffic may be the single most serious limiting factor to increasing the number of clients. Thus, the flooding of a multicast sender/server 112 by the responses from its clients 104, called client response implosion, is a common and significant impediment to the runtime perfonnance and to the scalability in the number of receivers and of multicast and broadcast applications. The possibility of client response implosion is aggravated when transmission errors increase due to adverse weather conditions, obscuring of the line of transmission, or sun spot activity. The efficiency of the run-length encoding algorithm used in data compression by the network is therefore a critical factor.<br>
+Accordingly, there exists a need for a system and method for providing an improved run-length encoding algorithm for data compression. The present invention addresses such a need.<br>
+SUMMARY OF THE INVENTION<br>
+The present invention provides an improved method for encoding a plurality of bit sequences. The present invention includes reading a bit sequence; determining a minimum number of bits for a repeat factor for the bit sequence, where the minimum number of bits is<br>
+variable; and encoding; the bit sequence using the repeat factor The method provides an improved run-length encoding algorithm by using a strategy where the number of bits used to represent the repeat factor (RF) varies for each individual sequence of equal-valued bits. Rather than conventionally representing the RF by any predetermined and fixed number of bits, the RF of the present invention is represented by the minimum number of bits to binary-encode that repeat factor as an unsigned integer. The key advantage of providing the variable width RF run-length encoding algorithm is that the RF for each individual bit sequence is represented using only the minimum number of bits necessary, regardless of any previous or following RF. Consequently, a compression ratio can be obtained, which is higher than that obtained with the conventional algorithms, over a wide range of sequence length distributions in the data to compress. Additionally, the variable width RF is data driven in that the data to compress is what controls how many bits are used to represent the RF. Therefore, it is unnecessary to know the bit value sequence distribution in advance, which makes the method in accordance with the present invention well suited for real-time application.<br>
+The present invention further provides a system for encoding a plurality of bit<br>
+(a)	means for reading a bit sequence;<br>
+(b)	means for determining a minimum number of bits for a repeat factor for the bit<br>
+sequence, wherein the minimum number of bits is variable; and<br>
+(c)	means for encoding the bit sequence using the repeat factor.<br>
+The means for reading step (a) comprises:-5-<br>
+(al) means for reading a plurality of consecutive equal-valued bits of an input bit stream.<br>
+The said means reading step (al) comprises:<br>
+(ali)    means for reading a first bit of the input bit stream;<br>
+(alii)   means for setting a previous bit equal to the first bit;<br>
+(aliii) means for reading a next bit of the input bit stream;<br>
+(aliv) means for setting a current bit equal to the next bit;<br>
+(alv)   means for determining if the previous bit equals the current bit;<br>
+(alvi) means for setting the previous bit equal to the current bit if the previous bit equals the current bit, and return to step (aliii); and<br>
+(alvii) means for stopping the reading if the previous bit does not equal the current bit.<br>
+The means for determining step (b) comprises:<br>
+(bl) means for counting a plurality of consecutive equal-valued bits of an input bit stream, wherein the consecutive equal-valued bits comprise the bit sequence, wherein the result of the counting is the repeat factor; and<br>
+(b2) means for determining a repeat factor encoding width for the repeat factor, wherein the repeat factor encoding width is the minimum number of bits for the repeat factor.<br>
+The means for counting step (b1) comprises:<br>
+(bli) means for setting the repeat factor equal to a predetermined maximum number if the repeat factor is greater than the predetermined maximum number.<br>
+The means for determining step (b2) comprises:<br>
+(b2i) means for setting the repeat factor encoding width equal to one, if the repeat factor is not greater than one; and<br>
+(b2ii) meansJEbr setting the repeat factor encoding width equal to one plus a largest integer not greater than a binary logarithm of the repeat factor, if the repeat factor is greater than one.<br>
+The means for encoding step (c) comprises:<br>
+(cl) nieans-for writing a repeat factor encoding width for the repeat factor to an output bit stream; and<br>
+(c2)     means for writing the repeat factor to the output bit stream.<br>
+The above system, further comprises:<br>
+(al)     means for initializing the repeat factor equal to one.<br>
+The above system further comprises:<br>
+(d) meajis-for inserting a zero length sequence for a bit value opposite to a value of the bit sequence.<br>
+The said means for inserting step (d) comprises:<br>
+(dl)    means For setting the repeat factor equal to zero; and<br>
+(d2) means for encoding the zero length sequence with the repeat factor equal to zero.<br>
+The present invetion further provides a method for encoding a plurality of bit sequences, comprising:<br>
+(a)	reading a bit sequence;<br>
+(b)	determining a minimum number of bits for a repeat factor for the bit sequence,<br>
+wherein the minimum number of bits is variable; and<br>
+(c)	encoding the bit sequence using the repeat factor.<br>
+The reading step (a) comprises:<br>
+(al)     reading a plurality of consecutive equal-valued bits of an input bit stream.<br>
+The reading step (al) comprises:<br>
+(ali)    reading a first bit of the input bit stream;<br>
+(alii)   setting a previous bit equal to the first bit;<br>
+(aliii) reading a next bit of the input bit stream;<br>
+(aliv)  setting a current bit equal to the next bit;<br>
+(alv)   determine if the previous bit equals the current bit;<br>
+(alvi) setting the previous bit equal to the current bit if the previous bit equals the current bit, and return to step (aliii); and<br>
+(alvii) stopping the reading if the previous bit does not equal the current bit.<br>
+The determining step (b) comprises:<br>
+(bl) counting a plurality of consecutive equal-valued bits of an input bit stream, wherein the consecutive equal-valued bits comprise the bit sequence, wherein the result of the counting is the repeat factor; and<br>
+(b2) determining a repeat factor encoding width for the repeat factor, wherein the repeat factor encoding width is the minimum number of bits for the repeat factor.<br>
+The counting step (bl) comprises:<br>
+(bli) setting the repeat factor equal to a predetermined maximum number if the repeat factor is greater than the predetermined maximum number.<br>
+The determining step (b2) comprises:<br>
+(b2i) setting the repeat factor encoding width equal to one, if me repeat factor is not greater than one; and<br>
+(b2ii) setting the repeat factor encoding width equal to one plus a largest integer not greater than a binary logarithm of the repeat factor, if the repeat factor is greater than one.<br>
+The encoding step (c) comprises:<br>
+(cl) writing a repeat factor encoding width for the repeat factor to an output bit stream; and<br>
+(c2)     writing the repeat factor to the output bit stream.<br>
+The above method, further comprises:<br>
+(al)     initializing the repeat factor equal to one.<br>
+The above method, further comprises:<br>
+(d) inserting a zero length sequence for a bit value opposite to a value of the bit sequence.<br>
+The said inserting step (d) comprises:<br>
+(dl)    setting the repeat factor equal to zero; and<br>
+(d2)    encoding the zero length sequence with the repeat factor equal to zero.<br>
+The instant invetion also provides a computer readable medium with program instructions for encoding bit sequences, the instructions for:<br>
+(a)	reading a bit sequence;<br>
+(b)	determining a minimum number of bits for a repeat factor for the bit sequence,<br>
+wherein the minimum number of bits is variable; and<br>
+(c)	encoding the bit sequence using the repeat factor.<br>
+The reading instruction (a) comprises instructions for:<br>
+(al)     reading a plurality of consecutive equal-valued bits of an input bit stream.<br>
+The reading instruction (al) comprises instructions for:<br>
+(ali)    reading a first bit of the input bit stream;<br>
+(alii)   setting a previous bit equal to the first bit;<br>
+(aliii) reading a next bit of the input bit stream;<br>
+(aliv)  setting a current bit equal to the next bit;<br>
+(alv)   determine if the previous bit equals the current bit;<br>
+(alvi) setting the previous bit equal to the current bit if the previous bit equals the current bit, and return to step (aliii); and<br>
+(alvii) stopping the reading if the previous bit does not equal the current bit.<br>
+Tthe determining instructions (b) comprises instructions for:<br>
+(bl) counting a plurality of consecutive equal-valued bits of an input bit stream, wherein the consecutive equal-valued bits comprise the bit sequence, wherein the result of the counting is the repeat factor; and<br>
+(b2) determining a repeat factor encoding width for the repeat factor, wherein the repeat factor encoding width is the minimum number of bits for the repeat factor.<br>
+The counting instructions (bl) comprises instructions for:<br>
+(bli) setting the repeat factor equal to a predetermined maximum number if the repeat factor is greater than the predetermined maximum number.<br>
+The determining instruction (b2) comprises instructions for:<br>
+(b2i) setting the repeat factor encoding width equal to one, if the repeat factor is not greater than one; and<br>
+(b2ii) setting the repeat factor encoding width equal to one plus a largest integer not greater than a binary logarithm of the repeat factor, if the repeat factor is greater than one.<br>
+The encoding instruction (c) comprises instructions for:<br>
+(cl) writing a repeat factor encoding width for the repeat factor to an output bit stream; and<br>
+(c2)     writing the repeat factor to the output bit stream.<br>
+The above medium, further comprises:<br>
+(al)     initializing the repeat factor equal to one.<br>
+The above medium, further comprising instructions for:<br>
+(d)      inserting; a zero length sequence for a bit value opposite to a value of the bit sequence.<br>
+The said inserting instruction (d) comprises instructions for: (dl)    setting the repeat factor equal to zero; and (d2)    encoding the zero length sequence with the repeat factor equal to zero.<br>
+hi a preferred embodiment, the instant invention provides a system for encoding a plurality of bit sequences, comprising:<br>
+(a)	means for reading a plurality of consecutive equal-valued bits of an input bit<br>
+stream;<br>
+(b)	means for counting the plurality of consecutive equal-valued bits, wherein the<br>
+result of the counting is the repeat factor;<br>
+(c)	means for determining a repeat factor encoding width for the repeat factor,<br>
+wherein the repeat factor encoding width is the minimum number of bits for the repeat factor,<br>
+(d)	means for writing the repeat factor encoding width to an output bit stream; and<br>
+(e)	means for writing the repeat factor to the output bit stream.<br>
+In another preferred embodiment, the invention provides a method for encoding a plurality of bit sequences, comprising:<br>
+(a)	reading a plurality of consecutive equal-valued bits of an input bit stream;<br>
+(b)	counting the plurality of consecutive equal-valued bits, wherein the result of<br>
+the counting is the repeat factor;<br>
+(c)	determining a repeat factor encoding width for the repeat factor, wherein the<br>
+repeat factor encoding width is the minimum number of bits for the repeat factor;<br>
+(d)	writing ithe repeat factor encoding width to an output bit stream; and<br>
+(e)	writing the repeat factor to the output bit stream.<br>
+In another preferred embodiment the invention provides a computer readable medium with program instructions for encoding bit sequences, the instructions for:<br>
+(a)	reading a plurality of consecutive equal-valued bits of an input bit stream;<br>
+(b)	counting the plurality of consecutive equal-valued bits, wherein the result of<br>
+the counting is the repeat factor;<br>
+(c)	determining a repeat factor encoding width for the repeat factor, wherein the<br>
+repeat factor encoding width is the minimum number of bits for the repeat factor;<br>
+(d)	writing the repeat factor encoding width to an output bit stream; and<br>
+(e)	writing the repeat factor to the output bit stream.<br>
+In yet another preferred embodiment, the present invention provides a system for encoding a plurality of bit sequences, comprising:<br>
+(a)	means for reading a plurality of consecutive equal-valued bits of an input bit<br>
+stream;<br>
+(b)	means for counting the plurality of consecutive equal-valued bits, wherein the<br>
+result of the counting is the repeat factor;<br>
+(c)	means for setting a repeat factor encoding width equal to one, if the repeat<br>
+factor is not greater than one;<br>
+(d)	means for setting the repeat factor encoding width equal to one plus a largest<br>
+integer not greater than a binary logarithm of the repeat factor, if the repeat factor is greater than one;<br>
+(e)	means for writing the repeat factor encoding width to an output bit stream;<br>
+(f)	means for writing the repeat factor to the output bit stream; and<br>
+(g)	means for inserting a zero length sequence for a bit value opposite to a value of<br>
+the plurality of consecutive equal-valued bits.<br>
+In a further preferred embodiment, the instant invention provides a method for encoding a plurality of bit sequences, comprising:<br>
+(a)	reading a plurality of consecutive equal-valued bits of an input bit stream;<br>
+(b)	counting the plurality of consecutive equal-valued bits, wherein the result of<br>
+the counting is the repeat factor;<br>
+(c)	setting a repeat factor encoding width equal to one, if the repeat factor is not<br>
+greater than one;<br>
+(d)	setting the repeat factor encoding width equal to one plus a largest integer not<br>
+greater than a binary logarithm of the repeat factor, if the repeat factor is greater than one;<br>
+(e)	writing the repeat factor encoding width to an output bit stream;<br>
+(f)	writing the repeat factor to the output bit stream; and<br>
+(g)	inserting a zero length sequence for a bit value opposite to a value of the<br>
+plurality of consecutive equal-valued bits.<br>
+In another preferred embodiment the invention provides a computer readable medium with program instructions for encoding bit sequences, the instructions for:<br>
+(a)	reading a plurality of consecutive equal-valued bits of an input bit stream;<br>
+(b)	counting; the plurality of consecutive equal-valued bits, wherein the result of<br>
+the counting is the repeat factor;<br>
+(c)	setting a repeat factor encoding width equal to one, if the repeat factor is not<br>
+greater than one;<br>
+(d)	setting the repeat factor encoding width equal to one plus a largest integer not<br>
+greater than a binary logarithm of the repeat factor, if the repeat factor is greater than one;<br>
+(e)	writing the repeat factor encoding width to an output bit stream;<br>
+(f)	writing the repeat factor to the output bit stream; and<br>
+(g)	inserting a zero length sequence for a bit value opposite to a value of the<br>
+plurality of consecutive equal-valued bits.<br>
+BRIEF DESCRIPTION OF THE FIGURES<br>
+Figure 1 illustrates a conventional satellite system which may use data compression algorithms,<br>
+Figure 2 is a_ftflBL£hart illustrating a preferred embodiment of a method for providing an improved run-length encoding algorithm for data compression in accordance with the present invention.<br>
+Figure 3 is a flow chart illustrating in more detail the preferred embodiment of the method for providing an improved run-length encoding algorithm for data compression in accordance with the present invention.<br>
+Figure 4 is a flow chart illustrating in more detail the initializing step in accordance with the present invention.<br>
+FigureJ) is a flow chart illustrating in more detail the writing the zero length sequence in accordance with the present invention.<br>
+Figure 6 is a flow chart illustrating in more detail the writing of the encoded sequence in accordance with the present invention.<br>
+Figure 7 is a flow chart illustrating in more detail the determining of the RFEW in accordance with the present invention.<br>
+DETAILED DESCRIPTION<br>
+The present invention provides a method for providing an improved run-length encoding algorithm for data compression. The following description is presented to enable one of ordinary skill in the art to make and use the invention and is provided in the context of a patent application and its requirements. Various modifications to the preferred embodiment will be readily apparent to those skilled in the art and the generic principles herein may be applied to other embodiments. Thus, the present invention is not intended to be limited to the embodiment shown but is to be accorded the widest scope consistent with the principles and features described herein.<br>
+The method in accordance with the present invention provides an improved run-length encoding algorithm by using a strategy where the number of bits used to represent the repeat factor (RF) varies for each individual sequence of equal-valued bits. The RF is the number of successive repetitions of the same bit value in a bit sequence to compress. Rather than conventionally representing the RF by any predetermined and fixed number of bits, the RF of the present invention is represented by the minimum number of bits to binary-encode that repeat factor as an unsigned integer.<br>
+In the preferred embodiment, the number of bits needed to represent the RF of a sequence of equal-valued bits is written to the output bit stream (OBS) before the actual RF, using a small parametrized number of bits, called the repeat factor encoding width (RFEW). The first item of information constituting a bit sequence compressed with the method in accordance with the present invention is the RFEW. The actual RF is then represented using repeat factor width (RFW) bits. For example, if the RFEW is 4 bits, men the RFW can range from 1 to 16 bits. The RFW can never be smaller than 1 bit, since even a RF of zero needs one bit to be represented. For an RFW of 1 to 16 bits, a RF can attain values ranging from zero to 216-1, or 65,635.<br>
+To more particularly describe the features of the present invention, please refer to Figures 2 through 7 in conjunction with the discussion below.<br>
+Figure 2 is a flow chart illustrating a preferred embodiment of a method for providing an unproved run-length encoding algorithm for data compression in accordance with the present invention. First, a bit sequence to encode is read, via step 202. Next, a minimum number of bits for a RF for the bit sequence is determined, where the minimum number of bits is variable, via step 204. Then, the bit sequence is encoded using the RF, via step 206.<br>
+For example, assume that a bit sequence for one thousand consecutive "l"'s is to be encoded. The RF for this bit sequence is thus one thousand as well. The binary representation of the RF is "1111101000", which occupies ten bite. The RF width would be ten, which is "1010" in binary. However, no RF can occupy less man one bit, because even a RF of zero requires one bit to encode mat zero. Therefore, one is always implicitly added to the RF width, which is encoded in the first RFEW bits of an encoded bit sequence. Consequently, in this example, the RF of one thousand, with the resulting binary RF width of<br>
+ten bits, the first four hits of me encoded sequence will contain the value of nine, or "1001" in binary. Following these initial RFEW bits are the ten bits that encode the RF of one thousand. Thus, the bit sequence of one thousand consecutive equal bits is encoded into a fourteen bit long output sequence, "10011111101000", where the first bits, "1001" is the RFEW. The resulting compression ratio is 1000/14, or 71.4. Although this example illustrates a RFEW of four bits, any number of bits may be used.<br>
+Figure 3 is a flow chart illustrating in more detail the preferred embodiment of the method for providing an improved run-length encoding algorithm for data compression in accordance with the present invention. First, the process is initialized, via step 302. Figure 4 is a flow chart illustrating in more detail the initializing step 302. In the initialization, the first bit from the input bit stream (IBS) is read, and the global variable "previous bit" is set equal to the first bit, via step 402. If previous bit is determined to not be equal to zero, via step 404, then a zero length encoded sequence is written, via step 406. The global variable "cleanup" is set equal to "TRUE", via step 408, and the global variable for the RF, "repeat factor", is set equal to one, via step 410. The variable "cleanup" indicates whether or not an encoded sequence is to be flushed to the OBS. If previous bit is determined to be equal to zero, via step 404, then the initializing step skips step 406 and proceeds to step 408 and 410. However, whether the convention requires the first bit of the OBS to be zero, as is used above, or one, is arbitrary. The predominant bit value of the IBS should be used.<br>
+Figure 5 is a flow chart illustrating in more detail the writing the zero length sequence (step 406, Fig. 4) in accordance with the present invention. First, me repeat_factor is set equal to zero, via step 502. Then, the encoded sequence is written, via step 504.<br>
+Returning to Figure 3, once the encoding process is initialized via step 302, it is<br>
+determined if the IBS is empty, via step 304. If so, then if cleanup equals TRUE, then the encoded sequence is flushed to the OBS, via step 306. If not, then the next bit of the IBS Is read and the global variable "current bit" is set equal to the next bit, via step 308. Then, it is determined if current bit equals previous bit, via step 310. If not, then the end of a sequence of equal bits has been reached and current bit is the first bit of the next bit sequence. Previous bit is then set equal to current bit to track the bit value of the next bit sequence, via step 312. The encoded sequence is then written, via step 314. The RF is reset equal to one, via step 316, and cleanup is set to FALSE, via step 318, since the old sequence has already been flushed to the OBS. The process then loops back to step 304.<br>
+If current bit is equal to previous bit, via step 310, then the value of repeat factor is incremented by one, via step 320, in order to count the number of sequential equal bits. If the incremented repeat factor has exceeded a preset maximum value, via step 322, then repeat factor is set equal to the maximum value, via step 324. (This maximum value is 2A(2ARFEW)-1). Then, the encoded sequence is written, via step 326, and a zero length sequence of the opposite bit value is inserted after the encoded sequence, via step 328. The repeat factor is then reset equal to one, via step 320, and cleanup is set to TRUE, via step 332. The process then loops back to step 304.<br>
+Figure 6 is a flow chart illustrating in more detail the writing of the encoded sequence (steps 326 and 314, Fig. 3; step 504, Fig. 5) in accordance with the present invention. First, the RFEW for the value of repeat_factor is determined, via step 602. Next, the value of the RFEW is written to the OBS, via step 604. Then, the value of repeat factor is written to the OBS, via step 606.<br>
+Figure 7 is a flow chart illustrating in more detail the determining of the RFEW (step<br>
+602, Fig. 6) in accordance with the present invention. First, it is determined if repeat factor is less than or equal to one, via step 702. If it is, then a one is returned for the RFEW, via step 704. If not, then a RFEW equal to one plus the largest integer not greater than the binary logarithm of repeat factor is returned, via step 706.<br>
+The key advantage of providing the variable width RF run-length encoding algorithm in accordance with the present invention is that the RF for each individual bit sequence is represented using only the minimum number of bits necessary, regardless of any previous or following RF. Consequently, a compression ratio can be obtained, which is higher than that obtained with the conventional algorithms, over a wide range of sequence length distributions in the data to compress. Additionally, the variable width RF is data driven in that the data to compress is what controls how many bits are used to represent the RF. Therefore, it is unnecessary to know the bit value sequence distribution in advance, which makes the method in accordance with the present invention well suited for real-time application.<br>
+To demonstrate the higher compression ratio obtained by the method in accordance with the present invention, assume that there are bit sequences of 1000 "0"'s, 20 "l"'s, and 300 "0"'s to be encoded, as illustrated in the table below.<br>
+TABLE 1<br>
+(Table Removed)<br>
+Using a conventional run-length compression algorithm with a RF fixed with of 4 bits, the sequence of 1000 consecutive "0"'s require 67 RF and 66 sequences for the opposing value in between each RF, requiring 532 bits. For the sequence of 20 consecutive "l"'s, 2 RF's are required plus 1 for the opposing value in between the RF's, requiring 12 bits. For the sequence of 300 consecutive "0"'s, 20 RF's are required plus 19 for the opposing value in between each RF, requiring 156 bits. Thus, with the conventional run-length compression algorithm, a total of 700 bits is required to encode the bit sequences. The compression ratio is 1320/700 = 1.89.<br>
+hi contrast, with the method in accordance with the present invention, the sequence of 1000 consecutive "0"'s require one RF with a width of 10 bits; the sequence of 20 consecutive "l"'s require one RF with a width of 5 bits; and the sequence of 300 consecutive "0"'s require one RF with a width of 9 bits. A RFEW with 4 bits is needed for each RF, resulting in 14 bits to encode the 1000 "0"'s, 9 bits to encode the 20 T's, and 13 bits to encode the 300 "0"'s. Thus, with the run-length compression algorithm in accordance with the present invention, which uses a variable RF width, a total of 36 bits is required to encode the bit sequences. The compression ratio is 1320/36 = 36.7. Therefore, a higher compression ratio is accomplished, which significantly exceeds that accomplished by the conventional run-length encoding algorithm.<br>
+hi the context of the satellite network illustrated in Figure 1, several advantages are obtained with the method in accordance with the present invention. Since a higher compression ratio is possible, the data load on the local network environment of the server 112 is much lighter than without using the algorithm of the present invention. This has two<br>
+consequences. First, it may make some customer installations feasible because the customer's existing or planned data network could not otherwise tolerate the additional burden imposed by the uncompressed back traffic from multicast applications. Second, the reduction of the work load of the server's local network may now allow the upgrade of the existing or planned system to a much larger total number of clients. Also, having to process significantly less data in the back traffic, the server 112 is less likely to be overrun by the client responses.<br>
+The decompression of the algorithm in accordance with the present invention does not require a sophisticated algorithm. Since sustained data traffic from memory to the processor (not shown) of the server 112 can be a major performance bottleneck of that server when processing client back traffic, data compression in accordance with the present invention can improve the overall speed at which the server 112 can process the client responses. This is because less response data per client has to be piped into the processor as compared to using conventional compression methods. This, in turn, improves the overall throughput of the server 112 which now has some of its resources freed. The implementation of the algorithm in accordance with the present invention requires very little resources in terms of central processing unit (CPU) cycles, and almost none in terms of memory beyond what is needed to contain the executable code implementing it The data to be compressed have to be read/processed only once, i.e., they can be piped through an implementation of the present Invention.<br>
+A method for providing an improved run-length encoding algorithm for data compression has been disclosed. The method in accordance with the present invention provides an improved run-length encoding algorithm by using a strategy where the number of bits used to represent the repeat factor (RF) varies for each individual sequence of<br>
+equal-valued bits. Rather than conventionally representing the RF by any predetermined and fixed number of bits, the RF of the present invention is represented by the minimum number of bits to binary-encode that repeat factor as an unsigned integer. The key advantage of providing the variable width RF run-length encoding algorithm in accordance with the present invention is that the RF for each individual bit sequence is represented using only the minimum number of bits necessary, regardless of any previous or following RF. Consequently, a compression ratio can be obtained, which is higher than that obtained with the conventional algorithms, over a wide range of sequence length distributions in the data to compress. Additionally, the variable width RF is data driven in that the data to compress is what controls how many bits are used to represent the RF. Therefore, it is unnecessary to know the bit value sequence distribution in advance, which makes the method in accordance with the present invention well suited for real-time application.<br>
+Although the present invention has been described in accordance with the embodiments shown, one of ordinary skill in the art will readily recognize that there could be variations to the embodiments and those variations would be within the spirit and scope of the present invention. Accordingly, many modifications may be made by one of ordinary skill in the art without departing from the spirit and scope of the appended claims.<br><br><br><br>
+Claim:<br>
+1.	A system for encoding a plurality of bit sequences in a communication<br>
+network,   said  communication  network  comprising  a   server  which<br>
+communicates with remote clients, said system comprising ;<br>
+(a)	means for reading as herein described a bit sequence ;<br>
+(b)	means for determining as herein described a minimum number of<br>
+bits for a repeat factor for the bit sequence, wherein the minimum<br>
+number of bits is variable; and<br>
+(c)	means for encoding as herein described the bit sequence using the<br>
+repeat factor.<br>
+2.	A system for encoding a plurality of bit sequences substantially as herein<br>
+described with reference to and as illustrated in the accompanying<br>
+drawings.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">1221-del-2000-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1jbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">1221-del-2000-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1jb3JyZXNwb25kZW5jZS1vdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">1221-del-2000-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1jb3JyZXNwb25kZW5jZS1wby5wZGY=" target="_blank" style="word-wrap:break-word;">1221-del-2000-correspondence-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1kZXNjcmlwdGlvbiAoY29tcGxldGUpLnBkZg==" target="_blank" style="word-wrap:break-word;">1221-del-2000-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">1221-del-2000-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1mb3JtLTEucGRm" target="_blank" style="word-wrap:break-word;">1221-del-2000-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1mb3JtLTE5LnBkZg==" target="_blank" style="word-wrap:break-word;">1221-del-2000-form-19.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1mb3JtLTIucGRm" target="_blank" style="word-wrap:break-word;">1221-del-2000-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1mb3JtLTMucGRm" target="_blank" style="word-wrap:break-word;">1221-del-2000-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1mb3JtLTUucGRm" target="_blank" style="word-wrap:break-word;">1221-del-2000-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1ncGEucGRm" target="_blank" style="word-wrap:break-word;">1221-del-2000-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTIyMS1kZWwtMjAwMC1wZXRpdGlvbi0xMzcucGRm" target="_blank" style="word-wrap:break-word;">1221-del-2000-petition-137.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="216780-water-decomposable-absorbent-article.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="216782-a-process-for-preparing-benzimidazole-derivatives.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>216781</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1221/DEL/2000</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>13/2008</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>31-Mar-2008</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>19-Mar-2008</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>29-Dec-2000</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>INTERNATIONAL BUSINESS MACHINES CORPORATION,</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>ARMONK, NEW YORK 10504, UNITED STATES OF AMERICA.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>WAGNER, MARCUS</td>
+											<td>2637 CENTINELLA AVENUE, NO. 27, SANTA MONICA, CAIFORNIA 90405, USA</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H03M 7/46</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>09/477,289</td>
+									<td>2000-01-04</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/216781-system-for-encoding-a-plurality-of-bit-sequence by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 11:01:41 GMT -->
+</html>

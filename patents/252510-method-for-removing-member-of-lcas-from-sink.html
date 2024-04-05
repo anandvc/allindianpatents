@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/252510-method-for-removing-member-of-lcas-from-sink by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 13:19:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 252510:METHOD FOR REMOVING MEMBER OF LCAS FROM SINK</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD FOR REMOVING MEMBER OF LCAS FROM SINK</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method for removing a member of a Link Capacity Adjustment Scheme (LCAS) from a sink includes: notifying, by the sink, a source that a member is in a REMOVE state after receiving a remove command; determining, by the sink, whether a notification response is received; if the notification response is not received, keeping the member in the REMOVE state, keeping reading payload from the member, and waiting for the notification response; if the notification response is received, moving the member to an IDLE state. Embodiments of the present invention also provide an apparatus and a state machine at the sink. A REMOVE state at the sink is added for each member. The method and the state machine provided by embodiments of the present invention guarantee a synchronous modification of the bandwidth at the source and the sink, thereby guaranteeing no hit on the traffic.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+Method and Apparatus for Removing Member of LCAS from Sink and State Machine at Sink<br>
+Field of the Invention<br>
+The present invention relates to communication technologies, and more particularly, to a method and an apparatus for removing a member of a Link Capacity Adjustment Scheme (LCAS) from a sink and a state machine at the sink.<br>
+Background of the Invention<br>
+LCAS, defined by International Telecommunications Union Telecommunication Standardization Sector (ITU-T) in G.7042, provides a negotiation mechanism between Virtual Concatenation Group (VCG) source and sink to guarantee that there is no hit to traffic when a member is added to or removed from the sink, thereby implementing hitless bandwidth modification.<br>
+Establishment or release of a Virtual Concatenation (VC) and addition or removal of a member are achieved by changing a field of a control packet and establishing a negotiation process between the source and the sink. The control packet describes the state of the VC link and ensures synchronization of changes in network between the source and the sink. The control packet mainly includes the following fields:<br>
+1.	Member Status (MST) field, sent from the sink to the source, used to convey status of the members of the VC;<br>
+2.	Re-Sequence Acknowledge (RS-Ack) bit, sent from the sink to the source, used for transferring a change of the sequence of the members detected by the sink;<br>
+3.	Control (CTRL) field, sent from the source to the sink, used to synchronize the sink with the source and provide the status of the member of the VCG;<br>
+4.	Group Identification (GID) bit, used for identification of the VCG;<br>
+5.	Cyclic Redundancy Check (CRC) field, used to protect the control packet.<br><br>
+For each member in the VCG, there is a state machine at the source and a state machine at the sink. The state machine at the source includes five states: IDLE, NORM, DNU (Do Not Use), ADD and REMOVE. The state machine at the sink includes three states: IDLE, OK and FAIL; wherein if an incoming signal for the member experiences no failure condition or has received and acknowledged a request for addition of the member, the member is in the OK state; if the incoming signal for the member experiences a failure condition or an incoming request for removal of the member has been received and acknowledged, the member is in the FAIL state.<br>
+In G.7042, for the purpose of guaranteeing no hit to the traffic, the LCAS requires that the addition or removal of a member should be initiated at the source. The detailed implementation is described in the related standards. Because the addition or removal of the member at the source is not related to the present invention, it will not be described herein. As to the addition or removal of the member initiated at the sink, the state machine at the sink defined by the G.7042 cannot ensure that no hit to the traffic and hitless modification of the bandwidth.<br>
+Figure 1 is a schematic diagram illustrating a negotiation procedure of the removal of a member initiated at the sink defined by the prior art G.7042. As shown in Figure 1, when a member in the OK state receives a remove command MREMOVE from a Network Management System (NMS), the sink sends MST=FAIL to the source, and stops reading payload from the member. The state of the member moves to the IDLE state. Thus, the member is removed.<br>
+When the NMS initiates the removal of the member at the sink, the negotiation procedure of the state machine at the sink includes:<br>
+1)	After receiving the MREMOVE from the NMS, the sink sends MST=FAIL to the source;<br>
+2)	From the beginning of next multiframe, the sink stops reading payload from the member and moves the member to the IDLE state, i.e., the member is removed.<br>
+It should be noted that the part circled by dotted lines in Figure 1, i.e., the state machine of the removal of the member, is what is related to the present invention. Other parts are the same as those defined in the G.7042 and are not described herein.<br><br>
+The corresponding negotiation procedure of the state machine at the source defined in the G.7042 includes:<br>
+1)	The source retrieves the MST=FAIL;<br>
+2)	Change CTRL =DNU, i.e., indicate that the state of the member is moved from the NORM state to the DNU state at the source;<br>
+3)	From the beginning of the next multiframe, the source stops sending payload to the member.<br>
+In the above negotiation procedure diagram, the MST=FAIL sent by the sink will not be acquired by the source until 64ms/128ms elapses. Supposing that a time interval from the sink sending the MST-FAIL to stopping reading payload from the member is tRX, a time interval from the source acquiring the MST=FAIL to the member moving to the DNU state is ttx. If the time when the source stops sending payload differs from the time when the sink stops reading payload, for example, tRx is smaller or larger than trx+ 64ms/128ms, there will be hit to the traffic. Moreover, the tRx and tix for each sink or source are different. Therefore, with the state machine at the sink defined by the G.7042, it cannot be guaranteed no hit on the traffic when the sink initiates the removal of the member, and thus cannot guarantee the hitless modification of the bandwidth.<br>
+Summary of the Invention<br>
+The present invention provides a method and an apparatus for removing a member of a Link Capacity Adjustment Scheme (LCAS) from a sink, to guarantee no hit to traffic when a sink initiates the removal of the member.<br>
+The present invention also provides a state machine at the sink for implementing removal of a member initiated by a sink, to guarantee no hit to the traffic when the sink initiates the removal of the member.<br>
+The method for removing a member of the LCAS from the sink includes:<br>
+notifying, by the sink, a source that a member to be removed is in a REMOVE state after receiving a remove command; and<br><br>
+determining, by the sink, whether a notification response from the source is received; if the notification response is not received, keeping the member in the REMOVE state, keeping reading payload from the member and waiting for the notification response; if the notification response is received, moving the member to an IDLE state.<br>
+The notifying the source that the member is in the REMOVE state after receiving a remove command includes: sending, by the sink, a Member Status (MST)=FAIL to the source; and moving, by the sink, the member from a OK state to the REMOVE state.<br>
+The notification response message includes CTRL= Do Not Use (DNU), or CTRL=ADD or CTRL=IDLE.<br>
+The method further includes: stopping, by the sink, reading payload from the member from beginning of a next multiframe after receiving the notification response from the source.<br>
+The method further includes: stopping, by the sink, reading payload from the member after moving the member to an IDLE state.The method further includes: stopping waiting for the notification response if a failure of the member is detected.<br>
+The method further includes: removing, by the sink, the member after stopping reading payload from the member.<br>
+A state machine at a sink of a Link Capacity Adjustment Scheme (LCAS) for implementing removal of a member initiated by the sink includes: an IDLE state, a traffic carry state OK, a FAIL state, and a REMOVE state, wherein the sink waits for a notification response from a source for acknowledging removal of a member at the REMOVE state, and keeps reading payload from the member.<br>
+Wherein in the REMOVE state, the sink stops reading payload from the member from beginning of a next multiframe after receiving the notification response from the source.<br>
+An apparatus for removing a member of a Link Capacity Adjustment Scheme (LCAS) from a sink includes:<br><br>
+a unit, adapted for notifying a source that a member is in a REMOVE state after receiving a remove command; and determining whether a notification response from the source is received; if the notification response is not received, keeping the member in the REMOVE state, keeping reading payload from the member, and waiting for the notification response; if the notification response is received, moving the member to an IDLE state.<br>
+Wherein the unit is further adapted for sending a Member Status (MST)=FAIL to the source; and moving the member from a OK state to the REMOVE state.<br>
+Wherein the unit is further adapted for stopping reading payload from the member from beginning of a next multiframe after receiving the notification response from the source.<br>
+Wherein the unit is further adapted for stopping reading payload from the member after moving the member to an IDLE state.<br>
+Wherein the unit is further adapted for stopping waiting for the notification response if a failure of the member is detected.<br>
+Wherein the unit is further adapted for removing the member after stopping reading payload from the member.<br>
+An apparatus for removing a member of a Link Capacity Adjustment Scheme (LCAS) from a sink includes:<br>
+a unit, adapted for receiving a notification from a sink notifying that a member is in a REMOVE state and sending a notification response to the sink.<br>
+Wherein notification received from sink includes a Member Status (MST)=FAIL.<br>
+Wherein the notification response includes any one of CTRL= Do Not Use (DNU), CTRL=ADD and CTRL-IDLE.<br>
+In the present invention, a state for indicating that a member is in the remove process, i.e., a REMOVE state, is added to the state machine at the sink defined by the G.7042. In the REMOVE state, the sink waits for the notification response from the source and keeps reading payload from the member. The sink stops reading payload<br><br>
+from the member from beginning of a next multiframe after receiving the notification response.<br>
+The method, apparatus and state machine provided by the present invention guarantee a synchronous modification of the bandwidth at the source and the sink, thereby guaranteeing no hit to the traffic.<br>
+Brief Description of the Drawings<br>
+Figure 1 is a schematic diagram illustrating a negotiation procedure of the removal of a member initiated at the sink defined by the G.7042 according to the related art.<br>
+Figure 2 is a schematic diagram illustrating a negotiation procedure of removal of a member initiated at the sink according to an embodiment of the present invention.<br>
+Embodiments of the Invention<br>
+The present invention is described in detail as follows with reference to accompanying drawings and embodiments.<br>
+Figure 2 is a schematic diagram illustrating a negotiation procedure of removal of a member initiated at the sink according to an embodiment of the present invention. In the OK state, the sink receives a remove command MREMOVE from the NMS or the source or other management devices. The sink notifies the source that the member to be removed moves into the REMOVE state, and determines whether a notification response is received from the source. If the notification response is not received, the sink keeps the member in the REMOVE state and keeps reading payload from the member and waits for the notification response. If the notification response is received, the sink moves the member to the IDLE state. The negotiation procedure specifically includes:<br>
+a) The sink sends an MST=FAIL to the source to notify the source to change the state of the member at the source, and moves the state of the member at the sink from the OK state to the REMOVE state;<br><br>
+b)	After retrieving the MST= FAIL, the source signals CTRL=DNU to move the member from the NORM state to the DNU state, and sends the CTRL=DNU to the sink;<br>
+c)	From the beginning of the next multiframe, the sink stops reading payload from the member after receiving the CTRL=DNU;<br>
+d)	The sink moves the member from the REMOVE state to the IDLE state to indicate that the member is removed successfully.<br>
+At the source, from the next multiframe after signaling the CTRL=DNU, the source stops sending payload to the member. At the sink, from the next multiframe after receiving the CTRL=DNU, the sink stops reading payload from the member. Thus, a synchronous modification of the bandwidth at the source and the sink may be guaranteed, thereby guaranteeing no hit on the traffic.<br>
+It should to be noted that the part circled by dotted lines in Figure 2, i.e., the state machine of the removal of the member, is what is related to the present invention. Other parts are the same as those defined in the G.7042 and are not described herein.<br>
+Further, when the sink waits for the notification response from the source, if the sink detects failure of the member, the sink stops reading payload from the member at once and removes the member from the sink. Or, when the member is in the NORM state, the sink determines whether to remove the member according to the CTRL field sent by the source. For example, the sink determines to remove the member if CTRL= DNU/ADD/IDLE is received.<br>
+The foregoing description is only the preferred embodiments of the present invention and is not for limiting the protection scope of the present invention. All the modifications, equivalent replacements or improvements within the principle of the present invention shall be covered under the protection scope of the present invention.<br><br><br><br><br><br><br><br><br><br><br>
+Claims<br>
+1.	A method for removing a member of a Link Capacity Adjustment Scheme<br>
+(LCAS) from a sink, comprising:<br>
+notifying, by a sink, a source that a member is in a REMOVE state after receiving a remove command; and<br>
+determining, by the sink, whether a notification response from the source is received; if the notification response is not received, keeping the member in the REMOVE state, keeping reading payload from the member, and waiting for the notification response; if the notification response is received, moving the member to an IDLE state.<br>
+2.	The method of claim 1, wherein the notifying the source that the member is in<br>
+the REMOVE state after receiving a remove command comprises:<br>
+sending, by the sink, a Member Status (MST)=FAIL to the source; and<br>
+moving, by the sink, the member from a OK state to the REMOVE state.<br>
+3.	The method of claim 1, wherein the notification response comprises any one of CTRL= Do Not Use (DNU), CTRL=ADD and CTRL=IDLE.<br>
+4.	The method of claim 1, further comprising:<br>
+stopping, by the sink, reading payload from the member from beginning of a next multiframe after receiving the notification response from the source.<br>
+5.	The method of claim 1, further comprising:<br>
+stopping, by the sink, reading payload from the member after moving the member to an IDLE state.<br>
+6.	The method of claim 1, further comprising:<br>
+stopping waiting for the notification response if a failure of the member is detected.<br>
+7.	The method of claim 5, further comprising:<br><br>
+removing, by the sink, the member after stopping reading payload from the member.<br>
+8.	A state machine at a sink of a Link Capacity Adjustment Scheme (LCAS) for<br>
+implementing removal of a member initiated by the sink, comprising:<br>
+an IDLE state, a traffic carry state OK, a FAIL state; and<br>
+a REMOVE state, where the sink waits for a notification response from a source for acknowledging removal of a member, and keeps reading payload from the member.<br>
+9.	The state machine of claim 8, wherein in the REMOVE state, the sink stops<br>
+reading payload from the member from beginning of a next multiframe after receiving<br>
+the notification response from the source.<br>
+10.	An apparatus for removing a member of a Link Capacity Adjustment Scheme<br>
+(LCAS) from a sink, comprising:<br>
+a unit, adapted for notifying a source that a member is in a REMOVE state after receiving a remove command; and determining whether a notification response from the source is received; if the notification response is not received, keeping the member in the REMOVE state, keeping reading payload from the member, and waiting for the notification response; if the notification response is received, moving the member to an IDLE state.<br>
+11.	The apparatus of claim 10, wherein the unit is further adapted for sending a Member Status (MST)=FAIL to the source; and moving the member from a OK state to the REMOVE state.<br>
+12.	The apparatus of claim 10, wherein the unit is further adapted for stopping reading payload from the member from beginning of a next multiframe after receiving the notification response from the source.<br>
+13.	The apparatus of claim 10, wherein the unit is further adapted for stopping reading payload from the member after moving the member to an IDLE state.<br><br>
+14.	The apparatus of claim 10, wherein the unit is further adapted for stopping<br>
+waiting for the notification response if a failure of the member is detected.<br>
+15.	The apparatus of claim 13, wherein the unit is further adapted for removing<br>
+the member after stopping reading payload from the member.<br>
+16.	An apparatus for removing a member of a Link Capacity Adjustment Scheme<br>
+(LCAS) from a sink, comprising:<br>
+a unit, adapted for receiving a notification from a sink notifying that a member is in a REMOVE state and sending a notification response to the sink.<br>
+17.	The apparatus of claim 16, wherein notification received from sink comprises a Member Status (MST)=FAIL.<br>
+18.	The apparatus of claim 16, wherein the notification response comprises any one of CTRL= Do Not Use (DNU), CTRL=ADD and CTRL=IDLE.<br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgIEFNRU5ERUQgIENMQUlNUyAgMTYtMDktMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007    AMENDED  CLAIMS  16-09-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgIEFNRU5ERUQgUEFHRVMgT0YgU1BFQ0lGSUNBVElPTiAgMTYtMDktMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007    AMENDED PAGES OF SPECIFICATION  16-09-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgIGFzc2lnbm1lbnQgICAwOC0wNy0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">3863-chenp-2007    assignment   08-07-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgIGZvcm0tMSAgIDA4LTA3LTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3863-chenp-2007    form-1   08-07-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgIEZPUk0tMSAgMTYtMDktMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007    FORM-1  16-09-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgIGZvcm0tMiAgIDA4LTA3LTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3863-chenp-2007    form-2   08-07-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgIGZvcm0tMyAgIDA4LTA3LTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3863-chenp-2007    form-3   08-07-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgIGZvcm0tMyAgIDI0LTA1LTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3863-chenp-2007    form-3   24-05-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgIGZvcm0tNSAgIDA4LTA3LTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3863-chenp-2007    form-5   08-07-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgIGZvcm0tNiAgIDA4LTA3LTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3863-chenp-2007    form-6   08-07-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgIHBvd2VyIG9mIGF0dG9ybmV5ICAgMDgtMDctMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3863-chenp-2007    power of attorney   08-07-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgQU1FTkRFRCBDTEFJTVMgMTYtMDUtMjAxMi5wZGY=" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007   AMENDED CLAIMS 16-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgQU1FTkRFRCBQQUdFUyBPRiBTUEVDSUZJQ0FUSU9OIDE2LTA1LTIwMTIucGRm" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007   AMENDED PAGES OF SPECIFICATION 16-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgQVNTSUdOTUVOVCAgMjQtMDEtMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007   ASSIGNMENT  24-01-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgY29ycmVzcG9uZGVuY2Ugb3RoZXJzICAgMjQtMDUtMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3863-chenp-2007   correspondence others   24-05-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgY29ycmVzcG9uZGVuY2Ugb3RoZXJzICAwOC0wNy0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">3863-chenp-2007   correspondence others  08-07-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgQ09SUkVTUE9OREVOQ0UgT1RIRVJTIDE2LTA1LTIwMTIucGRm" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007   CORRESPONDENCE OTHERS 16-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgRVhBTUlOQVRJT04gUkVQT1JUIFJFUExZIFJFQ0VJVkVEIDE2LTA5LTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007   EXAMINATION REPORT REPLY RECEIVED 16-09-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgZm9ybS0xICAyNC0wMS0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">3863-chenp-2007   form-1  24-01-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgRk9STS0xMyAgMjQtMDEtMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007   FORM-13  24-01-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgRk9STS0yICAyNC0wMS0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007   FORM-2  24-01-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgZm9ybS0zICAyNC0wMS0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">3863-chenp-2007   form-3  24-01-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICAgZm9ybS01ICAyNC0wMS0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">3863-chenp-2007   form-5  24-01-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgRk9STS02ICAyNC0wMS0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007   FORM-6  24-01-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICAgRk9STS4zIDE2LTA1LTIwMTIucGRm" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007   FORM.3 16-05-2012.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICBjb3JyZXNwb25kZW5jZSBvdGhlcnMgIDI0LTAxLTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">3863-chenp-2007  correspondence others  24-01-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3ICBjb3JyZXNwb25kZW5jZSBvdGhlcnMuICAyNC0wMS0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">3863-chenp-2007  correspondence others.  24-01-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1DSEVOUC0yMDA3ICBQT1dFUiBPRiBBVFRPUk5FWSAgMjQtMDEtMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">3863-CHENP-2007  POWER OF ATTORNEY  24-01-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">3863-chenp-2007-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">3863-chenp-2007-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3LWNvcnJlc3BvbmRuZWNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">3863-chenp-2007-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3LWRlc2NyaXB0aW9uKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">3863-chenp-2007-description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">3863-chenp-2007-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3LWZvcm0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">3863-chenp-2007-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3LWZvcm0gMTgucGRm" target="_blank" style="word-wrap:break-word;">3863-chenp-2007-form 18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3LWZvcm0gMjYucGRm" target="_blank" style="word-wrap:break-word;">3863-chenp-2007-form 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3LWZvcm0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">3863-chenp-2007-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3LWZvcm0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">3863-chenp-2007-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=Mzg2My1jaGVucC0yMDA3LXBjdC5wZGY=" target="_blank" style="word-wrap:break-word;">3863-chenp-2007-pct.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="252509-pharmaceutical-therapeutic-and-dietary-compositions-derived-from-leaves-of-lagerstroemia-speciosal-i-plant.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="252511-process-for-manufacture-of-paper-coatings-with-improved-water-retention-and-brookfield-tm-viscosity-using-a-comb-polymer-with-at-least-one-grafted-polyalkylene-oxide-function.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>252510</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>3863/CHENP/2007</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>21/2012</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>25-May-2012</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>21-May-2012</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>04-Sep-2007</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>Huawei Telecommunications (India) Co. Pvt. Ltd.</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>NO.23,LEVEL 3&amp;4, LEELA GALLERIA, AIRPORT ROAD, BANGALORE - 560017</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>YANG, YANG</td>
+											<td>HUAWEI ADMINISTRATION BUILDING BANTIAN, LONGGANG DISTRICT SHENZHEN, GUANGDONG 518129</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>ZHAO, ZHIGUANG</td>
+											<td>HUAWEI ADMINISTRATION BUILDING BANTIAN, LONGGANG DISTRICT SHENZHEN, GUANGDONG 518129</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04L 12/56</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/CN06/00301</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2006-03-01</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>200510033434.2</td>
+									<td>2005-03-01</td>
+								    <td>China</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/252510-method-for-removing-member-of-lcas-from-sink by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 13:19:26 GMT -->
+</html>

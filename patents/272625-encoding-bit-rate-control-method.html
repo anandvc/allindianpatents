@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/272625-encoding-bit-rate-control-method by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 00:25:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 272625:&quot;ENCODING BIT-RATE CONTROL METHOD&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;ENCODING BIT-RATE CONTROL METHOD&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>An encoding bit-rate control method used in video encoding in which intraframe prediction and interframe prediction are switchably used. The method includes measuring an amount of code generated for quantized information and an amount of code generated for non-quantized information for the picture which has been encoded; computing a ratio of the amount of code generated for the non-quantized information to the total amount of generated code, based on the above measured amounts of code; and determining a target amount of code of an encoding target picture by using the computed ratio of the amount of code generated for the non-quantized information. The target amount of code may be determined by computing a complex index for the quantized information of the picture which has been encoded, and estimating an amount of code generated when the encoding target picture is encoded using a predetermined assumed quantization step size, based on the above index and the ratio of the amount of code generated for the non-quantized information.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>DESCRIPTION<br>
+ENCODING BIT-RATE CONTROL METHOD AND APPARATUS, PROGRAM THEREFOR, AND STORAGE MEDIUM WHICH STORES THE PROGRAM<br>
+TECHNICAL FIELD [0001]<br>
+The present invention relates to an encoding bit-rate control method used in video encoding in which intraframe prediction and interframe prediction are switchably used, a corresponding apparatus, an encoding bit-rate control program for implementing the encoding bit-rate control, and a computer-readable storage medium which stores the program.<br>
+Priority is claimed on Japanese Patent Application No. 2007-064271, filed March 14, 2007, the contents of which are incorporated herein by reference.<br>
+BACKGROUND ART [0002]<br>
+In many video encoding methods, the amount of generated code varies depending on the character of an input image. Therefore, an encoding bit rate control technique is required for controlling the amount of generated code and keeping a constant encoding bit rate.<br>
+The amount of generated code closely relates to the quantization step size, and the amount of generated code is controlled by varying the quantization step size. [0003]<br><br>
+In test model 5 (abbreviated as "TM5") of MPEG-2, code amount control is performed using a relationship between the quantization step size and the amount of generated code (see, for example, Non-Patent Document 1).<br>
+Below, the code amount control in TM5 of MPEG-2 will be explained. [0004]<br>
+In TM5 of MPEG-2, code amount control is performed using a unit called GOP (group of pictures), which may include I, P, and B pictures having different picture types such as I, P, and B picture types. [0005]<br>
+Fig. 7 shows a flowchart of the code amount control in TM5 of MPEG-2. [0006]<br>
+As shown in the flowchart, in the code amount control of TM5 in MPEG-2, in the first step S3 01, a complex index Xx for each picture type (x=i, p, b (which respectively correspond to I, P, and B pictures)) is computed by the following formula:<br>
+Xx = Sx<qx><br>
+[0007]<br>
+In the above formula, x indicates the picture type, Sx indicates the amount of code generated for an image which has the same picture type as the present image and was encoded most recently, and <qx> indicates an average of the quantization step size in the relevant encoding. [0008]<br><br>
+Generally, the code amount Sx is in inverse proportion to the quantization step size Qx Therefore, computation of the complex index Xx gives a relationship between the amount of generated code and the quantization step size. [0009]<br>
+In the next step S3 02, a target amount Tx of code (x=i, p, b) for each picture type is computed by the following formulas. [0010]<br><br>
+[Formula 1]<br>
+Ti    =<br><br>
+R<br>
+NpXp     Nf,X^ J-T V   ix-    "T v. !('.<br><br>
+rp	_	R<br>
+^^+%§?<br>
+XfjKp<br>
+[0011]<br>
+Here, R indicates the amount of code allocated to the relevant GOP, Np indicates the number of P pictures in the GOP, Nb indicates the number of B pictures in the GOP, and Kp and Kb are constants. [0012]<br>
+The above formulas show that in order to set the target code amount Ti, P pictures are converted to I pictures in accordance with Xp/X,, B pictures are converted to I pictures in accordance with Xb/Xi, and the target code amount Ti is computed based on the converted values, the numbers Np and Nb of pictures, and the amount R of code allocated to the GOP.<br><br>
+In order to set the target code amount Tp, B pictures are converted to P pictures in accordance with Xb/Xp, and the target code amount Tp is computed based on the converted value, the numbers Np and Nb of pictures, and the amount R of code allocated to the GOP.<br>
+In order to set the target code amount Tb, P pictures are converted to B pictures in accordance with Xp/Xb, and the target code amount Tb is computed based on the converted value, the numbers Np and Nb of pictures, and the amount R of code allocated to the GOP. [0013]<br>
+In the next step S3 03, based on the target code amount Tx set above for the pictures, the quantization step size for a small block as an encoding target is determined. [0014]<br>
+In the next step S304, each small block is subjected to quantization and encoding by using the determined quantization step size. [0015]<br>
+In the next step S3 05, after encoding of one picture is completed, an average <qx> of the quantization step size is computed. [0016]<br>
+In the next step S3 06, (after encoding of one picture is completed,) the actual amount Sx of generated code is measured. [0017]<br>
+Based on the measured amount Sx of generated code and the computed average quantization step size <qx>, in step S3 01 again, the complex index Xx for each picture type is updated. [0018]<br><br>
+In accordance with the above method, in TM5 of MPEG-2, a target amount of code is assigned to each picture when encoding the picture, thereby controlling the amount of generated code. [0019]<br>
+In the conventional method, the target amount of code is determined based on the amount of code allocated to the relevant GOP and the complex index for each picture type. This method is based on a prior relationship such that the quantization step size is inversely proportional to the amount of generated code. [0020]<br>
+However, if the amount of code generated for an element (e.g., the motion vector for motion-compensated prediction, the encoding mode, etc.) which has no relation to the quantization step size is dominant, then the prior relationship may be ineffective. If the prior relationship is ineffective, the amount of generated code is erroneously estimated, and thus the target amount of code is not accurately determined. [0021]<br>
+In order to solve the above problem. Patent Document 1 discloses a method of performing quantization control without considering the amount of fixed-length code.<br>
+In this method, the amount of code required for each element (e.g., DC components or motion vectors in the intraframe encoding mode of MPEG-2) which does not depend on the bit rate is defined as the amount of code independent of the quantization step size.<br>
+Non-Patent Document 1: MPEG-2, Test ModeI5(TM5), Doc.ISO/IECJTCl/SC29/WGl 1/NO400, Test Model Editing Committee, pp. 59-63, Apr., 1993.<br><br>
+Patent Document 1: Japanese Unexamined Patent Application, First Publication No. HIO-290461.<br>
+DISCLOSURE OF INVENTION Problem to be Solved by the Invention [0022]<br>
+In Non-Patent Document 1, the quantization step size is not considered when selecting the encoding mode. Therefore, regardless of the level of roughness in quantization, a prediction mode which produces a minimum prediction error is selected.<br>
+Such a method causes no serious problems in many known video encoding methods in which the amount of code required for orthogonal transformation coefficients is considerably larger than the amount of code required for motion vectors. [0023]<br>
+However, in an encoding method in H.264 of ITU-T in which at largest 32 motion vectors are assigned to one macroblock, the amount of code required for the orthogonal transformation coefficients is not always dominant in the total amount of generated code. [0024]<br>
+In an encoding method in which the amount of code generated for elements other than the orthogonal transformation coefficients is dominant, if the prediction mode for producing the minimum prediction error is always selected, the amount of code generated for the elements other than the orthogonal transformation coefficients increases, which degrades the encoding efficiency.<br>
+Therefore, when selecting the prediction mode, the relevant cost is computed based on, not only the prediction error power, but also a weighting using the amount of code required for an<br><br>
+element (e.g., the motion vector) other than the orthogonal transformation coefficients, by using<br>
+the quantization step size.<br>
+[0025]<br>
+In H.264 reference software, the cost function "Cost=D+^-A" is used when selecting the prediction mode. [0026]<br>
+In the above formula, D indicates the prediction error power, A indicates the amount of code generated for the elements other than the orthogonal transformation coefficients, and A, is a constant determined by the quantization step size. [0027]<br>
+When the quantization step size decreases, X also decreases, so that the prediction error power dominates the cost function. In contrast, when the quantization step size increases, X, also increases, so that the amount of code generated for the elements other than the orthogonal transformation coefficients dominates the cost function. [0028]<br>
+As described above, the method disclosed in Patent Document 1 is based on a premise that the amount of code generated for the elements other than the orthogonal transformation coefficients does not depend on the quantization step size. Therefore, if a prediction mode selection using the above cost function is performed in an encoding method as defined in H.264 of ITU-T, in which the amount of code generated for the elements other than the orthogonal transformation coefficients is relatively large, then the amount of generated code is not accurately estimated, and thus it may be difficult to control the amount of code. [0029]<br><br>
+In light of the above circumstances, an object of the present invention is to provide a novel technique by which even in an encoding method in which the amount of code generated for the elements other than the orthogonal transformation coefficients is dominant, a target amount of code in consideration of the relevant amount of generated code can be set so as to implement a reliable encoding bit-rate control.<br>
+Means for Solving the Problem [0030]<br>
+In order to achieve the object, the present invention provides an encoding bit-rate control apparatus used in video encoding in which intraframe prediction and interframe prediction are switchably used. The apparatus includes (1) a first measurement device that measures an amount of code generated for quantized information for a picture which has been encoded; (2) a second measurement device that measures an amount of code generated for non-quantized information for the picture which has been encoded; (3) a computation device that computes a ratio of the amount of code generated for the non-quantized information to the total amount of generated code, based on the amounts of code measured by the first and second measurement devices; and (4) a determination device that determines a target amount of code of an encoding target picture by using the ratio (computed by the computation device) of the amount of code generated for the non-quantized information. [0031]<br>
+In the above structure, a function which defines a relationship between the quantization step size and the ratio of the amount of code generated for the non-quantized information may be used, where the function may be formed by straight lines having different gradients corresponding to different value ranges of the quantization step size. In such a case, the<br><br>
+apparatus may further includes a function determination device for determining the function based on the ratio (computed by the computation device) of the amount of code generated for the non-quantized information and a quantization step size used in the encoding of the picture which has been encoded. [0032]<br>
+The encoding bit-rate control method of the present invention implemented by operating the above-described devices can also be implemented by a computer program. Such a computer program may be provided by storing it in an appropriate computer-readable storage medium, or by means of a network, and can be installed and operate on a control device such as a CPU so as to implement the present invention. [0033]<br>
+In the encoding bit-rate control apparatus of the present invention having the above-described structure, an amount of code generated for quantized information for a picture which has been encoded is measured, and an amount of code generated for non-quantized information for the picture which has been encoded is also measured. [0034]<br>
+Based on the above measured amounts of code, a ratio of the amount of code generated for the non-quantized information to the total amount of generated code is computed. Then, a target amount of code of an encoding target picture is determined by using the computed ratio of the amount of code generated for the non-quantized information [0035]<br>
+For example, a complex index for the quantized information of the picture which has been encoded is computed; an amount of code generated when the encoding target picture is encoded using a predetermined assumed quantization step size is estimated based on the computed<br><br>
+complex index and the computed ratio of the amount of code generated for the non-quantized information; and the target amount of code of the encoding target picture is determined by using the estimated amount of generated code. [0036]<br>
+As the above assumed quantization step size, the assumed quantization step size for a picture (of P or B picture type) encoded by interframe prediction may be computed by using a quantization step size which was used when encoding a picture (I picture) by intraframe prediction and a predetermined ratio value. [0037]<br>
+In addition, the computed ratio of the amount of code generated for the non-quantized information may be varied using a function (determined by the function determination device) in accordance with the assumed quantization step size; and the target amount of code of the encoding target picture may be determined by using the varied ratio of the amount of generated code.<br>
+Effect of the Invention [0038]<br>
+As described above, in the present invention, even in an encoding method in which the amount of code generated for non-quantized information is dominant, a target amount of code in consideration of the relevant amount of generated code can be set. [0039]<br>
+Therefore, in accordance with the present invention, the target amount of code is determined in consideration of the amount of code generated for non-quantized information.<br><br>
+Therefore, an error in the estimated amount of generated code decreases, and a stable encoding bit-rate control can be performed.<br>
+BRffiF DESCRIPTION OF THE DRAWINGS [0040]<br>
+Fig. 1 is a flowchart of an operation in accordance with the present invention.<br>
+Fig. 2 is a diagram explaining the header code amount ratio.<br>
+Fig. 3 is a diagram showing an example structure of a video encoding apparatus to which the present invention is applied.<br>
+Fig. 4 is a diagram showing an example inner structure of the video encoding apparatus.<br>
+Fig. 5 is a diagram showing an example of a function used for deriving the header code amount ratio.<br>
+Fig. 6 is a diagram showing an example flowchart performed by the video encoding apparatus.<br>
+Fig. 7 is a diagram showing a flowchart of the code amount control in TM5 of MPEG-2.<br>
+Reference Symbols<br>
+[0041]<br>
+1	video encoding apparatus<br>
+10       quantization controller<br>
+20       quantization and encoding execution unit<br>
+100	picture type manager<br>
+101	assumed quantization step size computation unit<br>
+102	estimated generated code amount computation unit<br><br>
+103	target code amount computation unit<br>
+104	quantization step size computation unit<br>
+105	I picture information storage unit<br>
+106	I picture information updater<br>
+107	parameter information storage unit<br>
+108	GOP information storage unit<br>
+109	updating unit<br><br>
+1070	transformation coefficient code amount complex index storage part<br>
+1071	header code amount ratio derivation function storage part<br>
+1072	picture complex index storage part<br><br>
+1090	parameter information updater<br>
+1091	GOP information updater<br>
+BEST MODE FOR CARRYING OUT THE INVENTION [0042]<br>
+Below, the present invention will be explained with reference to embodiments of the present invention. [0043]<br>
+As the present invention refers to the amount of code generated for elements other than the orthogonal transformation coefficients (which will be called "header code amount"), the ratio between the amount of code generated for the orthogonal transformation coefficients and the header code amount is computed so as to accurately estimate the amount of generated code. [0044]<br>
+Fig. 1 shows a flowchart of an operation in accordance with the present invention.<br><br>
+[0045]<br>
+In the first step SI 01, the amount of code generated by means of encoding using an assumed quantization step size is estimated, where the assumed quantization step size is predetermined for each picture type. [0046]<br>
+In this process, the estimated amount of generated code is computed using the following information:<br>
+(i)       complex index for the amount of code required for transformation coefficients:     ajx, where x = i, p, b<br>
+(ii)      header code amount ratio:      a^, where x = i, p, b [0047]<br>
+Here, when the header code amount ratio (i.e., "header code amount / total amount of generated code") varies depending on the quantization step size, the header code amount ratio is treated as a function of the quantization step size Qx (x = i, p, b), as follows:<br>
+ttrx == Func(Qx) [0048]<br>
+For example, as shown in Fig. 2, when the header code amount ratio Orx varies depending on the quantization step size Qx, the header code amount ratio should be computed as a function of the quantization step size Qx.<br>
+Such a function is determined depending on the cost computation method used when selecting the encoding mode. That is, it is necessary to use a function suitable for the employed cost computation method. [0049]<br><br>
+In the next step SI 02, the target amount of code of an encoding target picture is computed based on the amount of generated code estimated for each picture type. [0050]<br>
+In the next step SI 03, based on the computed target amount of code, the quantization step size for small blocks (as encoding targets) in the encoding target picture is determined. [0051]<br>
+In the next step S104, quantization and encoding operations are executed for each small block, by using the determined quantization step size. [0052]<br>
+After the encoding operation for the relevant one picture is completed, the following parameters are computed: (i)       average quantization step size: <qx><br>
+(ii)      complex index for the amount of code required for transformation coefficients:     ttsx, where x = i, p, b<br>
+(iii)     header code amount ratio:      a^, where x = i, p, b [0053]<br>
+That is, in the next step SI 05, an average <qx> of the quantization step size is computed. [0054]<br>
+In the next step S106, the amount Gtx of code required for transformation coefficients and the header code amount Ghx are measured. [0055]<br>
+In the next step SI 07, the product of the code amount Gtx for the transformation coefficients and the average quantization step size <qx> is computed, so as to compute the<br><br>
+complex index ttsx (for the code amount for the transformation coefficients) used in the next<br>
+picture having the same type as the present picture.<br>
+[0056]<br>
+In the next step SI 08, the header code amount ratio ttrx, which is the ratio of the header code amount Ghx to the total amount Gx of generated code, is computed, that is, the header code amount ratio a^ used in the next picture having the same type as the present picture is computed. [0057]<br>
+If the header code amount ratio a„ does not depend on the quantization step size, the header code amount ratio CCK can be computed by the following formula:<br>
+ttrx = Ghx / Gx<br>
+When the header code amount ratio 0^ is computed as the function Func(Qx) of the quantization step size Qx, parameters necessary for the relevant value computation are computed. [0058]<br>
+As described above, in accordance with the present invention, the target amount of code is determined in consideration of the header code amount, so that an error in the estimated amount of generated code decreases, and stable encoding bit-rate control can be performed.<br>
+Specific embodiment [0059]<br>
+Below, the present invention will be further explained in accordance with a specific embodiment. [0060]<br><br>
+Fig. 3 shows a structure of a video encoding apparatus 1 as an embodiment of the present invention. [0061]<br>
+As shown in Fig. 3, the video encoding apparatus 1 performs an operation for generating a predicted signal of a video signal, computing a difference between the video signal and the predicted signal, and generating and outputting an encoded bit stream by quantizing and encoding the difference. The video encoding apparatus 1 has a quantization controller 10 for performing quantization control, and a quantization and encoding execution unit 20 which includes a quantizer and an information source encoder. [0062]<br>
+Fig. 4 shows an example of the structure of the quantization controller 10 in the video encoding apparatus 1. [0063]<br>
+As shown in Fig. 4, in order to control the encoding bit-rate by performing per-GOP code amount allocation (i.e., based on the intra frame period) in accordance with the present invention, the quantization controller 10 has a picture type manager 100, an assumed quantization step size computation unit 101, an estimated generated code amount computation unit 102, a target code amount computation unit 103, a quantization step size computation unit 104, an I picture information storage unit 105, an I picture information updater 106, a parameter information storage unit 107, a GOP information storage unit 108, and an updating unit 109. [0064]<br>
+The picture type manager 100 manages information which indicates the picture type of a current target processed in the quantization controller 10. [0065]<br><br>
+The assumed quantization step size computation unit 101 computes quantization step sizes Qp and Qb for P and B picture types, based on (i) an average quantization step size <qi> of an I picture which was encoded immediately before (an I picture to be encoded) and (ii) predetermined ratio values Rp and Rb. [0066]<br>
+Here, the present embodiment is based on the average quantization step size <qi> of an I picture which was encoded immediately before, and it is assumed that the ratios Rp and Rb between the average quantization step size <qi> and the respective step sizes Qp and Qb for P and B picture types are constant. [0067]<br>
+The estimated generated code amount computation unit 102 estimates amounts Sp and Sb of generated code for P and B picture types, based on the assumed quantization step size Qx computed by the assumed quantization step size computation unit 101, a complex index ttsx for the amount of code required for transformation coefficients, and a header code amount ratio arx(Qx). Here, for the I picture type, the amount of code generated for the I picture which was encoded immediately before is determined to be an estimated result (S,). [0068]<br>
+The target code amount computation unit 103 computes the target amount Tx of code of the encoding target picture, based on the generated code amount Sx estimated by the estimated generated code amount computation unit 102, the amount of code (represented by "R") allocated to the relevant GOP, the number Np of P pictures in the relevant GOP, and the number Nb of B pictures in the relevant GOP. [0069]<br><br>
+The quantization step size computation unit 104 computes the quantization step size Qx based on the target code amount Tx computed by the target code amount computation unit 103 and a complex index Xx for each picture type. [0070]<br>
+The quantization and encoding execution unit 20 subjects each small block to quantization and encoding operations by using the quantization step size Qx computed by the quantization step size computation unit 104. [0071]<br>
+The I picture information storage unit 105 stores (i) the average quantization step size <qi> of the I picture which was encoded immediately before, where <qi> is referred to by the assumed quantization step size computation unit 101, and (ii) the amount of code generated for the I picture which was encoded immediately before, where the generated code amount is referred to by the estimated generated code amount computation unit 102. [0072]<br>
+The 1 picture information updater 106 updates the information stored in the I picture information storage unit 105, based on the results of operations executed by the quantization and encoding execution unit 20. [0073]<br>
+The parameter information storage unit 107 includes: (i)       a transformation coefficient code amount complex index storage part 1070 for storing a complex index asx for the amount of code required for transformation coefficients, where ttjx is referred to by the estimated generated code amount computation unit 102; (ii)      a header code amount ratio derivation function storage part 1071 for storing information<br><br>
+about a function used for deriving the header code amount ratio arx(Qx), where ajx(Qx) is also referred to by the estimated generated code amount computation unit 102; and (iii)     a picture complex index storage part 1072 for storing the complex index Xx for each picture type, where Xx is referred to by the quantization step size computation unit 104.<br>
+The parameter information storage unit 107 stores the above-described information items by means of the above storage parts. [0074]<br>
+The header code amount ratio derivation function storage part 1071 stores information of a function used for deriving the header code amount ratio anc(Qx), for example, information (Ox (gradient of straight line, explained later) and Qthx) of the following function formed by two straight lines (see two dotted lined in Fig. 5) defined on both sides of the quantization step size Qthx:<br>
+arx(Qx) = axQx     Qx<qthx qx qthx></qthx>
+The GOP information storage unit 108 stores the code amount R, the numbers Np and Nb of respective P and B pictures (which have not yet been encoded), where R, Np, and Nb are referred to by the target code amount computation unit 103. [0076]<br>
+In order to update the information stored in the parameter information storage unit 107 and the GOP information storage unit 108, the updating unit 109 includes:<br><br>
+(i)       a parameter information updater 1090 for updating the information stored in the<br>
+parameter information storage unit 107, based on the results of operations executed by the<br>
+quantization and encoding execution unit 20; and<br>
+(ii)      a GOP information updater 1091 for updating the information stored in the GOP<br>
+information storage unit 108, based on the results of operations executed by the quantization and<br>
+encoding execution unit 20.<br>
+[0077]<br>
+Fig. 6 shows an example of a flowchart performed by the video encoding apparatus 1 having the structure of Fig. 4. [0078]<br>
+In accordance with this flowchart, the encoding bit-rate control operation executed by the video encoding apparatus 1 will be explained in detail. [0079]<br>
+As shown in the first step S201 of the flowchart of Fig. 6, in the video encoding apparatus 1, assumed quantization step sizes Qp and Qb of P and B picture types are first computed based on the average quantization step size <qi> (read from the I picture information storage unit 105) of an I picture which was encoded immediately before, and the predetermined ratio values Rp and Rb, in accordance with the following formula:<br>
+Qx = <qi>/Rx [0080]<br>
+In the next step S202, the amounts Sp and Sb of generated code for P and B picture types are estimated based on the computed assumed quantization step size Qx, the complex index ttjx (read from the transformation coefficient code amount complex index storage part 1070) for the<br><br>
+code amount for transformation coefficients, and the header code amount ratio arx(Qx) (computed based on the function information stored in the header code amount ratio derivation function storage part 1071), in accordance with the following formula:<br>
+Sx = asx/[(l-MQx))-Qx] [0081]<br>
+For the I picture type, the code amount (read from the I picture information storage unit 105) generated for the I picture which has encoded immediately before is determined to be the estimated result. [0082]<br>
+In the next step S203, the target amount Tx of code for the encoding target picture is computed based on (i) the generated code amount Sx estimated for each picture type, and (ii) the code amount R and the numbers Np and Nb for the P and B pictures, which are read from the GOP information storage unit 108, in accordance with the formulas shown below. [0083]<br>
+That is, when the encoding target picture is an I picture, the target code amount Ti of the encoding target picture is computed by the following formula. [0084] [Formula 2]<br>
+	R<br>
+Si	Si<br>
+[0085]<br><br>
+When the encoding target picture is a P picture, the target code amount Tp of the encoding target picture is computed by the following formula. [0086] [Formula 3]<br>
+R<br>
+r.<br>
+'~ N, + ^<br>
+[0087]<br>
+When the encoding target picture is a B picture, the target code amount Tb of the encoding target picture is computed by the following formula. [0088] [Formula 4]<br>
+R<br>
+P^<br>
+[0089]<br>
+In the next step S204, the quantization step size Qx is computed, for example, based on the computed target code amount Tx and the complex index Xx (for each picture type) read from the picture complex index storage part 1072, in accordance with the following formula:<br>
+Qx = Xx/Tx<br>
+[0090]<br><br>
+In the above process, the complex index Xx for each picture type) is computed based on the average quantization step size <qx> and the amount Gx of generated code (which are obtained using the results of encoding a picture having the same picture type as that encoded immediately prior to the picture to be encoded) in accordance with the following formula:<br>
+Xx = <qx>-Gx<br>
+[0091]<br>
+In the next step S205, each small block is subjected to quantization and encoding by using the computed quantization step size Qx. [0092]<br>
+After the encoding of the current one picture is completed, updating of the information stored in the parameter information storage unit 107 and the GOP information storage unit 108 is executed. If an I picture has been encoded, updating of the information stored in the I picture information storage unit 105 is also executed. [0093]<br>
+In the next step S206, the average quantization step size <qx> is computed. [0094]<br>
+In the next step S207, the amount Gtx of code required for transformation coefficients and the header code amount Ghx are measured, and the sum of them is computed so as to obtain the amount Gx of generated code. [0095]<br>
+In the next step S208, the product of the code amount Gtx for the transformation coefficients and the average quantization step size <qx> is computed, as follows:<br><br>
+Clsx-Gtx- <qx><br>
+That is, the complex index ttjx for the code amount for the transformation coefficients is computed. Based on the computed value, the complex index ttsx stored in the transformation coefficient code amount complex index storage part 1070 is updated. [0096]<br>
+In the next step S209, the gradient ctx of the straight line of the derivation function for the header code amount ratio Orx shown in Fig. 5 is computed based on the generated code amount Gx, the header code amount Ghx, and the average quantization step size <qx>, in accordance with the following formula:<br>
+ax=Ghx/[Gx-<qx>]<br>
+In addition, a quantization step size Qthx obtained when the relevant straight line has a value "0.95" of am is computed. In accordance with the computed values, the function information (of ax and Qthx) stored in the header code amount ratio derivation function storage part 1071 is updated. [0097]<br>
+In the next step S210, the complex index Xx for each picture type is computed based on the generated code amount Gx and the average quantization step size <qx>, in accordance with the following formula:<br>
+Xx-<qx>Gx<br><br>
+In accordance with the computed values, the complex index Xx (for each picture type) stored in the picture complex index storage part 1072 is updated. [0098]<br>
+In the next step S211, the code amount R (allocated to the relevant GOP) and the number Nx of pictures (which have not yet been encoded, for P and B picture types) stored in the GOP information storage unit 108 are updated. In addition, if an I picture has been encoded, the average quantization step size <qx> and the amount of code generated for the I picture, which are stored in the I picture information storage unit 105, are updated for the encoding of the next picture. [0099]<br>
+As described above, in the present invention, the header code amount and the code amount for transformation coefficients are separately measured, and the header code amount ratio and the complex index for the code amount for transformation coefficients are computed. Therefore, the target amount of code can be determined in consideration of the header code amount, thereby implementing a stable encoding bit-rate control. [0100]<br>
+Although the present invention has been explained in accordance with the illustrated embodiment, the present invention is not limited thereto.<br>
+For example, although the derivation function for the header code amount ratio is approximated by two straight lines in the above embodiment, this condition is just an example.<br>
+Additionally, the method of computing the quantization step size based on the target amount of code in the above embodiment is also just an example.<br>
+INDUSTRIAL APPLICABILITY<br><br>
+[0101]<br>
+In accordance with the present invention, the target amount of code is determined in consideration of the amount of code generated for non-quantized information. Therefore, an error in the estimated amount of generated code decreases, and a stable encoding bit-rate control can be performed.<br><br><br>
+CLAIMS<br>
+1.        An encoding bit-rate control method used in video encoding in which intraframe prediction and interframe prediction are switchably used, the method comprising the steps of:<br>
+measuring an amoimt of code generated for quantized information for a picture which has been encoded;<br>
+measuring an amount of code generated for non-quantized information for the picture which has been encoded;<br>
+computing a ratio of the amount of code generated for the non-quantized information to the total amount of generated code, based on the above measured amounts of code; and<br>
+determining a target amount of code of an encoding target picture by using the computed ratio of the amount of code generated for the non-quantized information.<br>
+2.        The encoding bit-rate control method in accordance with claim 1, wherein the step of determining a target amount of code includes:<br>
+computing a complex index for the quantized information of the picture which has been encoded;<br>
+estimating an amount of code generated when the encoding target picture is encoded using a predetermined assumed quantization step size, based on the computed complex index and the computed ratio of the amount of code generated for the non-quantized information; and<br>
+determining the target amount of code of the encoding target picture by using the estimated amount of generated code.<br><br>
+3.	The encoding bit-rate control method in accordance with claim 2, wherein the step of<br>
+determining a target amount of code includes:<br>
+computing the assumed quantization step size for a picture encoded by interframe prediction by using a quantization step size which was used when encoding a picture by intraframe prediction and a predetermined ratio value.<br>
+4.	The encoding bit-rate control method in accordance with claim 2, wherein the step of<br>
+determining a target amount of code includes:<br>
+varying the computed ratio of the amount of code generated for the non-quantized information in accordance with the assumed quantization step size; and<br>
+determining the target amount of code of the encoding target picture by using the varied ratio of the amount of generated code.<br>
+5.	The encoding bit-rate control method in accordance with claim 4, wherein the step of<br>
+determining a target amount of code includes:<br>
+varying the computed ratio of the amount of code generated for the non-quantized information in accordance with the assumed quantization step size, by using a function which defines a relationship between the quantization step size and the ratio of the amount of code generated for the non-quantized information.<br>
+6.	The encoding bit-rate control method in accordance with claim 5, wherein:<br>
+the function is formed by straight lines having different gradients corresponding to different value ranges of the quantization step size.<br><br>
+7.	The encoding bit-rate control method in accordance with claim 5, wherein:<br>
+the function is determined based on the computed ratio of the amount of code generated for the non-quantized information and a quantization step size used in the encoding of the picture which has been encoded.<br>
+8.	An encoding bit-rate control apparatus used in video encoding in which intrafi-ame<br>
+prediction and interframe prediction are switchably used, the apparatus comprising:<br>
+a device that measures an amount of code generated for quantized information for a picture which has been encoded;<br>
+a device that measures an amount of code generated for non-quantized information for the picture which has been encoded;<br>
+a device that computes a ratio of the amount of code generated for the non-quantized information to the total amount of generated code, based on the above measured amounts of code; and<br>
+a device that determines a target amount of code of an encoding target picture by using the computed ratio of the amount of code generated for the non-quantized information.<br>
+9.	An encoding bit-rate control program by which a computer executes an operation for<br>
+implementing the encoding bit-rate control method in accordance with claim 1.<br>
+10.	A computer-readable storage medium which stores an encoding bit-rate control program<br>
+by which a computer executes an operation for implementing the encoding bit-rate control<br>
+method in accordance with claim 1.<br><br></qx></qx></qx></qx></qx></qx></qx></qx></qx></qx></qi></qi></qi></qi></qi></qi></qi></qx></qx></qx></qx></qx></qx></qx></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=Sz0eA/2oDRUNXUSqmmlHnA==&amp;amp;loc=egcICQiyoj82NGgGrC5ChA==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=Sz0eA/2oDRUNXUSqmmlHnA==&amp;amp;loc=egcICQiyoj82NGgGrC5ChA==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="272624-insert-casting-component.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="272626-display-having-self-orienting-mounting-area.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>272625</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>5151/CHENP/2009</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>16/2016</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>15-Apr-2016</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>13-Apr-2016</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>02-Sep-2009</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>NIPPON TELEGRAPH AND TELEPHONE CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>3-1, OTEMACHI 2-CHOME, CHIYODA-KU, TOKYO 100-8116</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>ATSUSHI SHIMIZU</td>
+											<td>C/O NTT INTELLECTUAL PROPERTY CENTER, 9-11, MIDORI-CHO, 3-CHOME, MUSASHINO-SHI, TOKYO 180-8585</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>RYUICHI TANIDA</td>
+											<td>C/O NTT INTELLECTUAL PROPERTY CENTER, 9-11, MIDORI-CHO, 3-CHOME, MUSASHINO-SHI, TOKYO 180-8585</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04N7/32</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/JP2008/053959</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2008-03-05</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>2007-064271</td>
+									<td>2007-03-14</td>
+								    <td>Japan</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/272625-encoding-bit-rate-control-method by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 00:25:41 GMT -->
+</html>

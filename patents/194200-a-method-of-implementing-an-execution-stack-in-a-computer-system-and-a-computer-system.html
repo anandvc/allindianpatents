@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/194200-a-method-of-implementing-an-execution-stack-in-a-computer-system-and-a-computer-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 05:43:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 194200:A METHOD OF IMPLEMENTING AN EXECUTION STACK IN A COMPUTER SYSTEM AND A COMPUTER SYSTEM</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">A METHOD OF IMPLEMENTING AN EXECUTION STACK IN A COMPUTER SYSTEM AND A COMPUTER SYSTEM</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>Systems and methods for implementing an execution stack which stores frames for functions written in a plurality of programming languages are provided. The frames for functions written in different programming languages (459 and 461) may be interleaved on the same execution stack (451). A data block (457) on the execution stack may be utilized to traverse the execution stack around a frame by storing a stack pointer and frame pointer to a previous frame. Furthermore, resources may be allocated or de-allocated for functions written in a plurality of programming. Additionally, functions may be propagated, with conversion if necessary, through frames on the execution stack that are written in different programming languages.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>BACKGROUND OF THE INVENTION <br>
+1. Field of the Invention<br>
+The present invention relates to a method of implementing an execution stack that stores frames for functions written in a plurality of programming languages, and a computer system. More specifically, the invention relates to implementing an execution stack for use with functions that may be written in multiple programming languages such as, for example, and execution stack for a Java(tm) virtual machine.<br>
+The Java(tm) programming language is an object-oriented high level programming language developed by Sun Microsystems of Pala Alto, California, and is designed to be portable enough to be executed on a wide range of computers ranging from small personal computers up to supercomputers. Computer programs written in Java (and other languages) may be compiled into virtual machine instructions for execution by a Java virtual machine. In general the Java virtual machine is an interpreter that decodes and executes the virtual machine instructions.<br>
+The virtual machine instructions for the Java virtual machine are bytecodes, meaning they include one or more bytes. The bytecodes are stored in a particular file format called a "class file" that includes bytecodes for methods of a class. In addition to the bytecodes for methods of a class, the class file includes a symbol table as well as other ancillary information.<br>
+A computer program embodied as Java bytecodes in one or more class files is platform independent. The computer program may be executed, unmodified, on nay computer that is able to rum an implementation of the Java virtual machine. The Java virtual machine is a software emulator of a "generic" computer that is a major factor in allowing computer programs for the Java virtual machine to be platform independent.<br>
+-1A-<br><br>
+The Java virtual machine is commonly implemented as a software interpreter. Conventional interpreters decode and execute the virtual machine instructions of an interpreted program one instruction at a time during execution. Compilers, on the other hand, decode source code into native machine instructions prior to execution so that decoding is not performed during execution. Because conventional interpreters decode each instruction before it is executed repeatedly each time the instruction is encountered, execution of interpreted programs is typically quite slower than compiled programs because the native machine instructions of compiled programs can be executed on the native machine or computer system without necessitating decoding.<br>
+Typically, the Java virtual machine will be written in a programming language other than the Java programming language (e.g., the C++ programming language). Therefore, execution of a Java program may involve execution of functions written in multiple programming languages. Additionally, the bytecodes themselves may call functions (e.g., system functions for input/output) that are not written in the Java programming language. It is therefore common for an executing Java program to entail the execution of functions that were written in multiple programming languages. It would be desirable to have an execution stack that stores functions written in multiple programming languages. Additionally, it would be beneficial to allow exceptions to be propagated through these functions, with conversion of the exception to the appropriate format where necessary.<br>
+The Java virtual machine allows Java programs to dynamically load and execute native methods, where a native method is implemented in a language other than the Java programming language. Native methods often require resources to execute so resources may be allocated and deallocated each time a native method is called. However, resource allocation and deallocation may be very time consuming and the continual allocation and deallocation of resources may result in a significant decrease in efficiency of the interpreted program. Therefore, it would be desirable to provide more efficient techniques of resource allocation and deallocation.<br>
+2<br><br>
+Accordingly, there is a need for techniques for implementing an execution stack capable of holding function activations for functions implemented in different programming languages, and in particular allow exceptions to be propagated through these functions and the corresponding activations. Additionally, there is a need to provide interpreters that are more efficient in the way resources are allocated and deallocated so that execution speed may be increased.<br>
+3<br><br>
+SUMMARY OF THE INVENTION<br>
+In general, embodiments of the present invention provide innovative systems and methods for implementing an execution stack that stores frames for functions written in multiple programming languages. Frames for functions written in multiple programming languages may be stored on the same execution stack utilizing an entry frame (or data block) that stores pointers to a previous frame on the execution stack for a function written in the same programming language The entry frame allows the execution stack to be traversed "around" frames for functions written in other programming languages and exceptions may be propagated through the execution stack for handling by the appropriate exception handler, even when the functions were written in different programming languages and the format of the exceptions are different. Additionally, resources may be allocated upon entering a function written in one programming language (e.g., the Java programming language) so that the resources will be available for any subsequent functions (e.g., native) in other programming languages. The resources may then be deallocated once when the calling function terminates, thereby increasing the efficiency of resource allocation and deallocation. Several embodiments of the invention are described below.<br>
+According to the present invention there is provided in a computer system, a method for implementing an execution stack that stores frames for functions written in a plurality of programming languages, the method comprising storing a first frame on the execution stack for a first function, the first function being written in a first programming language ; and in response to the first function calling a second function written in a second programming language, storing a data block on thee execution stack before a second frame for the second function, the data block comprising at least one pointer to a previous frame on the execution stack for a previous function written in the second programming language. In preferred embodiments, the data block stores a stack pointer and a frame pointer to the previous frame on the execution stack, where the stack pointer and frame pointer were stored in local storage (e g., thread local storage).<br>
+-4-<br><br>
+In another embodiment, a computer implemented method for implementing an execution stack that stores frames for functions written in multiple programming languages is provided. A first frame for a function written in a first programming language may be stored on the execution stack. When the first function calls a second function written in a second programming language, at least one pointer to the first frame on the execution stack may be stored in local storage (e.g., thread local storage). The at least one pointer may be a stack pointer and a frame pointer. Subsequently, when a third function written in the first programming language is called, a data block may be stored on the execution stack before a third frame for the third function. The data block may store the at least one pointer to the first frame on the execution stack that were stored in local storage so that the data block provides a way around the second frame on the execution stack. In preferred embodiments, the first programming language is the Java programming language.<br>
+In another embodiment, a data structure stored by a computer readable medium for implementing an execution stack is provided A first frame is stored on the execution stack for a first function written in a first programming language. A second frame is stored on the execution stack for a second function written in a second programming language. On the execution stack above the second frame on the execution stack, a data block is stored which includes at least one pointer to the first frame on the execution stack. In a preferred embodiment, the data block stores a stack pointer and a frame pointer to the first frame.<br>
+Other features and advantages of the invention will become readily apparent upon review of the following detailed description in association with the accompanying drawings.<br>
+5<br><br>
+BRIEF DESCRIPTION OF THE ACCOMPANYING DRAWINGS<br>
+FIG. 1 illustrates an example of a computer system that may be utilized to execute the software of an embodiment of the invention.<br>
+F1G. 2 shows a system block diagram of the computer system of FIG. 1.<br>
+FIG. 3 shows how a Java source code program is executed.<br>
+FIG. 4 shows the components of an implementation of a Java runtime system.<br>
+FIG. 5 illustrates frames for functions that are stored on an execution stack.<br>
+FIG. 6 shows a high level process of implementing an execution stack that stores frames for functions written in multiple programming languages.<br>
+FIG. 7 shows an execution stack that stores frames for functions written in the Java programming language and another programming language.<br>
+FIG 8 shows a process of entering external code from Java code<br>
+FIG. 9 shows a process of entering Java code from external code.<br>
+FIG 10 shows a process of exiting Java code to external code.<br>
+FIG 11 shows a process of exiting external code to Java code.<br>
+FIG. 12 illustrates an execution stack having an exception shield between a C++ frame and a Java frame, and an exception unshield between the Java frame and another C++ frame.<br>
+FIGS. 13A and 13B show a process of an exception exiting external code to Java code.<br>
+FIGS 14A and I4B show a process of an exception exiting Java code to external code.<br>
+FIG. 15 shows information that may be stored in thread local storage in order to implement an execution stack that stores frames for functions written in multiple programming languages.<br>
+6<br><br>
+DETAILED DESCRIPTION OF PREFERRED EMBODIMENTS<br>
+Definitions<br>
+Function - A software routine (also called a subroutine, procedure, member function, and method).<br>
+Frame (or activation frame, activation record) - A record that is stored on the execution stack for a function to store information for execution of the function, such information may include state variables, local variables and an operand stack.<br>
+Execution stack - A stack utilized during program execution to store frames for functions in their sequential calling order. When a function ("callee") is called, a frame for the function is pushed on the execution stack. Subsequently, when the function terminates, the frame is popped off the stack and the function ("caller") for the frame on the top of the execution stack resumes execution.<br>
+Operand stack - A stack utilized to store operands for use by machine instructions during execution.<br>
+External code - Computer code that is written in a programming language other than a specific programming language (e.g., the Java programming language). For example, the Java virtual machine may be written in the C++ programming language and the Java virtual machine could be deemed external code in reference to the Java code of a program that is being interpreted. External code include native methods.<br>
+Native methods - Functions that are written in a programming language other than the Java programming language. Native methods may be called by a Java program thai causes them to be dynamically loaded and executed. Additionally, native methods may call functions written in the Java programming language.<br>
+Overview<br>
+In the description that follows, the present invention will be described in reference to a preferred embodiment that implements an execution stack for a Java virtual machine<br>
+7<br><br>
+that executes a Java program (e.g., bytecodes). In particular, examples will be described in which the Java virtual machine is written in the C++ programming language. However, the invention is not limited to any particular language, computer architecture, or specific implementation. Therefore, the description of the embodiments that follow is for purposes of illustration and not limitation.<br>
+FIG. 1 illustrates an example of a computer system that may be used to execute the software of an embodiment of the invention FIG. 1 shows a computer system 1 that includes a display 3, screen 5, cabinet 7, keyboard 9, and mouse 11. Mouse 11 may have one or more buttons for interacting with a graphical user interface. Cabinet 7 houses a CD-ROM drive 13, system memory and a hard drive (see FIG. 2) which may be utilized to store and retrieve software programs incorporating computer code that implements the invention, data for use with the invention, and the like. Although the CD-ROM 15 is shown as an exemplary computer readable storage medium, other computer readable storage media including floppy disk, tape, flash memory, system memory, and hard drive may be utilized. Additionally, a data signal embodied in a carrier wave (e.g , in a network including the Internet) may be the computer readable storage medium<br>
+FIG. 2 shows a system block diagram of computer system 1 used to execute the software of an embodiment of the invention As in FIG. 1, computer system 1 includes monitor 3 and keyboard 9, and mouse 11. Computer system 1 further includes subsystems such as a central processor 51, system memory 53, fixed storage 55 (e g , hard drive), removable storage 57 (e.g., CD-ROM drive), display adapter 59, sound card 61, speakers 63, and network interface 65. Other computer systems suitable for use with the invention may include additional or fewer subsystems For example, another computer system could include more than one processor 51 (i e., a multi-processor system), or a cache memory.<br>
+The system bus architecture of computer system 1 is represented by arrows 67. However, these arrows are illustrative of any interconnection scheme serving to link the subsystems. For example, a local bus could be utilized to connect the central processor to the system memory and display adapter. Computer system 1 shown in FIG. 2 is but an<br>
+8<br><br>
+example of a computer system suitable for use with the invention. Other computer architectures having different configurations of subsystems may also be utilized.<br>
+Typically, computer programs written in the Java programming language are compiled into bytecodes or Java virtual machine instructions that are then executed by a Java virtual machine. The bytecodes are stored in class files that are input into the Java virtual machine for interpretation. FIG. 3 shows a progression of a simple piece of Java source code through execution by an interpreter, the Java virtual machine.<br>
+Java source code 101 includes the classic Hello World program written in Java. The source code is then input into a bytecode compiler 103 that compiles the source code into bytecodes. The bytecodes are virtual machine instructions as they will be executed by a software emulated computer. Typically, virtual machine instructions are generic (i.e., not designed for any specific microprocessor or computer architecture) but this is not required. The bytecode compiler outputs a Java class file 105 that includes the bytecodes for the Java program.<br>
+The Java class file is input into a Java virtual machine 107. The Java virtual machine includes an interpreter that decodes and executes the bytecodes in the Java class file. The Java virtual machine may be considered to be an interpreter, but is commonly referred to as a virtual machine as it emulates a microprocessor or computer architecture in software (e.g., the microprocessor or computer architecture that may not exist in hardware).<br>
+FIG. 4 shows the components of an implementation of a Java runtime system. Implementations of the Java virtual machine are known as Java runtime systems. A Java runtime system 201 may receive input of Java class files 203, standard built-in Java classes 205 and native methods 207 in order to execute a Java program The standard built-in Java classes may be classes for objects such as threads, strings and the like. The native methods may be written in programming languages other than the Java programming language. The native methods are typically stored in dynamic link libraries (DLLs) or shared libraries.<br>
+9<br><br>
+The Java runtime system may also interface with an operating system 209. For example, input/output functions may be handled by the operating system, including providing the Java runtime system with interfaces to Java class files 203, standard built-in Java classes 205 and native methods 207.<br>
+A dynamic class loader and verifier 211 loads Java class files 203 and standard built-in Java classes 205 via operating system 209 into a memory 213 Additionally, the dynamic class loader and verifier may verify the correctness of the bytecodes in the Java class files, reporting any errors that are detected.<br>
+A native method linker 215 links in native methods 207 via operating system 209 into the Java runtime system and stores the native methods in memory 213. As shown, memory 213 may include a class and method area for the Java classes and a native method area for native methods. The class and method area in memory 213 may be stored in a garbage collected heap. As new objects are created, they are stored in the garbage collected heap. The Java runtime system, not the application, is responsible for reclaiming memory in the garbage collected heap when space is no longer being utilized.<br>
+At the heart of the Java runtime system shown in FIG. 4 is an execution engine 217. The execution engine carries out the instructions stored in memory 213 and may be implemented in software, hardware or a combination of the two. The execution engine supports object-oriented applications and conceptually, there are multiple execution engines running concurrently, one for each Java thread. Execution engine 217 may also utilize support code 221. The support code may provide functionality relating to exceptions, threads, security, and the like.<br>
+As a Java program executes, functions are sequentially called within each thread. For each thread there is an execution stack which stores frames for each of the functions that have not completed execution. A frame stores information for execution of the function, such information may include state variables, local variables and an operand stack. As a function is called, a frame for the function is pushed on the execution stack. When the a function terminates, the function's frame is popped off the execution stack. Accordingly, only the function corresponding to the frame on the top of the execution<br>
+10<br><br>
+stack is active, the functions that correspond to frames below the top of the execution stack have had their execution suspended until the function they called returns (i.e., terminates).<br>
+FIG. 5 illustrates frames for functions that are stored on an execution stack. An execution stack 301 is shown having a frame 303 on the top of the execution stack and frames 305 and 307 stored below frame 303, respectively. A stack pointer SP points to the top of the execution stack while a frame pointer FP points to a frame pointer in the frame on the top of execution stack 301.<br>
+Each frame is shown to include state variables, local variables and an operand stack for the function corresponding to the frame. Additionally, the last item stored in the frame is a frame pointer which points to the frame pointer in the frame below the current frame on the execution stack as shown by arrows 309 and 311.<br>
+When a function calls another function, the system first pushes the return address for the current function on execution stack 301 and then pushes a new frame for the recently called function. In this manner, when the new function returns, the system is able to pop the frame at the top of the execution stack and then pop the return address off the execution stack and set the program counter equal to this return address so that execution of the calling function may resume. Accordingly, that is the reason frames 305 and 307 include return addresses and the active frame 303 does not include a return address. However, if the function corresponding to frame 303 calls another function, the return address would be pushed on execution stack 301 before the frame for the new function is pushed on the execution stack<br>
+The frame pointers allow the system to accurately traverse the frames on the execution stack For example, stack pointer SP and frame pointer FP delineate the frame on the top of the execution stack Furthermore, the frame pointer in frame 303 specifies the next frame on the execution stack. The address just below the frame pointer in frame 303 is the beginning of the next frame on the execution stack and the contents of the frame pointer of frame 303 specify the last item in the next frame on the execution stack which is frame 305. Similarly, the frame pointer in frame 305 specifies the location of the next<br>
+11<br><br>
+frame on the execution stack. Therefore, the chain of frame pointers allows the system to traverse the frames on the execution stack (e.g., when the frames are popped off the execution stack).<br>
+Although FIG. 5 shows an implementation of an execution stack, the invention is not limited to (he implementation shown. For example, the execution stack is shown as growing upwards in memory, however, it should be clear that the stack may also grow downwards in memory. Furthermore, the information stored in each frame may vary depending upon the implementation.<br>
+Mixed Execution Stack<br>
+The execution stack shown in FIG. 5 may perform well for functions written in the same programming language. However, if the functions are written in multiple programming languages, the organization of the execution stack shown in FIG. 5 is not satisfactory for a number of reasons. For example, the format of a frame in another programming language may be substantially different. Therefore it may not be possible to create a chain of frame pointers through frames for functions written in multiple programming languages. It may also not be known the exact size or contents of frames for functions written in other programming languages.<br>
+In order fo more clearly demonstrate the problem, it may be beneficial to describe an example utilizing the execution stack shown in FIG. 5. Assume for the moment that the frames 305 and 307 are for functions that are written in a different programming language than the function for frame 303. When the function for frame 303 is executing, the contents or size of frames 305 and 307 may not be known. Therefore, even if the frame pointer of frame 303 were set to a previous frame on the execution stack for a function that is written in the same programming language as frame 303 (not shown), it may still not be known where that frame begins on the execution stack. Accordingly, these problems make it difficult to implement an execution stack that stores frames for functions wntten in multiple programming languages. The present invention provides implementations for execution stacks that store frames for functions written in multiple<br>
+12<br><br>
+programming language and also provides other advantages as well, including improved resource allocation and exception handling.<br>
+FIG. 6 shows a high level process of storing frames on an execution stack for functions written in multiple programming languages. The process shown in FIG. 6 is at a high level and will be described in more detail in subsequent figures and the description that follows. At a step 401, the system stores a first frame on the execution stack for a first function written in one programming language.<br>
+When the first function calls a second function written in another programming language, the system stores in local storage a pointer or pointers to the first frame on the execution stack at a step 403. In preferred embodiments, the programming language of the first function is the Java programming language. Each Java thread has associated with it thread local storage so in these preferred embodiments, the local storage is the thread local storage for the thread that is executing the first and second functions. Additionally, the stack pointer and the frame pointer to the first frame are stored in the thread local storage.<br>
+At a step 405, the system stores a second frame on the execution stack for the second function written in another programming language As an example, the other programming language may be C++ programming language, Pascal, FORTRAN, assembly, and the like.<br>
+When the second function calls a third function written in the programming language of the first function, the system stores a data block (or entry frame) on the execution stack that includes the pointer or pointers to the first frame on the execution stack at a step 407. The pointer or pointers that were stored in local storage at step 403 are copied into the data block that is pushed on the execution stack above the second frame for the second function. The data block provides a mechanism for traversing the execution stack around or through the second frame on the execution stack. Although the process shown in FIG. 6 only shows a single second function written in another programming language, it should be understood that there may be many functions that are<br>
+13<br><br>
+written in another programming language that call each other before the third function is called.<br>
+At a step 409, the system stores a third frame on the execution stack for the third function written in the programming language of the first function. Accordingly, the execution stack now stores frames for functions written in multiple programming language and includes mechanisms for traversing the execution stack through the frames. In order to further illustrate the process shown in FIG. 6, an execution stack that stores frames for functions written in the Java programming language and another programming language will be described in reference to FIG. 7.<br>
+As shown in FIG. 7, a control frame 451 stores frames for functions written in the Java programming language and external frames for functions written in programming languages other than the Java programming language (e.g., the C++ programming language) A Java frame 453 is stored on the top of the execution stack and a Java frame 455 is stored below on the execution stack. For simplicity, the details of the frames are not shown, however, in preferred embodiments the details of the frames are as shown in FIG 5<br>
+An entry frame 457 is shown on the execution stack which stores, among other things, a LAST__JAVA_SP and a LAST_JAVA_FP that are pointers to a previous Java frame 459 on the execution stack An external frame 461 is shown on the execution stack between entry frame 457 and Java frame 459. The external frame or frames may be for functions written in languages other than the Java programming language. As shown, the entry frame is a data block that includes at least one pointer around the external frame.<br>
+In the timeline of executing the program that has generated the execution stack shown in FIG. 1, the function corresponding to Java frame 459 is executing first. The function corresponding to Java frame 459 calls a function written in another programming language Before the external frame for this function is pushed on the execution stack, the system stores at least one pointer to Java frame 459 in local storage.<br>
+Subsequently, the function corresponding to external frame 461 calls a Java function. In response to calling the Java function, the system pushes entry frame 457 onto<br>
+14<br><br>
+the execution stack and stores therein the at least one pointer to Java frame 459 that was stored in local storage, which in this case is the LAST_JAVA_SP and the LAST_JAVA_FP. The function corresponding to Java frame 455 then calls a Java function corresponding to Java frame 453.<br>
+In order to more clearly understand the present invention, there are four distinct actions that will be described in reference to the execution stack of FIG. 7. As shown, the system may enter external code from Java code meaning that a Java function has called an external function written in another programming language Additionally, the system may enter Java code from external code. As the Java function corresponding to Java frame 455 returns, the system exits Java code to external code and as the external function corresponding to external frame 461 returns, the system exits external code to Java code. The following will describe each of these four processes in more detail.<br>
+We will start with a Java function calling an external function. FIG. 8 shows a process of entering external code from Java code. At a step 501, the system stores the current stack pointer SP and frame pointer FP as the LAST_JAVA_SP and LAST_JAVA_FP in thread local storage. At this point it should be remembered that a Java function has called an external function The stack pointer and frame pointer that are stored in thread local storage will be subsequently used to traverse around external frames utilizing a data block or entry frame that stores these pointers. Although preferred embodiments store both the stack pointer and frame pointer in thread local storage, the invention may be advantageously utilized storing other or fewer pointers in other storage locations<br>
+The system then calls the external code at a step 503. At this point, the system will push an external frame for the external function on the execution stack. Before calling the external code, the system pushes the return address for the Java function on the execution stack before pushing the external frame on the top of the execution stack. Once in external code, the external function may call a Java function or call another external function that calls a Java function.<br>
+15<br><br>
+A Java function calling an external function has been described above. The calling of a Java function from an external function will now be described.<br>
+FIG. 9 shows a process of entering Java code from external code. Typically, the return address of the external function is pushed on the execution stack before the Java function is called. At a step 551, the system pushes an entry frame or data block on the execution stack. The LAST_JAVA_SP and LAST_JAVA_FP stored in thread local storage are then copied into the entry frame at a step 553. The LAST_JAVA_SP and LAST_JAVA_FP pointers point to a previous Java frame on the execution stack. As should be apparent to one of ordinary skill in the art, the process steps shown and described herein are provided to illustrate the invention and should not be taken to imply that any particular order of the steps is necessarily required. For example, an embodiment of the invention may first store a pointer in the entry frame before it is pushed on the execution stack and such an embodiment would clearly fall within the scope of the invention described herein.<br>
+At a step 555, the system clears the LAST_JAVA_SP and LAST_JAVA_FP stored in thread local storage. These pointers in the thread local storage may be cleared by setting their values equal to zero or any other way known to those of ordinary skill in the art. In preferred embodiments, the pointers are set equal to zero so that the pointers may be checked to determine whether Java code or external code is currently running on the system (e.g.., nonzero = external and zero = Java).<br>
+In conventional systems, resources for native methods are typically allocated when the native methods are called. Oftentimes, a Java function will call multiple native methods so the conventional resource allocation results in multiple allocation and deallocation of resources. With embodiments of the invention, resources are allocated for native methods when a Java function is entered so that these resources are available to all the native methods that the Java function may call Additionally, resources may be allocated for native methods once when the Java function is entered and deallocated once when the Java function returns thereby increasing the efficiency of resource allocation/deallocation.<br>
+16<br><br>
+At a step 557, the system allocates resources for native methods and stores the resources in thread local storage. The system then calls the Java code at a step 559.<br>
+After a Java function that was called by an external function returns, execution will continue with the external function that called the Java function. FIG. 10 shows a process of exiting Java code to external code. At a step 601, the system restores the LAST_JAVA_SP and LAST_JAVA_FP to thread local storage. The system copies the pointer stored in the entry frame back to the thread local storage. Accordingly, should the external fund ion once again call a Java function, the pointers will again be available in thread local storage to set up an entry frame.<br>
+The system deallocates resources for native methods at a step 603. In preferred embodiments, the resources are stored in thread local storage after they are allocated. At a step 605, the system returns to external code that is typically designated by a return address on the execution stack.<br>
+Once the external function that was called by a Java function returns, execution will resume in the Java function that called the external function. FIG. 11 shows a process of exiting external code to Java code. At a step 651, the system clears the LAST_JAVA_SP and LASTJAVAFP in thread local storage. In preferred embodiments, the stack pointer and frame pointer stored in thread local storage are set to a zero value when the system is executing a Java function and set to a non-zero value when the system is executing external code. The stack and frame pointer are non-zero values when executing external code as the pointers point to a previous Java frame on the execution stack.<br>
+The system returns to Java code at a step 653. The system returns to Java code by setting the program counter to the return address that was pushed on the execution stack once the external function was called.<br>
+The above has shown how embodiments of the present invention provide an implementation of an execution stack that stores frames for functions written in multiple programming languages. Although the description has focused on functions for the Java programming language, the present invention is not limited to any specific programming<br>
+17<br><br>
+language. The invention may be advantageously applied to systems that execute programs utilizing functions written in multiple programming languages. By allowing the system to traverse the execution stack and more efficiently allocate resources, programs may be executed more efficiently.<br>
+Exceptions<br>
+Exceptions are signals that indicate something out of the ordinary has happened. For example, an exception may indicate that the system has run out of memory or that the end-of-file of a file has been reached. Some exceptions indicate unrecoverable situations (e.g., out of memory) and some exceptions indicate recoverable situations (e.g., end-of-file).<br>
+When an exception is generated, a Java run time system typically searches for an exception handler for that exception. The search starts within the function in which the exception was thrown and then propagates through the functions on the execution stack. If an exception handler is found, the exception handler catches the exception and takes the appropriate action that may include throwing another exception.<br>
+As an example, we will describe an embodiment where the Java virtual machine is written in the C++ programming language. Accordingly, the execution stack will include C++ frames and Java frames With embodiments of the invention, exceptions may be propagated through the different frames on the execution stack. Although a particular embodiment is described to illustrate the invention, the invention is not limited to any particular language or configuration. FIG. 12 illustrates an execution stack including both C++ and Java frames. A C++ frame 703 is located on the top of the execution stack. The C++ function corresponding to C++ frame 703 was called by a Java function corresponding to a Java frame 705. As described previously, an entry frame 707 is stored on the execution stack to allow the system to traverse C++ frames 709 and 711 to a Java frame 713.<br>
+Conceptually there is a shield 715 between C++ frame 703 and Java frame 705. Shield 715 catches C++ exceptions that are not handled in C++ frame 703 and passes the<br>
+18<br><br>
+exception to Java frame 705. It may be necessary to transform the C++ exception to a Java exception before the exception is passed on. As shown, there may also be a shield 716 between C++ frame 711 and Java frame 713.<br>
+An unshield 717 is between Java frame 705 (and entry frame 707) and C++ frame 709. Unshield 717 passes Java exceptions that are not handled within Java frame 705 and passes them on to C++ frame 709. The execution stack shown in FIG. 12 has now been briefly described so it may be beneficial to describe a process of an exception exiting external code to Java code.<br>
+FIGS. 13A and 13B show a process of an exception exiting external code to Java code. At a step 801, a C++ exception has been thrown. The C++ exception may be caught and handled by an appropriate exception handler as is known in the art. If the C++ exception is handled by an exception handler at a step 803, the system continues execution as directed by the exception handler.<br>
+Steps 805 and the subsequent steps 807, 809, 811, 813, 815, and 817 correspond to shield 715 of FIG. 12. At a step 805, the system catches all the exceptions that were not handled within the C++ frame. The system then determines if the caught exception is a Java exception at a step 807. In other words, the system determines if the C++ exception may be translated into a Java exception. If the C++ exception may not be transformed into a Java exception, the system may issue a bug error message at a step 809 and halt execution.<br>
+If the C++ exception is a Java exception, the system removes the C++ frame from the top of the execution stack at a step 811. The C++ frame corresponds to the C++ function that was running when the exception was thrown. The system stores the exception and a return address in thread local storage at a step 813. The stored return address may be utilized to generate a Java exception.<br>
+At a step 815, the system patches the return address on the execution stack with an address to an exception forwarder. The exception forwarder is external code of a virtual machine function (written in C++ or assmelby in preferred embodiments) that is<br>
+19<br><br>
+responsible for generating a Java exception and jumping to the exception handler for the next Java frame on the execution stack.<br>
+At a step 817, the system returns to external code. Now that the return address for Java frame 705 has been patched at step 815 to refer to the exception forwarder, the system will next execute the exception forwarder function which is shown in FIG. 13B. FIG. 13B shows an embodiment of the exception forwarder. At a step 851, the system sets up a Java exception. A Java exception includes both an exception object and a program counter (or "issuing PC") where the exception was thrown. The program counter may be readily generated from the return address stored in thread local storage by simply subtracting one from the return address. Although the embodiment described stores the return address, it should be readily apparent that the issuing PC could also be stored in thread local storage.<br>
+Utilizing the return address stored in thread local storage, the exception forwarder gets the exception handler routine for the method specified by the return address. After the appropriate exception handler is identified, a jump is performed to the exception handler at a step 855 Accordingly, it has been shown how a C++ exception may be translated and handled as a Java exception. The following will describe an exception exiting Java code to external code.<br>
+FIGS 14A and 14B show a process of an exception exiting Java code to external code. At a step 901, a Java exception has been thrown. The system determines if the exception may be handled in the current Java frame at a step 903. If the exception may be handled by an exception handler for this frame, the system jumps to that exception handler at a step 905.<br>
+If the Java exception may not be handled by the exception handler for this Java frame, the system removes the Java frame from the execution stack at a step 907. The system then finds the exception handler for the return address stored in the CPU registers at a step 909. At a step 911, the system jumps to the exception handler. The exception handler will be the exception handler for the entry frame.<br>
+20<br><br>
+FIG. ] 4B shows a process for the exception handler of the entry frame. At a step 951, the exception handler saves the exception in thread local storage. The exception handler finishes execution and continues after the call in C++ at step 953. When execution begins after the call in C++, the unshield shown as unshield 717 in FIG. 12 determines if an exception is pending at a step 955. It may be determined that an exception is pending by checking local storage to see if an exception is pending. For example, it may be determined whether an exception is stored in thread local storage. If an exception is pending, a C++ exception may be thrown at a step 957 by throwing the exception stored in thread local storage. Accordingly, a Java exception has been transformed and rethrown as a C++ exception.<br>
+The embodiments described above has shown that information may be stored in<br>
+thread local storage in order to implement an execution stack that stores frames for<br>
+functions written in multiple programming languages. FIG. 15 shows the information that<br>
+may be stored in thread local storage. The information has been described above in<br>
+reference to the other figures; however, it may be beneficial to review the information that<br>
+may be stored therein. A LAST_JAVA_SP 1001 and LAST_JAVA_FP 1003 are pointers<br>
+to a previous Java frame on the execution stack. These pointers allow the execution stack<br>
+to be traversed around or through frames on the execution stack written in other<br>
+programming languages.	<br>
+Resources 1005 are allocated when the system enters a Java function from a function written in another programming language. The resources may then be utilized by any native methods called by the Java function or any subsequent Java functions.<br>
+An exception 1007 and a return address 1009 are stored to allow exceptions to pass from a function written in another programming language (e.g., the C++ programming language) to a Java function, and vice versa. Other information may also be stored in thread local storage.<br>
+21<br><br>
+Conclusion<br>
+While the above is a complete description of preferred embodiments of the invention, there is alternatives, modifications, and equivalents may be used. It should be evident that the invention is equally applicable by making appropriate modifications to the embodiments described above. For example, the embodiments described have been in reference to a mixed execution stack including Java frames, but the principles of the present invention may be readily applied to other systems and languages. Therefore, the above description should not be taken as limiting the scope of the invention that is defined by the metes and bounds of the appended claims along with their full scope of equivalents<br>
+22<br><br>
+WE CLAIM :<br>
+1 In a computer system, a method for implementing an execution stack that stores frames for functions written in a plurality of programming-languages, the method comprising :<br>
+storing a first frame on the execution stack for a first function, the first function being written in a first programming language ; and<br>
+in response to the first function calling a second function written in a second programming language, storing a data block on the execution stack before a second frame for the second function, the data block having at least<br>
+one pointer to a previous frame on the execution stack for a previous function<br>
+written in the second programming language.<br>
+2 The method as claimed in claim 1, wherein the at least one pointer comprises a previous stack pointer and frame pointer.<br>
+3. The method as claimed in any one of the preceding claims,<br>
+comprising in response to the first function calling the second function, allocating<br>
+resources for functions written in programming languages other than the second<br>
+programming language that may be called by the second function<br>
+4. The method as claimed in claim 3, comprising upon exiting the<br>
+second function, deallocating the resources for functions written in programming<br>
+languages other than the second programming language.<br>
+5. The method as claimed in any of the preceding claims, comprising<br>
+catching an exception that was raised during execution of the second function<br>
+that was not handled by an exception handler for the second function.<br>
+6. The method as claimed in claim 5, comprising identifying an<br>
+exception handler for the data block to handle the exception and jumping to the<br>
+identified exception handler.<br>
+-23-<br><br>
+7. The method as claimed in claim 6, wherein the identified exception<br>
+handler stores the exception in local storage.<br>
+8. The method as claimed in claim 7, wherein the local storage is<br>
+storage associated with a current thread in which the first and second functions<br>
+are executing.<br>
+9. The method as claimed in one of claims 7 and 8, comprising upon<br>
+returning to the first function, checking the local storage to determine if an<br>
+exception is pending and throwing the stored exception if an exception is<br>
+pending.<br>
+10. The method as claimed in claim 9, comprising converting the<br>
+stored exception to a format for the first programming language.<br>
+11.	The method as claimed in any one of the preceding claims,<br>
+wherein the second programming language is the Java programming language<br>
+12.	A computer system that implements an execution stack that stores<br>
+frames for functions written in a plurality of programming languages, comprising <br>
+computer code that stores a first frame on the execution stack for a first function, the first function being written in a first programming language ;<br>
+computer code that, in response to the first function calling a second function written in a second programming language, stores a data block on the execution stack before a second frame for the second function, the data block including at least one pointer to a previous frame on the execution stack for a previous function written in the second programming language ; and<br>
+a computer readable medium that stores the computer codes.<br>
+13.	The computer system as claimed in claim 12, wherein the<br>
+computer readable medium is selected from the group consisting of CD-ROM,<br>
+-24-<br><br><br>
+floppy disk, tape, flash memory, system memory, hard drive, and data signal embodied in a carrier wave<br>
+14. A computer system for implementing an execution stack that stores frames for functions written in a plurality of programming languages, comprising <br>
+a processor,<br>
+a memory coupled to the processor that stores the execution stack , and<br>
+a computer program operating on the processor that stores a first frame on the execution stack for a first function, the first function being written in a first programming language and, in response to the first function calling a second function written in a second programming language, stores a data block on the execution stack before a second frame for the second function, the data block having at least one pointer to a previous frame on the execution stack for a previous function written in the second programming language.<br>
+(15.) In a computer system, a method for implementing an execution stack that stores frames for functions written in a plurality of programming languages, the method comprising :<br>
+storing a first frame on the execution stack for a first function, the first function being written in a first programming language , and<br>
+in response to the first function calling a second function written in a second programming language, storing in local storage at least one pointerto the first frame on the execution stack and storing a second frame on the execution stack for the second function.<br>
+16 The method as claimed in claim 15, wherein the at least one pointer comprises a previous stack pointer and frame pointer.<br>
+17. The method as claimed in any one of claims 15 and 16, wherein the local storage is storage associated with a current thread in which the first and second functions are executing.<br>
+-25-<br><br>
+18. The method as claimed in any one of claims 15-17, comprising upon exiting the second function, clearing the at least one pointer stored in the local storage.<br>
+19 The method as claimed in any one of claims 15-18, comprising<br>
+catching an exception that was raised during execution of the second function<br>
+that was not handled by an exception handler for the second function.<br>
+20 The method as claimed in claim 19, comprising determining if the<br>
+exception is appropriate for the first programming language.<br><br>
+21. The method as claimed in any one of claims 19 and 20, comprising<br>
+storing the exception in the local storage.<br>
+22. The method as claimed in any one of claims 19-21, comprising<br>
+patching a return address on the execution stack with an address of an<br>
+exception forwarder, the exception forwarder identifying an exception handler for<br>
+the first function to handle the exception and jumping to the identified exception<br>
+handler.<br>
+23 The method as claimed in claim 22, wherein the exception forwarder converts the exception to a format for the first programming language.<br>
+24. The method as claimed in any one of the preceding claims,<br>
+comprising in response to the second function calling a third function written in<br>
+the first programming language, storing a data block on the execution stack<br>
+before a third frame for the third function, the data block having the at least one<br>
+pointer to the first frame that is stored in the local storage<br>
+25. The method as claimed in claim 24, comprising :<br>
+in response to the second function calling the third function, allocating resources for functions written in programming languages other than the first programming language that may be called by the third function ; and<br>
+-26-<br><br>
+upon exiting the third function, deallocating the resources for functions written in programming languages other than the first programming language.<br>
+26. The method as claimed in claim 24, comprising catching an<br>
+exception that was raised during execution of the third function that was not<br>
+handled by an exception handler for the third function.<br>
+27. A computer system that implements an execution stack that stores<br>
+frames for functions written in a plurality of programming languages, comprising :<br>
+computer code that stores a first frame on the execution stack for a first function, the first function being written in a first programming language ;<br>
+computer code that, in response to the first function calling a second function written in a second programming language, stores in local storage at least one pointer to the first frame on the execution stack and stores a second frame on the execution stack for the second function ; and<br>
+a computer readable medium that stores the computer codes.<br>
+28.	In a computer system, a method for allocating resources for<br>
+functions written in a plurality of programming languages, the method<br>
+comprising:<br>
+storing a first frame on the execution stack for a first function, the first function being written in a first programming language ; and<br>
+calling a second function using the first function ; and<br>
+allocating resources for functions written in programming languages other than a second programming language that may be called by the second function.<br>
+29.	The method as claimed in claim 28, comprising upon exiting the<br>
+second function, deallocating the resources for functions written in programming<br>
+languages other than the second programming language.<br>
+-27-<br><br>
+30. The method as claimed in claim 28, wherein calling the second function using the first function comprises executing the second function, the method also comprising catching an exception that was raised during execution of the second function that was not handled by an exception handler for the second function.<br>
+31	The method as claimed in claim 30 comprising :<br>
+identifying an exception handler for the data block to handle the exception; and<br>
+jumping from the second function to the identified exception handler.<br>
+32	The method as claimed in claim 31, wherein the identified<br>
+exception handler stores the exception in a local storage associated with a<br>
+thread which causes the second function to be called using the first function.<br>
+33. The method as claimed in claim 32, comprising :<br>
+returning to the first function from the second function ; and<br>
+checking the local storage to determine whether an exception is pending ;<br>
+and<br>
+throwing the stored exception when it is determined that the exception is<br>
+pending<br>
+ 34. In a computer system, a method for handling exceptions for functions writen in a plurality of programming languages, the method comprising<br>
+storing a first frame on the execution stack for a first function, the first function being written in a first programming language ;<br>
+calling a second function with a first function , and<br>
+catching an exception that was raised during execution of the second function that was not handled by an exception handler for the second function.<br>
+-28-<br><br>
+35 The method as claimed in claim 34, comprising identifying an<br>
+exception handler for the data block to handle the exception and jumping to the<br>
+identified exception handler.<br>
+36 The method as claimed in claim 35, wherein the identified<br>
+exception handler stores the exception in local storage<br>
+37 The method as claimed in claim 36, wherein the local storage is<br>
+storage associated with a current thread in which the first and second functions<br>
+are executing<br>
+38 The method as claimed in claim 36, comprising upon returning to<br>
+the first function, checking the local storage to determine if an exception is<br>
+pending an throwing the stored exception if an exception is pending.<br><br>
+39. The method as claimed in claim 38, comprising converting the<br>
+stored exception to a format for the first programming language.<br>
+40. The method as claimed in claim 34, wherein calling the second<br>
+function with the first function comprises storing a data block on the execution<br>
+stack, the data block including a reference to another frame on the execution<br>
+stack for a third function not written in the first programming language.<br><br>
+ 41. In a computer system, a method for implementing an execution<br>
+stack that stores frames for functions written in a plurality of programming languages, the method comprising :<br>
+storing a first frame on the execution stack for a first function, the first function being written in a first programming language ;<br>
+storing a second frame on the execution stack for a second function, the second function being written in a second programming language ; and<br>
+-29-<br><br>
+calling a third function from the second function, the third function being written in the first programming language, wherein calling the third function from the second function comprises storing a data block on the execution stack that includes at least one reference to the first frame<br>
+42. The method as claimed in claim 41, comprising storing the data<br>
+block on the execution stack before a third frame for the third function.<br>
+43. The method as claimed in claim 41, wherein the first programming<br>
+language is the Java programming language.<br>
+44. The method as claimed in claim 43, wherein the second<br>
+programming language is one selected from the group consisting of the C++<br>
+programming language, the Pascal programming language, the FORTRAN<br>
+programming language, and an assembly language.<br>
+45. A method of implementing a mixed execution stack that supports a<br>
+plurality of programming languages in a computing environment, said method<br>
+comprising the steps of :<br>
+storing a first frame on said mixed execution stack, wherein said first frame is associated with a first programming language ;<br>
+determining whether a second frame associated with a second programming language is to be stored on said mixed execution stack, wherein said second programming language is different than said first programming language ; and<br>
+storing a reference to said first frame associated with said first programming language when said determining determines that a second frame associated with a second programming language is to be stored on said mixed execution stack.<br>
+-30-<br><br>
+46. In a computer system, a method for implementing an execution<br>
+stack, substantially as herein described, particularly with reference to and as<br>
+illustrated in the accompanying drawings.<br>
+47. A computer system for implementing an execution stack,<br>
+substantially as herein described, particularly with reference to and as illustrated<br>
+in the accompanying drawings.<br>
+48. In a computer system, a method for allocating resources,<br>
+substantially as herein described, particularly with reference to and as illustrated<br>
+in the accompanying drawings.<br>
+49. In a computer system, a method of handling exceptions,<br>
+substantially as herein described, particularly with reference to and as illustrated<br>
+in the accompanying drawings.<br><br>
+-31-<br><br>
+Systems and methods for implementing an execution stack which stores frames for functions written in a plurality of programming languages are provided. The frames for functions written in different programming languages (459 and 461) may be interleaved on the same execution stack (451). A data block (457) on the execution stack may be utilized to traverse the execution stack around a frame by storing a stack pointer and frame pointer to a previous frame. Furthermore, resources may be allocated or de-allocated for functions written in a plurality of programming. Additionally, functions may be propagated, with conversion if necessary, through frames on the execution stack that are written in different programming languages.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggYWJzdHJhY3QucGRm" target="_blank" style="word-wrap:break-word;">01762-cal-1998 abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggYXNzaWdubWVudC5wZGY=" target="_blank" style="word-wrap:break-word;">01762-cal-1998 assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggY2xhaW1zLnBkZg==" target="_blank" style="word-wrap:break-word;">01762-cal-1998 claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggY29ycmVzcG9uZGVuY2UucGRm" target="_blank" style="word-wrap:break-word;">01762-cal-1998 correspondence.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggZGVzY3JpcHRpb24oY29tcGxldGUpLnBkZg==" target="_blank" style="word-wrap:break-word;">01762-cal-1998 description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggZHJhd2luZ3MucGRm" target="_blank" style="word-wrap:break-word;">01762-cal-1998 drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggZm9ybS0xLnBkZg==" target="_blank" style="word-wrap:break-word;">01762-cal-1998 form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggZm9ybS0xMy5wZGY=" target="_blank" style="word-wrap:break-word;">01762-cal-1998 form-13.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggZm9ybS0yLnBkZg==" target="_blank" style="word-wrap:break-word;">01762-cal-1998 form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggZm9ybS0zLnBkZg==" target="_blank" style="word-wrap:break-word;">01762-cal-1998 form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggZm9ybS01LnBkZg==" target="_blank" style="word-wrap:break-word;">01762-cal-1998 form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggZ3BhLnBkZg==" target="_blank" style="word-wrap:break-word;">01762-cal-1998 gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MDE3NjItY2FsLTE5OTggcHJpb3JpdHkgZG9jdW1lbnQucGRm" target="_blank" style="word-wrap:break-word;">01762-cal-1998 priority document.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWFzc2lnbm1lbnQucGRm" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-assignment.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWNvcnJlc3BvbmRlbmNlLnBkZg==" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-correspondence.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWZvcm0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWZvcm0gMTMucGRm" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-form 13.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWZvcm0gMi5wZGY=" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-form 2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWZvcm0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWZvcm0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWdwYS5wZGY=" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLWxldHRlciBwYXRlbnQucGRm" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-letter patent.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLXJlcGx5IHRvIGV4YW1pbmF0aW9uIHJlcG9ydC5wZGY=" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-reply to examination report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTc2Mi1jYWwtMTk5OC1ncmFudGVkLXNwZWNpZmljYXRpb24ucGRm" target="_blank" style="word-wrap:break-word;">1762-cal-1998-granted-specification.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="194199-a-magnetic-assembly-for-a-transformer-or-other-electrical-apparatus.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="194201-improvements-in-the-design-construction-of-passenger-road-rail-vehicles-for-reducing-interior-heat-enhancing-ventilation.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>194200</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1762/CAL/1998</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>30/2009</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>24-Jul-2009</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>12-Aug-2005</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>05-Oct-1998</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>SUN MICROSYSTEMS, INC</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>901, SAN ANTONIO ROAD,PALO ALTO,CALOIFORNIA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>URS HOLZLE</td>
+											<td>7220,DAVENPORT ROAD,#105,GOLETA,CALIFORNIA 93117</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>LARS BAK</td>
+											<td>3782,CORINA WAY,PALO ALTO,CALIFORNIA 94303</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>ROBERT GREISEMER</td>
+											<td>960,OAK LANE,#F,MENLO PARK,CALIFORNIA 94025</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 9/40</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>08/944,335</td>
+									<td>1997-10-06</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/194200-a-method-of-implementing-an-execution-stack-in-a-computer-system-and-a-computer-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 05:43:50 GMT -->
+</html>

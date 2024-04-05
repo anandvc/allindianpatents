@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/268298-an-apparatus-for-performing-detection-and-decoding-in-a-communication-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 06:56:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 268298:&quot; AN APPARATUS FOR PERFORMING DETECTION AND DECODING IN A COMMUNICATION SYSTEM&quot;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot; AN APPARATUS FOR PERFORMING DETECTION AND DECODING IN A COMMUNICATION SYSTEM&quot;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>Techniques for performing detection and decoding at a receiver are described. In one scheme, the receiver obtains R received symbol streams for M data streams transmitted by a transmitter, performs receiver spatial processing on the received symbols to obtain detected symbols, performs log-likelihood ratio (LLR) computation independently for each of D best data streams, and performs LLR computation jointly for the M D remaining data streams, where M &gt; D &gt; 1 and M &gt; 1. The D best data streams may be selected based on SNR and/or other criteria. In another scheme, the receiver performs LLR computation independently for each of the D best data streams, performs LLR computation jointly for the M D remaining data streams, and reduces the number of hypotheses to consider for the joint LLR computation by performing a search for candidate hypotheses using list sphere detection, Markov chain Monte Carlo, or some other search technique.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>REDUCED COMPLEXITY DETECTION AND DECODING FOR A RECEIVER IN A COMMUNICATION SYSTEM<br>
+[001]	The present application claims priority to provisional U.S. Application Serial<br>
+No. 60/738,159, entitled "REDUCED COMPLEXITY INTERATIVE DETECTION AND DECODING FOR MIMO-OFDM SYSTEMS," filed November 18, 2005, assigned to the assignee hereof and incorporated herein by reference.<br>
+BACKGROUND<br>
+I.	Field<br>
+[002]	The present  disclosure  relates  generally  to  communication,  and more<br>
+specifically to techniques for performing detection and decoding at a receiver in a communication system.<br>
+II.	Background<br>
+[003]	A multiple-input multiple-output (MEMO) communication system employs<br>
+multiple (T) transmit antennas at a transmitter and multiple (R) receive antennas at a receiver for data transmission. A MIMO channel formed by the T transmit antennas and the R receive antennas may be decomposed into M spatial channels, where M 
+[004]	The transmitter may encode and transmit M data streams in parallel via the T<br>
+transmit antennas. The receiver obtains R received symbol streams via the R receive antennas, performs MIMO detection to separate out the M data streams, and performs decoding on the detected symbol streams to recover the transmitted data streams. To achieve optimal performance, the receiver would need to evaluate many hypotheses for all possible sequences of data bits that might have been transmitted based on all of the information available at the receiver. Such an exhaustive search is computationally intensive and is prohibitive for many applications.<br>
+[005]	There is therefore a need in the art for techniques to perform detection and<br>
+decoding with reduced complexity while achieving good performance.<br><br>
+SUMMARY<br>
+[006]	Techniques for performing detection and decoding with reduced complexity<br>
+while achieving  good performance  are  described herein.     These  techniques  are<br>
+embodied m various reduced complexity detection schemes described below.<br>
+[007]	In one reduced complexity detection scheme, a receiver obtains R received<br>
+symbol streams for M data streams transmitted by a transmitter, performs receiver spatial processing (or spatial matched filtering) on the received symbols to obtain detected symbols, performs log-likelihood ratio (LLR) computation independently for each of D "best" data streams, and performs LLR computation jointly for the M-D remaining data streams, where in general M &gt; D &gt; 1 and M &gt; 1. The D best data streams may be selected based on signal-to-noise-and-interference ratio (SNR) and/or other criteria. In another reduced complexity detection scheme, the receiver performs LLR computation independently for each of the D best data streams, performs LLR computation jointly for the M —D remaining data streams, and reduces the number of hypotheses to consider for the joint LLR computation by performing a search for candidate hypotheses using list sphere detection, Markov chain Monte Carlo, or some other search technique.<br>
+[008] For both detection schemes, dimensionality is reduced from M to M-D by performing per-stream LLR computation for the D best data streams. The reduction in dimensionality may substantially reduce the number of hypotheses to consider for the joint LLR computation for the M-D remaining data streams. The number of hypotheses may be further reduced by performing a search for candidate hypotheses. These detection schemes may be used for (1) a single-pass receiver that performs detection and decoding once and (2) an iterative receiver that performs detection and decoding iteratively. These and other detection schemes are described in detail below. [009] Various aspects and embodiments of the invention are also described in further detail below.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[010]        The features and nature of the present invention will become more apparent from the detailed description set forth below when taken in conjunction with the drawings in which like reference characters identify correspondingly throughout. [011]        FIG. 1 shows a block diagram of a transmitter and a receiver.<br>
+[012]	FIG. 2 shows a block diagram of a transmit (TX) data processor and a TX<br>
+spatial processor at the transmitter.<br>
+[013]	FIG. 3 shows a block diagram of a receive (RX) spatial processor and an RX<br>
+data processor for a single-pass receiver.<br>
+[014]	FIG. 4 shows a block diagram of an RX spatial processor and an RX data<br>
+processor for an iterative receiver.<br>
+[015]	FIG. 5 shows a flow diagram for a reduced dimensionality detection scheme.<br>
+[016]	FIG. 6 shows an apparatus for the reduced dimensionality detection scheme.<br>
+[017]	FIG. 7 shows an exemplary search tree for list sphere detection.<br>
+[018]	FIG. 8 shows a flow diagram for a reduced order detection scheme.<br>
+[019]	FIG. 9 shows an apparatus for the reduced order detection scheme.<br>
+DETAILED DESCRIPTION<br>
+[020]	The word "exemplary" is used herein to mean "serving as an example,<br>
+instance, or illustration." Any embodiment or design described herein as "exemplary" is not necessarily to be construed as preferred or advantageous over other embodiments or designs.<br>
+[021]	The detection and decoding techniques described herein may be used for<br>
+various communication systems in which multiple data streams are transmitted in<br>
+parallel via a communication channel. For example, these techniques may be used for a<br>
+MIMO system with a single frequency subband, a MIMO system with multiple<br>
+subbands, a Code Division Multiple Access (CDMA) system, a Frequency Division<br>
+Multiple Access (FDMA) system, a Time Division Multiple Access (TDMA) system,<br>
+and so on. Multiple subbands may be obtained with orthogonal frequency division<br>
+multiplexing (OFDM), single-carrier frequency division multiple access (SC-FDMA),<br>
+or some other modulation technique. OFDM and SC-FDMA partition the overall<br>
+system bandwidth into multiple (L) orthogonal subbands, which are also called<br>
+subcarriers, tones, bins, and so on. Each subband is associated with a subcarrier that<br>
+may be independently modulated with data. In general, modulation symbols are sent in<br>
+the frequency domain with OFDM and in the time domain with SC-FDMA. For clarity,<br>
+much of the description below is for a MIMO system that utilizes OFDM.<br>
+[022]	FIG. 1 shows a block diagram of an embodiment of a transmitter 110 and a<br>
+receiver 150 in a MIMO system 100.  Transmitter 110 is equipped with multiple (T)<br>
+antennas, and receiver 150 is equipped with multiple (R) antennas. For downlink (or forward link) transmission, transmitter 110 may be part of, and may contain some or all of the functionality of, a base station, an access point, a Node B, and so on. Receiver 150 may be part of, and may contain some or all of the functionality of, a mobile station, a user terminal, a user equipment, and so on. For uplink (or reverse link) transmission, transmitter 110 may be part of a mobile station, a user terminal, a user equipment, and so on, and receiver 150 may be part of a base station, an access point, a Node B, and so on.<br>
+[023]	At transmitter 110, a TX data processor 120 receives traffic data from a data<br>
+source 112 and processes (e.g., formats, encodes, interleaves, and symbol maps) the traffic data to generate data symbols, which are modulation symbols for traffic data. A TX spatial processor 130 multiplexes the data symbols with pilot symbols, which are modulation symbols for pilot. A pilot is a transmission that is known a priori by both the transmitter and receiver and may also be referred to as a training signal, a reference, a preamble, and so on. TX spatial processor 130 performs transmitter spatial processing and provides T streams of transmit symbols to T transmitter units (TMTR) 132a through 132t. Each transmitter unit 132 processes (e.g., OFDM modulates, converts to analog, filters, amplifies, and upconverts) its transmit symbol stream and generates a modulated signal. T modulated signals from transmitter units 132a through 132t are transmitted from antennas 134a through 134t, respectively.<br>
+[024]	At receiver 150, R antennas 152a through 152r receive the T modulated<br>
+signals, and each antenna 152 provides a received signal to a respective receiver unit (RCVR) 154. Each receiver unit 154 processes its received signal in a manner complementary to the processing performed by transmitter units 132 to obtain received symbols, provides received symbols for traffic data to an RX spatial processor 160, and provides received symbols for pilot to a channel processor 194. Channel processor 194 estimates the response of the MTMO channel from transmitter 110 to receiver 150 based on the received symbols for pilot (and possibly the received symbols for traffic data) and provides channel estimates to RX spatial processor 160. RX spatial processor 160 performs detection on the received symbols for traffic data with the channel estimates and provides soft decisions, which may be represented by LLRs as described below. An RX data processor 170 further processes (e.g., deinterleaves and decodes) the soft decisions and provides decoded data to a data sink 172.  The detection and decoding<br>
+ may be performed with a single pass through processors 160 and 170 or iteratively between processors 160 and 170.<br>
+[025]	Receiver 150 may send feedback information to assist transmitter 110 in<br>
+controlling the data transmission to receiver 150. The feedback information may<br>
+indicate a particular transmission mode to use for transmission, a particular rate or<br>
+packet format to use for each data stream, acknowledgments (ACKs) and/or negative<br>
+acknowledgments (NAKs) for packets decoded by receiver 150, channel state<br>
+information, and so on, or any combination thereof. The feedback information is<br>
+processed (e.g., encoded, interleaved, and symbol mapped) by a TX signaling processor<br>
+180, multiplexed with pilot symbols and spatially processed by a TX spatial processor<br>
+182, and further processed by transmitter units 154a through 154r to generate R<br>
+modulated signals, which are transmitted via antennas 152a through 152r.<br>
+[026]	At transmitter 110, the R modulated signals are received by antennas 134a<br>
+through 134t, processed by receiver units 132a through 132t, spatially processed by an RX spatial processor 136, and further processed (e.g., deinterleaved and decoded) by an RX signaling processor 138 to recover the feedback information. A controller/processor 140 controls the data transmission to receiver 150 based on the received feedback information. A channel processor 144 may estimate the response of the MIMO channel from receiver 150 to transmitter 110 and may derive spatial mapping matrices used by TX spatial processor 130.<br>
+[027]	Controllers/processors 140 and 190 control the operation at transmitter 110<br>
+and receiver 150, respectively. Memories 142 and 192 store data and program codes for transmitter 110 and receiver 150, respectively.<br>
+[028]	FIG. 2 shows a block diagram of an embodiment of TX data processor 120<br>
+and TX spatial processor 130 at transmitter 110. For this embodiment, a common coding scheme is used for all data streams, and a separate code rate and a separate modulation scheme may be used for each data stream. For clarity, the following description assumes that M data streams are sent on M spatial channels. [029] Within TX data processor 120, an encoder 220 encodes traffic data in accordance with a coding scheme and generates code bits. The coding scheme may include a convolutional code, a Turbo code, a low density parity check (LDPC) code, a cyclic redundancy check (CRC) code, a block code, and so on, or a combination thereof. A demultiplexer (Demux) 222 demultiplexes (or parses) the code bits into M streams and provides the M code bit streams to M sets of processing units. Each set includes a<br>
+ puncture unit 224, a channel interleaver 226, and a symbol mapper 228. Each puncture unit 224 punctures (or deletes) code bits, as necessary, to achieve a code rate selected for its stream and provides the retained code bits to an associated channel interleaver 226. Each channel interleaver 226 interleaves (or reorders) its code bits based on an interleaving scheme and provides interleaved bits to an associated symbol mapper 228. The interleaving may be performed separately for each data stream (as shown in FIG. 2) or across some or all data streams (not shown in FIG. 2).<br>
+[030]	Each symbol mapper 228 maps its interleaved bits in accordance with a<br>
+modulation scheme selected for its stream and provides a stream of data symbols {sm}. The symbol mapping for stream m may be achieved by (1) grouping sets of Qm bits to form Qm-bit values, where Qm &gt; 1, and (2) mapping each Qm-bit value to one of 2Qm points in a signal constellation for the selected modulation scheme. Each mapped signal point is a complex value and corresponds to a data symbol. The symbol mapping may be based on Gray mapping or non-Gray mapping. With Gray mapping, neighboring points in the signal constellation (in both the horizontal and vertical directions) differ by only one out of Qm bit positions. Gray mapping reduces the number of bit errors for more likely error events, which correspond to a received symbol being mapped to a location near the correct location, in which case only one coded bit would be detected in error. With non-Gray mapping, neighboring points may differ by more than one bit position. Non-Gray mapping may result in more independence between the coded bits and may improve performance for iterative detection and decoding. [031] Within TX spatial processor 130, a multiplexer (Mux) 230 receives the M data symbol streams from symbol mappers 228a through 228m and maps the data symbols and pilot symbols to the proper subbands in each symbol period. A matrix multiplier 232 multiplies the data and/or pilot symbols for each subband l with a spatial mapping matrix P(l) and provides transmit symbols for that subband. Different spatial mapping matrices may be used for different transmission modes, and different spatial mapping matrices may be used for different subbands for some transmission modes, as described below.<br>
+[032] FIG. 2 shows an embodiment in which a common coding scheme and separate code rates and modulation schemes may be used for the M data streams. Different code rates may be achieved for the M data streams by using different puncture patterns for these streams.  In another embodiment, a common coding scheme and a<br>
+ common code rate are used for all data streams, and separate modulation schemes may be used for the M data streams. In yet another embodiment, a common coding scheme, a common code rate, and a common modulation scheme are used for all M data streams. In still yet another embodiment, each data stream is processed based on a coding and modulation scheme selected for that data stream. In general, the same or different coding schemes, the same or different code rates, and the same or different modulation schemes may be used for the M data streams. Furthermore, the same or different coding schemes, the same or different code rates, and the same or different modulation schemes may be used across the subbands.<br>
+[033]	Transmitter   110   typically   encodes   each   packet   separately.      In   an<br>
+embodiment, the M data streams are jointly encoded so that a single packet may be sent on multiple (e.g., all M) spatial channels. In another embodiment, the M data streams are independently encoded so that each packet is sent on one spatial channel. In yet another embodiment, some data streams are jointly encoded while remaining data streams are independently encoded.<br>
+[034]	For clarity, the following description assumes that one data stream is sent on<br>
+each spatial channel. The terms "data stream" and "spatial channel" are thus interchangeable for much of the description below. The number of data streams may be configurable and may be selected based on channel conditions and/or other factors. For clarity, the following description assumes that M data streams are sent on M spatial channels.<br>
+[035]	FIG. 3 shows a block diagram of an RX spatial processor 160a and an RX<br>
+data processor 170a for a single-pass receiver. Processors 160a and 170a are an embodiment of processors 160 and 170, respectively, at receiver 150 in FIG. 1. For this embodiment, processors 160a and 170a perform detection and decoding with a single pass through each of processors 160a and 170a.<br>
+[036]	Within RX spatial processor 160a, a spatial filter matrix computation unit<br>
+308 receives the channel estimates from channel processor 194 and derives spatial filter matrices based on the channel estimates and the spatial mapping matrices used by transmitter 110, as described below. A  MIMO detector 310 obtains the received symbols from R receiver units 154a through I54r, the channel estimates from channel processor 194, and the spatial filter matrices from unit 308. MIMO detector 310 performs detection as described below and provides K soft decisions for K code bits of M data symbols sent on each subband in each symbol period used for data transmission.<br>
+ A soft decision is a multi-bit value that is an estimate of a transmitted code bit. The soft decisions may be represented as LLRs and may be refeixed to as extrinsic LLRs.  If M data symbols are sent on one subband in one symbol period, then K may be computed<br>
+M<br>
+as K= y~Qm , where Qm is the number of code bits used to form a data symbol for<br>
+m = l<br>
+stream m. If the same modulation scheme is used for all M data streams, then K may be<br>
+computed as K = M Q, where Q is the number of code bits for each data symbol.<br>
+[037]	Within RX data processor 170a, channel deinterleavers 316a through 316m<br>
+receive the extrinsic LLRs for the M data streams. Each channel deinterleaver 316 deinterleaves the extrinsic LLRs for its stream in a manner complementary to the interleaving performed by channel interleaver 226 for that stream. A multiplexer 318 multiplexes (or serializes) the deinterleaved LLRs from channel deinterleavers 316a through 316m. A decoder 320 decodes the deinterleaved LLRs and provides decoded data. The detection and decoding are described in detail below.<br>
+[038]	FIG. 4 shows a block diagram of an RX spatial processor 160b and an RX<br>
+data processor 170b for an iterative receiver.   Processors 160b and 170b are another<br>
+embodiment of processors  160 and 170, respectively,  at receiver  150.    For this<br>
+embodiment, processors 160b and 170b perform detection and decoding iteratively.<br>
+[039]	Within RX spatial processor 160b, a unit 408 derives spatial filter matrices<br>
+based on the channel estimates and the spatial mapping matrices used by transmitter 110. A MIMO detector 410 obtains the received symbols from R receiver units 154a through 154r, the channel estimates from channel processor 194, the spatial filter matrices from unit 408, and a priori LLRs from a decoder 420. The a priori LLRs are denoted as La(bk) and represent a priori information from decoder 420. MIMO detector 410 performs detection as described below and provides K detector LLRs for K code bits of M data symbols sent on each subband in each symbol period used for data transmission. The detector LLRs are denoted as L(bk)- K summers 412a through 412k subtract the a priori LLRs from the detector LLRs and provide extrinsic LLRs, which are denoted as Le(bk). The extrinsic LLRs represent extrinsic or new information from MIMO detector 410 to decoder 420.<br>
+[040]	Within RX data processor 170b, an M-stream channel deinterleaver 416<br>
+deinterleaves the extrinsic LLRs for each stream in a manner complementary to the interleaving  performed  by  channel  interleaver  226   for  that  stream.     Channel<br>
+ deinterleaver 416 may include M channel deinterleavers 316a through 316m shown in FIG. 3.   A multiplexer 418 serializes the deinterleaved LLRs, which are denoted as LDe(bk) .  A decoder 420 decodes the deinterleaved LLRs and provides decoder LLRs.<br>
+A summer 422 subtracts the deinterleaved LLRs from the decoder LLRs and provides a<br>
+priori LLRs, which represent extrinsic information from decoder 420 to MIMO detector<br>
+410 for the next iteration. The a priori LLRs for MIMO detector 410 are demultiplexed<br>
+into M streams by a demultiplexer 424. An M-stream channel interleaver 426<br>
+interleaves the a priori LLRs for each stream in the same manner performed by channel<br>
+interleaver 226 for that stream. Channel interleaver 426 may include M channel<br>
+interleavers 226a through 226m shown in FIG. 2. Channel interleaver 426 provides the<br>
+interleaved a priori LLRs for the next iteration to MIMO detector 410.<br>
+[041]	RX spatial processor 160b and RX data processor 170b may perform any<br>
+number of iterations. In an embodiment, processors 160b and 170b perform a<br>
+predetermined number of iterations (e.g., 4, 6, 8 or more iterations). In another<br>
+embodiment, processors 160b and 170b perform one iteration, then check if a packet is<br>
+decoded correctly and/or if a decoder reliability metric is sufficiently high, and perform<br>
+another iteration if the packet is decoded in error or if the decoder reliability metric is<br>
+low. The error detection may be achieved with a CRC and/or some other error detection<br>
+code. Processors 160b and 170b may thus perform a fixed number of iterations or a<br>
+variable number of iterations up to some maximum number of iterations. The iterative<br>
+detection and decoding is described in detail below.<br>
+[042]	The received symbols at receiver 150 may be expressed as:<br>
+(Equation Removed)<br>
+where  s(Z) is an M xl vector with M data symbols sent on subband I;<br>
+P(Z) is a T x M spatial mapping matrix used by transmitter 110 for subband l;<br>
+Hch(0 is an R XT MIMO channel response matrix for subband l;<br>
+H(Z) = Hch(Z)-P(Z) is an RxM effective MIMO channel response matrix for<br>
+subband l; y(Z) is an R xl vector with R received symbols for subband Z; and<br>
+n(Z) is an R xl vector of noise for subband Z.<br>
+ The noise may be assumed to be additive white Gaussian noise (AWGN) with a zero mean vector and a covariance matrix of cr\ I, where <j is the variance of noise and i identity matrix. effective mimo channel response h includes actual memo hch spatial mapping matrix p used by></j>
+transmitter 110.<br>
+[043]	In an embodiment, a MIMO detector (e.g., MIMO detector 310 or 410)<br>
+performs detection separately for each subband based on the received symbols and the<br>
+channel estimate for that subband and, if available, the a priori LLRs for the data<br>
+symbols sent on that subband.. In another embodiment, the MIMO detector performs<br>
+detection jointly for multiple subbands. A decoder (e.g., decoder 320 or 420) performs<br>
+decoding on a sequence of LLRs for a packet, which may be transmitted on one or<br>
+multiple subbands. For clarity, subband index l is omitted in the following description.<br>
+[044]	A packet may be partitioned into multiple blocks, with each block containing<br>
+K code bits. The K code bits for each block may be mapped to M data symbols, as follows:<br>
+(Equation Removed)<br>
+where  s = \sx s2 ... su] is a vector with M data symbols;<br>
+(Equation Removed)<br>
+vector with K code bits for one block; bm is a vector with Q,„ code bits used to form data symbol sm for stream m; bm,q, for m = 1,..., M and q = 1,..., Qm, is the g-th code bit in vector bm; and bk, for k = 1,..., K, is the fc-th code bit in vector b.<br>
+There is a one-to-one mapping between a given bit vector b and a corresponding data<br>
+vector s. In general, Q may be the same or different for the M data symbols sent on a<br>
+given subband, and K may be the same or different for the L subbands.<br>
+[045]	An optimal receiver for the transmission scheme shown in equation (1) is a<br>
+maximum likelihood (ML) sequence receiver that performs detection and decoding jointly for an entire packet. This optimal receiver would make joint decisions on all data bits in the packet using knowledge of the correlation introduced by the coding<br>
+scheme across the blocks, subbands, and OFDM symbols for the packet.  The optimal<br>
+receiver would perform an exhaustive search over all possible sequences of data bits<br>
+that might have been transmitted for the packet to find the sequence that is most likely<br>
+to have been transmitted. This optimal receiver would be prohibitively complex.<br>
+[046]	A receiver that performs detection and decoding iteratively, e.g., as shown in<br>
+FIG. 4, can achieve near-optimal performance with lower complexity. The detector and decoder compute soft decisions on the code bits and exchange this information in an iterative manner, which increases the reliability of the soft decisions with the number of iterations performed. The MIMO detector and decoder may each be implemented in various manners.<br>
+[047]	In   an   embodiment,   the  MEMO   detector  is   a  maximum  a posteriori<br>
+probability (MAP) detector that minimizes the error probability for each code bit and provides a soft decision for each code bit. The MAP detector provides soft decisions in the form of a posteriori probabilities (APPs) that are often expressed as LLRs. The detector LLR for code bit bk, L(bk), may be expressed as:<br>
+(Equation Removed)<br>
+where P{bk - +11 y} is the probability of code bit bk being +1 given received vector y; and P{bk = -1 ] y} is the probability of code bit bk being -1 given received vector y,<br>
+[048]	The detector LLR may be separated into two parts, as follows:<br>
+(Equation Removed)<br>
+where La{bk) is the a priori LLR for code bit bk provided by the decoder or possibly other sources to the MIMO detector and Le(bk) is the extrinsic LLR for code bit bk provided by the MIMO detector to the decoder. The a priori LLR for code bit bk may be expressed as:<br>
+(Equation Removed)<br>
+where  P{bk = +1} is the probability of code bit bk being +1; and P{bk = -1} is the probability of code bit bk being -1.<br>
+[049]	The MAP detector may be a log-MAP detector, a max-log-MAP detector, or<br>
+some other type of MAP detector. The extrinsic LLR from a log-MAP detector, which is called a log-MAP LLR, may be computed as:<br>
+(Equation Removed)<br>
+where   b and S are vectors that are hypothesized to have been transmitted;<br>
+b[(t] is a vector with all code bits in vector b except for code bit bk,<br>
+La, [k] is a vector with a priori LLRs for all code bits in bk;<br>
+j| y -H- s ||2 represents a Euclidean distance cost function; and<br>
+" r" denotes a transpose.<br>
+[050]	Equation (6) shows one expression for the extrinsic LLR from the log-MAP<br>
+detector.    The extrinsic LLR may also be expressed in other forms.    The receiver<br>
+typically derives H, which is an estimate of the effective MIMO channel response matrix H, and uses H in the LLR computation. For simplicity, the description herein assumes no channel estimation error, so that H = H .<br>
+[051]	Equation (6) is evaluated for each code bit in the transmitted bit vector b.<br>
+For each code bitbk, 2K hypothesized bit vectors b for all possible sequences of code bits {b1 ... bk} (or all possible combinations of code bit values) that might have been transmitted for vector b are considered. 2K-I hypothesized bit vectors b have bk = +1, and the other 2K-1 hypothesized bit vectors b have bk = -1. Each hypothesized bit vector b has a corresponding hypothesized data vector S . The expression within the summation is computed for each hypothesized bit vector b to obtain a result for that bit vector. The results for the 2K_1 hypothesized bit vectors b with bk = +1 are summed to obtain a total result for the numerator. The results for the 2K-1 hypothesized bit vectors b with bk = -1 are summed to obtain a total result for the denominator. The log-MAP<br>
+LLR for code bit bkis equal to the natural logarithm (In) of the total result for the numerator divided by the total result for the denominator.<br>
+ [052]        A max-log-MAP detector approximates the log-MAP LLR in equation (6) and provides a max-log-MAP LLR, as follows:<br>
+(Equation Removed)<br>
+The max-log-MAP approximation in equation (7) replaces the summations in equation (6) with max{ } operations. Only a small degradation in performance typically results from using the max-log-MAP approximation. Other approximations of the log-MAP LLR in equation (6) may also be used.<br>
+[053]	The log-MAP detector in equation (6) and the max-log-MAP detector in<br>
+equation (7) make joint decisions on the received symbols in vector y and compute<br>
+extrinsic LLRs for the code bits associated with these received symbols. In order to compute the extrinsic LLRs optimally, each MAP detector performs an exhaustive search over all possible combinations of data symbols that might have been transmitted for vector s. This exhaustive search is computationally intensive and may be prohibitive for many applications. The complexity of the LLR computation is exponential in the number of bits (K) in the transmitted bit vector b for both the log-MAP and max-log-MAP detectors. In particular, 2K hypotheses are considered by both MAP detectors for each code bit bk. Various detection schemes with reduced complexity are described below.<br>
+[054]	To reduce computational complexity, the receiver may perform receiver<br>
+spatial processing (or spatial matched filtering) on the received symbols to obtain detected symbols and may then perform LLR computation independently for each detected symbol. The detected symbols are estimates of the data symbols transmitted by the transmitter. The receiver may perform receiver spatial processing based on a zero-forcing (ZF) technique, a minimum mean square error (MMSE) technique, a maximal ratio combining (MRC) technique, or some other technique. A spatial filter matrix may be derived based on the ZF, MMSE, or MRC technique, as follows:<br>
+(Equation Removed)<br>
+Eq (9) (Equation Removed)<br>
+Eq(10) (Equation Removed)<br>
+where Dmmje = diag{[H* •H+aMr1 H* H}1 ;<br>
+Mrf, Mmmse and Mmrc are MxR spatial filter matrices for the ZF, MMSE, and<br>
+MRC techniques, respectively; and " H " denotes, a conjugate transpose.<br>
+[055]	The receiver spatial processing may be expressed as:<br>
+Eq(ll) (Equation Removed)<br>
+where  M may be equal to M^ , Mmmse or Mmrc; and<br>
+s is an M.x 1 vector of detected symbols and is an estimate of data vector s.<br>
+[056]	LLR computation  may be performed independently for each detected<br>
+symbol.  The extrinsic LLRs may be computed for the Qm code bits of each detected symbol sm with the max-log-MAP detector, as follows:<br>
+(Equation Removed)<br>
+where  S   is the m-th element of s;<br>
+sm is a hypothesized data symbol for transmitted data symbol sm;<br>
+bmW is a vector with all code bits for data symbol sm except for code bit bm,q;<br>
+ha,m,[q] *s a vector with a priori LLRs for all code bits in bm (q); and<br>
+Le(b    ) is the extrinsic LLR for code bit bm&gt;q.<br>
+[057]	Equation (12) is evaluated for each code bit in each transmitted bit vector<br>
+b,n, for m = 1,..., M.   For each code bit bm,q in bit vector bm, 2Q" hypothesized bit vectors bm for all possible sequences of code bits {Zvi ••• bm,Qm }tnat might have been<br>
+transmitted for vector bm are considered. Each hypothesized bit vector b„ has a corresponding hypothesized data symbol sm. The expression within the maxf} operation is computed for each hypothesized bit vector bm to obtain a result for that vector. The results for the 2Qm-1 hypothesized bit vectors b„, with bm,q - +1 are used in the first max{ } operation. The results for the 2Qm-1 hypothesized bit vectors bm with bm,q   = -1 are used in the second max{ } operation.<br>
+[058] The complexity of the receiver spatial processing is linear in the number of data streams (M) and is not dependent on the signal constellation size. Computing the extrinsic LLRs on a per-stream basis reduces the number of hypotheses to evaluate from 2MQ to M-2Q, assuming that the same modulation scheme is used for all M data streams. The per-stream LLR computation may substantially reduce computational complexity but may result in higher performance degradation than desired.<br>
+[059]	In an aspect, the receiver performs receiver spatial processing on the<br>
+received symbols to obtain detected symbols, performs LLR computation independently for each of D best detected symbols, and performs LLR computation jointly for the M-D remaining detected symbols, where M&gt;D&gt;1. The D best detected symbols may be for the D data streams with the highest SNRs, the D data streams with the smallest SNR variation, the D data streams with the most robust coding, and so on. This detection scheme is referred to as a reduced dimensionality detection scheme and may be used for the single-pass receiver shown in FIG. 3 and the iterative receiver shown in FIG. 4.<br>
+[060] The receiver may perform receiver spatial processing on the R received symbols to obtain the D best detected symbols (instead of all M detected symbols). A reduced spatial filter matrix MD of dimension DxR may be derived based on a reduced channel response matrix HD. Matrix HD has dimension of RxD and includes D columns of H corresponding to the D best detected symbols. The receiver spatial processing for the D best detected symbols is less computationally complex. [061] The receiver may perform LLR computation independently for each of the D best detected symbols, e.g., based on the max-log-MAP detector shown in equation (12) or some other type of detector. The receiver may perform joint LLR computation for the M-D remaining detected symbols in various manners.<br>
+ [062]        In one embodiment, the receiver performs joint LLR computation for the remaining detected symbols by considering the D best detected symbols.   For this embodiment, hard decisions are made on the D best detected symbols. A hard decision sm for a given detected symbol sm is a modulation symbol that is closest in distance to<br>
+sm from among all modulation symbols in the signal constellation used for sm.   The<br>
+receiver then computes extrinsic LLRs for the code bits for the remaining detected symbols, e.g., based on the max-log-MAP detector shown in equation (7) or some other type of detector. For this LLR computation, the D best detected symbols are constrained or fixed to the hard decisions determined for these detected symbols.<br>
+Hence, the number of hypotheses to evaluate is reduced from 2m"'    to 2'""1   , assuming<br>
+that the D best detected symbols have indices of m = M-D + l,...,M.<br>
+[063]	In another embodiment, the receiver performs joint LLR computation for the<br>
+remaining detected symbols without considering the D best detected symbols. For this embodiment, the receiver forms reduced vectors for b , S , Lfli[i] and b[k] as well as a<br>
+reduced matrix for H. The reduced vectors and matrix include only elements<br>
+corresponding to the remaining detected symbols. The receiver then computes extrinsic<br>
+LLRs for the code bits for the remaining detected symbols, e.g., based on the max-log-<br>
+MAP detector shown in equation (7) or some other type of detector. The reduced<br>
+vectors and matrix are used for the LLR computation. Hence, the number of hypotheses<br>
+to evaluate and the computation for each hypothesis are both reduced.<br>
+[064]	In an embodiment, D is a fixed value that may be selected based on a<br>
+tradeoff between complexity, performance, and/or other considerations. In another embodiment, D is a configurable value that may be selected based on the selected transmission mode, the channel conditions (e.g., the SNRs for the data streams) and/or other factors. D may be adaptive and may be selected per packet, per frame, per subband, or in some other manner.<br>
+[065]	The   reduced   dimensionality    detection   scheme   may   provide    good<br>
+performance with less complexity than the exhaustive detection scheme shown in equations (6) and (7). The reduced dimensionality detection scheme may be well suited for a data transmission in which some data streams observe high SNRs and/or low frequency selectivity and the remaining data streams observe lower SNRs and/or greater frequency selectivity. Frequency selectivity refers to variation in channel gains across<br>
+frequency, which results in SNR variation across frequency. The reduced<br>
+dimensionality detection scheme takes advantage of the high SNRs and/or low<br>
+frequency selectivity for the D best data streams to reduce computational complexity.<br>
+Near optimal detection is performed on the remaining data streams with lower SNRs<br>
+and/or greater frequency selectivity to improve performance over a detection scheme<br>
+that performs per-stream LLR computation for all M data streams.<br>
+[066]	FIG. 5 shows a process 500 for performing detection and decoding based on<br>
+the reduced dimensionality detection scheme. Receiver spatial processing is performed on received symbols for multiple data streams (e.g., based on the zero-forcing or MMSE technique) to obtain detected symbols (block 512). Detection is performed independently for each of at least one data stream to obtain soft decisions for the stream (block 514). Detection is performed jointly for the remaining data streams to obtain soft decisions for these streams (block 516). The soft decisions (e.g., extrinsic LLRs) for each of the at least one data stream may be derived independently based on the detected symbols and a priori information (e.g., a priori LLRs) from the decoder, if any, for that stream. The soft decisions for the remaining data streams may be derived jointly based on the received symbols and the a priori information, if any. The soft decisions for the multiple data streams may be decoded to obtain a priori information for the detector (block 518).<br>
+[067]	A determination is. then made whether to perform another iteration of<br>
+detection and decoding (block 520). The answer for block 520 is 'No' after one iteration for a single-pass receiver and is also 'No' for an iterative receiver if a termination condition is encountered. If the answer is 'Yes' for block 520, then the a priori information is used for detection in the next iteration (block 522), and the process returns to block 514. Otherwise, the soft decisions from the detector are further processed to obtain decoded data (block 524). The soft decisions may also be decoded prior to block 520, and the result of the decoding may be used in block 520 to determine whether or not to perform another iteration.<br>
+[068]	A packet may be encoded and demultiplexed into multiple subpackets that<br>
+may be sent on the multiple data streams. A CRC may be used for each subpacket or each data stream. In this case, the CRC for each detected data stream may be checked after block 514, and the subsequent processing may be terminated if the CRC fails for any of the data stream(s) detected in block 514.<br>
+ [069] FIG. 6 shows an apparatus 600 for performing detection and decoding based on the reduced dimensionality detection scheme. Apparatus 600 includes means for performing receiver spatial processing on received symbols for multiple data streams to obtain detected symbols (block 612), means for performing detection independently for each of at least one data stream to obtain soft decisions for the stream (block 614), means for performing detection jointly for the remaining data streams to obtain soft decisions for these streams (block 616), means for decoding the soft decisions for the multiple data streams to obtain a priori information (block 618), means for performing an additional iteration of detection and decoding, if applicable, using the a priori information (block 620), and means for processing the soft decisions to obtain decoded data (block 622).<br>
+[070]	The number of hypotheses to consider in the joint LLR computation may be<br>
+reduced by performing a search for candidate hypotheses using list sphere detection (LSD), which is also referred to as sphere decoding, spherical decoding, and so on. List sphere detection may be used to reduce complexity for the log-MAP detector in equation (6), the max-log-MAP detector in equation (7), and other types of detector. List sphere detection seeks to reduce the search space of the detector by discarding less likely hypotheses based on a cost function. As an example, the log-MAP and max-log-MAP detectors may consider only hypotheses that satisfy the following condition:<br>
+(Equation Removed)<br>
+where |]y-H-j[||2 is the cost function and r2 is a sphere radius or threshold used to<br>
+retain or discard hypotheses from consideration.<br>
+[071]	The cost function in equation (13) may be expanded, as follows:<br>
+(Equation Removed)<br>
+where R is an upper-triangular matrix obtained from QR decomposition of H; and C is a constant, which may be omitted since it is not a function of is .<br>
+ [072]        QR decomposition may be performed on the effective MIMO channel response matrix H to obtain an orthonormal matrix Q and an upper triangular matrix<br>
+R, or H = QR where QH -Q = I.   The upper triangular matrix R contains zeros<br>
+below the main diagonal.  The fourth equality in equation (14) may be obtained based<br>
+on the following: H* -H = [Q-R]" QR = RH QH QR = Rfl R<br>
+[073]	For the cost function in equation (14), the detected symbols may be used as<br>
+the center point for the search. The cost function may then be expressed as:<br><br>
+(Equation Removed)<br>
+where I may be obtained from equation (11) based on any receiver spatial processing technique (e.g., zero-forcing or MMSE). The cost function in equation (15) may be computed for 2 hypothesized data vectors £ that might have been transmitted for vector s to obtain 2K cost values for these 2K hypotheses.    The hypothesized data<br>
+vectors with cost values that are less than or equal to r2 may be considered for LLR computation, e.g., in equation (6) or (7).<br>
+[074]	The structure of the upper triangular matrix R may be exploited to reduce<br>
+the number of hypotheses for which to compute the cost function. Equation (15) may be expanded as follows:<br><br>
+(Equation Removed)<br><br><br>
+[075]        For M = 4, equation (16) may be expressed as:<br>
+Eq (17) (Equation Removed)<br>
+where  Tx = | ru • (s, - ?,) + r12 • (S2 - s2) + r13 ■ (s3 - s3) + rlA ■ (s4 - s4) |2 , T2 = I r2,2 • (S3 ~ ?2&gt; + r2.3 -(s3-s3) + r2A • (st - s4) \2 ,<br>
+ [076]	Equation (17) may be generalized for any value of M, as follows:	<br>
+Eq(18) (Equation Removed)<br>
+Eq(19) (Equation Removed)<br>
+ [077]	As shown in equations (18) and (19), the cost function may be decomposed<br>
+into a sum of M terms T\ through TM. Term I'M is only dependent on detected symbol su for stream M, term TM-I is dependent on detected symbols sUA and su for streams M-1 and M, and so on, and term Ti is dependent on detected symbols J: through sM for all M streams.<br>
+[078]	The cost function may be computed incrementally in M levels, one term T,-<br>
+for each level, starting with the last term Tu for the first level. This is indicated by the<br>
+reverse summation for J in equation (18), which starts with i = M . For each level, Tt is<br>
+computed for all hypotheses applicable for that level, and tihe cost function is updated.<br>
+[079]	The cost function may be computed by considering one additional symbol at<br>
+a time, starting with sM and ending with s:. To improve search performance, the streams may be sorted such that su corresponds to the best stream (e.g., with the highest SNR) and sx corresponds to the worst stream (e.g., with the lowest SNR). The received vector y and the channel response matrix H may be reordered to achieve the<br>
+desired ordering for the detected vector s.<br>
+[080]	The LSD  search may be performed in  various manners.     In  a first<br>
+embodiment, all hypotheses with cost values equal to or less than r2 are retained, and<br>
+all other hypotheses are discarded. In a second embodiment, only B best hypotheses are<br>
+retained at each level, and all other hypotheses are discarded.  For both embodiments,<br>
+the total number of hypotheses to consider is reduced by discarding hypotheses with<br>
+high cost values.<br>
+[081]	The LSD search may be performed as follows. For the first level, a list PM is<br>
+formed with 2QM hypothesized data symbols su that might have been transmitted for<br>
+data symbol sM. rM is computed for the 2QM hypothesized data symbols IM in list PM<br>
+as shown in equation (19) to obtain 2QM cost values.   For the first embodiment, all<br>
+ hypothesized data symbols with cost values less than or equal to r2 are retained and stored in a candidate list CM- For the second embodiment, up to B hypothesized data symbols with the lowest cost values that are smaller than or equal to r2 are retained and stored in candidate list CM- For the second embodiment, hypothesized data symbols with cost values smaller than or equal to r2 may be discarded if these cost values are not among the B lowest cost values. For both embodiments, all other hypothesized data symbols are discarded, which has the effect of pruning all hypothesized data vectors ¥ containing the discarded symbols.<br>
+[082]	For the second level, a. list PM-I is formed with 2QM'1  hypothesized data<br>
+symbols sM_j that might have been transmitted for data symbol su_{. TU-i is computed for all valid hypothesized symbol pairs ( su^, sM ) and summed with TM to obtain cost values for these hypothesized symbol pairs. The valid hypothesized symbol pairs include all possible combinations of each symbol in candidate list CM with each symbol in list PM-I- The updated cost values may be computed as: JM^ = TM_X +TU. For the first embodiment, all hypothesized symbol pairs with cost values smaller than or equal to r2 are retained and stored in a candidate list CM-I- For the second embodiment, up to B hypothesized symbol pairs with the lowest cost values that are smaller than or equal to r2 are retained and stored in candidate list CM-I- For both embodiments, all other hypothesized symbol pairs are discarded.<br>
+[083]	Each of the remaining levels may be evaluated in similar manner. A list P, is<br>
+formed with 2Qi hypothesized data symbols % that might have been transmitted for data symbol st.   Tt is computed for all valid hypothesized symbol sets (J(,...,?M) and<br>
+summed with r,+i through Tu to obtain cost values for these hypothesized symbol sets. The valid hypothesized symbol sets include all possible combinations of each hypothesis in candidate list C1+1 with each symbol in list P,. The updated cost values may be computed as:  /. = T, +... + Tu .    For the first embodiment, all hypothesized<br>
+symbol sets with cost values smaller than or equal to r2 are retained and stored in a candidate list C,-. For the second embodiment, up to B hypothesized symbol sets with the lowest cost values that are smaller than or equal to r2 are retained and stored in candidate list C,-. For both embodiments, all other hypothesized symbol sets are discarded.<br><br>
+ [084]	After all M levels have been evaluated, extrinsic LLRs may be computed for<br>
+all hypotheses stored in candidate list Ci, e.g., based on the max-log-MAP detector, as follows:<br>
+Eq(20) (Equation Removed)<br>
+where   C\ is a subset of candidate list Ci and contains hypotheses for which bk = +1; and C^ is a subset of candidate list Ci and contains hypotheses for which  bk—-\.<br>
+[085]	The extrinsic LLRs may also be computed based on the log-MAP detector or<br>
+some other type of detector.    The cost values already computed for the candidate<br>
+hypotheses may be used to compute the extrinsic LLRs for these hypotheses.   For<br>
+clarity, the description above uses different candidate lists for different levels. A single<br>
+candidate list C may be used for all M levels and may be updated at each level.<br>
+[086]	FIG. 7 shows an exemplary search tree for the second embodiment, which<br>
+retains the B best hypotheses at each level. For this example, M = 4, four terms T\ through TA are computed, B = 2, and the candidate list C contains up to two best hypotheses at each level. For the first level with i = 4, TA is computed for 2Q4 hypotheses for 2Q* possible data symbols that might have been transmitted for data symbol s^ which are denoted as ?4(1) through s4(2Qi) in FIG. 7. The two best hypotheses are shown with black filled nodes. For the second level with i = 3, T3 is computed for B • 2Q3 hypotheses for B • 2Q3 possible symbol pairs that might have been transmitted for data symbols 53 and 54. The two best hypotheses are shown with black filled nodes. For the third level with i-2, T2is computed for B• 2Ql hypotheses for B • 2°* possible symbol sets that might have been transmitted for data symbols s2, s3 and s$. The two best hypotheses are shown with black filled nodes. For the last level with i = 1, T\ is computed for B • 2Ql hypotheses for B • 2Ql possible symbol sets that might have been transmitted for data symbols s\, s2, S3 and 54. The two best hypotheses are shown with black filled nodes. The set of symbols that yields the lowest cost value is shown by the heavy line.<br>
+ [087] In an embodiment, the number of candidate hypotheses to store in list C is a fixed value that may be selected based on a tradeoff between detection performance, complexity, and/or other considerations. This fixed value (B) may be for each level, as described above. This fixed value may also be for each node of a given level, in which case BM~' • 2Qi hypotheses are considered per level. In another embodiment, the number of candidate hypotheses is configurable and may be selected based on signal constellation size, iteration number, detection performance, complexity, and/or other considerations. For example, B may be a function of signal constellation size so that more candidate hypotheses are stored for larger signal constellations to ensure sufficient accuracy in the LLR computation. B may also be constrained to be equal to or larger than some minimum value (e.g., B^ =2), which ensures that at least Bmin candidate hypotheses are stored at each level.<br>
+[088]	Two embodiments for computing cost for list sphere detection have been<br>
+described above. The cost computation may also be performed in other manners.<br>
+[089]	List sphere detection is one search technique for reducing the number of<br>
+hypotheses to consider for LLR computation. Other techniques may also be used to reduce the number of hypotheses for LLR computation. In another embodiment, a Markov chain Monte Carlo (MCMC) technique is used to generate a list of candidate hypotheses. The MCMC technique considers the M elements in data vector s in a sequential manner, evaluates one hypothesis for each element, and cycles through these M elements for multiple iterations. The list sphere detection and MCMC techniques are known in the art and described in various papers.<br>
+[090] In another aspect, the receiver performs LLR computation independently for each of D best detected symbols, performs LLR computation jointly for the M - D remaining detected symbols, and reduces the number of hypotheses to consider for the joint LLR computation by performing a search using LSD, MCMC, or some other search technique. This detection scheme is referred to as a reduced order detection scheme and may be used for the single-pass receiver shown in FIG. 3 and the iterative receiver shown in FIG. 4. For the reduced order detection scheme, dimensionality is reduced from M to M - D by performing per-stream LLR computation for the D best streams, and the number of hypotheses to consider for the M - D remaining streams<br>
+may be reduced from an upper bound of 2i=1    by performing a search.   D may be<br>
+adaptively selected based on channel conditions (e.g., SNRs) and/or some other factors.<br>
+The SNR information may be readily obtained from the receiver spatial processing that<br>
+provides the detected symbols used for the center point of an LSD search.<br>
+[091]	FIG. 8 shows a process 800 for performing detection and decoding based on<br>
+the reduced order detection scheme. Receiver spatial processing is performed on a set of received symbols (e.g., vector y) to obtain a set of detected symbols (e.g., vector s)<br>
+for a set of data symbols (e.g., vector s) transmitted via a MIMO channel (block 812). Extrinsic LLRs are computed independently for each of at least one data symbol based on a corresponding detected symbol and a priori LLRs, if any, from the decoder (block 814). A list of candidate hypotheses is determined for the remaining data symbols, e.g., by performing a search using LSD, MCMC, or some other technique (block 816). Each candidate hypothesis corresponds to a different combination of symbols hypothesized to have been transmitted for the remaining data symbols. Extrinsic LLRs are then computed jointly for the remaining data symbols with the list of candidate hypotheses (block 818). The extrinsic LLRs for all data symbols are decoded to obtain a priori LLRs for the detector (block 820).<br>
+[092]	A determination is then made whether to perform another iteration of<br>
+detection and decoding (block 822). If the answer is 'Yes-', then a priori LLRs are computed to be used for LLR computation in the detector in the next iteration (block 824), and the process returns to block 814. Otherwise, the extrinsic LLRs from the detector are processed to obtain decoded data (block 826).<br>
+[093]	FIG. 9 shows an apparatus 900 for performing detection and decoding based<br>
+on the reduced order detection scheme. Apparatus 900 includes means for performing receiver spatial processing on a set of received symbols to obtain a set of detected symbols for a set of data symbols transmitted via a MIMO channel (block 912), means for computing extrinsic LLRs independently for each of at least one data symbol based on a corresponding detected symbol and a priori LLRs, if any, from the decoder (block 914), means for determining a list of candidate hypotheses for the remaining data symbols by performing a search (block 916), means for computing extrinsic LLRs jointly for the remaining data symbols with the list of candidate hypotheses (block 918), means for decoding the extrinsic LLRs for all data symbols to obtain a priori LLRs (block 920), means for performing an additional iteration of LLR computation and<br>
+ decoding, if applicable, using the a priori LLRs (block 922), and means for processing the extrinsic LLRs from the detector to obtain decoded data (block 924). [094] For the iterative receiver, the search for candidate hypotheses may be performed in various manners. In an embodiment, the search is performed for only the first iteration to obtain a list of candidate hypotheses, and this candidate list is used for all subsequent iterations. For this embodiment, the extrinsic LLRs for each subsequent iteration are computed with the a priori LLRs from the decoder and for the candidate hypotheses determined in the first iteration. In another embodiment, the search is performed for each iteration. In yet another embodiment, the search is performed for each iteration until a termination condition is encountered. This termination condition may be triggered, e.g., after a predetermined number of iterations has been completed, if the search provides the same list of candidate hypotheses for two consecutive iterations, and so on. For the embodiments in which the search is performed for multiple iterations, the threshold (e.g., the sphere radius) may be a fixed value for all iterations or may be a configurable value that may be set for each iteration based on, e.g., the a priori information from the decoder.<br>
+[095]	For the reduced order detection scheme, the reduction in complexity relative<br>
+to the optimal log-MAP or max-log-MAP detector is dependent on the complexity of the search. For an LSD search, the complexity is determined by the number of nodes visited in the search tree, which in turn is dependent on various factors such as the number of hypotheses to store at each level (e.g., the value for B), the sphere radius r2, the specific channel response matrix H, the SNR, and so on.<br>
+[096]	In another reduced complexity detection scheme, the receiver performs (1)<br>
+per-stream LLR computation for all M streams for the first iteration and (2) joint LLR computation for the M - D worst streams or all M streams for a subsequent iteration, if needed, e.g., if the packet is decoded in error.<br>
+[097]	For the iterative receiver, the channel estimates may be updated during the<br>
+iterative detection and decoding process to obtain improved channel estimates. For example, if pilot symbols are received and monitored multiple times during the iterative process, then the effective SNR of the channel estimates may be improved over time by performing averaging and/or other processing. The improved channel estimates may be used for receiver spatial processing, e.g., as shown in equations (8) through (10), for26<br>
+LLR computation, e.g., as shown in equations (6), (7) and (12), for cost computation for<br>
+a search of candidate hypotheses, e.g., as shown in equations (18) and (19).<br>
+[098]	Various reduced complexity detection schemes have been described above.<br>
+These schemes reduce the number of hypotheses to consider for the LLR computation while achieving good error rate performance that is close to the performance of the optimal detector.<br>
+[099]	Decoder 320 in FIG. 3 and decoder 420 in KG. 4 may be implemented in<br>
+various manners depending on the coding scheme(s) used at transmitter 110. Decoder 420 receives soft decision inputs and generates soft decision outputs for MIMO detector 410 and may be a soft-output Viterbi algorithm (SOVA) decoder if a convolutional code is used at transmitter 110, a Turbo decoder if a parallel or serial concatenated Turbo code is used, and so on. Decoder 320 may be a Viterbi decoder or a SOVA decoder for a convolutional code, a Turbo decoder for a Turbo code, and so on. A Turbo decoder may be a MAP decoder that may implement a BCJR soft-input soft-output MAP algorithm or a lower complexity derivative. These various types of decoder are known in the art and described in various literatures. For example, the SOVA decoder is described by J. Hagenauer et al. in a paper entitled "A Viterbi Algorithm with Soft-Decision Outputs and its Applications," IEEE Globecom, 1989, pp. 47.1.1-47.1.7. The MAP decoder is described by L. R. Bahl et al. in a paper entitled "Optimal Decoding of Linear Codes for Minimizing Symbol Error Rate," IEEE Transaction on Information Theory, March 1974, vol. 20, pp. 284-287.<br>
+[0100] The detection and decoding techniques described herein may be used for various MIMO transmission schemes, which may also be referred to as transmission modes, spatial modes, and so on. Table 1 lists some exemplary transmission modes and their short descriptions. The steered mode may also be called a beamforming mode, an eigensteering mode, a MIMO mode with beamforming, and so on. The unsteered mode may also be called a basic MIMO mode. The spatial spreading mode may also be called a pseudo-random transmit steering mode, a spatial expansion mode, and so on,<br>
+[0101]<br>
+Table 1<br>
+(Table Removed)<br>
+ [0102] Each transmission mode has different capabilities and requirements. The steered mode typically provides better performance but requires spatial processing at transmitter 110 and receiver 150. The unsteered mode requires no spatial processing at transmitter 110. For example, transmitter 110 may transmit one data stream from each transmit antenna. The spatial spreading mode transmits M data streams with different spatial mapping matrices so that these data streams observe an ensemble of effective channels and achieve similar performance. A suitable transmission mode may be selected based on the availability of channel state information, the capabilities of the transmitter and receiver, and so on.<br>
+[0103] For the steered mode, data is transmitted on up to M eigenmodes of the MIMO channel, which may be obtained by diagonalizing the MTMO channel response matrix H via singular value decomposition of H or eigenvalue decomposition of a<br>
+correlation matrix of H, which is A =HH H. The eigenvalue decomposition of A may be expressed as:	<br>
+Eq(21) (Equation Removed)<br>
+where  E is a T XT unitary matrix of eigenvectors of A ; and A is a TxT diagonal matrix of eigenvalues of A .<br>
+Transmitter 110 may perform spatial processing with the eigenvectors in E to transmit data on the M eigenmodes of H. The diagonal matrix A contains possible non-negative real values along the diagonal and zeros elsewhere. These diagonal entries are referred to as eigenvalues of A and represent the power gains for the M eigenmodes.<br>
+ [0104]       Table 2 shows the transmitter spatial processing for the three transmission modes and the effective MIMO channel response matrix for each transmission mode. In Table 2, me subscript "es" denotes the steered mode (or eigensteering), "us" denotes the unsteered mode, and "ss" denotes the spatial spreading mode.<br>
+Table 2<br>
+(Table Removed)<br>
+ [0105] For a MIMO system with multiple subbands, the transmitter spatial processing shown in Table 2 may be performed for each subband I. In equation (1), P(Z) = E(0 for the steered mode, P(Z) = I for the unsteered mode, and P(Z) = V(Z) for the spatial spreading mode. V(Z) is a TxT spatial mapping matrix used for spatial spreading and may be generated based on a Hadamard matrix, a Fourier matrix, and so on.<br>
+[0106] For a MIMO system with multiple subbands, the M eigenvalues for each subband I may be ordered from largest to smallest, so that the eigenmodes of H(Z) are ranked from highest SNR to lowest SNR. Wideband eigenmode m may be formed with the m-th eigenmode for each of the L subbands. The principal wideband eigenmode (with m = 1) is associated with the largest eigenvalues for all L subbands, the second wideband eigenmode (with m = 2) is associated with the second largest eigenvalues for all L subbands, and so on. M data streams may be sent on the M wideband eigenmodes. [0107] The principal wideband eigenmode has the highest average SNR and typically also has less SNR variability across time and frequency. Conversely, the weakest wideband eigenmode has the lowest average SNR and typically has more SNR variability. The techniques described herein may be used for data transmission on the M wideband eigenmodes. In an embodiment, the receiver may perform per-stream LLR computation for one or more of the strongest wideband eigenmodes and joint LLR computation for the remaining wideband eigenmodes. The number of hypotheses to consider for the joint LLR computation may be reduced by performing a search using LSD, MCMC, or some other search technique.<br>
+[0108] The detection and decoding techniques described herein may be implemented by various means. For example, these techniques may be implemented in hardware, firmware, software, or a combination thereof. For a hardware implementation, the processing units used to perform detection and decoding may be implemented within one or more application specific integrated circuits (ASICs), digital signal processors (DSPs), digital signal processing devices (DSPDs), programmable logic devices (PLDs), field programmable gate arrays (FPGAs), processors, controllers, micro-controllers, microprocessors, electronic devices, other electronic units designed to perform the functions described herein, or a combination thereof. [0109] For a firmware and/or software implementation, the techniques may be implemented with modules (e.g., procedures, functions, and so on) that perform the functions described herein. The software codes may be stored in a memory (e.g., memory 192 in FIG. 1) and executed by a processor (e.g., processor 190). The memory may he implemented within the processor or external to the processor. [0110] The previous description of the disclosed embodiments is provided to enable any person skilled in the art to make or use the present invention. Various modifications to these embodiments will be readily apparent to those skilled in the art, and the generic principles defined herein may be applied to other embodiments without departing from the spirit or scope of the invention. Thus, the present invention is not intended to be limited to the embodiments shown herein but is to be accorded the widest scope consistent with the principles and novel features disclosed herein.<br><br><br><br><br><br>
+CLAIMS<br>
+1.	An apparatus comprising:<br>
+at least one processor configured to perform detection independently for each of at least one data stream selected from among multiple data streams, and to perform detection jointly for remaining data streams among the multiple data streams; and<br>
+a memory coupled to the at least one processor.<br>
+2.	The apparatus of claim 1, wherein the at least one processor is configured to derive soft decisions independently for each of the at least one data stream, and to derive soft decisions jointly for the remaining data streams.<br>
+3.	The apparatus of claim 1, wherein the at least one processor is configured to perform receiver spatial processing for the at least one data stream to obtain at least one detected symbol stream, and to derive soft decisions independently for each of the at least one detected symbol stream.<br>
+4.	The apparatus of claim 3, wherein the at least one processor is configured to perform receiver spatial processing based on a zero-forcing (ZF) technique or a minimum mean square error (MMSE) technique.<br>
+5.	The apparatus of claim 1, wherein the at least one processor is configured to compute log-likelihood ratios (LLRs) for code bits for each of the at least one data stream independent of other data streams, and to compute LLRs for code bits for the remaining data streams jointly.<br>
+6.	The apparatus of claim 5, wherein the at least one processor is configured to compute the LLRs based on a maximum a posteriori probability (MAP) detector.<br>
+7.	The apparatus of claim 2, wherein the at least one processor is configured to decode the soft decisions for the multiple data streams to obtain a priori information, and to perform detection for an additional iteration using the a priori information.<br>
+8.	The apparatus of claim 2, wherein the at least one processor is configured to decode the soft decisions based on a soft-output Viterbi algorithm (SOVA) decoder or a maximum a posteriori probability (MAP) decoder.<br>
+9.	The apparatus of claim 1, wherein the at least one processor is configured to check each of the at least one data stream after the independent detection, and to perform detection jointly for the remaining data streams if the at least one data stream passes the check.<br>
+10.	The apparatus of claim 1, wherein the at least one data stream has highest signal-to-noise-and-interference ratios (SNRs) among SNRs for the multiple data streams.<br>
+11.	A method comprising:<br>
+performing detection independently for each of at least one data stream selected from among multiple data streams; and<br>
+performing detection jointly for remaining data streams among the multiple data streams.<br>
+12.	The method of claim 11, wherein the performing detection independently comprises deriving soft decisions independently for each of the at least one data stream, and wherein the performing detection jointly comprises deriving soft decisions jointly for the remaining data streams.<br>
+13.	The method of claim 12, further comprising:<br>
+decoding the soft decisions for the multiple data streams to obtain a priori information; and<br>
+performing detection for an additional iteration using the a priori information.<br>
+14.      An apparatus comprising:<br>
+means for performing detection independently for each of at least one data stream selected from among multiple data streams; and<br>
+means for performing detection jointly for remaining data streams among the multiple data streams.<br>
+15.	The apparatus of claim 14, wherein the means for performing detection independently comprises means for deriving soft decisions independently for each of the at least one data stream, and wherein the means for performing detection jointly comprises means for deriving soft decisions jointly for the remaining data streams.<br>
+16.	The apparatus of claim 15, further comprising:<br>
+means for decoding the soft decisions for the multiple data streams to obtain a priori information; and<br>
+means for performing detection for an additional iteration using the a priori information.<br>
+17.	An apparatus comprising:<br>
+at least one processor configured to compute log-likelihood ratios (LLRs) independently for each of at least one data symbol in a set of data symbols transmitted via a multiple-input multiple-output (MIMO) channel, and to compute LLRs jointly for remaining data symbols in the set of data symbols; and<br>
+a memory coupled to the at least one processor.<br>
+18.	The apparatus of claim 17, wherein the at least one processor is configured to compute the LLRs for the remaining data symbols by using fixed values for the at least one data symbol.<br>
+19.	The apparatus of claim 17, wherein the at least one processor is configured to compute the LLRs for the remaining data symbols by excluding the at least one data symbol.<br>
+20.	The apparatus of claim 17, wherein the at least one processor is configured to compute the LLRs based on a maximum a posteriori probability (MAP) detector.<br>
+21.	The apparatus of claim 1, wherein the at least one processor is configured to decode the LLRs for the set of data symbols to obtain a priori LLRs, and to jointly compute the LLRs for the remaining data symbols for an additional iteration using the a priori LLRs.<br>
+22.	The apparatus of claim 17, wherein the at least one processor is configured to perform receiver spatial processing on a set of received symbols to obtain at least one detected symbol for the at least one data symbol, and to compute the LLRs for each of the at least one detected symbol.<br>
+23.	The apparatus of claim 17, wherein the at least one processor is configured to derive a channel estimate based on a channel response matrix for the MIMO channel and a spatial mapping matrix used to transmit the set of data symbols, to derive a spatial filter matrix based on the channel estimate, to perform receiver spatial processing on a set of received symbols based on the spatial filter matrix to obtain at least one detected symbol, and to compute the LLRs for each the at least one detected symbol.<br>
+24.	The apparatus of claim 17, wherein the at least one processor is configured to compute LLRs separately for each of multiple sets of data symbols transmitted via the MIMO channel on multiple frequency subbands.<br>
+25.	A method comprising:<br>
+computing log-likelihood ratios (LLRs) independently for each of at least one data symbol in a set of data symbols transmitted via a multiple-input multiple-output (MIMO) channel; and<br>
+computing LLRs jointly for remaining data symbols in the set of data symbols.<br>
+26.	The method of claim 25, further comprising:<br>
+decoding the LLRs for the set of data symbols to obtain a priori LLRs; and jointly computing the LLRs for the remaining data symbols for an additional iteration using the a priori LLRs.<br>
+27.	The method of claim 25, further comprising:<br>
+computing LLRs separately for each of multiple sets of data symbols transmitted via the MIMO channel on multiple frequency subbands.<br>
+28.	An apparatus comprising:<br>
+means for computing log-likelihood ratios (LLRs) independently for each of at least one data symbol in a set of data symbols transmitted via a multiple-input multiple-output (MIMO) channel; and<br>
+means for computing LLRs jointly for remaining data symbols in the set of data symbols.<br>
+29.	The apparatus of claim 28, further comprising:<br>
+means for decoding the LLRs for the set of data symbols to obtain a priori LLRs; and<br>
+means for jointly computing the LLRs for the remaining data symbols for an additional iteration using the a priori LLRs.<br>
+30.	The apparatus of claim 28, further comprising:<br>
+means for computing LLRs separately for each of multiple sets of data symbols transmitted via the MIMO channel on multiple frequency subbands.<br>
+31.	An apparatus comprising:<br>
+at least one processor configured to perform detection independently for each of at least one data stream selected from among multiple data streams, to perform detection jointly for remaining data streams among the multiple data streams, to perform decoding for the multiple data streams, and to perform detection independently for each of the at least one data stream, to perform detection jointly for the remaining data streams, and to perform decoding for the multiple data streams for at least one additional iteration; and<br>
+a memory coupled to the at least one processor.<br>
+32.	An apparatus comprising:<br>
+at least one processor configured to compute log-likelihood ratios (LLRs) independently for each of at least one data symbol in a set of data symbols transmitted<br>
+ via a multiple-input multiple-output (MEMO) channel, to determine a list of candidate hypotheses for remaining data symbols in the set of data symbols, and to compute LLRs jointly for the remaining data symbols with the list of candidate hypotheses; and a memory coupled to the at least one processor.<br>
+33.	The apparatus of claim 32, wherein the at least one processor is configured to determine the list of candidate hypotheses using list sphere detection.<br>
+34.	The apparatus of claim 32, wherein the at least one processor is configured to determine the list of candidate hypotheses using Markov chain Monte Carlo technique.<br>
+35.	The apparatus of claim 32, wherein the at least one processor is configured to select one of the remaining data symbols at a time for consideration and, after selecting each remaining data symbol, to determine the list of candidate hypotheses for all selected remaining data symbols based on a cost function.<br>
+36.	The apparatus of claim 35, wherein the list of candidate hypotheses includes at most B best hypotheses for the selected remaining data symbols, where B &gt; 1.<br>
+37.	The apparatus of claim 35, wherein the selected remaining data symbols correspond to a plurality of nodes in a search tree, and wherein the list of candidate hypotheses includes at most B best hypotheses for each of the plurality of nodes, where B&gt;1.<br>
+38.	The apparatus of claim 36, wherein B is selected based on a modulation scheme used for the set of data symbols.<br>
+39.	The apparatus of claim 35, wherein the list of candidate hypotheses includes at a minimum Bmin best hypotheses for the selected remaining data symbols, where Bmin&gt; 1.<br>
+40.	The apparatus of claim 35, wherein the list of candidate hypotheses includes all hypotheses with cost values less than or equal to a threshold.<br>
+41.	The apparatus of claim 40, wherein the threshold is determined based on information from a decoder.<br>
+42.	The apparatus of claim 32, wherein the at least one processor is configured to perform receiver spatial processing on a set of received symbols to obtain a set of detected symbols, to derive an upper triangular matrix based on a channel estimate, and to determine the set of candidate hypotheses based on a cost function of the set of detected symbols and the upper triangular matrix.<br>
+43.	A method comprising:<br>
+computing log-likelihood ratios (LLRs) independently for each of at least one data symbol in a set of data symbols transmitted via a multiple-input multiple-output (MEMO) channel;<br>
+detennining a list of candidate hypotheses for remaining data symbols in the set of data symbols; and<br>
+computing LLRs jointly for the remaining data symbols with the list of candidate hypotheses.<br>
+44.	The method of claim 43, wherein the determining the list of candidate<br>
+hypotheses comprises<br>
+deterrnining the list of candidate hypotheses for the remaining data symbols using list sphere detection.<br>
+45.	The method of claim 43, further compri sing:<br>
+performing receiver spatial processing on a set of received symbols to obtain a<br>
+set of detected symbols; and<br>
+deriving an upper triangular matrix based on a channel estimate, and<br>
+wherein the determining the list of candidate hypotheses comprises determining<br>
+the set of candidate hypotheses based on a cost function of the set of detected symbols<br>
+and the upper triangular matrix.<br>
+46.	An apparatus comprising:<br>
+means for computing log-likelihood ratios (LLRs) independently for each of at least one data symbol in a set of data symbols transmitted via a multiple-input multiple-output (MIMO) channel;<br>
+means for determining a list of candidate hypotheses for remaining data symbols in the set of data symbols; and<br>
+means for computing LLRs jointly for the remaining data symbols with the list of candidate hypotheses.<br>
+47.	The apparatus of claim 46, wherein the means for determining the list of<br>
+candidate hypotheses comprises<br>
+means for determining the list of candidate hypotheses for the remaining data symbols using list sphere detection.<br>
+48.	The apparatus of claim 46, further comprising:<br>
+means for performing receiver spatial processing on a set of received symbols to<br>
+obtain a set of detected symbols; and<br>
+means for deriving an upper triangular matrix based on a channel estimate, and wherein the means for determining the list of candidate hypotheses comprises<br>
+means for determining the set of candidate hypotheses based on a cost function of the<br>
+set of detected symbols and the upper triangular matrix.<br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=IV3iYNbDFIYf5mornsrq6w==&amp;amp;loc=+mN2fYxnTC4l0fUd8W4CAA==" target="_blank" style="word-wrap:break-word;">http://ipindiaonline.gov.in/patentsearch/GrantedSearch/viewdoc.aspx?id=IV3iYNbDFIYf5mornsrq6w==&amp;amp;loc=+mN2fYxnTC4l0fUd8W4CAA==</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="268297-emission-system-and-method-for-reducing-nitrous-oxides-in-lean-burn-diesel-engine-exhaust.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="268299-a-catalyst-for-the-production-of-carboxylic-acid-esters.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>268298</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>4208/DELNP/2008</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>35/2015</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>28-Aug-2015</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>25-Aug-2015</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>16-May-2008</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>QUALCOMM INCORPORATED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>5775 MOREHOUSE DRIVE, SAN DIEGO, CALIFORNIA 92121-1714, USA.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>BJORN BJERKE</td>
+											<td>1313 WASHINGTON STREET, #204,, BOSTON, MA 02118, USA.</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>IRINA MEDVEDEV</td>
+											<td>23 ELM STREET, #105, SOMERVILLE, MA 02143, USA.</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>JOHN W. KETCHUM</td>
+											<td>37 CANDLEBERRY LANE, HARVARD, MA 01451, USA.</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>MARK S. WALLACE</td>
+											<td>4 MADEL LANE, BEDFORD, MA 01730, USA.</td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td>JAY RODNEY WALTON</td>
+											<td>85 HIGHWOODS LANE, CARLISLE, MA 01741, USA.</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04B 7/08</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2006/045031</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2006-11-20</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>11/345,976</td>
+									<td>2006-02-01</td>
+								    <td>U.S.A.</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>60/738,159</td>
+									<td>2005-11-18</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/268298-an-apparatus-for-performing-detection-and-decoding-in-a-communication-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 06:56:50 GMT -->
+</html>

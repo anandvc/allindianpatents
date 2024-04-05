@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/256692-system-and-method-for-block-ack-window-synchronization-in-mboa-based-wpan-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 09:16:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 256692:SYSTEM AND METHOD FOR BLOCK - ACK WINDOW SYNCHRONIZATION IN MBOA BASED WPAN SYSTEM</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">SYSTEM AND METHOD FOR BLOCK - ACK WINDOW SYNCHRONIZATION IN MBOA BASED WPAN SYSTEM</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>This invention relates to the synchronization of transmit and receive B-ACK Frame Window in order to save buffer resources and improve system efficiency such as throughput. A system and method for Block - Ack window synchronization in MBOA based WPAN system involves a sender transmitting a Block-Ack Request Frame and subsequently receiving the Block-Ack Control Frame from a receiver and based on the bitmap from the B-ACK Control Frame and its maximum retransmission parameter, the sender deciding to discard some unsuccessfully transmitted MSDUs where the sender informs the receiver about discarded MSDUs by transmitting a specific MAC data frame and upon reception of such a frame. Also it involves a receiver upon reception of such a specific MAC data frame discards the MSDUs whose sequence number is less than the sequence number present in the received MAC data frame thereby, synchronizing the Receive ACK window with the Transmit ACK Window.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>FIELD OF THE INVENTION<br>
+The present invention, in general, relates to the field of wireless networks. Further, this invention relates to medium access control for wireless personal area networks (WPAN) that are based on wireless mobile ad-hoc networks. Also, this invention relates to the medium access control (MAC) for ultra-wideband system. Particularly, this invention relates to the acknowledgment policies in the ultra-wideband MAC (UWB MAC) system. This invention relates to block acknowledgment (B-ACK) policy of medium access control for ultra-wideband system. Particularly, this invention relates to the discarding of incomplete aged MSDUs exchanged during DRP or PCA communication and when using B-ACK process for acknowledgment. Specifically, this invention relates to the synchronization of transmit and receive B-ACK Frame Window in order to save buffer resources and improve system efficiency such as throughput. Also more particularly, this invention encompasses a system and method for synchronization of Block-Ack Window during DRP or PCA communication between two devices belonging to the same UWB cluster. The present invention relates to system and method for block - ack window synchronization in mboa based wpan system.<br>
+DESCRIPTION OF RELATED ART<br>
+The wireless personal area networks are defined to operate in the personal operating space, i.e. in a range of approximately 10 meters. The WiMedia Alliance (http://www.wimedia.org) is involved in defining standards for such wireless personal area networks. The Ultra Wide Band (UWB) technology can provide data<br><br>
+rates exceeding several hundreds of Mbps in this personal operating space. In wireless personal area networks, the medium is shared between all the devices for communication with each other. This necessitates a medium access control mechanism for the devices to manage medium access, broadly including how it may join the network, how it can transfer data at the required rate to another device, how the medium is best used, how to detect and resolve beacon collisions, how to detect and retransmit packets lost due to wireless errors, discarding of incomplete aged MSDUs etc.<br>
+Medium access control for wireless personal area networks is designed in distributed manner. The medium access operations are distributed evenly across all devices in the network and all the devices share the load of managing medium access operations for each other. Figure 1 show the wireless personal area network, which is based on distributed approach and which does not have any centralized coordinator. It involves a decentralized WPAN, in which devices are light coordinator and there is no dedicated coordinator present. All devices cooperate and share information with each other to perform the medium access control tasks such as allowing a new device to join, allocation of channel time to a device to transmit data to another device, synchronization mechanisms etc. This is a Distributed WPAN system, which is formed, in an ad-hoc fashion. Each device periodically broadcasts the information about its neighbors and allocated channel time to its neighbors.<br><br>
+The Distributed medium access control approach relies on a timing concept called the Superframe. Superframe has a fixed length in time and is divided into a number of time windows, which are called time slots. Some of the time slots are used by the devices to send their beacons and the other are used by the devices to send the data. The slots in which beacon is sent are called beacon slots and the slots in which data is sent are called data slots. The length of a beacon period may be less than the length of a data period. The beacon slots may be distributed across the slots in the superframe or may appear together at the start of the superframe. In addition, the number of beacon slots may be fixed or variable leading to different configurations of Distributed Medium Access Control mechanisms.<br>
+Figure 2 illustrates the superframe structure, specified by the WiMedia MAC. It consists of several Medium Access Slots (As an example, the number is shown as 256). Some Medium Access Slots (MAS) constitute beacon period (comprising of beacon slots corresponding to multiple devices) and remaining MASs constitute data period (comprising of data slots that may be used by different devices in the network to transmit data to other devices in the network), employs a superframe duration of 65,536 micro-second with 256 MASs, and each MAS is of 256 microsecond duration. Information about superframe is being broadcasted by each device in its broadcasted beacons, so neighbors of that device can use that information for further processing. The start time of the superframe is determined by the beginning of the beacon period and defined as the beacon period start time (BPST).<br><br>
+Devices that belong to the same beacon period shall utilize the same BPST for the superframe. However, some of the devices may define a different time as their BPST. In such case, 2 or more beacon groups may coexist for the device. MASs are numbered relative to this starting time. The devices shall transform the numbering of MASs of other beaconing periods into the time reference of their main beaconing period. A device can be part of several beaconing periods but has to select one beaconing period as its main beaconing period.<br>
+MASs can be reserved through Distributed Reservation Protocol (DRP). The reservation can be of different reservation type like Hard, Soft, PCA (Prioritized Contention Access) or Private. All reservation type uses different access method to access the channel. Private reservation type does not define any access method; it is up to the implementation to use an access method in private reservation. Each device, which is target of the reservation or owner of the reservation, sends a DRP IE in their beacon.<br>
+WiMedia MAC also defines a channel access method called Prioritized Contention Access (PCA). This can be used in reservation of type PCA or any unreserved time in superframe.<br>
+Device uses 16 bit device address (DevAddr) as an addressing entity. Two type of addressing is defined by WiMedia MAC. Address called generated address is generated by the device randomly. If same address found in neighborhood being<br><br>
+useu oy some other device then address will be generated again, this procedure is called address conflict resolution. Another type of address called Private address, which is not generated by the device, but assigned by some other mean.<br>
+MAC frame exchanges between a sender and receiver belonging to the same UWB beacon group and which are in range of each other uses DRP reservation or PCA mode of communication as channel access mechanism.<br>
+The type of data traffic and applications determine the best mode of channel access between the sender and receiver.<br>
+Applications that do not have delay or jitter requirements may employ PCA mode of channel access.<br>
+Applications that have QoS requirements may employ DRP reservation as channel access. This ensures that access to channel bandwidth is deterministic. The degree of QoS requirements determines the type of DRP reservation, pattern of DRP reservation MAS slots etc.<br>
+Real-time multimedia applications require DRP reservation so as to ensure strict QoS guarantees. Since these applications are periodic in nature, the DRP reservation within a superframe may be such that more than one chunk of MAS slots (one chunk consists of one or more contiguous MAS slots) with fixed or variable interleaved MAS slots between successive chunks are reserved for<br><br>
+communication such as shown in Figure. This pattern of reservation ensures that the device can access the channel periodically so as to satisfy real-time periodic traffic.<br>
+This traffic consumes huge buffers and require very less response time to validate the transmission or reception success of the MAC frames.<br>
+There are 3 acknowledgment policies that are defined in the UWB MAC system.<br>
+They are:<br>
+No-Ack Policy: Applications that require very low delay but can compromise on reliable delivery of data use this mode of acknowledgment. The sender does not wait for acknowledgment from the receiver for frame transmission. Hence, there is no delay involved between successive frame transmissions. But the sender cannot identify frames that are lost due to channel errors thereby making the frame transmission unreliable.<br>
+Immediate-Ack Policy: Applications that require strict reliability on data delivery, but can compromise on delay use this mode of acknowledgment. The receiver has to send an acknowledgment frame for every packet received by it. The sender waits for the acknowledgement for a transmitted frame before transmitting the next in buffer. Frames that are not acknowledged by the receiver will be retransmitted by the sender. This ensures reliable data delivery, but there is overhead and delay involved in this immediate acknowledgment policy.<br><br>
+Block-Ack Policy is a hybrid between No-Acknowledgment and Immediate-Acknowledgment policy. This policy is used by applications that require very low delay as well as reliable data delivery. The sender transmits a burst of frames before waiting for acknowledgment. The receiver sends an acknowledgement for the burst of frames indicating the reception success/failure of each frame in the burst. This ensures that the sender need not wait for acknowledgment of every frame that it had transmitted thereby reducing delay between successive transmissions. Also, the sender can validate the transmission success/failure of the frames when it receives the combined acknowledgment from the receiver.<br>
+The various terms used to explain the B-ACK process is explained below. Unless specified explicitly, the terms used in the description refer to the meanings below.<br>
+•	MSDUs : Consists of one or more MPDUs(also called fragments or MAC frames)<br>
+•	Burst: The set of MAC frames (also called MAC Protocol Data Units -MPDUs) between 2 successive Block-Ack Request Frames.<br>
+•	Block-Ack Request Frames: MAC data frames whose ack-policy field of the MAC header contains Block-Ack Request type. These frames request the receiver to send Block-Ack Control frame.<br>
+•	Block-Ack Control Frames: MAC control frames that are sent by receiver in response to a Block-Ack Request frame. These frames indicate the maximum number of MAC frames that can be transmitted by the sender in<br><br>
+the subsequent "burst". It also contains the acknowledgment bitmap that indicates the reception status of MAC frames in the just completed burst.<br>
+•	Aggregated Size of octets: The combined size of individual MAC frames in a burst.<br>
+•	B-ACK Time Window: The actual time between 2 successive Block-Ack Request Frames.<br>
+•	B-ACK Frame Window: The range of sequence number between the last frame in a "burst" to the first frame in a "burst".<br>
+•	DRP Chunk : Contiguous set of MAS slots. A periodic reservation may consist of one or more DRP chunks within a superframe interleaved by DRP chunks from other reservations. A DRP chunk is show in Figure 2.<br>
+The some of the terms used to describe the B-ACK process is depicted in Figure 3.<br>
+The Block - Acknowledgment process consists of 3 stages. They are<br>
+•	Initiation<br>
+•	Operation<br>
+•	Termination<br>
+The devices belonging to the same UWB cluster advertise their B-ACK capability using Capability IE. Any device intending to use B-ACK policy for DRP or PCA communication with another device shall verify the peer device's capability to handle B-ACK process and then initiate the B-ACK process.<br><br>
+The sender initiates B-ACK process by setting the ack-policy field of the MAC header of the first frame to be B-ACK Request. The receiver can reject the B-ACK request by sending a B-ACK control frame with no frame payload to the sender. If the receiver accepts the B-ACK request, it sends the B-ACK Control frame indicating the maximum number of frames or aggregated size of octets that the receiver can receive in the first burst.<br>
+After the B-ACK process has been initiated, the sender transmits a burst not exceeding the maximum number frames or maximum aggregated size of octets to the receiver. The ack-policy field in the MAC header of these burst frames is set as B-ACK except for the last frame in the burst. The sender requests B-ACK control frame from the receiver by setting the ack-policy for the last frame in the burst to be B-ACK Request. The receiver responds with a B-ACK Control frame indicating the maximum number of frames or maximum aggregated size of octets that the receiver can receive in the next burst. It also sends the acknowledgment bitmap that represents the reception success of each frame in the burst transmitted by the sender. Based on the bitmap, the sender retransmits erroneous frames along with new frames in the next burst. The number of frames in the next burst will be based on the maximum size number of frames or maximum aggregated size of octets.<br>
+The sender or receiver of a DRP or PCA session can terminate the B-ACK process by<br><br>
+•	The sender transmits a frame with any No-ACK or Imm-ACK to terminate an ongoing B-ACK process.<br>
+•	The receiver terminates the B-ACK process by responding to a B-ACK request by a B-ACK control frame with no payload.<br>
+The B-ACK process explained above is as shown in the Figure 4.<br>
+Each B-ACK instance is allocated a set of buffers (memory space). The number of allocated buffers in the sender or receiver, which ever is smaller determines the maximum number of frames that can be transmitted in a burst.<br>
+Buffer Occupancy is an important performance measure in any communication system. For any given stream using DRP or PCA mode of channel access, buffer occupancy is generally defined as the ratio of number of buffers occupied by MAC data frames to the maximum number of buffers allocated to the stream.<br>
+By the above definition, it can be understood that, high buffer occupancy implies that more MAC data frames occupy the buffers. This phenomenon results in<br>
+o   Higher delay per MAC frame<br>
+o Prevention of higher layer packets from occupying the buffers, resulting in lower system throughput.<br>
+A large B-ACK Frame Window implies that a long range of MSDUs are required to be stored which will increase the buffer occupancy.<br><br>
+Similarly a large "B-ACK Time Window" will result in undue delay in validating MAC frame transmit success/failure at the sender's side. This results in unnecessary storing of MSDUs in the sender's buffers even if they have been successfully received, thereby increasing buffer occupancy.<br>
+The sender and receiver of the DRP/PCA communication maintain a Transmit ACK Window and Receive ACK Window respectively. When the sender transmits the B-ACK Request Frame, the receiver responds with the B-ACK Control frame which indicates the available buffer at the receiver and a bitmap representing the Receive ACK Window. Based on the bitmap, the sender synchronizes its Transmit ACK Window based and does either of the following,<br>
+o   Retransmits erroneous MAC data frames<br>
+o   discards incomplete aged MSDUs<br>
+When the sender discards the incomplete aged MSDUs, the Transmit ACK Window gets modified.<br>
+The present state of art in this field does not have any mechanism to inform the receiver about the change of Transmit ACK Window when using B-ACK process for DRP/PCA communication in UWB based WPAN network.<br>
+LIMITATIONS<br><br>
+Currently in the present state of art:<br>
+—	The receiver may implement a timeout to discard incompletely received aged MSDUs.<br>
+—	Since the timeout is optional and implementation dependent, the Transmit ACK Window and the Receive ACK Window will remain unsynchronized.<br>
+—	Even though the sender has discarded some MSDUs, the receiver will be storing it in it's buffers till it's timeout.<br>
+—	This results in higher buffer occupancy in the receiver, which is wasteful.<br>
+—	Having higher buffer occupancy in receiver prevents the sender from transmitting a larger burst even though the sender has free buffers to store more MSDUs. This results in reduction of system throughput.<br>
+—	There is no method to synchronize the Transmit ACK Window and Receiver ACK Window, which will overcome the problems described above for a system using B-ACK process in UWB, based WPAN system.<br>
+SUMMARY OF THE INVENTION<br>
+The primary object of the invention is to provide a system and method for B-ACK Window Synchronization in wireless personal area networks based on ultra wide band (UWB) systems.<br>
+It is another object of the invention to reduce the undue buffer occupancy in the receiver by informing the change in Transmit ACK Window to the receiver.<br><br>
+Another object of the invention is to improve the system throughput by synchronizing Transmit ACK Window and Receive ACK Window between the sender and the receiver of DRP/PCA communication in UWB based WPAN system.<br>
+The present invention comprises of system and method, which would solve the problems associated with current art, in the following manner:<br>
+The sender informs the receiver about discarded MSDUs by transmitting a specific MAC data frame. Upon reception of such a frame, the receiver discards the MSDUs whose sequence number is less than the sequence number present in the received MAC data frame. By this manner, the receiver synchronizes the Receive ACK window with the Transmit ACK Window. Accordingly, the invention provides a system and method for B-ACK Window Synchronization in wireless personal area networks based on ultra wide band (UWB) systems.<br>
+Accordingly, the invention provides a mechanism to reduce the unnecessary buffer occupancy in the receiver of the DRP/PCA communication using B-ACK process. The invention provides a mechanism for the receiver to discard MSDUs discarded by the sender of the DRP/PCA communication using B-ACK process.<br>
+Accordingly, the invention provides a mechanism to synchronize Transmit ACK window and Receive ACK window between the sender and receiver of the<br><br>
+DRP/PCA communication when using B-ACK process.<br>
+Accordingly, this invention encompasses a method for Block - Ack window synchronization in MBOA based WPAN system wherein the sender transmitting a Block-Ack Request Frame and subsequently receiving the Block-Ack Control Frame from the receiver and based on the bitmap from the B-ACK Control Frame and its maximum retransmission parameter, the sender deciding to discard some unsuccessfully transmitted MSDUs characterized in that the sender informs the receiver about discarded MSDUs by transmitting a specific MAC data frame and upon reception of such a frame, the receiver discards the MSDUs whose sequence number is less than the sequence number present in the received MAC data frame thereby, synchronizing the Receive ACK window with the Transmit ACK Window.<br>
+After discarding the MSDUs, the sender transmits a "Sync MAC data frame" to the receiver where the "Sync MAC data frame" is a zero length payload MAC data frame with sequence number indicating the next MSDU ID after the last discarded MSDU and with Ack-Policy as B-ACK Request. If a zero length payload MAC data frame is received immediately after the receiver has sent a Block-Ack Control frame, the receiver identifies the zero length payload MAC data frame as "Sync MAC data frame". The receiver discards the incomplete MSDUs whose sequence number is less than the sequence number in the "Sync MAC data frame". The receiver updates it's Receive ACK Window after discarding the incomplete aged MSDUs and sends back an B-ACK Control Frame with the updated bitmap<br><br>
+thereby confirming the synchronization with the transmitter.<br>
+Accordingly, this invention further encompasses a system for Block - Ack window synchronization in MBOA based WPAN system comprising:<br>
+(a)	a sender transmitting a Block-Ack Request Frame and subsequently receiving the Block-Ack Control Frame from a receiver and based on the bitmap from the B-ACK Control Frame and its maximum retransmission parameter, the sender deciding to discard some unsuccessfully transmitted MSDUs where the sender informs the receiver about discarded MSDUs by transmitting a specific MAC data frame and upon reception of such a frame, and<br>
+(b)	the receiver upon reception of such a specific MAC data frame discards the MSDUs whose sequence number is less than the sequence number present in the received MAC data frame thereby, synchronizing the Receive ACK window with the Transmit ACK Window.<br>
+These and other objects, features and advantages of the present invention will become more apparent from the ensuing detailed description of the invention taken in conjunction with the accompanying drawings.<br>
+BRIEF DESCRIPTION OF ACCOMPANYING DRAWINGS<br>
+Figure 1 illustrates the WPAN as a decentralized and distributed ad-hoc network<br><br>
+system and range of all devices;<br>
+Figure 2 illustrates the superframe structure in current art, which includes MASs and a dynamic beacon period (i.e. a BP with dynamic length);<br>
+Figure 3 illustrates the various terms needed to explain the B-ACK process and the invention.<br>
+Figure 4 illustrates the 3 stages of B-ACK process.<br>
+Figure 5 illustrates the system having the problem of un-synchronized Transmit and Receive B-ACK Windows.<br>
+Figure 6 illustrates the invention to synchronize the Transmit and Receive B-ACK Windows.<br>
+DETAILED DESCRIPTION OF THE INVENTION<br>
+The preferred embodiments of the present invention will now be explained with reference to the accompanying drawings. It should be understood however that the disclosed embodiments are merely exemplary of the invention, which may be embodied in various forms. The following description and drawings are not to be construed as limiting the invention and numerous sDecifie details AFP H^crrihoH tn<br><br>
+provide a thorough understanding of the present invention, as the basis for the claims and as a basis for teaching one skilled in the art how to make and/or use the invention. However in certain instances, well-known or conventional details are not described in order not to unnecessarily obscure the present invention in detail.<br>
+The present invention relates to a system that provides medium access control in the decentralized Wireless Personal Area Networks based on mobile ad-hoc networks.<br>
+Accordingly, the invention provides a system and method for B-ACK Window synchronization between sender and receiver of DRP/PCA communication when using B-ACK process in wireless personal area networks based on ultra wide band (UWB) systems. THE invention provides a system and method for the transmitter to inform the receiver about discarded MSDUs<br>
+Accordingly, the invention provides a mechanism for the receiver to identify the synchronization packet and to discard the incomplete aged MSDUs. The invention provides a mechanism where the receiver can synchronize it's Receive ACK Window to the sender's Transmit ACK Window and thereby reduce buffer occupancy at the receiver side and to increase the system throughput of the UWB based WPAN system.<br>
+The following section describes the invention in detail:<br><br>
+The sender transmits a Block-Ack Request Frame and subsequently receives the Block-Ack Control Frame from the receiver. Based on the bitmap from the B-ACK Control Frame and its maximum retransmission parameter, the sender decides to discards some unsuccessfully transmitted MSDUs.<br>
+The sender does not transmit the next burst after discarding the MSDUs, and instead transmits a "Sync MAC data frame" to the receiver. The "Sync MAC data frame" is a zero length payload MAC data frame with sequence number indicating the next MSDU ID after the last discarded MSDU and with Ack-Policy as B-ACK Request.<br>
+If a zero length payload MAC data frame is received immediately after the receiver has sent a Block-Ack Control frame, the receiver identifies the zero length payload MAC data frame as "Sync MAC data frame". The receiver discards the incomplete MSDUs whose sequence number is less than the sequence number in the "Sync MAC data frame".<br>
+The receiver updates it's Receive ACK Window after discarding the incomplete aged MSDUs and sends back an B-ACK Control Frame with the updated bitmap. By this manner, the receiver confirms the synchronization to the transmitter.<br>
+The following section illustrates the problem and the invention through Figure 5 and Figure 6 respectively.<br><br>
+	w.„.a . .yuic u rnctse i, ine sender transmits a burst with a Transmit ACK<br>
+Window of (2,0) to (4,2). The receiver receives all the MAC data frames expect three as shown in the Figure 5. The receiver sends the Block-ACK Control Frame indicating the reception success/failure as a bitmap and the maximum number of MAC data frames that the sender can transmit in the next burst. The Receive ACK Window is same as the Transmit ACK Window in this Phase 1.<br>
+Upon reception of the bitmap from the receiver, the sender discards the MSDU#2 and transmits a new burst with a Transmit ACK Window of (3,0) to (5,0) as shown in Phase 2 of Figure 5. This burst consists of some re-transmissions and some new transmission.<br>
+But in Phase 2, the Receive ACK Window is (2,0) to (5,0). The receiver stores the fragments of the MSDU#2 though the sender has discarded the MSDU#2. This will result in undue buffer occupancy and as can be seen from the Figure 5, the receiver has no free buffers to receive further frames. It is indicated in the B-ACK Control Frame sent by the receiver in Phase2. This condition will prevail till timeout in the receiver occurs, upon which the aged incomplete MSDUs will be discarded.<br>
+From the above illustration, it will be clear that the un-synchronized Transmit and Receive ACK Windows will result in wastage of buffers and subsequently higher buffer occupancy.<br><br>
+By our invention, which is illustrated in Figure 6, in Phase 2, the sender transmits a "Sync Mac Data Frame" with zero length payload, and ack-policy as B-ACK Request and the MSDU ID#3. The receiver discards the MSDU#2 based on the Sync Mac Data Frame and transmits a Block-Ack Control Frame with a new bitmap representing the updated Receive ACK Window.<br>
+In Phase 3, the sender transmits a burst of frames corresponding to the new Transmit ACK Window, which is same as Receive ACK Window. It can be seen from Figure 6, that the sender is able to transmit more number of MAC data frames than the case illustrated in Figure 5. It can also be understood that the receiver by discarding MSDU#2 has reduced buffer occupancy during Phase 2.<br>
+ADVANTAGES<br>
+Hence by our invention to synchronize the Transmit and Receive ACK windows when using B-ACK process, we achieve lower buffer occupancy at the receiver side and subsequent improvement system throughput.<br>
+It will also be obvious to those skilled in the art that other control methods and apparatuses can be derived from the combinations of the various methods and apparatuses of the present invention as taught by the description and the accompanying drawings and these shall also be considered within the scope of the present invention. Further, description of such combinations and variations is therefore omitted above. It should also be noted that the host for storing the<br><br>
+applications include but not limited to a microchip, microprocessor, handheld communication device, computer, rendering device or a multi function device.<br>
+Although the present invention has been fully described in connection with the preferred embodiments thereof with reference to the accompanying drawings, it is to be noted that various changes and modifications are possible and are apparent to those skilled in the art. Such changes and modifications are to be understood as included within the scope of the present invention as defined by the appended claims unless they depart therefrom.<br><br>
+GLOSSARY OF TERMS AND DEFINITIONS THEREOF<br>
+ACK:	Acknowledge<br>
+BP:	Beacon Period<br>
+BPST:	Beacon Period Start Time<br>
+B-ACK:	Block ACK<br>
+CTA:	Channel Time Allocation<br>
+DevAddr: Device Address<br>
+DRP:	Distributed Reservation Protocol<br>
+IE:	Information Element<br>
+MAC:	Medium Access Control<br>
+MAS:	Medium Access Slot<br>
+MSDU :	MAC Service Data Unit<br>
+MPDU :	MAC Protocol Data Unit<br>
+PCA:	Prioritized Contention Access<br>
+PHY:	Physical Layer<br>
+UWB:	Ultra Wide Band<br>
+WPAN:	Wireless Personal Area Network<br><br><br>
+WE CLAIM<br>
+1.	A method for Block - Ack window synchronization in MBOA based WPAN system wherein the sender transmitting a Block-Ack Request Frame and subsequently receiving the Block-Ack Control Frame from the receiver and based on the bitmap from the B-ACK Control Frame and its maximum retransmission parameter, the sender deciding to discard some unsuccessfully transmitted MSDUs characterized in that the sender informs the receiver about discarded MSDUs by transmitting a specific MAC data frame and upon reception of such a frame, the receiver discards the MSDUs whose sequence number is less than the sequence number present in the received MAC data frame thereby, synchronizing the Receive ACK window with the Transmit ACK Window.<br>
+2.	A method as claimed in claim 1 wherein after discarding the MSDUs, the sender transmits a "Sync MAC data frame" to the receiver where the "Sync MAC data frame" is a zero length payload MAC data frame with sequence number indicating the next MSDU ID after the last discarded MSDU and with Ack-Policy as B-ACK Request.<br>
+3.	A method as claimed in claim 2 wherein if a zero length payload MAC data frame is received immediately after the receiver has sent a Block-Ack Control frame, the receiver identifies the zero length payload MAC data frame as "Sync MAC data frame".<br><br>
+4.	A method as claimed in claim 3 wherein the receiver discards the incomplete MSDUs whose sequence number is less than the sequence number in the "Sync MAC data frame".<br>
+5.	A method as claimed in claim 4 wherein the receiver updates it's Receive ACK Window after discarding the incomplete aged MSDUs and sends back an B-ACK Control Frame with the updated bitmap thereby confirming the synchronization with the transmitter.<br>
+6.	A system for Block - Ack window synchronization in MBOA based WPAN system comprising:<br><br>
+(a)	a sender transmitting a Block-Ack Request Frame and subsequently receiving the Block-Ack Control Frame from a receiver and based on the bitmap from the B-ACK Control Frame and its maximum retransmission parameter, the sender deciding to discard some unsuccessfully transmitted MSDUs where the sender informs the receiver about discarded MSDUs by transmitting a specific MAC data frame and upon reception of such a frame, and<br>
+(b)	the receiver upon reception of such a specific MAC data frame discards the MSDUs whose sequence number is less than the sequence number present in the received MAC data frame thereby,<br><br>
+synchronizing the Receive ACK window with the Transmit ACK Window.<br>
+7.	A system as claimed in claim 6 wherein after discarding the MSDUs, the sender transmits a "Sync MAC data frame" to the receiver where the "Sync MAC data frame" is a zero length payload MAC data frame with sequence number indicating the next MSDU ID after the last discarded MSDU and with Ack-Policy as B-ACK Request.<br>
+8.	A system as claimed in claim 7 wherein if a zero length payload MAC data frame is received immediately after the receiver has sent a Block-Ack Control frame, the receiver identifies the zero length payload MAC data frame as "Sync MAC data frame".<br>
+9.	A system as claimed in claim 8 wherein the receiver discards the incomplete MSDUs whose sequence number is less than the sequence number in the "Sync MAC data frame".<br>
+10.	A system as claimed in claim 9 wherein the receiver updates it's Receive ACK Window after discarding the incomplete aged MSDUs and sends back an B-ACK Control Frame with the updated bitmap thereby confirming the synchronization with the transmitter.<br><br>
+11.	A method for Block - Ack window synchronization in MBOA based WPAN system substantially described particularly with reference to the accompanying drawings.<br>
+12.	A system for Block - Ack window synchronization in MBOA based WPAN system substantially described particularly with reference to the accompanying drawings.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIEFNRU5ERUQgQ0xBSU1TICAwMy0wNy0yMDEzLnBkZg==" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   AMENDED CLAIMS  03-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIEFNRU5ERUQgQ0xBSU1TIDEwLTA3LTIwMTMucGRm" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   AMENDED CLAIMS 10-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIEFNRU5ERUQgUEFHRVMgT0YgU1BFQ0lGSUNBVElPTiAgMDMtMDctMjAxMy5wZGY=" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   AMENDED PAGES OF SPECIFICATION  03-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIENPUlJFU1BPTkRFTkNFIE9USEVSUyAwNS0wNy0yMDEzLnBkZg==" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   CORRESPONDENCE OTHERS 05-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIENPUlJFU1BPTkRFTkNFIE9USEVSUyAxMC0wNy0yMDEzLnBkZg==" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   CORRESPONDENCE OTHERS 10-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIEVYQU1JTkFUSU9OIFJFUE9SVCBSRVBMWSBSRUNFSVZFRCAgMDMtMDctMjAxMy5wZGY=" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   EXAMINATION REPORT REPLY RECEIVED  03-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIEZPUk0tMSAgMDMtMDctMjAxMy5wZGY=" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   FORM-1  03-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIEZPUk0tMSAwNS0wNy0yMDEzLnBkZg==" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   FORM-1 05-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIEZPUk0tMTMgIDAzLTA3LTIwMTMucGRm" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   FORM-13  03-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIEZPUk0tNSAgMDMtMDctMjAxMy5wZGY=" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   FORM-5  03-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIE9USEVSIFBBVEVOVCBET0NVTUVOVCAgMDMtMDctMjAxMy5wZGY=" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   OTHER PATENT DOCUMENT  03-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIFBPV0VSIE9GIEFUVE9STkVZICAwMy0wNy0yMDEzLnBkZg==" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   POWER OF ATTORNEY  03-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgIFBPV0VSIE9GIEFUVE9STkVZICAxMC0wNy0yMDEzLnBkZg==" target="_blank" style="word-wrap:break-word;">1915-CHE-2005   POWER OF ATTORNEY  10-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgRk9STS0xMyAgMTktMDYtMjAwNi5wZGY=" target="_blank" style="word-wrap:break-word;">1915-CHE-2005  FORM-13  19-06-2006.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1DSEUtMjAwNSAgUE9XRVIgT0YgQVRUT1JORVkgMDUtMDctMjAxMy5wZGY=" target="_blank" style="word-wrap:break-word;">1915-CHE-2005  POWER OF ATTORNEY 05-07-2013.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1jaGUtMjAwNS1hYnN0cmFjdC5wZGY=" target="_blank" style="word-wrap:break-word;">1915-che-2005-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1jaGUtMjAwNS1jbGFpbXMucGRm" target="_blank" style="word-wrap:break-word;">1915-che-2005-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1jaGUtMjAwNS1jb3JyZXNwb25kbmVjZS1vdGhlcnMucGRm" target="_blank" style="word-wrap:break-word;">1915-che-2005-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1jaGUtMjAwNS1kZXNjcmlwdGlvbihjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">1915-che-2005-description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1jaGUtMjAwNS1kZXNjcmlwdGlvbihwcm92aXNpb25hbCkucGRm" target="_blank" style="word-wrap:break-word;">1915-che-2005-description(provisional).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1jaGUtMjAwNS1kcmF3aW5ncy5wZGY=" target="_blank" style="word-wrap:break-word;">1915-che-2005-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1jaGUtMjAwNS1mb3JtIDEucGRm" target="_blank" style="word-wrap:break-word;">1915-che-2005-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1jaGUtMjAwNS1mb3JtIDEzLnBkZg==" target="_blank" style="word-wrap:break-word;">1915-che-2005-form 13.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1jaGUtMjAwNS1mb3JtIDI2LnBkZg==" target="_blank" style="word-wrap:break-word;">1915-che-2005-form 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTkxNS1jaGUtMjAwNS1mb3JtIDUucGRm" target="_blank" style="word-wrap:break-word;">1915-che-2005-form 5.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="256691-a-process-for-preparing-intermediate-for-biotin.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="256693-a-method-of-forwarding-a-facsimile-message-from-an-intermediate-machine-to-one-or-more-recipients.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>256692</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1915/CHE/2005</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>29/2013</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>19-Jul-2013</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>16-Jul-2013</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>26-Dec-2005</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>SAMSUNG INDIA SOFTWARE OPERATIONS PRIVATE LIMITED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>BAGMANE LAKEVIEW, BLOCK B, NO.66/1, BAGMANE TECH PARK, CV RAMAN NAGAR, BYRASANDRA, BANGALORE-560 093.</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>SUNDARESAN SWAMINATHAN</td>
+											<td>SAMSUNG ELECTRONIC CO.LTD INDIA SOFTWHERE OPERATIONS J.P.TECHNO PARK,3/1 MILLERS ROAD BANGALORE 560 052 KARANATAKA</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H 04 C 7/00</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td></td>
+									<td></td>
+								    <td>NA</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/256692-system-and-method-for-block-ack-window-synchronization-in-mboa-based-wpan-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 09:16:23 GMT -->
+</html>

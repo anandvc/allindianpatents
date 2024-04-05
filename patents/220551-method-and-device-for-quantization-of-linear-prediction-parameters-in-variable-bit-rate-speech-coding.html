@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/220551-method-and-device-for-quantization-of-linear-prediction-parameters-in-variable-bit-rate-speech-coding by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 10:37:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 220551:METHOD AND DEVICE FOR QUANTIZATION OF LINEAR PREDICTION PARAMETERS IN VARIABLE BIT RATE SPEECH CODING</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">METHOD AND DEVICE FOR QUANTIZATION OF LINEAR PREDICTION PARAMETERS IN VARIABLE BIT RATE SPEECH CODING</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>The present invention relates to a method and device for quantizing linear prediction parameters in variable bit-rate sound signal coding, in which an input linear prediction parameter vector is received, a sound signal frame corresponding to the input linear prediction parameter vector is classified, a prediction vector is computed, the computed prediction vector is removed from the input linear prediction parameter vector to produce a prediction error vector, and the prediction error vector is quantized. Computation of the prediction vector comprises selecting one of a plurality of prediction schemes in relation to the classification of the sound signal frame, and processing the prediction error vector through the selected prediction scheme. The present invention further relates to a method and device for dequantizing linear prediction parameters in variable bit-rate sound signal decoding, in which at least one quantization index and information about classification of a sound signal frame corresponding to the quantization index are received, a prediction error vector is recovered by applying the index to at least one quantization table, a prediction vector is reconstructed, and a linear prediction parameter vector is produced in response to the recovered prediction error vector and the reconstructed prediction vector. Reconstruction of the prediction vector comprises processing the recovered prediction error vector through one of a plurality of prediction schemes depending on the frame classification information.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+METHOD AND DEVICE FOR ROBUST PREDICTIVE<br>
+VECTOR QUANTIZATION OF LINEAR PREDICTION PARAMETERS<br>
+IN VARIABLE BIT RATE SPEECH CODING<br>
+BACKGROUND OF THE INVENTION<br>
+1.	Field of the invention:<br>
+The present invention relates to an improved technique for digitally encoding a sound signal, in particular but not exclusively a speech signal, in view of transmitting and synthesizing this sound signal. More specifically, the present invention is concerned with a method and device for vector quantizing linear prediction parameters in variable bit rate linear prediction based coding.<br>
+2.	Brief description of the prior techniques:<br>
+2.1 Speech coding and quantization of linear prediction (LP) parameters:<br>
+Digital voice communication systems such as wireless systems use speech encoders to increase capacity while maintaining high voice quality. A speech encoder converts a speech signal into a digital bitstream which is transmitted over a communication channel or stored in a storage medium. The speech signal is digitized, that is, sampled and quantized with usually 16-bits per sample. The speech encoder has the role of representing these digital samples with a smaller number of bits while maintaining a good subjective speech quality. The speech decoder or synthesizer operates on the transmitted or stored bit stream and converts it back to a sound signal.<br>
+Digital speech coding methods based on linear prediction analysis have been very successful in low bit rate speech coding. In particular, code-excited linear prediction (CELP) coding is one of the best known techniques for achieving a good compromise between the subjective quarity and bit rate. This coding technique is the basis of several speech coding standards both in wireless and wireline applications. In<br><br>
+CELP coding, the sampled speech signal is processed in successive blocks of JV samples usually called frames, where N is a predetermined number corresponding typically to 10-30 ms. A linear prediction (LP) filter A(z) is computed, encoded, and transmitted every frame. The computation of the LP filter A(z) typically needs a lookahead, which consists of a 5-15 ms speech segment from the subsequent frame. The A^-sample frame is divided into smaller blocks called subframes. Usually the number of subframes is three or four resulting in 4-10 ms subframes. In each subframe, an excitation signal is usually obtained from two components, the past excitation and the innovative, fixed-codebook excitation. The component formed from the past'excitation is often referred to as the adaptive codebook or pitch excitation. The parameters characterizing the excitation signal are coded and transmitted to the decoder, where the reconstructed excitation signal is used as the input of a LP synthesis filter.<br>
+The LP synthesis filter is given by<br>
+"W- — =	\	<br>
+where a, are linear prediction coefficients and Mis the order of the LP analysis. The LP synthesis filter models the spectral envelope of the speech signal. At the decoder, the speech signal is reconstructed by filtering the decoded excitation through the LP synthesis filter.<br>
+The set of linear prediction coefficients at are computed such that the prediction error<br>
+e(n) = s(n) - 7(ri)	(1)<br>
+is minimized, where s(n) is the input signal at time n and J(n) is the predicted signal based on the last M samples given by:<br><br>
+Thus the prediction error is given by:<br>
+M e{n) - s(ri) + ^ ats{n - /) /=]<br>
+This corresponds in the z-tranform domain to:<br>
+E(z) = S(z)A(z)<br>
+where A{z) is the LP filter of order M given by:<br>
+(=1<br>
+Typically, the linear prediction coefficients at are computed by minimizing the mean-squared prediction error over a block of L samples, L being an integer usually equal to or larger than N (L usually corresponds to 20-30 ms). The computation of linear prediction coefficients is otherwise well known to those of ordinary skill in the art. An example of such computation is given in [ITU-T Recommendation G.722.2 "Wideband coding of speech at around 16 kbit/s using adaptive multi-rate wideband (AMR-WB)", Geneva, 2002].<br>
+The linear prediction coefficients a,- cannot be directly quantized for transmission to the decoder. The reason is that small quantization errors on the linear prediction coefficients can produce large spectral errors in the transfer function of the LP filter, and can even cause filter instabilities. Hence, a transformation is applied to the linear prediction coefficients a,- prior to quantization. The transformation yields what is called a representation of the linear prediction coefficients a,-. After receiving^ the quantized transformed linear prediction coefficients a,-, the decoder can then apply<br><br>
+the inverse transformation to obtain the quantized linear prediction coefficients. One widely used representation for the linear prediction coefficients a{ is the line spectral frequencies (LSF) also known as line spectral pairs (LSP). Details of the computation of the Line Spectral Frequencies can be found in [ITU-T Recommendation G.729 "Coding of speech at 8 kbit/s using conjugate-structure algebraic-code-excited linear prediction (CS-ACELP)," Geneva, March 1996].<br>
+A similar representation is the Immitance Spectral Frequencies (ISF), which has been used in the AMR-WB coding standard [ITU-T Recommendation G.722.2 "Wideband coding of speech at around 16 kbit/s using Adaptive Multi-Rate Wideband (AMR-WB)", Geneva, 2002]. Other representations are also possible and have been used. Without loss of generality, the particular case of ISF representation will be considered in the following description.<br>
+The so obtained LP parameters (LSFs, ISFs, etc.), are quantized either with scalar quantization (SQ) or vector quantization (VQ). In scalar quantization, the LP parameters are quantized individually and usually 3 or 4 bits per parameter are required. In vector quantization, the LP parameters are grouped in a- vector and quantized as an entity. A codebook, or a table, containing the set of quantized vectors is stored. The quantizer searches the codebook for the codebook entry that is closest to the input vector according to a certain distance measure. The index of the selected quantized vector is transmitted to the decoder. Vector quantization gives better performance than scalar quantization but at the expense of increased complexity and memory requirements.<br>
+Structured vector quantization is usually used to reduce the complexity and storage requirements of VQ. In split-VQ, the LP parameter vector is split into at least two subvectors which are quantized individually. In multistage VQ the quantized vector is the addition of entries from several codebooks. Both split VQ and multistage VQ result in reduced memory and complexity while maintaining good quantization performance. Furthermore, an interesting approach is to combine multistage and split<br><br>
+VQ to further reduce the complexity and memory requirement. In reference [ITU-T Recommendation G.729 "Coding of speech at 8 kbit/s using conjugate-structure algebraic-code-excited linear prediction (CS-ACELP)," Geneva, March 1996], the LP parameter vector is quantized in two stages where the second stage vector is split in two sub vectors.<br>
+The LP parameters exhibit strong correlation between successive frames and this is usually exploited by the use of predictive quantization to improve the performance. In predictive vector quantization, a predicted LP parameter vector is computed based on information from past frames. Then the predicted vector is removed from the input vector and the prediction error is vector quantized. Two kinds of prediction are usually used: auto-regressive (AR) prediction and moving average (MA) prediction. In AR prediction the predicted vector is computed as a combination of quantized vectors from past frames. In MA prediction, the predicted vector is computed as a combination of the prediction error vectors from past frames. AR prediction yields better performance. However, AR prediction is not robust to frame loss conditions which are encountered in wireless and packet-based communication systems. In case of lost frames, the error propagates to consecutive frames since the prediction is based on previous corrupted frames.<br>
+2.2 Variable bit-rate (VBR) coding:<br>
+In several communications systems, for example wireless systems using code division multiple access (CDMA) technology, the use of source-controlled variable bit rate (VBR) speech coding significantly improves the capacity of the system. In source-controlled VBR coding, the encoder can operate at several bit rates, and a rate selection module is used to determine the bit rate used for coding each speech frame based on the nature of the speech frame, for example voiced, unvoiced, transient, background noise, etc. The goal is to attain the best speech quality at a given average bit rate, also referred to as average data rate (ADR). The encoder is also^capable of operating in accordance with different modes of operation by tuning the rate selection<br><br>
+module to attain different ADRs for the different modes, where the performance of the encoder improves with increasing ADR. This provides the encoder with a mechanism of trade-off between speech quality and system capacity. In CDMA systems, for example CDMA-one and CDMA2000, typically 4 bit rates are used and are referred to as full-rate (FR), half-rate (HR), quarter-rate (QR), and eighth-rate (ER). In this CDMA system, two sets of rates are supported and referred to as Rate Set I and Rate Set II. In Rate Set II, a variable-rate encoder with rate selection mechanism operates at source-coding bit rates of 13.3 (FR), 6.2 (HR), 2.7 (QR), and 1.0 (ER) kbit/s, corresponding to gross bit rates of 14.4, 7.2, 3.6, and 1.8 kbit/s (with some bits added for error detection).<br>
+A wideband codec known as adaptive multi-rate wideband (AMR-WB) speech codec was recently selected by the ITU-T (International Telecommunications Union - Telecommunication Standardization Sector) for several wideband speech telephony and services and by 3GPP (Third Generation Partnership Project) for GSM and W-CDMA (Wideband Code Division Multiple Access) third generation wireless systems. An AMR-WB codec consists of nine bit rates in the range from 6.6 to 23.85 kbit/s. Designing an AMR-WB-based source controlled VBR codec for CDMA2000 system has the advantage of enabling interoperation between CDMA2000 and other systems using an AMR-WB codec. The AMR-WB bit rate of 12.65 kbit/s is the closest rate that can fit in the 13.3 kbit/s full-rate of CDMA2000 Rate Set II. The rate of 12.65 kbit/s can be used as the common rate between a CDMA2000 wideband VBR codec and an AMR-WB codec to enable interoperability without transcoding, which degrades speech quality. Half-rate at 6.2 kbit/s has to be added to enable efficient operation in the Rate Set II framework. The resulting codec can operate in few CDMA2000-specific modes, and incorporates a mode that enables interoperability with systems using a AMR-WB codec.<br>
+Half-rate encoding is typically chosen in frames where the input speech<br>
+signal is stationary. The bit savings, compared to full-rate, are achieved by updating<br>
+»<br>
+encoding parameters less frequently or by using fewer bits to encode some of these encoding parameters. More specifically, in stationary voiced segments, the pitch<br><br>
+information is encoded only once a frame, and fewer bits are used for representing the fixed codebook parameters and the linear prediction coefficients.<br>
+Since predictive VQ with MA prediction is typically applied to encode the linear prediction coefficients, an unnecessary increase in quantization noise can be observed in these linear prediction coefficients. MA prediction, as opposed to AR prediction, is used to increase the robustness to frame losses; however, in stationary frames the linear prediction coefficients evolve slowly so that using AR prediction in this particular case would have a smaller impact on error propagation in the case of lost frames. This can be seen by observing that, in the case of missing frames, most decoders apply a concealment procedure which essentially extrapolates the linear prediction coefficients of the last frame. If the missing frame is stationary voiced, this extrapolation produces values very similar to the actually transmitted, but not. received, LP parameters. The reconstructed LP parameter vector is thus close to what would have been decoded if the frame had not been lost. In this specific case, therefore, using AR prediction in the quantization procedure of the linear prediction coefficients cannot have a very adverse effect on quantization error propagation.<br>
+SUMMARY OF THE INVENTION<br>
+According to the present invention, there is provided a method for quantizing linear prediction parameters in variable bit-rate sound signal coding, comprising receiving an input linear prediction parameter vector, classifying a sound signal frame corresponding to the input linear prediction parameter vector, computing a prediction vector, removing the computed prediction vector from the input linear prediction parameter vector to produce a prediction error vector, scaling the prediction error vector, and quantizing the scaled prediction error vector. Computing a prediction vector comprises selecting one of a plurality of prediction schemes in relation to the classification of the sound signal frame, and computing the prediction vector in accordance with the selected prediction scheme. Scaling the prediction error vector comprises selecting at least one of a plurality of scaling scheme in relation to the<br><br>
+selected prediction scheme, and scaling the prediction error vector in accordance with the selected scaling scheme.<br>
+Also according to the present invention, there is provided a device for quantizing linear prediction parameters in variable bit-rate sound signal coding, comprising means for receiving an input linear prediction parameter vector, means for classifying a sound signal frame corresponding to the input linear prediction parameter vector, means for computing a prediction vector, means for removing the computed prediction vector from the input linear prediction parameter vector to produce a prediction error vector, means for scaling the prediction error vector, and means for quantizing the scaled prediction error vector. The means for computing a prediction vector comprises means for selecting one of a plurality of prediction schemes in relation to declassification of the sound signal frame, and means for computing the prediction vector in accordance with the selected prediction scheme. Also, the means for scaling the prediction error vector comprises means for selecting at least one of a plurality of scaling scheme in relation to the selected prediction scheme, and means for scaling the prediction error vector in accordance with the selected scaling scheme.<br>
+The present invention also relates to a device for quantizing linear prediction parameters in variable bit-rate sound signal coding, comprising an input for receiving an input linear prediction parameter vector, a classifier of a sound signal frame corresponding to the input linear prediction parameter vector, a calculator of a prediction vector, a subtracter for removing the computed prediction vector from the input linear prediction parameter vector to produce a prediction error vector, a scaling unit supplied with the prediction error vector, this unit scaling the prediction error vector, and a quantizer of the scaled prediction error vector. The prediction vector calculator comprises a selector of one of a plurality of prediction schemes in relation to the classification of the sound signal frame, to calculate the prediction vector- in accordance with the selected prediction scheme. The scaling^unit comprises a selector of at least one of a plurality of scaling schemes in relation to the selected prediction<br><br>
+scheme, to scale the prediction error vector in accordance with the selected scaling scheme.<br>
+The present invention is further concerned with a method of dequantizing - linear prediction parameters in variable bit-rate sound signal decoding, comprising receiving at least one quantization index, receiving information about classification of a sound signal frame corresponding to said at least one quantization index, recovering a prediction error vector by applying the at least one index to at least one quantization table, reconstructing a prediction vector, and producing a linear prediction parameter vector in response to the recovered prediction error vector and the reconstructed prediction vector. Reconstruction of a prediction vector comprises processing the recovered prediction error vector through one of a plurality of prediction schemes depending on the frame classification information.<br>
+The present invention still further relates to a device for dequantizing linear prediction parameters in variable bit-rate sound signal decoding, comprising means for receiving at least one quantization index, means for receiving information about classification of a sound signal frame corresponding to the at least one quantization index, means for recovering a prediction error vector by applying the at least one index to at least one quantization table, means for reconstructing a prediction vector, and means for producing a linear prediction parameter vector in response to the recovered prediction error vector and the reconstructed prediction vector. The prediction vector reconstructing means comprises means for processing the recovered prediction error vector through on of a plurality of prediction schemes depending on the frame classification information.<br>
+In accordance with a last aspect of the present invention, there is provided a device for dequantizing linear prediction parameters in variable bit-rate sound signal decoding, comprising means for receiving at least one quantization index, means for receiving information about classification of a sound signal frame corresponding to the at least one quantization index, at least one quantization table supplied with said at<br><br>
+least one quantization index for recovering a prediction error vector, a prediction vector reconstructing unit, and a generator of a linear prediction parameter vector in response to the recovered prediction error vector and the reconstructed prediction vector. The prediction vector reconstructing unit comprises at least one predictor supplied with recovered prediction error vector for processing the recovered prediction error vector through one of a plurality of prediction schemes depending on the frame classification information.<br>
+The foregoing and other objects, advantages and features of the present invention will become more apparent, upon reading of the following non restrictive description of illustrative embodiments thereof, given by way of example only with reference to the accompanying drawings.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+In the appended drawings:<br>
+Figure 1 is a schematic block diagram illustrating a non-limitative example of multi-stage vector quantizer;<br>
+Figure 2 is a schematic block diagram illustrating a non-limitative example of split-vector vector quantizer;<br>
+Figure 3 is a schematic block diagram illustrating a non-limitative example of predictive vector quantizer using autoregressive (AR) prediction;<br>
+Figure 4 is a schematic block diagram illustrating a non-limitative example of predictive vector quantizer using moving average (MA) prediction;<br>
+Figure 5 is a schematic block diagram of an example of switched predictive vector quantizer at the encoder, according to a non-restrictive illustrative embodiment of present invention;<br><br>
+Figure 6 is a schematic block diagram of an example of switched predictive vector quantizer at the decoder, according to a non-restrictive illustrative embodiment of present invention;<br>
+Figure 7 is a non-restrictive illustrative example of a distribution of ISFs over frequency, wherein each distribution is a function of the probability to find an ISF at a given position in the ISF vector; and<br>
+Figure 8 is a graph showing a typical example of evolution of ISF parameters through successive speech frames.<br>
+DETAILED DESCRIPTION OF THE ILLUSTRATIVE EMBODIMENTS<br>
+Although the illustrative embodiments of the present invention will be described in the following description in relation to an application to a speech signal, - it should be kept in mind that the present invention can also be applied to other types of sound signals.<br>
+Most recent speech coding techniques are based on linear prediction analysis such as CELP coding. The LP parameters are computed and quantized in frames of 10-30 ms. In the present illustrative embodiment, 20 ms frames are used and an LP analysis order of 16 is assumed. An example of computation of the LP parameters in a speech coding system is found in reference [ITU-T Recommendation G.722.2 "Wideband coding of speech at around 16 kbit/s using Adaptive Multi-Rate Wideband (AMR-WB)", Geneva, 2002]. In this illustrative example, the preprocessed speech signal is windowed and the autocorrelations of the windowed speech are computed. The Levinson-Durbin recursion is then used to compute the linear prediction coefficients ah z-l,...,Mfrom the autocorrelations R(k), £=0,...,M&gt; where Mis the prediction order.<br>
+-'        The  linear  prediction   coefficients   a,-  cannot  be  directly  quantized   for transmission to the decoder. The reason is that small quantization errors on the linear<br><br>
+prediction coefficients can produce large spectral errors in the transfer function of the LP filter, and can even cause filter instabilities. Hence, a transformation is applied to the linear prediction coefficients at prior to quantization. The transformation yields what is called a representation of the linear prediction coefficients. After receiving the quantized, transformed linear prediction coefficients, the decoder can then apply the inverse transformation to obtain the quantized linear prediction coefficients. One widely used representation for the linear prediction coefficients a, is the line spectral frequencies (LSF) also known as line spectral pairs (LSP). Details of the computation of the LSFs can be found in reference [ITU-T Recommendation G.729 "Coding of speech at 8 kbit/s using conjugate-structure algebraic-code-excited linear prediction (CS-ACELP)," Geneva, March 1996]. The LSFs consists of the poles of the polynomials:<br>
+P(z) = (A(z) + z-{M^A{z'{ ))/(l + z~x)<br>
+and<br>
+Q(z) = (A(z)-z-(M+»A(z-l))/(l-z-1)<br>
+For even values of M, each polynomial has Mil conjugate roots on the unit circle le±Jiiii). Therefore, the polynomials can be written as:<br>
+?(z)= n(i-2*iz",+*-2)<br>
+and<br>
+Q(Z)= nfr-2*,*-1+*■*).<br>
+i=2AJHM<br>
+where qt =cos(o)/) with ®x being the line spectral frequencies (LSF) satisfying the ordering property 0 
+ <br>
+A similar representation is the immitance spectral.pairs (ISP) or the immitance spectral frequencies (ISF), which has been used in the AMR-WB coding standard. Details of the computation of the ISFs can be found in reference [ITU-T Recommendation G.722.2 "Wideband coding of speech at around 16 kbit/s using Adaptive Multi-Rate Wideband (AMR-WB)", Geneva, 2002]. Other representations are also possible and have been used. Without loss of generality, the following description will consider the case of ISF representation as a non-restrictive illustrative example.<br>
+For an Mh order LP filter, where M is even, the ISPs are defined as the roots of the polynomials:<br>
+Fx(z) = A{z) + z-MA{z-x) and<br>
+F2(Z) = (A(Z)-Z-MA(Z-{))/(\-Z-2)<br>
+Polynomials F\{z) and Fi(z) have Mil and M2-1 conjugate roots on the unit circle (etja), respectively. Therefore, the polynomials can be written as:<br>
+Fl(z) = {l + aM)   n(l-2^"1+^2)<br>
+1=1,3	JW-1<br>
+and<br>
+F2(z) = {l-aM)    Yl(\-2qiZ-l+z-2)<br>
+i=2,4	M-2<br>
+where q^cos(a)i) with C0i being the immittance spectral frequencies (ISF), and a^ is the last linear prediction coefficient. The ISFs satisfy the ordering property 0 
+ <br>
+f fi^irarccosfo),   . / = 1,K ,M-1,<br>
+27T<br>
+and<br>
+fK{ = -^arccos(au)<br>
+4;r<br>
+LSFs and ISFs (LP parameters) have been widely used due to several properties which make them suitable for quantization purposes. Among these properties are the well defined dynamic range, their smooth evolution resulting in strong inter and intra-frame correlations, and the existence of the ordering property which guarantees the stability of the quantized LP filter.<br>
+In  this  document,  the term "LP  parameter''  is  used  to  refer to  any representatione of LP coefficients, e.g. LSF, ISF. Mean-removed LSF, or mean-' removed ISF.<br>
+The main properties of ISFs (LP (linear prediction) parameters) will now be described in order to understand the quantization approaches used. Figure 7 shows a<br>
+. typical example of the probability distribution function (PDF) of ISF coefficients. Each curve represents the PDF of an individual ISF coefficient. The mean of each distribution is shown on the horizontal axis (/ft). For example, the curve for ISFi indicates all values, with their probability of occurring, that can be taken by the first<br>
+'. ISF coefficient in a frame. The curve for ISF2 indicates all values, with their probability of occurring, that can be taken by the second ISF coefficient in a frame, and so on. The PDF function is typically obtained by applying a histogram to the values taken by a given coefficient as observed through several consecutive'frames. We see that each ISF coefficient occupies a restricted interval over all possible ISF values. This effectively reduces the space that the quantizer has to cover and increases the bit-rate efficiency. It is also important to note that, while the PDFs of ISF coefficients can overlap, ISF coefficients in a given frame are always ordered (ISFk+i<br><br>
+- ISFk &gt; 0, where k is the position of the ISF coefficient within the vector of ISF coefficients).<br>
+With frame lengths of 10 to 30 ms typical in a speech encoder, ISF coefficients exhibit interframe correlation. Figure 8 illustrates how ISF coefficients evolve across frames in a speech signal. Figure 8 was obtained by performing LP analysis over 30 consecutive frames of 20 ms in a speech segment comprising both voiced and unvoiced frames. The LP coefficients (16 per frame) were transformed into ISF coefficients. Figure 8 shows that the lines never cross each other, which means that ISFs are always ordered. Figure 8 also shows that ISF coefficients typically evolve slowly, compared to the frame rate. This means in practice that predictive quantization can be applied to reduce the quantization error.<br>
+Figure 3 illustrates an example of predictive vector quantizer 300 using autoregressive (AR) prediction. As illustrated in Figure 3, a prediction error vector en is first obtained by subtracting (Processor 301) a prediction vector pn from the input LP parameter vector to be quantized x„. The symbol n here refers to the frame index in time. The prediction vector pn is computed by a predictor P (Processor 302) using the past quantized LP parameter vectors xn_x, xn_2, etc. The prediction error vector en is then quantized (Processor 303) to produce an index i for transmission for example through a channel and a quantized prediction error vector e„. The total quantized LP<br>
+parameter vector xn is obtained by adding (Processor 304) the quantized prediction error vector en and the prediction vector pn. A general form of the predictor P (Processor 302) is:<br>
+Pn = Aii,-, + A2x„_2 +... +A^i^<br>
+where A* are prediction matrices of dimension M*M and K is the predictor order. A simple form for the predictor P (Processor 302) is the use of first order prediction:<br>
+P„ = Ai,.,	(2)<br><br>
+where A is a prediction matrix of dimension M*M, where M is the dimension of LP parameter vector xn. A simple form of the prediction matrix A is a diagonal matrix with diagonal elements au o&amp;,.--&gt; Gfa&gt; where at are prediction factors for individual LP parameters. If the same factor a is used for all LP parameters then equation 2 reduces to:<br>
+P„ = «Vi	(3)<br>
+Using the simple prediction form of Equation (3), then in Figure 3, the quantized LP parameter vector xw is given by the following autoregressive (AR) relation:<br>
+xn=ert+ax^	(4)<br>
+The recursive form of Equation (4) implies that, when using an AR predictive quantizer 300 of the form as illustrated in Figure 3, channel errors will propagate across several frames. This can be seen more clearly if Equation (4) is written in the following mathematically equivalent form :<br>
+DO<br>
+x„=e„+2&gt;Aen_t	(5)<br>
+This form clearly shows that in principle each past decoded prediction error vector e^ contributes to the value of the quantized LP parameter vector in. Hence, in the<br>
+case of channel errors, which would modify the value of en received by the decoder<br>
+relative to what was sent by the encoder, the decoded vector xn obtained in Equation<br>
+(4) would not be the same at the decoder and at the encoder. Because of the recursive nature of the predictor P, this encoder-decoder mismatch will propagate in the future and affect the next vectors xn+1, xn+2, etc., even if there are no channel errors in the<br>
+later frames. Therefore, predictive vector quantization is not robust to channel errors, especially when the prediction factors are high (a close to 1 in Equations (4) and (5)).<br><br>
+To alleviate this propagation problem, moving average (MA) prediction can be used instead of AR prediction. In MA prediction, the infinite series of Equation (5) is truncated to a finite number of terms. The idea is to approximate the autoregressive form of predictor P in Equation (4) by using a small number of terms in Equation (5). Note that the weights in the summation can be modified to better approximate the predictor P of Equation (4).<br>
+A non-limitative example of MA predictive vector quantizer 400 is shown in Figure 4, wherein processors 401, 402, 403 and 404 correspond to processors 301, 302, 303 and 304, respectively. A general form of the predictor P (Processor 402) is:<br>
+where B* are prediction matrices of dimension M*M and K is the predictor order. It should be noted that in MA prediction, transmission errors propagate only into next K frames.<br>
+A simple form for the predictor P (Processor 402) is to use first order prediction:<br>
+P^Be^	(6)<br>
+where B is a prediction matrix of dimension M*M, where M is the dimension of LP parameter vector. A simple form of the prediction matrix is a diagonal matrix with diagonal elements fii9 /%,..., /5M, where 0t are prediction factors for individual LP parameters. If the same factor /? is used for all LP parameters then Equation (6) reduces to:<br>
+P„ =;&amp;„-,	(7)<br>
+Using the simple prediction form of Equation (7), then in Figure 4, the quantized LP parameter vector xn is given by the following moving average (MA) relation:<br>
+i„ =£„+#„-,	(8)<br><br>
+In the illustrative example of predictive vector quantizer 400 using MA prediction as shown in Figure 4. the predictor memory (in Processor 402) is formed by the past decoded prediction error vectors en_p efl_2, etc. Hence, the maximum<br>
+number of frames over which a channel error can propagate is the order of the predictor P (Processor 402). In the illustrative predictor example of Equation (8), a 1st order prediction is used so that the MA prediction error can only propagate over one frame only.<br>
+While more robust to transmission errors than AR prediction, MA prediction does not achieve the same prediction gain for a given prediction order. The prediction error has consequently a greater dynamic range, and can require more bits to achieve the same coding gain than with AR predictive quantization. The compromise is thus robustness to channel errors versus coding gain at a given bit rate.<br>
+In source-controlled variable bit rate (VBR) coding, the encoder operates at several bit rates, and a rate selection module is used to determine the bit rate used for encoding each speech frame based on the nature of the speech frame, for example voiced, unvoiced, transient, background noise. The nature of the speech frame, for example voiced, unvoiced, transient, background noise, etc., can be determine in the same manner as for CDMA VBR. The goal is to attain the best speech quality at a given average bit rate, also referred to as average data rate (ADR). As an illustrative example, in CDMA systems, for example CDMA-one and CDMA2000, typically 4 bit rates are used and are referred to as full-rate (FR), half-rate (HR), quarter-rate (QR), and eighth-rate (ER). In this CDMA system, two sets of rates are supported and are referred to as Rate Set I and Rate Set II. In Rate Set II, a variable-rate encoder with rate selection mechanism operates at source-coding bit rates of 13.3 (FR), 6.2 (HR), 2.7 (QR), and 1.0 (ER) kbit/s.<br>
+In VBR coding, a classification and rate selection mechanism is used to<br>
+classify the speech frame according to its nature (voiced, unvoiced, transient, noise,<br>
+■   etc.) and selects the bit rate needed to encode the frame according to the classification<br>
+and the required average data rate (ADR). Half-rate encoding is typically chosen in<br><br>
+frames where the input speech signal is stationary. The bit savings compared to the full-rate are achieved by updating encoder parameters less frequently or by using fewer bits to encode some parameters. Further, these frames exhibit a strong correlation which can be exploited to reduce the bit rate. More specifically, in stationary voiced segments, the pitch information is encoded only once in a frame, and fewer bits are used for the fixed codebook and the LP coefficients. In unvoiced frames, no pitch prediction is needed and the excitation can be modeled with small codebooks in HR or random noise in QR.<br>
+Since predictive VQ with MA prediction is typically applied to encode the LP parameters, this results in an unnecessary increase in quantization noise. MA prediction, as opposed to AR prediction, is used to increase the robustness to frame losses; however, in stationary.frames the LP parameters evolve slowly so that using AR prediction in this case would have a smaller impact on error propagation in the case of lost frames. This is detected by observing that, in the case of missing frames, most decoders apply a concealment procedure which essentially extrapolates the LP parameters of the last frame. If the missing frame is stationary voiced, this extrapolation produces values very similar to the actually transmitted, but not received LP parameters. The reconstructed LP parametervector is thus close to what would have been decoded if the frame had not been lost. In that specific case, using AR prediction in the quantization procedure of the LP coefficients cannot have a very adverse effect on quantization error propagation.<br>
+Thus, according to a non-restrictive illustrative embodiment of the present invention, a predictive VQ method for LP parameters is disclosed whereby the predictor is switched between MA and AR prediction according to the nature of the speech frame being processed. More specifically, in transient and non-stationary frames MA prediction is used while in stationary frames AR prediction is used. Moreover, since AR prediction results in a prediction error vector e„ with a smaller dynamic range than MA prediction, it is not efficient to use the same quantization tables for both types of prediction. To overcome this problem, the prediction error<br><br>
+vector after AR prediction is properly scaled so that it can be quantized using the same quantization tables as in the MA prediction case. When multistage VQ is used to quantize the prediction error vector, the first stage can be used for both types of prediction after properly scaling the AR prediction error vector. Since it is sufficient to use split VQ in the second stage which doesn't require large memory, quantization tables of this second stage can be trained and designed separately for both types of prediction. Of course, instead of designing the quantization tables of the first stage with MA prediction and scaling the AR prediction error vector, the opposite is also valid, that is, the first stage can be designed for AR prediction and the MA prediction error vector is scaled prior to quantization.<br>
+Thus, according to a non-restrictive illustrative embodiment of the present invention, a predictive vector quantization method is also disclosed for quantizing LP parameters in a variable bit rate speech codec whereby the predictor P is switched between MA and AR prediction according to classification information regarding the nature of the speech frame being processed, and whereby the prediction error vector is properly scaled such that the same first stage quantization tables in a multistage VQ of the prediction error can be used for both types of prediction.<br>
+Example 1<br>
+Figure 1 shows a non-limitative example of a two-stage vector quantizer 100. An input vector x is first quantized with the quantizer Ql (Processor 101) to produce a quantized vector x, and a quantization index i\. The difference between the input<br>
+vector x and first stage quantized vector xx is computed (Processor 102) to produce the error vector X2 further quantized with a second stage VQ (Processor 103) to produce the quantized second stage error vector x2 with quantization index h. The indices of i\ and 12 are transmitted (Processor 104) through a channel and the quantized vector x is reconstructed at the decoder as x = xx + x2.<br><br>
+Figure 2 shows an illustrative example of split vector quantizer 200. An input vector x of dimension M is split into K subvectors of dimensions Nu JVi,..., Afc, and quantized with vector quantizers Qi, Q2, ..., QK, respectively (Processors 201.1, 201.2 ... 201.K). The quantized subvectors y}, y2, ..., y^, with quantization indices iu i2, and iK are found. The quantization indices are transmitted (Processor 202) through a channel and the quantized vector x is reconstructed by simple concatenation of quantized subvectors.<br>
+An efficient approach for vector quantization is to combine both multi-stage and split VQ which results in a good trade-off between quality and complexity. In a first illustrative example, a two-stage VQ can be used whereby the second stage error vector e2 is split into several subvectors and quantized with second stage quantizers<br>
+Q21, Q22, •■-&gt; Q.2K,, respectively. In an second illustrative example, the input Vector can be split into two subvectors, then each subvector is quantized with two-stage VQ using further split in the second stage as in the first illustrative example.<br>
+Figure 5 is a schematic block diagram illustrating a non-limitative example of switched predictive vector quantizer 500 according to the present invention. Firstly, a vector of mean LP parameters \i is removed from an input LP parameter vector z to produce the mean-removed LP parameter vector x (Processor 501). As indicated in the foregoing description, the LP parameter vectors can be vectors of LSF parameters, ISF parameters, or any other relevant LP parameter representation. Removing the mean LP parameter vector \i from the input LP parameter vector z is optional but results in improved prediction performance. If Processor 501 is disabled then the mean-removed LP parameter vector x will be the same as the input LP parameter vector z. It should be noted here that the frame index n used in Figures 3 and 4 has been dropped here for the purpose of simplification. The prediction vector p is then computed and removed from the mean-removed LP parameter vector x to produce the prediction error vector e (Processor 502). Then, based on frame classification information, if the frame corresponding to the input LP parameter vector z is stationary voiced then AR prediction is used and the error vector e is scaled by a<br><br>
+certain factor (Processor 503) to obtain the scaled prediction error vector e\ If the frame is not stationary voiced, MA prediction is used and the scaling factor (Processor 503) is equal to 1. Again, classification of the frame, for example voiced, unvoiced, transient, background noise, etc., can be determined, for example, in the same manner as for CDMA VBR.. The scaling factor is typically larger than 1 and results in upscaling the dynamic range of the prediction error vector so that it can be quantized with a quantizer designed for MA prediction. The value of the scaling factor depends on the coefficients used for MA and AR prediction. Non-restrictive typical values are: MA prediction coefficient (3=0.33, AR prediction coefficient a=0.65, and scaling factor = 1.25. If the quantizer is designed for AR prediction then an opposite operation will be performed: the prediction error vector for MA prediction will be scaled and the scaling factor will be smaller than 1.<br>
+The scaled prediction error vector e' is then vector quantized (Processor 508) to produce a quantized scaled prediction error vector e'. In the example of Figure 5, processor 508 consists of a two-stage vector quantizer where split VQ is used in both stages and wherein the vector quantization tables of the first stage are the same for both MA and AR prediction. The two-stage vector quantizer 508 consists of processors 504, 505, 506, 507, and"509. In the first-stage quantizer Ql, the scaled prediction error vector e' is quantized to produce a first-stage quantized prediction error vector ex (Processor 504). This vector ex is removed from the scaled prediction<br>
+error vector e' (Processor 505) to produce a second-stage prediction error vector e2. This second-stage prediction error vector e2 is then quantized (Processor 506) by either a second-stage vector quantizer QMA or a second-stage vector quantizer QAR to produce a second-stage quantized prediction error vector e2. The choice between the<br>
+second-stage vector quantizers QMA and QAR depends on the frame classification information (for example, as indicated hereinabove, AR if the frame is stationary voiced and MA if the frame is not stationary voiced). The quantized scaled prediction error vector e' is reconstructed (Processor 509) by the summation of the quantized prediction error vectors e, and e2 from the two stages: e'^ + e^ Finally, scaling<br><br>
+inverse to that of processor 503 is applied to the quantized scaled prediction error vector e' (Processor 510) to produce the quantized prediction error vector e . In the present illustrative example, the vector dimension is 16, and split VQ is used in both stages. The quantization indices ii and 12 from quantizer Ql and quantizer QMA or QAR are multiplexed and transmitted through a communication channel (Processor 507).<br>
+The prediction vector p is computed in either an MA predictor (Processor 511) or an AR predictor (Processor 512) depending on the frame classification information (for example, as indicated hereinabove, AR if the frame is stationary voiced and MA if the frame is not stationary voiced). If the frame is stationary voiced then the prediction vector is equal to the output of the AR predictor 512. Otherwise the prediction vector is equal to the output of the MA predictor 511. As explained hereinabove the MA predictor 511 operates on the quantized prediction error vectors from previous frames while the AR predictor 512 operates on the quantized input LP paremeter vectors from previous frames. The quantized input LP. parameter vector (mean-removed) is constructed by adding the quantized prediction error vector e to the prediction vector p (Processor 514): x = e + p.<br>
+Figure 6 is a schematic block diagram showing an illustrative embodiment of a switched predictive vector quantizer 600 at the decoder according to the present invention. At the decoder side, the received sets of quantization indices ii and i2 are used by the quantization tables (Processors 601 and 602) to produce the first-stage and second-stage quantized prediction error vectors ex and e2. Note that the second-stage quantization (Processor 602) consists of two sets of tables for MA and AR prediction as described hereinabove with reference to the encoder side of Figure'5. The scaled prediction error vector is then reconstructed in Processor 603 by summing the quantized prediction error vectors from the two stages;  ef=ej+e2. Inverse<br>
+scaling is applied in Processor 609 to produce the quantized prediction error vector e. Note that the inverse scaling is a function of the received frame classification information and corresponds to the inverse of the scaling performed by processor 503 of Figure 5. The quantized, mean-removed input LP parameter vector x  is then<br><br>
+reconstructed in Processor 604 by adding the prediction vector p to the quantized prediction error vector e: x = e + p. In case the vector of mean LP parameters \i has<br>
+been removed at the encoder side, it is added in Processor 608 to produce the quantized input LP parameter vector z . It should be noted that as in the case of the encoder side of Figure 5, the prediction vector p is either the output of the MA predictor 605 or the AR predictor 606 depending on the frame classification information; this selection is made in accordance with the logic of Processor 607 in response to the frame classification information. More specifically, if the frame is stationary voiced then the prediction vector p is equal to the output of the AR predictor 606. Otherwise the prediction vector p is equal to the output of the MA predictor 605.<br>
+Of course, despite the fact that only the output of-either the MA pedictor or the AR predictor is used in a certain frame, the memories of both predictors will be updated every frame, assuming that either MA or AR prediction can be used in the next frame. This is valid for both the encoder and decoder sides.<br>
+In order to optimize the encoding gain, some vectors of the first" stage, designed for MA prediction, can be replaced by new vectors designed for AR prediction. In a non-restrictive illustrative embodiment, the first stage codebook size is 256, and has the same content as in the AMR-WB standard at 12.65 kbit/s, and 28 vectors are replaced in the first stage codebook when using AR prediction. An extended, first stage codebook is thus formed as follows: first, the 28 first-stage vectors less used when applying AR prediction but usable for MA prediction are placed at the beginning of a table, then the remaining 256-28 = 228 first-stage vectors usable for both AR and MA prediction are appended in the table, and finally 28 new vectors usable for AR prediction are put at the end of the table. The table length is thus 256 -f- 28 = 284 vectors. When using MA prediction, the first 256 vectors of the table are used in the first stage; when using AR prediction the last 256 vectors of the table are used. To ensure interoperability with the AMR-WB standard, a table is used<br><br>
+which contains the mapping between the position of a first stage vector in this new codebook, and its original position in the AMR-WB first stage codebook.<br>
+To summarize, the above described non-restrictive illustrative embodiments &gt;f the present invention, described in relation to Figures 5 and 6, presents the bllowing features:<br>
+Switched AR/MA prediction is used depending on the encoding mode of the variable rate encoder, itself depending on the nature of the current speech frame.<br>
+Essentially the same first stage quantizer is used whether AR or MA prediction is<br>
+applied, which results in memory savings. In a non-restrictive illustrative<br>
+embodiment, 16th order LP prediction is used and the LP parameters are<br>
+represented in the ISF domain. The first stage codebook is the same as the one used<br>
+in the 12:65 kbit/s mode of the AMR-WB encoder where the codebook was<br>
+designed using MA prediction (The 16 dimension LP parameter vector is split by 2<br>
+to obtain two subvectors with dimension 7 and 9, and in the first-stage of<br>
+quantization, two 256-entry codebooks are used).	-;<br>
+■	Instead of MA prediction, AR prediction is used in stationary modes, specifically half-rate voiced mode; otherwise, MA prediction is used.<br>
+■	In the case of AR prediction, the first stage of the quantizer is the same as the MA prediction case. However, the second stage can be properly designed and trained for AR prediction.<br>
+■	To take into account this switching in the predictor mode, the memories of both MA and AR predictors are updated every frame, assuming both MA or AR prediction can be used for the next frame.<br>
+- Further, to optimize the encoding-gain, some vectors of the first stage, designed for MA prediction, can be replaced by new vectors designed for AR prediction.<br><br>
+According to this non-restrictive illustrative embodiment, 28 vectors are replaced in the first stage codebook when using AR prediction.<br>
+-	An enlarged, first stage codebook can thus be formed as follows: first, the 28 first stage vectors less used when applying AR prediction are placed at the beginning of a table, then the remaining 256-28 - 228 first stage vectors are appended in the table, and finally 28 new vectors are put at the end of the table. The table length is thus 256 + 28 = 284 vectors. When using MA prediction, the first 256 vectors of the table are used in the first stage; when using AR prediction the last 256 vectors of the table are used.<br>
+-	To ensure interoperability with the AMR-WB standard, a table is used which contains the mapping between the position of a first stage vector in this new codebook, and its original position in the AMR-WB first stage codebook.<br>
+-	Since AR prediction achieves lower prediction error energy than MA prediction when used on stationary signals, a scaling factor is applied to the prediction error. In a non-restrictive illustrative embodiment, the scaling factor is 1 when MA prediction is used, and 1/0.8 when AR prediction is used. This increases the AR prediction error to a dynamic equivalent to the MA prediction error. Hence, the same quantizer can be used for both MA and AR prediction in the first stage.<br>
+Although the present invention has been described in, the foregoing description in relation to non-restrictive illustrative embodiments thereof, these embodiments can be modified at will, within the scope of the appended claims, without departing from the nature and scope of the present invention.<br><br><br>
+WHAT IS CLAIMED IS:<br>
+1.	A method for quantizing linear prediction parameters in variable bit-rate<br>
+sound signal coding, comprising:<br>
+receiving an input linear prediction parameter vector;<br>
+classifying a sound signal frame corresponding to the input linear prediction parameter vector;<br>
+computing a prediction vector;<br>
+removing the computed prediction vector from the input linear prediction parameter vector to produce a prediction error vector;<br>
+scaling the prediction error vector;<br>
+quantizing the scaled prediction error vector; wherein:<br>
+computing a prediction vector comprises selecting one of a plurality of prediction schemes in relation to the classification of the sound signal frame, and computing the prediction vector in accordance with the selected prediction scheme; and scaling the prediction error vector comprises selecting at least one of a plurality of scaling scheme in relation to the selected prediction scheme, and scaling the prediction error vector in accordance with the selected scaling scheme.<br>
+2.	A method for quantizing linear prediction parameters according to claim 1,<br>
+wherein quantizing the prediction error vector comprises:<br>
+processing the prediction error vector through at least one quantizer using the selected prediction scheme.<br>
+3.	A method for quantizing linear prediction parameters according to claim 1,<br>
+wherein:<br>
+the plurality of prediction schemes comprises moving-average prediction and auto-regressive prediction.<br><br>
+4.	A method for quantizing linear prediction parameters according to claim 1,<br>
+further comprising:<br>
+producing a vector of mean linear prediction parameters; and<br>
+removing the vector of mean linear prediction parameters from the input<br>
+linear prediction parameter vector to produce a mean-removed linear prediction<br>
+parameter vector.<br>
+5.	A method for quantizing linear prediction parameters according to claim 1,<br>
+wherein:<br>
+classifying the sound signal frame comprises determining that the sound signal frame is a stationary voiced frame;<br>
+selecting one of a plurality of prediction schemes comprises selecting auto-regressive prediction;<br>
+computing a prediction vector comprises computing the prediction error vector through auto-regressive prediction;<br>
+selecting one of a plurality of scaling schemes comprises selecting a scaling factor; and<br>
+scaling the prediction error vector comprises scaling the prediction error vector prior to quantization using said scaling factor.<br>
+6.	A method for quantizing linear prediction parameters according to claim 1,<br>
+wherein:<br>
+classifying the sound signal frame comprises determining that the sound signal frame is not a stationary voiced frame;<br>
+computing a prediction vector comprises computing the prediction error vector through moving-average prediction.<br>
+7.	A method for quantizing linear prediction parameters according to claim 5,<br>
+wherein the scaling factor is larger than 1.<br><br>
+8.	A method for quantizing linear prediction parameters according to claim 1,<br>
+wherein quantizing the prediction error vector comprises:<br>
+processing the prediction error vector through a two-stage vector quantization process.<br>
+9.	A method for quantizing linear prediction parameters according to claim 8,<br>
+further comprising using split vector quantization in the two stages of the vector<br>
+quantization process.<br>
+10.	A method for quantizing linear prediction parameters according to claim<br>
+3, wherein:<br>
+quantizing the prediction error vector comprises processing the prediction error vector through a two-stage vector quantization process comprising first and second stages; and<br>
+processing   the   prediction   error   vector   through   a   two-stage   vector quantization process  comprises  applying  the prediction error vector to   vector ■- quantization tables of the first stage, which are the same for both moving-average and auto-regressive prediction.<br>
+11.	A method for quantizing linear prediction parameters according to claim<br>
+8, wherein quantizing the prediction error vector comprises:<br>
+in a first stage of the two-stage vector quantization process, quantizing the prediction error vector to produce a first-stage quantized prediction error vector;<br>
+removing from the prediction error vector the first-stage quantized prediction error vector to produce a second-stage prediction error vector;<br>
+in the second stage of the two-stage vector quantization process, quantizing the second-stage prediction error vector to produce a second-stage quantized prediction error vector; and<br>
+producing a quantized prediction error vector by summing the first-stage and second-stage quantized prediction error vectors.<br><br>
+12.	A method for quantizing linear prediction parameters according to claim<br>
+11, wherein quantizing the second-stage prediction error vector comprises:<br>
+processing the second-stage prediction error vector through a moving-average prediction quantizer or an auto-regressive prediction quantizer depending on the classification of the sound signal frame.<br>
+13.	A method for quantizing linear prediction parameters according to claim<br>
+8, wherein quantizing the prediction error vector comprises:<br>
+producing quantization indices for the two stages of the two-stage vector quantization process;<br>
+transmitting the quantization indices through a communication channel.<br>
+14.	A method fQr quantizing linear prediction parameters according to claim<br>
+8, wherein:<br>
+classifying the sound signal frame comprises determining that the sound signal frame is a stationary voiced frame; and<br>
+computing a prediction vector comprises:<br>
+adding (a) the quantized prediction error vector produced by summing the first-stage and--second-stage quantized prediction error vectors and (b) the computed prediction vector to produce a quantized input vector; and<br>
+processing the quantized input vector through auto-regressive prediction.<br>
+15.	A method for quantizing linear prediction parameters according to claim<br>
+2, wherein:<br>
+-	the plurality of prediction schemes comprises moving-average prediction and auto-regressive prediction;<br>
+-	quantizing the prediction error vector comprises:<br>
+processing the prediction error vector through a two-stage vector quantizer comprising a first-stage codebook itself comprising, in sequence:<br><br>
+a first group of vectors usable when applying moving-average prediction and placed at the beginning of a table;<br>
+a second group of vectors usable when applying either moving-average and auto-regressive prediction and placed in the table intermediate the first group of vectors and a third group of vectors;<br>
+the third group of vectors usable when applying auto-regressive prediction and placed at the end of the table; - processing the prediction error vector through at least one quantizer using the selected prediction scheme comprises:<br>
+when the selected prediction scheme is moving-average prediction, processing the prediction error vector through the first and second groups of vectors of the table; and<br>
+when the selected prediction scheme is auto-regressive prediction, processing the prediction error vector through the second and third groups of vectors.<br>
+16. A method for quantizing linear prediction parameters according to claim 15, wherein, to ensure interoperability with the AMR-WB standard, mapping between the position of a first-stage vector in the table of the first-stage codebook and an original position of the first-stage vector in an AMR-WB first-stage codebook is made through a mapping table.<br>
+17. A method for quantizing linear prediction parameters according to claim 1, wherein:<br>
+classifying the sound signal frame comprises determining that the sound signal frame is a stationary voiced frame or non-stationary voiced frame; and<br>
+for stationary voiced frames, selecting one of a plurality of prediction schemes in relation to the classification of the sound signal frame comprises selecting auto-regressive prediction, computing fee- prediction vector in accordance with the selected prediction scheme comprises computing the prediction error vector through auto-<br><br>
+regressive prediction, selecting at ieast one of a plurality of scaling scheme in relation to the selected prediction scheme comprises selecting a scaling factor larger than 1, and scaling the prediction error vector in accordance with the selected scaling scheme comprises scaling the prediction error vector prior to quantization using the scaling 5     factor larger than 1;<br>
+for non-stationary voiced frames, selecting one of a plurality of prediction schemes in relation to the classification of the sound signal frame comprises selecting moving-average prediction, computing the prediction vector in accordance with the selected prediction scheme comprises computing the prediction error vector through 10 moving-average prediction, selecting at least one of a plurality of scaling scheme in relation to the selected prediction scheme comprises selecting a scaling factor equal to 1, and scaling the prediction error vector in accordance with the selected scaling scheme comprises scaling the prediction error vector prior to quantization using the scaling factor equal to 1. 15<br>
+18. A method of dequantizing linear prediction parameters in variable bitrrate sound signal decoding, comprising:<br>
+receiving at least one quantization index;<br>
+receiving   information   about   classification   of  a   sound   signal   frame " 20     corresponding to said at least one quantization index;<br>
+recovering a prediction error vector by applying said at least one index to at least one quantization table;<br>
+reconstructing a prediction vector; and<br>
+producing a linear prediction parameter vector in response to the recovered 25     prediction error vector and the reconstructed prediction vector; wherein;<br>
+reconstructing a prediction vector comprises processing the recovered prediction error vector through one of a plurality of prediction schemes depending on the frame classification information. 30<br><br>
+19.	A method of dequantizing linear prediction parameters according to<br>
+claim 18, wherein recovering the prediction error vector comprises:<br>
+applying said at least one index and the classification information to at least one quantization table using said one prediction scheme.<br>
+5<br>
+20.	A method of dequantizing linear prediction parameters according to<br>
+claim 18, wherein:<br>
+receiving at least one quantization index comprises receiving a first-stage quantization index and a second-stage quantization index; and<br>
+10	applying said at least one index to said at least one quantization table<br>
+comprises applying the first-stage quantization index to a first-stage quantization table to produce a first-stage prediction error vector, and applying the second-stage quantization, index to a second-stage quantization table to produce a second-stage prediction error vector.<br>
+15<br>
+21.	A method of dequantizing linear prediction parameters according to<br>
+claim 20, wherein:<br>
+the plurality of prediction schemes comprises moving-average prediction and<br>
+auto-regressive prediction;<br>
+20	the second-stage quantization table comprises a moving-average prediction<br>
+table and an auto-regressive prediction table; and<br>
+said-method further comprises applying the sound signal frame classification to the second-stage quantization table to process the second-stage quantization index through the moving-average prediction table or the auto-regressive prediction table 25     depending on the received frame classification information.<br>
+22.	A method of dequantizing linear prediction parameters according to<br>
+claim 20, wherein recovering a prediction error vector comprises:<br>
+summing the  first-stage prediction  error vector and the  second-stage 30     prediction error vector to produce the recovered prediction error vector.<br><br>
+23.	A method of dequantizing linear prediction parameters according to<br>
+claim 22, further comprising:<br>
+conducting on the recovered prediction vector an inverse scaling operation as a function of the received frame classification information.<br>
+5<br>
+24.	A method of dequantizing linear prediction parameters according to<br>
+claim 18, wherein producing a linear prediction parameter vector comprises:<br>
+adding the recovered prediction error vector and the reconstructed prediction vector to produce the linear prediction parameter vector. 10<br>
+25.	A method of dequantizing linear prediction parameters according to<br>
+claim 24, further comprising adding a vector of mean linear prediction parameters to<br>
+the recovered prediction error vector and the reconstructed prediction vector to<br>
+produce the linear prediction parameter vector.<br>
+15<br>
+26.	A method of dequantizing linear prediction parameters according to<br>
+claim 18, wherein:<br>
+the plurality of prediction schemes comprises moving-average prediction and<br>
+auto-regressive prediction; and<br>
+20	reconstructing the prediction vector comprises processing the recovered<br>
+prediction error vector through moving-average prediction or processing the produced parameter vector through auto-regressive prediction depending on the frame classification information.<br>
+25	27. A method of dequantizing linear prediction parameters according to<br>
+claim 26, wherein reconstructing the prediction vector comprises:<br>
+processing the produced parameter vector through auto-regressive prediction when the frame classification information indicates that the sound signal frame is<br>
+stationary voiced; and<br>
+»<br><br>
+V '<br>
+processing the recovered prediction error vector through moving-average prediction when the frame classification information indicates that the sound signal frame is not stationary voiced.<br>
+5	28. A device for quantizing linear prediction parameters in variable bit-rate<br>
+sound signal coding, comprising:<br>
+means for receiving an input linear prediction parameter vector;<br>
+means for classifying a sound signal frame corresponding to the input linear<br>
+prediction parameter vector;<br>
+10	means for computing a prediction vector;<br>
+means for removing the computed prediction vector from the input linear<br>
+prediction parameter vector to produce a prediction error vector;<br>
+means for scaling the prediction error vector; *  .<br>
+k	means for quantizing the scaled prediction error vector;<br>
+15     wherein:<br>
+the means for computing a prediction vector comprises means for selecting one of a plurality of prediction schemes in relation to the classification of the sound signal frame, and means for computing the prediction vector in accordance with the selected prediction scheme; and 20 - the means for scaling the prediction error vector comprises means for selecting at least one of a plurality of scaling scheme in relation to the selected prediction scheme, and means for scaling-the prediction error vector in accordance with the selected scaling scheme.<br>
+^      25	29. A device for quantizing linear prediction parameters in variable bit-rate<br>
+sound signal coding, comprising:<br>
+an input for receiving an input linear prediction parameter vector;<br>
+. a classifier of a sound signal frame corresponding to the input linear<br>
+prediction parameter vector;<br>
+30	a calculator of a prediction vector;<br><br>
+a subtractor for removing the computed prediction vector from the input linear prediction parameter vector to produce a prediction error vector;<br>
+a scaling unit supplied with the prediction error vector, said unit scaling the<br>
+prediction error vector; and<br>
+5	a quantizer of the scaled prediction error vector;<br>
+wherein:<br>
+the prediction vector calculator comprises a selector of one of a plurality of<br>
+prediction schemes in relation to the classification of the sound signal frame, to<br>
+calculate the prediction vector in accordance with the selected prediction scheme;<br>
+10	and<br>
+the scaling unit comprises a selector of at least one of a plurality of scaling schemes in relation to the selected prediction scheme, to scale the prediction error *  •      vector in accordance with the selected scaling scheme.<br>
+15	30. A device for quantizing linear prediction parameters according to claim<br>
+29, wherein:<br>
+the quantizer is supplied with the prediction error vector for processing said prediction error vector through the selected prediction scheme.<br>
+20	31. A device for quantizing linear prediction parameters according to claim<br>
+29, wherein:<br>
+the plurality of prediction schemes comprises moving-average prediction and auto-regressive prediction.<br>
+25	32. A device for quantizing linear prediction parameters according to claim<br>
+29, further comprising:<br>
+means for producing a vector of mean linear prediction parameters; and a subtractor for removing the vector of mean linear prediction parameters from the input linear prediction parameter vector to produce a mean-removed input 30     linear prediction parameter vector.<br><br>
+1	(	I<br>
+33.	A device for quantizing linear prediction parameters according to claim<br>
+29 wherein, when the classifier determines that the sound signal frame is a stationary<br>
+voiced frame, the prediction vector calculator comprises:<br>
+an auto-regressive predictor for applying auto-regressive prediction to the 5     prediction error vector.<br>
+34.	A device for quantizing linear prediction parameters according to claim<br>
+29, wherein, when the classifier determines that the sound signal frame is not a<br>
+stationary voiced frame:<br>
+10	the prediction vector calculator comprises a moving-average predictor for<br>
+applying moving-average prediction to the prediction error vector.<br>
+35.	A device for quantizing linear prediction parameters according to claim	^  .<br>
+33, wherein the scaling unit comprises:<br>
+15	a multiplier for applying to the prediction error vector a scaling factor larger<br>
+than 1.<br>
+36.	A device for quantizing linear prediction parameters according to claim<br>
+29, wherein the quantizer comprises a two-stage vector quantizer.<br>
+20<br>
+37.	A device for quantizing linear prediction parameters according to claim<br>
+36, wherein the two-stage vector quantizer comprises two stages using split vector<br>
+quantization.<br>
+38.	A device for quantizing linear prediction parameters according to claim<br>
+25     31, wherein:<br>
+the quantizer comprises a two-stage vector quantizer comprising first and second stages; and<br>
+the two-stage vector quantizer comprises first-stage quantization tables that are identical for both moving-average and auto-regressive prediction. 30<br><br>
+39. A device for quantizing linear prediction parameters according to claim 36, wherein the two-stage vector quantizer comprises:<br>
+a first-stage vector quantizer supplied with the prediction error vector for quantizing said prediction error vector and producing a first-stage quantized 5     prediction error vector;<br>
+a subtractor for removing from the prediction error vector the first-stage quantized prediction error vector to produce a second-stage prediction error vector;<br>
+a second-stage vector quantizer supplied with the second-stage prediction error vector for quantizing said second-stage prediction error vector and producing a 10     second-stage quantized prediction error vector; and<br>
+an adder for producing a quantized prediction error vector by summing the first-stage and second-stage quantized prediction error vectors.<br>
+1^	40. A device for quantizing linear prediction parameters according to claim<br>
+15      39, wherein the second-stage vector quantizer comprises:<br>
+a moving-average second-stage vector quantizer for quantizing the second-stage prediction error vector using moving-average prediction; and<br>
+an auto-regressive second-stage vector quantizer for quantizing the second-■ stage prediction error vector using auto-regressive prediction. 20<br>
+41.	A device for quantizing linear prediction parameters according to claim<br>
+36, wherein the two-stage vector quantizer comprises:<br>
+a first-stage vector quantizer for producing a first-stage quantization index; a second-stage vector quantizer for producing a second-stage quantization W       25      index; and<br>
+a transmitter of the first-stage and second-stage quantization indices through a communication channel.<br>
+42.	A device for quantizing linear prediction parameters according to claim<br>
+30     39, wherein, when the classifier determines that the sound signal frame is,a stationary<br>
+voiced frame, the prediction vector calculator comprises:<br><br>
+an adder for summing (a) the quantized prediction error vector produced by summing the first-stage and second-stage quantized prediction error vectors and (b) the computed prediction vector to produce a quantized input vector; and<br>
+an auto-regressive predictor for processing the quantized input vector. 5<br>
+43. A device for quantizing linear prediction parameters according to claim 30, wherein:<br>
+-	the plurality of prediction schemes comprises moving-average prediction and auto-<br>
+regressive prediction;<br>
+10     - the quantizer comprises:<br>
+a two-stage vector quantizer comprising a first-stage codebook itself comprising, in sequence:<br>
+a first group of vectors usable when applying moving-<br>
+average prediction and placed at the beginning of a table;<br>
+15	a second group of vectors usable when applying either<br>
+moving-average and auto-regressive prediction and placed in the table intermediate the first group of vectors and a third group of vectors;<br>
+the third group of vectors usable when applying auto-<br>
+20	regressive prediction and placed at the end of the table;<br>
+-	the prediction error vector processing means comprises:<br>
+when the selected prediction scheme is moving-average prediction,<br>
+means for processing the prediction error vector through the first and second<br>
+groups of vectors of the table; and<br>
+25	when the selected prediction scheme is auto-regressive prediction,<br>
+means for processing the prediction error vector through the second and third groups of vectors.<br>
+44. A device for quantizing linear prediction parameters according to claim<br>
+30     43, further comprising, to ensure interoperability with the AMR-WB standard, a<br>
+mapping table establishing mapping between the position of a first-stage vector in the<br><br>
+table of the first-stage codebook and an original position of the first-stage vector in an AMR-WB first-stage codebook.<br>
+45. A device for quantizing linear prediction parameters according to claim 5      31, wherein:<br>
+the prediction vector calculator comprises an auto-regressive predictor for<br>
+applying auto-regressive prediction to the prediction error vector and a moving-<br>
+average predictor for applying moving-average prediction to the prediction error<br>
+vector; and<br>
+10	the   auto-regressive   predictor   and   moving-average   predictor   comprise<br>
+respective memories that are updated every sound signal frame, assuming that either moving-average or auto-regressive prediction can be used in a next frame.<br>
+46.	A device for dequantizing linear prediction parameters in variable bit-rate<br>
+15      sound signal decoding, comprising:<br>
+means for receiving at least one quantization index;<br>
+means for receiving information about classification of a sound signal frame corresponding to said at least one quantization index;<br>
+means for recovering a prediction error vector by applying said at least one 20     index to at least one quantization table;<br>
+means for reconstructing a prediction vector;<br>
+means for producing a linear prediction parameter vector in response to the<br>
+recovered prediction error vector and the reconstructed prediction vector;	t<br>
+wherein:<br>
+„       25	the prediction vector reconstructing means comprises means for processing the<br>
+recovered prediction error vector through on of a plurality of prediction schemes depending on the frame classification information.<br>
+47.	A device for dequantizing linear prediction parameters in variable bit-rate<br>
+'  *   "30     sound signal decoding, comprising:<br>
+means for receiving at least one quantization index;<br><br>
+means for receiving information about classification of a sound signal frame corresponding to said at least one quantization index;<br>
+at least one quantization table supplied with said at least one quantization<br>
+index for recovering a prediction error vector;<br>
+5	a prediction vector reconstructing unit;<br>
+a generator of a linear prediction parameter vector in response  to the recovered prediction error vector and the reconstructed prediction vector; wherein:<br>
+the prediction vector reconstructing unit comprises at least one predictor supplied<br>
+10	with recovered prediction error vector for processing the recovered prediction<br>
+error vector through one of a plurality of prediction schemes depending on the frame classification information.<br>
+»   *<br>
+48.	A device for dequantizing linear prediction parameters according to claim<br>
+15     47, wherein said at least one quantization table comprises:<br>
+a quantization table using said one prediction scheme and supplied with both said at least one index and the classification information.<br>
+49.	A device for dequantizing linear* prediction parameters according to claim<br>
+20     47, wherein:<br>
+the quantization index receiving means comprises two inputs for receiving a<br>
+first-stage quantization index and a second-stage quantization index; and	t  .<br>
+said at least one quantization table comprises a first-stage quantization table supplied with the first-stage quantization index to produce a first-stage prediction ^ 25 error vector, and a second-stage quantization table supplied with the second-stage quantization index to produce a second-stage prediction error vector.<br>
+50.	A device for dequantizing linear prediction parameters according to claim<br>
+49, wherein:<br>
+30	the plurality of prediction schemes comprises moying-average prediction and<br>
+auto-regressive prediction;<br><br>
+the second-stage quantization table comprises a moving-average prediction table and an auto-regressive prediction table; and<br>
+said device further comprises means for applying the sound signal frame classification to the second-stage-quantization table to process the second-stage 5     quantization index through the moving-average prediction table or the auto-regressive prediction table depending on the received frame classification information.<br>
+51.	A device for dequantizing linear prediction parameters according to claim<br>
+49, further comprising:<br>
+10	an adder for summing the first-stage prediction error vector and the second-<br>
+stage prediction error vector to produce the recovered prediction error vector.<br>
+52.	A device for dequantizing linear prediction parameters according to claim<br>
+%^                 51, further comprising:<br>
+15	means for conducting on the reconstructed prediction vector an inverse<br>
+scaling operation as a function of the received frame classification information.    *<br>
+53.	A device for dequantizing linear prediction parameters according to claim<br>
+47, wherein the generator of linear prediction parameter vector comprises:<br>
+20	an adder of the recovered prediction error vector and the reconstructed<br>
+prediction vector to produce the linear prediction parameter vector.<br>
+54.	A device for dequantizing linear prediction parameters according to claim<br>
+53, further comprising means for adding a vector of mean linear prediction parameters<br>
+25     to the recovered prediction error vector and the reconstructed prediction vector to produce the linear prediction parameter vector.<br>
+55.	A device for dequantizing linear prediction parameters according to claim<br>
+47, wherein:<br>
+30       -  -      the plurality of prediction schemes comprises moving-average prediction and auto-regressive prediction; and<br><br>
+the prediction vector  reconstructing  unit comprises  a moving-average<br>
+predictor and an auto-regressive predictor for processing the recovered prediction<br>
+error vector through moving-average prediction or for processing the produced<br>
+parameter  vector  through  auto-regressive   prediction   depending   on   the   frame<br>
+5      classification information.<br>
+56. A device for dequantizing linear prediction parameters according to claim 55, wherein the prediction vector reconstructing unit comprises:<br>
+means for • processing the produced parameter vector through the auto-10 regressive predictor when the frame classification information indicates that the sound signal frame is stationary voiced; and<br>
+means for processing the recovered prediction error vector through the moving-average predictor when the frame classification information, indicates that the sound signal frame is not stationary voiced,<br>
+15	57. A device for dequantizing linear prediction parameters according to claim<br>
+55, wherein:<br>
+said at least one predictor comprises  an auto-regressive predictor  for -applying auto-regressive prediction to the prediction error vector and a moving--• average predictor for applying moving-average prediction to the prediction error 20     vector; and<br>
+the auto-regressive predictor and moving-average predictor comprise respective memories that are updated every sound signal frame, assuming that either moving-average or auto-regressive prediction can be used in a next frame.<br><br><br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1DSEVOUC0yMDA1IEFCU1RSQUNULnBkZg==" target="_blank" style="word-wrap:break-word;">1385-CHENP-2005 ABSTRACT.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1DSEVOUC0yMDA1IENMQUlNUyBHUkFOVEVELnBkZg==" target="_blank" style="word-wrap:break-word;">1385-CHENP-2005 CLAIMS GRANTED.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1DSEVOUC0yMDA1IENPUlJFU1BPTkRFTkNFIE9USEVSUy5wZGY=" target="_blank" style="word-wrap:break-word;">1385-CHENP-2005 CORRESPONDENCE OTHERS.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1DSEVOUC0yMDA1IENPUlJFU1BPTkRFTkNFIFBPLnBkZg==" target="_blank" style="word-wrap:break-word;">1385-CHENP-2005 CORRESPONDENCE PO.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1DSEVOUC0yMDA1IEZPUk0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">1385-CHENP-2005 FORM 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1jaGVucC0yMDA1LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">1385-chenp-2005-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1jaGVucC0yMDA1LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">1385-chenp-2005-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1jaGVucC0yMDA1LWNvcnJlc3BvbmRuZWNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">1385-chenp-2005-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1jaGVucC0yMDA1LWNvcnJlc3BvbmRuZWNlLXBvLnBkZg==" target="_blank" style="word-wrap:break-word;">1385-chenp-2005-correspondnece-po.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1jaGVucC0yMDA1LWRlc2NyaXB0aW9uKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">1385-chenp-2005-description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1jaGVucC0yMDA1LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">1385-chenp-2005-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1jaGVucC0yMDA1LWZvcm0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">1385-chenp-2005-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1jaGVucC0yMDA1LWZvcm0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">1385-chenp-2005-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1jaGVucC0yMDA1LWZvcm0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">1385-chenp-2005-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1jaGVucC0yMDA1LWZvcm0xOC5wZGY=" target="_blank" style="word-wrap:break-word;">1385-chenp-2005-form18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=MTM4NS1jaGVucC0yMDA1LXBjdC5wZGY=" target="_blank" style="word-wrap:break-word;">1385-chenp-2005-pct.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=YWJzLTEzODUuanBn" target="_blank" style="word-wrap:break-word;">abs-1385.jpg</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="220550-tetrahydroquinoline-derivatives.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="220552-a-swirling-flow-burner.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>220551</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>1385/CHENP/2005</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>29/2008</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>18-Jul-2008</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>29-May-2008</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>23-Jun-2005</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>NOKIA CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>JELINEK, Milan</td>
+											<td></td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G10L 19/02</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/CA2003/001985</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2003-12-18</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>2,415,105</td>
+									<td>2002-12-24</td>
+								    <td>Canada</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/220551-method-and-device-for-quantization-of-linear-prediction-parameters-in-variable-bit-rate-speech-coding by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 10:37:24 GMT -->
+</html>

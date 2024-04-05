@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/250689-dynamic-loading-of-virtual-volume-data-in-a-virtual-tape-server by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 14:17:59 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 250689:DYNAMIC LOADING OF VIRTUAL VOLUME DATA IN A VIRTUAL TAPE SERVER</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">DYNAMIC LOADING OF VIRTUAL VOLUME DATA IN A VIRTUAL TAPE SERVER</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>Disclosed are a system, a method, and article of manufacture to provide for obtaining data storage device specific information from a data storage device using standard read/write commands. This method uses a host application to write a unique sequence of records to a logical volume of the data storage device. The data storage device detects the unique sequence of records for the logical volume and writes device specific information to the logical volume allowing the host application the ability to read the data storage device specific information using a read command for the logical volume.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td> <br><br>
+Description<br>
+DYNAMIC LOADING OF VIRTUAL VOLUME DATA IN A VIRTUAL TAPE<br>
+SERVER<br>
+Technical Field<br>
+[001]         The present invention relates generally to the retrieval of storage controller specific data by host applications from virtual tape servers. The retrieval of storage controller specific data is accomplished using the data path between the host computer and the virtual tape server.<br>
+Background Art<br>
+[002]	Virtual tape storage systems use hard disk drive storage to emulate tape drives and<br>
+tape cartridges. For example, host systems perform input/output (I/O) operations with respect to a tape library by performing I/O operations with respect to a set of hard disk drives that emulate the tape library. In prior art virtual tape storage systems, such as the International Business Machines (IBM) Magstar® Virtual Tape Server, at least one virtual tape server (VTS) is coupled to a tape library comprising numerous tape drives and tape cartridges. The VTS is also coupled to a direct access storage device (DASD), comprised of numerous interconnected hard disk drives.<br>
+[003]         The DASD functions as a cache to volumes in the tape library. In VTS operations, the VTS processes the host's requests to access a volume in the tape library and returns data for such requests, if possible, from the cache. If the volume is not in the cache, then the VTS recalls the volume from the tape library to the cache, i.e., the VTS transfers data from the tape library to the cache. The VTS can respond to host requests for volumes that are present in the cache substantially faster than requests for volumes that have to be recalled from the tape library to the cache.<br>
+[004]	Because the cache can satisfy requests faster than the tape library, I/O requests can<br>
+be satisfied faster if frequently accessed volumes are kept in the cache. However, since the capacity of the cache is relatively small when compared to the tape library, not all volumes can be kept in the cache. Hence, the VTS also premigrates volumes from the cache to the tape library, i.e., the VTS transfers data from the cache to the tape cartridges in the tape library. The process of transferring data from the cache to the tape cartridges is referred to as premigration. Eventually, these premigrated volumes will be removed from the cache and shortened to a pointer that points to the data on tape cartridges, freeing space in the cache for new data. This shortening, or "migration," operation is very fast, and the performance bottleneck in the VTS is the premigration operation itself.<br>
+[005]	In general, applications running on a host computer use a data path to read and<br><br>
+write data to a storage device. In VTS operations with the host, the data path is used to read and write data with respect to data storage associated with the VTS. If the ap- plication (i.e. running on the host) needs device information about the data storage device (Le. VTS), special applications have to be written to use other special paths to obtain the device information. For example in an AIX application, reads and writes are used to transfer application data and IOCTLSs (input and output control commands to specific AIX  device drivers) are required to obtain device specific information. [006]	In general, the special paths used to obtain device information are device specific,<br>
+whereas the data path commands typically are not device specific. This makes applications that obtain device information less mobile between hardware platforms, making the applications more costly to maintain. In addition, data path commands have a fixed format for the data sent and to be returned, requiring a coordination of changes between the host application requesting the data, the operating system of the host that controls I/O devices and the storage device handling the request anytime additional information is needed from the data storage device. It is also inefficient to use the data path command method to obtain information from the storage device when the nature of the data has a high degree of variability in it. For example, if the storage device is an automated tape library and the information being requested is a list of the tapes stored in that library, that list could contain just a few hundred entries for a small library configuration or hundreds of thousands of entries for a large virtual library. Data path commands are not capable of handling an entirely variable amount of data easily. Typically, the data path command to obtain the information is designed to obtain one tape identifier at a time or some fixed multiple of tape identifiers, for example, one hundred tape identifiers. While obtaining a hundred at a time may work well for small libraries, the overhead of the hundreds of commands that would be necessary to obtain the information for a large library is excessive. What is required is a method to obtain device specific information from a data storage device that uses the standard host computer data path and read/write commands. Therefore there is a need for an improved method to obtain specific information from a storage device that uses the standard host computer data path and read/write commands.<br>
+Disclosure of Invention<br>
+[007]	The present invention provides a system and a method for obtaining data storage<br>
+device specific information from a data storage device using standard read/write commands. This method uses a host application to write a unique sequence of records to a logical volume of the data storage device. The data storage device detects the unique sequence of records for the logical volume and writes device specific information to the logical volume allowing the host application the ability to read the<br><br>
+data storage device specific information using a read command for the logical volume.<br>
+[008]	In method form, exemplary embodiments include a method for obtaining in-<br>
+formation from a data storage device, including writing data comprising a unique sequence of records to a logical volume on the data storage device. The data storage device analyzes the data written to the logical volume to detect the unique sequence of records. In response to the data storage device detecting the unique sequence of records on the logical volume, the data storage device writes data storage device specific information on the logical volume, the data storage device mounts the logical volume and reads the device specific information from the logical volume.<br>
+[009]	Another exemplary method embodiment includes a method for obtaining in-<br>
+formation from a data storage device, including writing data comprising a unique sequence of records to a logical volume on the data storage device. The data storage device analyzes the data written to the logical volume to detect the unique sequence of records. In response to the data storage device detecting the unique sequence of records on the logical volume, the data storage device places a device specific information data request flag in a metadata associated with the logical volume to indicate that the logical volume comprises device specific information. The data storage device receives a request to mount the logical volume and reads the metadata. In response to the data storage device detecting the device specific information data request flag in the metadata, the data storage device verifies that the logical volume is a special data request logical volume and writes device specific information on the logical volume. The data storage device reads the device specific information from the logical volume and provides the device specific information to a host computer.<br>
+[010]	In system embodiments the present invention provides a system for obtaining in-<br>
+formation from a device, including a host computer, a data storage device comprising: a cache memory; a logical volume; a central processing unit for controlling the data storage device and a host computer interface coupled to the host computer for interfacing the data storage device to the host computer. The host computer writes data comprising a unique sequence of records to the logical volume on the data storage device. The data storage device analyzes the data written to the logical volume to detect the unique sequence of records and in response to the data storage device detecting the unique sequence of records on the logical volume, the data storage device writes data storage device specific information on the logical volume. The data storage device mounts the logical volume and reads the device specific information from the logical volume. The data storage device provides the device specific information to the host computer.<br>
+[011]	It will be appreciated by those skilled in the art that although the following detailed<br>
+description will proceed with reference being made to preferred embodiments and<br><br>
+methods of use, the present invention is not intended to be limited to these preferred<br>
+embodiments and methods of use. Rather, the present invention is intended to be<br>
+limited only as set forth in the accompanying claims [012]         For a more detailed understanding of the present invention, reference may be made<br>
+to the following detailed description taken in conjunction with the accompanying<br>
+drawings.<br>
+Brief Description of the Drawings<br>
+[013]         Referring now to the drawings in which like reference numbers represent corresponding parts throughout: [014]         FIG. 1 illustrates, in a block diagram, a computing environment in accordance with<br>
+an implementation of the present invention. [015]         FIG. 2 illustrates, in a block diagram, further details of a computing environment in<br>
+accordance with an implementation of the present invention. [016]         FIG. 3 illustrates a block diagram including a virtual tape server, a cache, and a<br>
+physical library in accordance with certain implementations of the invention. [017]         FIG. 4 illustrates a flowchart of a process to write data to a data storage device. [018]         FIG. 5 illustrates a flowchart of a process to read data from a data storage device. [019]	FIG. 6 illustrates a flowchart of one embodiment of the present invention to obtain<br>
+data storage device specific information. [020]	FIG. 7 illustrates a flowchart of a second embodiment of the present invention to<br>
+obtain data storage device specific information. [021]         FIG. 8 illustrates, in a block diagram, one implementation of the architecture of<br>
+hosts, operator interfaces and VTS that may be used for the present invention.<br>
+Mode for the Invention<br>
+[022]         The present invention is described in preferred embodiments in the following description. The preferred embodiments are described with reference to the Figures. While the present invention is described in conjunction with the preferred embodiments, it will be appreciated by those skilled in the art that it is intended to cover alternatives, modifications, and equivalents as may be included.<br>
+[023]         FIG. 1 illustrates, in a block diagram, a computing environment 100 in accordance with an embodiment of the present invention. A Virtual Tape Server (VTS) 110 emulates virtual tapes as files on a direct access storage device (DASD) cache 160. Additional VTSs may be deployed, but for puiposes of illustration, a single VTS 110 is shown. The VTS 110 is any server computational device known in the art and includes any operating system known in the art For instance, in certain implementations of the invention, the VTS 110 may be implemented in one or more computers comprising an IBM RS/6000®  system, IBM P series®  and include the IBM AIX ® operating system.<br><br>
+[024]	One or more hosts 102 and one or more operator interfaces 105 connect to the VTS<br>
+110. The hosts 102 and operator interfaces 105 may be any computational device known in the art, such as a personal computer, a workstation, a server, a mainframe, a hand held computer, a palm top computer, a telephony device, network appliance, etc. The hosts 102 and operator interfaces 105 may include any operating system known in the art, such as the IBM OS/390** operating system.<br>
+[025]	The VTS 110 includes at least one central processing unit (CPU) 128 for controlling<br>
+VTS 110 and an application, such as a storage manager 130 that optimizes storage utilization. The storage manager 130 may be implemented either as a standalone application or as a part of one or more other applications. The storage manager 130 controls access to a cache memory (i.e. cache 160), such as a DASD file buffer, and a physical library 150, such as an automated data storage library. In certain implementations, the storage manager 130 may include software to utilize an automated data storage library, such as the IBM Magstar®Virtual Tape Server and the IBM ADSTAR Distributed Management (ADSM) software or Tivoli® Storage Manager. The storage manager 130 may perform data movement operations between the hosts 102, the cache 160, and the physical library 150. Further details of the VTS technology are described in the IBM publication "TotalStorage® Peer-to-Peer Virtual Tape Server Planning and Implementation Guide," IBM document no. SG24-6115-02 (Copyright IBM, 2004).<br>
+[026]	The physical library 150 may comprise an IBM Magstar®Tape Library, such as the<br>
+Magstar® 3494 Tape Library, or any other automated data storage library system known in the art In certain implementations, the physical library 150 comprises numerous physical devices 154, such as tape drives, CD ROM drives, DVD ROM drives, etc. that provide access to physical volumes 156. In certain implementations, the VTS 110 provides the image of up to 256 tape drives 154 (e.g., 3490 tape drives from IBM).<br>
+[027]	Cache 160 may comprise numerous interconnected hard disk drives. Cache 160<br>
+stores logical volumes 162. In certain implementations, logical volumes 162 are not organized into pools, although the physical volumes 156 may be organized into pools. Moreover, the logical volumes 162 may be stored anywhere in cache. Cache 160 improves performance by allowing host I/O requests from the hosts 102 to the physical library 150 to be serviced from the faster accessible cache 160 as opposed to the slower accessible physical library 150. The disks in the cache may be arranged as a Direct Access Storage Device (DASD), Just a Bunch of Disks (JBOD), Redundant Array of Inexpensive Disks (RAID), etc.<br>
+[028]         Host(s) 102 exchange tape operations with the VTS 110. The execution of the tape operations retrieves data from or stores data into logical volumes 162 stored in the cache 160. The VTS automatically premigrates (i.e., offloads) logical volumes 162 in<br><br>
+cache 160 after the logical volumes have been accessed by host(s) 102 onto physical volumes 156. In certain implementations, the least recently used (LRU) logical volume 162 is transferred before other logical volumes 162. If one of the hosts 102 requires a logical volume 162 that is not in the cache 160, the storage manager 130 of the VTS 110 commands the tape library 150 to mount the appropriate physical volume 156 into a physical device 154. Then, the required data is copied from the physical volume 156 as a logical volume 162 in the cache 160 (i.e., the data is recalled).<br>
+[029]         FIG. 2 illustrates, in a block diagram, further details of a computing environment in accordance with one embodiment of the present invention. A host computer interface coupled to host(s) 102 for interfacing the data storage device (i.e. VTS 110) to host(s) 102 is used for communicating with the data storage device. Various host computer interfaces may be used, such as Enterprise System Connection (ESCON) ® adaptors 112 and 114 or any other switching mechanism known in the art (e.g., fibre channel, Storage Area Network (SAN) interconnections, etc.). CADD 116 is a device driver for tape daemons 118A...118N. Tape daemons 118A...118N receive read and write tape operations from host(s) 102 through one or more host computer interfaces. For a write operation, the tape daemons 118A... 118N receive data, create logical volumes 162, and write the logical volumes 162 as files in cache 160. For read operations, the tape daemons 118A...118N access the cache 160 to retrieve data through client kernel extension 146 and return the data to hosts 102. Host(s) 102 operate as if they are communicating with physical tape drives, rather than with the tape daemons 118A. ..118N, which emulate the physical tape drives. Each tape daemon 118A... 118N includes a file system manager (FSM) 120A...120N that is used to access files in cache 160.<br>
+[030]         The storage manager 130 transfers data from cache 160 to tape drives 154A...154N. In one embodiment, the storage manager 130 includes multiple components, as illustrated in FIG. 2. The autonomic cache control 140 controls the transfer of data from cache 160 to tape drives 154A...154N. Additionally, the autonomic cache control 140 controls the rate at which the tape daemons 118A...118N write data to the cache 160.<br>
+[031]         In particular, the autonomic cache control 140 receives notification from one of the hosts 102 to transfer data. Host(s) 102 indicate which logical volumes 162 are to be placed into particular pools of tape cartridges 156A...156N. Moreover, the autonomic cache control 140 maintains metadata on which files are stored in cache 160. The autonomic cache control 140 notifies the disk data client 144 to transfer data. The disk data client 144 requests data from the client kernel extension 146, which retrieves the requested data from cache 160 and forwards the data to disk data client 144. The disk data client 144 forwards the data to tape data server 142 at the request of the autonomic cache control 140.<br>
+[032]         The tape data server controls the writing of data to tape drives 154A...154N. The<br><br>
+data is sent from tape data server to Atape driver 136 to SCSI adaptor 138 and to the tape drives 154A...154N. The tape data server uses a library interface 134 to tell the library manager 152 which tape cartridge 154 is to be put into one of the tape drives. The autonomic cache control 140 sends messages to the library manager 152 through the library driver 132.<br>
+[033]         The library manager 152 manages the mounting and unmounting of the tape cartridges 156A...154N from the tape drives 154A...154N. The autonomic cache control 140 selects the appropriate physical tape cartridge 156 to mount based on its association with the logical volume 162 being accessed or written. When the library manager 152 receives a notification to mount or unmount a tape cartridge 154, the library manager 152 notifies the accessor 158, which is used to access the tape drives 154A...154N. Hie accessor 158 mounts and unmounts tape drives 154A...154N.<br>
+[034]         FIG. 3 illustrates a block diagram including VTS 110, cache 160 and physical library 150, in accordance with one embodiment of the present invention. Physical library 150, in addition to including physical devices 154A...154N, includes physical volumes 156A...156N. A physical volume 156A...156N may be mounted on any of the physical devices 154A...154N. In certain implementations the physical volumes 156A...156N are tape cartridges that may be mounted via mechanical mounting onto the physical devices 154A...154N that are tape drives. In alternative implementations the physical volumes 156A...156N may be CD ROMs, DVDs or other storage media. In certain implementations, thanumber of physical volumes 156A...156N are larger than the number of physical devices 154A...154N. The physical volumes 154A...154N may be organized into pools. For example, physical volumes 156A and 156B may be in pool 157.<br>
+[035]         The operations occurring between cache 160 and physical devices 154A...154N are premigration (i.e., the transfer of data from the cache 160 to the physical volumes 156A...156N) and recall (i.e., the transfer of data from the physical volumes 156A...156N to the cache 160). A typical data file size is 100-200 megabytes. In one embodiment, the VTS 110 provides an N:l ratio, where N is typically 10-20 of logical devices to physical devices 154A...154N. In such implementations, since there are more physical volumes 156A...156N (corresponding to the logical volumes 162 stored in the logical devices) than physical devices 154A... 154N, there may be time periods when the VTS 110 has more physical volumes 156A...156N to be mounted for recalls than there are physical devices 154A...154N in the VTS 110. As a result, physical volumes 156A...156N may need to be unmounted so that other physical volumes 156A...156N may be mounted,<br>
+[036]         When a host 102 requests a logical volume from the VTS 110, a cache hit occurs if the logical volume is resident in the cache 160. If the logical volume is not resident in<br><br>
+the cache, the storage manager 130 determines whether the corresponding physical volume 156A...156N is mounted on one of the physical devices 154A...154N. If the corresponding physical volume 156A...156N is not mounted then the storage manager 130 mounts the corresponding physical volume 156A...156N on one of the physical devices 154A...154N. The data for the logical volume is then transferred back, i.e., recalled, from the corresponding physical volume 156A...156N. In certain implementations, recall operations can take several minutes, the recall latency may include the time for a robotic arm to access a tape cartridge and insert the tape cartridge into a tape drive, and the recall latency may include the time to locate the tape to a desired location.<br>
+[037]	The storage manager 130 maps a plurality of logical volumes 162 within cache 160<br>
+to a plurality of logical (virtual) devices.The hosts 102 perform I/O operations by accessing logical (virtual) volumes in the logical devices via the VTS 110. The storage manager 130 maps the logical volumes 162 to the physical volumes 156A...156N. Although the hosts 102 access data via logical volumes and logical devices, the data is 3physically stored in the physical volumes 156A...156N mountable on the physical devices 154A...154N.<br>
+[038]	The logical volumes 162A...162N corresponding to the physical volumes<br>
+156A...156N may be resident in the cache 160. In FIG. 3, the cache 160 contains logical volumes 162A...162N. The logical volumes resident on the cache 160 may change over time. The storage manager 130 attempts to keep the more likely to be used logical volumes in the cache 160.<br>
+[039]	When a host 102 writes a logical volume to the VTS 110, the data is stored as a file<br>
+in the cache 160. The cached data is later premigrated onto a physical volume 156A...156N. The original logical volume is left in the cache 160 for cache hits. "When the cache 160 fills to a predetermined threshold, the logical volume data for a selected logical volume 162A.,.162N is removed from the cache to free space for more logical volumes. In certain implementations, the storage manager 130 removes from the cache 160 a selected logical volume 162A...162N that has been resident on the cache 160 for the longest period of time (i.e., the least recently used logical volume).<br>
+[040]	An example of a standard write sequence 400 that may be used by VTS 110 to write<br>
+data is illustrated in flowchart 400 shown in FIG. 4. The write sequence process begins at step 405 where device driver CADD 116 receives a mount command and subsequent write commands with data for tape daemons 118A... 118N from host(s) 102. At step 407, storage manager 130 mounts the requested logical volume for writing. Mounting a logical volume may comprise: opening, locating, rewinding or any other operation that places the logical volume in a state to read or write data in the correct location relative to the beginning of the logical volume. Host(s) 102 may send the write command in the<br><br>
+form of a data object and a storage request. The data object may comprise a logical volume, record, file, physical volume, cylinder, logical or physical device, surface, sector, page, byte, bit, or any other appropriate unit of data. At step 410, tape daemons 118A...118N receive the data and forward the data to storage manager 130. At step 415, storage manager 130 writes the data object to DASD cache 160 and/or base storage physical volumes 156. Whether data is written to cache, base storage, or both is determined by the controller's pre-programmed data management strategy, which may include various alternatives such as (1) always storing received data objects on cache and occasionally copying or removing cached data objects to base storage, (2) storing received data objects in base storage and only caching the data objects that are most frequently used or likely to be used, (3) another known or novel approach. Storage manager 130 also makes an entry in a metadata database that may or may not be stored in cache 160. The entry in the metadata database cross-references the data object with metadata, which is discussed in greater detail below. Copying of the data object between primary and backup storage sites may also occur in step 415, or at another suitable time.<br>
+[041]         Until step 420 determines that the write operation is complete, step 420 repeats steps 410-415 as necessary. When the write operation finishes, step 420 advances to step 425. At step 425, storage manager 130 encapsulates the current data object's metadata. Encapsulation of the metadata involves collecting various metadata subcomponents and combining them into a suitable form for storage. Such encapsulation may entail concatenation, aggregation, encoding the parts together into a unified form, encrypting, etc. The metadata subcomponent relative to the present invention is a device specific information data request flag (explained below with reference to step 723). The metadata is associated with the logical volume where the corresponding data is stored. Step 430 writes the metadata to the cache 160 and/or another storage location, along with the data object written in step 415, depending upon the type of data management strategy in place. After step 430, the write sequence 400 ends in step 435.<br>
+[042]	As an alternative, step 410 may encapsulate the metadata with its corresponding<br>
+data object, and write the encapsulated result in step 415. In this case, step 410 buffers received data for subsequent writing to storage in step 415. The data object and metadata may be encapsulated, for example, by concatenation, aggregation, encoding the parts together into a unified form, encrypting, etc.<br>
+[043]         An example of a standard read sequence that may be used by VTS 110 to read data is illustrated in flowchart 500 shown in FIG. 5. The process of flowchart 500 is only one example of a process for obtaining information from a data storage device, other processes may be used without limitation. The read sequence 500 is started when<br><br>
+device driver CADD 116 receives a mount request from host(s) 102 for a specific logical volume 162. In response, device driver CADD 116 forwards the read request to tape daemons 118A...118N and storage manager 130. At step 507, storage manager 130 mounts the physical tape cartridge 156 associated with the requested logical volume for reading if the logical volume is not already resident in cache 160. Mounting a logical volume may comprise: opening, locating, rewinding or any other operation that places the logical volume in a state to read or write data in the correct location relative to the beginning of the logical volume. At step 510 the data and metadata for the logical volume are read At step 515 the data read is returned to the host 102. At step 520 the status of the reading of the requested logical volume is examined to determine if the read is complete. If the read is complete then control transfers to step 535. If the read is not complete then steps 510,515 and 520 are executed until the read is complete. The process ends at step 535. [044]	An example of the operation of one embodiment of the present invention for<br>
+obtaining information from a data storage device is now described with reference to FIG. 6. The process begins with step 602. Step 602 flows to step 605, where the data storage device, for example, VTS 110 receives a write command to write data to a logical volume. The logical volume may be any logical volume(s) managed by or associated with VTS 110. Multiple logical volumes may be written to simultaneously, without limitation. The write command is received from an external device(s), for example, host(s) 102. Other external devices may send a write command to the data storage device, for example, clients, servers, another VTS, an automated data storage library, etc., without limitation. The process flows to step 608 where the data associated with the write command is written to the logical volume. The data may be normal data or the data written may be data comprising a unique sequence of records, where the unique sequence of records may be used to indicate that device specific information is requested (explained below). The write process shown in flowchart 400 (FIG. 4) may be used to write the data or other procedures for writing data may be used. After completion of writing the data, the process flows to step 609 where the logical volume is either rewound or unloaded and loaded. The actions of step 609 are executed to prepare the logical volume to read data. After completion of step 609, the process flows to step 610 where VTS 110 determines if an analysis of the data written needs to be performed. Step 610, determines if data analysis step 615 needs to be executed. Data analysis step 615 may be disabled or enabled at step 610, by for example, using operator interface 105 coupled to the data storage device. Step 610 may be performed by an internal software switch, hardware logic, processing element etc. Operator interface 105 may be used to enable or disable the data analysis at step 610, or at any step of the execution of process 600. For example, an operator may enter a<br><br>
+command using a secure protocol, (e.g. username and password) at operator interface 105 to either enable or disable the data analysis at step 610. Other means or interfaces may be used, for example, a remote login to VTS 110 using a remote computer or other data processing device to enable or disable the data analysis at step 610. If at step 610 the data analysis is disabled, then control flows to step 622 where the data that was previously stored may be read from the logical volume. Alternatively data may be written to the logical volume at step 622. A read or write operation at step 622 may be the result of a read or write request from host(s) 102. The read or write request may additionally comprise an unmount, mount or rewind operation for the logical volume. The read or write processes shown in flowchart 500 (FIG. 5) and flowchart 400 (FIG. 4) may be used to read or write the data or other procedures for reading and writing data may be used. Alternatively, step 622 need not be executed. After execution of step 622, control flows to step 650 where the process ends. Step 622 may or may not be executed depending upon if it is necessary to read data at this time or if it is advantageous to read the data at another time.<br>
+[045]	If at step 610 the data analysis is enabled, then control flows to step 615 where the<br>
+data written to the logical volume is analyzed to detect a unique sequence of records. The data may be analyzed by reading the data on the logical volume, storing the data in temporary storage for analysis, intercepting the data as it is being stored, etc. The data analyzed may consist of the entire sequence of data written by the host 102 or specific subsets thereof. The data storage device (i.e. VTS 110) may analyze the data written to the logical volume to detect the unique sequence of records or other processing elements or devices associated with VTS 110 may be used. The unique set of records is used to indicate that a request for device specific information from the data storage device is requested by host(s) 102. The unique set of records is a specific pattern of data that has a low probability of existing for normal data written to a logical volume. An example of a unique set of records is: a volume header; a first dataset header; a second dataset header; a first tape mark; a key record; a query identifier record; a second tape mark; a volume trailer; a first volume end of file; a second volume end of file; a third tape mark; and a fourth tape mark. Volume headers, dataset headers, tape marks, end of file records and volume trailers are industry standard methods of identifying tape volumes (definitions are available from "DFSMS: using magnetic tape", IBM publication # SG26-7412).<br>
+[046]	Other unique sets of records than described above may be used with the present<br>
+invention without limitation. The unique sets of records should be a pattern of data that has a low probability of occurrence in normal data written to a logical volume.<br>
+[047]	If at step 620 the unique set of records is not detected on the logical volume, then<br>
+control flows to step 622 where the data that was previously stored may be read from<br><br>
+the logical volume. The above description for step 622 applies at this execution also. After execution of step 622, control flows to step 650 where the process ends. Step 622 may or may not be executed depending upon if it is necessary to read data at this time or if it is advantageous to ready the data at another time. If at step 620 the unique set of records is detected on the logical volume, then the process flows to step 623 where the unique set of records written to the logical volume is appended to, replaced, or changed to reflect device specific information. This may be accomplished by the data storage device (i.e. VTS 100) detecting the unique sequence of records on at least one logical volume, and then writing data storage device specific information on the logical volume. Also at step 623, VTS 110 notifies host(s) 102 that the device specific information stored on the logical volume is now available to read. The device specific information may comprise various forms of information about VTS 110, logical or physical volumes, associated storage devices (i.e. tape drives, Library 150, etc.). The device specific information may comprise a list of attributes of metadata associated with a logical volume. For example, the attributes of metadata may comprise a list of data version levels used to synchronize copies of logical volumes between two VTSs combined into a Peer-to-Peer VTS subsystem. The attributes of metadata could also comprise a list of host constructs that control which pools of physical tape cartridges each logical volume is associated with. The attributes of metadata may comprise statistical information about the data or other information relative to the data, without limitation. The device specific information may comprise a report of an operational, histoiy of the data storage device, for example, VTS 110. The operational history of the data storage device may comprise information regarding data stored or retrieved, power up/down sequences, performance history of the VTS, and usage of the subsystems that comprise the VTS, such as the cache 160 or the tape drives 154. The form of the report of operational history may take various forms, for example, a simple list, graphical depictions, interactive data file, etc. The device specific information may comprise a report of the operational states of the data storage device, for example, VTS 110. The operational states of the data storage device may comprise information regarding the present state of data stored or retrieved, power up/down sequence states, and availability status of the subsystems that comprise the VTS, such as the cache 160 or the tape drives 154. The form of the report of operational states may take various forms, for example, a simple list, graphical depictions, interactive data file, etc. The device specific information may comprise a list of the physical location of a logical volume stored in the data storage device. For example the physical location of a logical volume may reside in one or more physical devices 154, physical volumes 156, tape drives 154A-154N, tape cartridges 156A-156N, DASD 160 or other devices associated with VTS 110. The form of the a list of the physical locations may take various forms,<br><br>
+for example, a simple list, graphical depictions, interactive data file, etc.<br>
+[048]         After execution of step 623, control flows to step 625. At step 625 the logical<br>
+volume where the device specific information was written to is mounted. Mounting of the logical volume at step 625, may additionally comprise: opening the logical volume; rewinding of the logical volume; or any other operation upon the logical volume that places the logical volume in a state such that data can be read from the logical volume. Mounting the logical volume may be the result of VTS 110 receiving a read command (i.e. process 500, FIG. 5) from an external device, for example, host(s) 102. Mounting the logical volume may also include retrieving the entire contents of the logical volume into the cache 160 from the physical tape drive 154, verifying the correct logical volume is being accessed by checking either the volume data or the volume metadata, and verifying the integrity of the logical volume using error detecting or correcting codes. After mounting logical volume at step 625, control flows to step 630 where the data storage device (i.e. VTS 110) reads the device specific information from the logical volume. The information read is transmitted to the device requesting the information, for example, host(s) 102. The reading of the device specific information may comprise: reading a volume header; reading a first dataset header; reading a second dataset header; reading a first tape mark; reading a report header; reading at least one report data record; reading a second tape mark; reading a volume trailer; reading a first volume end of file; reading a second volume end of file; reading a third     tape mark; and reading a fourth tape mark. The reading of at least one report data may include any of the following (explained above): a list of attributes of metadata associated with the logical volume in the data storage device; a report of an operational history of the data storage device; a report of operational states of the data storage device; and a list of the physical location of the logical volume in the data storage device. After execution of step 630, control transfers to step 650 where the process ends.<br>
+[049]         An example of the operation of a second embodiment of the present invention for obtaining information from a data storage device is now described with reference to FIG. 7. The process begins with step 702. Step 702 flows to step 705, where the data storage device, for example, VTS 110 receives a write command to write data to a logical volume. The logical volume may be any logical volume(s) managed by or associated with VTS 110. Multiple logical volumes may be written to simultaneously, without limitation. The write command is received from an external device(s), for example, host(s) 102. Other external devices may send a write command to the data storage device, for example, clients, servers, another VTS, an automated data storage library, etc., without limitation. The process flows to step 708 where the data associated with the write command is written to the logical volume. The data may be<br><br>
+normal data or the data written may be data comprising a unique sequence of records, where the unique sequence of records may be used to indicate that device specific information is requested (explained below). The write process shown in flowchart 400 (FIG. 4) may be used to write the data or other procedures for writing data may be used After completion of writing the data, the process flows to step 710 where VTS 110 determines if an analysis of the data written needs to be performed. Step 710, determines if data analysis step 715 needs to be executed. Data analysis step 715 may be disabled or enabled at step 710, by for example, using operator interface 105 coupled to the data storage device. Step 710 may be performed by an internal software switch, hardware logic, processing element etc. Operator interface 105 may be used to enable or disable the data analysis at step 710, or at any step of the execution of process 700. For example, an operator may enter a command using a secure protocol, (e.g. username and password) at operator interface 105 to either enable or disable the data analysis at step 710. Other means or interfaces may be used, for example, a remote login to VTS 110 using a remote computer or other data processing device to enable or disable the data analysis at step 710. If at step 710 the data analysis is disabled, then control flows to step 722 where the data that was previously stored may be read from the logical volume. Alternatively data may be written to the logical volume at step 722. A read or write operation at step 722 may be the result of a read or write request from host(s) 102. The read or write request may additionally comprise an unmounV-mount or rewind operation for the logical volume. The read process? shown in flowchart 500 (FIG. 5) may be used to read the data or other procedures for reading data may be used. Alternatively, step 722 need not be executed. After execution of step 722, control flows to step 770 where the process ends. Step 722 may or may not be executed depending upon if it is necessary to read data at this time or if it is advantageous to ready the data at another time. If at step 710 the data analysis is enabled, then control flows to step 715 where the data written to the logical volume is analyzed to detect a unique sequence of records. The data may be analyzed by reading the data on the logical volume, storing the data in temporary storage for analysis, intercepting the data as it is being stored, etc. The data analyzed may consist of the entire sequence of data written by the host 102 or specific subsets thereof. Storage device (i.e. VTS 110) may analyze the data written to the logical volume to detect the unique sequence of records or other processing elements or devices associated with VTS 110 may be used. The unique set of records is used to indicate that a request for device specific information from the data storage device is requested by host(s) 102. The unique set of records is a specific pattern of data that has a low probability of existing for normal data written to a logical volume. An example of a unique set of records is: a volume header; a first dataset header; a second dataset header; a first tape mark; a key record; a<br><br>
+query identifier record; a second tape mark; a volume trailer; a first volume end of file; a second volume end of file; a third tape mark; and a fourth tape mark. Volume headers, dataset headers, tape marks, end of file records and volume trailers are industry standard methods of identifying tape volumes. Other unique sets of records than described above may be used with the present invention without limitation. The unique sets of records should be a pattern of data that has a low probability of occurrence in normal data written to a logical volume. If at step 720 the unique set of records is not detected on the logical volume, then control flows to step 722 where the data that was previously stored may be read from the logical volume. The above descriptions for the operation of steps 622 and 722 apply also to this execution of step 722. After execution of step 722, control flows to step 770 where the process ends. Step 722 may or may not be executed depending upon if it is necessary to read data at this time or if it is advantageous to ready the data at another time.<br>
+[050]         In response to the data storage device detecting the unique sequence of records on the logical volume at step 720, the data storage device (i.e. VTS 110) places a device specific information data request flag in the metadata associated with the logical volume at step 723 to indicate that the logical volume comprises device specific information and that the logical volume is a special data request logical volume. After execution of step 723 control flows to step 725 where host(s) 102 requests the data storage device (i.e. VTS 110) to mount the logical volume to prepare to read the logical volume. Mounting of the logical volume begins after  receiving the request at step 725. Mounting of the logical volume may additionally comprise: opening the logical volume; rewinding of the logical volume; or any other operation upon the logical volume that places the logical volume in a state such that data can be read from the logical volume. After receiving the request to mount the logical volume at step 725, the data storage device (i.e. VTS 110) reads and examines the metadata associated with the logical volume to detect the device specific information data request flag. In response to detecting the device specific information data request flag in the metadata at step 730, control flows to step 735 to verify that the logical volume is a special data request logical volume. As described above with reference to step 723, a logical volume that comprises device specific information is a special data request logical volume. Verifying that the logical volume is a special data request logical volume may comprise reading the logical volume to detect a unique set of records, device specific information or other data that may be used for verification purposes, without limitation. Alternatively the verification (step 735) may not be executed because detecting the device specific information data request flag in the metadata is sufficient to verify that the logical volume is a special data request logical volume.<br>
+[051]	If the device specific information data request flag is not detected at step 730, then<br><br>
+control flows to step 746 where VTS 110 notifies host(s) 102 that the mounting of the logical volume is complete. After execution of step 746 control flows to step 722 (previously described above) to optionally read data from the logical volume. After verifying that the logical volume is a special data request logical volume at step 735, control flows to step 740 to write the device specific information on the logical volume. If the VTS 110 does not verify that the logical volume is a special data request logical volume at step 735, then control flows to step 746 where VTS 110 notifies host(s) 102 that the mounting of the logical volume is complete. After execution of step 746 control flows to step 722 (previously described above) to optionally read data from the logical volume. [052]         At step 740 the unique set of records that was previously written to the logical<br>
+volume at step 708 is appended to, replaced, or changed to reflect device specific information. This may be accomplished by the data storage device (i.e. VTS 110) writing data storage device specific information on the logical volume. As described above for the first embodiment, the device specific information may comprise various forms of information about VTS 110, logical or physical volumes, associated storage devices (i.e. tape drives, library 150, etc.). The device specific information may comprise a list of attributes of metadata associated with a logical volume. For example, the attributes of metadata may comprise a list of data version levels used to synchronize copies of logical volumes between two VTSs combined into a Peer-to-Peer VTS subsystem. The attributes of metadata could also comprise a list of host constructs that control which pools of physical tape cartridges each logical volume is associated with. The attributes of metadata may comprise statistical information about the data or other information relative to the data, without limitation. The device specific information may comprise a report of an operational history the data storage device, for example, VTS 110. The operational history of the data storage device may comprise information regarding data stored or retrieved, power up/down sequences, performance history of the VTS, and usage of the subsystems that comprise the VTS, such as the cache 160 or the tape drives 154. The form of the report of operational history may take various forms, for example, a simple list, graphical depictions, interactive data file, etc. The device specific information may comprise a report of the operational states of the data storage device, for example, VTS 110. The operational states of the data storage device may comprise information regarding the state of data stored or retrieved, power up/down sequence status, and availability status of the subsystems that comprise the VTS, such as the cache 160 or the tape drives 154. The form of the report of operational states may take various forms, for example, a simple list, graphical depictions, interactive data file, etc. The device specific information may comprise a list of the physical location of a logical volume stored in the data storage device. For example the physical<br><br>
+location of a logical volume may reside in one or more physical devices 154, physical volumes 156, tape drives 154A-154N, tape cartridges 156A-156N, DASD 160 or other devices associated with VTS 110, The form of the a list of the physical locations may take various forms, for example, a simple list, graphical depictions, interactive data file, etc. After execution of step 740, control flows to step 745.<br>
+[053]	At step 745, the data storage device (i.e. VTS 110) notifies host(s) that mounting of<br>
+the logical volume where the device specific information is complete to enable host(s) 102 to read the device specific information. Completion of mounting of the logical volume at step 745, may additionally comprise: unmounting and mounting of the logical volume; rewinding of the logical volume; or any other operation upon the logical volume that places the logical volume in a state such that data can be read from the logical volume. After execution of step 745, control flows to step 750. At step 750 the logical volume where the device specific information was written to is read. The information read is transmitted to the device requesting the information, for example, host(s) 102. Reading the device specific information from logical volume may be the result of VTS 110 receiving a read command (i.e. process 500, FIG. 5) from an e xternal device, for example, host(s) 102. Reading of the device specific information may comprise: reading a volume header; reading a first dataset header; reading a second dataset header; reading a first tape mark; reading a report header; reading at least one report data record; reading a second tape mark; reading a volume trailer; reading a first volume end of file; reading a second volume-end of file; reading a third tape mark; and reading a fourth tape mark. The reading of at least one report data may include any of the following (explained above): a list of attributes of metadata associated with the logical volume in the data storage device; a report of an operational history of the data storage device; a report of operational states of the data storage device; and a list of the physical location of the logical volume in the data storage device. After execution of step 750, control transfers to step 770 where the process ends.<br>
+[054]	The above descriptions of the operation of the present invention proceeded using<br>
+VTS 110 as the data storage device. The data storage device used to implement the present invention may also be an automated data storage library (i.e. physical library 150). As described above physical library 150 comprises: data storage media for storage of data (Le. physical volumes 156), data storage drives (i.e. physical devices 154) for reading and writing data with respect to the data storage media and a library controller (Le. library manager 152) for controlling the automated data storage library.<br>
+[055]	Additional Implementation Details<br>
+[056]	The described techniques for maintaining information on network components may<br>
+be implemented as a method, apparatus or article of manufacture using standard<br><br>
+programming and/or engineering techniques to produce software, firmware, hardware, or any combination thereof. The term "article of manufacture" as used herein refers to code or logic implemented in hardware logic (e.g., an integrated circuit chip, Programmable Gate Array (PGA), Application Specific Integrated Circuit (ASIC), etc.) or a computer readable medium, such as magnetic storage medium (e.g., hard disk drives, floppy disks,, tape, etc.), optical storage (CD-ROMs, optical disks, etc.), volatile and non-volatile memory devices (e.g., EEPROMs, ROMs, PROMs, RAMs, DRAMs, SRAMs, firmware, programmable logic, etc.). Code in the computer readable medium is accessed and executed by a processor. The code in which embodiments are implemented may further be accessible through a transmission media or from a file server over a network. In such cases, the article of manufacture in which the code is implemented may comprise a transmission media, such as a network transmission line, wireless transmission media, signals propagating through space, radio waves, infrared signals, etc. Thus, the "article of manufacture" may comprise the medium in which the code is embodied. Additionally, the "article of manufacture" may comprise a combination of hardware and software components in which the code is embodied, processed, and executed. Of course, those skilled in the art will recognize that many modifications may be made to this configuration without departing from the scope of the present invention, and that the article of manufacture may comprise any information bearing medium known in the art.<br>
+[057]	In the described implementations, certain variables, such as N are used to denote<br>
+integer values indicating a certain number of elements. These variables may denote any number when used at different instances with the same or different elements. For example, in FIG. 3, for logical volumes 162A...N, N may represent Q number of elements; while for physical devices 154A...N, N may represent M number of elements; and, for physical volumes 156A...N, N may represent P number of elements.<br>
+[058]	The logic of FIGs. 4,5,6 and 7 describes specific operations occurring in a<br>
+particular order. In alternative implementations, certain of the logic operations may be performed in a different order, modified or removed. Morever, steps may be added to the above described logic and still conform to the described implementations. Further, operations described herein may occur sequentially or certain operations may be processed in parallel, or operations described as performed by a single process may be performed by distributed processes.<br>
+[059]         The logic of FIGs. 4,5,6 and 7 was described as being implemented in software. This logic may be part of the operating system of the host systems or an application program. In yet further implementations, this logic may be maintained in storage areas managed by the control units or in a read only memory or other hardwired type of device. The preferred logic may be implemented in hard disk drives or in pro-<br><br>
+grammable and non-programmable gate array logic.<br>
+[060]         FIG. 8 illustrates one implementation of the architecture of host(s) 102, operator interfaces 105, and VTS 110. Host(s) 102, operator interfaces 105, and VTS 110 may implement a computer architecture 800 having a processor 802 (e.g., a microprocessor), a memory 804 (e.g., a volatile memory device), and storage 806 (e.g., a non-volatile storage, such as magnetic disk drives, optical disk drives, a tape drive, etc.). The storage 806 may comprise an internal storage device or an attached or network accessible storage. Programs in the storage 806 are loaded into the memory 804 and executed by the processor 802 in a manner known in the art. The architecture further includes a network card 808 to enable communication with a network. An input device 810 is used to provide user input to the processor 802, and may include a keyboard, mouse, pen-stylus, microphone, touch sensitive display screen, or any other activation or input mechanism known in the art. An output device 812 is capable of rendering information transmitted from the processor 802, or other component, such as a display monitor, printer, storage, etc.<br>
+[061]         While the hosts 102 and the VTS 110 communicate within a client-server paradigm in the described implementations, the hosts 102 and the VTS 110 may also communicate within a peer-to-peer or any other paradigm known in the art. Furthermore, many of the software and hardware components have been described in separate modules for purposes of illustration. Such components may be integrated into a fewer number of components or divided into a larger number of components. Additionally, certain operations described as performed by a specific component may be performed by other components.<br>
+[062]         The foregoing description of the preferred implementations of the invention has<br>
+been presented for the purposes of illustration and description. It is not intended to be exhaustive or to limit the invention to the precise form disclosed. Many modifications and variations are possible in light of the above teaching. It is intended that the scope of the invention be limited not by this detailed description, but rattier by the claims appended hereto. The above specification, examples and data provide a complete description of the manufacture and use of the composition of the invention. Since many implementations of the invention can be made without departing from the spirit and scope of the invention, the invention resides in the claims hereinafter appended. The foregoing description, for purposes of explanation, used specific nomenclature to provide a thorough understanding of the invention. However, it will be apparent to one skilled in the art that the specific details are not required in order to practice the invention. In other instances, well known circuits and devices are shown in block diagram form in order to avoid unnecessary distraction from the underlying invention. Thus, the foregoing descriptions of specific embodiments of the present invention are<br><br>
+Spresented for purposes of illustration and description. They are not intended to be exhaustive or to limit the invention to the precise forms disclosed. Obviously many modifications and variations are possible in view of the above teachings. [063]         The embodiments were chosen and described in order to best explain the principles of the invention and its practical applications, to thereby enable others skilled in the art to best utilize the invention and various embodiments with various modifications as are suited to the particular use contemplated. It is intended that the scope of the invention be defined by the following claims and their equivalents.<br>
+Claims<br>
+We Claim:<br>
+[0001]	A method for obtaining information from a data storage device, comprising:<br>
+writing data comprising a unique sequence of records to at least one logical volume on said data storage device; said data storage device analyzing said data written to said at least one logical volume to detect said unique sequence of records; and in response to said data storage device detecting said unique sequence of records on said at least one logical volume, writing data storage device specific information on said at least one logical volume.<br>
+[0002]	The method as claimed in claim 1 further comprising rewinding or demounting<br>
+said at least one logical volume and after said rewinding or demounting said at least one logical volume, accessing said at least one logical volume.<br>
+[0003]	The method as claimed in claim 1. wherein said writing data storage device<br>
+information on at least one logical volume comprises replacing said data comprising said unique sequence of records.<br>
+[0004]	The method as claimed in claim 1, wherein said analyzing step is disabled or<br>
+enabled using an operator interface coupled to said data storage device.<br>
+[0005]	The method as claimed in claim 1, further comprising: mounting said at least<br>
+one logical volume; and reading said device specific information from said at least one logical volume.<br>
+[0006]	The method as claimed in claim 5, wherein said reading step further<br>
+comprises: reading a volume header; reading a first dataset header; reading a second dataset header; reading a first tape mark; reading a report header; reading at least one report data record; reading a second tape mark; reading a volume trailer; reading a first volume end of file; reading a second volume end of file; reading a third tape mark; and reading a fourth tape mark.<br><br>
+[0007]	The method as claimed in claim 1, wherein said device specific information<br>
+comprises one or more of the following: a list of attributes of metadata associated with said at least one logical volume in said data storage device.<br>
+[0008]	The method as claimed in claim 1, wherein said writing data comprising a<br>
+unique sequence of records further comprises: writing a volume header; writing a first dataset header; writing a second dataset header; writing a first tape mark; writing a key record; writing a query identifier record; writing a second tape mark; writing a volume trailer; writing a first volume end of file; writing a second volume end of file; writing a third tape mark; and writing a fourth tape mark.<br>
+[0009]	A method for obtaining information from a data storage device, comprising:<br>
+writing data comprising a unique sequence of records to at least one logical volume on said data storage device; said data storage device analyzing said data written to said at least one logical volume to detect said unique sequence of records; and in response to said data storage device detecting said unique sequence of records on said at least one logical volume, placing a device specific information data request flag in a metadata associated with said logical volume to indicate that said at least one logical volume comprises device specific information.<br>
+[0010]	The method as claimed in claim 9, further comprising; receiving a request to<br>
+mount said at least one logical volume; reading said metadata; and in response to detecting said device specific information data request flag in said metadata, writing said device specific information on said at least one logical volume.<br>
+[001 1]	The method as claimed in claim c). further comprising: receiving a request to<br>
+mount said at least one logical volume; reading said metadata; and in response to detecting said device specific information data request flag in said metadata, verifying that said at least one logical volume is a special data request logical volume and writing said device specific information on said at least one logical volume comprises replacing said data comprising said unique sequence of records.<br><br>
+[0012]	A system for obtaining information from a device, comprising: a host<br>
+computer; a data storage device comprising: a cache memory; at least one logical volume: a central processing unit for controlling said data storage device; and a host computer interface coupled to said host computer for interfacing said data storage device to said host computer, wherein said host computer is configured to write data comprising a unique sequence of records to said at least one logical volume on said data storage device, said data storage device is configured to analyze said data written to said at least one logical volume to detect said unique sequence of records and in response to said data storage device detecting said unique sequence of records on said at least one logical volume, said data storage device is configured to write data storage device specific information on said at least one logical volume.<br>
+[0013]	The system as claimed in any of the preceding claims, wherein said storage<br>
+device is configured to rewind or demount said at least one logical volume after said logical volume has been written to.<br>
+[0014]	The system as claimed in any of the preceding claims, wherein said data<br>
+storage device is a virtual tape server.<br>
+[0015]	The system as claimed in any of the preceding claims, further comprising an<br>
+operator interface coupled to said data storage device, wherein said operator interface is configured to enable or disable said data storage device to analyze said data written to said at least one logical volume.<br>
+[0016]	The system as claimed in any of the preceding claims, wherein said data<br>
+storage device is an automated data storage library further comprising: data storage media for storage of data; data storage drives for reading and writing said data with respect to said data storage media; and a library controller for controlling said automated data storage library.<br>
+[0017]	A data storage device, comprising: a cache memory; at least one logical<br>
+volume; a metadata associated with said at least one logical volume; a central processing unit for controlling said data storage device; and a host computer interface coupled to a host computer for interfacing said data storage device<br><br>
+to said host computer, wherein said data storage device is configured to analyze data on said at least one logical volume to detect a unique sequence of records and in response to said data storage device detecting said unique sequence of records on said at least one logical volume, placing a device specific information data request flag in said metadata to indicate that said at least one logical volume comprises device specific information .<br>
+[0018]	The data storage device as claimed in claim 16, wherein said storage device<br>
+configured to rewind or demount said at least on logical volume after said logical volume has been written to.<br>
+[0019]	The data storage device as claimed in claim 16, wherein said data storage<br>
+device is configured to receive a request from said host computer to mount said at least one logical volume, read said metadata and in response to detecting said device specific information data request flag in said metadata and write said device specific information on said at least one logical volume.<br>
+[0020]	The data storage device as claimed in claim 16, wherein said data storage is<br>
+configured to receive a request from said host computer to mount said at least one logical volume, read said metadata and in response to detecting said device specific information data request flag in said metadata, verify that said at least one logical volume is a special data request logical volume and write said device specific information on said at least one logical volume.<br>
+[0021]	The data storage device as claimed in any of the preceding claims further<br>
+comprising an operator interface coupled to said data storage device, wherein said operator interface is configured to enable or disable said data storage device to analyze said data on said at least one logical volume.<br>
+Dated this 14 day of December 2006 <br></td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1DSEVOUC0yMDA2ICAgQU1FTkRFRCBDTEFJTVMgICAgMjktMTEtMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">4570-CHENP-2006   AMENDED CLAIMS    29-11-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1DSEVOUC0yMDA2ICAgQVNTSUdOTUVOVCAgMjktMTEtMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">4570-CHENP-2006   ASSIGNMENT  29-11-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1DSEVOUC0yMDA2ICAgQ09SUkVTUE9OREVOQ0UgT1RIRVJTICAxNy0wMi0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">4570-CHENP-2006   CORRESPONDENCE OTHERS  17-02-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1DSEVOUC0yMDA2ICAgRk9STS0xMyAgIDI5LTExLTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">4570-CHENP-2006   FORM-13   29-11-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1DSEVOUC0yMDA2ICAgRk9STS0zICAyOS0xMS0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">4570-CHENP-2006   FORM-3  29-11-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1DSEVOUC0yMDA2ICAgT1RIRVIgUEFURU5UIERPQ1VNRU5UICAgIDI5LTExLTIwMTEucGRm" target="_blank" style="word-wrap:break-word;">4570-CHENP-2006   OTHER PATENT DOCUMENT    29-11-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1DSEVOUC0yMDA2ICAgT1RIRVIgUEFURU5UIERPQ1VNRU5ULiAgICAyOS0xMS0yMDExLnBkZg==" target="_blank" style="word-wrap:break-word;">4570-CHENP-2006   OTHER PATENT DOCUMENT.    29-11-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1DSEVOUC0yMDA2ICBDT1JSRVNQT05ERU5DRSBQTy5wZGY=" target="_blank" style="word-wrap:break-word;">4570-CHENP-2006  CORRESPONDENCE PO.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1DSEVOUC0yMDA2ICBFWEFNSU5BVElPTiBSRVBPUlQgUkVQTFkgUkVDRUlWRUQgICAgMjktMTEtMjAxMS5wZGY=" target="_blank" style="word-wrap:break-word;">4570-CHENP-2006  EXAMINATION REPORT REPLY RECEIVED    29-11-2011.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1DSEVOUC0yMDA2ICBGT1JNLTE4LnBkZg==" target="_blank" style="word-wrap:break-word;">4570-CHENP-2006  FORM-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1jaGVucC0yMDA2LWFic3RyYWN0LnBkZg==" target="_blank" style="word-wrap:break-word;">4570-chenp-2006-abstract.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1jaGVucC0yMDA2LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">4570-chenp-2006-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1jaGVucC0yMDA2LWNvcnJlc3BvbmRuZWNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">4570-chenp-2006-correspondnece-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1jaGVucC0yMDA2LWRlc2NyaXB0aW9uKGNvbXBsZXRlKS5wZGY=" target="_blank" style="word-wrap:break-word;">4570-chenp-2006-description(complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1jaGVucC0yMDA2LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">4570-chenp-2006-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1jaGVucC0yMDA2LWZvcm0gMS5wZGY=" target="_blank" style="word-wrap:break-word;">4570-chenp-2006-form 1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1jaGVucC0yMDA2LWZvcm0gMjYucGRm" target="_blank" style="word-wrap:break-word;">4570-chenp-2006-form 26.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1jaGVucC0yMDA2LWZvcm0gMy5wZGY=" target="_blank" style="word-wrap:break-word;">4570-chenp-2006-form 3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1jaGVucC0yMDA2LWZvcm0gNS5wZGY=" target="_blank" style="word-wrap:break-word;">4570-chenp-2006-form 5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NDU3MC1jaGVucC0yMDA2LXBjdC5wZGY=" target="_blank" style="word-wrap:break-word;">4570-chenp-2006-pct.pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="250688-hydrocarbon-cracking-catalyst-using-chemical-liquid-deposition-and-method-for-preparing-the-same.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="250690-dynamic-materialization-of-disappearing-entities.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>250689</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>4570/CHENP/2006</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>03/2012</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>20-Jan-2012</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>19-Jan-2012</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>14-Dec-2006</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>INTERNATIONAL BUSINESS MACHINES CORPORATION</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>ARMONK NEW YORK 10504 USA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>KISHI GREGORY TAD</td>
+											<td>861 WEST ANNANDALE WAY ORO VALLEY ARIZONA 85737 USA</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>PEAKE JONATHAN WAYNE</td>
+											<td>3778 NORTH SABINO RIDGE PLACE TUCSON ARIZONA 85750 USA</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>G06F 3/06</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/EP05/52191</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-05-12</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/845,699</td>
+									<td>2005-05-14</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/250689-dynamic-loading-of-virtual-volume-data-in-a-virtual-tape-server by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 14:18:00 GMT -->
+</html>

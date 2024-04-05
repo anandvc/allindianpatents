@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from www.allindianpatents.com/patents/250282-a-method-an-apparatus-for-deriving-eigenvectors-for-a-multiple-input-multiple-output-mimo-communication-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 14:31:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Patents. 250282:&quot;A METHOD AN APPARATUS FOR DERIVING EIGENVECTORS FOR A MULTIPLE-INPUT MULTIPLE-OUTPUT (MIMO) COMMUNICATION SYSTEM&#x27;</title>
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="cYcP52B8zyTWKbLwby2YPh9z/gvY/RLjWOwY4YXkiXg=" name="csrf-token" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <link href="../assets/application-e80cf34975c5b1730c80b2f7170e7d26.css" media="all" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../index.html">Indian Patents</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav">
+              <li><a href="../recently-granted.html">Recently Granted Patents</a></li>
+              <li><a href="../recently-published.html">Recently Published Patents</a></li>
+            </ul>
+            <form id="gform" class="navbar-search pull-right" action="https://www.google.com/search" method="get" target="_blank" onsubmit="document.getElementById('gform').q.value='site:http://www.allindianpatents.com '+document.getElementById('gform').q.value">
+                <input type="text" name="q" id="q" class="search-query" placeholder="Search" onclick="this.value=''" autocomplete="off">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <style>
+          .allindianpatents-top { width: 320px; height: 50px; }
+          @media(min-width: 500px) { .allindianpatents-top { width: 468px; height: 60px; } }
+          @media(min-width: 800px) { .allindianpatents-top { width: 728px; height: 90px; } }
+          </style>
+          <center>
+          </center>
+          
+          <div class="row-fluid">
+	<div class="span8">
+
+		<table class="table">
+			<tr>
+				<th>Title of Invention</th>
+				<td><h1 style="font-size:large;">&quot;A METHOD AN APPARATUS FOR DERIVING EIGENVECTORS FOR A MULTIPLE-INPUT MULTIPLE-OUTPUT (MIMO) COMMUNICATION SYSTEM&#x27;</h1></td>
+			</tr>
+			<tr>
+				<th>Abstract</th>
+				<td>A method of deriving eigenvectors for a multiple-input multiple-output (MIMO) communication system (300), comprising: initializing a first matrix of eigenvectors; and updating the first matrix based on a channel response matrix for a MIMO channel, wherein the first matrix is updated for a plurality of iterations in a period when a new channel estimate becomes available and a next transmission begins, and wherein eigenvectors in the updated first matrix are used for spatial processing to transmit data via the MIMO channel.</td>
+			</tr>
+		</table>
+
+					<style>
+					.allindianpatents-post-abstract { width: 320px; height: 50px; }
+					@media(min-width: 880px) { .allindianpatents-post-abstract { width: 468px; height: 60px; } }
+					@media(min-width: 1267px) { .allindianpatents-post-abstract { width: 728px; height: 90px; } }
+					</style>
+					<center>
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- AllIndianPatents-post-abstract -->
+					<ins class="adsbygoogle allindianpatents-post-abstract"
+					     style="display:inline-block"
+					     data-ad-client="ca-pub-7914358224572760"
+					     data-ad-slot="9152759240"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>					
+					</center>
+
+		<table class="table">
+			<tr>
+				<th>Full Text</th>
+				<td>ITERATIVE EIGENVECTOR COMPUTATION FOR A MIMO COMMUNICATION SYSTEM<br>
+BACKGROUND<br>
+I.	Field<br>
+[0001]	The present invention relates generally to data communication, and more<br>
+specifically to techniques for deriving eigenvectors used for spatial processing in a multiple-input multiple-output (MIMO) communication system.<br>
+II.	Background<br>
+[0002]	A MIMO system employs multiple (Mr) transmit antennas and multiple (NR)<br>
+receive antennas for data transmission. A MIMO channel formed by the NT transmit antennas and NR receive antennas may be decomposed into NS spatial channels, where Ns 
+to achieve higher overall throughput or redundantly to achieve greater reliability.<br>
+[0003]	In general, up to NS data streams may be transmitted simultaneously from the NT<br>
+transmit antennas in the MIMO system. However, these data streams interfere with each other at the receive antennas. Improved performance may be achieved by transmitting data on Ns eigenmodes of the MIMO channel, where the eigenmodes may be viewed as orthogonal spatial channels. To transmit data on the Ns eigenmodes, it is necessary to perform spatial processing at both a transmitter and a receiver. The spatial processing attempts to orthogonalize the data streams so that they can be individually recovered with minimal degradation at the receiver.<br>
+[0004]	For data transmission on the NS eigenmodes, the transmitter performs spatial<br>
+processing with a matrix of NS eigenvectors, one eigenvector for each eigenmode used for data transmission. Each eigenvector contains NT complex values used to scale a data symbol prior to transmission from the NT transmit antennas and on the associated eigenmode. For data reception, the receiver performs receiver spatial processing (or spatial matched filtering) with another matrix of NS eigenvectors. The eigenvectors for the transmitter and the eigenvectors for the receiver may be derived based on a channel response estimate for the MMO channel between the transmitter and receiver. The<br><br>
+derivation of the eigenvectors is computationally intensive. Furthermore, the accuracy of the eigenvectors may have a large impact on performance.<br>
+[0005J	There is therefore a need in the art for techniques to efficiently and accurately<br>
+derive eigenvectors used for data transmission and reception via the eigenmodes of a MIMO channel.<br>
+SUMMARY<br>
+[0006]	Techniques for deriving a matrix V of eigenvectors using an iterative procedure<br>
+are described herein. For the iterative procedure, an eigennaode matrix V, is first initialized to, for example, an identity matrix I or a matrix of eigenvectors derived for a prior transmission interval. The eigenmode matrix Vj is then updated based on a channel response matrix H for a MIMO channel to obtain an updated eigenmode matrix Vw, as described below.<br>
+[0007]	The eigenmode matrix may be updated for (1) a fixed number of iterations (e.g.,<br>
+10 iterations) or (2) a variable number of iterations until a termination condition is reached. The columns of the updated eigenmode matrix may be orthogonalized periodically or as necessary to improve performance and to ensure stability of the iterative procedure. In one embodiment, after all of the iterations have been completed, the updated eigenmode matrix (or the orthogonalized updated eigenmode matrix) for the<br>
+last iteration is provided as the matrix V of eigenvectors. The matrix V may be used<br>
+for spatial processing for data transmission on the eigenmodes of the MIMO channel.<br>
+The matrix V may also be used to derive a spatial filter matrix used for spatial matched<br>
+filtering of a data transmission received via the eigenmodes of the. MIMO channel.<br>
+[0008]	Various aspects and embodiments of the invention are described in further detail<br>
+below.<br>
+BRIEF DESCRIPTION OF THE DRAWINGS<br>
+[0009]	FIG. 1 shows a transmitting entity and a receiving entity in a MIMO system;<br>
+[0010]	FIG. 2 shows an iterative procedure for deriving a matrix of eigenvectors;<br>
+[0011]	FIG. 3 shows an access point and a user terminal in the MEMO system;<br>
+[0012]	FIG. 4 shows a processor for channel estimation and eigenvector computation; and<br><br>
+[0013]	FIG. 5 shows an example TDD frame structure for the MIMO system.<br>
+DETAILED DESCRIPTION<br>
+[0014]	The word "exemplary" is used herein to mean "serving as an example, instance,<br>
+or illustration." Any embodiment described herein as "exemplary" is not necessarily to be construed as preferred or advantageous over other embodiments.<br>
+[0015]	The eigenvector computation techniques described herein may be used for a<br>
+single-carrier MIMO system as well as a multi-carrier MIMO system. For clarity, these techniques are described in detail for a single-carrier MEMO system.<br>
+A. Single-Carrier MIMO System<br>
+[0016]	FIG. 1 shows a simple block diagram of a transmitting entity 110 and a<br>
+receiving entity 150 in a single-Carrier MIMO system 100. At transmitting entity 110&gt; a transmit (TX) spatial processor 120 performs spatial processing on data symbols<br>
+(denoted by a vector s) with a matrix V of eigenvectors to generate transmit symbols (denoted by a vector x). As used herein, a "data symbol" is a modulation symbol for data, a "pilot symbol" is a modulation symbol for pilot (which is known a priori by both the transmitting and receiving entities), a "transmit symbol" is a symbol to be sent from a transmit antenna, and a modulation symbol is a complex value for a point in a signal constellation used for a particular modulation scheme (e.g., M-PSK, M-QAM, and so on). The transmit symbols are further conditioned by a transmitter unit (TMTR) 122 to generate NT modulated signals, which are transmitted from NT transmit antennas 124 and via a MIMO channel.<br>
+[0017]	At receiving entity 150, the transmitted modulated signals are received by NR<br>
+receive antennas 152, and the NR received signals are conditioned by a receiver unit (RCVR) 154 to obtain received symbols (denoted by a vector r). A receive (RX) spatial processor 160 then performs receiver spatial processing (or spatial matched filtering) on the received symbols with a spatial filter matrix !&amp; to obtain detected symbols (denoted by a vector s). The detected symbols are estimates of the data symbols sent by transmitting entity 110. The spatial processing at the transmitting and receiving entities are described .below.<br><br>
+10018]	For the single-carrier MEMO system, the MIMO channel formed by the NT<br>
+transmit antennas at the transmitting entity and the NR receive antennas at the receiving entity may be characterized by an NR x NT channel response matrix H, which may be expressed as:<br><br>
+H =<br><br>
+k^	"^	Bq(l)<br><br>
+where element hijt for f = l ... NR and j = l ... Nr, denotes the coupling or complex gain between transmit antenna j and receive antenna i. For simplicity, the MIMO channel is assumed to be full rank with Ns = NT 
+[0019]	The channel response matrix H may be "diagonalized" to obtain Ns eigenmodes<br>
+of H. This diagonalization may be achieved by performing either singular value decomposition of the channel response matrix H or eigenvalue decomposition of a<br>
+correlation matrix of H, which is C = HffH, where " H " denotes the conjugate transpose.<br>
+[0020]	The singular value decomposition of the channel response matrix H may be<br>
+expressed as:<br>
+H = U2V"  ,	Eq(2)<br>
+where  U is an NR x NR unitary matrix of left eigenvectors of H;<br>
+2 is an NR x NT diagonal matrix of singular values of H; and V is an NT xNT unitary matrix of right eigenvectors of H.<br>
+A unitary matrix M is characterized by the property Mtf M = I, where I is the identity<br>
+matrix containing ones along the diagonal and zeros elsewhere.   The columns of a<br>
+unitary matrix are orthogonal to one another.<br>
+[0021]	The eigenvalue decomposition of the correlation matrix of H may be expressed as:<br>
+,	Eq(3)<br><br>
+where A is an NT xNT diagonal matrix of eigenvalues of C. As shown in equations (2) and (3), the columns of V are right eigenvectors of H as well as eigenvectors of C . Singular value decomposition and eigenvalue decomposition are described by Gilbert Strang in a book entitled "Linear Algebra and Its Applications," Second Edition, Academic Press, 1980.<br>
+[0022]	The right eigenvectors of H (which are the columns of V) may be used for<br>
+spatial processing by the transmitting entity to transmit data on the NS eigenmodes of H . The left eigenvectors of H (which are the columns of U ) may be used for spatial matched filtering by the receiving entity to recover the data transmitted on the NS eigenmodes. The eigenmodes may be viewed as orthogonal spatial channels obtained through decomposition.<br>
+[0023]	A diagonal matrix contains non-negative real values along the diagonal and<br>
+zeros elsewhere. The diagonal elements of 2 are referred to as the singular values of H and represent the channel gains for the NS eigenmodes of H . The diagonal elements of A are referred to as the eigenvalues of C and represent the power gains for the NS eigenmodes of H. The singular values of H, which are denoted as {cr: cr2 ... crNs} , are thus the square roots of the eigenvalues of C, which are denoted as {^ ^ ... ^ },<br><br>
+or 0} = -      for i = l ... Ns .<br>
+B. Iterative Eigenvector Computation<br>
+[0024]	The matrices H, V, and U represent "true" quantities that are not available in<br>
+a practical system. Instead, estimates of the matrices H, V, and U may be obtained and denoted as H, V, and tl, respectively. The matrix H may be obtained, for<br>
+i<br>
+example, based on a MMO pilot sent via the MIMO channel. A M1MO pilot is a pilot comprised of NT pilot transmissions sent from NT transmit antennas, where the pilot transmission from each transmit antenna is identifiable by the receiving entity. This can be achieved, for example, by using a different orthogonal sequence for the pilot transmission from each transmit antenna. The matrices V and U may be efficiently and accurately derived using an iterative procedure.<br><br>
+[0025]	For the iterative procedure, an NT xNT  estimated correlation matrix A is<br>
+initially computed as:<br>
+A = H*H.	Eq(4)<br>
+The eigenvalue decomposition of A would yield A = V0AaVf, where Va is an estimate of V and Aa is an estimate of A due to the fact that A is an estimate of C. An eigenmode matrix V,, which is an estimate of Va, may be iteratively computed as follows:<br>
+Y™ = Y? + V • (Tri_up (Yf AY,) - Trijow (Vf AY,))Vf ,	Eq (5)<br>
+where Vf is the eigenmode matrix for the i-th iteration;<br>
+Tri_up (M) is a matrix containing elements above the diagonal of M; Tri_low (M) is a matrix containing elements below the diagonal of M; // is a step size for the iterative procedure; and Vw is the eigenmode matrix for the (z+l)-th iteration.<br>
+[0026]	The eigenmode matrix V, may be initialized to the identity matrix I, or<br>
+Yo = I» if*10 otner information is available for V. The step size p determines the rate of convergence for the iterative procedure. A larger step size speeds up convergence but also increases the granularity of the elements of V,. Conversely, a smaller step size results in a slower convergence rate but improves the accuracy of the elements of V, • The step size may be set to /u = 0.05, for example, or to some other value.<br>
+[0027]	The computation shown in equation (5) may be decomposed into four steps. In<br>
+one embodiment, for the first step, a matrix X is computed as: X = AV,. In the second<br>
+step, a matrix Y is computed as: Y = Vf X. In the third step, an update matrix Z is<br>
+computed as: Z = (Trijup (Y) - Trijow (Y))V,.   In the fourth step, the eigenmode<br>
+matrix is updated as: Vm = V, + p • Z.<br>
+[0028]	Equation (5) may also be expressed as:<br>
+Y« =Yf +MTri_up(YfH*HY,)-Tri_low(YfHHHY,-))Yf .         Eq(6)<br><br>
+In another embodiment, the matrix X is computed as X = HV,, the matrix Y is computed as Y = Xff X, and the matrices Z and VM are computed as described above.<br>
+[0029]	The number of multiply and add operations required for each iteration of<br>
+equation (5) is dependent on the dimension of the channel response matrix H, which in turn is dependent on the number of transmit antennas and the number of receive antennas. Since all of the matrices defined above, except for the diagonal matrices, contain complex-valued elements, complex multiplies are performed on or for the elements of these matrices. For NR = 4 and NT = 4, three 4x4 complex matrix multiplies are performed to obtain the three matrices X, Y, and Z. The 4x4 complex matrix multiply for each matrix normally requires four complex multiplies for each element of the matrix, or a total of 64 complex multiplies for the'16 elements of the matrix, which can be performed with 256 real multiplies. A total of 768 real multiplies (where 768 = 256-3) would then be required to compute the three matrices X, Y,andZ.<br>
+[0030]	Some computational savings may be realized by recognizing that (1) the matrix<br>
+Z contains zeros along the diagonal and (2) the elements below the diagonal of Z are<br>
+the negative of the elements above the diagonal of Z (the lower triangle of Z is the<br>
+negative of the upper triangle of Z). Thus, only 6 out of 16 elements of Z need to be<br>
+computed.      This   reduces   the   total  number   of real   multiplies   to   608,   or<br>
+256 + 256+6 • 16 = 608.  The multiplies may also be performed in a manner to utilize<br>
+the full available range.   For example, a 4x4 complex matrix multiply for a given<br>
+matrix may be performed with 256 16x 16-bit real multiplies, where the two input<br>
+operands for each real multiply have 16 bits of resolution and the result of the real<br>
+multiply has a range that is greater than 16 bits. In mis case, the resultant elements of<br>
+the matrix may be divided by the magnitude of the largest element in the matrix and<br>
+then multiplied by a scaling factor, which may be selected such that the largest element<br>
+is represented with a 16-bit value that is as large as possible and/or convenient for<br>
+processing.<br>
+[0031]	The eigenmode matrix may be iteratively computed as shown in equation (5) for<br>
+a number of iterations until a sufficiently good estimate of V is obtained. It has been found through computer simulation that ten iterations are typically sufficient to obtain a<br><br>
+good estimate 9f V . In one embodiment, equation (5) is iteratively computed for a fixed number of iterations (e.g., ten iterations) to obtain an eigenmode matrix Vy- , which is the final estimate of V. In another embodiment, equation (5) is iteratively computed for a variable number of iterations until a termination condition is encountered, and the eigenmode matrix Vy for the last iteration is provided as the final<br>
+estimate of V provided by the iterative procedure. Since the matrix Y should resemble a diagonal matrix, the termination condition may be defined by how closely Y resembles a diagonal matrix, as described below.<br>
+[0032]	The iterative procedure updates the eigenmode matrix V,- such that Vf AVf<br>
+approaches a diagonal matrix. The final estimate of V may be expressed as:<br>
+V/AV^D,	Eq(7)<br>
+which may be rewritten as:<br>
+.	Eq(8)<br>
+If the iterative procedure is successful, then D is approximately equal to Aa (which is<br>
+the diagonal matrix of eigenvalues of A) and V^ is approximately equal to Vfl (which<br>
+is the matrix of eigenvectors of A). The eigenmode matrix V^ is also a good estimate<br>
+of the matrix V of eigenvectors of C , if A is a good estimate of C .<br>
+[0033]	There are typically some residual errors from the iterative procedure, so that V^<br>
+rr<br>
+is not a true unitary matrix, V/Y/ is not exactly equal to the identity matrix, and the off-diagonal elements of D may be non-zero values. Equation (5) may thus be iteratively computed until the off-diagonal elements of D are sufficiently small. For example, equation (5) may be iteratively computed until the sum of the squared magnitude of the off-diagonal elements of Y is less than a first predetermined threshold. As another example, the computation may continue until the ratio of the sum of the squared magnitude of the diagonal elements of Y over the sum of the squared magnitude of the off-diagonal elements of Y is greater than a second predetermined<br><br>
+threshold. Other termination conditions may also be defined. The columns of Vy may<br>
+also   be   forced  to   be   orthogonal   to   one   another  by  performing   eigenvector orthogonalization, as described below.<br>
+[0034]	After all of the iterations have been completed, the matrix V of eigenvectors<br>
+may be •defined as V = V^-. The matrix V is an estimate of Ihe matrix V, where the<br>
+estimate is obtained based on H and using the iterative procedure. The matrix ^ may be used for spatial processing, as described below.<br>
+[0035]	Computer simulations have shown that the computation for V, in equation (5)<br>
+converges for most cases. However, as the number of iterations increases for a given channel response matrix A, residual errors begin accumulating and the solution for V, starts to diverge. Convergence may be assured by performing eigenvector orthogonalization (described below) on the eigenmode matrix .V, periodically, e.g., after every N0ra iterations, where North may be equal to 50 or some other value.<br>
+[0036]	A matrix U, which is an estimate of U, may also be derived using the iterative<br>
+procedure, similar to that described above for the matrix V. To derive U, the matrix A is defined as A = HH , the matrix Vf is replaced with a matrix U, in equation (5), and the matrix U^ for the last iteration is used as the final estimate of U, or U = IL. Alternatively, from equation (2), the matrix U may be expressed as: U = HVS~'. The matrix U may thus be computed as U =HVZ , where II and S may be obtained from the MIMO pilot and V may be derived using the iterative procedure.<br>
+C. Eigenvector Ortho£onalization<br>
+/<br>
+[0037]	As noted above, the columns of V_f may not be orthogonal to one another if D<br>
+is not a diagonal matrix. This may be due to various parameters such as, for example, the step size ju, the number of iterations computed for V,-, finite processor precision, and so on. The columns of V_f may be forced to be orthogonal to one another using<br>
+various techniques such as QR factorization, minimum square error computation, and polar decomposition. QR factorization is described in detail below. The orthogonal<br><br>
+eigenvectors   from  the   QR -factorization   are   normalized,   and  the   orthonormal<br>
+eigenvectors are used for spatial processing.<br>
+[0038]	QR factorization decomposes the matrix Vy into an orthogonal matrix Q and<br>
+an upper triangle matrix R. The matrix Q forms an orthogonal basis for the columns of Vf &gt; and the diagonal elements of R give the length of the components of the columns of V^ in the directions of the respective columns of Q. The matrices Q and<br>
+R may be used to derive an enhanced matrix V having orthogonal columns.<br>
+[0039]	The QR factorization may be performed using various methods, including a<br>
+Gram-Schmidt procedure, a householder transformation, and so on. The Gram-Schmidt procedure is recursive and may be numerically unstable. Various variants of the Gram-Schmidt procedure have been devised and are known in the art. The "classical" Gram-Schmidt procedure for orthogonalizing the matrix V_f is described below.<br>
+[0040]	For QR factorization, the matrix Vf may be expressed as:<br>
+V/=QE,	Eq(9)<br>
+where Q is an NT x NT orthogonal matrix; and<br>
+R   is an NT xNT upper triangle matrix with possible non-zero values along and above the diagonal and zeros below the diagonal.<br>
+[0041]	The Gram-Schmidt procedure generates the matrices Q and R column by<br>
+column. The following notations are used for the description below: / is an index for the rows of a matrix; j is an index for the columns of a matrix; S = f5i £2 "• SN ]&gt;wnere fl, is they-th column of Q; qitj is the element in the z'-th row andy-th column of Q; Q = [§! 52 •» §N 3 &gt; where q  is they-th column of Q; rfj is the element in the z'-th row andy-th column of R; ¥/ = [Xi v2 ... vNt ], where Vj is they'-th column of Vf; and vtj is the element in the z'-th row andy-th column of V_f.<br><br>
+[0042]	The first column of Q and R may be obtained as follows:<br>
+2<br>
+M    •md	Eq(10)<br>
+q=— v,.	Eq(ll)<br>
+— i         •«<br>
+rw<br>
+The first column of R includes one non-zero value for the element rw in the first row<br>
+and zeros elsewhere, where ru is equal to the 2-norrn of y^ . The first column of Q is a<br>
+normalized version of the first column of Vy , where the normalization is achieved by<br>
+scaling each element of v, with the inverse of ru .<br>
+[0043]	Each of the remaining columns of Q and R may be obtained as follows:<br>
+FOR j = 2, 3, ... NT   { FOR  z = l, 2, ... j-1   {<br>
+fj-Sfv/ &gt;	Bq(12)<br>
+(=1<br>
+[0044]	The Gram-Schmidt procedure generates one column at a time for Q. Each new<br>
+column of Q is forced to be orthogonal to all prior-generated columns to the left of the new column. This is achieved by equations (13) and (15), where they-th column of Q (or q ) is generated based on q , which in turn is generated based on the/'-th column of<br>
+y.f (or Vj) an
+ <br>
+[0045]	Improved performance may be obtained by ordering the columns of Vy based<br>
+on the diagonal elements of D prior to performing the QR factorization. The diagonal elements of D may be ordered such that (cf, &gt; d2 &gt; ... &gt; d^T}, where dl is the largest and 
+smallest diagonal element of D.<br>
+[0046]	If the columns of Vy are ordered based on decreasing values of their associated<br>
+diagonal elements, then the columns/eigenvectors of Q are forced to be orthogonal to<br>
+the first column/eigenvector, which is associated with the largest diagonal element and has the largest gain. The ordering thus has a beneficial effect of rejecting certain noise components of each of the remaining eigenvectors of Q. In. particular, they'-th column<br>
+of Q (or q ) is generated based on the /-th column of Vy  (or Vj), and noise components in Vj that point in the direction of the j—\ eigenvectors to the left of q (which are associated with higher gains) are subtracted from Vj to obtain q .   The<br>
+ordering also has another beneficial effect of improving the estimates of eigenvectors associated with smaller diagonal elements. The overall result is improved performance, especially if the orthogonalized eigenvectors of Q are used for spatial processing.<br>
+[0047]	The enhanced matrix V from the QR factorization may be expressed as:<br>
+V = QR,	Eq(16)<br>
+where R is a diagonal matrix that contains only the diagonal elements of R. The matrix ^ may be set equal to the enhanced matrix V, or V = V.<br>
+[0048]	BIG. 2 shows a flow diagram of an iterative process 200 for deriving the matrix<br>
+V of eigenvectors. The eigenmode matrix Vf is first initialized, e.g., to the identity matrix or to a matrix of eigenvectors derived for another transmission interval or<br><br>
+another subband (block 212). The matrix A is computed based on the channel response matrix H, e.g., as shown in equation (4) (block 214).<br>
+[0049]	The eigenmode matrix  V,  is then iteratively computed for a number of<br>
+iterations. For each iteration, the matrix Y is first computed based on the matrices V, and A, e.g., Y = Vf AV, (block 216). The update matrix Z is then computed based on the matrices V,- and Y, e.g., Z = (Tri_up(Y)-Tri_low(Y))V, (block 218). Blocks 216 and 218 represent one way to obtain the update matrix Z. The eigenmode matrix is then updated based on the matrix Z, e.g., V/+1 = Vf + // • Z (block 220).<br>
+[0050]	A determination is next made whether to orthogonalize the eigenvectors in the<br>
+eigenmode matrix (block 222). Orthogonalization may be performed, for example, if North iterations have been completed since the start of the iterative procedure or since the last eigenvector Orthogonalization. If the answer is 'yes' for block 222, then eigenvector Orthogonalization is performed to obtain orthogonal columns for the eigenmode matrix (block 224). Otherwise, if the answer is 'no', then block 224 is skipped. In any case, a determination is next made whether or not to terminate the iterative procedure (block 226). The procedure may be terminated, e.g., after a fixed number of iterations or if a termination condition is encountered. If the answer is 'no' for block 226, then the process returns to block 216 to perform another iteration.<br>
+Otherwise, the eigenmode matrix V^ for the last iteration is provided as the matrix V of eigenvectors (block 228), and the process terminates. Although not shown in FIG. 2, eigenvector Orthogonalization may be performed on V_f, and the enhanced matrix V<br>
+with orthogonal columns may be provided as the matrix ^V.<br>
+D. Spatial Processing<br>
+[0051]	The channel estimation and eigenvector computation may be performed in<br>
+various manners.  For example, referring to FIG. 1, the receiving entity can receive a<br>
+MIMO pilot from the transmitting entity, obtain the channel response matrix H[ based on the MMO pilot, derive the matrix V of eigenvectors based on H and using the iterative procedure, and derive a spatial filter matrix M based on ^ and B[. The receiving entity can send V back to the transmitting entity.<br><br>
+[0052]	The transmitting entity performs spatial processing for data transmission on the<br>
+Ns eigenmodes, as follows:<br>
+x = Vs,	Eq(17)<br>
+where s is an NTxl  vector with up to NS data symbols to be sent on the NS<br>
+eigenmodes in one symbol period; and<br>
+x is an NT x 1 vector with NT transmit symbols to be sent from the NT transmit antennas in one symbol period.<br>
+The eigenvectors in V are also referred to as transmit vectors or steering vectors.<br>
+[0053]	The received symbols at the receiving entity may be expressed as:<br>
+r = Hx + n,	Eq(18)<br>
+where r is an NR x 1 vector with NR received symbols obtained via the NR receive<br>
+j<br>
+antennas, and n is a noise vector.<br>
+[0054]	The receiving entity may perform spatial matched filtering, as follows:<br>
+s = A"1Mr = A~1VWH/fr = A"1V/f]aH(HVs + n)ss + n_',	Eq(19)<br>
+where s is an NT x 1 vector with NT detected symbols;<br>
+M is an NT x NR spatial filter matrix, which is M = V H  ; and n^ is a post-detection noise vector.<br>
+As shown in equation (19), the receiving entity can recover the transmitted data symbols by performing spatial matched filtering with M and then scaling with A~ to obtain the detected symbols. If H is a good estimate of H and V is a good estimate of V, then s is a good estimate of s in the absence of noise.<br>
+[0055]	For simplicity, the above description assumes a full rank MIMO channel with<br>
+Ns = NT 
+ <br>
+values for the first NS elements and zeros for the remaining NT - Ns elements, and the NTxl vector s would contain NS detected symbols for the first NS elements. Alternatively, the vector s may have a dimension of Ns x 1, the matrix V may have a dimension of NT x Ns, and the spatial filter matrix M may have a dimension of NsxNT.<br>
+E. Channel Estimation<br>
+[0056]	Data may be transmitted in various manners in the MIMO system. For a burst<br>
+mode, data is transmitted in a small number of frames (e.g., one frame). A frame may be defined as a transmission interval of a predetermined time duration (e.g., 2 msec). The channel estimation is then performed based on the pilot received in a limited number of frames. For a continuous mode, data is transmitted in a larger number of frames, either continuously or with small gaps in transmission. The channel estimation may then be performed based on the pilot received in multiple frames.<br>
+[0057]	The receiving entity can estimate the MEMO channel response for each frame n<br>
+based on the pilot received in that frame and obtain a channel response matrix H(«) for that frame. To improve the quality of the channel estimate, the receiving entity can filter the channel response matrices obtained for the current and prior frames using a finite impulse response (FIR) filter, an infinite impulse response (IIR) filter, or some other type of filter. The filtering is performed on each of the elements in the channel response matrix and provides a filtered channel response matrix H(«). For example, the filtering of the channel response matrices for multiple frames with a single-tap IIR filter maybe expressed as:<br>
+hiJ(n) = a-hiJ(n-V) + (l-a)\](ri) ,  for i = l ... NR and j = 1 ... NT,      Eq(20)<br>
+A	^<br>
+where \y(n) is the element in the z'-th row andy-th column of H(n) for frame n; h,j (n -1) is the (i, f) -th element of H(n -1) for frame n -1;<br>
+hfj(ji) is the (r,y) -th element of H(n) for frame n; and a is a coefficient for the HR filter.<br><br>
+A larger value for a gives greater weight to the prior channel estimates, and a smaller value for a gives greater weight to the current channel estimate.   The coefficient a may be set as a = 0.75, for example, or to some other value.<br>
+[0058]	The eigenvector computation may be performed for each frame n based on either<br>
+the unfiltered channel response matrix H(«) or the filtered channel response matrix H(«) obtained for that frame.   For each frame, the eigenmode matrix V, may be<br>
+initialized to either the identity matrix or the matrix V(n -1) of eigenvectors obtained<br>
+for a prior frame.   The eigenvector computation for each frame provides the matrix<br>
+V(n) of eigenvectors that can be used for spatial processing in that frame.<br>
+[0059]	The eigenvector orthogonalization may be performed in various manners, which<br>
+may be dependent oa whether data is transmitted using the burst mode or Hie continuous mode. In one embodiment for both modes, eigenvector orthogonalization is performed<br>
+on the eigenmode matrix \_f for the last iteration, and the matrix V(n) is set to the enhanced matrix V having orthogonal columns, hi another embodiment for the burst mode, eigenvector orthogonalization is not performed, and the matrix V(n) is simply set to the eigenmode matrix Vy. hi another embodiment for the continuous mode,<br>
+eigenvector orthogonalization is performed after every N&amp; frames, where N&amp; may be set to Nfr = 5, for example, or to some other value. If filtering is performed on the channel response matrices, then eigenvector orthogonalization may be performed periodically to ensure stability of the iterative procedure. In general, eigenvector orthogonalization may improve performance and stability but require computation. Eigenvector orthogonalization may thus be performed sparingly or as necessary to reduce the amount of computation required to derive V(n).<br>
+F. Multi-Carrier MIMO System<br>
+[0060]	The eigenvector computation techniques described herein may also be used for a<br>
+multi-carrier MIMO system. Multiple carriers may be obtained with orthogonal frequency division multiplexing (OFDM), some other multi-carrier modulation techniques, or some other construct. OFDM effectively partitions the overall system bandwidth into multiple (Np) orthogonal subbands, which are also referred to as tones,<br><br>
+subcarriers, bins, and frequency channels. With OFDM, each subband is associated with a respective subcarrier that may be modulated with data.<br>
+[0061]	For a multi-carrier MDVIO  system, the  eigenvector computation may be<br>
+performed for each subband used for data transmission (or each "data" subband).   A<br>
+channel response matrix JH(fc) may be obtained for each data subband k based on, e.g., a MIMO pilot received on that subband. Eigenvector computation may be performed on H(fc) for each data subband k to obtain a matrix V(£) of eigenvectors that may be used for spatial processing for that subband. A high degree of correlation may exist in the channel response matrices for nearby subbands, especially for a flat fading MIMO channel. The eigenvector computation may be performed in a manner to take advantage of this correlation. For example, the eigenmode matrix V/(/t) for each data subband may be initialized to the matrix of eigenvectors obtained for an adjacent subband, e.g., Vj(£)=Y(fr-l) or Y,.(£) = V(£ + 1). As another example, a first set of matrices of eigenvectors may be iteratively derived for a first set of subbands, and a second set of matrices of eigenvectors for a second set of subbands may be derived by interpolating the matrices in the first set.<br>
+G. System<br>
+[0062]	FIG. 3 shows a block diagram of an embodiment of an access point 310 and a<br>
+user terminal 350 in a MIMO system 300. Access point 310 is equipped with Nap antennas that may be used for data transmission and reception, and user terminal 350 is equipped with Nut antennas, where Nap &gt; 1 and Nnt &gt; 1.<br>
+[0063]	On the downlink, at access point 310, a TX data processor 314 receives traffic<br>
+data from a data source 312 and signaling and other data from a controller 330. TX data processor 314 formats, codes, interleaves, and modulates (or symbol maps) the different types of data and provides data symbols. A TX spatial processor 320 receives the data symbols from TX data processor 314, performs spatial processing on the data symbols with one or more matrices of eigenvectors for the downlink (e.g., as shown in equation , (17)), multiplexes in pilot symbols as appropriate, and provides Nap streams of transmit symbols to Nap transmitter units 322a through 322ap. Each transmitter unit 322 receives and processes a respective transmit symbol stream and provides a corresponding downlink modulated signal. Nap downlink modulated signals from transmitter units<br><br>
+322a through 322ap are then transmitted from Nap antennas 324a through 324ap, respectively.<br>
+[0064]	At user terminal 350, Nut antennas 352a through 352ut receive the transmitted,<br>
+downlink modulated signals, and each antenna provides a received signal to a respective receiver unit 354. Each receiver unit 354 performs processing complementary to that performed by receiver unit 322 and provides received symbols. An RX spatial processor 360 then performs spatial matched filtering on the received symbols from all Nut receiver units 354a through 354ut (e.g., as shown in equation (20)) to obtain detected symbols. An RX data processor 370 processes (e.g., symbol demaps, deinterleaves, and decodes) the detected symbols and provides decoded data to a data sink 372 for storage and/or a controller 380 for further processing.<br>
+[0065]	The processing for the uplink may be the same or different from the processing<br>
+for the downlink. Data and signaling are processed (e.g., coded, interleaved, and modulated) by a TX data processor 388, spatially processed by a TX spatial processor 390 with one or more matrices of eigenvectors for the uplink, and multiplexed with pilot symbols to generate Nut transmit symbol streams. N^ transmitter units 354a through 354ut further condition the Nut transmit symbol streams to generate Nut uplink modulated signals, which are then transmitted via Nut antennas 352a through 352ut<br>
+[0066]	At access point 310, the uplink modulated signals are received by Nap antennas<br>
+324a through 324ap and processed by Nap receiver units 322a through 322ap to obtain received symbols for the uplink. An RX spatial processor 340 performs spatial matched filtering on the received symbols and provides detected symbols, which are further processed by an RX data processor 342 to obtain decoded data for the uplink.<br>
+[0067]	Digital signal processors (DSPs) 328 and 378 perform channel estimation and<br>
+eigenvector computation for the access point and user terminal, respectively. Controllers 330 and 380 control the operation of various processing units at the access point and user terminal, respectively. Memory units 332 and 382 store data and program codes used by controllers 330 and 380, respectively.<br>
+[0068]	FtG. 4 shows an embodiment of DSP 378, which performs channel estimation<br>
+and eigenvector computation for the user terminal. A channel estimator 412 obtains received pilot symbols (which are received symbols for a MIMO pilot sent on the downlink) and derives a channel response matrix H(n) for the current frame n. A filter 414 performs time-domain filtering of the channel response matrices for the current and<br><br>
+prior frames, e.g., as shown in equation (21), and provides a filtered channel response matrix H(ri) for the current frame. An eigenvector computation unit 416 derives an eigenmode matrix Vy(w) for the current frame based on either the unaltered matrix<br>
+H(«) or the filtered matrix H(n) and using the iterative procedure, as described above. A unit 418 performs eigenvector orthogonalization on Vf(n), if enabled, and provides<br>
+the matrix V(n) of eigenvectors for the current frame. Unit 418 may skip the eigenvector orthogonalization and provide the matrix Vy(«) from unit 416 directly as<br>
+the matrix V(»). This may be the case, for example, for the burst mode, or if less than Nfr frames have elapsed since the last orthogonalization for the continuous mode. Unit 418 may also perform the eigenvector orthogonalization and provide an enhance matrix<br>
+V(n) with orthogonal columns as the matrix V(w). Units 416 and 418 may also pass their results back and forth multiple times for the current frame. In any case, the matrix V(«) may be sent back to the access point and used for spatial processing for downlink data transmission. A unit 420 derives a spatial matched filter M^w) for the user terminal based on the matrix V(n) and either the unfiltered matrix H(«) or the filtered<br>
+matrix H(n), e.g., Mm(n) = Vff(n)H%) or MJn) = V*(n)H*(«).<br>
+[00691	FIG. 4 shows a representation of the processing unite for channel estimation and<br>
+eigenvector computation. The processing by the various units in FIG. 4 may be performed, for example, in a time division multiplex (TDM) manner by shared multipliers and adders within DSP 378.<br>
+[0070J	DSP 328 performs channel estimation and eigenvector computation for the<br>
+access point. The processing by DSP 328 may be the same or different from the processing by DSP 378, depending on the channel structure and pilot transmission scheme used for the MIMO system.<br>
+[0071J	System 300 may utilize a frequency division duplex (FDD) or a time division<br>
+duplex (TDD) channel structure. For the FDD structure, the downlink and uplink are allocated separate frequency bands, and the channel response matrix for one link may not correlate well with the channel response matrix for the other link. In this case, the channel estimation and eigenvector computation may be performed separately for each link. For the TDD structure, the downlink and uplink share the same frequency band,<br><br>
+with the downlink being allocated a portion of the time and the uplink being allocated the remaining portion of the time. The channel response matrix for one link may be highly correlated with the channel response matrix for the other link. In this case, the channel estimation and eigenvector computation may be performed in a manner to take advantage of this correlation, as described below.<br>
+[0072]	FIG. 5 shows an example frame structure 500 that may be used for a TDD<br>
+MIMO system. Data transmission occurs in units of TDD frames, with each TDD frame covering a predetermined time duration (e.g., 2 msec). Each TDD frame is partitioned into a downlink phase 510a and an uplink phase 510b. Each phase 510 includes a pilot portion 520 and a data and signaling portion 530. Pilot portion 520 for each link is used to transmit one or more types of pilot, which may be used to estimate the MMO channel response or the eigenvectors for that link. Data and signaling portion 530 for each link is used to transmit data and signaling. Each phase 510 may include multiple pilot portions 520 and/or multiple data and signaling portions 530, but this is not shown in FIG. 5 for simplicity.<br>
+[0073]	For a TDD MIMO system, the downlink and uplink channel responses may be<br>
+assumed to be reciprocal of one another. That is, if H represents the channel response matrix from antenna array A to antenna array B, then a reciprocal channel implies that the coupling from array B to array A is given by Hr, where " T" denotes the transpose. Typically, the responses of the transmit and receive chains at the access point are not equal to the responses of the transmit and receive chains at the user terminal. Calibration may be performed to determine and account for the differences in the transmit/receive responses at the two entities. For simplicity, the following description assumes that the transmit and receive chains at the access point and user terminal are flat, H is the channel response matrix for the downlink, and Hr is the channel response matrix for the uplink. The channel estimation and eigenvector computation may be simplified for a reciprocal channel.<br>
+[0074]	For a reciprocal MIMO channel, the singular value decomposition for the<br>
+downlink and uplink may be expressed as:<br>
+Hr=UapSV"    (uplink), and	Bq(21)<br><br>
+H = V;ST Uj,    (downlink),	Eq (22)<br>
+where Uap is an Nap x Nap unitary matrix of left eigenvectors of Hr, 2 is an Nap x Nut diagonal matrix of singular values of Hr,<br>
+T<br>
+Vut is an N^ x Nut unitary matrix of right eigenvectors of H , and " * " denotes the complex conjugate.<br>
+The matrices V^ and U^ are also matrices of left and right eigenvectors, respectively, of H. The matrices Uap and Vut may be used by the access point and user terminal,<br>
+respectively, for spatial processing for both data transmission and reception and are denoted as such by their subscripts.<br>
+[0075]	The channel estimation and eigenvector computation may be performed in<br>
+various manners for the TDD MIMO system. In one embodiment, the access point transmits a MIMO pilot on the downlink. The user terminal estimates the MJMO channel response based on the downlink MEMO pilot and obtains the channel response<br>
+matrix H for the downlink.   The user terminal then performs decomposition of H using the iterative procedure described above and obtains Vut, which is an estimate of<br>
+the matrix Vut of right eigenvectors of Hr. The user terminal uses the matrix Vm for both (1) spatial processing for an uplink data transmission to the access point and (2) spatial matched filtering of a downlink data transmission from the access point. The<br>
+user terminal transmits a steered reference on the uplink using Vut. A steered reference (or steered pilot) is a pilot that is transmitted from all antennas and on the eigenmodes of the MEMO channel. The access point derives U^, which is an estimate of Uap, based on the uplink steered reference sent by the user terminal. The access point then uses the matrix Uap for both (1) spatial processing for the downlink data transmission to<br>
+the user terminal and (2) spatial matched filtering of the uplink data transmission from i the user terminal. With a reciprocal channel, the MIMO pilot may be sent on only one link (e.g., the downlink), and the eigenvector computation may be performed by only one entity (e.g., the user terminal) to derive matrices of eigenvectors used by both entities.<br><br>
+[0076]	System 300 may or may not utilize OFDM for data transmission. If system 300<br>
+utilizes OFDM, then NF total subbands are available for transmission. Of the NF total subbands, ND subbands may be used for data transmission and are referred to as data subbands, Np subbands may be used for a carrier pilot and are referred to as pilot subbands, and NO subbands may be used as guard subbands (no transmission), where NF = ND +NP + NG. In each OFDM symbol period, up to ND data symbols may be<br>
+sent on the ND data subbands, and up to Np pilot symbols may be sent on the Np pilot subbands. For OFDM modulation, NF frequency-domain values (for ND data symbols, Np pilot symbols, and NO zeros) are transformed to the time domain with an Np-point inverse fast Fourier transform (IFFT) to obtain a "transformed" symbol mat contains NF time-domain chips. To combat intersymbol interference (ISI), which is caused by frequency selective fading, a portion of each transformed symbol is repeated to form a corresponding OFDM symbol. The repeated portion is often referred to as a cyclic prefix or guard interval. An OFDM symbol period (which is also referred to as simply a "symbol period") is the duration of one OFDM symbol. In FIG. 3, the OFDM modulation for each transmit antenna may be performed by the transmitter unit for that antenna. The complementary OFDM demodulation for each receive antenna may be performed by the receiver unit for that antenna.<br>
+[0077]	The eigenvector computation techniques described herein may be implemented<br>
+by various means. For example, these techniques may be implemented in hardware, software, or a combination thereof. For a hardware implementation, the processing units used to perform the eigenvector computation may be implemented within one or more application specific integrated circuits (ASICs), digital signal processors (DSPs), digital signal processing devices (DSPDs), programmable logic devices (PLDs), field programmable gate arrays (FPGAs), processors, controllers, micro-controllers, microprocessors, other electronic units designed to perform the functions described herein, or a combination thereof.<br>
+[0078]	For a software implementation, the eigenvector computation techniques may be<br>
+implemented with modules (e;g., procedures, functions, and so on) that perform the functions described herein.^ The software codes may be stored in a memory unit (e.g., memory unit 332 or 382 in FIG. 3) and executed by a processor (e.g., DSP 328 or 378, or controller 330 or 380). The memory unit may be implemented within the processor<br><br>
+or external to the processor, in which case it can be communicatively coupled to the processor via various means as is known in the art.<br>
+[0079]	Headings are included herein for reference and to aid in locating certain<br>
+sections. These headings are not intended to limit the scope of the concepts described therein under, and these concepts may have applicability in other sections throughout the entire specification.<br>
+[0080]	The previous description of the disclosed embodiments is provided to enable any<br>
+person skilled in the art to make or use the present invention. Various modifications to these embodiments will be readily apparent to those skilled in the art, and the generic principles defined herein may be applied to other embodiments without departing from the spirit or scope of the invention. Thus, the present invention is not intended to be limited to the embodiments shown herein but is to be accorded the widest scope consistent with the principles and novel features disclosed herein.<br>
+[0081]	WHAT IS CLAIMED IS:<br><br><br><br><br>
+We Claim:<br>
+1.	A method of deriving eigenvectors for a multiple-input multiple-output (MIMO)<br>
+communication system (300), comprising:<br>
+initializing a first matrix of eigenvectors; and<br>
+updating the first matrix based on a channel response matrix for a MIMO channel, wherein the first matrix is updated for a plurality of iterations in a period when a new channel estimate becomes available and a next transmission begins, and wherein eigenvectors in the updated first matrix are used for spatial processing to transmit data via the MIMO channel.<br>
+2.	The method as claimed in claim 1, wherein the updating of the first matrix is based<br>
+on the following equation:<br>
+(Equation Removed)<br>
+where i is an index for the plurality of iterations; "H" is a conjugate transpose; Vi is the first matrix for i-th iteration;<br>
+H is the channel response matrix for the MIMO channel;<br>
+Triup (M) is a matrix containing elements above a diagonal of M;<br>
+Tri_low (M) is a matrix containing elements below the diagonal of M;<br>
+µ is a step size; and<br>
+Vi+1 is the updated first matrix for the i-th iteration.<br>
+3.	The method as claimed in claim 1, wherein the updating of the first matrix<br>
+comprises:<br>
+computing a second matrix based on the first matrix and the channel response matrix,<br>
+computing an update matrix based on the first and second matrices, and updating the first matrix with the update matrix.<br><br>
+4.	The method as claimed in claim 3, wherein the second matrix is computed based on<br>
+the following equation:<br>
+(Equation Removed)<br>
+where i is an index for the plurality of iterations;<br>
+"H" is a conjugate transpose;<br>
+Vi is the first matrix for z'-th iteration;<br>
+H is the channel response matrix for the MIMO channel; and<br>
+Y is the second matrix.<br>
+5.	The method as claimed in claim 1, comprising: orthogonalizing the eigenvectors in the updated first matrix.<br>
+6.	The method as claimed in claim 5, wherein the orthogonalization of the eigenvectors in the updated first matrix is performed using QR factorization.<br>
+7.	The method as claimed in claim 3, comprising:<br>
+ordering the eigenvectors in the updated first matrix based on diagonal elements of the second matrix; and<br>
+orthogonalizing the ordered eigenvectors in the updated first matrix.<br>
+8.	The method as claimed in claim 1, wherein the first matrix is initialized to an identity matrix.<br>
+9.	The method as claimed in claim 1, wherein the first matrix is initialized with eigenvectors obtained for a prior transmission interval.<br>
+10.	The method as claimed in claim 1, wherein the MIMO system utilizes orthogonal frequency division multiplexing (OFDM), and wherein a different first matrix of eigenvectors is derived for each of a plurality of subbands based on a channel response matrix obtained for the subband.<br><br>
+11.	The method as claimed in claim 10, wherein a first matrix of eigenvectors for a first subband is initialized to a first matrix of eigenvectors derived for a second subband.<br>
+12.	The method as claimed in claim 1, wherein the first matrix is updated for a predetermined number of iterations.<br>
+13.	The method as claimed in claim 1, wherein the first matrix is updated for a variable number of iterations until a termination condition is encountered.<br>
+14.	The method as claimed in claim 3, wherein the first matrix is updated for a variable number of iterations until a sum of squared magnitude of off-diagonal elements of the second matrix is less than a threshold.<br>
+15.	The method as claimed in claim 1, comprising:<br>
+estimating a channel response for a first link of the MIMO channel to obtain the channel response matrix, and wherein the updated first matrix of eigenvectors is used for spatial processing for data transmission on a second link of the MIMO channel.<br>
+16.	The method as claimed in claim 1, comprising:<br>
+estimating a channel response for a downlink of the MIMO channel to obtain the channel response matrix, and wherein the updated first matrix of eigenvectors is used for spatial processing for data transmission on an uplink of the MIMO channel.<br>
+17.	The method as claimed in claim 1, comprising:<br>
+filtering a plurality of channel response matrices for a plurality of transmission intervals to obtain a filtered channel response matrix, and wherein the first matrix is updated based on the filtered channel response matrix.<br>
+18.	The method as claimed in claim 1, comprising:<br>
+deriving a spatial filter matrix based on the updated first matrix of eigenvectors and the channel response matrix, wherein the spatial filter matrix is used for spatial matched filtering of a data transmission received via the MIMO channel.<br><br>
+19.	The method as claimed in claim 1, wherein the first matrix and the channel response matrix contain complex-valued elements.<br>
+20.	An apparatus in a multiple-input multiple-output (MIMO) communication system (300), comprising:<br>
+a channel estimator (412) operative to obtain a channel response matrix for a MIMO channel; and<br>
+a first unit (416) operative to<br>
+initialize a first matrix of eigenvectors and to<br>
+update the first matrix based on the channel response matrix, wherein the first matrix is updated for a plurality of iterations in a period when a new channel estimate becomes available and a next transmission begins, and wherein eigenvectors in the updated first matrix are used for spatial processing to transmit data via the MIMO channel.<br>
+21.	The apparatus as claimed in claim 20, wherein the first unit is operable to update<br>
+the first matrix based on the following equation:<br>
+(Equation Removed)<br>
+where i is an index for the plurality of iterations; "H" is a conjugate transpose; Vi is the first matrix for i-th iteration;<br>
+H is the channel response matrix for the MIMO channel;<br>
+Triup (M) is a matrix containing elements above a diagonal of M;<br>
+Trilow (M) is a matrix containing elements below the diagonal of M;<br>
+µ is a step size; and<br>
+Vi+1 is the updated first matrix for the Mb. iteration.<br>
+22.	The apparatus as claimed in claim 20, comprising:<br>
+a second unit(418) operative to orthogonalize the eigenvectors in the updated first matrix.<br><br>
+23.	The apparatus as claimed in claim 22, wherein the first and second units (416,418) are implemented by a digital signal processor.<br>
+24.	The apparatus as claimed in claim 20, comprising:<br>
+a third unit (420) operative to derive a spatial filter matrix based on the updated first matrix and the channel response matrix.<br>
+25.	The apparatus as claimed in claim 20, comprising:<br>
+a filter(414) operative to filter a plurality of channel response matrices for a plurality of transmission intervals and provide a filtered channel response matrix, and wherein the first matrix is updated based on the filtered channel response matrix.<br>
+26.	The apparatus as claimed in claim 20, wherein the MIMO system utilizes orthogonal frequency division multiplexing (OFDM), and wherein a different first matrix of eigenvectors is derived for each of a plurality of subbands based on a channel response matrix obtained for the subband.<br>
+27.	An apparatus in a multiple-input multiple-output (MIMO) communication system, comprising:<br>
+means for initializing a first matrix of eigenvectors; and<br>
+means for updating the first matrix based on a channel response matrix for a MIMO channel, wherein the first matrix is updated for a plurality of iterations in a period when a new channel estimate becomes available and a next transmission begins, and wherein eigenvectors in the updated first matrix are used for spatial processing to transmit data via the MIMO channel.<br>
+28.	The apparatus as claimed in claim 27, wherein the first matrix is updated based on<br>
+the following equation:<br>
+(Equation Removed)<br>
+where i is an index for the plurality of iterations; "H" is a conjugate transpose;<br><br>
+Vi is the first matrix for i-th iteration;<br>
+H is the channel response matrix for the MIMO channel;<br>
+Triup (M) is a matrix containing elements above a diagonal of M;<br>
+Tri_low (M) is a matrix containing elements below the diagonal of M;<br>
+µ is a step size; and<br>
+Vi+1 is the updated first matrix for the i-th iteration.<br>
+29.	The apparatus as claimed in claim 27, comprising:<br>
+means for orthogonalizing the eigenvectors in the updated first matrix.<br>
+30.	The apparatus as claimed in claim 27, comprising:<br>
+means for deriving a spatial filter matrix based on the updated first matrix and the channel response matrix.<br>
+31.	The apparatus as claimed in claim 27, comprising:<br>
+means for filtering a plurality of channel response matrices for a plurality of transmission intervals to obtain a filtered channel response matrix, and wherein the first matrix is updated based on the filtered channel response matrix.</td>
+			</tr>
+		</table>	
+		<br>
+		<h3>Documents:</h3>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1ERUxOUC0yMDA2LUFic3RyYWN0LSgyNy0wNy0yMDExKS5wZGY=" target="_blank" style="word-wrap:break-word;">6232-DELNP-2006-Abstract-(27-07-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1ERUxOUC0yMDA2LUNsYWltcy0oMjctMDctMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">6232-DELNP-2006-Claims-(27-07-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LWNsYWltcy5wZGY=" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-claims.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1ERUxOUC0yMDA2LUNvcnJlc3BvbmRlbmNlIE90aGVycy0oMjctMDctMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">6232-DELNP-2006-Correspondence Others-(27-07-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LWNvcnJlc3BvbmRlbmNlLW90aGVycy5wZGY=" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-correspondence-others.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LWRlc2NyaXB0aW9uIChjb21wbGV0ZSkucGRm" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-description (complete).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1ERUxOUC0yMDA2LURyYXdpbmdzLSgyNy0wNy0yMDExKS5wZGY=" target="_blank" style="word-wrap:break-word;">6232-DELNP-2006-Drawings-(27-07-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LWRyYXdpbmdzLnBkZg==" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-drawings.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1ERUxOUC0yMDA2LUZvcm0tMS0oMjctMDctMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">6232-DELNP-2006-Form-1-(27-07-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LWZvcm0tMS5wZGY=" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-form-1.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LWZvcm0tMTgucGRm" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-form-18.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1ERUxOUC0yMDA2LUZvcm0tMi0oMjctMDctMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">6232-DELNP-2006-Form-2-(27-07-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LWZvcm0tMi5wZGY=" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-form-2.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1ERUxOUC0yMDA2LUZvcm0tMy0oMjctMDctMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">6232-DELNP-2006-Form-3-(27-07-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LWZvcm0tMy5wZGY=" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-form-3.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LWZvcm0tNS5wZGY=" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-form-5.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1ERUxOUC0yMDA2LUdQQS0oMjctMDctMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">6232-DELNP-2006-GPA-(27-07-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LWdwYS5wZGY=" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-gpa.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LXBjdC0zMDQucGRm" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-pct-304.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1kZWxucC0yMDA2LXBjdC1zZWFyY2ggcmVwb3J0LnBkZg==" target="_blank" style="word-wrap:break-word;">6232-delnp-2006-pct-search report.pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1ERUxOUC0yMDA2LVBldGl0aW9uIDEzNy0oMjctMDctMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">6232-DELNP-2006-Petition 137-(27-07-2011).pdf</a></p>
+				<p><a href="http://ipindiaonline.gov.in/patentsearch/GrantedSearch/pdfviewer.aspx?AppNo=NjIzMi1ERUxOUC0yMDA2LVBldGl0aW9uIDEzOC0oMjctMDctMjAxMSkucGRm" target="_blank" style="word-wrap:break-word;">6232-DELNP-2006-Petition 138-(27-07-2011).pdf</a></p>
+		<br>
+		<div class="pull-left">
+			<a href="250281-pharmaceutical-preparaition-comprising-an-antibody-against-the-egf-receptor.html">&laquo; Previous Patent</a>
+		</div>
+		<div class="pull-right">
+			<a href="250283-method-for-producing-a-contactless-ticket-comprising-a-chip.html">Next Patent &raquo;</a>
+		</div>			
+	</div><!-- /span8 -->
+	<div class="span4">
+		<div class="well infobox">
+			<table class="table table-condensed">
+				<tr>
+					<th>Patent Number</th>
+					<td>250282</td>
+				</tr>
+				<tr>
+					<th>Indian Patent Application Number</th>
+					<td>6232/DELNP/2006</td>
+				</tr>
+				<tr>
+					<th>PG Journal Number</th>
+					<td>51/2011</td>
+				</tr>
+				<tr>
+					<th>Publication Date</th>
+					<td>23-Dec-2011</td>
+				</tr>
+				<tr>
+					<th>Grant Date</th>
+					<td>21-Dec-2011</td>
+				</tr>
+				<tr>
+					<th>Date of Filing</th>
+					<td>25-Oct-2006</td>
+				</tr>
+				<tr>
+					<th>Name of Patentee</th>
+					<td>QUALCOMM INCORPORATED</td>
+				</tr>
+				<tr>
+					<th>Applicant Address</th>
+					<td>5775 MOREHOUSE DRIVE, SAN DIEGO, CALIFORNIA 92121-1714, USA</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+								<h5>Inventors:</h5>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Inventor's Name</th>
+										<th>Inventor's Address</th>
+									</tr>
+
+										<tr>
+											<td>1</td>
+											<td>STEVEN J. HOWARD</td>
+											<td>75 HERITAGE AVENUE, ASHLAND, MASSACHUSETTS 01721, USA</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>JOHN W. KETCHUM</td>
+											<td>37 CANDLEBERRY LANE, HARVARD, MASSACHUSETTS 01451, USA</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>MARK S. WALLACE</td>
+											<td>4 MADEL LANE, BEDFORD, MASSACHUSETTS 01730, USA</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>PETER MONSEN</td>
+											<td>15 OAKENCROFT ROAD, WELLESLEY, MASSACHUSETTS 02482, USA</td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td>RODNEY JAY WALTON</td>
+											<td>85 HIGHWOODS LANE, CARLISLE, MASSACHUSETTS 01741, USA</td>
+										</tr>
+								</table>
+					</td>
+				</tr>
+				<tr>
+					<th>PCT International Classification Number</th>
+					<td>H04B 7/04</td>
+				</tr>
+				<tr>
+					<th>PCT International Application Number</th>
+					<td>PCT/US2005/008756</td>
+				</tr>
+				<tr>
+					<th>PCT International Filing date</th>
+					<td>2005-03-15</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						<h5>PCT Conventions:</h5>
+						<table class="table">
+							<tr>
+								<th>#</th>
+								<th>PCT Application Number</th>
+								<th>Date of Convention</th>
+								<th>Priority Country</th>
+							</tr>
+
+								<tr>
+									<td>1</td>
+									<td>10/830,907</td>
+									<td>2004-04-22</td>
+								    <td>U.S.A.</td>
+								</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div><!-- /well -->
+	</div><!-- /span4 -->
+</div><!-- /row-fluid -->
+
+        </div>
+
+      </div><!--/row-->
+
+      <footer class="footer">
+
+        <style>
+        .allindianpatents-footer { width: 320px; height: 50px; }
+        @media(min-width: 500px) { .allindianpatents-footer { width: 468px; height: 60px; } }
+        @media(min-width: 800px) { .allindianpatents-footer { width: 728px; height: 90px; } }
+        </style>
+        <center>
+        </center>
+
+        <p>&copy; All Indian Patents, 2013-2021.</p>
+        <p>Patent data available in the public domain from Indian Patents Office, Department of Industrial Policy and Promotions, Ministry of Commerce and Industry, Government of India.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/application-95f297ff0d8d2015987f04b30593c800.js" type="text/javascript"></script>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=8902313; 
+    var sc_invisible=1; 
+    var sc_security="3c1f8147"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script>
+    <noscript><div class="statcounter"><a title="web stats"
+    href="http://statcounter.com/free-web-stats/"
+    target="_blank"><img class="statcounter"
+    src="http://c.statcounter.com/8902313/0/3c1f8147/1/"
+    alt="web stats"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-244143-31', 'allindianpatents.com');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+<!-- Mirrored from www.allindianpatents.com/patents/250282-a-method-an-apparatus-for-deriving-eigenvectors-for-a-multiple-input-multiple-output-mimo-communication-system by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Apr 2024 14:31:30 GMT -->
+</html>
